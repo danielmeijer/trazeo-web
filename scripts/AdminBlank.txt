@@ -1,0 +1,44 @@
+<?php
+namespace namespaceCADENA;
+ 
+use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Datagrid\DatagridMapper;
+use Sonata\AdminBundle\Validator\ErrorElement;
+use Sonata\AdminBundle\Form\FormMapper;
+ 
+class classCADENA extends Admin
+{
+  protected $translationDomain = 'translationDomainCADENA';
+
+  protected function configureFormFields(FormMapper $formMapper)
+  {
+    $formMapper
+        formMapperCadena
+    ;
+  }
+ 
+  protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+  {
+    $datagridMapper
+      dataGridMapperCadena
+    ;
+  }
+ 
+  protected function configureListFields(ListMapper $listMapper)
+  {
+    $listMapper
+      listMapperCadena
+    ;
+  }
+ 
+  public function validate(ErrorElement $errorElement, $object)
+  {
+    /*$errorElement
+      ->with('text')
+      ->assertMaxLength(array('limit' => 3))
+      ->end()
+    ;*/
+  }
+}
+?>

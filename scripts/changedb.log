@@ -1,0 +1,94 @@
+ALTER TABLE `baby`
+  DROP `password`,
+  DROP `password_view`;
+
+#ALTER TABLE `rol`
+#  DROP `parent;
+  
+ALTER TABLE `rol`
+  DROP `parent_level`;
+  
+  
+# Tabla de USUARIOS (user, jos_user_user)
+ALTER TABLE `user` CHANGE `name` `firstname` VARCHAR( 255 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL; 
+ALTER TABLE `user` CHANGE `surname` `lastname` VARCHAR( 255 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+ALTER TABLE `user` CHANGE `date_register` `created_at` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP; 
+
+ALTER TABLE `user`
+  DROP `code`,
+  DROP `count_code`,
+  DROP `isadmin`,
+  DROP `cookie`;
+
+ALTER TABLE `user` ADD `enabled` TINYINT( 1 ) NOT NULL;
+
+UPDATE user SET enabled = 1 WHERE state = "normal" OR state = "premium";
+
+ALTER TABLE `user` DROP `state`;
+
+ALTER TABLE `user` ADD `username` VARCHAR( 255 ) NOT NULL;
+ALTER TABLE `user` ADD `username_canonical` VARCHAR( 255 ) NOT NULL;
+ALTER TABLE `user` ADD `email_canonical` VARCHAR( 255 ) NOT NULL;
+
+UPDATE user SET username = email;
+UPDATE user SET username_canonical = email;
+UPDATE user SET email_canonical = email;  
+
+ALTER TABLE `user` ADD `roles` VARCHAR( 255 ) NOT NULL;
+UPDATE user SET roles = "a:0:{}";
+
+RENAME TABLE `user` TO `fos_user_user` ;
+
+# Exportar rol
+# Exportar baby
+
+# Exportar user_baby
+ALTER TABLE `user_baby` DROP `rol_parent`;
+ALTER TABLE `user_baby` DROP `notify`;
+
+# Exportar entry (añado objeto redundante de entry - baby)
+# Entry dará un error al importar, no pasa nada
+ALTER TABLE `entry` ADD `baby_id` INT( 11 ) NOT NULL;
+UPDATE entry SET baby_id = (SELECT b.baby_id FROM user_baby AS b WHERE b.id = ub_id);
+ALTER TABLE `entry` DROP `image`;
+ALTER TABLE `entry` DROP `notify`;
+
+# añadir: SET foreign_key_checks = 0;
+ALTER TABLE `entry_comment` DROP `notify`;
+
+# TODO: ¿SE PUEDE QUITAR COLUMNA USER A ENTRY_COMMENT, PORQUE YA LO TENEMOS EN ENTRY?
+# Orden importación
+# fos_user..., baby, rol, user_baby, entry, entry_comment, notification_user
+
+# Configuraciones de Usuario
+RENAME TABLE `user_settings` TO `user_setting`;
+ALTER TABLE `user_value` CHANGE `field_id` `setting_id` INT( 11 ) NOT NULL;
+ALTER TABLE `user_setting` CHANGE `values` `options` VARCHAR( 500 ) NOT NULL;
+ALTER TABLE `user_setting` CHANGE `default` `defaultoption` VARCHAR( 255 ) NOT NULL;
+
+# Cambios en rol por conflicto con nombre
+ALTER TABLE `rol` CHANGE `limit` `maximum` INT( 11 ) NOT NULL;
+
+
+#################################################################
+# TRAS MIGRACIÓN
+#################################################################
+ALTER TABLE notification_user ADD `view_complete` tinyint(1);
+UPDATE notification_user SET view_complete = view;
+
+# Más modificaciones
+ALTER TABLE `baby` CHANGE `state` `state` VARCHAR( 10 );
+ALTER TABLE `baby` CHANGE `privacity` `privacity` VARCHAR( 10 );
+ALTER TABLE `baby` CHANGE `sex` `sex` VARCHAR( 5 );
+ALTER TABLE `entry` CHANGE `type` `type` VARCHAR( 10 );
+ALTER TABLE `notification_user` CHANGE `action` `action` VARCHAR( 100 );
+ALTER TABLE `user_baby` CHANGE `can` `can` VARCHAR( 5 );
+ALTER TABLE `user_invite` CHANGE `can` `can` VARCHAR( 5 );
+
+DROP TABLE `generate_param_select`;
+DROP TABLE `generate_param`;
+DROP TABLE `generate`;
+
+# Problema foregni key
+# Se podrían borrar directamente
+# SELECT * FROM `entry_comment` WHERE user_id NOT IN (SELECT id FROM `fos_user_user`)
