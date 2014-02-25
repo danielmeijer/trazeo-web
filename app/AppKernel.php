@@ -38,6 +38,7 @@ class AppKernel extends Kernel
             new FOS\RestBundle\FOSRestBundle(),     
             new Sopinet\Bundle\BootstrapExtendBundle\SopinetBootstrapExtendBundle(),
             new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle(),
+            new Sopinet\Template\Sbadmin2Bundle\SopinetTemplateSbadmin2Bundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
