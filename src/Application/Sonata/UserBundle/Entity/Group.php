@@ -59,4 +59,69 @@ class Group extends BaseGroup
     {
         return $this->id;
     }
+    
+    /**
+     * Set Users
+     */
+    public function setUser(Application\Sonata\UserBundle\Entity\User $users) {
+    	$this->users = $users;
+    }
+    
+    /**
+     * Get Users
+     *
+     * @return string
+     */
+    public function getUsers() {
+    	return $this->Users;
+    }
+    
+    
+    /**
+     * Set Admin
+     */
+    public function setAdmin(Application\Sonata\UserBundle\Entity\User $admin) {
+    	$this->admin = $admin;
+    }
+    
+    /**
+     * Get Admin
+     *
+     * @return string
+     */
+    public function getAdmin() {
+    	return $this->Admin;
+    }
+    
+    /**
+     * Set Childrens
+     */
+    public function setChildrens(trazeo\Trazeo\BaseBundle\Entity\Children $childrens) {
+    	$this->childrens = $childrens;
+    }
+    
+    /**
+     * Get Childrens
+     *
+     * @return string
+     */
+    public function getChildrens() {
+    	return $this->Childrens;
+    }
+    
+    /**
+     * Set Routes
+     */
+    public function setRoutes(trazeo\Trazeo\BaseBundle\Entity\Route $routes) {
+    	$this->routes = $routes;
+    }
+    
+    /**
+     * Get Routes
+     *
+     * @return string
+     */
+    public function getRoutes() {
+    	return $this->Routes;
+    }
 }

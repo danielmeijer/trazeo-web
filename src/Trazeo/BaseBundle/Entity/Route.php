@@ -55,125 +55,69 @@ class Route
     {
         return $this->id;
     }
-
+    
     /**
-     * Set admin
-     *
-     * @param string $admin
-     *
-     * @return Route
+     * Set Admin
      */
-    public function setAdmin($admin)
-    {
-        $this->admin = $admin;
-
-        return $this;
+    public function setUser(Application\Sonata\UserBundle\Entity\User $admin) {
+    	$this->admin = $admin;
+    }
+    
+    /**
+     * Get Admin
+     *
+     * @return string
+     */
+    public function getAdmin() {
+    	return $this->Admin;
     }
 
     /**
-     * Get admin
-     *
-     * @return string 
+     * Set City
      */
-    public function getAdmin()
-    {
-        return $this->admin;
+    public function setGroup(JJs\Bundle\GeonamesBundle\Entity\City $city) {
+    	$this->city = $city;
     }
-
+    
     /**
-     * Set city
+     * Get City
      *
-     * @param string $city
-     *
-     * @return Route
+     * @return string
      */
-    public function setCity($city)
-    {
-        $this->city = $city;
-
-        return $this;
+    public function getCity() {
+    	return $this->City;
     }
-
+    
     /**
-     * Get city
-     *
-     * @return string 
+     * Set Country
      */
-    public function getCity()
-    {
-        return $this->city;
+    public function setCountry(JJs\Bundle\GeonamesBundle\Entity\Country $country) {
+    	$this->country = $country;
     }
-
+    
     /**
-     * Set country
+     * Get Country
      *
-     * @param string $country
-     *
-     * @return Route
+     * @return string
      */
-    public function setCountry($country)
-    {
-        $this->country = $country;
-
-        return $this;
+    public function getCountry() {
+    	return $this->Country;
     }
-
+    
     /**
-     * Get country
-     *
-     * @return string 
+     * Set Groups
      */
-    public function getCountry()
-    {
-        return $this->country;
+    public function setGroups(Application\Sonata\UserBundle\Entity\Group $groups) {
+    	$this->groups = $groups;
     }
-
+    
     /**
-     * Set groups
+     * Get Groups
      *
-     * @param string $groups
-     *
-     * @return Route
+     * @return string
      */
-    public function setGroups($groups)
-    {
-        $this->groups = $groups;
-
-        return $this;
-    }
-
-    /**
-     * Get groups
-     *
-     * @return string 
-     */
-    public function getGroups()
-    {
-        return $this->groups;
-    }
-
-    /**
-     * Set map
-     *
-     * @param string $map
-     *
-     * @return Route
-     */
-    public function setMap($map)
-    {
-        $this->map = $map;
-
-        return $this;
-    }
-
-    /**
-     * Get map
-     *
-     * @return string 
-     */
-    public function getMap()
-    {
-        return $this->map;
+    public function getGroups() {
+    	return $this->Groups;
     }
 }
 

@@ -55,7 +55,7 @@ class User extends BaseUser
     private $childrens;
     
     /**
-     * @ORM\ManyToMany(targetEntity="Group")
+     * @ORM\ManyToMany(targetEntity="Application\Sonata\UserBundle\Entity\Group")
      * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
      */
     protected $groups;
@@ -78,5 +78,125 @@ class User extends BaseUser
     public function getId()
     {
         return $this->id;
+    }
+    
+    /**
+     * Set nick
+     *
+     * @param string $nick
+     *
+     * @return Children
+     */
+    public function setNick($nick)
+    {
+    	$this->nick = $nick;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get nick
+     *
+     * @return string
+     */
+    public function getNick()
+    {
+    	return $this->nick;
+    }
+    
+    /**
+     * Set City
+     */
+    public function setGroup(JJs\Bundle\GeonamesBundle\Entity\City $city) {
+    	$this->city = $city;
+    }
+    
+    /**
+     * Get City
+     *
+     * @return string
+     */
+    public function getCity() {
+    	return $this->City;
+    }
+    
+    /**
+     * Set Country
+     */
+    public function setCountry(JJs\Bundle\GeonamesBundle\Entity\Country $country) {
+    	$this->country = $country;
+    }
+    
+    /**
+     * Get Country
+     *
+     * @return string
+     */
+    public function getCountry() {
+    	return $this->Country;
+    }
+    
+    /**
+     * Set Childrens
+     */
+    public function setChildrens(trazeo\Trazeo\BaseBundle\Entity\Children $childrens) {
+    	$this->childrens = $childrens;
+    }
+    
+    /**
+     * Get Childrens
+     *
+     * @return string
+     */
+    public function getChildrens() {
+    	return $this->Childrens;
+    }
+    
+    
+    /**
+     * Get Groups
+     *
+     * @return string
+     */
+    public function getGroups() {
+    	return $this->Groups;
+    }
+    
+    
+    /**
+     * Set AdminGroups
+     */
+    public function setAdminGroup(Application\Sonata\UserBundle\Entity\Group $adminGroups) {
+    	$this->adminGroups = $adminGroups;
+    }
+    
+    /**
+     * Get AdminGroups
+     *
+     * @return string
+     */
+    public function getAdminGroups() {
+    	return $this->AdminGroups;
+    }
+    
+    
+    /**
+     * Set Routes
+     */
+    public function setRoutes(trazeo\Trazeo\BaseBundle\Entity\Routes $routes) {
+    	$this->routes = $routes;
+    }
+    
+    /**
+     * Get Routes
+     *
+     * @return string
+     */
+    public function getRoutes() {
+    	return $this->Routes;
+    }
+    
+    public function __toString() {
+    	return $this->getNick();
     }
 }

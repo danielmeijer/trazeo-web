@@ -71,27 +71,19 @@ class Children
     }
 
     /**
-     * Set user
-     *
-     * @param string $user
-     *
-     * @return Children
+     * Set User
      */
-    public function setUser($user)
-    {
-        $this->user = $user;
-
-        return $this;
+    public function setUser(Application\Sonata\UserBundle\Entity\User $user) {
+    	$this->user = $user;
     }
-
+    
     /**
-     * Get user
+     * Get User
      *
-     * @return string 
+     * @return string
      */
-    public function getUser()
-    {
-        return $this->user;
+    public function getUser() {
+    	return $this->User;
     }
 
     /**
@@ -167,29 +159,22 @@ class Children
     }
 
     /**
-     * Set groups
-     *
-     * @param string $groups
-     *
-     * @return Children
+     * Set Groups
      */
-    public function setGroups($groups)
-    {
-        $this->groups = $groups;
-
-        return $this;
+    public function setGroup(Application\Sonata\UserBundle\Entity\Group $groups) {
+    	$this->groups = $groups;
     }
-
+    
     /**
-     * Get groups
+     * Get Groups
      *
-     * @return string 
+     * @return string
      */
-    public function getGroups()
-    {
-        return $this->groups;
+    public function getGroups() {
+    	return $this->Groups;
     }
-
+    
+    
     /**
      * Set sex
      *
@@ -213,5 +198,11 @@ class Children
     {
         return $this->sex;
     }
+    
+    
+    public function __toString() {
+    	return $this->getNick();
+    }
+    
 }
 
