@@ -40,6 +40,8 @@ class AppKernel extends Kernel
             new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle(),
             new Sopinet\Template\Sbadmin2Bundle\SopinetTemplateSbadmin2Bundle(),
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
+            new Trazeo\BaseBundle\TrazeoBaseBundle(),
+            new Trazeo\FrontBundle\TrazeoFrontBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -26,8 +26,51 @@ class User extends BaseUser
     /**
      * @var integer $id
      */
+	
     protected $id;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nick", type="string", length=255)
+     */
+    
+    private $nick;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\City")
+     */
+    
+    private $city;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\Country")
+     */
+    
+    protected $country;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="trazeo\Trazeo\BaseBundle\Entity\Children")
+     */
+    
+    private $children;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Group")
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
+     */
+    protected $groups;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Group")
+     */
+    protected $adminGroups;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="trazeo\Trazeo\BaseBundle\Entity\Route")
+     */
+    protected $adminRoutes;
+    
     /**
      * Get id
      *
