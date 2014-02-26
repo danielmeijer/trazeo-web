@@ -22,8 +22,7 @@ class Children
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Application\Sonata\UserBundle\Entity\User", mappedBy="User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="Application\Sonata\UserBundle\Entity\User", mappedBy="user")
      */
     private $user;
 
@@ -70,12 +69,6 @@ class Children
         return $this->id;
     }
 
-    /**
-     * Set User
-     */
-    public function setUser(Application\Sonata\UserBundle\Entity\User $user) {
-    	$this->user = $user;
-    }
     
     /**
      * Get User
@@ -158,12 +151,6 @@ class Children
         return $this->visibility;
     }
 
-    /**
-     * Set Groups
-     */
-    public function setGroup(Application\Sonata\UserBundle\Entity\Group $groups) {
-    	$this->groups = $groups;
-    }
     
     /**
      * Get Groups

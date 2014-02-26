@@ -60,12 +60,7 @@ class Group extends BaseGroup
         return $this->id;
     }
     
-    /**
-     * Set Users
-     */
-    public function setUser(Application\Sonata\UserBundle\Entity\User $users) {
-    	$this->users = $users;
-    }
+
     
     /**
      * Get Users
@@ -76,13 +71,7 @@ class Group extends BaseGroup
     	return $this->Users;
     }
     
-    
-    /**
-     * Set Admin
-     */
-    public function setAdmin(Application\Sonata\UserBundle\Entity\User $admin) {
-    	$this->admin = $admin;
-    }
+
     
     /**
      * Get Admin
@@ -93,12 +82,6 @@ class Group extends BaseGroup
     	return $this->Admin;
     }
     
-    /**
-     * Set Childrens
-     */
-    public function setChildrens(trazeo\Trazeo\BaseBundle\Entity\Children $childrens) {
-    	$this->childrens = $childrens;
-    }
     
     /**
      * Get Childrens
@@ -107,13 +90,6 @@ class Group extends BaseGroup
      */
     public function getChildrens() {
     	return $this->Childrens;
-    }
-    
-    /**
-     * Set Routes
-     */
-    public function setRoutes(trazeo\Trazeo\BaseBundle\Entity\Route $routes) {
-    	$this->routes = $routes;
     }
     
     /**

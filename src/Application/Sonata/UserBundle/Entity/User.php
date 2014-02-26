@@ -104,12 +104,6 @@ class User extends BaseUser
     	return $this->nick;
     }
     
-    /**
-     * Set City
-     */
-    public function setGroup(JJs\Bundle\GeonamesBundle\Entity\City $city) {
-    	$this->city = $city;
-    }
     
     /**
      * Get City
@@ -119,13 +113,7 @@ class User extends BaseUser
     public function getCity() {
     	return $this->City;
     }
-    
-    /**
-     * Set Country
-     */
-    public function setCountry(JJs\Bundle\GeonamesBundle\Entity\Country $country) {
-    	$this->country = $country;
-    }
+
     
     /**
      * Get Country
@@ -136,12 +124,6 @@ class User extends BaseUser
     	return $this->Country;
     }
     
-    /**
-     * Set Childrens
-     */
-    public function setChildrens(trazeo\Trazeo\BaseBundle\Entity\Children $childrens) {
-    	$this->childrens = $childrens;
-    }
     
     /**
      * Get Childrens
@@ -164,13 +146,6 @@ class User extends BaseUser
     
     
     /**
-     * Set AdminGroups
-     */
-    public function setAdminGroup(Application\Sonata\UserBundle\Entity\Group $adminGroups) {
-    	$this->adminGroups = $adminGroups;
-    }
-    
-    /**
      * Get AdminGroups
      *
      * @return string
@@ -179,13 +154,6 @@ class User extends BaseUser
     	return $this->AdminGroups;
     }
     
-    
-    /**
-     * Set Routes
-     */
-    public function setRoutes(trazeo\Trazeo\BaseBundle\Entity\Routes $routes) {
-    	$this->routes = $routes;
-    }
     
     /**
      * Get Routes
