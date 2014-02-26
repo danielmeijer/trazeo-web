@@ -191,5 +191,60 @@ class Children
     	return $this->getNick();
     }
     
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->user = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add user
+     *
+     * @param \Application\Sonata\UserBundle\Entity\User $user
+     *
+     * @return Children
+     */
+    public function addUser(\Application\Sonata\UserBundle\Entity\User $user)
+    {
+        $this->user[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param \Application\Sonata\UserBundle\Entity\User $user
+     */
+    public function removeUser(\Application\Sonata\UserBundle\Entity\User $user)
+    {
+        $this->user->removeElement($user);
+    }
+
+    /**
+     * Add groups
+     *
+     * @param \Application\Sonata\UserBundle\Entity\Group $groups
+     *
+     * @return Children
+     */
+    public function addGroup(\Application\Sonata\UserBundle\Entity\Group $groups)
+    {
+        $this->groups[] = $groups;
+
+        return $this;
+    }
+
+    /**
+     * Remove groups
+     *
+     * @param \Application\Sonata\UserBundle\Entity\Group $groups
+     */
+    public function removeGroup(\Application\Sonata\UserBundle\Entity\Group $groups)
+    {
+        $this->groups->removeElement($groups);
+    }
+}
