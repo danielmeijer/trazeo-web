@@ -5,12 +5,12 @@ namespace Trazeo\BaseBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Children
+ * Groups
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class Children
+class Groups
 {
     /**
      * @var integer
@@ -21,4 +21,5 @@ class Children
      */
     private $id;
 
-}
+ }
+
