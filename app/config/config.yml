@@ -64,7 +64,10 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
         
-
+#KNP_menu
+knp_menu:
+    twig:  # use "twig: false" to disable the Twig extension and the TwigRenderer
+        template: SopinetTemplateSbadmin2Bundle:Elements:knp_menu.html.twig
 
 # Swiftmailer Configuration
 swiftmailer:
