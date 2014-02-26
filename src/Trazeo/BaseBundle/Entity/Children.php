@@ -55,7 +55,7 @@ class Children
     private $groups;
 
     /**
-     * @ORM\Column(name="type", type="string", columnDefinition="ENUM('H','M')")
+     * @ORM\Column(name="sex", type="string", columnDefinition="ENUM('H','M')")
      */
     private $sex;
 

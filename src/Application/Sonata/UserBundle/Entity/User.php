@@ -50,10 +50,9 @@ class User extends BaseUser
     protected $country;
     
     /**
-     * @ORM\ManyToOne(targetEntity="trazeo\Trazeo\BaseBundle\Entity\Children")
+     * @ORM\ManyToOne(targetEntity="trazeo\Trazeo\BaseBundle\Entity\Children", inversedBy="Children")
      */
-    
-    private $children;
+    private $childrens;
     
     /**
      * @ORM\ManyToMany(targetEntity="Group")

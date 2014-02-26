@@ -42,6 +42,7 @@ class AppKernel extends Kernel
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
             new Trazeo\BaseBundle\TrazeoBaseBundle(),
             new Trazeo\FrontBundle\TrazeoFrontBundle(),
+        	new JJs\Bundle\GeonamesBundle\JJsGeonamesBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

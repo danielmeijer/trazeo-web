@@ -27,6 +27,28 @@ class Group extends BaseGroup
      * @var integer $id
      */
     protected $id;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $users;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $admin;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\Children")
+     */
+    protected $childrens;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Trazeo\BaseBundle\Entity\Route")
+     */
+    protected $routes;
 
     /**
      * Get id

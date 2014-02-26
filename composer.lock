@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "7b620b9f2007042fbcc0c31df33fd922",
+    "hash": "dcda143983d3e2d1e30211fdc2fcfa4a",
     "packages": [
         {
             "name": "a2lix/translation-form-bundle",
@@ -553,12 +553,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineBundle.git",
-                "reference": "e84e0229bae89a57106abf17753e351e9e16874a"
+                "reference": "941a69c8414a29f603991cd58542afd3865e960f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/e84e0229bae89a57106abf17753e351e9e16874a",
-                "reference": "e84e0229bae89a57106abf17753e351e9e16874a",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/941a69c8414a29f603991cd58542afd3865e960f",
+                "reference": "941a69c8414a29f603991cd58542afd3865e960f",
                 "shasum": ""
             },
             "require": {
@@ -617,7 +617,7 @@
                 "orm",
                 "persistence"
             ],
-            "time": "2014-02-03 21:03:15"
+            "time": "2014-02-25 18:05:38"
         },
         {
             "name": "doctrine/doctrine-fixtures-bundle",
@@ -1108,6 +1108,204 @@
             "time": "2014-02-24 20:17:49"
         },
         {
+            "name": "guzzle/common",
+            "version": "v3.8.1",
+            "target-dir": "Guzzle/Common",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/common.git",
+                "reference": "67f6c3fd04bae387d47c2a673fa623ed8f4189bb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/common/zipball/67f6c3fd04bae387d47c2a673fa623ed8f4189bb",
+                "reference": "67f6c3fd04bae387d47c2a673fa623ed8f4189bb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/event-dispatcher": ">=2.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Guzzle\\Common": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Common libraries used by Guzzle",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "collection",
+                "common",
+                "event",
+                "exception"
+            ],
+            "time": "2014-01-28 22:29:15"
+        },
+        {
+            "name": "guzzle/http",
+            "version": "v3.8.1",
+            "target-dir": "Guzzle/Http",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/http.git",
+                "reference": "565fd64be16d91c840f497c5de76f86d54a822d8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/http/zipball/565fd64be16d91c840f497c5de76f86d54a822d8",
+                "reference": "565fd64be16d91c840f497c5de76f86d54a822d8",
+                "shasum": ""
+            },
+            "require": {
+                "guzzle/common": "self.version",
+                "guzzle/parser": "self.version",
+                "guzzle/stream": "self.version",
+                "php": ">=5.3.2"
+            },
+            "suggest": {
+                "ext-curl": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Guzzle\\Http": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "HTTP libraries used by Guzzle",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "Guzzle",
+                "client",
+                "curl",
+                "http",
+                "http client"
+            ],
+            "time": "2014-01-23 18:23:29"
+        },
+        {
+            "name": "guzzle/parser",
+            "version": "v3.8.1",
+            "target-dir": "Guzzle/Parser",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/parser.git",
+                "reference": "3f52387052f2e4ef083145a0f73c3654aa14e086"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/parser/zipball/3f52387052f2e4ef083145a0f73c3654aa14e086",
+                "reference": "3f52387052f2e4ef083145a0f73c3654aa14e086",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Guzzle\\Parser": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Interchangeable parsers used by Guzzle",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "URI Template",
+                "cookie",
+                "http",
+                "message",
+                "url"
+            ],
+            "time": "2013-10-24 00:04:09"
+        },
+        {
+            "name": "guzzle/stream",
+            "version": "v3.8.1",
+            "target-dir": "Guzzle/Stream",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/stream.git",
+                "reference": "fa8af730ca714861c0001cfba64aaecc5f21bb96"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/stream/zipball/fa8af730ca714861c0001cfba64aaecc5f21bb96",
+                "reference": "fa8af730ca714861c0001cfba64aaecc5f21bb96",
+                "shasum": ""
+            },
+            "require": {
+                "guzzle/common": "self.version",
+                "php": ">=5.3.2"
+            },
+            "suggest": {
+                "guzzle/http": "To convert Guzzle request objects to PHP streams"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Guzzle\\Stream": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Guzzle stream wrapper component",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "Guzzle",
+                "component",
+                "stream"
+            ],
+            "time": "2014-01-28 22:14:17"
+        },
+        {
             "name": "incenteev/composer-parameter-handler",
             "version": "dev-master",
             "target-dir": "Incenteev/ParameterHandler",
@@ -1208,6 +1406,96 @@
                 "sql"
             ],
             "time": "2014-01-23 04:54:58"
+        },
+        {
+            "name": "jjs/common",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Josiah/JJsCommon.git",
+                "reference": "f9eeecaca52b0b6780df71087d61ea70aae5e79e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Josiah/JJsCommon/zipball/f9eeecaca52b0b6780df71087d61ea70aae5e79e",
+                "reference": "f9eeecaca52b0b6780df71087d61ea70aae5e79e",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "JJs\\Common": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Josiah",
+                    "email": "josiah@jjs.id.au",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Common functionality used by some JJs bundles",
+            "time": "2013-06-03 14:46:33"
+        },
+        {
+            "name": "jjs/geonames-bundle",
+            "version": "dev-master",
+            "target-dir": "JJs/Bundle/GeonamesBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Josiah/JJsGeonamesBundle.git",
+                "reference": "7b00d5e949ff1b07c0faa0352a8e8c6efbf353c9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Josiah/JJsGeonamesBundle/zipball/7b00d5e949ff1b07c0faa0352a8e8c6efbf353c9",
+                "reference": "7b00d5e949ff1b07c0faa0352a8e8c6efbf353c9",
+                "shasum": ""
+            },
+            "require": {
+                "guzzle/http": "~3.5",
+                "jjs/common": "*",
+                "php": "~5.4",
+                "symfony/framework-bundle": "~2.1"
+            },
+            "require-dev": {
+                "jms/cg": "~1.0",
+                "symfony/console": "~2.1",
+                "symfony/css-selector": "~2.2",
+                "symfony/dom-crawler": "~2.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "JJs\\Bundle\\GeonamesBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Josiah",
+                    "email": "josiah@jjs.id.au",
+                    "role": "Developer"
+                }
+            ],
+            "description": "GeoNames.org geographical data and associated functionality",
+            "keywords": [
+                "GeoNames.org",
+                "countries",
+                "database",
+                "geographical"
+            ],
+            "time": "2013-10-15 18:56:35"
         },
         {
             "name": "jms/aop-bundle",
@@ -2089,12 +2377,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "6b81ac8153be8ae33a877a79be3f61809f1448d9"
+                "reference": "7085f3e424dfbaba98461a433f6c55fec3229355"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/6b81ac8153be8ae33a877a79be3f61809f1448d9",
-                "reference": "6b81ac8153be8ae33a877a79be3f61809f1448d9",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/7085f3e424dfbaba98461a433f6c55fec3229355",
+                "reference": "7085f3e424dfbaba98461a433f6c55fec3229355",
                 "shasum": ""
             },
             "require": {
@@ -2148,7 +2436,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2014-02-23 15:06:45"
+            "time": "2014-02-25 22:48:41"
         },
         {
             "name": "nelmio/api-doc-bundle",
@@ -2625,12 +2913,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataAdminBundle.git",
-                "reference": "4792ec715210f61545e3002a191a6c22fe3b925d"
+                "reference": "1063230e2763892a2af5a542c46f028ef99d1c46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/4792ec715210f61545e3002a191a6c22fe3b925d",
-                "reference": "4792ec715210f61545e3002a191a6c22fe3b925d",
+                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/1063230e2763892a2af5a542c46f028ef99d1c46",
+                "reference": "1063230e2763892a2af5a542c46f028ef99d1c46",
                 "shasum": ""
             },
             "require": {
@@ -2697,7 +2985,7 @@
                 "bootstrap",
                 "sonata"
             ],
-            "time": "2014-02-24 17:46:46"
+            "time": "2014-02-25 18:20:13"
         },
         {
             "name": "sonata-project/block-bundle",
@@ -2705,12 +2993,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataBlockBundle.git",
-                "reference": "803a0b7eb69279670adb12b2385df7b51c324df8"
+                "reference": "7f6963007b8b74cca4a413d37d097e2eae2fddc2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataBlockBundle/zipball/803a0b7eb69279670adb12b2385df7b51c324df8",
-                "reference": "803a0b7eb69279670adb12b2385df7b51c324df8",
+                "url": "https://api.github.com/repos/sonata-project/SonataBlockBundle/zipball/7f6963007b8b74cca4a413d37d097e2eae2fddc2",
+                "reference": "7f6963007b8b74cca4a413d37d097e2eae2fddc2",
                 "shasum": ""
             },
             "require": {
@@ -2761,7 +3049,7 @@
                 "block",
                 "sonata"
             ],
-            "time": "2014-02-24 10:59:38"
+            "time": "2014-02-25 18:18:37"
         },
         {
             "name": "sonata-project/cache",
@@ -2897,12 +3185,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataCoreBundle.git",
-                "reference": "077a62e8993eede6883f541b7b48b76a512ff3f0"
+                "reference": "7cca91e209509d7cf8bc08f84c52dbfdc2f7625f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataCoreBundle/zipball/077a62e8993eede6883f541b7b48b76a512ff3f0",
-                "reference": "077a62e8993eede6883f541b7b48b76a512ff3f0",
+                "url": "https://api.github.com/repos/sonata-project/SonataCoreBundle/zipball/7cca91e209509d7cf8bc08f84c52dbfdc2f7625f",
+                "reference": "7cca91e209509d7cf8bc08f84c52dbfdc2f7625f",
                 "shasum": ""
             },
             "require": {
@@ -2948,7 +3236,7 @@
             "keywords": [
                 "sonata"
             ],
-            "time": "2014-02-25 09:03:08"
+            "time": "2014-02-25 23:36:09"
         },
         {
             "name": "sonata-project/doctrine-extensions",
@@ -3063,12 +3351,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataEasyExtendsBundle.git",
-                "reference": "63f2d9c99c94548fed1257c9503ac6efb39d73f0"
+                "reference": "bfce722a51c1e897646ddfb5dafc2e2506f19ceb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataEasyExtendsBundle/zipball/63f2d9c99c94548fed1257c9503ac6efb39d73f0",
-                "reference": "63f2d9c99c94548fed1257c9503ac6efb39d73f0",
+                "url": "https://api.github.com/repos/sonata-project/SonataEasyExtendsBundle/zipball/bfce722a51c1e897646ddfb5dafc2e2506f19ceb",
+                "reference": "bfce722a51c1e897646ddfb5dafc2e2506f19ceb",
                 "shasum": ""
             },
             "require": {
@@ -3112,7 +3400,7 @@
                 "Easy Extends",
                 "sonata"
             ],
-            "time": "2014-02-17 17:07:24"
+            "time": "2014-02-25 13:47:06"
         },
         {
             "name": "sonata-project/exporter",
@@ -3387,12 +3675,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sopinet/composergeneric.git",
-                "reference": "25447daacf2c9123332975761c2f5ac53f4ec123"
+                "reference": "c6d90ae8bc3131593d250fa45474f513eb2fb504"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sopinet/composergeneric/zipball/25447daacf2c9123332975761c2f5ac53f4ec123",
-                "reference": "25447daacf2c9123332975761c2f5ac53f4ec123",
+                "url": "https://api.github.com/repos/sopinet/composergeneric/zipball/c6d90ae8bc3131593d250fa45474f513eb2fb504",
+                "reference": "c6d90ae8bc3131593d250fa45474f513eb2fb504",
                 "shasum": ""
             },
             "require": {
@@ -3469,7 +3757,7 @@
             "keywords": [
                 "composer"
             ],
-            "time": "2014-02-24 13:32:07"
+            "time": "2014-02-26 07:45:00"
         },
         {
             "name": "stof/doctrine-extensions-bundle",
@@ -3934,12 +4222,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "429fc9331e9c74a77f575d136351630e1271cd3d"
+                "reference": "7b386a566f6f199698f200d9dff4b8cf5da3ed07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/429fc9331e9c74a77f575d136351630e1271cd3d",
-                "reference": "429fc9331e9c74a77f575d136351630e1271cd3d",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/7b386a566f6f199698f200d9dff4b8cf5da3ed07",
+                "reference": "7b386a566f6f199698f200d9dff4b8cf5da3ed07",
                 "shasum": ""
             },
             "type": "library",
@@ -3968,7 +4256,7 @@
                 "bootstrap",
                 "css"
             ],
-            "time": "2014-02-25 03:10:23"
+            "time": "2014-02-26 03:40:15"
         },
         {
             "name": "twig/extensions",

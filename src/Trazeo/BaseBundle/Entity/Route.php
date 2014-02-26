@@ -22,39 +22,28 @@ class Route
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="admin", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $admin;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="city", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\City")
      */
+    
     private $city;
-
+    
     /**
-     * @var string
-     *
-     * @ORM\Column(name="country", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\Country")
      */
-    private $country;
+    
+    protected $country;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="groups", type="string", length=255)
+     * @ORM\OneToMany(targetEntity="Application\Sonata\UserBundle\Entity\Group", mappedBy="Group")
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
      */
     private $groups;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="map", type="string", length=255)
-     */
-    private $map;
 
 
     /**
