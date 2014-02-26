@@ -56,12 +56,6 @@ class Route
         return $this->id;
     }
     
-    /**
-     * Set Admin
-     */
-    public function setUser(Application\Sonata\UserBundle\Entity\User $admin) {
-    	$this->admin = $admin;
-    }
     
     /**
      * Get Admin
@@ -72,12 +66,6 @@ class Route
     	return $this->Admin;
     }
 
-    /**
-     * Set City
-     */
-    public function setGroup(JJs\Bundle\GeonamesBundle\Entity\City $city) {
-    	$this->city = $city;
-    }
     
     /**
      * Get City
@@ -88,12 +76,6 @@ class Route
     	return $this->City;
     }
     
-    /**
-     * Set Country
-     */
-    public function setCountry(JJs\Bundle\GeonamesBundle\Entity\Country $country) {
-    	$this->country = $country;
-    }
     
     /**
      * Get Country
@@ -104,12 +86,6 @@ class Route
     	return $this->Country;
     }
     
-    /**
-     * Set Groups
-     */
-    public function setGroups(Application\Sonata\UserBundle\Entity\Group $groups) {
-    	$this->groups = $groups;
-    }
     
     /**
      * Get Groups
