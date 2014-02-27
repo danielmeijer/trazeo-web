@@ -21,12 +21,24 @@ class Route
      */
     private $id;
 
-	/** @ORM\ManyToOne(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", inversedBy="route") */
-    private $admin;
-
-	/** @ORM\OneToMany(targetEntity="Trazeo\BaseBundle\Entity\Groups", mappedBy="route") */
+    
+    /** @ORM\OneToMany(targetEntity="Trazeo\BaseBundle\Entity\Groups", mappedBy="routes")
+     */
     private $groups;
-
+    
+    /** @ORM\ManyToOne(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", inversedBy="adminroutes")
+     */
+    private $admin;
+    
+    
+    /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\City", inversedBy="routes")
+     */
+    private $city;
+    
+    /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\Country", inversedBy="routes")
+     */
+    private $country;
+    
 
     /**
      * Get id

@@ -21,22 +21,21 @@ class Groups
      */
     private $id;
 
-    /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", inversedBy="adminGroups")
-     *  @ORM\JoinColumn(name="userExtend_groups", referencedColumnName="id")
+    /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", mappedBy="groups")
      */
-    private $userExtend;
-
-    /** @ORM\ManyToOne(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", inversedBy="groups") */
+    private $userextend;
+    
+    /** @ORM\ManyToOne(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", inversedBy="admingroup")
+     */
     private $admin;
-
-    /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\Children", mappedBy="groups")
-     *  @ORM\JoinColumn(name="children_groups", referencedColumnName="id")
+    
+    /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\Children", inversedBy="groups")
      */
     private $children;
 
-    /** @ORM\ManyToOne(targetEntity="Trazeo\BaseBundle\Entity\Route", inversedBy="groups") */
-    private $route;
-
+    /** @ORM\ManyToOne(targetEntity="Trazeo\BaseBundle\Entity\Route", inversedBy="groups")
+     */
+    private $routes;
 
     /**
      * Get id

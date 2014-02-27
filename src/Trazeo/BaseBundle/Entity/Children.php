@@ -3,7 +3,6 @@
 namespace Trazeo\BaseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Children
  *
@@ -24,7 +23,12 @@ class Children
     /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", inversedBy="children")
      *  @ORM\JoinColumn(name="userExtend_children", referencedColumnName="id")
      */
-    private $userExtend;
+    private $userextend;
+    
+    /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\Groups", mappedBy="children")
+     *  @ORM\JoinColumn(name="groups_children", referencedColumnName="id")
+     */
+    private $groups;
 
     /**
      * @var string
@@ -47,17 +51,11 @@ class Children
      */
     private $visibility;
 
-    /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\Groups", inversedBy="children")
-     *  @ORM\JoinColumn(name="groups_children", referencedColumnName="id")
-     */
-    private $groups;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="sex", type="string", length=255)
-     */
-    private $sex;
+	/**
+	 * @ORM\Column(name="sex", type="string")
+	 */
+	protected $sex;
 
 
     /**
