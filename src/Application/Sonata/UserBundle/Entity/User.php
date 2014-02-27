@@ -23,9 +23,5 @@ class User extends BaseUser
         parent::__construct();
 
     }
-    
-    /**
-     * @ORM\OneToOne(targetEntity="Trazeo\BaseBundle\Entity\UserExtend")
-     */
-    private $userExtend;
+
 }
