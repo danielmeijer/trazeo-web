@@ -53,7 +53,7 @@ class Children
 
 
 	/**
-	 * @ORM\Column(name="sex", type="string")
+	 * @ORM\Column(name="sex", type="string", columnDefinition="ENUM('H','M')")
 	 */
 	protected $sex;
 
