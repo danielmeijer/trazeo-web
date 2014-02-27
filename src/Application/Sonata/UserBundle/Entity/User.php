@@ -24,4 +24,32 @@ class User extends BaseUser
 
     }
 
+    /**
+     * @OneToOne(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", mappedBy="user")
+     * @JoinColumn(name="userextend_id", referencedColumnName="id")
+     */
+    private $userextend;
+    
+    /**
+     * Set address
+     *
+     * @param \Trazeo\BaseBundle\Entity\UserExtend $userextend
+     * @return Order
+     */
+    public function setUserExtend(\Trazeo\BaseBundle\Entity\UserExtend $userextend = null)
+    {
+    	$this->userextend = $userextend;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get address
+     *
+     * @return \Trazeo\BaseBundle\Entity\UserExtend
+     */
+    public function getUserExtend()
+    {
+    	return $this->userextend;
+    }    
 }

@@ -7,21 +7,26 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="fos_user")
  */
-class UserExtend extends BaseUser
+class UserExtend
 {
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected $id;    
 
     public function __construct()
     {
         parent::__construct();
     }
+    
+    /**
+     * @ORM\OneToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="userextend")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $user;
     
     /**
      * @var string
@@ -45,14 +50,6 @@ class UserExtend extends BaseUser
     /** @ORM\OneToMany(targetEntity="Trazeo\BaseBundle\Entity\Route", mappedBy="userExtend") */
     private $adminRoutes;
     
-    
-    
-
     /** @ORM\OneToMany(targetEntity="Trazeo\BaseBundle\Entity\Route", mappedBy="admin") */
     private $route;
-    
-    
-    
-    
-    
 }
