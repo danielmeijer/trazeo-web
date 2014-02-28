@@ -2,7 +2,7 @@
 
 namespace Application\Sonata\UserBundle\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
+use FOS\UserBundle\Entity\User as BaseUser;
 
 use Doctrine\ORM\Mapping as ORM;
 /**
@@ -25,8 +25,8 @@ class User extends BaseUser
     }
 
     /**
-     * @OneToOne(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", mappedBy="user")
-     * @JoinColumn(name="userextend_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", mappedBy="user")
+     * @ORM\JoinColumn(name="userextend_id", referencedColumnName="id")
      */
     private $userextend;
     
