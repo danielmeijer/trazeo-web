@@ -1,3 +1,0 @@
-sopinet_template_amoeba_homepage:
-    path:  /hello/{name}
-    defaults: { _controller: SopinetTemplateAmoebaBundle:Default:index }

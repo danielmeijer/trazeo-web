@@ -1,7 +1,0 @@
-parameters:
-#    sopinet_template_amoeba.example.class: Sopinet\Template\AmoebaBundle\Example
-
-services:
-#    sopinet_template_amoeba.example:
-#        class: %sopinet_template_amoeba.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
