@@ -1,0 +1,35 @@
+{% if csrf_token is not defined %}
+	{% set csrf_token = render(controller('TrazeoFrontBundle:Public:getToken')) %}
+{% endif %}
+
+<form class="form-login" action="{{ path("fos_user_security_check") }}" method="post">
+	<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+	
+    {% if (redirect is defined) %}
+    	<input type="hidden" name="_redirect" id="redirect" value="{{ redirect }} "/>
+    {% endif %}	
+	<div class="form-group">
+		<label>{{ "Login.username"|trans }}</label>
+		<input type="text" name="_username" id="username" placeholder="{{ "Login.username"|trans }}" class="form-control input-sm bounceIn animation-delay2" >
+	</div>
+	<div class="form-group">
+		<label>{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+		<input type="password" name="_password" id="password" placeholder="{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}" class="form-control input-sm bounceIn animation-delay4">
+	</div>
+	{#<div class="form-group">
+		<label class="label-checkbox inline">
+			<input type="checkbox" class="regular-checkbox chk-delete" />
+			<span class="custom-checkbox info bounceIn animation-delay4"></span>
+		</label>
+		{{ "Login.rememberme"|trans }} 	
+	</div>
+
+	<div class="seperator"></div>
+	<div class="form-group">
+		{{ "Login.forgot"|trans }}<br/>
+		Click <a href="#">{{ "Login.here"|trans }}</a> {{ "Login.reset"|trans }}
+	</div>#}
+
+	<hr/>
+	<input type="submit" id="_submit" name="_submit" class="btn btn-icofrade bounceIn animation-delay5 pull-right" value="{{ "Login.signin"|trans }}">
+</form>

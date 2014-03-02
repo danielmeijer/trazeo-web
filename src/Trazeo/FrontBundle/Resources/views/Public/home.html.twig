@@ -21,27 +21,14 @@
 					<div class="row">
 					<div class="col-md-8 col-md-offset-2">
 						<div class="cform" id="contact-form">
-							<div id="sendmessage">
-								 Your message has been sent. Thank you!
-							</div>
-							<form action="" method="post" role="form" class="contactForm">
-							  <div class="form-group">
-								<input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
-								<div class="validation"></div>
-							  </div>
-							  <button type="submit" class="btn btn-theme">SEND</button>
-							</form>
+							{% block fos_user_content %}
+								{% include 'TrazeoFrontBundle:Public:_form_login.html.twig' %}
+							{% endblock fos_user_content %}
 
 						</div>
 					</div>
 					<!-- ./span12 -->
-				</div>
-					<p>
-					Lorem ipsum dolor sit amet, natum bonorum expetendis usu ut. 
-					Eum impetus offendit disputationi eu, at vim aliquip lucilius praesent. 
-					Alia laudem antiopam te ius, sed ad munere integre, ubique facete sapientem nam ut. 
-		
-					</p>	
+					</div>
 				</div>
 			</div>
 		</div>

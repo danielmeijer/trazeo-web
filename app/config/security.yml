@@ -15,7 +15,7 @@ security:
             pattern: ^/
             form_login:
                 provider: fos_userbundle
-                login_path: /login
+                login_path: /
                 check_path: /login_check 
                 default_target_path: /panel
                 always_use_default_target_path: true
