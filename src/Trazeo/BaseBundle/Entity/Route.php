@@ -21,30 +21,24 @@ class Route
      */
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    private $admin;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\City")
-     */
     
-    private $city;
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\Country")
-     */
-    
-    protected $country;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Application\Sonata\UserBundle\Entity\Group", mappedBy="Group")
-     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
+    /** @ORM\OneToMany(targetEntity="Trazeo\BaseBundle\Entity\Groups", mappedBy="routes")
      */
     private $groups;
-
+    
+    /** @ORM\ManyToOne(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", inversedBy="adminroutes")
+     */
+    private $admin;
+    
+    
+    /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\City", inversedBy="routes")
+     */
+    private $city;
+    
+    /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\Country", inversedBy="routes")
+     */
+    private $country;
+    
 
     /**
      * Get id
@@ -55,62 +49,15 @@ class Route
     {
         return $this->id;
     }
-    
-    
-    /**
-     * Get Admin
-     *
-     * @return string
-     */
-    public function getAdmin() {
-    	return $this->Admin;
-    }
-
-    
-    /**
-     * Get City
-     *
-     * @return string
-     */
-    public function getCity() {
-    	return $this->City;
-    }
-    
-    
-    /**
-     * Get Country
-     *
-     * @return string
-     */
-    public function getCountry() {
-    	return $this->Country;
-    }
-    
-    
-    /**
-     * Get Groups
-     *
-     * @return string
-     */
-    public function getGroups() {
-    	return $this->Groups;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Set admin
      *
-     * @param \Application\Sonata\UserBundle\Entity\User $admin
+     * @param string $admin
      *
      * @return Route
      */
-    public function setAdmin(\Application\Sonata\UserBundle\Entity\User $admin = null)
+    public function setAdmin($admin)
     {
         $this->admin = $admin;
 
@@ -118,54 +65,37 @@ class Route
     }
 
     /**
-     * Set city
+     * Get admin
      *
-     * @param \JJs\Bundle\GeonamesBundle\Entity\City $city
+     * @return string 
+     */
+    public function getAdmin()
+    {
+        return $this->admin;
+    }
+
+    /**
+     * Set groups
+     *
+     * @param string $groups
      *
      * @return Route
      */
-    public function setCity(\JJs\Bundle\GeonamesBundle\Entity\City $city = null)
+    public function setGroups($groups)
     {
-        $this->city = $city;
+        $this->groups = $groups;
 
         return $this;
     }
 
     /**
-     * Set country
+     * Get groups
      *
-     * @param \JJs\Bundle\GeonamesBundle\Entity\Country $country
-     *
-     * @return Route
+     * @return string 
      */
-    public function setCountry(\JJs\Bundle\GeonamesBundle\Entity\Country $country = null)
+    public function getGroups()
     {
-        $this->country = $country;
-
-        return $this;
-    }
-
-    /**
-     * Add groups
-     *
-     * @param \Application\Sonata\UserBundle\Entity\Group $groups
-     *
-     * @return Route
-     */
-    public function addGroup(\Application\Sonata\UserBundle\Entity\Group $groups)
-    {
-        $this->groups[] = $groups;
-
-        return $this;
-    }
-
-    /**
-     * Remove groups
-     *
-     * @param \Application\Sonata\UserBundle\Entity\Group $groups
-     */
-    public function removeGroup(\Application\Sonata\UserBundle\Entity\Group $groups)
-    {
-        $this->groups->removeElement($groups);
+        return $this->groups;
     }
 }
+

@@ -9,6 +9,8 @@
         <id name="id" column="id" type="integer">
             <generator strategy="AUTO" />
         </id>
+        
+        <one-to-one field="userextend" target-entity="Trazeo\BaseBundle\Entity\UserExtend"  mapped-by="user"></one-to-one>
 
     </entity>
 

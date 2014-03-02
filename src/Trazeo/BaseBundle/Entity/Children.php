@@ -3,7 +3,6 @@
 namespace Trazeo\BaseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Children
  *
@@ -21,10 +20,15 @@ class Children
      */
     private $id;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Application\Sonata\UserBundle\Entity\User", mappedBy="user")
+    /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", inversedBy="children")
+     *  @ORM\JoinColumn(name="userExtend_children", referencedColumnName="id")
      */
-    private $user;
+    private $userextend;
+    
+    /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\Groups", mappedBy="children")
+     *  @ORM\JoinColumn(name="groups_children", referencedColumnName="id")
+     */
+    private $groups;
 
     /**
      * @var string
@@ -47,16 +51,11 @@ class Children
      */
     private $visibility;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Application\Sonata\UserBundle\Entity\Group", mappedBy="Group")
-     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
-     */
-    private $groups;
 
-    /**
-     * @ORM\Column(name="sex", type="string", columnDefinition="ENUM('H','M')")
-     */
-    private $sex;
+	/**
+	 * @ORM\Column(name="sex", type="string", columnDefinition="ENUM('H','M')")
+	 */
+	protected $sex;
 
 
     /**
@@ -69,14 +68,28 @@ class Children
         return $this->id;
     }
 
-    
     /**
-     * Get User
+     * Set userExtend
      *
-     * @return string
+     * @param string $userExtend
+     *
+     * @return Children
      */
-    public function getUser() {
-    	return $this->User;
+    public function setUserExtend($userExtend)
+    {
+        $this->userExtend = $userExtend;
+
+        return $this;
+    }
+
+    /**
+     * Get userExtend
+     *
+     * @return string 
+     */
+    public function getUserExtend()
+    {
+        return $this->userExtend;
     }
 
     /**
@@ -151,17 +164,30 @@ class Children
         return $this->visibility;
     }
 
-    
     /**
-     * Get Groups
+     * Set groups
      *
-     * @return string
+     * @param string $groups
+     *
+     * @return Children
      */
-    public function getGroups() {
-    	return $this->Groups;
+    public function setGroups($groups)
+    {
+        $this->groups = $groups;
+
+        return $this;
     }
-    
-    
+
+    /**
+     * Get groups
+     *
+     * @return string 
+     */
+    public function getGroups()
+    {
+        return $this->groups;
+    }
+
     /**
      * Set sex
      *
@@ -185,66 +211,5 @@ class Children
     {
         return $this->sex;
     }
-    
-    
-    public function __toString() {
-    	return $this->getNick();
-    }
-    
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->user = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add user
-     *
-     * @param \Application\Sonata\UserBundle\Entity\User $user
-     *
-     * @return Children
-     */
-    public function addUser(\Application\Sonata\UserBundle\Entity\User $user)
-    {
-        $this->user[] = $user;
-
-        return $this;
-    }
-
-    /**
-     * Remove user
-     *
-     * @param \Application\Sonata\UserBundle\Entity\User $user
-     */
-    public function removeUser(\Application\Sonata\UserBundle\Entity\User $user)
-    {
-        $this->user->removeElement($user);
-    }
-
-    /**
-     * Add groups
-     *
-     * @param \Application\Sonata\UserBundle\Entity\Group $groups
-     *
-     * @return Children
-     */
-    public function addGroup(\Application\Sonata\UserBundle\Entity\Group $groups)
-    {
-        $this->groups[] = $groups;
-
-        return $this;
-    }
-
-    /**
-     * Remove groups
-     *
-     * @param \Application\Sonata\UserBundle\Entity\Group $groups
-     */
-    public function removeGroup(\Application\Sonata\UserBundle\Entity\Group $groups)
-    {
-        $this->groups->removeElement($groups);
-    }
 }
+

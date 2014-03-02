@@ -9,8 +9,8 @@ framework:
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
-    form:            ~
-    csrf_protection: ~
+    form:            true
+    csrf_protection: true
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
@@ -90,3 +90,6 @@ fos_user:
 sonata_block:
     default_contexts: [cms]
     
+services:
+    encoderback:
+        class: Trazeo\BaseBundle\Service\EncoderBack  
