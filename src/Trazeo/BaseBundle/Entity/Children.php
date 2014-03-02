@@ -23,7 +23,7 @@ class Children
     /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", inversedBy="children")
      *  @ORM\JoinColumn(name="userExtend_children", referencedColumnName="id")
      */
-    private $userextend;
+    private $userextendchildren;
     
     /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\Groups", mappedBy="children")
      *  @ORM\JoinColumn(name="groups_children", referencedColumnName="id")
@@ -211,5 +211,95 @@ class Children
     {
         return $this->sex;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->userextend = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add userextend
+     *
+     * @param \Trazeo\BaseBundle\Entity\UserExtend $userextend
+     *
+     * @return Children
+     */
+    public function addUserextend(\Trazeo\BaseBundle\Entity\UserExtend $userextend)
+    {
+        $this->userextend[] = $userextend;
+
+        return $this;
+    }
+
+    /**
+     * Remove userextend
+     *
+     * @param \Trazeo\BaseBundle\Entity\UserExtend $userextend
+     */
+    public function removeUserextend(\Trazeo\BaseBundle\Entity\UserExtend $userextend)
+    {
+        $this->userextend->removeElement($userextend);
+    }
+
+    /**
+     * Add groups
+     *
+     * @param \Trazeo\BaseBundle\Entity\Groups $groups
+     *
+     * @return Children
+     */
+    public function addGroup(\Trazeo\BaseBundle\Entity\Groups $groups)
+    {
+        $this->groups[] = $groups;
+
+        return $this;
+    }
+
+    /**
+     * Remove groups
+     *
+     * @param \Trazeo\BaseBundle\Entity\Groups $groups
+     */
+    public function removeGroup(\Trazeo\BaseBundle\Entity\Groups $groups)
+    {
+        $this->groups->removeElement($groups);
+    }
+
+
+    /**
+     * Add userextendchildren
+     *
+     * @param \Trazeo\BaseBundle\Entity\UserExtend $userextendchildren
+     *
+     * @return Children
+     */
+    public function addUserextendchild(\Trazeo\BaseBundle\Entity\UserExtend $userextendchildren)
+    {
+        $this->userextendchildren[] = $userextendchildren;
+
+        return $this;
+    }
+
+    /**
+     * Remove userextendchildren
+     *
+     * @param \Trazeo\BaseBundle\Entity\UserExtend $userextendchildren
+     */
+    public function removeUserextendchild(\Trazeo\BaseBundle\Entity\UserExtend $userextendchildren)
+    {
+        $this->userextendchildren->removeElement($userextendchildren);
+    }
+
+    /**
+     * Get userextendchildren
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserextendchildren()
+    {
+        return $this->userextendchildren;
+    }
+}

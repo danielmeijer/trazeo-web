@@ -23,7 +23,7 @@ class Groups
 
     /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", mappedBy="groups")
      */
-    private $userextend;
+    private $userextendgroups;
     
     /** @ORM\ManyToOne(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", inversedBy="admingroup")
      */
@@ -142,5 +142,119 @@ class Groups
     {
         return $this->route;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->userextend = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add userextend
+     *
+     * @param \Trazeo\BaseBundle\Entity\UserExtend $userextend
+     *
+     * @return Groups
+     */
+    public function addUserextend(\Trazeo\BaseBundle\Entity\UserExtend $userextend)
+    {
+        $this->userextend[] = $userextend;
+
+        return $this;
+    }
+
+    /**
+     * Remove userextend
+     *
+     * @param \Trazeo\BaseBundle\Entity\UserExtend $userextend
+     */
+    public function removeUserextend(\Trazeo\BaseBundle\Entity\UserExtend $userextend)
+    {
+        $this->userextend->removeElement($userextend);
+    }
+
+    /**
+     * Add children
+     *
+     * @param \Trazeo\BaseBundle\Entity\Children $children
+     *
+     * @return Groups
+     */
+    public function addChild(\Trazeo\BaseBundle\Entity\Children $children)
+    {
+        $this->children[] = $children;
+
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param \Trazeo\BaseBundle\Entity\Children $children
+     */
+    public function removeChild(\Trazeo\BaseBundle\Entity\Children $children)
+    {
+        $this->children->removeElement($children);
+    }
+
+    /**
+     * Set routes
+     *
+     * @param \Trazeo\BaseBundle\Entity\Route $routes
+     *
+     * @return Groups
+     */
+    public function setRoutes(\Trazeo\BaseBundle\Entity\Route $routes = null)
+    {
+        $this->routes = $routes;
+
+        return $this;
+    }
+
+    /**
+     * Get routes
+     *
+     * @return \Trazeo\BaseBundle\Entity\Route 
+     */
+    public function getRoutes()
+    {
+        return $this->routes;
+    }
+
+
+    /**
+     * Add userextendgroups
+     *
+     * @param \Trazeo\BaseBundle\Entity\UserExtend $userextendgroups
+     *
+     * @return Groups
+     */
+    public function addUserextendgroup(\Trazeo\BaseBundle\Entity\UserExtend $userextendgroups)
+    {
+        $this->userextendgroups[] = $userextendgroups;
+
+        return $this;
+    }
+
+    /**
+     * Remove userextendgroups
+     *
+     * @param \Trazeo\BaseBundle\Entity\UserExtend $userextendgroups
+     */
+    public function removeUserextendgroup(\Trazeo\BaseBundle\Entity\UserExtend $userextendgroups)
+    {
+        $this->userextendgroups->removeElement($userextendgroups);
+    }
+
+    /**
+     * Get userextendgroups
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserextendgroups()
+    {
+        return $this->userextendgroups;
+    }
+}
