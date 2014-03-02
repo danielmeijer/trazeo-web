@@ -1,0 +1,51 @@
+{% extends 'TrazeoFrontBundle:Public:base.html.twig' %}
+
+{% block body_content %}
+
+<section class="featured">
+	<div class="container"> 
+		<div class="row mar-bot40">
+			<div class="col-md-6 col-md-offset-3">
+				
+				<div class="align-center">
+					<!-- <i class="fa fa-flask fa-5x mar-bot20"></i> -->
+					<h2 class="slogan">¿Qué es Trazeo?</h2>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="videowrapper">
+								<iframe src="//www.youtube.com/embed/fWptLnpRGig" frameborder="0" allowfullscreen></iframe>
+							</div>
+						</div>
+					</div>
+					<br/>
+					<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="cform" id="contact-form">
+							<div id="sendmessage">
+								 Your message has been sent. Thank you!
+							</div>
+							<form action="" method="post" role="form" class="contactForm">
+							  <div class="form-group">
+								<input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+								<div class="validation"></div>
+							  </div>
+							  <button type="submit" class="btn btn-theme">SEND</button>
+							</form>
+
+						</div>
+					</div>
+					<!-- ./span12 -->
+				</div>
+					<p>
+					Lorem ipsum dolor sit amet, natum bonorum expetendis usu ut. 
+					Eum impetus offendit disputationi eu, at vim aliquip lucilius praesent. 
+					Alia laudem antiopam te ius, sed ad munere integre, ubique facete sapientem nam ut. 
+		
+					</p>	
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}

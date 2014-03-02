@@ -1,3 +1,7 @@
 panel:
     resource: "@TrazeoFrontBundle/Controller/PanelController.php"
     type:     annotation
+
+public:
+    resource: "@TrazeoFrontBundle/Controller/PublicController.php"
+    type:     annotation
