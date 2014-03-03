@@ -18,7 +18,7 @@ class PrevRegistroController extends Controller
 	 * @Route("/prev_registro", name="prev_registro"))
 	 * @Template
 	 */
-	public function prevRegistroAction()
+	public function prevRegistroAction(Request $request)
 	{
 		$userManager = $this->container->get('fos_user.user_manager');
 		$em = $this->getDoctrine()->getManager();
@@ -38,6 +38,9 @@ class PrevRegistroController extends Controller
 		
 			$em->persist($user);
 			$em->flush();
+			
+			$session = $request->getSession();
+			$session->getFlashBag()->add('info', 'Se ha guardado su registro correctamente');
 		
 			return $this->redirect($this->generateUrl('home'));
 			
