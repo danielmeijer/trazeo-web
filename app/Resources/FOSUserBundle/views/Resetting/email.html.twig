@@ -1,0 +1,11 @@
+{% block subject %}{% autoescape false %}
+Asunto
+{% endautoescape %}{% endblock %}
+
+{% block body_html %}
+
+{% include 'SopinetTemplateSbadmin2Bundle:Emails:header.html.twig' %}
+hola
+{% include 'SopinetTemplateSbadmin2Bundle:Emails:footer.html.twig' %}
+
+{% endblock %}

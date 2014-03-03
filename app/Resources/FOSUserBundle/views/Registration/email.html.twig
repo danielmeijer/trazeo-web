@@ -1,0 +1,11 @@
+{% block subject %}{% autoescape false %}
+{{ 'Email.registration.subject'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl}) }}
+{% endautoescape %}{% endblock %}
+
+{% block body_html %}
+
+{% include 'SopinetTemplateAceBundle:Emails:header.html.twig' %}
+{{ 'Email.registration.message'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl}) }}
+{% include 'SopinetTemplateAceBundle:Emails:footer.html.twig' %}
+
+{% endblock %}
