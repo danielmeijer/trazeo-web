@@ -21,9 +21,4 @@ class PublicController extends Controller
         return $this->render('TrazeoFrontBundle:Public:home.html.twig');
     }
     
-    public function getTokenAction()
-    {
-    	return new Response($this->container->get('form.csrf_provider')
-    			->generateCsrfToken('authenticate'));
-    }
 }
