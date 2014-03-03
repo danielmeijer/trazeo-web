@@ -30,7 +30,7 @@ class PrevRegistroController extends Controller
 			$user->setPassword($email);
 		
 			// Usuario activado por defecto
-			$user->setEnabled(true);
+			$user->setEnabled(false);
 		
 			// Asignación de permisos
 			$user->addRole('ROLE_USER');
