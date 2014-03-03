@@ -1,43 +1,29 @@
-<?php
-
+<?php 
 namespace Trazeo\FrontBundle\Translation;
-
+ 
 use Symfony\Bundle\FrameworkBundle\Translation\Translator as BaseTranslator;
-
+ 
 class PhraseTranslator extends BaseTranslator
 {
-    
-    /**
-     * {@inheritdoc}
-     */
     public function trans($id, array $parameters = array(), $domain = 'messages', $locale = null)
     {
-        return parent::trans($this->transformId($id, $domain), $parameters, $domain, $locale);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function transChoice($id, $number, array $parameters = array(), $domain = null, $locale = null)
-    {
-        return parent::transChoice($this->transformId($id, $domain), $number, $parameters, $domain, $locale);
-    }
-
-    /**
-     * Converts the Id to a PhraseApp-compatible Id
-     * Skips the `routes` domain as per documentation
-     *
-     * @param int $id
-     * @param int $domain
-     * @return string
-     */
-    protected function transformId($id, $domain)
-    {
-        if ($domain == 'routes') {
-            return $id;
+        $prefix = "{{__phrase_";
+        $suffix = "__}}";
+ 
+        if (!isset($locale)) {
+            $locale = $this->getLocale();
         }
-
-        return "{{__phrase_" . $id . "__}}";
+ 
+        if (!isset($this->catalogues[$locale])) {
+            $this->loadCatalogue($locale);
+        }
+ 
+        if ($domain == 'routes') {
+            // Return translated values for 'routes' domain
+            return strtr($this->catalogues[$locale]->get((string) $id, $domain), $parameters);
+        } else {
+            // Return PhraseApp translation keys for all other domains
+            return $prefix.$id.$suffix;
+        }
     }
-    
 }
