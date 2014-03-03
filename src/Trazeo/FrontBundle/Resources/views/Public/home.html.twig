@@ -21,7 +21,10 @@
 					<div class="row">
 					<div class="col-md-8 col-md-offset-2">
 						<div class="cform" id="contact-form">
-							
+							<form action="{{ path('prev_registro') }}" method="POST" role="form">
+								<input type="email" required class="form-control" name="email" id="email" placeholder="Correo electrónico" data-rule="email" data-msg="Please enter a valid email">
+							    <button type="submit" class="btn btn-theme">Enviar</button>
+							</form>
 						</div>
 					</div>
 					<!-- ./span12 -->
