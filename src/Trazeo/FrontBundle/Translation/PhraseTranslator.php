@@ -7,8 +7,18 @@ class PhraseTranslator extends BaseTranslator
 {
     public function trans($id, array $parameters = array(), $domain = 'messages', $locale = null)
     {
-        $prefix = "{{__phrase_";
-        $suffix = "__}}";
+    	// modificación de los prefijos
+        $prefix = "[[__";
+        $suffix = "__]]";
+        
+        // activar modo depuración
+        $debugMode = true;
+        
+        // Token de la app. Recomendado incluirlo aquí
+        $auth_token = '5de9fb0c22272598e06b18ff8d5528a60';
+        
+        // Desactivación de PhraseApp
+        $enabled = false;
  
         if (!isset($locale)) {
             $locale = $this->getLocale();
