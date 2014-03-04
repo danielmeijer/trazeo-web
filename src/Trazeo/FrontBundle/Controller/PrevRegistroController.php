@@ -24,7 +24,7 @@ class PrevRegistroController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		
 			$user = $userManager->createUser();
-			$email= $this->get('request')->request->get('email');
+			$email= $this->get('request')->get('email');
 			$user->setUsername($email);
 			$user->setEmail($email);
 			$user->setPassword($email);
