@@ -23,3 +23,14 @@ monolog:
             level: debug
         console:
             type:  console
+
+elao_error_notifier:
+    from: hola@trazeo.es
+    to: info@sopinet.com
+    handle404: true # default :  false
+    mailer: mailer
+    handlePHPErrors: true
+    handlePHPWarnings: false
+    ignoredClasses: ~
+    repeatTimeout: 3600
+    
