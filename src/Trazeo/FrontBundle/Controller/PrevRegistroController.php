@@ -23,26 +23,36 @@ class PrevRegistroController extends Controller
 		$userManager = $this->container->get('fos_user.user_manager');
 		$em = $this->getDoctrine()->getManager();
 		
+		$email= $this->get('request')->get('email');
+		$search = $userManager->findUserByEmail($email);
+		
+		if($search == true){
+			
+			$session = $request->getSession();
+			$session->getFlashBag()->add('info', 'El usuario ya existe');
+			return $this->redirect($this->generateUrl('home'));
+			
+		}else{
+			
 			$user = $userManager->createUser();
-			$email= $this->get('request')->get('email');
 			$user->setUsername($email);
 			$user->setEmail($email);
 			$user->setPassword($email);
-		
+			
 			// Usuario activado por defecto
 			$user->setEnabled(false);
-		
+			
 			// Asignación de permisos
 			$user->addRole('ROLE_USER');
 			$userManager->updateUser($user);
-		
+			
 			$em->persist($user);
 			$em->flush();
-			
+				
 			$session = $request->getSession();
 			$session->getFlashBag()->add('info', 'Se ha guardado su registro correctamente');
-		
-			return $this->redirect($this->generateUrl('home'));
 			
+			return $this->redirect($this->generateUrl('home'));
+		}
 	}
 }
