@@ -21,6 +21,7 @@
     "require": {
         "sopinet/composergeneric": "dev-master",
         "jjs/geonames-bundle": "*",
-        "jms/translation-bundle": "dev-master"
+        "jms/translation-bundle": "dev-master",
+        "elao/error-notifier-bundle" : "dev-master"
     }
 }

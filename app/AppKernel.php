@@ -45,6 +45,7 @@ class AppKernel extends Kernel
         	new JJs\Bundle\GeonamesBundle\JJsGeonamesBundle(),
             new Sopinet\Template\AmoebaBundle\SopinetTemplateAmoebaBundle(),
         	new JMS\TranslationBundle\JMSTranslationBundle(),
+        	new Elao\ErrorNotifierBundle\ElaoErrorNotifierBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
