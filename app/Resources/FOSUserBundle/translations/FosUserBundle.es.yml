@@ -1,6 +1,6 @@
 form:
-    username: "Email:"
+    username: "Correo electrónico:"
     
 security:
     login:
-        username: "Email:"    
+        username: "Correo electrónico:"    

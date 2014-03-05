@@ -20,6 +20,7 @@
     "minimum-stability": "dev",    
     "require": {
         "sopinet/composergeneric": "dev-master",
-        "jjs/geonames-bundle": "*"
+        "jjs/geonames-bundle": "*",
+        "jms/translation-bundle": "dev-master"
     }
 }

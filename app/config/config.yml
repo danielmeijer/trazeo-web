@@ -99,3 +99,19 @@ sonata_block:
         sonata.block.service.action:
         sonata.block.service.rss:
         sonata.block.service.tableinput:
+        
+services:
+    twig.text_extension:
+        class: Twig_Extensions_Extension_Text
+        tags:
+              - name: twig.extension
+              
+jms_translation:
+    configs:
+        app:
+            dirs: ["%kernel.root_dir%", "%kernel.root_dir%/../src"]
+            output_dir: "%kernel.root_dir%/Resources/translations"
+            ignored_domains: [routes]
+            excluded_dirs: [cache, data, logs]
+            extractors: [sonata_admin]
+            

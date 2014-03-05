@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file date="2014-03-05T12:19:25Z" source-language="en" target-language="es" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="69135d92b325b8afc239ed974b90e5ed9a28b943" resname="                     Dashboard&#10;                    ">
+        <source>                     Dashboard
+                    </source>
+        <target>Panel de control</target>
+        <jms:reference-file line="14">views/Panel/base.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="032963ad73e52eb5b5275296f2493672e58530d9" resname="Menu.home">
+        <source>Menu.home</source>
+        <target>Inicio</target>
+        <jms:reference-file line="19">BaseBundle/Menu/Builder.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="07bd2efbbb91f0571a32375386941c693fde0ade" resname="Menu.rutes">
+        <source>Menu.rutes</source>
+        <target>Rutas</target>
+        <jms:reference-file line="39">BaseBundle/Menu/Builder.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="9c07b867ca859cd29827bdfa3916bb86f9917b77" resname="Menu.timeline">
+        <source>Menu.timeline</source>
+        <target>Línea del tiempo</target>
+        <jms:reference-file line="29">BaseBundle/Menu/Builder.php</jms:reference-file>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

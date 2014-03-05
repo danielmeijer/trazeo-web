@@ -44,6 +44,7 @@ class AppKernel extends Kernel
             new Trazeo\FrontBundle\TrazeoFrontBundle(),
         	new JJs\Bundle\GeonamesBundle\JJsGeonamesBundle(),
             new Sopinet\Template\AmoebaBundle\SopinetTemplateAmoebaBundle(),
+        	new JMS\TranslationBundle\JMSTranslationBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
