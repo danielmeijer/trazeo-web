@@ -1,0 +1,37 @@
+{% extends 'SopinetTemplateSbadmin2Bundle:Base:god.html.twig' %}
+
+{% block title %}Trazeo | Languages{% endblock %}
+
+    {% block csss %}
+            <link rel="stylesheet" type="text/css" media="screen" href="{{ asset("bundles/jmstranslation/css/bootstrap.css") }}" />
+    {% endblock %}
+
+{% block body %}
+
+{% include 'SopinetTemplateSbadmin2Bundle:Base:navbar.html.twig' %}
+{% include 'SopinetTemplateSbadmin2Bundle:Base:sidebar.html.twig' %}
+	<div id="page-wrapper">	
+		{% block body_content %}
+			<div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">
+                    {{ "Panel.title" | trans  }}
+
+                    </h1>
+                </div><!-- /.col-lg-12 -->
+                
+                 <div class="col-lg-12">
+               		{% block Translation %}
+               		
+               		{% endblock %}  
+                 </div>
+               
+            </div>
+		{% endblock %}
+	</div>
+	
+        {% block bottomjavascripts %}
+        <script language="javascript" type="text/javascript" src="{{ asset("bundles/jmstranslation/js/jquery.js") }}"></script>
+        {% endblock %}
+	
+{% endblock %}

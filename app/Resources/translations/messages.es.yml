@@ -1,2 +1,5 @@
 Menu:
     home: Inicio
+
+Panel:
+    title: 'Panel de Control'

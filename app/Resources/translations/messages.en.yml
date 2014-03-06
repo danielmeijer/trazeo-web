@@ -1,2 +1,5 @@
 Menu:
     home: Home
+
+Panel:
+    title: Dashboard

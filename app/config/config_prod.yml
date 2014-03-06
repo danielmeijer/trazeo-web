@@ -27,7 +27,7 @@ monolog:
 elao_error_notifier:
     from: hola@trazeo.es
     to: info@sopinet.com
-    handle404: true # default :  false
+    handle404: true
     mailer: mailer
     handlePHPErrors: true
     handlePHPWarnings: false

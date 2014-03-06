@@ -35,7 +35,7 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ SopinetTemplateSbadmin2Bundle, TrazeoFrontBundle, SopinetTemplateAmoebaBundle ]
+    bundles:        [ SopinetTemplateSbadmin2Bundle, TrazeoFrontBundle, SopinetTemplateAmoebaBundle, JMSTranslationBundle ]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -73,8 +73,9 @@ knp_menu:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
+    transport: smtp
+    encryption: tls
+    host:      smtp.trazeo.es
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
