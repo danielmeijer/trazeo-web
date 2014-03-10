@@ -46,6 +46,7 @@ class AppKernel extends Kernel
             new Sopinet\Template\AmoebaBundle\SopinetTemplateAmoebaBundle(),
         	new JMS\TranslationBundle\JMSTranslationBundle(),
         	new Elao\ErrorNotifierBundle\ElaoErrorNotifierBundle(),
+        	new Sopinet\Admin\BaseBundle\SopinetAdminBaseBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
