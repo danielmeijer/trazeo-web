@@ -17,6 +17,6 @@ class PanelController extends Controller
 	 */
     public function indexAction()
     {
-        return $this->render('TrazeoFrontBundle:Panel:base.html.twig');
+        return $this->render('TrazeoFrontBundle:Panel:home.html.twig');
     }
 }
