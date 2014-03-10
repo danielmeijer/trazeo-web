@@ -9,3 +9,8 @@ public:
 prev_registro:
     resource: "@TrazeoFrontBundle/Controller/PrevRegistroController.php"
     type:     annotation
+    
+children:
+    resource: "@TrazeoFrontBundle/Controller/PanelChildrenController.php"
+    type:     annotation
+  

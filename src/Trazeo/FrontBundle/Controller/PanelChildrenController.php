@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 /**
  * @Route("/panel/children")
  */
-class ChildrenController extends Controller
+class PanelChildrenController extends Controller
 {
 	/**
 	 * @Route("/new", name="panel_children_new"))
@@ -19,4 +19,14 @@ class ChildrenController extends Controller
     {
         return $this->render('TrazeoFrontBundle:PanelChildren:new.html.twig');
     }
+    
+    /**
+     * @Route("/edit", name="panel_children_edit"))
+     * @Template
+     */
+    public function editChildAction()
+    {
+    	return $this->render('TrazeoFrontBundle:PanelChildren:edit.html.twig');
+    }
+    
 }

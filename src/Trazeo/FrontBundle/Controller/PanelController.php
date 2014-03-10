@@ -19,4 +19,5 @@ class PanelController extends Controller
     {
         return $this->render('TrazeoFrontBundle:Panel:home.html.twig');
     }
+    
 }
