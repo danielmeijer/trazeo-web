@@ -53,11 +53,6 @@ class UserExtend
      * @ORM\Column(name="nick", type="string", length=255)
      */
     protected $nick;
-    
-    public function __construct()
-    {
-    	parent::__construct();
-    }
 
     /**
      * Get id
@@ -292,4 +287,21 @@ class UserExtend
     {
         return $this->country;
     }
+    
+    
+    public function __toString() {
+    	return $this->getNick();
+    }
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->adminGroup = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->adminRoutes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
 }

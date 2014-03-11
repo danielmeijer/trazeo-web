@@ -14,21 +14,21 @@ class RouteAdmin extends Admin
   protected function configureFormFields(FormMapper $formMapper)
   {
     $formMapper
-        ->add('groups')->add('admin')->add('city')->add('country')
+        ->add('groups')->add('admin')
     ;
   }
  
   protected function configureDatagridFilters(DatagridMapper $datagridMapper)
   {
     $datagridMapper
-      ->add('groups')->add('admin')->add('city')->add('country')
+      ->add('groups')->add('admin')
     ;
   }
  
   protected function configureListFields(ListMapper $listMapper)
   {
     $listMapper
-      ->addIdentifier('id')->add('groups')->add('admin')->add('city')->add('country')
+      ->addIdentifier('id')->add('groups')->add('admin')
     ;
   }
  

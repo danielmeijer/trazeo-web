@@ -1,3 +1,0 @@
-trazeo_base_homepage:
-    path:  /hello/{name}
-    defaults: { _controller: TrazeoBaseBundle:Default:index }

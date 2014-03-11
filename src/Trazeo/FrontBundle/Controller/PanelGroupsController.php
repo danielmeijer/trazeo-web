@@ -7,21 +7,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Trazeo\BaseBundle\Entity\Children;
-use Trazeo\BaseBundle\Form\ChildrenType;
+use Trazeo\BaseBundle\Entity\Groups;
+use Trazeo\BaseBundle\Form\GroupsType;
+use Trazeo\BaseBundle\Controller\GroupsController;
 
 /**
- * Children controller.
+ * Groups controller.
  *
- * @Route("/panel/children")
+ * @Route("/panel/groups")
  */
-class PanelChildrenController extends Controller
+class PanelGroupsController extends Controller
 {
-
     /**
-     * Lists all Children entities.
+
+     * Lists all Groups entities.
      *
-     * @Route("/", name="children")
+     * @Route("/", name="groups")
      * @Method("GET")
      * @Template()
      */
@@ -29,22 +30,22 @@ class PanelChildrenController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('TrazeoBaseBundle:Children')->findAll();
+        $entities = $em->getRepository('TrazeoBaseBundle:Groups')->findAll();
 
         return array(
             'entities' => $entities,
         );
     }
     /**
-     * Creates a new Children entity.
+     * Creates a new Groups entity.
      *
-     * @Route("/", name="children_create")
+     * @Route("/", name="groups_create")
      * @Method("POST")
-     * @Template("TrazeoBaseBundle:Children:new.html.twig")
+     * @Template("TrazeoBaseBundle:Groups:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new Children();
+        $entity = new Groups();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -53,7 +54,7 @@ class PanelChildrenController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('children_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('groups_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -63,16 +64,16 @@ class PanelChildrenController extends Controller
     }
 
     /**
-     * Creates a form to create a Children entity.
+     * Creates a form to create a Groups entity.
      *
-     * @param Children $entity The entity
+     * @param Groups $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Children $entity)
+    private function createCreateForm(Groups $entity)
     {
-        $form = $this->createForm(new ChildrenType(), $entity, array(
-            'action' => $this->generateUrl('children_create'),
+        $form = $this->createForm(new GroupsType(), $entity, array(
+            'action' => $this->generateUrl('groups_create'),
             'method' => 'POST',
         ));
 
@@ -82,15 +83,15 @@ class PanelChildrenController extends Controller
     }
 
     /**
-     * Displays a form to create a new Children entity.
+     * Displays a form to create a new Groups entity.
      *
-     * @Route("/new", name="children_new")
+     * @Route("/new", name="groups_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new Children();
+        $entity = new Groups();
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -100,9 +101,9 @@ class PanelChildrenController extends Controller
     }
 
     /**
-     * Finds and displays a Children entity.
+     * Finds and displays a Groups entity.
      *
-     * @Route("/{id}/show", name="children_show")
+     * @Route("/{id}", name="groups_show")
      * @Method("GET")
      * @Template()
      */
@@ -110,10 +111,10 @@ class PanelChildrenController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('TrazeoBaseBundle:Children')->find($id);
+        $entity = $em->getRepository('TrazeoBaseBundle:Groups')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Children entity.');
+            throw $this->createNotFoundException('Unable to find Groups entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -125,9 +126,9 @@ class PanelChildrenController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Children entity.
+     * Displays a form to edit an existing Groups entity.
      *
-     * @Route("/{id}/edit", name="children_edit")
+     * @Route("/{id}/edit", name="groups_edit")
      * @Method("GET")
      * @Template()
      */
@@ -135,10 +136,10 @@ class PanelChildrenController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('TrazeoBaseBundle:Children')->find($id);
+        $entity = $em->getRepository('TrazeoBaseBundle:Groups')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Children entity.');
+            throw $this->createNotFoundException('Unable to find Groups entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -152,16 +153,16 @@ class PanelChildrenController extends Controller
     }
 
     /**
-    * Creates a form to edit a Children entity.
+    * Creates a form to edit a Groups entity.
     *
-    * @param Children $entity The entity
+    * @param Groups $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Children $entity)
+    private function createEditForm(Groups $entity)
     {
-        $form = $this->createForm(new ChildrenType(), $entity, array(
-            'action' => $this->generateUrl('children_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new GroupsType(), $entity, array(
+            'action' => $this->generateUrl('groups_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -170,20 +171,20 @@ class PanelChildrenController extends Controller
         return $form;
     }
     /**
-     * Edits an existing Children entity.
+     * Edits an existing Groups entity.
      *
-     * @Route("/{id}", name="children_update")
+     * @Route("/{id}", name="groups_update")
      * @Method("PUT")
-     * @Template("TrazeoBaseBundle:Children:edit.html.twig")
+     * @Template("TrazeoBaseBundle:Groups:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('TrazeoBaseBundle:Children')->find($id);
+        $entity = $em->getRepository('TrazeoBaseBundle:Groups')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Children entity.');
+            throw $this->createNotFoundException('Unable to find Groups entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -193,7 +194,7 @@ class PanelChildrenController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('children_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('groups_edit', array('id' => $id)));
         }
 
         return array(
@@ -203,9 +204,9 @@ class PanelChildrenController extends Controller
         );
     }
     /**
-     * Deletes a Children entity.
+     * Deletes a Groups entity.
      *
-     * @Route("/{id}", name="children_delete")
+     * @Route("/{id}", name="groups_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -215,21 +216,21 @@ class PanelChildrenController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('TrazeoBaseBundle:Children')->find($id);
+            $entity = $em->getRepository('TrazeoBaseBundle:Groups')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Children entity.');
+                throw $this->createNotFoundException('Unable to find Groups entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('children'));
+        return $this->redirect($this->generateUrl('groups'));
     }
 
     /**
-     * Creates a form to delete a Children entity by id.
+     * Creates a form to delete a Groups entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -238,7 +239,7 @@ class PanelChildrenController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('children_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('groups_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

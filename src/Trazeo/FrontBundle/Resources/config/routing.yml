@@ -13,4 +13,8 @@ prev_registro:
 children:
     resource: "@TrazeoFrontBundle/Controller/PanelChildrenController.php"
     type:     annotation
+    
+groups:
+    resource: "@TrazeoFrontBundle/Controller/PanelGroupsController.php"
+    type:     annotation
   

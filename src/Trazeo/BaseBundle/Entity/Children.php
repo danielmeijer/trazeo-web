@@ -232,4 +232,8 @@ class Children
     {
         return $this->groups;
     }
+    
+    public function __toString() {
+    	return $this->getNick();
+    }
 }

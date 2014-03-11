@@ -14,21 +14,21 @@ class UserExtendAdmin extends Admin
   protected function configureFormFields(FormMapper $formMapper)
   {
     $formMapper
-        ->add('user')->add('groups')->add('adminRoutes')->add('children')->add('city')->add('country')->add('nick')
+        ->add('user')->add('groups')->add('adminRoutes')->add('children')->add('nick')
     ;
   }
  
   protected function configureDatagridFilters(DatagridMapper $datagridMapper)
   {
     $datagridMapper
-      ->add('user')->add('groups')->add('adminRoutes')->add('children')->add('city')->add('country')->add('nick')
+      ->add('user')->add('groups')->add('adminRoutes')->add('children')->add('nick')
     ;
   }
  
   protected function configureListFields(ListMapper $listMapper)
   {
     $listMapper
-      ->addIdentifier('id')->add('user')->add('groups')->add('adminRoutes')->add('children')->add('city')->add('country')->add('nick')
+      ->addIdentifier('id')->add('user')->add('groups')->add('adminRoutes')->add('children')->add('nick')
     ;
   }
  

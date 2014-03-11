@@ -38,6 +38,16 @@ class Route
     /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\Country", inversedBy="routes")
      */
     protected $country;
+    
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=255)
+     */
+    protected $nombre;
+    
+    
     /**
      * Constructor
      */
@@ -156,5 +166,33 @@ class Route
     public function getCountry()
     {
         return $this->country;
+    }
+    
+    public function __toString() {
+    	return $this->getNombre();
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     *
+     * @return Route
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string 
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
     }
 }

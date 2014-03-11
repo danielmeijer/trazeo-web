@@ -36,6 +36,16 @@ class Groups
     /** @ORM\ManyToOne(targetEntity="Trazeo\BaseBundle\Entity\Route", inversedBy="groups")
      */
     protected $routes;
+    
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=255)
+     */
+    protected $nombre;
+    
+    
     /**
      * Constructor
      */
@@ -165,5 +175,33 @@ class Groups
     public function getRoutes()
     {
         return $this->routes;
+    }
+    
+    public function __toString() {
+    	return $this->getNombre();
+    }
+    
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     *
+     * @return Groups
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string 
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
     }
 }
