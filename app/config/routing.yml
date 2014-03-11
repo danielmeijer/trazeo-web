@@ -9,6 +9,19 @@ trazeo_front:
 trazeo_base:
     resource: "@TrazeoBaseBundle/Resources/config/routing.yml"
     prefix:   /
+    
+admin:
+    resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
+    prefix: /admin
+
+_sonata_admin:
+    resource: .
+    type: sonata_admin
+    prefix: /admin
+    
+sonata_user_admin_security_logout:
+  pattern: /logout
+  defaults: { _controller: FOSUserBundle:Security:logout }
 
 sopinet_template_sbadmin2:
     resource: "@SopinetTemplateSbadmin2Bundle/Resources/config/routing.yml"

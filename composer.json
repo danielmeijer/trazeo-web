@@ -22,6 +22,7 @@
         "sopinet/composergeneric": "dev-master",
         "jjs/geonames-bundle": "*",
         "jms/translation-bundle": "dev-master",
-        "elao/error-notifier-bundle" : "dev-master"
+        "elao/error-notifier-bundle" : "dev-master",
+        "sopinet/admin-bundle": "dev-master"
     }
 }

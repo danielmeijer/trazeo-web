@@ -19,26 +19,32 @@ class Route
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     
     /** @ORM\OneToMany(targetEntity="Trazeo\BaseBundle\Entity\Groups", mappedBy="routes")
      */
-    private $groups;
+    protected $groups;
     
     /** @ORM\ManyToOne(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", inversedBy="adminroutes")
      */
-    private $admin;
+    protected $admin;
     
     
     /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\City", inversedBy="routes")
      */
-    private $city;
+    protected $city;
     
     /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\Country", inversedBy="routes")
      */
-    private $country;
-    
+    protected $country;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -51,65 +57,9 @@ class Route
     }
 
     /**
-     * Set admin
-     *
-     * @param string $admin
-     *
-     * @return Route
-     */
-    public function setAdmin($admin)
-    {
-        $this->admin = $admin;
-
-        return $this;
-    }
-
-    /**
-     * Get admin
-     *
-     * @return string 
-     */
-    public function getAdmin()
-    {
-        return $this->admin;
-    }
-
-    /**
-     * Set groups
-     *
-     * @param string $groups
-     *
-     * @return Route
-     */
-    public function setGroups($groups)
-    {
-        $this->groups = $groups;
-
-        return $this;
-    }
-
-    /**
-     * Get groups
-     *
-     * @return string 
-     */
-    public function getGroups()
-    {
-        return $this->groups;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
      * Add groups
      *
      * @param \Trazeo\BaseBundle\Entity\Groups $groups
-     *
      * @return Route
      */
     public function addGroup(\Trazeo\BaseBundle\Entity\Groups $groups)
@@ -130,10 +80,42 @@ class Route
     }
 
     /**
+     * Get groups
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGroups()
+    {
+        return $this->groups;
+    }
+
+    /**
+     * Set admin
+     *
+     * @param \Trazeo\BaseBundle\Entity\UserExtend $admin
+     * @return Route
+     */
+    public function setAdmin(\Trazeo\BaseBundle\Entity\UserExtend $admin = null)
+    {
+        $this->admin = $admin;
+
+        return $this;
+    }
+
+    /**
+     * Get admin
+     *
+     * @return \Trazeo\BaseBundle\Entity\UserExtend 
+     */
+    public function getAdmin()
+    {
+        return $this->admin;
+    }
+
+    /**
      * Set city
      *
      * @param \JJs\Bundle\GeonamesBundle\Entity\City $city
-     *
      * @return Route
      */
     public function setCity(\JJs\Bundle\GeonamesBundle\Entity\City $city = null)
@@ -157,7 +139,6 @@ class Route
      * Set country
      *
      * @param \JJs\Bundle\GeonamesBundle\Entity\Country $country
-     *
      * @return Route
      */
     public function setCountry(\JJs\Bundle\GeonamesBundle\Entity\Country $country = null)
