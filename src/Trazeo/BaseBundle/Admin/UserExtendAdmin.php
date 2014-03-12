@@ -14,21 +14,21 @@ class UserExtendAdmin extends Admin
   protected function configureFormFields(FormMapper $formMapper)
   {
     $formMapper
-        ->add('user')->add('groups')->add('adminRoutes')->add('children')->add('nick')
+        ->add('user')->add('groups')->add('adminRoutes')->add('children')->add('city','text',array('label' => 'City'))->add('country','text',array('label' => 'Country'))->add('nick')
     ;
   }
  
   protected function configureDatagridFilters(DatagridMapper $datagridMapper)
   {
     $datagridMapper
-      ->add('user')->add('groups')->add('adminRoutes')->add('children')->add('nick')
+      ->add('user')->add('groups')->add('adminRoutes')->add('children')->add('city','text',array('label' => 'City'))->add('country','text',array('label' => 'Country'))->add('nick')
     ;
   }
  
   protected function configureListFields(ListMapper $listMapper)
   {
     $listMapper
-      ->addIdentifier('id')->add('user')->add('groups')->add('adminRoutes')->add('children')->add('nick')
+      ->addIdentifier('id')->add('user')->add('groups')->add('adminRoutes')->add('children')->add('city','text',array('label' => 'City'))->add('country','text',array('label' => 'Country'))->add('nick')
     ;
   }
  

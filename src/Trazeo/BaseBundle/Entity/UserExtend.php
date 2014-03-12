@@ -31,7 +31,7 @@ class UserExtend
      */
     private $adminGroup;
     
-    /** @ORM\OneToMany(targetEntity="Trazeo\BaseBundle\Entity\Route", mappedBy="admin")
+    /** @ORM\OneToMany(targetEntity="Trazeo\BaseBundle\Entity\Routes", mappedBy="admin")
      */
     protected $adminRoutes;
     
@@ -179,10 +179,10 @@ class UserExtend
     /**
      * Add adminRoutes
      *
-     * @param \Trazeo\BaseBundle\Entity\Route $adminRoutes
+     * @param \Trazeo\BaseBundle\Entity\Routes $adminRoutes
      * @return UserExtend
      */
-    public function addAdminRoute(\Trazeo\BaseBundle\Entity\Route $adminRoutes)
+    public function addAdminRoutes(\Trazeo\BaseBundle\Entity\Routes $adminRoutes)
     {
         $this->adminRoutes[] = $adminRoutes;
 
@@ -192,9 +192,9 @@ class UserExtend
     /**
      * Remove adminRoutes
      *
-     * @param \Trazeo\BaseBundle\Entity\Route $adminRoutes
+     * @param \Trazeo\BaseBundle\Entity\Routes $adminRoutes
      */
-    public function removeAdminRoute(\Trazeo\BaseBundle\Entity\Route $adminRoutes)
+    public function removeAdminRoute(\Trazeo\BaseBundle\Entity\Routes $adminRoutes)
     {
         $this->adminRoutes->removeElement($adminRoutes);
     }
@@ -304,4 +304,18 @@ class UserExtend
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+
+    /**
+     * Add adminRoutes
+     *
+     * @param \Trazeo\BaseBundle\Entity\Routes $adminRoutes
+     *
+     * @return UserExtend
+     */
+    public function addAdminRoute(\Trazeo\BaseBundle\Entity\Routes $adminRoutes)
+    {
+        $this->adminRoutes[] = $adminRoutes;
+
+        return $this;
+    }
 }

@@ -7,28 +7,28 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
 use Sonata\AdminBundle\Form\FormMapper;
  
-class GroupsAdmin extends Admin
+class RoutesAdmin extends Admin
 {
   protected $translationDomain = 'TrazeoBaseBundleAdmin';
 
   protected function configureFormFields(FormMapper $formMapper)
   {
     $formMapper
-        ->add('userExtendGroups')->add('admin')->add('children')->add('routes')->add('nombre')
+        ->add('groups')->add('admin')->add('city','text',array('label' => 'City'))->add('country','text',array('label' => 'Country'))->add('nombre')
     ;
   }
  
   protected function configureDatagridFilters(DatagridMapper $datagridMapper)
   {
     $datagridMapper
-      ->add('userExtendGroups')->add('admin')->add('children')->add('routes')->add('nombre')
+      ->add('groups')->add('admin')->add('city','text',array('label' => 'City'))->add('country','text',array('label' => 'Country'))->add('nombre')
     ;
   }
  
   protected function configureListFields(ListMapper $listMapper)
   {
     $listMapper
-      ->addIdentifier('id')->add('userExtendGroups')->add('admin')->add('children')->add('routes')->add('nombre')
+      ->addIdentifier('id')->add('groups')->add('admin')->add('city','text',array('label' => 'City'))->add('country','text',array('label' => 'Country'))->add('nombre')
     ;
   }
  

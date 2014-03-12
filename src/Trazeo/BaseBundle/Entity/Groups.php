@@ -33,7 +33,7 @@ class Groups
      */
     protected $children;
 
-    /** @ORM\ManyToOne(targetEntity="Trazeo\BaseBundle\Entity\Route", inversedBy="groups")
+    /** @ORM\ManyToOne(targetEntity="Trazeo\BaseBundle\Entity\Routes", inversedBy="groups")
      */
     protected $routes;
     
@@ -157,10 +157,10 @@ class Groups
     /**
      * Set routes
      *
-     * @param \Trazeo\BaseBundle\Entity\Route $routes
+     * @param \Trazeo\BaseBundle\Entity\Routes $routes
      * @return Groups
      */
-    public function setRoutes(\Trazeo\BaseBundle\Entity\Route $routes = null)
+    public function setRoutes(\Trazeo\BaseBundle\Entity\Routes $routes = null)
     {
         $this->routes = $routes;
 
@@ -170,7 +170,7 @@ class Groups
     /**
      * Get routes
      *
-     * @return \Trazeo\BaseBundle\Entity\Route 
+     * @return \Trazeo\BaseBundle\Entity\Routes 
      */
     public function getRoutes()
     {
