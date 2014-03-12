@@ -21,7 +21,7 @@ class PanelChildrenController extends Controller
     /**
      * Lists all Children entities.
      *
-     * @Route("/", name="children")
+     * @Route("/", name="panel_children")
      * @Method("GET")
      * @Template()
      */
@@ -38,7 +38,7 @@ class PanelChildrenController extends Controller
     /**
      * Creates a new Children entity.
      *
-     * @Route("/", name="children_create")
+     * @Route("/", name="panel_children_create")
      * @Method("POST")
      * @Template("TrazeoBaseBundle:Children:new.html.twig")
      */
@@ -53,7 +53,8 @@ class PanelChildrenController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('children_show', array('id' => $entity->getId())));
+            //return $this->redirect($this->generateUrl('panel_children_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('panel_children'));
         }
 
         return array(
@@ -72,7 +73,7 @@ class PanelChildrenController extends Controller
     private function createCreateForm(Children $entity)
     {
         $form = $this->createForm(new ChildrenType(), $entity, array(
-            'action' => $this->generateUrl('children_create'),
+            'action' => $this->generateUrl('panel_children_create'),
             'method' => 'POST',
         ));
 
@@ -84,7 +85,7 @@ class PanelChildrenController extends Controller
     /**
      * Displays a form to create a new Children entity.
      *
-     * @Route("/new", name="children_new")
+     * @Route("/new", name="panel_children_new")
      * @Method("GET")
      * @Template()
      */
@@ -102,7 +103,7 @@ class PanelChildrenController extends Controller
     /**
      * Finds and displays a Children entity.
      *
-     * @Route("/{id}/show", name="children_show")
+     * @Route("/{id}/show", name="panel_children_show")
      * @Method("GET")
      * @Template()
      */
@@ -127,7 +128,7 @@ class PanelChildrenController extends Controller
     /**
      * Displays a form to edit an existing Children entity.
      *
-     * @Route("/{id}/edit", name="children_edit")
+     * @Route("/{id}/edit", name="panel_children_edit")
      * @Method("GET")
      * @Template()
      */

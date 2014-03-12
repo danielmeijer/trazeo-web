@@ -2,6 +2,7 @@ Menu:
     home: Inicio
     groups: Grupos
     routes: Rutas
+    children: Niños/as
 
 Panel:
     title: 'Panel de Control'

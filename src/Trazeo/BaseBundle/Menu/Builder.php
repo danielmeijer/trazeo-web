@@ -22,7 +22,17 @@ class Builder extends ContainerAware
         	$menu['Home']->setAttribute('class', 'active');
         }
 
-        // Timeline
+        // Children
+        $menu->addChild('Children', array(
+        		'route' => 'panel_children'
+        ))
+        ->setLabel($this->container->get('translator')->trans('Menu.children'));
+        $menu['Children']->setAttribute('icon', 'fa-user');
+        if ($options['activeMenu'] == "routes") {
+        	$menu['Children']->setAttribute('class', 'active');
+        }
+        
+        // Groups
         $menu->addChild('Groups', array(
         		'route' => 'panel_groups'
         		))
@@ -32,7 +42,7 @@ class Builder extends ContainerAware
         	$menu['Groups']->setAttribute('class', 'active');
         }
         
-        // Rutes
+        // Routes
         $menu->addChild('Routes', array(
         		'route' => 'panel_routes'
         ))
@@ -41,6 +51,8 @@ class Builder extends ContainerAware
         if ($options['activeMenu'] == "routes") {
         	$menu['Routes']->setAttribute('class', 'active');
         }
+        
+        
 
         return $menu;
     }

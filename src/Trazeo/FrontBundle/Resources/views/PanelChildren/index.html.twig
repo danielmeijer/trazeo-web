@@ -8,50 +8,18 @@
                     {{ "Panel.title" | trans  }}
                     </h1>
                 </div><!-- /.col-lg-12 -->
-		{% endblock %}
-		
-{% block body -%}
-    <h1>Children list</h1>
-
-    <table class="records_list">
-        <thead>
+                
+                {% for entity in entities %}
             <tr>
-                <th>Id</th>
-                <th>Nick</th>
-                <th>Datebirth</th>
-                <th>Visibility</th>
-                <th>Sex</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('children_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+               
                 <td>{{ entity.nick }}</td>
                 <td>{% if entity.dateBirth %}{{ entity.dateBirth|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{{ entity.visibility }}</td>
                 <td>{{ entity.sex }}</td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('children_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('children_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                
                 </td>
             </tr>
         {% endfor %}
-        </tbody>
-    </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('children_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock %}
+		{% endblock %}
+		

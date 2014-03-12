@@ -17,8 +17,12 @@ class RoutesType extends AbstractType
         $builder
             ->add('nombre')
             ->add('admin')
-            ->add('city','text',array('label' => 'City'))
-            ->add('country','text',array('label' => 'Country'))
+            ->add('country', 'entity', array(
+            		'class' => 'JJsGeonamesBundle:Country',
+            		'attr' => array('class' => 'chosen-select'),
+            		'property' => 'name'))
+            
+            
         ;
     }
     
