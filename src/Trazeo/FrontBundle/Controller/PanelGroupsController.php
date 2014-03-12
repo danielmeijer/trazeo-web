@@ -22,7 +22,7 @@ class PanelGroupsController extends Controller
 
      * Lists all Groups entities.
      *
-     * @Route("/", name="groups")
+     * @Route("/", name="panel_groups")
      * @Method("GET")
      * @Template()
      */

@@ -5,20 +5,25 @@ Panel:
     title: Dashboard
 
 Trans:
-    head: Trazeo traducciones
-    title: Available Messages
+    alternative: 'Alternative Translation'
+    description: Description
+    head: 'Trazeo traducciones'
+    meaning: Meaning
+    notfound: 'No messages found'
+
+    save:
+        success: 'Translation was saved'
+        wrong: 'Could not be saved'
+
+    sources: Sources
+
     subtitle:
-        new: New Messages
-        exist: Existing Messagess
+        exist: 'Existing Messagess'
+        new: 'New Messages'
+
     table:
         id: Id
+        info: 'Additional Information'
         translation: Translation
-        info: Additional Information
-    meaning: Meaning
-    alternative: Alternative Translation
-    sources: Sources
-    description: Description
-    notfound: No messages found
-    save:
-        wrong: Could not be saved
-        success: Translation was saved
+
+    title: 'Available Messages'

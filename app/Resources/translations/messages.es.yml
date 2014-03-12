@@ -1,24 +1,31 @@
 Menu:
     home: Inicio
+    groups: Grupos
+    routes: Rutas
 
 Panel:
-    title: Panel de Control
-    
+    title: 'Panel de Control'
+
 Trans:
-    head: Trazeo traducciones
-    title: ES Available Messages
-    subtitle:
-        new: ES New Messages
-        exist: ES Existing Messagess
-    table:
-        id: ES Id
-        translation: ES Translation
-        info: ES Additional Information
-    meaning: ES Meaning
-    alternative: ES Alternative Translation
-    sources: ES Sources
-    description: ES Description
-    notfound: ES No messages found
+    alternative: 'ES Alternative Translation'
+    description: 'ES Description'
+    head: 'Trazeo traducciones'
+    meaning: 'ES Meaning'
+    notfound: 'ES No messages found'
+
     save:
-        wrong: ES Could not be saved
-        success: ES Translation was saved
+        success: 'La traducción se ha guardado'
+        wrong: 'ES Could not be saved'
+
+    sources: 'ES Sources'
+
+    subtitle:
+        exist: 'ES Existing Messagess'
+        new: 'ES New Messages'
+
+    table:
+        id: 'ES Id'
+        info: 'ES Additional Information'
+        translation: 'ES Translation'
+
+    title: 'ES Available Messages'

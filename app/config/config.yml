@@ -30,6 +30,9 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         fos_csrf_provider: "@form.csrf_provider"
+    form:
+        resources:
+            - 'SopinetTemplateSbadmin2Bundle:Form:bootstrap.html.twig'  
 
 # Assetic Configuration
 assetic:
@@ -135,3 +138,7 @@ jms_translation:
             ignored_domains: [routes]
             excluded_dirs: [cache, data, logs]
             extractors: [sonata_admin]
+            
+#hwi_oauth:
+    # name of the firewall in which this bundle is active, this setting MUST be set
+ #   firewall_name: secured_area

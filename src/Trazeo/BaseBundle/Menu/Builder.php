@@ -23,26 +23,23 @@ class Builder extends ContainerAware
         }
 
         // Timeline
-        $menu->addChild('Timeline', array(
-        		'route' => 'panel_dashboard'
+        $menu->addChild('Groups', array(
+        		'route' => 'panel_groups'
         		))
-        ->setLabel($this->container->get('translator')->trans('Menu.timeline'));
-        $menu['Timeline']->setAttribute('icon', 'fa-plus');
-        if ($options['activeMenu'] == "new") {
-        	$menu['Timeline']->setAttribute('class', 'active');
+        ->setLabel($this->container->get('translator')->trans('Menu.groups'));
+        $menu['Groups']->setAttribute('icon', 'fa-plus');
+        if ($options['activeMenu'] == "groups") {
+        	$menu['Groups']->setAttribute('class', 'active');
         }
         
         // Rutes
-        $menu->addChild('Rutes', array(
-        		'route' => 'panel_dashboard'
+        $menu->addChild('Routes', array(
+        		'route' => 'panel_routes'
         ))
-        ->setLabel($this->container->get('translator')->trans('Menu.rutes'));
-        $menu['Rutes']->setAttribute('icon', 'fa-user')
-        ->addChild('Timeline', array(
-        		'route' => 'panel_dashboard'
-        		));
-        if ($options['activeMenu'] == "list") {
-        	$menu['Rutes']->setAttribute('class', 'active');
+        ->setLabel($this->container->get('translator')->trans('Menu.routes'));
+        $menu['Routes']->setAttribute('icon', 'fa-user');
+        if ($options['activeMenu'] == "routes") {
+        	$menu['Routes']->setAttribute('class', 'active');
         }
 
         return $menu;

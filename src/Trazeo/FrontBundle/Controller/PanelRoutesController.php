@@ -40,7 +40,7 @@ class PanelRoutesController extends Controller
      *
      * @Route("/", name="panel_routes_create")
      * @Method("POST")
-     * @Template("TrazeoBaseBundle:Routes:new.html.twig")
+     * @Template("TrazeoFrontBundle:Routes:new.html.twig")
      */
     public function createAction(Request $request)
     {
