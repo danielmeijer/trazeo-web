@@ -3,3 +3,22 @@ Menu:
 
 Panel:
     title: Dashboard
+
+Trans:
+    head: Trazeo traducciones
+    title: Available Messages
+    subtitle:
+        new: New Messages
+        exist: Existing Messagess
+    table:
+        id: Id
+        translation: Translation
+        info: Additional Information
+    meaning: Meaning
+    alternative: Alternative Translation
+    sources: Sources
+    description: Description
+    notfound: No messages found
+    save:
+        wrong: Could not be saved
+        success: Translation was saved

@@ -41,7 +41,7 @@ class Builder extends ContainerAware
         ->addChild('Timeline', array(
         		'route' => 'panel_dashboard'
         		));
-        if ($options['activeMenu'] == "new") {
+        if ($options['activeMenu'] == "list") {
         	$menu['Rutes']->setAttribute('class', 'active');
         }
 

@@ -2,4 +2,23 @@ Menu:
     home: Inicio
 
 Panel:
-    title: 'Panel de Control'
+    title: Panel de Control
+    
+Trans:
+    head: Trazeo traducciones
+    title: ES Available Messages
+    subtitle:
+        new: ES New Messages
+        exist: ES Existing Messagess
+    table:
+        id: ES Id
+        translation: ES Translation
+        info: ES Additional Information
+    meaning: ES Meaning
+    alternative: ES Alternative Translation
+    sources: ES Sources
+    description: ES Description
+    notfound: ES No messages found
+    save:
+        wrong: ES Could not be saved
+        success: ES Translation was saved
