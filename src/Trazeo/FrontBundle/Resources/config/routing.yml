@@ -24,4 +24,4 @@ routes:
     
 userextend:
     resource: "@TrazeoFrontBundle/Controller/PanelUserController.php"
-    type:     annotation  
+    type:     annotation

@@ -16,10 +16,16 @@ class ChildrenType extends AbstractType
     {
         $builder
             ->add('nick')
-            ->add('dateBirth')
-            ->add('visibility')
-            ->add('sex')
-            ->add('userExtendChildren')
+    		->add('date_birth', 'date', array(
+    			'widget' => 'single_text',
+    			'attr' => array('class' => 'inputDate'),
+    			'format' => 'dd/MM/yyyy'))
+            ->add('visibility', 'choice', array(
+            		'choices'   => array('enabled' => 'Enabled', 'disabled' => 'Disabled')));
+            $builder->add('sex', 'choice', array(
+            				'choices'   => array('f' => 'Femenino', 'm' => 'Masculino'),
+            				'required'  => true,
+            		))
             ->add('groups')
         ;
     }
