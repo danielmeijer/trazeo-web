@@ -21,7 +21,6 @@ class Routes
 	 */
 	protected $id;
 	
-	
 	/** @ORM\OneToMany(targetEntity="Trazeo\BaseBundle\Entity\Groups", mappedBy="routes")
 	 */
 	protected $groups;
@@ -29,7 +28,6 @@ class Routes
 	/** @ORM\ManyToOne(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", inversedBy="adminRoutes")
 	 */
 	protected $admin;
-	
 	
 	/** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\City", inversedBy="routes")
 	 */
@@ -39,7 +37,6 @@ class Routes
 	 */
 	protected $country;
 	
-	
 	/**
 	 * @var string
 	 *
@@ -47,14 +44,10 @@ class Routes
 	 */
 	protected $nombre;
 	
-	
-	
 	public function __toString() {
 		
 		return $this->getNombre();
 	}
-	
-	
 	
     /**
      * Constructor
