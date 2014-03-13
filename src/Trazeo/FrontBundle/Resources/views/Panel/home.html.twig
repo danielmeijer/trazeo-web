@@ -13,6 +13,8 @@
             </div>
             
 			<div class="row">
+
+                <!-- START currentGroups -->
                 <div class="col-lg-12 currentGroups alert alert-success">
                 	<div class="col-md-1">
                 		<i class="fa fa-5x fa-clock-o"></i>
@@ -20,32 +22,47 @@
                 	<div class="col-md-11">
   						<h3>Hay grupos en marcha</h3>
 	  					<p>Los siguientes grupos están en marcha y tienes ninos apuntados en ellos:</p>
-	  						<ul class="col-md-3">
-	  							<li><i class="fa fa-group"></i> Grupo 1</li>
-	  							<li><i class="fa fa-group"></i> Grupo 2</li>
-	  						</ul>
-	  						<ul class="col-md-3">
-	  							<li><i class="fa fa-mail-forward"></i> Ir al grupo</li>
-								<li><i class="fa fa-mail-forward"></i> Ir al grupo</li>
-	  						</ul>
+  						<ul class="col-md-3">
+  							<li><i class="fa fa-group"></i> Grupo 1</li>
+  							<li><i class="fa fa-group"></i> Grupo 2</li>
+  						</ul>
+  						<ul class="col-md-3">
+  							<li><i class="fa fa-mail-forward"></i> Ir al grupo</li>
+							<li><i class="fa fa-mail-forward"></i> Ir al grupo</li>
+  						</ul>
 					</div>
-                </div><!-- currentGropus -->
+                </div>
+                <!-- END currentGropus -->
+                
+                <!-- START Buttons -->
                 <div class="col-md-12">
                 	<p class="col-md-2"><a class="btn btn-primary btn-outline" href="#"><i class="fa fa-user"></i> Unirme a un grupo</a></p>
                 	<p class="col-md-2"><a class="btn btn-primary btn-outline" href="#"><i class="fa fa-location-arrow"></i> Buscar una ruta</a></p>
                 </div>
+                <!-- END Buttons -->
+
+                <!-- START Resume -->
  				<div class="col-md-12 resume">
  					<h2 class="col-md-12 well">Mi Resumen</h2>
- 					<div class="col-md-12 resumeChilds well ">
+ 					
+ 					<!-- START resumeChilds -->
+ 					<div class="col-md-12 resumeChilds well">
  						<div class="col-md-6">
 	 						<h4 class="alert alert-info">Niños</h4>
 	 						<div class="alert alert-warning">
-	 						
-		 						<p>Tienes (contador) niños dados de alta en Trazeo:</p>
+	 							
+	 							{% if children.count == 0 %}
+	 								<p>Aún no tienes niños dados de alta. (¿Crea uno?)</p>
+	 							{% elseif children.count == 1 %}
+	 								<p>Tienes 1 niño dado de alta:</p>
+	 							{% else %}
+	 								<p>Tienes {{ children.count }} niños dados de alta:</p>
+	 							{% endif %}
+		 						
 		 						<ul>
-		 			{% for children in children %}
-		 				{{ children.Nick }}
-					{% endfor %}
+						 			{% for children in children %}
+						 				<li>{{ children.Nick }}</li>
+									{% endfor %}
 		 						</ul>
 	 						</div>
  						</div>
@@ -60,26 +77,36 @@
 		 						</ul>
 	 						</div>
  						</div>
-
- 					</div><!-- resumeChilds -->
+ 					</div>
+ 					<!-- END resumeChilds -->
  					
+ 					<!-- START resumeGroups -->
  					<div class="col-md-12 resumeGroups well">
  						<div class="col-md-6">
 	 						<h4 class="alert alert-info">Grupos</h4>
 	 						<div class="alert alert-warning">
-		 						<p>Has creado (contador) grupos en Trazeo:</p>
+		 						
+		 						{% if groups.count == 0 %}
+	 								<p>Aún no has creado ningún grupo. (¿Crea uno?)</p>
+	 							{% elseif groups.count == 1 %}
+	 								<p>Tienes creado 1 grupo:</p>
+	 							{% else %}
+	 								<p>Tienes creados {{ groups.count }} grupos:</p>
+	 							{% endif %}
+		 						
 		 						<ul>
-						 			{% for groups in groups %}
-						 			<li>{{ groups.Nombre }}</li>
+						 			{% for group in groups %}
+						 				<li>{{ group.Nombre }}</li>
 									{% endfor %}
 		 						</ul>
 	 						</div>
  						</div>
+
  						<div class="col-md-6">
 	 						<h5 class="alert alert-info">
-									<i class="fa fa-users"></i> Buscar Grupos
-									&nbsp;
-									<i class="fa fa-plus"></i> Crear Grupo
+								<i class="fa fa-users"></i> Buscar Grupos
+								&nbsp;
+								<i class="fa fa-plus"></i> Crear Grupo
 	 						</h5>
 	 						<div class="alert alert-warning">
 		 						<p>&nbsp;</p>
@@ -89,26 +116,35 @@
 		 						</ul>
 	 						</div>
  						</div>
-
- 					</div><!-- resumeGroups -->
+ 					</div>
+ 					<!-- END resumeGroups -->
  					
+ 					<!-- START resumeRoutes -->
  					<div class="col-md-12 resumeRoutes well">
  						<div class="col-md-6">
 	 						<h4 class="alert alert-info">Rutas</h4>
 	 						<div class="alert alert-warning">
-		 						<p>Has creado (contador) ruta en Trazeo:</p>
+		 						
+		 						{% if routes.count == 0 %}
+	 								<p>Aún no has creado ninguna ruta. (¿Crea una?)</p>
+	 							{% elseif routes.count == 1 %}
+	 								<p>Tienes creada 1 ruta:</p>
+	 							{% else %}
+	 								<p>Tienes creadas {{ routes.count }} rutas:</p>
+	 							{% endif %}
+		 						
 		 						<ul>
-						 			{% for routes in routes %}
-						 				<li>{{ routes.Nombre }}</li>
+						 			{% for route in routes %}
+						 				<li>{{ route.Nombre }}</li>
 									{% endfor %}
 		 						</ul>
 	 						</div>
  						</div>
  						<div class="col-md-6">
 	 						<h5 class="alert alert-info">
-									<i class="fa fa-location-arrow"></i> Buscar Rutas
-									&nbsp;
-									<i class="fa fa-plus"></i> Crear Rutas
+								<i class="fa fa-location-arrow"></i> Buscar Rutas
+								&nbsp;
+								<i class="fa fa-plus"></i> Crear Rutas
 	 						</h5>
 	 						<div class="alert alert-warning">
 		 						<p>&nbsp;</p>
@@ -117,8 +153,8 @@
 		 						</ul>
 	 						</div>
  						</div>
-
- 					</div><!-- resumeRoutes -->
+ 					</div>
+ 					<!-- END resumeRoutes -->
  					
  				</div><!-- resume -->
             </div><!-- row -->
