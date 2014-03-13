@@ -24,7 +24,7 @@ class RoutesAdmin extends Admin
       		'property' => 'name',
       		'class' => 'JJs\Bundle\GeonamesBundle\Entity\City'
       		)) TODO: No se cargan */ 
-        ->add('nombre')
+        ->add('name')
     ;
   }
  
@@ -33,7 +33,7 @@ class RoutesAdmin extends Admin
     $datagridMapper
       ->add('groups')
       ->add('admin')
-      ->add('nombre')
+      ->add('name')
     ;
   }
  
@@ -43,7 +43,7 @@ class RoutesAdmin extends Admin
       ->addIdentifier('id')
       ->add('groups')
       ->add('admin')
-      ->add('nombre');
+      ->add('name');
   }
  
   public function validate(ErrorElement $errorElement, $object)
