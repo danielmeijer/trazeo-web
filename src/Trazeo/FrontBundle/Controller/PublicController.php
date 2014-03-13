@@ -21,4 +21,12 @@ class PublicController extends Controller
         return $this->render('TrazeoFrontBundle:Public:home.html.twig');
     }
     
+    /**
+     * @Route("/cofinanciadores", name="home_cofinanciadores"))
+     * @Template
+     */
+    public function cofinanciadoresAction()
+    {
+    	return $this->render('TrazeoFrontBundle:Public:cofinanciadores.html.twig');
+    }
 }
