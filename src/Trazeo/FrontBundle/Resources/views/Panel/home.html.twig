@@ -98,7 +98,9 @@
 	 						<div class="alert alert-warning">
 		 						<p>Has creado (contador) ruta en Trazeo:</p>
 		 						<ul>
-		 							<li>Ruta del parque Fidiana (contador groups)</li>
+						 			{% for routes in routes %}
+						 				<li>{{ routes.Nombre }}</li>
+									{% endfor %}
 		 						</ul>
 	 						</div>
  						</div>

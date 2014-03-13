@@ -30,11 +30,14 @@ class PanelController extends Controller
     	$queryChildren = $em->createQuery("SELECT c FROM TrazeoBaseBundle:Children c JOIN c.userextendchildren u WHERE u.id = u.id");
     	$children = $queryChildren->getResult();
     	
+    	$queryRoutes = $em->createQuery("SELECT r FROM TrazeoBaseBundle:Routes r JOIN r.admin u WHERE u.id = u.id");
+    	$routes = $queryRoutes->getResult();
+    	
  
     	
     	
 	    	return $this->render('TrazeoFrontBundle:Panel:home.html.twig',array(
-	    			'user' => $user, 'groups' => $groups, 'children' => $children));  
+	    			'user' => $user, 'groups' => $groups, 'children' => $children, 'routes' => $routes));  
 	}
 }
 
