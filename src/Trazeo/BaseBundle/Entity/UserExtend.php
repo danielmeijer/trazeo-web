@@ -35,7 +35,7 @@ class UserExtend
      */
     protected $adminRoutes;
     
-    /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\Children", mappedBy="userExtendChildren")
+    /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\Children", mappedBy="userextendchildren")
      */
     protected $children;
     
