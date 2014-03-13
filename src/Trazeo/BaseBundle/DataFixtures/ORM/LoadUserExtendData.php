@@ -2,12 +2,13 @@
 
 namespace Trazeo\BaseBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Trazeo\BaseBundle\Entity\UserExtend;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadUserExtendData implements FixtureInterface
+class LoadUserExtendData extends AbstractFixture implements OrderedFixtureInterface
 {
 	/**
 	 * @var ContainerInterface
@@ -18,29 +19,23 @@ class LoadUserExtendData implements FixtureInterface
 	 * Creamos un usuario extend para el usuario trazeo
 	 * @param unknown $nick Nick del usuario
 	 */
-	public function createUserExtend($nick)
+	public function createUserExtend($name)
 	{
+		
+		$reUserExtend = $this->manager->getRepository("TrazeoBaseBundle:UserExtend");
+		$reChildren = $this->manager->getRepository("TrazeoBaseBundle:Children");
+		$reGroups = $this->manager->getRepository("TrazeoBaseBundle:Groups");
+		$reRoutes = $this->manager->getRepository("TrazeoBaseBundle:Routes");
 		
 		//Creamos el usuario
 		$user = new \Application\Sonata\UserBundle\Entity\User;
-		$user->setEmail("trazeo@trazeo.es");
-		$user->setPlainPassword("trazeo");
-		$user->setUsername("trazeo");
+		$user->setEmail($name . "@" . $name . ".es");
+		$user->setPlainPassword($name);
+		$user->setUsername($name);
 		$user->setEnabled(1);
 		
 		$this->manager->persist($user);
 		$this->manager->flush();
-		
-		/*$reUser = $this->manager->getRepository("\Application\Sonata\UserBundle\Entity\User");
-		
-		$user = $reUser->findOneById(1);
-		
-		$userExtend = new UserExtend();
-		$userExtend->setUser($user);
-		$userExtend->setNick($nick);
-	
-		$this->manager->persist($userExtend);
-		$this->manager->flush();*/
 	}
 	
 	/**
@@ -49,7 +44,10 @@ class LoadUserExtendData implements FixtureInterface
 	public function load(ObjectManager $manager)
 	{
 		$this->manager = $manager;
-		
-		$this->createUserExtend("trazeo_niño_1");
+		$this->createUserExtend("trazeo");
+	}
+	
+	public function getOrder(){
+		return 1;
 	}
 }

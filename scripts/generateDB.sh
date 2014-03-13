@@ -7,8 +7,8 @@ then
 	php app/console geonames:load:countries
 	php app/console geonames:load:timezones
 	#php app/console geonames:load:localities ES
-	sh scripts/clean.sh
 	php app/console fos:user:create hidabe fhidalgo@sopinet.com hidabe2013 --super-admin
-	else
+sh scripts/clean.sh	
+else
 	echo "Error. Sitúese en el directorio raíz de Symfony";
 fi
