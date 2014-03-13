@@ -6,6 +6,7 @@ use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Table("userextend")
  * @ORM\Entity
  */
 class UserExtend
@@ -209,28 +210,7 @@ class UserExtend
         return $this->adminRoutes;
     }
 
-    /**
-     * Add children
-     *
-     * @param \Trazeo\BaseBundle\Entity\Children $children
-     * @return UserExtend
-     */
-    public function addChild(\Trazeo\BaseBundle\Entity\Children $children)
-    {
-        $this->children[] = $children;
 
-        return $this;
-    }
-
-    /**
-     * Remove children
-     *
-     * @param \Trazeo\BaseBundle\Entity\Children $children
-     */
-    public function removeChild(\Trazeo\BaseBundle\Entity\Children $children)
-    {
-        $this->children->removeElement($children);
-    }
 
     /**
      * Get children
@@ -304,4 +284,28 @@ class UserExtend
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+
+    /**
+     * Add children
+     *
+     * @param \Trazeo\BaseBundle\Entity\Children $children
+     *
+     * @return UserExtend
+     */
+    public function addChild(\Trazeo\BaseBundle\Entity\Children $children)
+    {
+        $this->children[] = $children;
+
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param \Trazeo\BaseBundle\Entity\Children $children
+     */
+    public function removeChild(\Trazeo\BaseBundle\Entity\Children $children)
+    {
+        $this->children->removeElement($children);
+    }
 }

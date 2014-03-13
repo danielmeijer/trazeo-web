@@ -6,6 +6,7 @@ use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Trazeo\BaseBundle\Entity\UserExtend;
+use Application\Sonata\UserBundle\Entity\User as FOSUser;
 
 
 class UpdatedListener implements EventSubscriber {
@@ -23,17 +24,14 @@ class UpdatedListener implements EventSubscriber {
 	public function execUpdate($args) {
 		$entity = $args->getEntity();
 		$em = $args->getEntityManager();
-		if ($entity instanceof Attribute || 
-			$entity instanceof Category ||
-			$entity instanceof Config ||
-			$entity instanceof Image ||
-			$entity instanceof Item) {
-			$museum = $entity->getMuseum();
-			if ($museum != null) {
-				$museum->setUpdatedAt(new \DateTime()); 
-				$em->persist($museum);
-				$em->flush();
-			}			
+		if ($entity instanceof FOSUser) {
+		
+			$userExtend = new UserExtend();
+			$userExtend->setNick("Nombre");
+			$userExtend->setUser($entity);
+			$em->persist($userExtend);
+			$em->flush();
+					
 		}
 	}
 }

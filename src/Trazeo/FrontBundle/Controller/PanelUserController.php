@@ -178,6 +178,7 @@ class PanelUserController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+    	//ldd($request);
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($id);
