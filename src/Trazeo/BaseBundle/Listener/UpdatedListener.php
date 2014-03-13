@@ -26,8 +26,10 @@ class UpdatedListener implements EventSubscriber {
 		$em = $args->getEntityManager();
 		if ($entity instanceof FOSUser) {
 		
+			$email = $entity->getEmail();
 			$userExtend = new UserExtend();
-			$userExtend->setNick("Nombre");
+			
+			$userExtend->setNick($email);
 			$userExtend->setUser($entity);
 			$em->persist($userExtend);
 			$em->flush();
