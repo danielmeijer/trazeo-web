@@ -12,7 +12,7 @@
             
 			<div class="row">
                 <div class="col-lg-12">
-                	<h4 class="alert alert-info">{{ entity.nick }}</h4>
+                	<h4 class="alert alert-info">{{ entity.Nombre }}</h4>
                 	<p class="well">En esta página puedes modificar los datos de tu niño. Sólo utilizamos estos datos para darte un
 mejor servicio. Sólo tú podrás verlos (ningún otro padre o madre). Los campos marcados con
 asterisco son necesarios.
@@ -23,11 +23,7 @@ asterisco son necesarios.
     {{ form(edit_form) }}
 
         <ul class="record_actions">
-    <li>
-        <a href="{{ path('routes') }}">
-            Back to the list
-        </a>
-    </li>
+
     <li>{{ form(delete_form) }}</li>    
 
                 </div>

@@ -194,7 +194,7 @@ class PanelChildrenController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('children_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('panel_children_edit', array('id' => $id)));
         }
 
         return array(
@@ -226,7 +226,7 @@ class PanelChildrenController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('children'));
+        return $this->redirect($this->generateUrl('panel_children'));
     }
 
     /**

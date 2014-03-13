@@ -26,7 +26,7 @@ class Routes
 	 */
 	protected $groups;
 	
-	/** @ORM\ManyToOne(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", inversedBy="adminroutes")
+	/** @ORM\ManyToOne(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", inversedBy="adminRoutes")
 	 */
 	protected $admin;
 	

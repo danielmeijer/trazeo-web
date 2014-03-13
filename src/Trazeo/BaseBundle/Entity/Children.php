@@ -21,12 +21,11 @@ class Children
     protected $id;
 
     /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", inversedBy="children")
-     *  @ORM\JoinColumn(name="userExtend_children", referencedColumnName="id")
+     * @ORM\JoinColumn(name="children_userextend", referencedColumnName="id")
      */
     protected $userextendchildren;
     
     /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\Groups", mappedBy="children")
-     *  @ORM\JoinColumn(name="groups_children", referencedColumnName="id")
      */
     protected $groups;
 
@@ -53,7 +52,7 @@ class Children
 
 
 	/**
-	 * @ORM\Column(name="sex", type="string", columnDefinition="ENUM('H','M')")
+	 * @ORM\Column(name="sex", type="string")
 	 */
 	protected $sex;
     /**

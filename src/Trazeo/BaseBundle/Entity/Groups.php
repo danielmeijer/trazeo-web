@@ -22,14 +22,16 @@ class Groups
     protected $id;
 
     /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", mappedBy="groups")
+     * @ORM\JoinColumn(name="userextend_groups", referencedColumnName="id")
      */
-    protected $userExtendGroups;
+    protected $userextendgroups;
     
-    /** @ORM\ManyToOne(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", inversedBy="admingroup")
+    /** @ORM\ManyToOne(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", inversedBy="adminGroup")
      */
     protected $admin;
     
     /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\Children", inversedBy="groups")
+     * @ORM\JoinColumn(name="groups_children", referencedColumnName="id")
      */
     protected $children;
 
@@ -65,38 +67,6 @@ class Groups
         return $this->id;
     }
 
-    /**
-     * Add userExtendGroups
-     *
-     * @param \Trazeo\BaseBundle\Entity\UserExtend $userExtendGroups
-     * @return Groups
-     */
-    public function addUserExtendGroup(\Trazeo\BaseBundle\Entity\UserExtend $userExtendGroups)
-    {
-        $this->userExtendGroups[] = $userExtendGroups;
-
-        return $this;
-    }
-
-    /**
-     * Remove userExtendGroups
-     *
-     * @param \Trazeo\BaseBundle\Entity\UserExtend $userExtendGroups
-     */
-    public function removeUserExtendGroup(\Trazeo\BaseBundle\Entity\UserExtend $userExtendGroups)
-    {
-        $this->userExtendGroups->removeElement($userExtendGroups);
-    }
-
-    /**
-     * Get userExtendGroups
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getUserExtendGroups()
-    {
-        return $this->userExtendGroups;
-    }
 
     /**
      * Set admin
@@ -203,5 +173,39 @@ class Groups
     public function getNombre()
     {
         return $this->nombre;
+    }
+
+    /**
+     * Add userextendgroups
+     *
+     * @param \Trazeo\BaseBundle\Entity\UserExtend $userextendgroups
+     *
+     * @return Groups
+     */
+    public function addUserextendgroup(\Trazeo\BaseBundle\Entity\UserExtend $userextendgroups)
+    {
+        $this->userextendgroups[] = $userextendgroups;
+
+        return $this;
+    }
+
+    /**
+     * Remove userextendgroups
+     *
+     * @param \Trazeo\BaseBundle\Entity\UserExtend $userextendgroups
+     */
+    public function removeUserextendgroup(\Trazeo\BaseBundle\Entity\UserExtend $userextendgroups)
+    {
+        $this->userextendgroups->removeElement($userextendgroups);
+    }
+
+    /**
+     * Get userextendgroups
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserextendgroups()
+    {
+        return $this->userextendgroups;
     }
 }

@@ -17,26 +17,27 @@ class PanelController extends Controller
 	 */
     public function indexAction()
     {
-    	
-    	// Acceso al usuario logueado
-    	
     	$em = $this->getDoctrine()->getManager();
-    	$um = $this->container->get('fos_user.user_manager');
+    	$fosUser = $this->container->get('security.context')->getToken()->getUser();
+    	$fosUsername = $fosUser->getUsername();
+    	$fosUserEmail = $fosUser->getEmail();
     	
-    	$user = $this->container->get('security.context')->getToken()->getUser();
-    	$username =  $user->getUsername();
+    	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findByNick($fosUsername);
     	
-    	$entity = $em->getRepository('TrazeoBaseBundle:UserExtend')->findByNick($username);
-    
+    	$queryGroups = $em->createQuery("SELECT g FROM TrazeoBaseBundle:Groups g JOIN g.userextendgroups u WHERE u.id = u.id");
+    	$groups = $queryGroups->getResult();
     	
-  
-    	if (!$entity) {
-    		throw $this->createNotFoundException('Error.');
-	    	}
-	    	
+    	$queryChildren = $em->createQuery("SELECT c FROM TrazeoBaseBundle:Children c JOIN c.userextendchildren u WHERE u.id = u.id");
+    	$children = $queryChildren->getResult();
+    	
+ 
+    	
+    	
 	    	return $this->render('TrazeoFrontBundle:Panel:home.html.twig',array(
-	    			'entity' => $entity
-	    	)
-    	);    
+	    			'user' => $user, 'groups' => $groups, 'children' => $children));  
 	}
 }
+
+
+
+

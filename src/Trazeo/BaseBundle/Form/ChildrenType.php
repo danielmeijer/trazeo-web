@@ -21,11 +21,8 @@ class ChildrenType extends AbstractType
     			'attr' => array('class' => 'inputDate'),
     			'format' => 'dd/MM/yyyy'))
             ->add('visibility', 'choice', array(
-            		'choices'   => array('enabled' => 'Enabled', 'disabled' => 'Disabled')));
-            $builder->add('sex', 'choice', array(
-            				'choices'   => array('f' => 'Femenino', 'm' => 'Masculino'),
-            				'required'  => true,
-            		))
+            		'choices'   => array('enabled' => 'Enabled', 'disabled' => 'Disabled')))
+            ->add('sex')
             ->add('groups')
         ;
     }
