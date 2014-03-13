@@ -14,21 +14,31 @@ class GroupsAdmin extends Admin
   protected function configureFormFields(FormMapper $formMapper)
   {
     $formMapper
-        ->add('userExtendGroups')->add('admin')->add('children')->add('routes')->add('nombre')
+        ->add('userextendgroups', null, array('required' => false))
+        ->add('admin')
+        ->add('children', null, array('required' => false))
+        ->add('routes', null, array('required' => false))
+        ->add('nombre')
     ;
   }
  
   protected function configureDatagridFilters(DatagridMapper $datagridMapper)
   {
     $datagridMapper
-      ->add('userExtendGroups')->add('admin')->add('children')->add('routes')->add('nombre')
+      ->add('routes')
+      ->add('nombre')
     ;
   }
  
   protected function configureListFields(ListMapper $listMapper)
   {
     $listMapper
-      ->addIdentifier('id')->add('userExtendGroups')->add('admin')->add('children')->add('routes')->add('nombre')
+      ->addIdentifier('id')
+      ->add('userextendgroups')
+      ->add('admin')
+      ->add('children')
+      ->add('routes')
+      ->add('nombre')
     ;
   }
  

@@ -14,21 +14,32 @@ class ChildrenAdmin extends Admin
   protected function configureFormFields(FormMapper $formMapper)
   {
     $formMapper
-        ->add('userExtendChildren')->add('groups')->add('nick')->add('dateBirth')->add('visibility')->add('sex')
+        ->add('userextendchildren')
+        ->add('groups', null, array('required' => false))
+        ->add('nick')
+        ->add('dateBirth')
+        ->add('visibility','choice', array('choices' => array(
+       			"0" => "No",
+       			"1" => "Si"
+       		)))
+        ->add('sex','choice', array('choices' => array(
+       			"H" => "Niño",
+       			"M" => "Niña"
+       		)))
     ;
   }
  
   protected function configureDatagridFilters(DatagridMapper $datagridMapper)
   {
     $datagridMapper
-      ->add('userExtendChildren')->add('groups')->add('nick')->add('dateBirth')->add('visibility')->add('sex')
+      ->add('userextendchildren')->add('groups')->add('nick')->add('dateBirth')->add('visibility')->add('sex')
     ;
   }
  
   protected function configureListFields(ListMapper $listMapper)
   {
     $listMapper
-      ->addIdentifier('id')->add('userExtendChildren')->add('groups')->add('nick')->add('dateBirth')->add('visibility')->add('sex')
+      ->addIdentifier('id')->add('userextendchildren')->add('groups')->add('nick')->add('dateBirth')->add('visibility')->add('sex')
     ;
   }
  
