@@ -1,33 +1,19 @@
+{% set activeMenu = "route" %}
+{% set pageheader_title = "Route.edit.title"|trans %}
+{% set pageheader_description = "Route.edit.description"|trans %}
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
-		{% block body_content %}
-		
+		{% block body_content %}            
 			<div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">
-                    {{ "Panel.title" | trans  }}
-                    </h1>
-                </div><!-- /.col-lg-12 -->
-            </div>
-            
-			<div class="row">
-                <div class="col-lg-12">
-                	<h4 class="alert alert-info">{{ entity.name }}</h4>
+                	<h4 class="alert alert-info">{{ entity.Nombre }}</h4>
                 	<p class="well">En esta página puedes modificar los datos de tu niño. Sólo utilizamos estos datos para darte un
 mejor servicio. Sólo tú podrás verlos (ningún otro padre o madre). Los campos marcados con
 asterisco son necesarios.
                 	</p>
                 </div>
                 <div class="col-lg-12 alert alert-warning">
-       
-    {{ form(edit_form) }}
-
-        <ul class="record_actions">
-
-    <li>{{ form(delete_form) }}</li>    
-
-                </div>
-                <button class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
-            </div>
+    				{{ form(edit_form) }}
+            	</div>
 		
 		{% endblock %}

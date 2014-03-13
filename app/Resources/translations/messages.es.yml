@@ -7,6 +7,8 @@ Menu:
 Panel:
     title: 'Panel de Control'
 
+Route.show.title: "Ruta: %name%"
+
 Trans:
     alternative: 'ES Alternative Translation'
     description: 'ES Description'

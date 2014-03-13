@@ -39,7 +39,7 @@ class PanelGroupsController extends Controller
     /**
      * Creates a new Groups entity.
      *
-     * @Route("/", name="groups_create")
+     * @Route("/", name="panel_groups_create")
      * @Method("POST")
      * @Template("TrazeoBaseBundle:Groups:new.html.twig")
      */
@@ -54,7 +54,7 @@ class PanelGroupsController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('groups_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('panel_groups_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -73,7 +73,7 @@ class PanelGroupsController extends Controller
     private function createCreateForm(Groups $entity)
     {
         $form = $this->createForm(new GroupsType(), $entity, array(
-            'action' => $this->generateUrl('groups_create'),
+            'action' => $this->generateUrl('panel_groups_create'),
             'method' => 'POST',
         ));
 
@@ -85,7 +85,7 @@ class PanelGroupsController extends Controller
     /**
      * Displays a form to create a new Groups entity.
      *
-     * @Route("/new", name="groups_new")
+     * @Route("/new", name="panel_groups_new")
      * @Method("GET")
      * @Template()
      */
@@ -103,7 +103,7 @@ class PanelGroupsController extends Controller
     /**
      * Finds and displays a Groups entity.
      *
-     * @Route("/{id}", name="groups_show")
+     * @Route("/{id}", name="panel_groups_show")
      * @Method("GET")
      * @Template()
      */
@@ -128,7 +128,7 @@ class PanelGroupsController extends Controller
     /**
      * Displays a form to edit an existing Groups entity.
      *
-     * @Route("/{id}/edit", name="groups_edit")
+     * @Route("/{id}/edit", name="panel_groups_edit")
      * @Method("GET")
      * @Template()
      */
@@ -162,7 +162,7 @@ class PanelGroupsController extends Controller
     private function createEditForm(Groups $entity)
     {
         $form = $this->createForm(new GroupsType(), $entity, array(
-            'action' => $this->generateUrl('groups_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('panel_groups_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -173,7 +173,7 @@ class PanelGroupsController extends Controller
     /**
      * Edits an existing Groups entity.
      *
-     * @Route("/{id}", name="groups_update")
+     * @Route("/{id}", name="panel_groups_update")
      * @Method("PUT")
      * @Template("TrazeoBaseBundle:Groups:edit.html.twig")
      */
@@ -194,7 +194,7 @@ class PanelGroupsController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('groups_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('panel_groups_edit', array('id' => $id)));
         }
 
         return array(
@@ -206,7 +206,7 @@ class PanelGroupsController extends Controller
     /**
      * Deletes a Groups entity.
      *
-     * @Route("/{id}", name="groups_delete")
+     * @Route("/{id}", name="panel_groups_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -226,7 +226,7 @@ class PanelGroupsController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('groups'));
+        return $this->redirect($this->generateUrl('panel_groups'));
     }
 
     /**
@@ -239,7 +239,7 @@ class PanelGroupsController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('groups_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('panel_groups_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

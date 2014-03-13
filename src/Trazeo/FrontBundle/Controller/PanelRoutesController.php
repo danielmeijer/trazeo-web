@@ -90,9 +90,12 @@ class PanelRoutesController extends Controller
      */
     public function newAction()
     {
+    	
         $entity = new Routes();
         $form   = $this->createCreateForm($entity);
 
+        
+        
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
@@ -109,9 +112,13 @@ class PanelRoutesController extends Controller
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
+        
+        $reGroups = $em->getRepository('TrazeoBaseBundle:Groups');
 
         $entity = $em->getRepository('TrazeoBaseBundle:Routes')->find($id);
-
+        $groups = $reGroups->findByRoutes($entity);
+        
+        
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Routes entity.');
         }
@@ -119,6 +126,7 @@ class PanelRoutesController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
+        	'groups'	  => $groups,
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         );

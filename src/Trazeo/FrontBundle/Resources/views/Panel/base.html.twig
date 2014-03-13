@@ -6,18 +6,30 @@
 
 {% include 'SopinetTemplateSbadmin2Bundle:Base:navbar.html.twig' %}
 {% include 'SopinetTemplateSbadmin2Bundle:Base:sidebar.html.twig' %}
-	<div id="page-wrapper">	
+	<div id="page-wrapper">
+		{% if pageheader_title is not defined %}
+			{% set pageheader_title = "Trazeo" %}
+			{% set pageheader_description = "" %}
+		{% endif %}
+			{% include 'SopinetTemplateSbadmin2Bundle:Base:pageheader.html.twig' with {
+				'title': pageheader_title,
+				'description': pageheader_description
+				} 
+			%}
 		{% block body_content %}
-			<div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">
-                    {{ "Panel.title" | trans  }}
-                     Dashboard
-                    </h1>
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
+		
+			
 		{% endblock %}
 	</div>
 
 {% endblock %}
+{#
+{% block js %}
+	{{ parent() }}
+	<script>
+	$('.inputDate').datepicker({
+		language: "es"
+        })
+        </script>
+{% endblock %}
+#}
