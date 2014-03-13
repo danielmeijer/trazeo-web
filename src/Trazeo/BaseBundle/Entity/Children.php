@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Children
  *
- * @ORM\Table()
+ * @ORM\Table("children")
  * @ORM\Entity
  */
 class Children

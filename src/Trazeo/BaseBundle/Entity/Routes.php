@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Routes
  *
- * @ORM\Table()
+ * @ORM\Table("routes")
  * @ORM\Entity
  */
 class Routes

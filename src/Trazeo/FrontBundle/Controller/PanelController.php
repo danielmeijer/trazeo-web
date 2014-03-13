@@ -18,15 +18,20 @@ class PanelController extends Controller
     public function indexAction()
     {
     	$em = $this->getDoctrine()->getManager();
-    	$fosUser = $this->container->get('security.context')->getToken()->getUser();	
-    	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fosUser);
+    	$fos_user = $this->container->get('security.context')->getToken()->getUser();	
+    	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
     
-    	$groups = $user->getGroups();
     	$children = $user->getChildren();
+        $groups = $user->getGroups();
     	$routes = $user->getAdminRoutes();
 
-	    	return $this->render('TrazeoFrontBundle:Panel:home.html.twig',array(
-	    			'user' => $user, 'groups' => $groups, 'children' => $children, 'routes' => $routes));  
+    	$twig_variables = array(
+            'user' => $user,
+    		'children' => $children,
+            'groups' => $groups,
+    		'routes' => $routes);
+    	
+	    return $this->render('TrazeoFrontBundle:Panel:home.html.twig', $twig_variables);
 	}
 }
 
