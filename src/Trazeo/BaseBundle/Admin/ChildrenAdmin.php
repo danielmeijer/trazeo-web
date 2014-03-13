@@ -14,7 +14,7 @@ class ChildrenAdmin extends Admin
   protected function configureFormFields(FormMapper $formMapper)
   {
     $formMapper
-        ->add('userextendchildren')
+        ->add('userextendchildren',null, array('required' => false))
         ->add('groups', null, array('required' => false))
         ->add('nick')
         ->add('dateBirth')

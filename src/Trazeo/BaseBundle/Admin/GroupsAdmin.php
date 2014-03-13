@@ -18,7 +18,7 @@ class GroupsAdmin extends Admin
         ->add('admin')
         ->add('children', null, array('required' => false))
         ->add('routes', null, array('required' => false))
-        ->add('nombre')
+        ->add('name')
     ;
   }
  
@@ -26,7 +26,7 @@ class GroupsAdmin extends Admin
   {
     $datagridMapper
       ->add('routes')
-      ->add('nombre')
+      ->add('name')
     ;
   }
  
@@ -38,7 +38,7 @@ class GroupsAdmin extends Admin
       ->add('admin')
       ->add('children')
       ->add('routes')
-      ->add('nombre')
+      ->add('name')
     ;
   }
  

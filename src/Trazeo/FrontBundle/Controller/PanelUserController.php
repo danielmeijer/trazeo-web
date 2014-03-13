@@ -40,7 +40,7 @@ class PanelUserController extends Controller
      *
      * @Route("/", name="panel_userextend_create")
      * @Method("POST")
-     * @Template("TrazeoBaseBundle:UserExtend:new.html.twig")
+     * @Template("TrazeoFrontBundle:PanelUser:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -174,11 +174,10 @@ class PanelUserController extends Controller
      *
      * @Route("/{id}", name="panel_userextend_update")
      * @Method("PUT")
-     * @Template("TrazeoBaseBundle:UserExtend:edit.html.twig")
+     * @Template("TrazeoFrontBundle:PanelUser:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
-    	//ldd($request);
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($id);
@@ -190,6 +189,7 @@ class PanelUserController extends Controller
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
+       
 
         if ($editForm->isValid()) {
             $em->flush();

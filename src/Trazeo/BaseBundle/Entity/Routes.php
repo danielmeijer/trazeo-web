@@ -48,7 +48,6 @@ class Routes
 		
 		return $this->getNombre();
 	}
-	
     /**
      * Constructor
      */
@@ -196,5 +195,4 @@ class Routes
     {
         return $this->country;
     }
-    
 }

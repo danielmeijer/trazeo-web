@@ -19,7 +19,7 @@ class UserExtendType extends AbstractType
             ->add('user')
             ->add('groups')
             ->add('children')
-            ->add('country', 'entity', array(
+             ->add('country', 'entity', array(
             		'class' => 'JJsGeonamesBundle:Country',
             		'attr' => array('class' => 'chosen-select'),
             		'property' => 'name'))
