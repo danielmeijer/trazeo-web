@@ -24,7 +24,6 @@ class UserExtend
     protected $user;
     
     /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\Groups", inversedBy="userextendgroups")
-     * @ORM\JoinColumn(name="userextend_groups", referencedColumnName="id")
      */
     protected $groups;
     
@@ -32,12 +31,11 @@ class UserExtend
      */
     private $adminGroup;
     
-    /** @ORM\OneToMany(targetEntity="Trazeo\BaseBundle\Entity\Routes", mappedBy="admin")
+    /** @ORM\OneToMany(targetEntity="Trazeo\BaseBundle\Entity\Route", mappedBy="admin")
      */
     protected $adminRoutes;
     
-    /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\Children", mappedBy="userextendchildren")
-     * @ORM\JoinColumn(name="userextend_children", referencedColumnName="id")
+    /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\Children", mappedBy="userExtendChildren")
      */
     protected $children;
     
@@ -56,23 +54,6 @@ class UserExtend
      */
     protected $nick;
 
-
-    
-    public function __toString() {
-    	return $this->getNick();
-    }
-    
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->adminGroup = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->adminRoutes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
     /**
      * Get id
      *
@@ -87,7 +68,6 @@ class UserExtend
      * Set nick
      *
      * @param string $nick
-     *
      * @return UserExtend
      */
     public function setNick($nick)
@@ -111,7 +91,6 @@ class UserExtend
      * Set user
      *
      * @param \Application\Sonata\UserBundle\Entity\User $user
-     *
      * @return UserExtend
      */
     public function setUser(\Application\Sonata\UserBundle\Entity\User $user = null)
@@ -135,7 +114,6 @@ class UserExtend
      * Add groups
      *
      * @param \Trazeo\BaseBundle\Entity\Groups $groups
-     *
      * @return UserExtend
      */
     public function addGroup(\Trazeo\BaseBundle\Entity\Groups $groups)
@@ -169,7 +147,6 @@ class UserExtend
      * Add adminGroup
      *
      * @param \Trazeo\BaseBundle\Entity\Groups $adminGroup
-     *
      * @return UserExtend
      */
     public function addAdminGroup(\Trazeo\BaseBundle\Entity\Groups $adminGroup)
@@ -202,11 +179,10 @@ class UserExtend
     /**
      * Add adminRoutes
      *
-     * @param \Trazeo\BaseBundle\Entity\Routes $adminRoutes
-     *
+     * @param \Trazeo\BaseBundle\Entity\Route $adminRoutes
      * @return UserExtend
      */
-    public function addAdminRoute(\Trazeo\BaseBundle\Entity\Routes $adminRoutes)
+    public function addAdminRoute(\Trazeo\BaseBundle\Entity\Route $adminRoutes)
     {
         $this->adminRoutes[] = $adminRoutes;
 
@@ -216,9 +192,9 @@ class UserExtend
     /**
      * Remove adminRoutes
      *
-     * @param \Trazeo\BaseBundle\Entity\Routes $adminRoutes
+     * @param \Trazeo\BaseBundle\Entity\Route $adminRoutes
      */
-    public function removeAdminRoute(\Trazeo\BaseBundle\Entity\Routes $adminRoutes)
+    public function removeAdminRoute(\Trazeo\BaseBundle\Entity\Route $adminRoutes)
     {
         $this->adminRoutes->removeElement($adminRoutes);
     }
@@ -237,7 +213,6 @@ class UserExtend
      * Add children
      *
      * @param \Trazeo\BaseBundle\Entity\Children $children
-     *
      * @return UserExtend
      */
     public function addChild(\Trazeo\BaseBundle\Entity\Children $children)
@@ -271,7 +246,6 @@ class UserExtend
      * Set city
      *
      * @param \JJs\Bundle\GeonamesBundle\Entity\City $city
-     *
      * @return UserExtend
      */
     public function setCity(\JJs\Bundle\GeonamesBundle\Entity\City $city = null)
@@ -295,7 +269,6 @@ class UserExtend
      * Set country
      *
      * @param \JJs\Bundle\GeonamesBundle\Entity\Country $country
-     *
      * @return UserExtend
      */
     public function setCountry(\JJs\Bundle\GeonamesBundle\Entity\Country $country = null)
@@ -314,4 +287,21 @@ class UserExtend
     {
         return $this->country;
     }
+    
+    
+    public function __toString() {
+        return $this->getNick();
+    }
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->adminGroup = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->adminRoutes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
 }
