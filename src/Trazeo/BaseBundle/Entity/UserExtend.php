@@ -36,7 +36,7 @@ class UserExtend
      */
     protected $adminRoutes;
     
-    /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\Children", mappedBy="userextendchildren")
+    /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\Children", inversedBy="userextendchildren")
      */
     protected $children;
     
@@ -54,6 +54,23 @@ class UserExtend
      * @ORM\Column(name="nick", type="string", length=255)
      */
     protected $nick;
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->adminGroup = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->adminRoutes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    public function __toString(){
+    	if($this->nick == "")
+    		return (string)$this->id;
+    	return $this->nick;
+    }
 
     /**
      * Get id
@@ -69,6 +86,7 @@ class UserExtend
      * Set nick
      *
      * @param string $nick
+     *
      * @return UserExtend
      */
     public function setNick($nick)
@@ -92,6 +110,7 @@ class UserExtend
      * Set user
      *
      * @param \Application\Sonata\UserBundle\Entity\User $user
+     *
      * @return UserExtend
      */
     public function setUser(\Application\Sonata\UserBundle\Entity\User $user = null)
@@ -115,6 +134,7 @@ class UserExtend
      * Add groups
      *
      * @param \Trazeo\BaseBundle\Entity\Groups $groups
+     *
      * @return UserExtend
      */
     public function addGroup(\Trazeo\BaseBundle\Entity\Groups $groups)
@@ -148,6 +168,7 @@ class UserExtend
      * Add adminGroup
      *
      * @param \Trazeo\BaseBundle\Entity\Groups $adminGroup
+     *
      * @return UserExtend
      */
     public function addAdminGroup(\Trazeo\BaseBundle\Entity\Groups $adminGroup)
@@ -181,6 +202,7 @@ class UserExtend
      * Add adminRoutes
      *
      * @param \Trazeo\BaseBundle\Entity\Routes $adminRoutes
+     *
      * @return UserExtend
      */
     public function addAdminRoute(\Trazeo\BaseBundle\Entity\Routes $adminRoutes)
@@ -210,7 +232,29 @@ class UserExtend
         return $this->adminRoutes;
     }
 
+    /**
+     * Add children
+     *
+     * @param \Trazeo\BaseBundle\Entity\Children $children
+     *
+     * @return UserExtend
+     */
+    public function addChild(\Trazeo\BaseBundle\Entity\Children $children)
+    {
+        $this->children[] = $children;
 
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param \Trazeo\BaseBundle\Entity\Children $children
+     */
+    public function removeChild(\Trazeo\BaseBundle\Entity\Children $children)
+    {
+        $this->children->removeElement($children);
+    }
 
     /**
      * Get children
@@ -226,6 +270,7 @@ class UserExtend
      * Set city
      *
      * @param \JJs\Bundle\GeonamesBundle\Entity\City $city
+     *
      * @return UserExtend
      */
     public function setCity(\JJs\Bundle\GeonamesBundle\Entity\City $city = null)
@@ -249,6 +294,7 @@ class UserExtend
      * Set country
      *
      * @param \JJs\Bundle\GeonamesBundle\Entity\Country $country
+     *
      * @return UserExtend
      */
     public function setCountry(\JJs\Bundle\GeonamesBundle\Entity\Country $country = null)
@@ -266,46 +312,5 @@ class UserExtend
     public function getCountry()
     {
         return $this->country;
-    }
-    
-    
-    public function __toString() {
-        return $this->getNick();
-    }
-    
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->adminGroup = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->adminRoutes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-
-    /**
-     * Add children
-     *
-     * @param \Trazeo\BaseBundle\Entity\Children $children
-     *
-     * @return UserExtend
-     */
-    public function addChild(\Trazeo\BaseBundle\Entity\Children $children)
-    {
-        $this->children[] = $children;
-
-        return $this;
-    }
-
-    /**
-     * Remove children
-     *
-     * @param \Trazeo\BaseBundle\Entity\Children $children
-     */
-    public function removeChild(\Trazeo\BaseBundle\Entity\Children $children)
-    {
-        $this->children->removeElement($children);
     }
 }

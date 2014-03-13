@@ -43,9 +43,9 @@ class Groups
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255)
      */
-    protected $nombre;
+    protected $name;
     
     
     /**
@@ -55,8 +55,14 @@ class Groups
     {
         $this->userExtendGroups = new \Doctrine\Common\Collections\ArrayCollection();
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+    }   
 
+    public function __toString(){
+    	if($this->name == "")
+    		return (string)$this->id;
+    	return $this->name;
+    }
+    
     /**
      * Get id
      *
@@ -67,90 +73,6 @@ class Groups
         return $this->id;
     }
 
-
-    /**
-     * Set admin
-     *
-     * @param \Trazeo\BaseBundle\Entity\UserExtend $admin
-     * @return Groups
-     */
-    public function setAdmin(\Trazeo\BaseBundle\Entity\UserExtend $admin = null)
-    {
-        $this->admin = $admin;
-
-        return $this;
-    }
-
-    /**
-     * Get admin
-     *
-     * @return \Trazeo\BaseBundle\Entity\UserExtend 
-     */
-    public function getAdmin()
-    {
-        return $this->admin;
-    }
-
-    /**
-     * Add children
-     *
-     * @param \Trazeo\BaseBundle\Entity\Children $children
-     * @return Groups
-     */
-    public function addChild(\Trazeo\BaseBundle\Entity\Children $children)
-    {
-        $this->children[] = $children;
-
-        return $this;
-    }
-
-    /**
-     * Remove children
-     *
-     * @param \Trazeo\BaseBundle\Entity\Children $children
-     */
-    public function removeChild(\Trazeo\BaseBundle\Entity\Children $children)
-    {
-        $this->children->removeElement($children);
-    }
-
-    /**
-     * Get children
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getChildren()
-    {
-        return $this->children;
-    }
-
-    /**
-     * Set routes
-     *
-     * @param \Trazeo\BaseBundle\Entity\Routes $routes
-     * @return Groups
-     */
-    public function setRoutes(\Trazeo\BaseBundle\Entity\Routes $routes = null)
-    {
-        $this->routes = $routes;
-
-        return $this;
-    }
-
-    /**
-     * Get routes
-     *
-     * @return \Trazeo\BaseBundle\Entity\Routes 
-     */
-    public function getRoutes()
-    {
-        return $this->routes;
-    }
-    
-    public function __toString() {
-    	return $this->getNombre();
-    }
-    
     /**
      * Set nombre
      *
@@ -207,5 +129,111 @@ class Groups
     public function getUserextendgroups()
     {
         return $this->userextendgroups;
+    }
+
+    /**
+     * Set admin
+     *
+     * @param \Trazeo\BaseBundle\Entity\UserExtend $admin
+     *
+     * @return Groups
+     */
+    public function setAdmin(\Trazeo\BaseBundle\Entity\UserExtend $admin = null)
+    {
+        $this->admin = $admin;
+
+        return $this;
+    }
+
+    /**
+     * Get admin
+     *
+     * @return \Trazeo\BaseBundle\Entity\UserExtend 
+     */
+    public function getAdmin()
+    {
+        return $this->admin;
+    }
+
+    /**
+     * Add children
+     *
+     * @param \Trazeo\BaseBundle\Entity\Children $children
+     *
+     * @return Groups
+     */
+    public function addChild(\Trazeo\BaseBundle\Entity\Children $children)
+    {
+        $this->children[] = $children;
+
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param \Trazeo\BaseBundle\Entity\Children $children
+     */
+    public function removeChild(\Trazeo\BaseBundle\Entity\Children $children)
+    {
+        $this->children->removeElement($children);
+    }
+
+    /**
+     * Get children
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * Set routes
+     *
+     * @param \Trazeo\BaseBundle\Entity\Routes $routes
+     *
+     * @return Groups
+     */
+    public function setRoutes(\Trazeo\BaseBundle\Entity\Routes $routes = null)
+    {
+        $this->routes = $routes;
+
+        return $this;
+    }
+
+    /**
+     * Get routes
+     *
+     * @return \Trazeo\BaseBundle\Entity\Routes 
+     */
+    public function getRoutes()
+    {
+        return $this->routes;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Groups
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }
