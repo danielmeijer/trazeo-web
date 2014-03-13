@@ -47,7 +47,8 @@ class AppKernel extends Kernel
         	new JMS\TranslationBundle\JMSTranslationBundle(),
         	new Elao\ErrorNotifierBundle\ElaoErrorNotifierBundle(),
         	new Sopinet\Bundle\AdminBundle\SopinetAdminBundle(),
-        	//new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+        	new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+        	new Sopinet\UserBundle\SopinetUserBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
