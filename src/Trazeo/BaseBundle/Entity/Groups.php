@@ -74,30 +74,6 @@ class Groups
     }
 
     /**
-     * Set nombre
-     *
-     * @param string $nombre
-     *
-     * @return Groups
-     */
-    public function setNombre($nombre)
-    {
-        $this->nombre = $nombre;
-
-        return $this;
-    }
-
-    /**
-     * Get nombre
-     *
-     * @return string 
-     */
-    public function getNombre()
-    {
-        return $this->nombre;
-    }
-
-    /**
      * Add userextendgroups
      *
      * @param \Trazeo\BaseBundle\Entity\UserExtend $userextendgroups

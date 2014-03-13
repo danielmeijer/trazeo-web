@@ -15,7 +15,7 @@ class RoutesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombre')
+            ->add('name')
             ->add('admin')
             ->add('country', 'entity', array(
             		'class' => 'JJsGeonamesBundle:Country',

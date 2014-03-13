@@ -40,14 +40,15 @@ class Routes
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="nombre", type="string", length=255)
+	 * @ORM\Column(name="name", type="string", length=255)
 	 */
-	protected $nombre;
+	protected $name;
 	
 	public function __toString() {
 		
-		return $this->getNombre();
+		return $this->getName();
 	}
+   
     /**
      * Constructor
      */
@@ -67,27 +68,27 @@ class Routes
     }
 
     /**
-     * Set nombre
+     * Set name
      *
-     * @param string $nombre
+     * @param string $name
      *
      * @return Routes
      */
-    public function setNombre($nombre)
+    public function setName($name)
     {
-        $this->nombre = $nombre;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get nombre
+     * Get name
      *
      * @return string 
      */
-    public function getNombre()
+    public function getName()
     {
-        return $this->nombre;
+        return $this->name;
     }
 
     /**
