@@ -1,15 +1,37 @@
 {% extends 'TrazeoFrontBundle:Public:base.html.twig' %}
 
+{% block css %}
+	{{ parent() }}
+	<style>
+		.cofinanciadores {
+		
+		}
+		.cof_image_small {
+			width: 100px;
+		}
+		
+		.cof_image_big {
+			width: 200px;
+		}
+		
+		.cof_text {
+			color: #000;
+		}
+	</style>
+{% endblock %}
+
 {% block body_content %}
 <section class="featured">
 	<div class="container"> 
-		<div class="row" style="background-color:#000" id="cofinanciadores_10">
-			<div>Antonio</div>
-			<div>Pepe</div>
-			<div>Garcia</div>
-			<div>Tu Colega</div>
-			<div>Amiguitos</div>
-			<img src="http://www.sopinet.com/media/sopinetoliva1.png" width="100px"/>
+		<div class="row cofinanciadores" id="cofinanciadores_10">
+			<div class="cof_text">Antonio</div>
+			<div class="cof_text">Pepe</div>
+			<div class="cof_text">Garcia</div>
+			<div class="cof_text">Tu Colega</div>
+			<div class="cof_text">Amiguitos</div>
+			<div class="cof_text">Amiguitos</div>
+			<img src="http://www.sopinet.com/media/sopinetoliva1.png" class="cof_image_small"/>
+			<img src="http://www.sopinet.com/media/sopinetoliva1.png" class="cof_image_big"/>
 		</div>
 	</div>
 </section>
