@@ -31,35 +31,34 @@
 		</div>
 		<hr/>
 		<h2 class="slogan">Gracias a...</h2>
-		<div class="row">
-		    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-		      <!-- Indicators -->
-		      <ol class="carousel-indicators">
-		      	{% set i = 0 %}
-		      	{% for banner in banners %}
-		      		<li data-target="#myCarousel" data-slide-to="{{ i }}" {% if i == 0 %}class="active"{% endif %}></li>
-		      		{% set i = i+1 %}
-		      	{% endfor %}
-		      </ol>
-		      <div class="carousel-inner">
-		      	{% set i = 0 %}
-		      	{% for banner in banners %}
-			        <div class="item{% if i == 0 %} active{% endif %}">
-			        {% set i = i + 1 %}
-			          <img src="{{ banner.url }}" alt="{{ banner.title }}" heigth="100px">
-			          <div class="container">
-			            <div class="carousel-caption">
-			              <h1>{{ banner.title }}</h1>
-			              <p>{{ banner.desc }}</p>
-			            </div>
-			          </div>
-			        </div>
-				{% endfor %}
-		      </div>
-		      <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-		      <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-		    </div><!-- /.carousel -->			
-		</div>
+
+<div class="col-md-12 carousel-container">
+  <div id="myCarousel" class="carousel slide col-md-12">
+    <div class="carousel-inner">
+        {% set i = 0 %}
+		{% for banner in banners %}  
+              <div class="col-md-12 item{% if i == 0 %} active{% endif %}">
+              {% set i = i + 1 %}
+                <img class="col-md-offset-1 col-md-6 col-sm-6 col-sm-offset-1 col-xs-12 img-responsive" src="{{ banner.url }}" alt="{{ banner.title }}">
+
+                  <div class="col-md-4 col-sm-4 col-xs-12 caption">
+                    <h1>{{ banner.title }}</h1>
+                    <p>{{ banner.desc }}</p>
+                  </div>  
+              </div>
+        {% endfor %}
+     </div>
+    <!-- Controls -->
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+      <i class="fa fa-chevron-left fa-3x"></i> 
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+      <i class="fa fa-chevron-right fa-3x"></i> 
+    </a>  
+  </div><!-- /.carousel -->
+</div> <!-- end .carousel-container-->
+		
+		
 	</div>
 </section>
 

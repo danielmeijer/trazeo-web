@@ -26,6 +26,7 @@
 		"elao/error-notifier-bundle" : "dev-master",
 		"sopinet/admin-bundle" : "dev-master",
 		"hwi/oauth-bundle": "0.4.*@dev",
-		"sopinet/userbundle": "dev-master"
+		"sopinet/userbundle": "dev-master",
+		"jmikola/auto-login-bundle": "~1.0"
 	}
 }
