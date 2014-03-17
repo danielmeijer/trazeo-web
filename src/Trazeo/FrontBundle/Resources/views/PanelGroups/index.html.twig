@@ -4,5 +4,25 @@
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
 		{% block body_content %}
-			LISTADO		
+			
+        <!-- START currentGroups -->
+        <div class="col-lg-12 currentGroups alert alert-info">
+        	<div class="col-md-1">
+        		<i class="fa fa-5x fa-users"></i>
+        	</div>
+        	<div class="col-md-11">
+				<h4>Estos grupos se encuentran en tu ciudad o en la de alguno de tus niños, y podrían interesarte.</h4>
+				
+			<div class="input-group custom-search-form col-md-4">
+				<input type="search" class="form-control" placeholder='{{ "Search.Groups"|trans }}'/>
+				<span class="input-group-btn">
+				<button class="btn btn-primary" type="button"><i class="fa fa-search"></i></button>
+				</span>				
+			</div>
+				
+			</div>
+        </div>
+        <!-- END currentGropus -->
+			
+			
 		{% endblock %}
