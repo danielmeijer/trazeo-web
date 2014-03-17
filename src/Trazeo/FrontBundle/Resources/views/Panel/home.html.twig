@@ -64,8 +64,11 @@
 						<div class="alert alert-warning">
  						<ul>
 								<li>&nbsp;</li>
- 							{% for child in children %}
-				 				<li><i class="fa fa-pencil"></i> <a href="{{ app.request.getBaseURL() }}/panel/children/{{ child.id }}/edit">Editar</a> &nbsp;<i class="fa fa-trash-o"></i> <a href="{{ app.request.getBaseURL() }}/panel/children/{{ child.id }}/delete">Eliminar</a></li>
+							{% for child in children %}
+				 				<li>
+				 					<i class="fa fa-pencil"></i> <a href="{{ path('panel_children') }}{{ child.id }}/edit">Editar</a>
+				 					<i class="fa fa-trash-o"></i> <a data-href="{{ path('panel_children_delete', {'id': child.id }) }}" data-toggle="confirmation">Eliminar</a>
+				 				</li>
 							{% endfor %}
 
  						</ul>
