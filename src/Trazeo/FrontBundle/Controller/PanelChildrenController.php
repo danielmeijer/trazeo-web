@@ -40,7 +40,6 @@ class PanelChildrenController extends Controller
      *
      * @Route("/", name="panel_children_create")
      * @Method("POST")
-     * @Template("TrazeoBaseBundle:Children:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -50,17 +49,11 @@ class PanelChildrenController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            
-            $fos_user = $this->container->get('security.context')->getToken()->getUser();
-            $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
-            
-            $user->addChild($entity);
-            
             $em->persist($entity);
             $em->flush();
 
             //return $this->redirect($this->generateUrl('panel_children_show', array('id' => $entity->getId())));
-            return $this->redirect($this->generateUrl('panel'));
+            return $this->redirect($this->generateUrl('panel_children'));
         }
 
         return array(
@@ -168,7 +161,7 @@ class PanelChildrenController extends Controller
     private function createEditForm(Children $entity)
     {
         $form = $this->createForm(new ChildrenType(), $entity, array(
-            'action' => $this->generateUrl('children_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('panel_children_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -179,9 +172,8 @@ class PanelChildrenController extends Controller
     /**
      * Edits an existing Children entity.
      *
-     * @Route("/{id}", name="children_update")
+     * @Route("/{id}", name="panel_children_update")
      * @Method("PUT")
-     * @Template("TrazeoBaseBundle:Children:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
@@ -212,7 +204,7 @@ class PanelChildrenController extends Controller
     /**
      * Deletes a Children entity.
      *
-     * @Route("/{id}", name="children_delete")
+     * @Route("/{id}", name="panel_children_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -245,7 +237,7 @@ class PanelChildrenController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('children_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('panel_children_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

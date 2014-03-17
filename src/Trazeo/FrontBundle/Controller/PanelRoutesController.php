@@ -44,12 +44,19 @@ class PanelRoutesController extends Controller
      */
     public function createAction(Request $request)
     {
+    	$em = $this->getDoctrine()->getManager();
+    	$fos_user = $this->container->get('security.context')->getToken()->getUser();
+    	 
+    	//UserExtend
+    	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+    	
         $entity = new Routes();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $entity->setAdmin($user);
             $em->persist($entity);
             $em->flush();
 
@@ -90,11 +97,10 @@ class PanelRoutesController extends Controller
      */
     public function newAction()
     {
-    	
         $entity = new Routes();
-        $form   = $this->createCreateForm($entity);
+        $entity->setAdmin($user);
 
-        
+        $form = $this->createCreateForm($entity);
         
         return array(
             'entity' => $entity,

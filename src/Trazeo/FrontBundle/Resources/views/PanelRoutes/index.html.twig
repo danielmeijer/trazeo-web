@@ -3,5 +3,27 @@
 {% set pageheader_description = "Route.index.description"|trans %}
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
-		{% block body_content %}{% endblock %}
+{% block body_content %}
+		
+	{% for entity in entities %}
+		<div class="panel-group" id="accordion">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+		        	<h4 class="panel-title">
+		            	<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ entity.id }}">{{ entity.name }}<div class="pull-right">{{ entity.groups|length }} {{ "Groups"|trans }}</div></a>
+					</h4>
+				</div>
+				<div id="collapse{{ entity.id }}" class="panel-collapse collapse">
+					<div class="panel-body">
+						<ul>
+							<li>
+							<b>Autor</b>: 
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+{% endblock %}
 		

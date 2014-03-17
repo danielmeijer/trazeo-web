@@ -44,7 +44,7 @@ class Builder extends ContainerAware
         
         // Routes
         $menu->addChild('Routes', array(
-        		'route' => 'panel_routes_new'
+        		'route' => 'panel_routes'
         ))
         ->setLabel($this->container->get('translator')->trans('Menu.routes'));
         $menu['Routes']->setAttribute('icon', 'fa-user');
