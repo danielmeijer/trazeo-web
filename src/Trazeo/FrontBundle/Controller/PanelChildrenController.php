@@ -49,6 +49,12 @@ class PanelChildrenController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            
+            $fos_user = $this->container->get('security.context')->getToken()->getUser();
+            $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+            
+            $user->addChild($entity);
+            
             $em->persist($entity);
             $em->flush();
 
@@ -241,7 +247,6 @@ class PanelChildrenController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('panel_children_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
     }

@@ -248,7 +248,6 @@ class PanelGroupsController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('panel_groups_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
     }

@@ -24,7 +24,7 @@ class Builder extends ContainerAware
 
         // Children
         $menu->addChild('Children', array(
-        		'route' => 'panel_children_new'
+        		'route' => 'panel_children'
         ))
         ->setLabel($this->container->get('translator')->trans('Menu.children'));
         $menu['Children']->setAttribute('icon', 'fa-user');
@@ -34,7 +34,7 @@ class Builder extends ContainerAware
         
         // Groups
         $menu->addChild('Groups', array(
-        		'route' => 'panel_groups_new'
+        		'route' => 'panel_groups'
         		))
         ->setLabel($this->container->get('translator')->trans('Menu.groups'));
         $menu['Groups']->setAttribute('icon', 'fa-plus');
