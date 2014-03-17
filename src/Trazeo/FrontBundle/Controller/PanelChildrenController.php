@@ -204,15 +204,17 @@ class PanelChildrenController extends Controller
     /**
      * Deletes a Children entity.
      *
-     * @Route("/{id}", name="panel_children_delete")
-     * @Method("DELETE")
+     * @Route("/{id}/delete", name="panel_children_delete")
+     * @Method("GET")
      */
     public function deleteAction(Request $request, $id)
     {
+        /*
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
+        */
 
-        if ($form->isValid()) {
+        //if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('TrazeoBaseBundle:Children')->find($id);
 
@@ -222,7 +224,7 @@ class PanelChildrenController extends Controller
 
             $em->remove($entity);
             $em->flush();
-        }
+        //}
 
         return $this->redirect($this->generateUrl('panel_children'));
     }
