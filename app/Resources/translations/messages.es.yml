@@ -32,3 +32,6 @@ Trans:
         translation: 'ES Translation'
 
     title: 'ES Available Messages'
+    
+    search:
+        groups: 'Buscar Grupos'

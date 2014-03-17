@@ -1,10 +1,9 @@
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
 {% block body_content %}
-
 	<div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">
+            <h1 class="page-header alert alert-warning">
             {{ "Panel.title" | trans  }}
  				- {{ user.nick }}
             </h1>
@@ -15,7 +14,7 @@
 	<div class="row">
 
         <!-- START currentGroups -->
-        <div class="col-lg-12 currentGroups alert alert-success">
+        <div class="col-lg-12 currentGroups alert alert-info">
         	<div class="col-md-1">
         		<i class="fa fa-5x fa-clock-o"></i>
         	</div>
@@ -43,7 +42,7 @@
 
         <!-- START Resume -->
 			<div class="col-md-12 resume">
-				<h2 class="col-md-12 well">Mi Resumen</h2>
+				<h2 class="col-md-12  alert alert-warning">Mi Resumen</h2>
 				
 				<!-- START resumeChilds -->
 				<div class="col-md-12 resumeChilds well">

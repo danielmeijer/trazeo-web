@@ -5,24 +5,74 @@
 
 		{% block body_content %}
 			
-        <!-- START currentGroups -->
-        <div class="col-lg-12 currentGroups alert alert-info">
+        <div class="col-lg-12 alert alert-info">
         	<div class="col-md-1">
         		<i class="fa fa-5x fa-users"></i>
         	</div>
         	<div class="col-md-11">
 				<h4>Estos grupos se encuentran en tu ciudad o en la de alguno de tus niños, y podrían interesarte.</h4>
-				
-			<div class="input-group custom-search-form col-md-4">
-				<input type="search" class="form-control" placeholder='{{ "Search.Groups"|trans }}'/>
-				<span class="input-group-btn">
-				<button class="btn btn-primary" type="button"><i class="fa fa-search"></i></button>
-				</span>				
+				<div class="input-group custom-search-form col-md-4">
+					<input type="search" class="form-control" placeholder='{{ "Trans.search.groups"|trans }}'/>
+					<span class="input-group-btn">
+					<button class="btn btn-primary" type="button"><i class="fa fa-search"></i></button>
+					</span>				
+				</div>
 			</div>
+        </div><!-- END col-lg-12 alert alert-info -->
+        
+        		<!-- START Groups -->
+				<div class="col-md-12  well">
+					<div class="col-md-6">
+						<h4 class="alert alert-info">Grupos</h4>
+						<div class="alert alert-warning">
+	 						<ul>
+					 			{% for group in groups %}
+					 				<li>{{ group.Name }}</li>
+								{% endfor %}
+	 						</ul>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<h5 class="alert alert-info">
+							<i class="fa fa-plus"></i> <a href="{{ app.request.getBaseURL() }}/panel/groups/new">Crear Grupo</a>
+						</h5>
+						<div class="alert alert-warning">
+	 						<ul>
+	 							{% for group in groups %}
+					 				<li><i class="fa fa-mail-forward"></i> <a href="{{ app.request.getBaseURL() }}/join/{{ group.id }}">Unirme al grupo</a></li>
+								{% endfor %}
+	 						</ul>
+						</div>
+					</div>
+				</div>
+				<!-- END Groups -->
 				
-			</div>
-        </div>
-        <!-- END currentGropus -->
-			
+        		<!-- START Routes -->
+				<div class="col-md-12  well">
+					<div class="col-md-6">
+						<h4 class="alert alert-info">Rutas</h4>
+						<div class="alert alert-warning">
+	 						<ul>
+					 			{% for routes in routes %}
+					 				<li>{{ routes.Name }}</li>
+								{% endfor %}
+	 						</ul>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<h5 class="alert alert-info">
+							<i class="fa fa-plus"></i> <a href="{{ app.request.getBaseURL() }}/panel/routes/new">Crear Ruta</a>
+						</h5>
+						<div class="alert alert-warning">
+	 						<ul>
+	 							{% for routes in routes %}
+					 				<li><i class="fa fa-mail-forward"></i> <a href="{{ app.request.getBaseURL() }}/join/{{ routes.id }}">Unirme a la ruta</a></li>
+								{% endfor %}
+	 						</ul>
+						</div>
+					</div>
+				</div>
+				<!-- END Routes -->
+        
 			
 		{% endblock %}

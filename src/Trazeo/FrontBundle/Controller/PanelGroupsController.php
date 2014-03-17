@@ -30,10 +30,11 @@ class PanelGroupsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('TrazeoBaseBundle:Groups')->findAll();
+        $groups = $em->getRepository('TrazeoBaseBundle:Groups')->findAll();
+        $routes = $em->getRepository('TrazeoBaseBundle:Routes')->findAll();
 
         return array(
-            'entities' => $entities,
+            'groups' => $groups, 'routes' => $routes
         );
     }
     /**
