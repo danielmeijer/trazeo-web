@@ -1,14 +1,45 @@
 {% set activeMenu = "route" %}
-{% set pageheader_title = "Route.show.title"|trans({'%name%': entity.name}) %}
+{% set pageheader_title = "Route.show.title"|trans({'%name%': route.name}) %}
 {% set pageheader_description = "Route.show.description"|trans %}
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
-		{% block body_content %}
-		{{ entity.country.name }}
-		<h3>Grupos de esta ruta</h3>
-            <button type="button" class="btn btn-info btn-circle btn-xl"><i class="fa fa-plus"></i></button>
-            {% for group in groups %}
-            	{{ group.name }}
-            {% endfor %}
-		{% endblock %}
+{% block body_content %}
+
+		<div class="row">
+			<ul>
+				<li>Empieza en:</li>
+				
+				<li>Termina en:</li>
+				
+				<li>Descripción:</li>
+				
+				<li>Distancia:</li>
+				
+				<li>Niños: {{ cont }} apuntados en esta ruta</li>
+				
+				<li>Autor: {{ route.admin }}</li>
+			</ul>
+		</div>
+
+		<h1>MAPA</h1>
+		
+		<div class="row">
+			<div class="col-md-6">
+				<h3>Grupos de esta ruta</h3>
+			</div>
+			<div class="col-md-6">
+				<a href="{{ path('panel_groups_new') }}">
+					<button type="button" class="btn btn-warning btn-circle">
+						<i class="fa fa-plus"></i>
+					</button>
+					Crear grupo
+				</a>
+			</div>
+		</div>
+		<p>Los usuarios han creado {{ route.groups|length }} grupos en esta ruta</p>
+            
+        {% for group in route.groups %}
+        	{{ group.name }}
+        {% endfor %}
+{% endblock %}
 		

@@ -98,7 +98,6 @@ class PanelRoutesController extends Controller
     public function newAction()
     {
         $entity = new Routes();
-        $entity->setAdmin($user);
 
         $form = $this->createCreateForm($entity);
         
@@ -118,22 +117,24 @@ class PanelRoutesController extends Controller
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        
+        $route = $em->getRepository('TrazeoBaseBundle:Routes')->find($id);
         $reGroups = $em->getRepository('TrazeoBaseBundle:Groups');
-
-        $entity = $em->getRepository('TrazeoBaseBundle:Routes')->find($id);
-        $groups = $reGroups->findByRoutes($entity);
-        
-        
-        if (!$entity) {
+        $groups = $reGroups->findByRoutes($route);
+        $cont = 0;
+        foreach($groups as $group){
+        	// Ver si estos niños van a ser un
+        	$cont = $cont + $group->getChildren()->count();
+        }
+       
+        if (!$route) {
             throw $this->createNotFoundException('Unable to find Routes entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-        	'groups'	  => $groups,
-            'entity'      => $entity,
+        	'cont'		  => $cont,
+            'route'      => $route,
             'delete_form' => $deleteForm->createView(),
         );
     }
