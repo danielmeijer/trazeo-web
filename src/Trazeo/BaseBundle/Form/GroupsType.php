@@ -17,7 +17,6 @@ class GroupsType extends AbstractType
         $builder
             ->add('name')
             ->add('userextendgroups')
-            ->add('admin')
             ->add('children')
             ->add('routes')
         ;

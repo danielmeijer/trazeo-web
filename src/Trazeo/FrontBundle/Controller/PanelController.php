@@ -22,7 +22,7 @@ class PanelController extends Controller
     	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
     
     	$children = $user->getChildren();
-        $groups = $user->getGroups();
+        $groups = $user->getAdminGroup();
     	$routes = $user->getAdminRoutes();
 
     	$twig_variables = array(

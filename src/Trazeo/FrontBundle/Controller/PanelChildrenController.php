@@ -50,11 +50,17 @@ class PanelChildrenController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            
+            $fos_user = $this->container->get('security.context')->getToken()->getUser();
+            $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+            
+            $user->addChild($entity);
+            
             $em->persist($entity);
             $em->flush();
 
             //return $this->redirect($this->generateUrl('panel_children_show', array('id' => $entity->getId())));
-            return $this->redirect($this->generateUrl('panel_children'));
+            return $this->redirect($this->generateUrl('panel'));
         }
 
         return array(

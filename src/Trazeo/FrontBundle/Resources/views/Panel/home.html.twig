@@ -75,7 +75,7 @@
 						<h5 class="alert alert-info"><i class="fa fa-plus"></i> <a href="{{ app.request.getBaseURL() }}/panel/children/new">Añadir niño</a></h5>
 						<div class="alert alert-warning">
  						<ul>
-
+								<li>&nbsp;</li>
  							{% for child in children %}
 				 				<li><i class="fa fa-pencil"></i> <a href="{{ app.request.getBaseURL() }}/panel/children/{{ child.id }}/edit">Editar</a> &nbsp;<i class="fa fa-trash-o"></i> <a href="{{ app.request.getBaseURL() }}/panel/children/{{ child.id }}/delete">Eliminar</a></li>
 							{% endfor %}
@@ -144,7 +144,7 @@
  						<ul>
 
 				 			{% for route in routes %}
-				 				<li>{{ route.name }} <span style="float:right;">cosa</span></li>
+				 				<li>{{ route.name }} <span style="float:right;"></span></li>
 							{% endfor %}
 
  						</ul>

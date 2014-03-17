@@ -51,6 +51,12 @@ class PanelGroupsController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            
+            $fos_user = $this->container->get('security.context')->getToken()->getUser();
+            $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+            
+            $entity->setAdmin($user);
+            
             $em->persist($entity);
             $em->flush();
 
