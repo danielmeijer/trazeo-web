@@ -1,11 +1,14 @@
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
 {% block body_content %}
+
 	<div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header alert alert-warning">
+            <h1 class="page-header">
             {{ "Panel.title" | trans  }}
- 				- {{ user.nick }}
+ 			{% for user in user %}
+ 				- {{ user.Nick }}
+			{% endfor %}
             </h1>
         </div><!-- /.col-lg-12 -->
     </div>
@@ -14,7 +17,7 @@
 	<div class="row">
 
         <!-- START currentGroups -->
-        <div class="col-lg-12 currentGroups alert alert-info">
+        <div class="col-lg-12 currentGroups alert alert-success">
         	<div class="col-md-1">
         		<i class="fa fa-5x fa-clock-o"></i>
         	</div>
@@ -35,14 +38,14 @@
         
         <!-- START Buttons -->
         <div class="col-md-12">
-        	<p class="col-md-2"><a class="btn btn-primary btn-outline" href="{{ app.request.getBaseURL() }}/panel/groups"><i class="fa fa-user"></i> Unirme a un grupo</a></p>
-        	<p class="col-md-2"><a class="btn btn-primary btn-outline" href="{{ app.request.getBaseURL() }}/panel/routes"><i class="fa fa-location-arrow"></i> Buscar una ruta</a></p>
+        	<p class="col-md-2"><a class="btn btn-primary btn-outline" href="{{ path('panel_groups') }}"><i class="fa fa-user"></i> Unirme a un grupo</a></p>
+        	<p class="col-md-2"><a class="btn btn-primary btn-outline" href="{{ path('panel_routes') }}"><i class="fa fa-location-arrow"></i> Buscar una ruta</a></p>
         </div>
         <!-- END Buttons -->
 
         <!-- START Resume -->
 			<div class="col-md-12 resume">
-				<h2 class="col-md-12  alert alert-warning">Mi Resumen</h2>
+				<h2 class="col-md-12 well">Mi Resumen</h2>
 				
 				<!-- START resumeChilds -->
 				<div class="col-md-12 resumeChilds well">
@@ -69,12 +72,12 @@
 					</div>
 
 					<div class="col-md-6">
-						<h5 class="alert alert-info"><i class="fa fa-plus"></i> <a href="{{ app.request.getBaseURL() }}/panel/children/new">Añadir niño</a></h5>
+						<h5 class="alert alert-info"><i class="fa fa-plus"></i> <a href="{{ path('panel_children_new') }}">Añadir niño</a></h5>
 						<div class="alert alert-warning">
  						<ul>
-								<li>&nbsp;</li>
+
  							{% for child in children %}
-				 				<li><i class="fa fa-pencil"></i> <a href="{{ app.request.getBaseURL() }}/panel/children/{{ child.id }}/edit">Editar</a> &nbsp;<i class="fa fa-trash-o"></i> <a href="{{ app.request.getBaseURL() }}/panel/children/{{ child.id }}/delete">Eliminar</a></li>
+				 				<li><i class="fa fa-pencil"></i> <a href="{{ path('panel_children') }}{{ child.id }}/edit">Editar</a> &nbsp;<i class="fa fa-trash-o"></i> <a href="{{ path('panel_children') }}{{ child.id }}/delete">Eliminar</a></li>
 							{% endfor %}
 
  						</ul>
@@ -109,13 +112,13 @@
 
 					<div class="col-md-6">
 						<h5 class="alert alert-info">
-							<i class="fa fa-users"></i> <a href="{{ app.request.getBaseURL() }}/panel/groups">Buscar Grupos</a> &nbsp; <i class="fa fa-plus"></i> <a href="{{ app.request.getBaseURL() }}/panel/groups/new">Crear Grupo</a>
+							<i class="fa fa-users"></i> <a href="{{ path('panel_groups') }}">Buscar Grupos</a> &nbsp; <i class="fa fa-plus"></i> <a href="{{ path('panel_groups_new') }}">Crear Grupo</a>
 						</h5>
 						<div class="alert alert-warning">
 	 						<ul>
 
 	 							{% for group in groups %}
-					 				<li><i class="fa fa-pencil"></i> <a href="{{ app.request.getBaseURL() }}/panel/groups/{{ group.id }}/edit">Editar</a> &nbsp;<i class="fa fa-mail-forward"></i> <a href="{{ app.request.getBaseURL() }}/join/{{ group.id }}">Unirme al grupo</a></li>
+					 				<li><i class="fa fa-pencil"></i> <a href="{{ path('panel_groups') }}{{ group.id }}/edit">Editar</a> &nbsp;<i class="fa fa-mail-forward"></i> <a href="{{ app.request.getBaseURL() }}/join/{{ group.id }}">Unirme al grupo</a></li>
 								{% endfor %}
 
 	 						</ul>
@@ -141,7 +144,7 @@
  						<ul>
 
 				 			{% for route in routes %}
-				 				<li>{{ route.name }} <span style="float:right;"></span></li>
+				 				<li>{{ route.name }} <span style="float:right;">cosa</span></li>
 							{% endfor %}
 
  						</ul>
@@ -150,13 +153,13 @@
 
 					<div class="col-md-6">
 						<h5 class="alert alert-info">
-							<i class="fa fa-location-arrow"></i> <a href="{{ app.request.getBaseURL() }}/panel/routes">Buscar Rutas</a> &nbsp; <i class="fa fa-plus"></i> <a href="{{ app.request.getBaseURL() }}/panel/routes/new">Crear Ruta</a>
+							<i class="fa fa-location-arrow"></i> <a href="{{ path('panel_routes') }}">Buscar Rutas</a> &nbsp; <i class="fa fa-plus"></i> <a href="{{ path('panel_routes_new') }}">Crear Ruta</a>
 						</h5>
 						<div class="alert alert-warning">
 	 						<ul>
 
 	 							{% for route in routes %}
-	 								<li><i class="fa fa-pencil"></i> <a href="{{ app.request.getBaseURL() }}/panel/routes/{{ route.id }}/edit">Ver y Editar</a></li>
+	 								<li><i class="fa fa-pencil"></i> <a href="{{ path('panel_routes') }}{{ route.id }}/edit">Ver y Editar</a></li>
 	 							{% endfor %}
 
 	 						</ul>
