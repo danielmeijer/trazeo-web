@@ -4,6 +4,7 @@
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
 		{% block body_content %}
+		{{ entity.country.name }}
 		<h3>Grupos de esta ruta</h3>
             <button type="button" class="btn btn-info btn-circle btn-xl"><i class="fa fa-plus"></i></button>
             {% for group in groups %}

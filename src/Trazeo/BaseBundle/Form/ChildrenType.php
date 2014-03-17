@@ -15,15 +15,31 @@ class ChildrenType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nick')
+            ->add('nick', null, array(
+        			'attr' => array(
+        					'placeholder' => 'Children.nick'
+        					)
+        			)
+        		)
     		->add('date_birth', 'date', array(
     			'widget' => 'single_text',
-    			'attr' => array('class' => 'inputDate'),
+    			'attr' => array('class' => 'inputDate', 'placeholder' => 'Children.date'),
     			'format' => 'dd/MM/yyyy'))
             ->add('visibility', 'choice', array(
-            		'choices'   => array('enabled' => 'Enabled', 'disabled' => 'Disabled')))
-            ->add('sex')
-            ->add('groups')
+            		'choices'   => array(1 => 'Enabled', 0 => 'Disabled')))
+            ->add('sex', 'choice', array(
+            		'choices' => array('boy' => 'Children.sex.boy', 'girl' => 'Children.sex.girl'),
+        			'attr' => array(
+        					'placeholder' => 'Children.sex'
+        					)
+        			)
+        		)
+            ->add('groups', null, array(
+        			'attr' => array(
+        					'placeholder' => 'Children.groups'
+        					)
+        			)
+        		)
         ;
     }
     
