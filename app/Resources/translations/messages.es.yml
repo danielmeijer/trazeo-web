@@ -35,3 +35,4 @@ Trans:
     
     search:
         groups: 'Buscar Grupos'
+        routes: 'Buscar Rutas'

@@ -15,10 +15,11 @@ class GroupsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('userextendgroups')
-            ->add('children')
-            ->add('routes')
+        ->add('name', null, array(
+        		'attr' => array('placeholder' => 'Groups.name')))
+        ->add('routes',null , array(
+        		'data' => array('empty_value' => 'Ruotes.Name')))
+
         ;
     }
     
