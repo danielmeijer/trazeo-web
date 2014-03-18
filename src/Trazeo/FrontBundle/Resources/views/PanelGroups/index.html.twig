@@ -35,6 +35,14 @@
 								<b>Administrador del grupo:</b> {{ group.admin.Nick }} 
 							</li>
 							<li>
+							<b>Miembros del grupo:</b>
+								<ul>
+									{% for groupsUser in group.userextendgroups %}
+										<li><b>Nombre:</b> {{ groupsUser.Nick }}</li>
+									{% endfor %}
+								</ul>
+							</li>
+							<li>
 								<b>Nº de niños en este grupo:</b> {{ group.children.count }} 
 							</li>
 							<li>

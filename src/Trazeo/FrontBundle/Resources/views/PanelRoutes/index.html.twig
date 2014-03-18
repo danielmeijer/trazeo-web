@@ -45,6 +45,13 @@
 							</li>
 							<li>
 								<b>Grupos con esta ruta:</b>
+								<ul>
+								{% for routesGroups in route.groups %}
+									<li>
+										{{ routesGroups.name }}
+									</li>
+								{% endfor %}
+								</ul>
 							</li>
 							<li>
 								<b>País:</b> {{ route.country.name }} 

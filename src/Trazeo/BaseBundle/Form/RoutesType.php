@@ -20,11 +20,10 @@ class RoutesType extends AbstractType
         					'placeholder' => 'Route.name',
         					'data-toggle' => 'popover',
         					'data-placement' => 'right',
-        					'data-content' => 'Route.name.help'//$trans->translate('Route.name.help')
+        					'data-content' => 'Route.name.help'
         					)
        				)
         		)
-        ->add('groups')
             ->add('country', 'entity', array(
             		'class' => 'JJsGeonamesBundle:Country',
             		'attr' => array('class' => 'chosen-select'),

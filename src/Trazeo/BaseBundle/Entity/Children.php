@@ -25,8 +25,7 @@ class Children
      */
     protected $userextendchildren;
     
-    /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\Groups", mappedBy="children")
-     * @ORM\JoinColumn(name="children_groups", referencedColumnName="id")
+    /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\Groups", inversedBy="children")
      */
     protected $groups;
 

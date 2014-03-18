@@ -21,6 +21,8 @@ class ChildrenType extends AbstractType
         					)
         			)
         		)
+        	->add('userextendchildren')
+        	->add('groups')
     		->add('date_birth', 'date', array(
     			'widget' => 'single_text',
     			'attr' => array('class' => 'inputDate', 'placeholder' => 'Children.date'),
@@ -34,7 +36,6 @@ class ChildrenType extends AbstractType
         					)
         			)
         		)
-            ->add('groups')
         ;
     }
     
