@@ -18,6 +18,7 @@ class RoutesType extends AbstractType
             ->add('name', null, array(
         			'attr' => array('placeholder' => 'Routes.name')
         ))
+        ->add('groups')
             ->add('country', 'entity', array(
             		'class' => 'JJsGeonamesBundle:Country',
             		'attr' => array('class' => 'chosen-select'),

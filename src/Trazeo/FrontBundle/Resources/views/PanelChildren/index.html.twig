@@ -4,17 +4,56 @@
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
 		{% block body_content %}               
-        	{% for entity in entities %}
-            <tr>
-               
-                <td>{{ entity.nick }}</td>
-                <td>{% if entity.dateBirth %}{{ entity.dateBirth|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ entity.visibility }}</td>
-                <td>{{ entity.sex }}</td>
-                <td>
-                
-                </td>
-            </tr>
-        {% endfor %}
+
+        <div class="col-lg-12 alert alert-info">
+        	<div class="col-md-2">
+        		<i class="fa fa-5x fa-female">&nbsp;</i><i class="fa fa-5x fa-male"></i>
+        	</div>
+        	<div class="col-md-10">
+				<h4>Listado de tus niños</h4>
+					<div class="input-group custom-search-form col-md-4">
+						<input type="search" class="form-control" placeholder='{{ "Trans.search.children"|trans }}'/>
+						<span class="input-group-btn">
+						<button class="btn btn-primary" type="button"><i class="fa fa-search"></i></button>
+						</span>				
+					</div>
+			</div>
+        </div><!-- END col-lg-12 alert alert-info -->
+		
+		
+	{% for children in childrens %}
+		<div class="panel-group" id="accordion">
+			<div class="panel panel-warning">
+				<div class="panel-heading">
+		        	<h4 class="panel-title">
+		            	<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ children.id }}">{{ children.nick }}<div class="pull-right"><i class="btn btn-warning btn-circle">{{ children.groups|length }}</i> {{ "Usuarios"|trans }}</div></a>
+					</h4>
+				</div>
+				<div id="collapse{{ children.id }}" class="panel-collapse collapse">
+					<div class="panel-body">
+						<ul>
+							<li>
+								<b>Padre, madre o tutor: </b>{{ children.userextendchildren.count }}
+							</li>
+							<li>
+								<b>Grupo al que pertenece: </b> 
+							</li>
+							<li>
+								<b>Sexo: </b>{{ children.sex}} 
+							</li>
+							<li>
+								<b>Fecha de nacimiento: </b>{{ children.datebirth |date("d/m/Y")}} 
+							</li>
+							<li>
+								<b>Visibilidad: </b>{{ children.visibility }}
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+		
+		
 		{% endblock %}
 		

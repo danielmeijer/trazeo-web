@@ -5,19 +5,42 @@
 
 {% block body_content %}
 		
-	{% for entity in entities %}
+        <div class="col-lg-12 alert alert-info">
+        	<div class="col-md-1">
+        		<i class="fa fa-5x fa-location-arrow"></i>
+        	</div>
+        	<div class="col-md-11">
+				<h4>Estas rutas se encuentran en tu ciudad y podrían interesarte.</h4>
+		
+					<div class="input-group custom-search-form col-md-4">						
+						<input type="search" class="form-control" placeholder='{{ "Trans.search.routes"|trans }}'/>
+						<span class="input-group-btn">
+						<button class="btn btn-primary" type="button"><i class="fa fa-search"></i></button>
+						</span>	
+					</div>
+			</div>
+		</div>
+		
+		
+	{% for route in routes%}
 		<div class="panel-group" id="accordion">
-			<div class="panel panel-default">
+			<div class="panel panel-warning">
 				<div class="panel-heading">
 		        	<h4 class="panel-title">
-		            	<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ route.id }}">{{ route.name }}<div class="pull-right">{{ route.groups|length }} {{ "Groups"|trans }}</div></a>
+		            	<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ route.id }}">{{ route.name }}<div class="pull-right"><i class="btn btn-warning btn-circle"> {{ route.groups|length }}</i> {{ "Grupo"|trans }}</div></a>
 					</h4>
 				</div>
 				<div id="collapse{{ route.id }}" class="panel-collapse collapse">
 					<div class="panel-body">
 						<ul>
 							<li>
-							<b>Autor</b>: 
+								<b>Administrador de la ruta:</b> {{ route.admin.Nick }} 
+							</li>
+							<li>
+								<b>Grupos con esta ruta:</b>
+							</li>
+							<li>
+								<b>País:</b> {{ route.country.name }} 
 							</li>
 						</ul>
 					</div>

@@ -36,3 +36,4 @@ Trans:
     search:
         groups: 'Buscar Grupos'
         routes: 'Buscar Rutas'
+        children: 'Buscar Niños'

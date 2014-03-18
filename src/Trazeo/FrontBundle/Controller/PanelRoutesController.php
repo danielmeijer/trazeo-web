@@ -32,7 +32,7 @@ class PanelRoutesController extends Controller
         $entities = $em->getRepository('TrazeoBaseBundle:Routes')->findAll();
 
         return array(
-            'entities' => $entities,
+            'routes' => $entities,
         );
     }
     /**

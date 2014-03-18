@@ -29,10 +29,13 @@ class PanelChildrenController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('TrazeoBaseBundle:Children')->findAll();
+        $fos_user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+        
+        $childrens = $user->getChildren();
 
         return array(
-            'entities' => $entities,
+            'childrens' => $childrens,
         );
     }
     /**

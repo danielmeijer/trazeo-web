@@ -26,6 +26,7 @@ class Children
     protected $userextendchildren;
     
     /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\Groups", mappedBy="children")
+     * @ORM\JoinColumn(name="groups_children", referencedColumnName="id")
      */
     protected $groups;
 
