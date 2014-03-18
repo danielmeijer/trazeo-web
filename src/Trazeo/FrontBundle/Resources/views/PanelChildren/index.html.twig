@@ -6,8 +6,8 @@
 		{% block body_content %}               
 
         <div class="col-lg-12 alert alert-info">
-        	<div class="col-md-2">
-        		<i class="fa fa-5x fa-female">&nbsp;</i><i class="fa fa-5x fa-male"></i>
+        	<div class="col-md-1">
+        		<i class="fa fa-5x fa-user"></i>
         	</div>
         	<div class="col-md-10">
 				<h4>Listado de tus niños</h4>
@@ -26,23 +26,33 @@
 			<div class="panel panel-warning">
 				<div class="panel-heading">
 		        	<h4 class="panel-title">
-		            	<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ children.id }}">{{ children.nick }}<div class="pull-right"><i class="btn btn-warning btn-circle">{{ children.groups|length }}</i> {{ "Usuarios"|trans }}</div></a>
+		            	<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ children.id }}">{{ children.nick }}<div class="pull-right"><i class="btn btn-warning btn-circle">{{ children.userextendchildren |length }}</i> {{ "Usuarios"|trans }}</div></a>
 					</h4>
 				</div>
-				<div id="collapse{{ children.id }}" class="panel-collapse collapse">
+				<div id="collapse{{ children.id }}" class="panel-collapse collapse in">
 					<div class="panel-body">
 						<ul>
 							<li>
-								<b>Padre, madre o tutor: </b>
+								<b>Tutores: </b>
+									<ul>
+									{% for childrenUsers in children.userextendchildren %}
+										<li>{{ childrenUsers.nick }}</li>
+										{% endfor %} 
+									</ul>							
 							</li>
 							<li>
-								<b>Grupo al que pertenece: </b> 
+								<b>Grupos: </b>
+									<ul>
+									{% for childrenGroups in children.groups %}
+										<li>{{ childrenGroups.name }}</li>
+										{% endfor %} 
+									</ul>							
 							</li>
 							<li>
-								<b>Sexo: </b>{{ children.sex}} 
+								<b>Sexo: </b>{{ children.sex }} 
 							</li>
 							<li>
-								<b>Fecha de nacimiento: </b>{{ children.datebirth |date("d/m/Y")}} 
+								<b>Fecha de nacimiento: </b>{{ children.datebirth |date("d/m/Y") }} 
 							</li>
 							<li>
 								<b>Visibilidad: </b>{{ children.visibility }}

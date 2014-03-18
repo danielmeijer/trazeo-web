@@ -37,7 +37,7 @@ class Builder extends ContainerAware
         		'route' => 'panel_groups'
         		))
         ->setLabel($this->container->get('translator')->trans('Menu.groups'));
-        $menu['Groups']->setAttribute('icon', 'fa-plus');
+        $menu['Groups']->setAttribute('icon', 'fa-users');
         if ($options['activeMenu'] == "groups") {
         	$menu['Groups']->setAttribute('class', 'active');
         }
@@ -47,7 +47,7 @@ class Builder extends ContainerAware
         		'route' => 'panel_routes'
         ))
         ->setLabel($this->container->get('translator')->trans('Menu.routes'));
-        $menu['Routes']->setAttribute('icon', 'fa-user');
+        $menu['Routes']->setAttribute('icon', 'fa-location-arrow');
         if ($options['activeMenu'] == "routes") {
         	$menu['Routes']->setAttribute('class', 'active');
         }

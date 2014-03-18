@@ -17,8 +17,7 @@ class GroupsType extends AbstractType
         $builder
         ->add('name', null, array(
         		'attr' => array('placeholder' => 'Groups.name')))
-        ->add('routes',null , array(
-        		'data' => array('empty_value' => 'Ruotes.Name')))
+        ->add('routes')
 
         ;
     }

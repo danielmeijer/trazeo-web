@@ -34,12 +34,7 @@ class ChildrenType extends AbstractType
         					)
         			)
         		)
-            ->add('groups', null, array(
-        			'attr' => array(
-        					'placeholder' => 'Children.groups'
-        					)
-        			)
-        		)
+            ->add('groups')
         ;
     }
     

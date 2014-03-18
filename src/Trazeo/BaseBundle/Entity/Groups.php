@@ -31,7 +31,6 @@ class Groups
     protected $admin;
     
     /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\Children", inversedBy="groups")
-     * @ORM\JoinColumn(name="groups_children", referencedColumnName="id")
      */
     protected $children;
 

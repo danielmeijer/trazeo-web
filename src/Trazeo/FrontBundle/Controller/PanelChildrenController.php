@@ -46,8 +46,8 @@ class PanelChildrenController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity = new Children();
-        $form = $this->createCreateForm($entity);
+        $children = new Children();
+        $form = $this->createCreateForm($children);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -56,17 +56,16 @@ class PanelChildrenController extends Controller
             $fos_user = $this->container->get('security.context')->getToken()->getUser();
             $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
             
-            $user->addChild($entity);
+            $user->addChild($children);
             
-            $em->persist($entity);
+            $em->persist($children);
             $em->flush();
 
-            //return $this->redirect($this->generateUrl('panel_children_show', array('id' => $entity->getId())));
             return $this->redirect($this->generateUrl('panel_children'));
         }
 
         return array(
-            'entity' => $entity,
+            'children' => $children,
             'form'   => $form->createView(),
         );
     }
@@ -74,13 +73,13 @@ class PanelChildrenController extends Controller
     /**
      * Creates a form to create a Children entity.
      *
-     * @param Children $entity The entity
+     * @param Children $children The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Children $entity)
+    private function createCreateForm(Children $children)
     {
-        $form = $this->createForm(new ChildrenType(), $entity, array(
+        $form = $this->createForm(new ChildrenType(), $children, array(
             'action' => $this->generateUrl('panel_children_create'),
             'method' => 'POST',
         ));
@@ -99,11 +98,11 @@ class PanelChildrenController extends Controller
      */
     public function newAction()
     {
-        $entity = new Children();
-        $form   = $this->createCreateForm($entity);
+        $children = new Children();
+        $form   = $this->createCreateForm($children);
 
         return array(
-            'entity' => $entity,
+            'children' => $children,
             'form'   => $form->createView(),
         );
     }
@@ -119,16 +118,16 @@ class PanelChildrenController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('TrazeoBaseBundle:Children')->find($id);
+        $children = $em->getRepository('TrazeoBaseBundle:Children')->find($id);
 
-        if (!$entity) {
+        if (!$children) {
             throw $this->createNotFoundException('Unable to find Children entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'children'    => $children,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -144,17 +143,17 @@ class PanelChildrenController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('TrazeoBaseBundle:Children')->find($id);
+        $children = $em->getRepository('TrazeoBaseBundle:Children')->find($id);
 
-        if (!$entity) {
+        if (!$children) {
             throw $this->createNotFoundException('Unable to find Children entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($children);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'children'      => $children,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
@@ -163,14 +162,14 @@ class PanelChildrenController extends Controller
     /**
     * Creates a form to edit a Children entity.
     *
-    * @param Children $entity The entity
+    * @param Children $children The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Children $entity)
+    private function createEditForm(Children $children)
     {
-        $form = $this->createForm(new ChildrenType(), $entity, array(
-            'action' => $this->generateUrl('panel_children_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new ChildrenType(), $children, array(
+            'action' => $this->generateUrl('panel_children_update', array('id' => $children->getId())),
             'method' => 'PUT',
         ));
 
@@ -183,19 +182,20 @@ class PanelChildrenController extends Controller
      *
      * @Route("/{id}", name="panel_children_update")
      * @Method("PUT")
+     * @Template("TrazeoBaseBundle:Children:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('TrazeoBaseBundle:Children')->find($id);
+        $children = $em->getRepository('TrazeoBaseBundle:Children')->find($id);
 
-        if (!$entity) {
+        if (!$children) {
             throw $this->createNotFoundException('Unable to find Children entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($children);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
@@ -205,7 +205,7 @@ class PanelChildrenController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
+            'children'    => $children,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
@@ -225,13 +225,13 @@ class PanelChildrenController extends Controller
 
         //if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('TrazeoBaseBundle:Children')->find($id);
+            $children = $em->getRepository('TrazeoBaseBundle:Children')->find($id);
 
-            if (!$entity) {
+            if (!$children) {
                 throw $this->createNotFoundException('Unable to find Children entity.');
             }
 
-            $em->remove($entity);
+            $em->remove($children);
             $em->flush();
         //}
 
