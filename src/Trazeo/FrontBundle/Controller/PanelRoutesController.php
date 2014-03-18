@@ -29,10 +29,10 @@ class PanelRoutesController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('TrazeoBaseBundle:Routes')->findAll();
+        $routes = $em->getRepository('TrazeoBaseBundle:Routes')->findAll();
 
         return array(
-            'routes' => $entities,
+            'routes' => $routes,
         );
     }
     /**
@@ -50,21 +50,21 @@ class PanelRoutesController extends Controller
     	//UserExtend
     	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
     	
-        $entity = new Routes();
-        $form = $this->createCreateForm($entity);
+        $route = new Routes();
+        $form = $this->createCreateForm($route);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity->setAdmin($user);
-            $em->persist($entity);
+            $route->setAdmin($user);
+            $em->persist($route);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('panel_routes_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('panel_routes_show', array('id' => $route->getId())));
         }
 
         return array(
-            'entity' => $entity,
+            'route' => $route,
             'form'   => $form->createView(),
         );
     }
@@ -72,13 +72,13 @@ class PanelRoutesController extends Controller
     /**
      * Creates a form to create a Routes entity.
      *
-     * @param Routes $entity The entity
+     * @param Routes $route The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Routes $entity)
+    private function createCreateForm(Routes $route)
     {
-        $form = $this->createForm(new RoutesType(), $entity, array(
+        $form = $this->createForm(new RoutesType(), $route, array(
             'action' => $this->generateUrl('panel_routes_create'),
             'method' => 'POST',
         ));
@@ -97,12 +97,12 @@ class PanelRoutesController extends Controller
      */
     public function newAction()
     {
-        $entity = new Routes();
+        $route = new Routes();
 
-        $form = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($route);
         
         return array(
-            'entity' => $entity,
+            'route' => $route,
             'form'   => $form->createView(),
         );
     }
@@ -150,17 +150,17 @@ class PanelRoutesController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('TrazeoBaseBundle:Routes')->find($id);
+        $route = $em->getRepository('TrazeoBaseBundle:Routes')->find($id);
 
-        if (!$entity) {
+        if (!$route) {
             throw $this->createNotFoundException('Unable to find Routes entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($route);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'route'      => $route,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
@@ -169,14 +169,14 @@ class PanelRoutesController extends Controller
     /**
     * Creates a form to edit a Routes entity.
     *
-    * @param Routes $entity The entity
+    * @param Routes $route The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Routes $entity)
+    private function createEditForm(Routes $route)
     {
-        $form = $this->createForm(new RoutesType(), $entity, array(
-            'action' => $this->generateUrl('panel_routes_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new RoutesType(), $route, array(
+            'action' => $this->generateUrl('panel_routes_update', array('id' => $route->getId())),
             'method' => 'PUT',
         ));
 
@@ -195,14 +195,14 @@ class PanelRoutesController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('TrazeoBaseBundle:Routes')->find($id);
+        $route = $em->getRepository('TrazeoBaseBundle:Routes')->find($id);
 
-        if (!$entity) {
+        if (!$route) {
             throw $this->createNotFoundException('Unable to find Routes entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($route);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
@@ -212,7 +212,7 @@ class PanelRoutesController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
+            'route'      => $route,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
@@ -230,13 +230,13 @@ class PanelRoutesController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('TrazeoBaseBundle:Routes')->find($id);
+            $route = $em->getRepository('TrazeoBaseBundle:Routes')->find($id);
 
-            if (!$entity) {
+            if (!$route) {
                 throw $this->createNotFoundException('Unable to find Routes entity.');
             }
 
-            $em->remove($entity);
+            $em->remove($route);
             $em->flush();
         }
 

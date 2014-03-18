@@ -16,8 +16,14 @@ class RoutesType extends AbstractType
     {
         $builder
             ->add('name', null, array(
-        			'attr' => array('placeholder' => 'Routes.name')
-        ))
+        			'attr' => array(
+        					'placeholder' => 'Route.name',
+        					'data-toggle' => 'popover',
+        					'data-placement' => 'right',
+        					'data-content' => 'Route.name.help'//$trans->translate('Route.name.help')
+        					)
+       				)
+        		)
         ->add('groups')
             ->add('country', 'entity', array(
             		'class' => 'JJsGeonamesBundle:Country',
