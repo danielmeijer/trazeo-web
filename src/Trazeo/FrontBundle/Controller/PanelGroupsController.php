@@ -18,8 +18,36 @@ use Trazeo\BaseBundle\Controller\GroupsController;
  */
 class PanelGroupsController extends Controller
 {
-    /**
+	
+	/**
+	 * User join Group.
+	 *
+	 * @Route("/{id}", name="panel_groups_join")
+	 * @Method("GET")
+	 * @Template()
+	 */
+	public function joinGroupAction($id) {
+		
+		$em = $this->getDoctrine()->getManager();
+		
+		$fos_user = $this->container->get('security.context')->getToken()->getUser();
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+		
+		$group = $em->getRepository('TrazeoBaseBundle:Groups')->find($id);
+		
+		if (!$group) {
+			throw $this->createNotFoundException('Unable to find Groups entity.');
+		}
+		
+		$group->addUserextendgroup($user);
+		$em->persist($group);
+		$em->flush();
 
+		return $this->redirect($this->generateUrl('panel_groups'));
+	}
+	
+	
+    /**
      * Lists all Groups entities.
      *
      * @Route("/", name="panel_groups")

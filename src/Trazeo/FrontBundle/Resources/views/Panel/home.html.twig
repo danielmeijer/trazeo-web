@@ -109,7 +109,7 @@
 	 						<ul>
 
 	 							{% for group in groups %}
-					 				<li><i class="fa fa-pencil"></i> <a href="{{ app.request.getBaseURL() }}/panel/groups/{{ group.id }}/edit">Editar</a> &nbsp;<i class="fa fa-mail-forward"></i> <a href="{{ app.request.getBaseURL() }}/join/{{ group.id }}">Unirme al grupo</a></li>
+					 				<li><i class="fa fa-pencil"></i> <a href="{{ app.request.getBaseURL() }}/panel/groups/{{ group.id }}/edit">Editar</a>
 								{% endfor %}
 
 	 						</ul>
@@ -150,7 +150,7 @@
 	 						<ul>
 
 	 							{% for route in routes %}
-	 								<li><i class="fa fa-pencil"></i> <a href="{{ app.request.getBaseURL() }}/panel/routes/{{ route.id }}/edit">Ver y Editar</a></li>
+	 								<li><i class="fa fa-pencil"></i> <a href="{{ app.request.getBaseURL() }}/panel/routes/{{ route.id }}/edit">Editar</a></li>
 	 							{% endfor %}
 
 	 						</ul>

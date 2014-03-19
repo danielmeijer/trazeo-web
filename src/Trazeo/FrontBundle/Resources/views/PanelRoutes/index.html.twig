@@ -34,26 +34,32 @@
 			<div class="panel panel-warning">
 				<div class="panel-heading">
 		        	<h4 class="panel-title">
-		            	<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ route.id }}">{{ route.name }}<div class="pull-right"><i class="btn btn-warning btn-circle"> {{ route.groups|length }}</i> {{ "Grupo"|trans }}</div></a>
+		            	<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ route.id }}">{{ route.name }}<div class="pull-right"><i class="btn btn-warning btn-circle"> {{ route.groups|length }}</i> {{ "Menu.groups"|trans }}</div></a>
 					</h4>
 				</div>
-				<div id="collapse{{ route.id }}" class="panel-collapse collapse">
+				<div id="collapse{{ route.id }}" class="panel-collapse collapse in">
 					<div class="panel-body">
 						<ul>
 							<li>
+								<i class="fa fa-key"></i>
 								<b>Administrador de la ruta:</b> {{ route.admin.nick }} 
 							</li>
 							<li>
+								<i class="fa fa-location-arrow"></i><a href="{{ path('panel_routes_show', { 'id': route.id }) }}""> Mapa de la ruta</a>
+							</li>
+							<li>
+								<i class="fa fa-users"></i>
 								<b>Grupos con esta ruta:</b>
 								<ul>
 								{% for routesGroups in route.groups %}
 									<li>
-										{{ routesGroups.name }}
+										<i class="fa fa-angle-right"></i> {{ routesGroups.name }}
 									</li>
 								{% endfor %}
 								</ul>
 							</li>
 							<li>
+								<i class="fa fa-globe"></i>	
 								<b>País:</b> {{ route.country.name }} 
 							</li>
 						</ul>
