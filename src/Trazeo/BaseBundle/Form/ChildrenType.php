@@ -17,22 +17,53 @@ class ChildrenType extends AbstractType
         $builder
             ->add('nick', null, array(
         			'attr' => array(
-        					'placeholder' => 'Children.nick'
-        					)
+        					'placeholder' => 'Children.nick',
+        					'data-toggle' => 'popover',
+        					'data-placement' => 'right',
+        					'data-content' => 'Children.help.nick'
+        					),'required' => true
         			)
         		)
-        	->add('userextendchildren')
-        	->add('groups')
+            ->add('userextendchildren', null, array(
+        			'attr' => array(
+        					'placeholder' => 'Route.name',
+        					'data-toggle' => 'popover',
+        					'data-placement' => 'right',
+        					'data-content' => 'Children.help.userextend'
+        					)))
+            ->add('groups', null, array(
+        			'attr' => array(
+        					'placeholder' => 'Route.name',
+        					'data-toggle' => 'popover',
+        					'data-placement' => 'right',
+        					'data-content' => 'Children.help.groups'
+        					)))
     		->add('date_birth', 'date', array(
     			'widget' => 'single_text',
-    			'attr' => array('class' => 'inputDate', 'placeholder' => 'Children.date'),
-    			'format' => 'dd/MM/yyyy'))
+    			'attr' => array(
+    					'class' => 'inputDate', 
+    					'placeholder' => 'Children.date',
+    					'data-toggle' => 'popover',
+    					'data-placement' => 'right',
+    					'data-content' => 'Children.help.dateBirth'),
+    			'format' => 'dd/MM/yyyy','required' => true))
+    			
             ->add('visibility', 'choice', array(
-            		'choices'   => array(1 => 'Enabled', 0 => 'Disabled')))
+            		'choices'   => array(1 => 'Enabled', 0 => 'Disabled'),
+            		'attr' => array(
+            				'placeholder' => 'Children.sex',
+            				'data-toggle' => 'popover',
+            				'data-placement' => 'right',
+            				'data-content' => 'Children.help.visibility'
+            		)))
+            		
             ->add('sex', 'choice', array(
             		'choices' => array('boy' => 'Children.sex.boy', 'girl' => 'Children.sex.girl'),
         			'attr' => array(
-        					'placeholder' => 'Children.sex'
+        					'placeholder' => 'Children.sex',
+        					'data-toggle' => 'popover',
+        					'data-placement' => 'right',
+        					'data-content' => 'Children.help.sex'
         					)
         			)
         		)

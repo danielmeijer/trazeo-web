@@ -7,7 +7,36 @@ Menu:
 Panel:
     title: 'Panel de Control'
 
-Route.show.title: "Ruta: %name%"
+Userextend:
+    help:
+        nick: 'Nombre de  usuario'
+        groups: 'Grupos de los que quieres formar parte'
+
+Route:
+    name: 'Nombre de la ruta'
+    show:
+        title: "Ruta: %name%"
+    help:
+        name: 'Nombre descriptivo de la ruta'
+        country: 'Páis al que pertenece'
+        
+Groups:
+    name: 'Nombre del grupo'
+    help:
+       name: 'Nombre del grupo'
+       route: 'Asignar una ruta a este grupo'
+        
+        
+Children:
+    nick: 'Nombre del niño'
+    date: 'Fecha de nacimiento'
+    help:
+        name: 'Nombre del niño'
+        userextend: 'Tutores del niño'
+        groups: 'Asignar a un grupo'
+        datebirth: 'Fecha de nacimiento'
+        sex: 'Género'
+        visibility: 'Visibilidad'
 
 Trans:
     alternative: 'ES Alternative Translation'
@@ -37,3 +66,6 @@ Trans:
         groups: 'Buscar Grupos'
         routes: 'Buscar Rutas'
         children: 'Buscar Niños'
+        
+    select:
+        option: 'Selecciona una opción'

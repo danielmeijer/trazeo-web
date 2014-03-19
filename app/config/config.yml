@@ -134,7 +134,7 @@ services:
         class: Trazeo\BaseBundle\Listener\UpdatedListener
         arguments: ['@service_container']
         tags:
-            - { name: doctrine.event_subscriber }  
+            - { name: doctrine.event_subscriber }
               
 jms_translation:
     configs:

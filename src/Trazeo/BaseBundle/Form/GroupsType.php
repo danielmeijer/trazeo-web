@@ -16,10 +16,21 @@ class GroupsType extends AbstractType
     {
         $builder
         ->add('name', null, array(
-        		'attr' => array('placeholder' => 'Groups.name')))
+        		'attr' => array(
+        				'placeholder' => 'Groups.name',
+        				'data-toggle' => 'popover',
+        				'data-placement' => 'right',
+        				'data-content' => 'Groups.help.name'
+        		),'required' => true))
+        ->add('userextendgroups')
         ->add('routes', null, array(
-        		'empty_value' => 'Select your option'))
-        ;
+        		'attr' => array(
+        				'placeholder' => 'Groups.name',
+        				'data-toggle' => 'popover',
+        				'data-placement' => 'right',
+        				'data-content' => 'Groups.help.route'
+        		)),
+        		array('empty_value' => 'Trans.select.option'));
     }
     
     /**

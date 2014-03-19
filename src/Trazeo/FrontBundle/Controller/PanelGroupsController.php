@@ -30,11 +30,16 @@ class PanelGroupsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        
+        $fos_user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+        $userGroups = $user->getGroups();
+        
         $groups = $em->getRepository('TrazeoBaseBundle:Groups')->findAll();
         $routes = $em->getRepository('TrazeoBaseBundle:Routes')->findAll();
         
         return array(
-            'groups' => $groups, 'routes' => $routes
+            'groups' => $groups,'userGroups' => $userGroups, 'routes' => $routes
         );
     }
     /**
@@ -57,6 +62,7 @@ class PanelGroupsController extends Controller
             $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
             
             $entity->setAdmin($user);
+            $entity->addUserextendgroup($user);            
             
             $em->persist($entity);
             $em->flush();

@@ -24,7 +24,8 @@ class UserExtend
      */
     protected $user;
     
-    /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\Groups", inversedBy="userextendgroups")
+    /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\Groups", mappedBy="userextendgroups")
+     * @ORM\JoinColumn(name="groups_userextend", referencedColumnName="id")
      */
     protected $groups;
     

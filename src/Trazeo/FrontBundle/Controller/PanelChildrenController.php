@@ -37,6 +37,7 @@ class PanelChildrenController extends Controller
         return array(
             'childrens' => $childrens,
         );
+        return $this->redirect($this->generateUrl('panel_children'));
     }
     /**
      * Creates a new Children entity.

@@ -8,28 +8,30 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class RoutesType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    {    	
         $builder
             ->add('name', null, array(
         			'attr' => array(
         					'placeholder' => 'Route.name',
         					'data-toggle' => 'popover',
         					'data-placement' => 'right',
-        					'data-content' => 'Route.name.help'
-        					)
-       				)
-        		)
+        					'data-content' => 'Route.help.name'
+        					),'required' => true))
             ->add('country', 'entity', array(
             		'class' => 'JJsGeonamesBundle:Country',
-            		'attr' => array('class' => 'chosen-select'),
+            		'attr' => array(
+            				'class' => 'chosen-select',
+            				'data-toggle' => 'popover',
+            				'data-placement' => 'right',
+            				'data-content' => 'Children.help.country'
+            		),
             		'property' => 'name'
-           ))
-        ;
+           	));
     }
     
     /**

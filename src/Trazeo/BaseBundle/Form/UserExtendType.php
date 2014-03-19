@@ -15,10 +15,25 @@ class UserExtendType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nick')
-            ->add('user')
-            ->add('groups')
-            ->add('children')
+            ->add('nick', null, array(
+        			'attr' => array(
+        					'placeholder' => 'Children.nick',
+        					'data-toggle' => 'popover',
+        					'data-placement' => 'right',
+        					'data-content' => 'Userextend.help.nick'
+        					),
+            		'required' => true
+        			)
+        		)
+        		->add('groups', null, array(
+        				'attr' => array(
+        						'placeholder' => 'Children.nick',
+        						'data-toggle' => 'popover',
+        						'data-placement' => 'right',
+        						'data-content' => 'Userextend.help.groups'
+        				)
+        		)
+        		)
              ->add('country', 'entity', array(
             		'class' => 'JJsGeonamesBundle:Country',
             		'attr' => array('class' => 'chosen-select'),

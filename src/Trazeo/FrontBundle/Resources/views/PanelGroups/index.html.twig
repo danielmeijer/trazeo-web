@@ -19,7 +19,57 @@
 					</div>
 			</div>
         </div><!-- END col-lg-12 alert alert-info -->
-        				
+
+        <p>&nbsp;</p>
+        <div class="alert alert-info">
+        	<h3><i class="fa fa-list-ul"></i> Grupos de los que formo parte</h3>
+        </div>
+        
+	{% for userGroups in userGroups %}
+		<div class="panel-group" id="accordion">
+			<div class="panel panel-warning">
+				<div class="panel-heading">
+		        	<h4 class="panel-title">
+		            	<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ userGroups.id }}">{{ userGroups.name }}<div class="pull-right"><i class="btn btn-warning btn-circle"> {{ userGroups.userextendgroups|length }}</i> {{ "Usuarios"|trans }}</div></a>
+					</h4>
+				</div>
+				<div id="collapse{{ userGroups.id }}" class="panel-collapse collapse">
+					<div class="panel-body">
+						<ul>
+							<li>
+							<i class="fa fa-key"></i>
+								<b>Administrador del grupo:</b> {{ userGroups.admin.Nick }} 
+							</li>
+							<li>
+							<i class="fa fa-user"></i>
+							<b>Miembros del grupo:</b>
+								<ul>
+									{% for userGroupsUser in userGroups.userextendgroups %}
+										<li><b>Nombre:</b> {{ userGroupsUser.Nick }}</li>
+									{% endfor %}
+								</ul>
+							</li>
+							<li>
+							<i class="fa fa-signal"></i>
+								<b>Nº de niños en este grupo:</b> {{ userGroups.children.count }} 
+							</li>
+							<li>
+							<b><i class="fa fa-location-arrow"></i> Ruta asignada:</b> {{ userGroups.routes.Name }}
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+        
+        
+        
+        
+        
+        <div class="alert alert-info">
+        	<h3><i class="fa fa-list"></i> Todos los Grupos</h3>
+        </div>
 	{% for group in groups %}
 		<div class="panel-group" id="accordion">
 			<div class="panel panel-warning">
@@ -32,9 +82,11 @@
 					<div class="panel-body">
 						<ul>
 							<li>
+							<i class="fa fa-key"></i>
 								<b>Administrador del grupo:</b> {{ group.admin.Nick }} 
 							</li>
 							<li>
+							<i class="fa fa-user"></i>
 							<b>Miembros del grupo:</b>
 								<ul>
 									{% for groupsUser in group.userextendgroups %}
@@ -43,10 +95,11 @@
 								</ul>
 							</li>
 							<li>
+							<i class="fa fa-signal"></i>
 								<b>Nº de niños en este grupo:</b> {{ group.children.count }} 
 							</li>
 							<li>
-							<b>Ruta asignada:</b> {{ group.routes.Name }}
+							<b><i class="fa fa-location-arrow"></i> Ruta asignada:</b> {{ group.routes.Name }}
 							</li>
 						</ul>
 					</div>

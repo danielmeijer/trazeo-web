@@ -29,7 +29,8 @@ class PanelController extends Controller
             'user' => $user,
     		'children' => $children,
             'groups' => $groups,
-    		'routes' => $routes);
+    		'routes' => $routes
+    	);
     	
 	    return $this->render('TrazeoFrontBundle:Panel:home.html.twig', $twig_variables);
 	}
