@@ -91,10 +91,11 @@ class PanelGroupsController extends Controller
         $userGroups = $user->getGroups();
         
         $groups = $em->getRepository('TrazeoBaseBundle:Groups')->findAll();
-        $routes = $em->getRepository('TrazeoBaseBundle:Routes')->findAll();
+        
+    
         
         return array(
-            'groups' => $groups,'userGroups' => $userGroups, 'routes' => $routes
+            'groups' => $groups,'userGroups' => $userGroups
         );
     }
     /**
