@@ -81,6 +81,10 @@
 									<i class="fa fa-link"></i>
 								</a>
 								Unirme a este grupo
+								<a href="{{ path('panel_groups_disjoin', { 'id': group.id }) }}"" type="button" class="btn btn-danger btn-circle">
+									<i class="fa fa-link"></i>
+								</a>
+								Salir de este grupo
 		            	<i class="btn btn-warning btn-circle"> {{ group.userextendgroups|length }}</i> {{ "Usuarios"|trans }}</div>
 					</h4>
 				</div>

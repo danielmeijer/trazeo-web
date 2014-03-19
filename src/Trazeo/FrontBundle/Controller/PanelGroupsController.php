@@ -22,7 +22,7 @@ class PanelGroupsController extends Controller
 	/**
 	 * User join Group.
 	 *
-	 * @Route("/{id}", name="panel_groups_join")
+	 * @Route("/join/{id}", name="panel_groups_join")
 	 * @Method("GET")
 	 * @Template()
 	 */
@@ -46,6 +46,33 @@ class PanelGroupsController extends Controller
 		return $this->redirect($this->generateUrl('panel_groups'));
 	}
 	
+	
+	/**
+	 * User disjoin Group.
+	 *
+	 * @Route("/disjoin/{id}", name="panel_groups_disjoin")
+	 * @Method("GET")
+	 * @Template()
+	 */
+	public function disJoinGroupAction($id) {
+	
+		$em = $this->getDoctrine()->getManager();
+	
+		$fos_user = $this->container->get('security.context')->getToken()->getUser();
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+	
+		$group = $em->getRepository('TrazeoBaseBundle:Groups')->find($id);
+	
+		if (!$group) {
+			throw $this->createNotFoundException('Unable to find Groups entity.');
+		}
+	
+		$group->removeUserextendgroup($user);
+		$em->persist($group);
+		$em->flush();
+	
+		return $this->redirect($this->generateUrl('panel_groups'));
+	}
 	
     /**
      * Lists all Groups entities.
