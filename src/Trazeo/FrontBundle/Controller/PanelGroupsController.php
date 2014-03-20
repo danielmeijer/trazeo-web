@@ -84,32 +84,11 @@ class PanelGroupsController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        // Usuario logueado
         $fos_user = $this->container->get('security.context')->getToken()->getUser();
-        // UserExtend correspondiente a usuario logueado
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
-        
-        // Todos los grupos de un usuario ( devuelve un objeto)
-        $userGroups = $user->getGroups();
-        
-        // Convierte un objeto a array
-        function objectToArray($object)
-        {
-        	$array=array();
-        	foreach($object as $member=>$data)
-        	{
-        		$array[$member]=$data;
-        	}
-        	return $array;
-        }
-        
-		// Obtener el array del objeto $userGroups
-        $arrayUserGroups = objectToArray($userGroups);
-     	// Buscar todos los grupos existentes
+        $userGroups = $user->getGroups()->toArray();
         $allGroups = $em->getRepository('TrazeoBaseBundle:Groups')->findAll();
-        
-        // Resta: todos los grupos - grupos del usuario logueado
-        $groups = array_diff($allGroups,$arrayUserGroups);
+        $groups = array_diff($allGroups,$userGroups);
             
         return array(
             'groups' => $groups,'userGroups' => $userGroups

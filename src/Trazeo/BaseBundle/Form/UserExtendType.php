@@ -25,15 +25,6 @@ class UserExtendType extends AbstractType
             		'required' => true
         			)
         		)
-        		->add('groups', null, array(
-        				'attr' => array(
-        						'placeholder' => 'Children.nick',
-        						'data-toggle' => 'popover',
-        						'data-placement' => 'right',
-        						'data-content' => 'Userextend.help.groups'
-        				)
-        		)
-        		)
              ->add('country', 'entity', array(
             		'class' => 'JJsGeonamesBundle:Country',
             		'attr' => array('class' => 'chosen-select'),

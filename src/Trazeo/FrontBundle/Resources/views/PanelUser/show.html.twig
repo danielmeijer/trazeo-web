@@ -1,43 +1,69 @@
+{% set activeMenu = "userextend" %}
+{% set pageheader_title = "Userextend.profile.title"|trans %}
+{% set pageheader_description = "Userextend.index.description"|trans %}
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
-		{% block body_content %}
+{% block body_content %}
+   
+	<div class="row">
+        <div class="col-lg-12 alert alert-info">
+        	<div class="col-md-1">
+        		<i class="fa fa-5x fa-user"></i>
+        	</div>
+        	<div class="col-md-10">
+				<h4>{{ entity.Nick }}</h4>
+					<div class="input-group custom-search-form col-md-4">
+						<input type="search" class="form-control" placeholder='{{ "Trans.search.children"|trans }}'/>
+						<span class="input-group-btn">
+						<button class="btn btn-primary" type="button"><i class="fa fa-search"></i></button>
+						</span>				
+					</div>
+			</div>
+        </div><!-- END col-lg-12 alert alert-info -->
+			
+		<div class="col-lg-12 alert alert-warning">		  
+			<div class="panel-group" id="accordion">
+				<div class="panel panel-warning">
+					<div class="panel-heading">
+			        	<h4 class="panel-title">
+			            	<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ entity.id }}">{{ entity.Nick }}</a>
+						</h4>
+					</div>
+					<div id="collapse{{ entity.id }}" class="panel-collapse collapse in">
+						<div class="panel-body">
+							<ul>
+								<li>
+								<i class="fa fa-angle-right"></i>
+									<b>Nombre: </b>{{ entity.Nick }} 
+								</li>
+								<li>
+								<i class="fa fa-globe"></i>
+									<b>País: </b>{{ entity.country.name }} 
+								</li>
+								<i class="fa fa-map-marker"></i>
+									<b>Ciudad: </b> 
+								</li>
+							</ul>
+						</div> {# END .panel-body #}
+					</div>{# END #collapse #}
+				</div>
+			</div>
+		</div>
 		
-			<div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">
-                    {{ "Panel.title" | trans  }}
-                    </h1>
-                </div><!-- /.col-lg-12 -->
-		{% endblock %}
+	<div class="col-md-12">
+		<div class="col-md-1">
+			<a class="btn btn-warning btn-outline" href="{{ path('panel') }}">{{ "Btn.back" | trans }}</a>
+		</div>
+		<div class="col-md-1">
+			<a class="btn btn-success btn-outline" href="{{ path('panel_userextend_edit', { 'id': entity.id }) }}">{{ "Btn.edit" | trans }}</a>
+		</div>
+    </div>
 		
-{% block body -%}
-    <h1>UserExtend</h1>
-
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Nick</th>
-                <td>{{ entity.nick }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('panel_userextend') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('panel_userextend_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
 {% endblock %}
-		
+
+
+
+
+
+
+
