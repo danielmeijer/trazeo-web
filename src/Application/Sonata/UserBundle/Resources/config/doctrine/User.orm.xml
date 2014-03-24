@@ -11,6 +11,7 @@
         </id>
         
         <one-to-one field="userextend" target-entity="Trazeo\BaseBundle\Entity\UserExtend"  mapped-by="user"></one-to-one>
+        <one-to-one field="sopinetuserextend" target-entity="Sopinet\UserBundle\Entity\SopinetUserExtend"  mapped-by="user"></one-to-one>
 
     </entity>
 

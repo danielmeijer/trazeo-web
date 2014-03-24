@@ -24,8 +24,28 @@ class User extends BaseUser
         parent::__construct();
 
     }
-    //Trait para traernos el atributo profilepicture
-    use \Sopinet\UserBundle\Model\UserExtend;
+    
+    /**
+     * @ORM\OneToOne(targetEntity="Sopinet\UserBundle\Entity\SopinetUserExtend", mappedBy="user")
+     * @ORM\JoinColumn(name="sopinetuserextend_id", referencedColumnName="id")
+     */
+    private $sopinetuserextend;
+
+    public function setSopinetUserExtend(\Sopinet\UserBundle\Entity\SopinetUserExtend $sopinetuserextend = null)
+    {
+    	$this->userextend = $userextend;
+    
+    	return $this;
+    }
+    
+    /**
+     *
+     * @return \Sopinet\UserBundle\Entity\SopinetUserExtend $sopinetuserextend
+     */
+    public function getSopinetUserExtend()
+    {
+    	return $this->sopinetuserextend;
+    }    
 
     /**
      * @ORM\OneToOne(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", mappedBy="user")
