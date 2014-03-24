@@ -5,7 +5,7 @@
 	<div class="row">
 
         <!-- START currentGroups -->
-        <div class="col-lg-12 currentGroups alert alert-info">
+        <div class="col-lg-12 currentGroups alert alert-success">
         	<div class="col-md-1">
         		<i class="fa fa-5x fa-clock-o"></i>
         	</div>
@@ -37,127 +37,169 @@
 				
 				<!-- START resumeChilds -->
 				<div class="col-md-12 resumeChilds well">
-					<div class="col-md-6">
-						<h4 class="alert alert-info">Niños</h4>
+					<div class="col-md-10">
+						<h4 class="alert alert-info">Mis Niños <i class="btn btn-info btn-circle pull-right">{{ children.count }}</i></h4>
 						<div class="alert alert-warning">
-
-							{% if children.count == 0 %}
-								<p>Aún no tienes niños dados de alta.</p>
-							{% elseif children.count == 1 %}
-								<p>Tienes 1 niño dado de alta:</p>
-							{% else %}
-								<p>Tienes {{ children.count }} niños dados de alta:</p>
-							{% endif %}
-
-	 						<ul>
-
-					 			{% for child in children %}
-					 				<li>{{ child.Nick }}</li>
-								{% endfor %}
-
-	 						</ul>
+							<table class="table">
+								<thead>
+									<tr>
+										<th><i class="fa fa-user"></i></th>
+										<th>Nombre</th>
+										<th>Opciones</th>
+									</tr>
+								</thead>
+							        <tbody>
+							        {% for child in children %}
+							            <tr>
+							                <td>&nbsp;</td>
+							                <td>{{ child.nick }}</td>
+							                <td>
+												<i class="fa fa-pencil"></i> <a href="{{ path('panel_children') }}{{ child.id }}/edit">Editar</a>
+												&nbsp;<i class="fa fa-trash-o"></i> <a data-href="{{ path('panel_children_delete', {'id': child.id }) }}" data-toggle="confirmation">Eliminar</a>
+							                </td>
+							            </tr>
+							        {% endfor %}
+							        </tbody>
+							</table>
 						</div>
 					</div>
 
-					<div class="col-md-6">
-						<h5 class="alert alert-info"><i class="fa fa-plus"></i> <a href="{{ app.request.getBaseURL() }}/panel/children/new">Añadir niño</a></h5>
-						<div class="alert alert-warning">
- 						<ul>
-								<li>&nbsp;</li>
-							{% for child in children %}
-				 				<li>
-				 					<i class="fa fa-pencil"></i> <a href="{{ path('panel_children') }}{{ child.id }}/edit">Editar</a>
-				 					<i class="fa fa-trash-o"></i> <a data-href="{{ path('panel_children_delete', {'id': child.id }) }}" data-toggle="confirmation">Eliminar</a>
-				 				</li>
-							{% endfor %}
-
- 						</ul>
-						</div>
+					<div class="col-md-2">
+						<h5 class="alert alert-info text-center">Crear niño</h5>
+							<div class="row">
+								<div class="col-lg-12 text-center">
+								<a href="{{ app.request.getBaseURL() }}/panel/children/new">
+									<button type="button" class="btn btn-info btn-circle btn-md">
+											<i class="fa fa-plus"></i>
+									</button>
+								</a>
+								</div>
+							</div>
+							&nbsp;
+						<h5 class="alert alert-info text-center">Buscar niño</h5>
+							<div class="row">
+								<div class="col-lg-12 text-center">
+								<a href="{{ app.request.getBaseURL() }}/panel/children">
+									<button type="button" class="btn btn-info btn-circle btn-md">
+											<i class="fa fa-search"></i>
+									</button>
+								</a>
+								</div>
+							</div>
 					</div>
 				</div>
 				<!-- END resumeChilds -->
 				
 				<!-- START resumeGroups -->
 				<div class="col-md-12 resumeGroups well">
-					<div class="col-md-6">
-						<h4 class="alert alert-info">Grupos</h4>
+					<div class="col-md-10">
+						<h4 class="alert alert-info">Mis Grupos <i class="btn btn-info btn-circle pull-right">{{ groups.count }}</i></h4>
 						<div class="alert alert-warning">
-
-	 						{% if groups.count == 0 %}
-								<p>Aún no has creado ningún grupo.</p>
-							{% elseif groups.count == 1 %}
-								<p>Tienes creado 1 grupo:</p>
-							{% else %}
-								<p>Tienes creados {{ groups.count }} grupos:</p>
-							{% endif %}
-
-	 						<ul>
-
-					 			{% for group in groups %}
-					 				<li>{{ group.Name }}</li>
-								{% endfor %}
-
-	 						</ul>
+							<table class="table">
+								<thead>
+									<tr>
+										<th><i class="fa fa-users"></i></th>
+										<th>Nombre</th>
+										<th>Opciones</th>
+									</tr>
+								</thead>
+							        <tbody>
+							        {% for groups in groups %}
+							            <tr>
+							                <td>&nbsp;</td>
+							                <td>{{ groups.name }}</td>
+							                <td>
+												<i class="fa fa-pencil"></i> <a href="{{ path('panel_groups') }}{{ groups.id }}/edit">Editar</a>
+												&nbsp;<i class="fa fa-trash-o"></i> <a data-href="{{ path('panel_groups_delete', {'id': groups.id }) }}" data-toggle="confirmation">Eliminar</a>
+							                </td>
+							            </tr>
+							        {% endfor %}
+							        </tbody>
+							</table>
 						</div>
 					</div>
 
-					<div class="col-md-6">
-						<h5 class="alert alert-info">
-							<i class="fa fa-users"></i> <a href="{{ app.request.getBaseURL() }}/panel/groups">Buscar Grupos</a> &nbsp; <i class="fa fa-plus"></i> <a href="{{ app.request.getBaseURL() }}/panel/groups/new">Crear Grupo</a>
-						</h5>
-						<div class="alert alert-warning">
-	 						<ul>
-
-	 							{% for group in groups %}
-					 				<li><i class="fa fa-pencil"></i> <a href="{{ app.request.getBaseURL() }}/panel/groups/{{ group.id }}/edit">Editar</a>
-								{% endfor %}
-
-	 						</ul>
-						</div>
+					<div class="col-md-2">
+						<h5 class="alert alert-info text-center">Crear Grupo</h5>
+							<div class="row">
+								<div class="col-lg-12 text-center">
+								<a href="{{ app.request.getBaseURL() }}/panel/groups/new">
+									<button type="button" class="btn btn-info btn-circle btn-md">
+											<i class="fa fa-plus"></i>									
+									</button>
+								</a>
+								</div>
+							</div>
+							&nbsp;
+						<h5 class="alert alert-info text-center">Buscar Grupo</h5>
+							<div class="row">
+								<div class="col-lg-12 text-center">
+								<a href="{{ app.request.getBaseURL() }}/panel/groups">
+									<button type="button" class="btn btn-info btn-circle btn-md">
+											<i class="fa fa-search"></i>
+									</button>
+									</a>
+								</div>
+							</div>
 					</div>
 				</div>
-				<!-- END resumeGroups -->
+				<!-- END resumeGroups -->	
 				
-				<!-- START resumeRoutes -->
-				<div class="col-md-12 resumeRoutes well">
-					<div class="col-md-6">
-						<h4 class="alert alert-info">Rutas</h4>
+				<!-- START resumeGroups -->
+				<div class="col-md-12 resumeGroups well">
+					<div class="col-md-10">
+						<h4 class="alert alert-info">Mis Rutas <i class="btn btn-info btn-circle pull-right">{{ routes.count }}</i></h4>
 						<div class="alert alert-warning">
- 						
- 							{% if routes.count == 0 %}
-								<p>Aún no has creado ninguna ruta.</p>
-							{% elseif routes.count == 1 %}
-								<p>Tienes creada 1 ruta:</p>
-							{% else %}
-								<p>Tienes creadas {{ routes.count }} rutas:</p>
-							{% endif %}
- 						
- 						<ul>
-
-				 			{% for route in routes %}
-				 				<li>{{ route.name }} <span style="float:right;"></span></li>
-							{% endfor %}
-
- 						</ul>
+							<table class="table">
+								<thead>
+									<tr>
+										<th><i class="fa fa-location-arrow"></i></th>
+										<th>Nombre</th>
+										<th>Opciones</th>
+									</tr>
+								</thead>
+							        <tbody>
+							        {% for routes in routes %}
+							            <tr>
+							                <td>&nbsp;</td>
+							                <td>{{ routes.name }}</td>
+							                <td>
+												<i class="fa fa-pencil"></i> <a href="{{ path('panel_routes') }}{{ routes.id }}/edit">Editar</a>
+												&nbsp;<i class="fa fa-trash-o"></i> <a data-href="{{ path('panel_routes_delete', {'id': routes.id }) }}" data-toggle="confirmation">Eliminar</a>
+							                </td>
+							            </tr>
+							        {% endfor %}
+							        </tbody>
+							</table>
 						</div>
 					</div>
 
-					<div class="col-md-6">
-						<h5 class="alert alert-info">
-							<i class="fa fa-location-arrow"></i> <a href="{{ app.request.getBaseURL() }}/panel/routes">Buscar Rutas</a> &nbsp; <i class="fa fa-plus"></i> <a href="{{ app.request.getBaseURL() }}/panel/routes/new">Crear Ruta</a>
-						</h5>
-						<div class="alert alert-warning">
-	 						<ul>
-
-	 							{% for route in routes %}
-	 								<li><i class="fa fa-pencil"></i> <a href="{{ app.request.getBaseURL() }}/panel/routes/{{ route.id }}/edit">Editar</a></li>
-	 							{% endfor %}
-
-	 						</ul>
-						</div>
+					<div class="col-md-2">
+						<h5 class="alert alert-info text-center">Crear Ruta</h5>
+							<div class="row">
+								<div class="col-lg-12 text-center">
+								<a href="{{ app.request.getBaseURL() }}/panel/routes/new">
+									<button type="button" class="btn btn-info btn-circle btn-md">
+											<i class="fa fa-plus"></i>									
+									</button>
+								</a>
+								</div>
+							</div>
+							&nbsp;
+						<h5 class="alert alert-info text-center">Buscar Ruta</h5>
+							<div class="row">
+								<div class="col-lg-12 text-center">
+								<a href="{{ app.request.getBaseURL() }}/panel/routes">
+									<button type="button" class="btn btn-info btn-circle btn-md">
+											<i class="fa fa-search"></i>
+									</button>
+									</a>
+								</div>
+							</div>
 					</div>
 				</div>
-				<!-- END resumeRoutes -->
+				<!-- END resumeRoutes -->			
+
 				
 			</div>
 			<!-- END Resume -->
