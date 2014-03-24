@@ -5,9 +5,10 @@ namespace Application\Sonata\UserBundle\Entity;
 use FOS\UserBundle\Entity\User as BaseUser;
 
 use Doctrine\ORM\Mapping as ORM;
+
 /**
  * @ORM\Entity
- * @ORM\Table(name="fos_user")
+ * @ORM\Table(name="foss_user")
  */
 class User extends BaseUser
 {
@@ -23,6 +24,8 @@ class User extends BaseUser
         parent::__construct();
 
     }
+    //Trait para traernos el atributo profilepicture
+    use \Sopinet\UserBundle\Model\UserExtend;
 
     /**
      * @ORM\OneToOne(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", mappedBy="user")
