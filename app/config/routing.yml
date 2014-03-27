@@ -1,3 +1,7 @@
+sopinet_template_landing:
+    resource: "@SopinetTemplateLandingBundle/Resources/config/routing.yml"
+    prefix:   /
+
 sopinet_template_amoeba:
     resource: "@SopinetTemplateAmoebaBundle/Resources/config/routing.yml"
     prefix:   /
