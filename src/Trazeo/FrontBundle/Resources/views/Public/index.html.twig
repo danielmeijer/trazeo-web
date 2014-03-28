@@ -1,72 +1,76 @@
-{% extends 'TrazeoFrontBundle:Public:base.html.twig' %}
+{% extends 'TrazeoFrontBundle:Public:base.html.twig' %} 
+{% block body %}
+<div id="page" class="row">
+	{% include 'SopinetTemplateLandingBundle:Base:navbar.html.twig' %} 
+	{% block body_content %}
 
-{% block body_content %}
-
-
-<section class="featured">
-	<div class="container"> 
-		<div class="row mar-bot40">
-			<div class="col-md-12">
-				<div class="align-center">
-					<div class="row">
-						<div class="col-md-6">
-							<h2 class="slogan">¿Qué es Trazeo?</h2>
-							<div class="videowrapper">
-								<iframe src="//www.youtube.com/embed/fWptLnpRGig" frameborder="0" allowfullscreen></iframe>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<h2 class="slogan">¿Quieres probarlo?</h2>
-							<h4 style="color: #FFF">Sé el primero en probar Trazeo, mándanos tu correo electrónico y te añadiremos a la lista de usuarios que podrán probar el sistema en cuanto esté listo.</h4>
-							<div class="cform" id="contact-form">
-							<form action="{{ path('prev_registro') }}" method="POST" role="form">
-								<input type="email" required class="form-control" name="email" id="email" placeholder="Correo electrónico" data-rule="email" data-msg="Please enter a valid email">
-							    <button type="submit" name="submit" class="btn btn-lg btn-theme">Enviar</button>
-							</form>
-							</div>
-						</div>
+	<div class="col-md-12">
+		<div class="align-center">
+			<div class="row">
+				<div class="col-md-5 col-md-offset-1 col-sm-5 col-sm-offset-1">
+					<h2 class="slogan">¿Qué es Trazeo?</h2>
+					<div class="videowrapper">
+						<iframe src="//www.youtube.com/embed/fWptLnpRGig" frameborder="0"
+							allowfullscreen></iframe>
+					</div>
+				</div>
+				<div class="col-md-5 col-sm-5">
+					<h2 class="slogan">¿Quieres probarlo?</h2>
+					<p class="col-md-offset-1 col-md-10">Sé el primero en probar <a href="http://trazeo.es">Trazeo</a>, mándanos tu
+						correo electrónico y te añadiremos a la lista de usuarios que
+						podrán probar el sistema en cuanto esté listo.</p>
+					<div class="cform col-md-12" id="contact-form">
+						<form action="{{ path('prev_registro') }}" method="POST"
+							role="form">								
+							<div class="form-group input-group col-md-10 col-md-offset-1">
+                            	<span class="input-group-addon">@</span>
+								<input type="email" required class="form-control" name="email"
+								id="email" placeholder="Introduce tu correo electrónico" data-rule="email"
+								data-msg="Please enter a valid email">
+							</div>	
+							<button type="submit" name="submit" class="btn btn-lg btn-success">Enviar</button>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
-		<hr/>
-		<h2 class="slogan">Gracias a...</h2>
-
-<div class="col-md-12 carousel-container">
-  <div id="myCarousel" class="carousel slide col-md-12">
-    <div class="carousel-inner">
-        {% set i = 0 %}
-		{% for banner in banners %}  
-              <div class="col-md-12 item{% if i == 0 %} active{% endif %}">
-              {% set i = i + 1 %}
-                <img class="col-md-offset-1 col-md-6 col-sm-6 col-sm-offset-1 col-xs-12 img-responsive" src="{{ banner.url }}" alt="{{ banner.title }}">
-
-                  <div class="col-md-4 col-sm-4 col-xs-12 caption">
-                    <h1>{{ banner.title }}</h1>
-                    <p>{{ banner.desc }}</p>
-                  </div>  
-              </div>
-        {% endfor %}
-     </div>
-    <!-- Controls -->
-    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-      <i class="fa fa-chevron-left fa-3x"></i> 
-    </a>
-    <a class="right carousel-control" href="#myCarousel" data-slide="next">
-      <i class="fa fa-chevron-right fa-3x"></i> 
-    </a>  
-  </div><!-- /.carousel -->
-</div> <!-- end .carousel-container-->
-		
-		
 	</div>
-</section>
+
+	<p>&nbsp;</p><p>&nbsp;</p>
+	<h2 class="slogan well">Gracias a...</h2>
+	<div class="col-md-12 carousel-container">
+		<div id="myCarousel" class="carousel slide col-md-12">
+			<div class="carousel-inner">
+				{% set i = 0 %} {% for banner in banners %}
+				<div class="col-md-12 item{% if i == 0 %} active{% endif %}">
+					{% set i = i + 1 %} <img
+						class="col-md-offset-1 col-md-6 col-sm-6 col-sm-offset-1 col-xs-12 img-responsive"
+						src="{{ banner.url }}" alt="{{ banner.title }}">
+
+					<div class="col-md-4 col-sm-4 col-xs-12 caption">
+						<h1>{{ banner.title }}</h1>
+						<p>{{ banner.desc }}</p>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			<!-- Controls -->
+			<a class="left carousel-control" href="#myCarousel" data-slide="prev">
+				<i class="fa fa-chevron-left fa-3x"></i>
+			</a> <a class="right carousel-control" href="#myCarousel"
+				data-slide="next"> <i class="fa fa-chevron-right fa-3x"></i>
+			</a>
+		</div>
+		<!-- /.carousel -->
+	</div>
+	<!-- end .carousel-container-->
 
 
+	{% endblock %} 
+	{% include 'SopinetTemplateLandingBundle:Base:footer.html.twig' %}
+</div> <!-- END #page -->
+{% endblock %} 
 
-{% endblock %}
-
-{% block js %}
-	{{ parent() }}
-	{% include 'TrazeoFrontBundle:Panel:flashmessage.html.twig' %}
+{% block js %} {{ parent() }} 
+{% include 'TrazeoFrontBundle:Panel:flashmessage.html.twig' %} 
 {% endblock %}

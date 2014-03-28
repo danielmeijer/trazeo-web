@@ -1,5 +1,7 @@
 {% extends 'TrazeoFrontBundle:Public:base.html.twig' %}
-
+{% block body %}
+<div id="page" class="row">
+	{% include 'SopinetTemplateLandingBundle:Base:navbar.html.twig' %} 
 {% block css %}
 	{{ parent() }}
 	<style>
@@ -84,6 +86,10 @@
 	</div>
 </section>
 {% endblock %}
+
+	{% include 'SopinetTemplateLandingBundle:Base:footer.html.twig' %}
+</div> <!-- END #page -->
+{% endblock %} 
 
 {% block js %}
 	{{ parent() }}
