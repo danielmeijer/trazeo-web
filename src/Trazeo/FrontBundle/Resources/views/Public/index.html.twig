@@ -1,7 +1,5 @@
 {% extends 'TrazeoFrontBundle:Public:base.html.twig' %} 
-{% block body %}
-<div id="page" class="row">
-	{% include 'SopinetTemplateLandingBundle:Base:navbar.html.twig' %} 
+
 	{% block body_content %}
 
 	<div class="col-md-12">
@@ -62,14 +60,8 @@
 			</a>
 		</div>
 		<!-- /.carousel -->
-	</div>
-	<!-- end .carousel-container-->
-
-
-	{% endblock %} 
-	{% include 'SopinetTemplateLandingBundle:Base:footer.html.twig' %}
-</div> <!-- END #page -->
-{% endblock %} 
+	</div><!-- end .carousel-container-->
+	{% endblock %}
 
 {% block js %} {{ parent() }} 
 {% include 'TrazeoFrontBundle:Panel:flashmessage.html.twig' %} 

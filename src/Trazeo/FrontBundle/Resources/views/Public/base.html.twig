@@ -1,11 +1,13 @@
 {% extends 'SopinetTemplateLandingBundle:Base:god.html.twig' %}
 
-{% block title %}Trazeo - Landing{% endblock %}
+{% block title %}Trazeo - Recuperando el camino al cole{% endblock %}
 
 {% block body %}
-<section id="header" class="appear"></section>
+<div id="page" class="row">
+	{% include 'SopinetTemplateLandingBundle:Base:navbar.html.twig' %}
 		
 	{% block body_content %}{% endblock %}
 
-{% include 'SopinetTemplateLandingBundle:Base:footer.html.twig' %}
+	{% include 'SopinetTemplateLandingBundle:Base:footer.html.twig' %}
+</div> <!-- END #page -->
 {% endblock %}
