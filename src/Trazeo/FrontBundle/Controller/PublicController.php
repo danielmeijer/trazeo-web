@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 class PublicController extends Controller
 {
 	/**
-	 * @Route("/", name="home"))
+	 * @Route("/", name="home")
 	 * @Template
 	 */
     public function indexAction()

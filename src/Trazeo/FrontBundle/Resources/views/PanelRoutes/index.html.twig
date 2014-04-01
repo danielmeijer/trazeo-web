@@ -29,7 +29,7 @@
 		</div>
 		
 		
-	{% for route in routes%}
+	{% for route in routes %}
 		<div class="panel-group" id="accordion">
 			<div class="panel panel-warning">
 				<div class="panel-heading">
@@ -45,7 +45,7 @@
 								<b>Administrador de la ruta:</b> {{ route.admin.nick }} 
 							</li>
 							<li>
-								<i class="fa fa-location-arrow"></i><a href="{{ path('panel_routes_show', { 'id': route.id }) }}""> Mapa de la ruta</a>
+								<i class="fa fa-location-arrow"></i><a href="{{ path('panel_route_show', { 'id': route.id }) }}""> Mapa de la ruta</a>
 							</li>
 							<li>
 								<i class="fa fa-users"></i>
@@ -60,7 +60,7 @@
 							</li>
 							<li>
 								<i class="fa fa-globe"></i>	
-								<b>País:</b> {{ route.country.name }} 
+								<b>País:</b> {% if route.country != null %}{{ route.country.name }}{% endif %}
 							</li>
 						</ul>
 					</div>

@@ -5,12 +5,12 @@ namespace Trazeo\BaseBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Routes
+ * Entity Route
  *
- * @ORM\Table("routes")
+ * @ORM\Table("e_route")
  * @ORM\Entity
  */
-class Routes
+class ERoute
 {
 	/**
 	 * @var integer
@@ -21,19 +21,19 @@ class Routes
 	 */
 	protected $id;
 	
-	/** @ORM\OneToMany(targetEntity="Trazeo\BaseBundle\Entity\Groups", mappedBy="routes")
+	/** @ORM\OneToMany(targetEntity="EGroup", mappedBy="route")
 	 */
 	protected $groups;
 	
-	/** @ORM\ManyToOne(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", inversedBy="adminRoutes")
+	/** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="adminRoutes")
 	 */
 	protected $admin;
 	
-	/** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\City", inversedBy="routes")
+	/** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\City")
 	 */
 	protected $city;
 	
-	/** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\Country", inversedBy="routes")
+	/** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\Country")
 	 */
 	protected $country;
 	
@@ -72,7 +72,7 @@ class Routes
      *
      * @param string $name
      *
-     * @return Routes
+     * @return ERoute
      */
     public function setName($name)
     {
@@ -94,11 +94,11 @@ class Routes
     /**
      * Add groups
      *
-     * @param \Trazeo\BaseBundle\Entity\Groups $groups
+     * @param \Trazeo\BaseBundle\Entity\EGroup $groups
      *
-     * @return Routes
+     * @return ERoute
      */
-    public function addGroup(\Trazeo\BaseBundle\Entity\Groups $groups)
+    public function addGroup(\Trazeo\BaseBundle\Entity\EGroup $groups)
     {
         $this->groups[] = $groups;
 
@@ -108,9 +108,9 @@ class Routes
     /**
      * Remove groups
      *
-     * @param \Trazeo\BaseBundle\Entity\Groups $groups
+     * @param \Trazeo\BaseBundle\Entity\EGroup $groups
      */
-    public function removeGroup(\Trazeo\BaseBundle\Entity\Groups $groups)
+    public function removeGroup(\Trazeo\BaseBundle\Entity\EGroup $groups)
     {
         $this->groups->removeElement($groups);
     }
@@ -130,7 +130,7 @@ class Routes
      *
      * @param \Trazeo\BaseBundle\Entity\UserExtend $admin
      *
-     * @return Routes
+     * @return ERoute
      */
     public function setAdmin(\Trazeo\BaseBundle\Entity\UserExtend $admin = null)
     {
@@ -154,7 +154,7 @@ class Routes
      *
      * @param \JJs\Bundle\GeonamesBundle\Entity\City $city
      *
-     * @return Routes
+     * @return ERoute
      */
     public function setCity(\JJs\Bundle\GeonamesBundle\Entity\City $city = null)
     {
@@ -178,7 +178,7 @@ class Routes
      *
      * @param \JJs\Bundle\GeonamesBundle\Entity\Country $country
      *
-     * @return Routes
+     * @return ERoute
      */
     public function setCountry(\JJs\Bundle\GeonamesBundle\Entity\Country $country = null)
     {

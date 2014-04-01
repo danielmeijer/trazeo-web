@@ -4,12 +4,12 @@ namespace Trazeo\BaseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 /**
- * Children
+ * Entity Children
  *
- * @ORM\Table("children")
+ * @ORM\Table("e_child")
  * @ORM\Entity
  */
-class Children
+class EChild
 {
     /**
      * @var integer
@@ -20,12 +20,11 @@ class Children
      */
     protected $id;
     
-    /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\UserExtend", mappedBy="children")
-     * @ORM\JoinColumn(name="children_userextend", referencedColumnName="id")
+    /** @ORM\ManyToMany(targetEntity="UserExtend", mappedBy="childs")
      */
-    protected $userextendchildren;
+    protected $userextendchilds;
     
-    /** @ORM\ManyToMany(targetEntity="Trazeo\BaseBundle\Entity\Groups", inversedBy="children")
+    /** @ORM\ManyToMany(targetEntity="EGroup", inversedBy="childs")
      */
     protected $groups;
 
@@ -52,23 +51,24 @@ class Children
 
 
 	/**
-	 * @ORM\Column(name="sex", type="string")
+	 * @ORM\Column(name="gender", type="string")
 	 */
-	protected $sex;
+	protected $gender;
     
+       
+    public function __toString(){
+    	if($this->nick == "")
+    		return (string)$this->id;
+    	return $this->nick;
+    }
+
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->userExtendChildren = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    public function __toString(){
-    	if($this->nick == "")
-    		return (string)$this->id;
-    	return $this->nick;
+        $this->userextendchildren = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->group = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -86,7 +86,7 @@ class Children
      *
      * @param string $nick
      *
-     * @return Children
+     * @return EChild
      */
     public function setNick($nick)
     {
@@ -110,7 +110,7 @@ class Children
      *
      * @param \DateTime $dateBirth
      *
-     * @return Children
+     * @return EChild
      */
     public function setDateBirth($dateBirth)
     {
@@ -134,7 +134,7 @@ class Children
      *
      * @param boolean $visibility
      *
-     * @return Children
+     * @return EChild
      */
     public function setVisibility($visibility)
     {
@@ -154,71 +154,71 @@ class Children
     }
 
     /**
-     * Set sex
+     * Set gender
      *
-     * @param string $sex
+     * @param string $gender
      *
-     * @return Children
+     * @return EChild
      */
-    public function setSex($sex)
+    public function setGender($gender)
     {
-        $this->sex = $sex;
+        $this->gender = $gender;
 
         return $this;
     }
 
     /**
-     * Get sex
+     * Get gender
      *
      * @return string 
      */
-    public function getSex()
+    public function getGender()
     {
-        return $this->sex;
+        return $this->gender;
     }
 
     /**
-     * Add userextendchildren
+     * Add userextendchilds
      *
-     * @param \Trazeo\BaseBundle\Entity\UserExtend $userextendchildren
+     * @param \Trazeo\BaseBundle\Entity\UserExtend $userextendchilds
      *
-     * @return Children
+     * @return EChild
      */
-    public function addUserextendchild(\Trazeo\BaseBundle\Entity\UserExtend $userextendchildren)
+    public function addUserextendchild(\Trazeo\BaseBundle\Entity\UserExtend $userextendchilds)
     {
-        $this->userextendchildren[] = $userextendchildren;
+        $this->userextendchilds[] = $userextendchilds;
 
         return $this;
     }
 
     /**
-     * Remove userextendchildren
+     * Remove userextendchilds
      *
-     * @param \Trazeo\BaseBundle\Entity\UserExtend $userextendchildren
+     * @param \Trazeo\BaseBundle\Entity\UserExtend $userextendchilds
      */
-    public function removeUserextendchild(\Trazeo\BaseBundle\Entity\UserExtend $userextendchildren)
+    public function removeUserextendchild(\Trazeo\BaseBundle\Entity\UserExtend $userextendchilds)
     {
-        $this->userextendchildren->removeElement($userextendchildren);
+        $this->userextendchilds->removeElement($userextendchilds);
     }
 
     /**
-     * Get userextendchildren
+     * Get userextendchilds
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getUserextendchildren()
+    public function getUserextendchilds()
     {
-        return $this->userextendchildren;
+        return $this->userextendchilds;
     }
 
     /**
      * Add groups
      *
-     * @param \Trazeo\BaseBundle\Entity\Groups $groups
+     * @param \Trazeo\BaseBundle\Entity\EGroup $groups
      *
-     * @return Children
+     * @return EChild
      */
-    public function addGroup(\Trazeo\BaseBundle\Entity\Groups $groups)
+    public function addGroup(\Trazeo\BaseBundle\Entity\EGroup $groups)
     {
         $this->groups[] = $groups;
 
@@ -228,9 +228,9 @@ class Children
     /**
      * Remove groups
      *
-     * @param \Trazeo\BaseBundle\Entity\Groups $groups
+     * @param \Trazeo\BaseBundle\Entity\EGroup $groups
      */
-    public function removeGroup(\Trazeo\BaseBundle\Entity\Groups $groups)
+    public function removeGroup(\Trazeo\BaseBundle\Entity\EGroup $groups)
     {
         $this->groups->removeElement($groups);
     }

@@ -3,21 +3,6 @@
 {% set pageheader_description = "Groups.edit.description"|trans %}
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
-		{% block body_content %}
-            
-			<div class="row">
-                <div class="col-lg-12">
-                <p>what?¿</p>
-                </div>
-                <div class="col-lg-12 alert alert-warning">
-       
-    {{ form(edit_form) }}
-
-        <ul class="record_actions">
-    <li>{{ form(delete_form) }}</li>    
-
-                </div>
-                <button class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
-            </div>
-		
-		{% endblock %}
+	{% block body_content %}
+		{{ form(edit_form) }}
+	{% endblock %}

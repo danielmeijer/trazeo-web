@@ -7,14 +7,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Trazeo\BaseBundle\Entity\Groups;
-use Trazeo\BaseBundle\Form\GroupsType;
+use Trazeo\BaseBundle\Entity\EGroup;
+use Trazeo\BaseBundle\Form\GroupType;
 use Trazeo\BaseBundle\Controller\GroupsController;
 
 /**
  * Groups controller.
  *
- * @Route("/panel/groups")
+ * @Route("/panel/group")
  */
 class PanelGroupsController extends Controller
 {
@@ -22,7 +22,7 @@ class PanelGroupsController extends Controller
 	/**
 	 * User join Group.
 	 *
-	 * @Route("/join/{id}", name="panel_groups_join")
+	 * @Route("/join/{id}", name="panel_group_join")
 	 * @Method("GET")
 	 * @Template()
 	 */
@@ -33,24 +33,24 @@ class PanelGroupsController extends Controller
 		$fos_user = $this->container->get('security.context')->getToken()->getUser();
 		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
 		
-		$group = $em->getRepository('TrazeoBaseBundle:Groups')->find($id);
+		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
 		
 		if (!$group) {
-			throw $this->createNotFoundException('Unable to find Groups entity.');
+			throw $this->createNotFoundException('Unable to find Group entity.');
 		}
 		
 		$group->addUserextendgroup($user);
 		$em->persist($group);
 		$em->flush();
 
-		return $this->redirect($this->generateUrl('panel_groups'));
+		return $this->redirect($this->generateUrl('panel_group'));
 	}
 	
 	
 	/**
 	 * User disjoin Group.
 	 *
-	 * @Route("/disjoin/{id}", name="panel_groups_disjoin")
+	 * @Route("/disjoin/{id}", name="panel_group_disjoin")
 	 * @Method("GET")
 	 * @Template()
 	 */
@@ -61,23 +61,23 @@ class PanelGroupsController extends Controller
 		$fos_user = $this->container->get('security.context')->getToken()->getUser();
 		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
 	
-		$group = $em->getRepository('TrazeoBaseBundle:Groups')->find($id);
+		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
 	
 		if (!$group) {
-			throw $this->createNotFoundException('Unable to find Groups entity.');
+			throw $this->createNotFoundException('Unable to find Group entity.');
 		}
 	
 		$group->removeUserextendgroup($user);
 		$em->persist($group);
 		$em->flush();
 	
-		return $this->redirect($this->generateUrl('panel_groups'));
+		return $this->redirect($this->generateUrl('panel_group'));
 	}
 		
     /**
      * Lists all Groups entities.
      *
-     * @Route("/", name="panel_groups")
+     * @Route("/", name="panel_group")
      * @Method("GET")
      * @Template()
      */
@@ -86,25 +86,27 @@ class PanelGroupsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $fos_user = $this->container->get('security.context')->getToken()->getUser();
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
-        $userGroups = $user->getGroups()->toArray();
-        $allGroups = $em->getRepository('TrazeoBaseBundle:Groups')->findAll();
-        $groups = array_diff($allGroups,$userGroups);
+        $userGroups = $user->getGroups();
+
+        $allGroups = $em->getRepository('TrazeoBaseBundle:EGroup')->findAll();
+        $groups = array_diff($allGroups,$userGroups->toArray());
             
         return array(
-            'groups' => $groups,'userGroups' => $userGroups
+            'groups' => $groups,
+        	'userGroups' => $userGroups
         );
     }
     /**
-     * Creates a new Groups entity.
+     * Creates a new Group entity.
      *
-     * @Route("/", name="panel_groups_create")
+     * @Route("/", name="panel_group_create")
      * @Method("POST")
      * @Template("TrazeoBaseBundle:Groups:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new Groups();
-        $form = $this->createCreateForm($entity);
+        $group = new EGroup();
+        $form = $this->createCreateForm($group);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -113,13 +115,13 @@ class PanelGroupsController extends Controller
             $fos_user = $this->container->get('security.context')->getToken()->getUser();
             $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
             
-            $entity->setAdmin($user);
-            $entity->addUserextendgroup($user);            
+            $group->setAdmin($user);
+            $group->addUserextendgroup($user);            
             
-            $em->persist($entity);
+            $em->persist($group);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('panel_groups_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('panel_group'));
         }
 
         return array(
@@ -129,16 +131,16 @@ class PanelGroupsController extends Controller
     }
 
     /**
-     * Creates a form to create a Groups entity.
+     * Creates a form to create a Group entity.
      *
-     * @param Groups $entity The entity
+     * @param Group $group
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Groups $entity)
+    private function createCreateForm(EGroup $group)
     {
-        $form = $this->createForm(new GroupsType(), $entity, array(
-            'action' => $this->generateUrl('panel_groups_create'),
+        $form = $this->createForm(new GroupType(), $group, array(
+            'action' => $this->generateUrl('panel_group_create'),
             'method' => 'POST',
         ));
 
@@ -150,17 +152,17 @@ class PanelGroupsController extends Controller
     /**
      * Displays a form to create a new Groups entity.
      *
-     * @Route("/new", name="panel_groups_new")
+     * @Route("/new", name="panel_group_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new Groups();
-        $form   = $this->createCreateForm($entity);
+        $group = new EGroup();
+        $form   = $this->createCreateForm($group);
 
         return array(
-            'entity' => $entity,
+            'entity' => $group,
             'form'   => $form->createView(),
         );
     }
@@ -191,9 +193,9 @@ class PanelGroupsController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Groups entity.
+     * Displays a form to edit an existing Group entity.
      *
-     * @Route("/{id}/edit", name="panel_groups_edit")
+     * @Route("/{id}/edit", name="panel_group_edit")
      * @Method("GET")
      * @Template()
      */
@@ -201,33 +203,33 @@ class PanelGroupsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('TrazeoBaseBundle:Groups')->find($id);
+        $group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Groups entity.');
+        if (!$group) {
+            throw $this->createNotFoundException('Unable to find Group entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createEditForm($group);
+        //$deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'group'      => $group,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            //'delete_form' => $deleteForm->createView(),
         );
     }
 
     /**
-    * Creates a form to edit a Groups entity.
+    * Creates a form to edit a Group entity.
     *
-    * @param Groups $entity The entity
+    * @param EGroup $group
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Groups $entity)
+    private function createEditForm(EGroup $group)
     {
-        $form = $this->createForm(new GroupsType(), $entity, array(
-            'action' => $this->generateUrl('panel_groups_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new GroupType(), $group, array(
+            'action' => $this->generateUrl('panel_group_update', array('id' => $group->getId())),
             'method' => 'PUT',
         ));
 
@@ -238,7 +240,7 @@ class PanelGroupsController extends Controller
     /**
      * Edits an existing Groups entity.
      *
-     * @Route("/{id}", name="panel_groups_update")
+     * @Route("/{id}", name="panel_group_update")
      * @Method("PUT")
      * @Template("TrazeoBaseBundle:Groups:edit.html.twig")
      */
@@ -246,32 +248,32 @@ class PanelGroupsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('TrazeoBaseBundle:Groups')->find($id);
+        $group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Groups entity.');
+        if (!$group) {
+            throw $this->createNotFoundException('Unable to find Group entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        //$deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createEditForm($group);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('panel_groups_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('panel_group_edit', array('id' => $id)));
         }
 
         return array(
-            'entity'      => $entity,
+            'group'      => $group,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            //'delete_form' => $deleteForm->createView(),
         );
     }
     /**
      * Deletes a Groups entity.
      *
-     * @Route("/{id}", name="panel_groups_delete")
+     * @Route("/{id}", name="panel_group_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -281,17 +283,17 @@ class PanelGroupsController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('TrazeoBaseBundle:Groups')->find($id);
+            $group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Groups entity.');
+            if (!$group) {
+                throw $this->createNotFoundException('Unable to find Group entity.');
             }
 
-            $em->remove($entity);
+            $em->remove($group);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('panel_groups'));
+        return $this->redirect($this->generateUrl('panel_group'));
     }
 
     /**
@@ -304,7 +306,7 @@ class PanelGroupsController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('panel_groups_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('panel_group_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->getForm()
         ;

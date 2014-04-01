@@ -20,13 +20,7 @@ class LoadUserExtendData extends AbstractFixture implements OrderedFixtureInterf
 	 * @param unknown $nick Nick del usuario
 	 */
 	public function createUserExtend($name)
-	{
-		
-		$reUserExtend = $this->manager->getRepository("TrazeoBaseBundle:UserExtend");
-		$reChildren = $this->manager->getRepository("TrazeoBaseBundle:Children");
-		$reGroups = $this->manager->getRepository("TrazeoBaseBundle:Groups");
-		$reRoutes = $this->manager->getRepository("TrazeoBaseBundle:Routes");
-		
+	{		
 		//Creamos el usuario
 		$user = new \Application\Sonata\UserBundle\Entity\User;
 		$user->setEmail($name . "@" . $name . ".es");

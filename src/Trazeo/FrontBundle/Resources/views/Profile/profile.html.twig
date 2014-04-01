@@ -1,0 +1,29 @@
+{% extends 'TrazeoFrontBundle:Panel:base.html.twig' %} {% block
+body_content %}
+
+<form class="form-horizontal" id="profile-edit" method="post" action="{{ path('panel_profile_save') }}">
+
+	<ul class="nav nav-tabs nav-bottom">
+		<li class="active"><a href="#location" data-toggle="tab">Location</a></li>
+		<li><a href="#profile" data-toggle="tab">Profile</a></li>
+		<li><a href="#avatar" data-toggle="tab">Avatar</a></li>
+	</ul>
+
+	<!-- Tab panes -->
+	<div class="container">
+		<div class="tab-content">
+			<div class="tab-pane fade in active" id="location">
+				{{ form_widget(form_userextend) }}
+			</div>
+			<div class="tab-pane fade" id="profile">
+				{{ form_widget(form_profile) }}
+			</div>
+			<div class="tab-pane fade" id="avatar">posible avatar</div>
+			{{ form_errors(form_profile) }}
+			{{ form_errors(form_userextend) }}
+		</div>
+	</div>
+	<button type="submit" class="btn btn-outline btn-success">Btn.success</button>
+
+</form>
+{% endblock %}

@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class GroupsType extends AbstractType
+class GroupType extends AbstractType
 {
 	
    /**
@@ -23,8 +23,8 @@ class GroupsType extends AbstractType
         				'data-placement' => 'right',
         				'data-content' => 'Groups.help.name'
         		),'required' => true))
-        ->add('userextendgroups')
-        ->add('routes', null, array(
+        
+        ->add('route', null, array(
         		'attr' => array(
         				'placeholder' => 'Groups.name',
         				'data-toggle' => 'popover',
@@ -40,7 +40,7 @@ class GroupsType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Trazeo\BaseBundle\Entity\Groups'
+            'data_class' => 'Trazeo\BaseBundle\Entity\EGroup'
         ));
     }
 
@@ -49,6 +49,6 @@ class GroupsType extends AbstractType
      */
     public function getName()
     {
-        return 'trazeo_basebundle_groups';
+        return 'trazeo_basebundle_group';
     }
 }

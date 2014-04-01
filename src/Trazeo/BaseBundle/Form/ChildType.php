@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ChildrenType extends AbstractType
+class ChildType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -24,7 +24,7 @@ class ChildrenType extends AbstractType
         					),'required' => true
         			)
         		)
-            ->add('userextendchildren', null, array(
+            ->add('userextendchilds', null, array(
         			'attr' => array(
         					'placeholder' => 'Route.name',
         					'data-toggle' => 'popover',
@@ -57,7 +57,7 @@ class ChildrenType extends AbstractType
             				'data-content' => 'Children.help.visibility'
             		)))
             		
-            ->add('sex', 'choice', array(
+            ->add('gender', 'choice', array(
             		'choices' => array('boy' => 'Children.sex.boy', 'girl' => 'Children.sex.girl'),
         			'attr' => array(
         					'placeholder' => 'Children.sex',
@@ -76,7 +76,7 @@ class ChildrenType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Trazeo\BaseBundle\Entity\Children'
+            'data_class' => 'Trazeo\BaseBundle\Entity\EChild'
         ));
     }
 
@@ -85,6 +85,6 @@ class ChildrenType extends AbstractType
      */
     public function getName()
     {
-        return 'trazeo_basebundle_children';
+        return 'trazeo_basebundle_child';
     }
 }

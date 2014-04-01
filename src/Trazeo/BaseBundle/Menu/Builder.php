@@ -23,33 +23,33 @@ class Builder extends ContainerAware
         }
 
         // Children
-        $menu->addChild('Children', array(
-        		'route' => 'panel_children'
+        $menu->addChild('Child', array(
+        		'route' => 'panel_child'
         ))
-        ->setLabel($this->container->get('translator')->trans('Menu.children'));
-        $menu['Children']->setAttribute('icon', 'fa-user');
+        ->setLabel($this->container->get('translator')->trans('Menu.child'));
+        $menu['Child']->setAttribute('icon', 'fa-user');
         if ($options['activeMenu'] == "routes") {
-        	$menu['Children']->setAttribute('class', 'active');
+        	$menu['Child']->setAttribute('class', 'active');
         }
         
         // Groups
-        $menu->addChild('Groups', array(
-        		'route' => 'panel_groups'
+        $menu->addChild('Group', array(
+        		'route' => 'panel_group'
         		))
-        ->setLabel($this->container->get('translator')->trans('Menu.groups'));
-        $menu['Groups']->setAttribute('icon', 'fa-users');
-        if ($options['activeMenu'] == "groups") {
-        	$menu['Groups']->setAttribute('class', 'active');
+        ->setLabel($this->container->get('translator')->trans('Menu.group'));
+        $menu['Group']->setAttribute('icon', 'fa-users');
+        if ($options['activeMenu'] == "group") {
+        	$menu['Group']->setAttribute('class', 'active');
         }
         
         // Routes
-        $menu->addChild('Routes', array(
-        		'route' => 'panel_routes'
+        $menu->addChild('Route', array(
+        		'route' => 'panel_route'
         ))
-        ->setLabel($this->container->get('translator')->trans('Menu.routes'));
-        $menu['Routes']->setAttribute('icon', 'fa-location-arrow');
-        if ($options['activeMenu'] == "routes") {
-        	$menu['Routes']->setAttribute('class', 'active');
+        ->setLabel($this->container->get('translator')->trans('Menu.route'));
+        $menu['Route']->setAttribute('icon', 'fa-location-arrow');
+        if ($options['activeMenu'] == "route") {
+        	$menu['Route']->setAttribute('class', 'active');
         }
         
         

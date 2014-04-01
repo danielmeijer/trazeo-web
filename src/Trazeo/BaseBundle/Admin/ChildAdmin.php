@@ -7,14 +7,14 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
 use Sonata\AdminBundle\Form\FormMapper;
  
-class ChildrenAdmin extends Admin
+class ChildAdmin extends Admin
 {
   protected $translationDomain = 'TrazeoBaseBundleAdmin';
 
   protected function configureFormFields(FormMapper $formMapper)
   {
     $formMapper
-        ->add('userextendchildren',null, array('required' => false))
+        ->add('userextendchilds',null, array('required' => false))
         ->add('groups', null, array('required' => false))
         ->add('nick')
         ->add('dateBirth')
@@ -22,7 +22,7 @@ class ChildrenAdmin extends Admin
        			"0" => "No",
        			"1" => "Si"
        		)))
-        ->add('sex','choice', array('choices' => array(
+        ->add('gender','choice', array('choices' => array(
        			"H" => "Niño",
        			"M" => "Niña"
        		)))
@@ -32,14 +32,14 @@ class ChildrenAdmin extends Admin
   protected function configureDatagridFilters(DatagridMapper $datagridMapper)
   {
     $datagridMapper
-      ->add('userextendchildren')->add('groups')->add('nick')->add('dateBirth')->add('visibility')->add('sex')
+      ->add('userextendchilds')->add('groups')->add('nick')->add('dateBirth')->add('visibility')->add('gender')
     ;
   }
  
   protected function configureListFields(ListMapper $listMapper)
   {
     $listMapper
-      ->addIdentifier('id')->add('userextendchildren')->add('groups')->add('nick')->add('dateBirth')->add('visibility')->add('sex')
+      ->addIdentifier('id')->add('userextendchilds')->add('groups')->add('nick')->add('dateBirth')->add('visibility')->add('gender')
     ;
   }
  

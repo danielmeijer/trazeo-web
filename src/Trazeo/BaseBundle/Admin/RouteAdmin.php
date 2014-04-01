@@ -7,17 +7,23 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
 use Sonata\AdminBundle\Form\FormMapper;
  
-class GroupsAdmin extends Admin
+class RouteAdmin extends Admin
 {
   protected $translationDomain = 'TrazeoBaseBundleAdmin';
 
   protected function configureFormFields(FormMapper $formMapper)
   {
     $formMapper
-        ->add('userextendgroups', null, array('required' => false))
+        ->add('group', null, array('required' => false))
         ->add('admin')
-        ->add('children', null, array('required' => false))
-        ->add('routes', null, array('required' => false))
+        ->add('country', 'entity', array(
+      		'property' => 'name',
+      		'class' => 'JJs\Bundle\GeonamesBundle\Entity\Country'
+      		))
+        /*->add('city', 'entity', array(
+      		'property' => 'name',
+      		'class' => 'JJs\Bundle\GeonamesBundle\Entity\City'
+      		)) TODO: No se cargan */ 
         ->add('name')
     ;
   }
@@ -25,7 +31,8 @@ class GroupsAdmin extends Admin
   protected function configureDatagridFilters(DatagridMapper $datagridMapper)
   {
     $datagridMapper
-      ->add('routes')
+      ->add('groups')
+      ->add('admin')
       ->add('name')
     ;
   }
@@ -34,18 +41,15 @@ class GroupsAdmin extends Admin
   {
     $listMapper
       ->addIdentifier('id')
-      ->add('userextendgroups')
+      ->add('groups')
       ->add('admin')
-      ->add('children')
-      ->add('routes')
-      ->add('name')
-    ;
+      ->add('name');
   }
  
   public function validate(ErrorElement $errorElement, $object)
   {
     /*$errorElement
-      ->with('text')
+      ->with('class')
       ->assertMaxLength(array('limit' => 3))
       ->end()
     ;*/

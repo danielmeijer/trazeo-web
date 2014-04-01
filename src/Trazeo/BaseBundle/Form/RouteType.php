@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class RoutesType extends AbstractType
+class RouteType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -40,7 +40,7 @@ class RoutesType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Trazeo\BaseBundle\Entity\Routes'
+            'data_class' => 'Trazeo\BaseBundle\Entity\ERoute'
         ));
     }
 
@@ -49,6 +49,6 @@ class RoutesType extends AbstractType
      */
     public function getName()
     {
-        return 'trazeo_basebundle_routes';
+        return 'trazeo_basebundle_route';
     }
 }

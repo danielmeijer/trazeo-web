@@ -25,70 +25,74 @@
         	<h4><i class="fa fa-list-ul"></i> Grupos de los que formo parte</h4>
         </div>
         
-	{% for userGroups in userGroups %}
-		<div class="panel-group" id="accordion">
+        <div class="panel-group" id="accordion1">
+		{% for userGroup in userGroups %}
+		
 			<div class="panel panel-warning">
 				<div class="panel-heading">
 		        	<h4 class="panel-title">
-		            	<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ userGroups.id }}">{{ userGroups.name }}</a>
+		            	<a data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ userGroup.id }}">{{ userGroup.name }}</a>
 		            	<div class="pull-right">
-			<a href="{{ path('panel_groups_disjoin', { 'id': userGroups.id }) }}"" type="button" class="btn btn-danger btn-circle">
+			<a href="{{ path('panel_group_disjoin', { 'id': userGroup.id }) }}"" type="button" class="btn btn-danger btn-circle">
 									<i class="fa fa-times"></i>
 								</a>
 								Desvincularme del grupo
-		            		<i class="btn btn-warning btn-circle"> {{ userGroups.userextendgroups|length }}</i>
+		            		<i class="btn btn-warning btn-circle"> {{ userGroup.userextendgroups|length }}</i>
 		            	 	{{ "Usuarios"|trans }}
 		            	 </div>
 					</h4>
 				</div>
-				<div id="collapse{{ userGroups.id }}" class="panel-collapse collapse in">
+				<div id="collapse{{ userGroup.id }}" class="panel-collapse collapse {% if loop.index == 1 %}in{% endif %}">
 					<div class="panel-body">
 						<ul>
 							<li>
 							<i class="fa fa-key"></i>
-								<b>Administrador del grupo:</b> {{ userGroups.admin.Nick }} 
+								<b>Administrador del grupo:</b> {{ userGroup.admin.Nick }} 
 							</li>
 							<li>
 							<i class="fa fa-user"></i>
 							<b>Miembros del grupo:</b>
 								<ul>
-									{% for userGroupsUser in userGroups.userextendgroups %}
+									{% for userGroupsUser in userGroup.userextendgroups %}
 										<li><b>Nombre:</b> {{ userGroupsUser.Nick }}</li>
 									{% endfor %}
 								</ul>
 							</li>
 							<li>
 							<i class="fa fa-tasks"></i>
-								<b>Nº de niños en este grupo:</b> {{ userGroups.children.count }} 
+								<b>Nº de niños en este grupo:</b> {{ userGroup.childs.count }} 
 							</li>
 							<li>
-							<b><i class="fa fa-location-arrow"></i> Ruta asignada:</b> {{ userGroups.routes.Name }}
+							<b><i class="fa fa-location-arrow"></i> Ruta asignada:</b> {{ userGroup.route.name }}
 							</li>
 						</ul>
 					</div>
 				</div>
 			</div>
-		</div>
-	{% endfor %}
+		
+		{% endfor %}
+        </div>
         
         <div class="alert alert-info">
         	<h4><i class="fa fa-list"></i> Todos los Grupos</h4>
         </div>
-	{% for group in groups %}
-		<div class="panel-group" id="accordion">
+        
+        <div class="panel-group" id="accordion2">
+		{% for group in groups %}
+		
 			<div class="panel panel-warning">
 				<div class="panel-heading">
 		        	<h4 class="panel-title">
-		            	<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ group.id }}">{{ group.name }}</a>
+		            	<a data-toggle="collapse" data-parent="#accordion2" href="#collapse{{ group.id }}">{{ group.name }}</a>
 		            	<div class="pull-right">
-								<a href="{{ path('panel_groups_join', { 'id': group.id }) }}" type="button" class="btn btn-success btn-circle">
+								<a href="{{ path('panel_group_join', { 'id': group.id }) }}" type="button" class="btn btn-success btn-circle">
 									<i class="fa fa-check"></i>
 								</a>
 								Unirme al grupo
 		            	<i class="btn btn-warning btn-circle"> {{ group.userextendgroups|length }}</i> {{ "Usuarios"|trans }}</div>
 					</h4>
 				</div>
-				<div id="collapse{{ group.id }}" class="panel-collapse collapse">
+				<div id="collapse{{ group.id }}" class="panel-collapse collapse {% if loop.index == 1 %}in{% endif %}">
 					<div class="panel-body">
 						<ul>
 							<li>
@@ -106,16 +110,17 @@
 							</li>
 							<li>
 							<i class="fa fa-tasks"></i>
-								<b>Nº de niños en este grupo:</b> {{ group.children.count }} 
+								<b>Nº de niños en este grupo:</b> {{ group.childs.count }} 
 							</li>
 							<li>
-							<b><i class="fa fa-location-arrow"></i> Ruta asignada:</b> {{ group.routes.Name }}
+							<b><i class="fa fa-location-arrow"></i> Ruta asignada:</b> {{ group.route.Name }}
 							</li>
 						</ul>
 					</div>
 				</div>
 			</div>
+		
+		{% endfor %}
 		</div>
-	{% endfor %}
 		
 		{% endblock %}

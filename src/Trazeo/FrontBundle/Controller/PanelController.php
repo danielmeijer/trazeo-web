@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class PanelController extends Controller
 {
 	/**
-	 * @Route("/", name="panel_dashboard"))
+	 * @Route("/", name="panel_dashboard")
 	 * @Template
 	 */
     public function indexAction()
@@ -21,13 +21,13 @@ class PanelController extends Controller
     	$fos_user = $this->container->get('security.context')->getToken()->getUser();	
     	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
     
-    	$children = $user->getChildren();
-        $groups = $user->getAdminGroup();
+    	$childs = $user->getChilds();
+        $groups = $user->getAdminGroups();
     	$routes = $user->getAdminRoutes();
 
     	$twig_variables = array(
             'user' => $user,
-    		'children' => $children,
+    		'childs' => $childs,
             'groups' => $groups,
     		'routes' => $routes
     	);

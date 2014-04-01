@@ -5,70 +5,68 @@
 
 		{% block body_content %}               
 
-        <div class="col-lg-12 alert alert-info">
+        <div class="col-lg-12 alert alert-success">
         	<div class="col-md-1">
         		<i class="fa fa-5x fa-user"></i>
         	</div>
         	<div class="col-md-10">
 				<h4>Listado de tus niños</h4>
 					<div class="input-group custom-search-form col-md-4">
-						<input type="search" class="form-control" placeholder='{{ "Trans.search.children"|trans }}'/>
+						<input type="search" class="form-control" placeholder='{{ "Trans.search.child"|trans }}'/>
 						<span class="input-group-btn">
-						<button class="btn btn-primary" type="button"><i class="fa fa-search"></i></button>
+						<button class="btn btn-success" type="button"><i class="fa fa-search"></i></button>
 						</span>				
 					</div>
 			</div>
         </div><!-- END col-lg-12 alert alert-info -->
-		
-		
-	{% for children in childrens %}
 		<div class="panel-group" id="accordion">
+		{% for child in childs %}
+		
+		
 			<div class="panel panel-warning">
 				<div class="panel-heading">
 		        	<h4 class="panel-title">
-		            	<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ children.id }}">{{ children.nick }}<div class="pull-right"><i class="btn btn-warning btn-circle">{{ children.userextendchildren|length }}</i> {{ "Tutores"|trans }}</div></a>
+		            	<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ child.id }}">{{ child.nick }}<div class="pull-right"><i class="btn btn-warning btn-circle">{{ child.userextendchilds|length }}</i> {{ "Tutores"|trans }}</div></a>
 					</h4>
 				</div>
-				<div id="collapse{{ children.id }}" class="panel-collapse collapse in">
+				<div id="collapse{{ child.id }}" class="panel-collapse collapse {% if loop.index == 1 %}in{% endif %}">
 					<div class="panel-body">
 						<ul>
 							<li>
 							<i class="fa fa-sitemap"></i>
 								<b>Tutores: </b>
 									<ul>
-									{% for childrenUsers in children.userextendchildren %}
-										<li><i class="fa fa-angle-right"></i> {{ childrenUsers.nick }}</li>
-										{% endfor %} 
+									{% for childUser in child.userextendchilds %}
+										<li><i class="fa fa-angle-right"></i> {{ childUser.nick }}</li>
+									{% endfor %} 
 									</ul>							
 							</li>
 							<li>
 							<i class="fa fa-users"></i>
 								<b>Grupos: </b>
 									<ul>
-									{% for childrenGroups in children.groups %}
-										<li><i class="fa fa-angle-right"></i> {{ childrenGroups.name }}</li>
-										{% endfor %} 
+									{% for childGroup in child.groups %}
+										<li><i class="fa fa-angle-right"></i> {{ childGroup.name }}</li>
+									{% endfor %} 
 									</ul>							
 							</li>
 							<li>
 							<i class="fa fa-star"></i>
-								<b>Sexo: </b>{{ children.sex }} 
+								<b>Género: </b>{{ child.gender }} 
 							</li>
 							<li>
 							<i class="fa fa-calendar-o"></i>
-								<b>Fecha de nacimiento: </b>{{ children.datebirth |date("d/m/Y") }} 
+								<b>Fecha de nacimiento: </b>{{ child.datebirth |date("d/m/Y") }} 
 							</li>
 							<li>
 							<i class="fa fa-eye"></i>
-								<b>Visibilidad: </b>{{ children.visibility }}
+								<b>Visibilidad: </b>{{ child.visibility }}
 							</li>
 						</ul>
-					</div> {# END .panel-body #}
-				</div>{# END #collapse #}
+					</div> 
+				</div>
 			</div>
+		
+		{% endfor %}
 		</div>
-	{% endfor %}
-		
-		
-		{% endblock %}
-		
+{% endblock%}

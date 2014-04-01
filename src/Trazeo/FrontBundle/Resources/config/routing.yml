@@ -6,6 +6,10 @@ public:
     resource: "@TrazeoFrontBundle/Controller/PublicController.php"
     type:     annotation
     
+profile:
+    resource: "@TrazeoFrontBundle/Controller/ProfileController.php"
+    type:     annotation
+
 prev_registro:
     resource: "@TrazeoFrontBundle/Controller/PrevRegistroController.php"
     type:     annotation
