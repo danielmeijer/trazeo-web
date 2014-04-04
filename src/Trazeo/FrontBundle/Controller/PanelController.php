@@ -35,6 +35,15 @@ class PanelController extends Controller
 	    return $this->render('TrazeoFrontBundle:Panel:home.html.twig', $twig_variables);
 	}
 	
+	/**
+	 * @Route("/comment", name="panel_comment")
+	 * @Template
+	 */
+	public function commentAction()
+	{
+		return array();
+	}
+	
 }
 
 
