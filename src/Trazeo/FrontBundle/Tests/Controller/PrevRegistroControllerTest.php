@@ -8,21 +8,13 @@ class PrevRegistroControllerTest extends WebTestCase
 {
     public function testPrevRegistro()
     {
-        $client = static::createClient();
-
-        $crawler = $client->request('GET', '/prev_registro');
-
-//         $buttonCrawlerNode = $crawler->selectButton('submit');
-        
-//         $form = $buttonCrawlerNode->form();
-        
-//         $form = $buttonCrawlerNode->form(array(
-//         		'email' => 'lumilo8@gmail.com'
-//         ));
-        
-//         $client->submit($form);
-    
-    }
-    
-    
+    	$client = static::createClient();
+    	
+    	$crawler = $client->request('GET', '/');
+    	$form = $crawler->selectButton('submitPrevRegister')->form();
+    	$crawler = $client->submit($form, array(
+    			'email' => 'syamuza@sopinet.com',
+    	
+    	));    	
+    }    
 }
