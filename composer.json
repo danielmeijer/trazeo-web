@@ -25,8 +25,16 @@
 		"jms/translation-bundle" : "dev-master",
 		"elao/error-notifier-bundle" : "dev-master",
 		"sopinet/admin-bundle" : "dev-master",
+<<<<<<< HEAD
 		"hwi/oauth-bundle": "0.4.*@dev",
 		"sopinet/userbundle": "dev-master",
 		"jmikola/auto-login-bundle": "~1.0"
+=======
+		"hwi/oauth-bundle" : "0.4.*@dev",
+		"sopinet/userbundle" : "dev-master",
+		"jmikola/auto-login-bundle" : "~1.0",
+		"friendsofsymfony/comment-bundle": "dev-master",
+		"egeloen/google-map-bundle" : "~2.1"
+>>>>>>> foscomment
 	}
 }

@@ -62,3 +62,8 @@ JMSTranslationBundle_ui:
     type:     annotation
     prefix:   /_trans
     
+fos_comment_api:
+    type: rest
+    resource: "@FOSCommentBundle/Resources/config/routing.yml"
+    prefix: /api
+    defaults: { _format: html }

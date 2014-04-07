@@ -50,6 +50,11 @@ class AppKernel extends Kernel
         	new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
         	new Sopinet\UserBundle\SopinetUserBundle(),
             new Sopinet\Template\LandingBundle\SopinetTemplateLandingBundle(),
+<<<<<<< HEAD
+=======
+        	new FOS\CommentBundle\FOSCommentBundle(),
+        	new Ivory\GoogleMapBundle\IvoryGoogleMapBundle(),
+>>>>>>> foscomment
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

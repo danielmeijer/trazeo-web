@@ -39,7 +39,7 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ SopinetTemplateSbadmin2Bundle, TrazeoFrontBundle, SopinetTemplateLandingBundle,SopinetTemplateAmoebaBundle, JMSTranslationBundle ]
+    bundles:        [ "FOSCommentBundle", SopinetTemplateSbadmin2Bundle, TrazeoFrontBundle, SopinetTemplateLandingBundle,SopinetTemplateAmoebaBundle, JMSTranslationBundle ]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -149,5 +149,10 @@ jms_translation:
     # name of the firewall in which this bundle is active, this setting MUST be set
  #   firewall_name: secured_area
 
-            
+fos_comment:
+    db_driver: orm
+    class:
+        model:
+            comment: Trazeo\BaseBundle\Entity\Comment
+            thread: Trazeo\BaseBundle\Entity\Thread
    

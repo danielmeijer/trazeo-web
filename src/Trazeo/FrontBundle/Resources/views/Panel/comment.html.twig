@@ -1,0 +1,7 @@
+{% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
+
+{% block body_content %}
+
+	{% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': 'foo'} %}
+
+{% endblock %}
