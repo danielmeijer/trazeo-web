@@ -155,4 +155,5 @@ fos_comment:
         model:
             comment: Trazeo\BaseBundle\Entity\Comment
             thread: Trazeo\BaseBundle\Entity\Thread
+            vote: Trazeo\BaseBundle\Entity\Vote
    
