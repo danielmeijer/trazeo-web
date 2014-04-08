@@ -50,7 +50,6 @@ class AppKernel extends Kernel
         	new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
         	new Sopinet\UserBundle\SopinetUserBundle(),
             new Sopinet\Template\LandingBundle\SopinetTemplateLandingBundle(),
-
         	new FOS\CommentBundle\FOSCommentBundle(),
         );
 
