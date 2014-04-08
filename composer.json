@@ -15,7 +15,7 @@
 					"url" : "http://code.jquery.com/jquery-1.10.2.js",
 					"type" : "file"
 				}
-			}
+			}   
 		}
 	],
 	"minimum-stability" : "dev",
