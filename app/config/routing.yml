@@ -1,3 +1,7 @@
+sopinet_timeline:
+    resource: "@SopinetTimelineBundle/Resources/config/routing.yml"
+    prefix:   /
+
 sopinet_template_landing:
     resource: "@SopinetTemplateLandingBundle/Resources/config/routing.yml"
     prefix:   /

@@ -1,7 +1,7 @@
 <?php
 // src/MyProject/MyBundle/Entity/Comment.php
 
-namespace Trazeo\BaseBundle\Entity;
+namespace Sopinet\TimelineBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\CommentBundle\Entity\Comment as BaseComment;
@@ -26,7 +26,7 @@ class Comment extends BaseComment implements SignedCommentInterface, VotableComm
      * Thread of this comment
      *
      * @var Thread
-     * @ORM\ManyToOne(targetEntity="Trazeo\BaseBundle\Entity\Thread")
+     * @ORM\ManyToOne(targetEntity="Sopinet\TimelineBundle\Entity\Thread")
      */
     protected $thread;
     
@@ -95,5 +95,4 @@ class Comment extends BaseComment implements SignedCommentInterface, VotableComm
     
     	return $this->getAuthor()->getUsername();
     }
-
 }
