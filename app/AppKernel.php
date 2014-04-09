@@ -51,7 +51,6 @@ class AppKernel extends Kernel
         	new Sopinet\UserBundle\SopinetUserBundle(),
             new Sopinet\Template\LandingBundle\SopinetTemplateLandingBundle(),
         	new FOS\CommentBundle\FOSCommentBundle(),
-            new Sopinet\Template\OpenMapBundle\SopinetTemplateOpenMapBundle(),
             new Sopinet\TimelineBundle\SopinetTimelineBundle(),
             new Sopinet\OpenMapBundle\SopinetOpenMapBundle(),
         );

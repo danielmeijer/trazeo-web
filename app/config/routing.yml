@@ -2,9 +2,6 @@ sopinet_open_map:
     resource: "@SopinetOpenMapBundle/Resources/config/routing.yml"
     prefix:   /
 
-sopinet_template_open_map:
-    resource: "@SopinetTemplateOpenMapBundle/Resources/config/routing.yml"
-
 sopinet_timeline:
     resource: "@SopinetTimelineBundle/Resources/config/routing.yml"
     prefix:   /
