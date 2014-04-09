@@ -3,6 +3,14 @@
 {% set pageheader_description = "Route.show.description"|trans %}
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
+	{% block css %}
+		{{ parent() }}
+	   	{% stylesheets
+	    	'@SopinetTemplateOpenMapBundle/Resources/public/css/leaflet.css'
+	    	output='css/*.css' filter='cssrewrite' %}
+	    	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+		{% endstylesheets %}
+ 	{% endblock %}
 {% block body_content %}
 
 		<div class="row">
@@ -44,4 +52,21 @@
         	{{ group.name }}
         {% endfor %}
 {% endblock %}
-		
+	
+{% block js %}	
+	{{ parent() }}
+	{% javascripts 
+		'@SopinetTemplateOpenMapBundle/Resources/public/js/leaflet.js'	
+	%}
+	<script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+	
+	<script type="text/javascript">
+		/* Leaflet configuration*/ 
+		var map = L.map('map').setView([37.8938548, -4.788015299999984], 16);
+		L.tileLayer('http://{s}.tile.cloudmade.com/8ee2a50541944fb9bcedded5165f09d9/997/256/{z}/{x}/{y}.png', {
+		    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+		}).addTo(map);
+		var marker = L.marker([37.8938548, -4.788015299999984]).addTo(map);
+	</script>
+{% endblock %}
