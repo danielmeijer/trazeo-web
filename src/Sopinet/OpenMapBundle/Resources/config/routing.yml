@@ -1,0 +1,3 @@
+sopinet_open_map_homepage:
+    path:  /hello/{name}
+    defaults: { _controller: SopinetOpenMapBundle:Default:index }

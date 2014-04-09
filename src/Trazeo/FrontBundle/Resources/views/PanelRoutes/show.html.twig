@@ -6,7 +6,7 @@
 	{% block css %}
 		{{ parent() }}
 	   	{% stylesheets
-	    	'@SopinetTemplateOpenMapBundle/Resources/public/css/leaflet.css'
+	    	'@SopinetOpenMapBundle/Resources/public/css/leaflet.css'
 	    	output='css/*.css' filter='cssrewrite' %}
 	    	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
 		{% endstylesheets %}
@@ -56,9 +56,9 @@
 {% block js %}	
 	{{ parent() }}
 	{% javascripts 
-		'@SopinetTemplateOpenMapBundle/Resources/public/js/leaflet.js'
-		'@SopinetTemplateOpenMapBundle/Resources/public/js/leaflet-src.js'
-		'@SopinetTemplateOpenMapBundle/Resources/public/js/configuration.js'	
+		'@SopinetOpenMapBundle/Resources/public/js/leaflet.js'
+		'@SopinetOpenMapBundle/Resources/public/js/leaflet-src.js'
+		'@SopinetOpenMapBundle/Resources/public/js/configuration.js'	
 	%}
 	<script type="text/javascript" src="{{ asset_url }}"></script>
 	{% endjavascripts %}
