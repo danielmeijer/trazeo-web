@@ -28,6 +28,7 @@
 		"hwi/oauth-bundle": "0.4.*@dev",
 		"sopinet/userbundle": "dev-master",
 		"jmikola/auto-login-bundle": "~1.0",
-		"friendsofsymfony/comment-bundle": "dev-master"
+		"friendsofsymfony/comment-bundle": "dev-master",
+
 	}
 }

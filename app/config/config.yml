@@ -153,6 +153,7 @@ fos_comment:
     db_driver: orm
     class:
         model:
-            comment: Trazeo\BaseBundle\Entity\Comment
-            thread: Trazeo\BaseBundle\Entity\Thread
+            comment: Sopinet\TimelineBundle\Entity\Comment
+            thread: Sopinet\TimelineBundle\Entity\Thread
+            vote: Sopinet\TimelineBundle\Entity\Vote
    

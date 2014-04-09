@@ -1,7 +1,7 @@
 <?php
 // src/MyProject/MyBundle/Entity/Thread.php
 
-namespace Trazeo\BaseBundle\Entity;
+namespace Sopinet\TimelineBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\CommentBundle\Entity\Thread as BaseThread;
@@ -20,4 +20,28 @@ class Thread extends BaseThread
      */
     protected $id;
 
+
+    /**
+     * Set id
+     *
+     * @param string $id
+     *
+     * @return Thread
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get id
+     *
+     * @return string 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 }
