@@ -7,6 +7,8 @@
 		{{ parent() }}
 	   	{% stylesheets
 	    	'@SopinetOpenMapBundle/Resources/public/css/leaflet.css'
+	    	'@SopinetOpenMapBundle/Resources/public/css/plugins/leafletRouting/app.css'
+	    	'@SopinetTemplateSbadmin2Bundle/Resources/public/css/plugins/openmap/openmap.css'
 	    	output='css/*.css' filter='cssrewrite' %}
 	    	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
 		{% endstylesheets %}
@@ -30,7 +32,8 @@
 		</div>
 
 		<h1>MAPA</h1>
-		<div id="map"></div>
+		<div id="mapa" class="col-md-12">
+		</div>
 
 	
 		<div class="row">
@@ -58,6 +61,13 @@
 	{% javascripts 
 		'@SopinetOpenMapBundle/Resources/public/js/leaflet.js'
 		'@SopinetOpenMapBundle/Resources/public/js/leaflet-src.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/utils/LineUtil.Snapping.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/utils/Marker.Snapping.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/utils/Polyline.Snapping.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Storage.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Draw.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Edit.js'
 		'@SopinetOpenMapBundle/Resources/public/js/configuration.js'	
 	%}
 	<script type="text/javascript" src="{{ asset_url }}"></script>
