@@ -27,9 +27,10 @@ class PrevRegistroController extends Controller
 		$search = $userManager->findUserByEmail($email);
 		
 		if($search == true){
-			
-			$session = $request->getSession();
-			$session->getFlashBag()->add('info', 'El usuario ya existe');
+						
+		   	$container = $this->get('sopinet_notifier');
+		   	$notification = $container->MessagesNotifier("error","El usuario ya está registrado");
+
 			return $this->redirect($this->generateUrl('home'));
 			
 		}else{
@@ -50,7 +51,7 @@ class PrevRegistroController extends Controller
 			$em->flush();
 				
 			$session = $request->getSession();
-			$session->getFlashBag()->add('info', 'Se ha guardado su registro correctamente');
+			$session->getFlashBag()->add('success', 'Se ha guardado su registro correctamente');
 			
 			return $this->redirect($this->generateUrl('home'));
 		}
