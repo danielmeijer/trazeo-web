@@ -1,3 +1,0 @@
-sopinet_timeline_homepage:
-    path:  /hello/{name}
-    defaults: { _controller: SopinetTimelineBundle:Default:index }
