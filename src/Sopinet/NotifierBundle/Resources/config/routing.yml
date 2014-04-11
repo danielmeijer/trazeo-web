@@ -1,0 +1,3 @@
+sopinet_notifier_homepage:
+    path:  /hello/{name}
+    defaults: { _controller: SopinetNotifierBundle:Default:index }

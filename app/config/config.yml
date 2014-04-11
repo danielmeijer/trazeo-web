@@ -138,7 +138,9 @@ services:
         class: Trazeo\BaseBundle\Listener\UpdatedListener
         arguments: ['@service_container']
         tags:
-            - { name: doctrine.event_subscriber }
+            - { name: doctrine.event_subscriber }     
+    sopinet_notifier:
+        class:        Sopinet\NotifierBundle\Service\Notifier
               
 jms_translation:
     configs:
