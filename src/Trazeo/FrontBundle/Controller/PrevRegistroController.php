@@ -50,8 +50,8 @@ class PrevRegistroController extends Controller
 			$em->persist($user);
 			$em->flush();
 				
-			$session = $request->getSession();
-			$session->getFlashBag()->add('success', 'Se ha guardado su registro correctamente');
+			$container = $this->get('sopinet_notifier');
+			$notification = $container->MessagesNotifier("success","Se ha registrado correctamente");
 			
 			return $this->redirect($this->generateUrl('home'));
 		}
