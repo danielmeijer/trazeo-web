@@ -1,7 +1,7 @@
 var gk, topo, thunderforest, osm, waymarkedtrails;
 
-L.Icon.Default.imagePath = '/template-openmap-bundle/Resources/public/css/images';  
-//L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/public/css/images';  
+
+L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/public/css/images';  
 
     gk = 'http://opencache.statkart.no/gatekeeper/gk';
 
@@ -11,6 +11,7 @@ L.Icon.Default.imagePath = '/template-openmap-bundle/Resources/public/css/images
       styleId: 22677
     });
 
+    //cloudmade APi Key and info
     var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/8ee2a50541944fb9bcedded5165f09d9/{styleId}/256/{z}/{x}/{y}.png',
     cloudmadeAttribution = 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade';
     var midnight   = L.tileLayer(cloudmadeUrl, {styleId: 999, attribution: cloudmadeAttribution}),
@@ -39,6 +40,8 @@ L.Icon.Default.imagePath = '/template-openmap-bundle/Resources/public/css/images
 
     //map.attributionControl.addAttribution('&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors');
 
+
+    //Routing Machine plugin info
     router = function(m1, m2, cb) {
       var proxy = 'http://www2.turistforeningen.no/routing.php?url=';
       var route = 'http://www.yournavigation.org/api/1.0/gosmore.php&format=geojson&v=foot&fast=1&layer=mapnik';
@@ -61,6 +64,36 @@ L.Icon.Default.imagePath = '/template-openmap-bundle/Resources/public/css/images
       ,snapping: {
         layers: []
       }
+      ,shortcut: {
+    	    draw: {
+    	      enable: 68    // 'd'
+    	      , disable: 81  // 'q'
+    	    }
+      }
     });
     map.addControl(routing);
-    routing.draw()
+    map.doubleClickZoom.disable();
+    routing.draw();
+    //map custom events
+
+    var disableRouting=function(e){
+    		e.originalEvent.stopPropagation();
+    		
+    		$(".leaflet-marker-icon").css("pointer-events","none");
+    		routing.draw(false);
+
+    		map.once('dblclick', enableRouting);
+    		return false;
+    	};
+    	
+    var enableRouting=function(e){
+		e.originalEvent.stopPropagation();
+		
+		$(".leaflet-marker-icon").css("pointer-events","all");
+		routing.draw(true);
+
+		map.once('dblclick', disableRouting);
+		return false;
+	};
+    	
+    	map.once('dblclick', disableRouting);
