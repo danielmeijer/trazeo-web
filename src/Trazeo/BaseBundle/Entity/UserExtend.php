@@ -51,6 +51,12 @@ class UserExtend
     protected $country;
     
     /**
+     * @ORM\OneToMany(targetEntity="Sopinet\NotifierBundle\Entity\Notification", mappedBy="userextend")
+     * @ORM\JoinColumn(name="notification_userextend", referencedColumnName="id", nullable=true, onDelete="CASCADE")
+     */
+    protected $notifications;
+    
+    /**
      * @var string
      *
      * @ORM\Column(name="nick", type="string", length=255)

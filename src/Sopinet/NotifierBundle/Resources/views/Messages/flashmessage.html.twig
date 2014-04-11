@@ -1,10 +1,12 @@
-{% for type, flashMessages in app.session.flashbag.all() %}
+{% for type, flashMessages, position in app.session.flashbag.all() %}
 	{% for flashMessage in flashMessages %}
 	<script>
 		$.msgGrowl({
 			'type': '{{ type }}',
 			'title': '{{ flashMessage }}',
-			'text': '{{ flashMessage }}'
+			'text': '{{ flashMessage }}',
+			'position': 'top-right',
+			'sticky':true
 		});
 	</script>
 	{% endfor %}
