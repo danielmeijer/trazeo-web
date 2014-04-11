@@ -126,6 +126,10 @@ sonata_block:
         sonata.block.service.tableinput:
         
 services:
+    #apikey_authenticator:
+     #   class:     Trazeo\BaseBundle\Security\ApiKeyAuthenticator
+      #  arguments: ["@webservice_user_provider"]
+
     twig.text_extension:
         class: Twig_Extensions_Extension_Text
         tags:
@@ -151,6 +155,12 @@ jms_translation:
     # name of the firewall in which this bundle is active, this setting MUST be set
  #   firewall_name: secured_area
 
+#FOSRest
+fos_rest:
+    routing_loader:
+        default_format: json
+
+#FOSComment
 fos_comment:
     db_driver: orm
     class:
@@ -158,4 +168,6 @@ fos_comment:
             comment: Sopinet\TimelineBundle\Entity\Comment
             thread: Sopinet\TimelineBundle\Entity\Thread
             vote: Sopinet\TimelineBundle\Entity\Vote
+            
+
    
