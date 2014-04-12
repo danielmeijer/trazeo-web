@@ -95,5 +95,32 @@ L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/publ
 		map.once('dblclick', disableRouting);
 		return false;
 	};
-    	
+	
+	//API data
+	var getWaypoints=function(){
+		return routing.getWaypoints();
+	};
+	
+    var loadFromWaypoints=function(waypoints){
+		for(var index=0;waypoints.length>index;index++){
+		    var marker, latlng, last;
+
+		    latlng = waypoints[index];
+		    
+		    if (routing.options.snapping) {
+		      latlng = L.LineUtil.snapToLayers(latlng, null, routing.options.snapping);
+		    }
+		    marker = new L.Marker(latlng);
+		    last = routing.getLast();
+
+		    routing._draw._trailer.setLatLngs([latlng, latlng]);
+		    routing.addWaypoint(marker, last, null, function(err, data) {
+		      // console.log(err, data);
+		    });
+		    if (last !== null) {
+		    	routing._draw._trailer.setLatLngs([last.getLatLng(), latlng]);
+			}
+		}
+		routing.draw();
+	};   		
     	map.once('dblclick', disableRouting);
