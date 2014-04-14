@@ -54,6 +54,7 @@ class AppKernel extends Kernel
             new Sopinet\TimelineBundle\SopinetTimelineBundle(),
             new Sopinet\OpenMapBundle\SopinetOpenMapBundle(),
             new Sopinet\UserPreferencesBundle\SopinetUserPreferencesBundle(),
+        	new Sopinet\FlashMessagesBundle\SopinetFlashMessagesBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

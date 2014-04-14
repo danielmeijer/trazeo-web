@@ -63,4 +63,7 @@
 	</div><!-- end .carousel-container-->
 	{% endblock %}
 
+	{% block js %} {{ parent() }} 
+		{% include 'SopinetFlashMessagesBundle:Messages:notification.html.twig' %} 
+	{% endblock %}
 

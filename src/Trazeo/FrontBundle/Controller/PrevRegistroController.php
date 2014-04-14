@@ -28,8 +28,8 @@ class PrevRegistroController extends Controller
 		
 		if($search == true){
 						
-		   	$container = $this->get('sopinet_notifier');
-		   	$notification = $container->MessagesNotifier("error","El usuario ya está registrado");
+		   	$container = $this->get('sopinet_flashMessages');
+		   	$notification = $container->addFlashMessages("error","El usuario ya está registrado");
 
 			return $this->redirect($this->generateUrl('home'));
 			
@@ -50,8 +50,8 @@ class PrevRegistroController extends Controller
 			$em->persist($user);
 			$em->flush();
 				
-			$container = $this->get('sopinet_notifier');
-			$notification = $container->MessagesNotifier("success","Se ha registrado correctamente");
+			$container = $this->get('sopinet_flashMessages');
+			$notification = $container->addFlashMessages("success","Se ha registrado correctamente");
 			
 			return $this->redirect($this->generateUrl('home'));
 		}

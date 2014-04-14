@@ -1,3 +1,7 @@
+sopinet_flash_messages:
+    resource: "@SopinetFlashMessagesBundle/Resources/config/routing.yml"
+    prefix:   /
+
 sopinet_user_preferences:
     resource: "@SopinetUserPreferencesBundle/Resources/config/routing.yml"
     prefix:   /

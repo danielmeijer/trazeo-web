@@ -30,6 +30,7 @@
 		"jmikola/auto-login-bundle" : "~1.0",
 		"friendsofsymfony/comment-bundle" : "dev-master",
 		"sopinet/timeline-bundle" : "dev-master",
-		"sopinet/simple-point-bundle": "dev-master"
+		"sopinet/simple-point-bundle": "dev-master",
+		"sopinet/flash-messages-bundle" : "dev-master"
 	}
 }
