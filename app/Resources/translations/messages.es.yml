@@ -72,3 +72,6 @@ Trans:
         
     select:
         option: 'Selecciona una opción'
+        
+Notifications:
+    child_in_group: 'El niño $1 ha entrado en el grupo $2'

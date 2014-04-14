@@ -43,9 +43,9 @@ class PanelSettingsController extends Controller
 		$sup = $this->container->get('sopinet_user_preferences');
 		$sup->setAllSettings($request);
 		
-		$container = $this->get('sopinet_notifier');
+		$container = $this->get('sopinet_flashMessages');
 		// TODO: Traducir mensaje de Guardadas Preferencias de Usuario
-		$notification = $container->MessagesNotifier("success","Guardadas preferencias de usuario");
+		$notification = $container->addFlashMessages("success","Guardadas preferencias de usuario");
 		
 		return $this->redirect($this->generateUrl('panel_dashboard'));
 	}

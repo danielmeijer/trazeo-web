@@ -25,14 +25,14 @@ class Notification
     protected $action;
 
     /**
-     * @ORM\Column(name="object", type="string", length=100)
+     * @ORM\Column(name="objects", type="string", length=500, nullable=true)
      */
-    protected $object;
+    protected $objects;
     
     /**
-     * @ORM\Column(name="object_id", type="integer", length=20, nullable=true)
+     * @ORM\Column(name="objects_id", type="string", length=100, nullable=true)
      */
-    protected $object_id;
+    protected $objects_id;    
     
     /**
      * @ORM\Column(name="view", type="boolean")
@@ -94,9 +94,9 @@ class Notification
      * @param integer $object
      * @return Notification
      */
-    public function setObject($object)
+    public function setObjects($objects)
     {
-        $this->object = $object;
+        $this->objects = $objects;
     
         return $this;
     }
@@ -106,10 +106,33 @@ class Notification
      *
      * @return integer 
      */
-    public function getObject()
+    public function getObjects()
     {
-        return $this->object;
+        return $this->objects;
     }
+    
+    /**
+     * Set object
+     *
+     * @param integer $object
+     * @return Notification
+     */
+    public function setObjectsId($objects_id)
+    {
+    	$this->objects_id = $objects_id;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get object
+     *
+     * @return integer
+     */
+    public function getObjectsId()
+    {
+    	return $this->objects_id;
+    }    
 
     /**
      * Set view
