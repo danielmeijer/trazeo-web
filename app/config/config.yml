@@ -39,7 +39,7 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ "FOSCommentBundle", SopinetTemplateSbadmin2Bundle, TrazeoFrontBundle, SopinetTemplateLandingBundle,SopinetTemplateAmoebaBundle, JMSTranslationBundle,FOSUserBundle, SopinetNotifierBundle ]
+    bundles:        [ "FOSCommentBundle", SopinetTemplateSbadmin2Bundle, TrazeoFrontBundle, SopinetTemplateLandingBundle,SopinetTemplateAmoebaBundle, JMSTranslationBundle,FOSUserBundle ]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -126,9 +126,9 @@ sonata_block:
         sonata.block.service.tableinput:
         
 services:
-    #apikey_authenticator:
-     #   class:     Trazeo\BaseBundle\Security\ApiKeyAuthenticator
-      #  arguments: ["@webservice_user_provider"]
+    apikey_authenticator:
+        class:     Trazeo\BaseBundle\Security\ApiKeyAuthenticator
+        arguments: ["@webservice_user_provider"]
 
     twig.text_extension:
         class: Twig_Extensions_Extension_Text
@@ -141,9 +141,6 @@ services:
             - { name: doctrine.event_subscriber }     
     sopinet_notifier:
         class:        Sopinet\NotifierBundle\Service\Notifier
-        arguments:
-            entityManager: @doctrine.orm.entity_manager
-            container: @service_container
               
 jms_translation:
     configs:
@@ -171,6 +168,3 @@ fos_comment:
             comment: Sopinet\TimelineBundle\Entity\Comment
             thread: Sopinet\TimelineBundle\Entity\Thread
             vote: Sopinet\TimelineBundle\Entity\Vote
-            
-
-   

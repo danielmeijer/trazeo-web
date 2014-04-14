@@ -1,6 +1,6 @@
 <?php
 // src/Acme/WebserviceUserBundle/Security/User/WebserviceUserProvider.php
-namespace Acme\WebserviceUserBundle\Security\User;
+namespace Trazeo\BaseBundle\Security\User;
 
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -12,17 +12,16 @@ class WebserviceUserProvider implements UserProviderInterface
     public function loadUserByUsername($username)
     {
         // make a call to your webservice here
-        $userData = $this->container->get('security.context')->getToken()->getUser();	
+        $userData = $username;
         // pretend it returns an array on success, false if there is no user
 
         if ($userData) {
             $password = $userData->getPassword();
             $username = $userData->getUsername();
-            //$salt = $userData->getSalt();
+            $salt = $userData->getSalt();
+			$roles = $userData->getRoles();
 
-            // ...
-
-            return new WebserviceUser($username, $password);
+            return new WebserviceUser($username, $password, $salt, $roles);
         }
 
         throw new UsernameNotFoundException(

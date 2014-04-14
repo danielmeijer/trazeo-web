@@ -1,13 +1,13 @@
 parameters:
-    #webservice_user_provider.class: Trazeo\BaseBundle\Security\User\WebserviceUserProvider
-#    trazeo_base.example.class: Trazeo\BaseBundle\Example
+    webservice_user_provider.class: Trazeo\BaseBundle\Security\User\WebserviceUserProvider
+ #   trazeo_base.example.class: Trazeo\BaseBundle\Example
 
 services:
 #    trazeo_base.example:
 #        class: %trazeo_base.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
-    #webservice_user_provider:
-     #   class: "%webservice_user_provider.class%"
+    webservice_user_provider:
+        class: "%webservice_user_provider.class%"
     
     Trazeo.login_success_handler:
         class:  Trazeo\BaseBundle\Authentication\CheckUser

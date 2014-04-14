@@ -23,6 +23,15 @@ class ApiController extends Controller {
 		
 		$em = $this->get('doctrine.orm.entity_manager');
 		$fos_user = $this->container->get('security.context')->getToken()->getUser();
+		//61ZcV10HTyBO4pcDLaMza14ljSVip46I
+		$hola1 = $this->get('apikeyauthenticator')->createToken($request, $fos_user->getSalt());
+		//ldd($hola1);
+		//$username = $fos_user->getUsername();
+		//$hola = $this->get('webserviceuserprovider')->loadUserByUsername($fos_user);
+		ldd($hola);
+		
+		$em = $this->get('doctrine.orm.entity_manager');
+		$fos_user = $this->container->get('security.context')->getToken()->getUser();
 		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
 		
 		//$reGroup = $em->getRepository("TrazeoBaseBundle:EGroup");
