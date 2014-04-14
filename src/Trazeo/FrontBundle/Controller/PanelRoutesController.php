@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Trazeo\BaseBundle\Entity\ERoute;
+use Trazeo\BaseBundle\Entity\EPointsRoute;
 use Trazeo\BaseBundle\Form\RouteType;
 use Sopinet\Bundle\SimplePointBundle\ORM\Type\SimplePoint;
 
@@ -118,26 +119,28 @@ class PanelRoutesController extends Controller
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $route = $em->getRepository('TrazeoBaseBundle:ERoute')->find($id);
+        $eroute = $em->getRepository('TrazeoBaseBundle:ERoute')->find($id);
         $reGroups = $em->getRepository('TrazeoBaseBundle:EGroup');
-        $groups = $reGroups->findByRoute($route);
+        $groups = $reGroups->findByRoute($eroute);
         $cont = 0;
         foreach($groups as $group){
         	// Ver si estos niños van a ser un
         	$cont = $cont + $group->getChilds()->count();
         }
-       
+        foreach($eroute->getPointsroute() as $point){
+        	ld($point->getLocation());
+        }
+       //ldd($route->getPointsroute()->getLocation());
         if (!$route) {
             throw $this->createNotFoundException('Unable to find Route entity.');
         }
 
         //$deleteForm = $this->createDeleteForm($id);
-		$location = $route->getLocation();
+		//$location = $route->getLocation();
 		//ldd($location);
         return array(
         	'cont'		  => $cont,
-            'route'      => $route,
-        	'location' => $location
+            'route'      => $route
             //'delete_form' => $deleteForm->createView(),
         );
     }
@@ -195,15 +198,25 @@ class PanelRoutesController extends Controller
      */
     public function saveMapAction(Request $request)
     {
-		ldd($request);
+		//ldd($request);
 		$id = $request->get('id');
+		$inputPoints = $request->get('inputPoints');
+		$points = explode(";", $inputPoints);
+	
 		$em = $this->getDoctrine()->getManager();
 
         $route = $em->getRepository('TrazeoBaseBundle:ERoute')->find($id);
     	
-//     	$point = new SimplePoint($request->get('latitude'), $request->get('longitude'));
-		$point = new SimplePoint(0,0);
-    	$route->setLocation($point);
+    	
+		for($i = 0;$i < count($points);$i++)
+		{
+			$latlng = explode(",", str_replace(array("(", ")"), "", $points[$i]));
+			//ld($latlng);
+			$point = new EPointsRoute(new SimplePoint($latlng[0], $latlng[1]));			
+			//ld($point);
+			$route->addPointsroute($point);
+		}
+    	
     	$em->persist($route);
     	$em->flush();
     
