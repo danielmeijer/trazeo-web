@@ -52,8 +52,7 @@ class AppKernel extends Kernel
             new Sopinet\Template\LandingBundle\SopinetTemplateLandingBundle(),
         	new FOS\CommentBundle\FOSCommentBundle(),
             new Sopinet\TimelineBundle\SopinetTimelineBundle(),
-            new Sopinet\OpenMapBundle\SopinetOpenMapBundle(),
-            new Sopinet\NotifierBundle\SopinetNotifierBundle(),
+            new Sopinet\OpenMapBundle\SopinetOpenMapBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

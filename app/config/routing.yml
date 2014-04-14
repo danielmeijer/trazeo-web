@@ -1,7 +1,3 @@
-sopinet_notifier:
-    resource: "@SopinetNotifierBundle/Resources/config/routing.yml"
-    prefix:   /
-
 sopinet_open_map:
     resource: "@SopinetOpenMapBundle/Resources/config/routing.yml"
     prefix:   /

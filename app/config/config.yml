@@ -39,7 +39,7 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ "FOSCommentBundle", SopinetTemplateSbadmin2Bundle, TrazeoFrontBundle, SopinetTemplateLandingBundle,SopinetTemplateAmoebaBundle, JMSTranslationBundle,FOSUserBundle, SopinetNotifierBundle ]
+    bundles:        [ "FOSCommentBundle", SopinetTemplateSbadmin2Bundle, TrazeoFrontBundle, SopinetTemplateLandingBundle,SopinetTemplateAmoebaBundle, JMSTranslationBundle,FOSUserBundle ]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
