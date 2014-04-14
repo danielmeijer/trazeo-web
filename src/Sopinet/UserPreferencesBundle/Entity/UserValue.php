@@ -95,7 +95,7 @@ class UserValue
     /**
      * Set setting
      *
-     * @param \SusPasitos\BaseBundle\Entity\UserSetting $setting
+     * @param UserSetting $setting
      * @return UserValue
      */
     public function setSetting(UserSetting $setting = null)
@@ -108,7 +108,7 @@ class UserValue
     /**
      * Get setting
      *
-     * @return \SusPasitos\BaseBundle\Entity\UserSetting 
+     * @return UserSetting 
      */
     public function getSetting()
     {

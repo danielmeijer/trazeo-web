@@ -139,10 +139,10 @@ class UserSetting
     /**
      * Add uservalues
      *
-     * @param \SusPasitos\BaseBundle\Entity\UserValue $uservalues
+     * @param UserValue $uservalues
      * @return UserSetting
      */
-    public function addUservalue(\SusPasitos\BaseBundle\Entity\UserValue $uservalues)
+    public function addUservalue(UserValue $uservalues)
     {
         $this->uservalues[] = $uservalues;
     
@@ -152,9 +152,9 @@ class UserSetting
     /**
      * Remove uservalues
      *
-     * @param \SusPasitos\BaseBundle\Entity\UserValue $uservalues
+     * @param UserValue $uservalues
      */
-    public function removeUservalue(\SusPasitos\BaseBundle\Entity\UserValue $uservalues)
+    public function removeUservalue(UserValue $uservalues)
     {
         $this->uservalues->removeElement($uservalues);
     }

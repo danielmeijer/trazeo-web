@@ -29,7 +29,7 @@
 		 * @param User <Entity> $user
 		 * @param Integer $usersetting_id
 		 * @param String $value
-		 * @return \SusPasitos\BaseBundle\Entity\UserValue
+		 * @return UserValue
 		 */
 		public function setValue($user, $usersetting_id, $value) {
 			$em = $this->getEntityManager();
