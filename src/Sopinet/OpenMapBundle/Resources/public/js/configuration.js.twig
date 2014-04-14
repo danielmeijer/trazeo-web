@@ -103,7 +103,8 @@ L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/publ
     		
     		$(".leaflet-marker-icon").css("pointer-events","none");
     		routing.draw(false);
-
+    		
+    		getPointsData();
     		map.once('dblclick', enableRouting);
     		return false;
     	};
@@ -123,8 +124,7 @@ L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/publ
 	var getWaypoints=function(){
 		return routing.getWaypoints();
 	};
-	console.log("aqui");
-	console.log(getWaypoints());
+
     var loadFromWaypoints=function(waypoints){
 		for(var index=0;waypoints.length>index;index++){
 		    var marker, latlng, last;
@@ -183,8 +183,8 @@ L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/publ
            	lat.id="inputLat";
            	var lng=document.createElement("INPUT");
            	lng.id="inputLng";
-           	document.body.appendChild(lat);
-           	document.body.appendChild(lng);    		
+           	document.getElementById("mapa").appendChild(lat);
+           	document.getElementById("mapa").appendChild(lng);    		
     	}
        	
        	//populate inputs
