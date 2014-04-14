@@ -181,6 +181,7 @@ L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/publ
     var getPointsData=function(){
     	var waypoints=getWaypoints();
     	//create input
+    	var points="";
     	if(document.getElementById("inputPoints")==null){
         	var lat=document.createElement("INPUT");
            	lat.id="inputPoints";
@@ -188,9 +189,12 @@ L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/publ
            	
            	document.getElementById("mapa").appendChild(lat);  		
     	}
-       	
+       	for(var i=0;waypoints.length>i;i++){
+       		if(i!=0)points+=";";       		
+       		points+=("("+waypoints[i].lat+","+waypoints[i].lng+")");
+       	}
        	//populate input
-    	$("#inputPoints").val(waypoints);    	
+    	$("#inputPoints").val(points);    	
     }
     map.on('click', updateRouteInfo);
     
