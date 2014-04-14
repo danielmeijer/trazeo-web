@@ -1,0 +1,12 @@
+parameters:
+#    sopinet_user_notifications.example.class: Sopinet\UserNotificationsBundle\Example
+
+services:
+#    sopinet_user_notifications.example:
+#        class: %sopinet_user_notifications.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+services:
+    sopinet_user_notification:
+       class: Sopinet\UserNotificationsBundle\Service\NotificationHelper
+       arguments: ["@service_container"]
