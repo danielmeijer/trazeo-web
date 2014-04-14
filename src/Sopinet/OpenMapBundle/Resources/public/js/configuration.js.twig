@@ -101,6 +101,7 @@ L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/publ
     var disableRouting=function(e){
     		e.originalEvent.stopPropagation();
     		
+    		routing.removeWaypoint(routing.getLast());
     		$(".leaflet-marker-icon").css("pointer-events","none");
     		routing.draw(false);
     		
@@ -111,7 +112,7 @@ L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/publ
     	};
     	
     var enableRouting=function(e){
-		e.originalEvent.stop();
+		e.originalEvent.stopPropagation();
 		
 		$(".leaflet-marker-icon").css("pointer-events","all");
 		routing.draw(true);
@@ -165,6 +166,7 @@ L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/publ
     		$("#start").html("Termina en: "+ last.lat+" lat "+last.lng+" lng");
     	}
     	if(first && last)$("#distance").html("Distancia: "+getDistance()+" m");
+    	$(".leaflet-marker-icon").on();
     }
     
     
@@ -196,5 +198,5 @@ L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/publ
        	//populate input
     	$("#inputPoints").val(points);    	
     }
-    map.on('click', updateRouteInfo);
+    setInterval(updateRouteInfo,3000);
     
