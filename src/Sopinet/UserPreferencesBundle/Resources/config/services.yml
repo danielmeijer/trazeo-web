@@ -1,0 +1,17 @@
+parameters:
+#    sopinet_user_preferences.example.class: Sopinet\UserPreferencesBundle\Example
+
+services:
+#    sopinet_user_preferences.example:
+#        class: %sopinet_user_preferences.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+services:
+    suspasitos.twig.base_extension:
+        class: Sopinet\UserPreferencesBundle\Twig\BaseExtension
+        arguments: ['@service_container']
+        tags:
+            - { name: twig.extension }
+
+    sopinet_user_preferences:
+       class: Sopinet\UserPreferencesBundle\Service\PreferencesHelper
+       arguments: ["@service_container"]
