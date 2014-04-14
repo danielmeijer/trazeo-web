@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Trazeo\BaseBundle\Entity\ERoute;
-use Trazeo\BaseBundle\Entity\EPointsRoute;
+use Trazeo\BaseBundle\Entity\EPoints;
 use Trazeo\BaseBundle\Form\RouteType;
 use Sopinet\Bundle\SimplePointBundle\ORM\Type\SimplePoint;
 
@@ -134,7 +134,7 @@ class PanelRoutesController extends Controller
 
         //$deleteForm = $this->createDeleteForm($id);
 		//$location = $route->getLocation();
-		//ldd($location);
+		//ldd($route->getPoints()->toArray());
         return array(
         	'cont'		  => $cont,
             'route'      => $route
@@ -204,22 +204,20 @@ class PanelRoutesController extends Controller
 
         $route = $em->getRepository('TrazeoBaseBundle:ERoute')->find($id);
     	
-    	
+    	$punto = new EPoints();
 		for($i = 0;$i < count($points);$i++)
 		{
-			$latlng = explode(",", str_replace(array("(", ")"), "", $points[$i]));
-			//ld($latlng);
-			$point = new EPointsRoute(new SimplePoint($latlng[0], $latlng[1]));
 			
-			//ld($point);
-			$route->addPointsroute($point);
+			$latlng = explode(",", str_replace(array("(", ")"), "", $points[$i]));
+
+			$punto = new EPoints();
+			$punto->setLocation(new SimplePoint($latlng[0], $latlng[1]));
+			$punto->setRoute($route);	
+			$em->persist($punto);
 		}
-    	//ldd($route);
-    	
-    	$em->persist($route);
     	$em->flush();
     
-    	return $this->redirect($this->generateUrl('panel_route_show', array('id' => $request->get('id'))));
+    	return $this->redirect($this->generateUrl('panel_route_show', array('id' => $id)));
     }
     
     
