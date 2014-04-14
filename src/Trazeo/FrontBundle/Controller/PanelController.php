@@ -42,10 +42,7 @@ class PanelController extends Controller
 	public function commentAction()
 	{
 		return array();
-	}
 	
+	}
+
 }
-
-
-
-

@@ -39,7 +39,7 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ "FOSCommentBundle", SopinetTemplateSbadmin2Bundle, TrazeoFrontBundle, SopinetTemplateLandingBundle,SopinetTemplateAmoebaBundle, JMSTranslationBundle,FOSUserBundle ]
+    bundles:        [ "FOSCommentBundle", SopinetTemplateSbadmin2Bundle, TrazeoFrontBundle, SopinetTemplateLandingBundle,SopinetTemplateAmoebaBundle, JMSTranslationBundle,FOSUserBundle, SopinetFlashMessagesBundle ]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -145,8 +145,8 @@ services:
         arguments: ['@service_container']
         tags:
             - { name: doctrine.event_subscriber }     
-    sopinet_notifier:
-        class:        Sopinet\NotifierBundle\Service\Notifier
+    sopinet_flashMessages:
+        class:        Sopinet\FlashMessagesBundle\Service\FlashNotifier
         arguments:
             entityManager: @doctrine.orm.entity_manager
             container: @service_container
