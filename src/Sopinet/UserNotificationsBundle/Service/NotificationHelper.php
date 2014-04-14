@@ -64,7 +64,8 @@ class NotificationHelper {
 			$elements[] = $re->findOneById($objects_id[$i]);
 			$i++;
 		}
-		return $elements;
+		// TODO: Traducir el action de la notification, pasando como parámetros los ELEMENTOS
+		//return $elements;
 		// foreach($notification->getObjects() as $not) 
 		// TODO: Devolver el texto traducido con los objetos
 	}
