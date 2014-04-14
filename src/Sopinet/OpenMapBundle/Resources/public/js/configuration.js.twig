@@ -97,8 +97,7 @@ L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/publ
     map.doubleClickZoom.disable();
     routing.draw();
     
-    //map custom events
-
+    //map custom events    
     var disableRouting=function(e){
     		e.originalEvent.stopPropagation();
     		
@@ -148,3 +147,56 @@ L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/publ
 		}
 		routing.draw();
 	};   		
+	
+	//methods
+    var updateRouteInfo=function(e){
+    	var first=routing.getFirst();
+    	var last=routing.getLast();
+    	var distance=0;
+    	if(first){
+    		first=first.getLatLng();
+    		$("#finish").html("Empieza en: "+ first.lat+" lat "+first.lng+" lng");
+    	}
+    	if(last){
+    		last=last.getLatLng();
+    		$("#start").html("Termina en: "+ last.lat+" lat "+last.lng+" lng");
+    	}
+    	if(first && last)$("#distance").html("Distancia: "+getDistance()+" m");
+    }
+    
+    
+    var getDistance=function(){
+    	var distance=0;
+		for(var i=0;getWaypoints().length-1>i;i++){
+			var actual=getWaypoints()[i];
+			var next=getWaypoints()[i+1];
+			distance+=Math.floor(actual.distanceTo(next));
+		}    	
+		return distance;
+    }
+    
+    var getPointsData=function(){
+    	var waypoints=getWaypoints();
+    	//create inputs
+    	if(document.getElementById("inputLat")==null){
+        	var lat=document.createElement("INPUT");
+           	lat.id="inputLat";
+           	var lng=document.createElement("INPUT");
+           	lng.id="inputLng";
+           	document.body.appendChild(lat);
+           	document.body.appendChild(lng);    		
+    	}
+       	
+       	//populate inputs
+    	var pointsLat=new Array;
+    	var pointsLng=new Array;
+    	for(var actual in waypoints){
+    		pointsLat.push(waypoints[actual].lat);
+    		pointsLng.push(waypoints[actual].lng)
+    	}
+    	$("#inputLat").val(pointsLat);
+    	$("#inputLng").val(pointsLng);
+    	
+    }
+    map.on('click', updateRouteInfo);
+    
