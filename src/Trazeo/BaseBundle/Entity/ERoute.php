@@ -25,9 +25,9 @@ class ERoute
 	 */
 	protected $groups;
 	
-	/** @ORM\OneToMany(targetEntity="EPointsRoute", mappedBy="route", cascade={"persist"})
+	/** @ORM\OneToMany(targetEntity="EPoints", mappedBy="route", cascade={"persist"})
 	 */
-	protected $pointsroute;
+	protected $points;
 	
 	/** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="adminRoutes")
 	 */
@@ -202,36 +202,36 @@ class ERoute
     }
 
     /**
-     * Add pointsroute
+     * Add points
      *
-     * @param \Trazeo\BaseBundle\Entity\EPointsRoute $pointsroute
+     * @param \Trazeo\BaseBundle\Entity\EPoints $points
      *
      * @return ERoute
      */
-    public function addPointsroute(\Trazeo\BaseBundle\Entity\EPointsRoute $pointsroute)
+    public function addPoint(\Trazeo\BaseBundle\Entity\EPoints $points)
     {
-        $this->pointsroute[] = $pointsroute;
+        $this->points[] = $points;
 
         return $this;
     }
 
     /**
-     * Remove pointsroute
+     * Remove points
      *
-     * @param \Trazeo\BaseBundle\Entity\EPointsRoute $pointsroute
+     * @param \Trazeo\BaseBundle\Entity\EPoints $points
      */
-    public function removePointsroute(\Trazeo\BaseBundle\Entity\EPointsRoute $pointsroute)
+    public function removePoint(\Trazeo\BaseBundle\Entity\EPoints $points)
     {
-        $this->pointsroute->removeElement($pointsroute);
+        $this->points->removeElement($points);
     }
 
     /**
-     * Get pointsroute
+     * Get points
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getPointsroute()
+    public function getPoints()
     {
-        return $this->pointsroute;
+        return $this->points;
     }
 }

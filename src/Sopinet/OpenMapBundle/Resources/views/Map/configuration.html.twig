@@ -1,3 +1,5 @@
+<script type="text/javascript">
+
 var gk, topo, thunderforest, osm, waymarkedtrails;
 
 
@@ -56,6 +58,7 @@ L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/publ
         return cb(null, L.GeoJSON.geometryToLayer(geojson));
       });
     }
+    
     routing = new L.Routing({
       position: 'topleft'
       ,routing: {
@@ -72,7 +75,8 @@ L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/publ
       }
     });
     map.addControl(routing);
-    
+
+   
     
     //Map GeoCoder Plugin info
     var options = {
@@ -86,6 +90,7 @@ L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/publ
     	                first = new L.LatLng(bbox[0], bbox[2]),
     	                second = new L.LatLng(bbox[1], bbox[3]),
     	                bounds = new L.LatLngBounds([first, second]);
+	                
     	            this._map.fitBounds(bounds);
     	    }
     };
@@ -149,8 +154,7 @@ L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/publ
 		    	routing._draw._trailer.setLatLngs([last.getLatLng(), latlng]);
 			}
 		}
-		routing.draw();
-		
+		routing.draw();		
 	};   		
 	
 	//methods
@@ -200,4 +204,4 @@ L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/publ
     	$("#inputPoints").val(points);    	
     }
     setInterval(updateRouteInfo,3000);
-    
+</script>
