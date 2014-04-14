@@ -12,7 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ERoute
 {
-	use \Sopinet\Bundle\SimplePointBundle\Model\GeoLocation;
 	/**
 	 * @var integer
 	 *
@@ -25,6 +24,10 @@ class ERoute
 	/** @ORM\OneToMany(targetEntity="EGroup", mappedBy="route")
 	 */
 	protected $groups;
+	
+	/** @ORM\OneToMany(targetEntity="EPointsRoute", mappedBy="route", cascade={"persist"})
+	 */
+	protected $pointsroute;
 	
 	/** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="adminRoutes")
 	 */
@@ -196,5 +199,39 @@ class ERoute
     public function getCountry()
     {
         return $this->country;
+    }
+
+    /**
+     * Add pointsroute
+     *
+     * @param \Trazeo\BaseBundle\Entity\EPointsRoute $pointsroute
+     *
+     * @return ERoute
+     */
+    public function addPointsroute(\Trazeo\BaseBundle\Entity\EPointsRoute $pointsroute)
+    {
+        $this->pointsroute[] = $pointsroute;
+
+        return $this;
+    }
+
+    /**
+     * Remove pointsroute
+     *
+     * @param \Trazeo\BaseBundle\Entity\EPointsRoute $pointsroute
+     */
+    public function removePointsroute(\Trazeo\BaseBundle\Entity\EPointsRoute $pointsroute)
+    {
+        $this->pointsroute->removeElement($pointsroute);
+    }
+
+    /**
+     * Get pointsroute
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPointsroute()
+    {
+        return $this->pointsroute;
     }
 }
