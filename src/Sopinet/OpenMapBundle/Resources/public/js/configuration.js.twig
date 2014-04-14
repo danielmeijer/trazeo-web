@@ -104,22 +104,25 @@ L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/publ
     		$(".leaflet-marker-icon").css("pointer-events","none");
     		routing.draw(false);
     		
+    		$("form > button").removeAttr("disabled");
     		getPointsData();
     		map.once('dblclick', enableRouting);
     		return false;
     	};
     	
     var enableRouting=function(e){
-		e.originalEvent.stopPropagation();
+		e.originalEvent.stop();
 		
 		$(".leaflet-marker-icon").css("pointer-events","all");
 		routing.draw(true);
 
+		$("form > button").attr("disabled","true");
 		map.once('dblclick', disableRouting);
 		return false;
 	};
    	map.once('dblclick', disableRouting);
-   	
+	$("form > button").attr("disabled","true");
+	
 	//API data
 	var getWaypoints=function(){
 		return routing.getWaypoints();
@@ -177,29 +180,17 @@ L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/publ
     
     var getPointsData=function(){
     	var waypoints=getWaypoints();
-    	//create inputs
-    	if(document.getElementById("inputLat")==null){
+    	//create input
+    	if(document.getElementById("inputPoints")==null){
         	var lat=document.createElement("INPUT");
-           	lat.id="inputLat";
-           	lat.name="inputLat";
-           	var lng=document.createElement("INPUT");
-           	lng.id="inputLng";
-           	lng.name="inputLng";
+           	lat.id="inputPoints";
+           	lat.name="inputPoints";
            	
-           	document.getElementById("mapa").appendChild(lat);
-           	document.getElementById("mapa").appendChild(lng);    		
+           	document.getElementById("mapa").appendChild(lat);  		
     	}
        	
-       	//populate inputs
-    	var pointsLat=new Array;
-    	var pointsLng=new Array;
-    	for(var actual in waypoints){
-    		pointsLat.push(waypoints[actual].lat);
-    		pointsLng.push(waypoints[actual].lng)
-    	}
-    	$("#inputLat").val(pointsLat);
-    	$("#inputLng").val(pointsLng);
-    	
+       	//populate input
+    	$("#inputPoints").val(waypoints);    	
     }
     map.on('click', updateRouteInfo);
     
