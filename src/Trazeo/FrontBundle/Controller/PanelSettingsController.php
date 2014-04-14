@@ -44,27 +44,10 @@ class PanelSettingsController extends Controller
 		$sup->setAllSettings($request);
 		
 		$container = $this->get('sopinet_notifier');
-		$notification = $container->MessagesNotifier("success","Saved");
+		// TODO: Traducir mensaje de Guardadas Preferencias de Usuario
+		$notification = $container->MessagesNotifier("success","Guardadas preferencias de usuario");
 		
 		return $this->redirect($this->generateUrl('panel_dashboard'));
-		/*
-		$em = $this->getDoctrine()->getEntityManager();
-		$user = $this->get('security.context')->getToken()->getUser();
-		$reUserValue = $em->getRepository("SusPasitosBaseBundle:UserValue");
-		 
-		foreach($request->request->all() as $key => $value) {
-			$temp = explode("_",$key);
-			if ($temp[0] == "setting") {
-				$usersetting_id = $temp[1];
-				$reUserValue->setValue($user, $usersetting_id, $value);
-			}
-		}
-		 
-		// TODO: MENSAJE
-		return $this->redirect($this->generateUrl('panel_dashboard'));		
-		*/
-		//ldd($request);
-		//die("Esto es lo que hay");
 	}
 }
 
