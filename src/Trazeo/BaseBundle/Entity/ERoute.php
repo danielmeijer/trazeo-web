@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ERoute
 {
+	use \Sopinet\Bundle\SimplePointBundle\Model\GeoLocation;
 	/**
 	 * @var integer
 	 *

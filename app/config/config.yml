@@ -59,14 +59,20 @@ doctrine:
         password: "%database_password%"
         charset:  UTF8
         mapping_types:
+            point: point
             enum: string
         types:
+            point: Sopinet\Bundle\SimplePointBundle\DBAL\Types\SimplePointType
             json: Sonata\Doctrine\Types\JsonType
         # if using pdo_sqlite as your database driver, add the path in parameters.yml
         # e.g. database_path: "%kernel.root_dir%/data/data.db3"
         # path:     "%database_path%"
 
     orm:
+        dql:
+            numeric_functions:
+                distance: Sopinet\Bundle\SimplePointBundle\ORM\MySQL\Distance
+                point_str: Sopinet\Bundle\SimplePointBundle\ORM\MySQL\PointStr
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
         

@@ -124,7 +124,8 @@ L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/publ
 	var getWaypoints=function(){
 		return routing.getWaypoints();
 	};
-	
+	console.log("aqui");
+	console.log(getWaypoints());
     var loadFromWaypoints=function(waypoints){
 		for(var index=0;waypoints.length>index;index++){
 		    var marker, latlng, last;

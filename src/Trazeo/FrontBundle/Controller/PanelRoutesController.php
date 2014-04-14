@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Trazeo\BaseBundle\Entity\ERoute;
 use Trazeo\BaseBundle\Form\RouteType;
+use Sopinet\Bundle\SimplePointBundle\ORM\Type\SimplePoint;
 
 /**
  * PanelRoutes controller.
@@ -131,10 +132,12 @@ class PanelRoutesController extends Controller
         }
 
         //$deleteForm = $this->createDeleteForm($id);
-
+		$location = $route->getLocation();
+		//ldd($location);
         return array(
         	'cont'		  => $cont,
             'route'      => $route,
+        	'location' => $location
             //'delete_form' => $deleteForm->createView(),
         );
     }
@@ -184,6 +187,30 @@ class PanelRoutesController extends Controller
 
         return $form;
     }
+    
+    /**
+     * Finds and displays a Routes entity.
+     *
+     * @Route("/savemap", name="panel_save_map")
+     */
+    public function saveMapAction(Request $request)
+    {
+		//ldd($request);
+		$id = $request->get('id');
+		$em = $this->getDoctrine()->getManager();
+
+        $route = $em->getRepository('TrazeoBaseBundle:ERoute')->find($id);
+    	
+//     	$point = new SimplePoint($request->get('latitude'), $request->get('longitude'));
+		$point = new SimplePoint(0,0);
+    	$route->setLocation($point);
+    	$em->persist($route);
+    	$em->flush();
+    
+    	return $this->redirect($this->generateUrl('panel_route_show', array('id' => $request->get('id'))));
+    }
+    
+    
     /**
      * Edits an existing Routes entity.
      *
