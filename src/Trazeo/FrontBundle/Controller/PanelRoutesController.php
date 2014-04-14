@@ -119,18 +119,15 @@ class PanelRoutesController extends Controller
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $eroute = $em->getRepository('TrazeoBaseBundle:ERoute')->find($id);
+        $route = $em->getRepository('TrazeoBaseBundle:ERoute')->find($id);
         $reGroups = $em->getRepository('TrazeoBaseBundle:EGroup');
-        $groups = $reGroups->findByRoute($eroute);
+        $groups = $reGroups->findByRoute($route);
         $cont = 0;
         foreach($groups as $group){
         	// Ver si estos niños van a ser un
         	$cont = $cont + $group->getChilds()->count();
         }
-        foreach($eroute->getPointsroute() as $point){
-        	ld($point->getLocation());
-        }
-       //ldd($route->getPointsroute()->getLocation());
+       
         if (!$route) {
             throw $this->createNotFoundException('Unable to find Route entity.');
         }
@@ -212,10 +209,12 @@ class PanelRoutesController extends Controller
 		{
 			$latlng = explode(",", str_replace(array("(", ")"), "", $points[$i]));
 			//ld($latlng);
-			$point = new EPointsRoute(new SimplePoint($latlng[0], $latlng[1]));			
+			$point = new EPointsRoute(new SimplePoint($latlng[0], $latlng[1]));
+			
 			//ld($point);
 			$route->addPointsroute($point);
 		}
+    	//ldd($route);
     	
     	$em->persist($route);
     	$em->flush();
