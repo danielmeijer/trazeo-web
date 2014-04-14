@@ -195,7 +195,7 @@ class PanelRoutesController extends Controller
      */
     public function saveMapAction(Request $request)
     {
-		//ldd($request);
+		ldd($request);
 		$id = $request->get('id');
 		$em = $this->getDoctrine()->getManager();
 

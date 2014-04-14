@@ -181,8 +181,11 @@ L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/publ
     	if(document.getElementById("inputLat")==null){
         	var lat=document.createElement("INPUT");
            	lat.id="inputLat";
+           	lat.name="inputLat";
            	var lng=document.createElement("INPUT");
            	lng.id="inputLng";
+           	lng.name="inputLng";
+           	
            	document.getElementById("mapa").appendChild(lat);
            	document.getElementById("mapa").appendChild(lng);    		
     	}
