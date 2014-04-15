@@ -85,12 +85,13 @@ class PanelGroupsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $fos_user = $this->container->get('security.context')->getToken()->getUser();
+        
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
         $userGroups = $user->getGroups();
 
         $allGroups = $em->getRepository('TrazeoBaseBundle:EGroup')->findAll();
         $groups = array_diff($allGroups,$userGroups->toArray());
-            
+        
         return array(
             'groups' => $groups,
         	'userGroups' => $userGroups

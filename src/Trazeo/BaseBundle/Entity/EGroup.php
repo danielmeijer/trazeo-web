@@ -25,7 +25,7 @@ class EGroup
      */
     protected $userextendgroups;
     
-    /** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="adminGroup")
+    /** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="adminGroups")
      */
     protected $admin;
     
@@ -37,6 +37,12 @@ class EGroup
     /** @ORM\ManyToOne(targetEntity="ERoute", inversedBy="groups")
      */
     protected $route;
+    
+    /**
+     *
+     * @ORM\Column(name="visibility", type="string", length=255, nullable=true)
+     */
+    protected $visibility;
     
     
     /**
@@ -210,5 +216,30 @@ class EGroup
     public function getRoute()
     {
         return $this->route;
+    }
+    
+
+    /**
+     * Set visibility
+     *
+     * @param boolean $visibility
+     *
+     * @return EGroup
+     */
+    public function setVisibility($visibility)
+    {
+    	$this->visibility = $visibility;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get visibility
+     *
+     * @return boolean
+     */
+    public function getVisibility()
+    {
+    	return $this->visibility;
     }
 }
