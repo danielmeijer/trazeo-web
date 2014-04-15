@@ -52,21 +52,33 @@ class NotificationHelper {
 		
 		$em->persist($notification);
 		$em->flush();
+		
+		return $notification;
 	}
 	
 	function parseNotification(Notification $notification) {
+		//ldd($notification);
 		$em = $this->_container->get("doctrine.orm.entity_manager");
 		$objects = explode(",", $notification->getObjects());
-		$objects_id = $explode(",", $notification->getObjectsId());
+		$objects_id = explode(",", $notification->getObjectsId());
 		$i = 0;
 		foreach($objects as $object) {
 			$re = $em->getRepository($object);
-			$elements[] = $re->findOneById($objects_id[$i]);
+			$elements['%'.$i] = $re->findOneById($objects_id[$i]);
 			$i++;
 		}
+		//ldd($elements);
+		return $this->_container->get('translator')->trans('Notifications.'.$notification->getAction(), $elements);
 		// TODO: Traducir el action de la notification, pasando como parámetros los ELEMENTOS
 		//return $elements;
 		// foreach($notification->getObjects() as $not) 
 		// TODO: Devolver el texto traducido con los objetos
+	}
+	
+	/**
+	 * Coger todas las notificaciones sin leer de un usuario
+	 */
+	function getNotifications($user = null) {
+		// Devolvemos las notificaciones
 	}
 }
