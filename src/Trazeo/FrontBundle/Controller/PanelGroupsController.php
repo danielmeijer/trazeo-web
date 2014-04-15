@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Trazeo\BaseBundle\Entity\EGroup;
+use Trazeo\BaseBundle\Entity\EGroupAccess;
 use Trazeo\BaseBundle\Entity\EChild;
 use Trazeo\BaseBundle\Form\GroupType;
 use Trazeo\BaseBundle\Controller\GroupsController;
@@ -64,6 +65,34 @@ class PanelGroupsController extends Controller
 		$em->persist($group);
 		$em->flush();
 
+		return $this->redirect($this->generateUrl('panel_group'));
+	}
+	
+	/**
+	 * User Group Admin join an User.
+	 *
+	 * @Route("/letjoin/{id}/{group}", name="panel_group_let_join")
+	 * @Method("GET")
+	 * @Template()
+	 */
+	public function letJoinGroupAction($id, $group) {
+	
+		$em = $this->getDoctrine()->getManager();
+	
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($id);
+		$groupToJoin = $em->getRepository('TrazeoBaseBundle:EGroup')->find($group);
+	
+		if (!$groupToJoin) {
+			throw $this->createNotFoundException('Unable to find Group entity.');
+		}
+	
+		$groupToJoin->addUserextendgroup($user);
+		$em->persist($groupToJoin);
+		$em->flush();
+		
+		$container = $this->get('sopinet_flashMessages');
+		$notification = $container->addFlashMessages("success","El usuario ha sido añadido al grupo");
+	
 		return $this->redirect($this->generateUrl('panel_group'));
 	}
 	
@@ -138,14 +167,24 @@ class PanelGroupsController extends Controller
         $fos_user = $this->container->get('security.context')->getToken()->getUser();
         
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+        // Grupos a los que pertenece el usuario
         $userGroups = $user->getGroups();
-
+        $userId = $user->getId();
+        
+        // Grupos de los cuales el usuario es administrador
+        $userAdmin = $em->getRepository('TrazeoBaseBundle:EGroup')->findByAdmin($userId);
+        // Listado de todas las peticiones de acceso a un grupo por parte de otros usuarios
+        $allGroupsAccess = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findAll();
+        
+        // Se cogen todos los grupos y se "restan" los cuales el usuario forma parte
         $allGroups = $em->getRepository('TrazeoBaseBundle:EGroup')->findAll();
         $groups = array_diff($allGroups,$userGroups->toArray());
         
         return array(
             'groups' => $groups,
-        	'userGroups' => $userGroups
+        	'userGroups' => $userGroups,
+        	'userAdmin' => $userAdmin,
+        	'allGroupsAccess' => $allGroupsAccess
         );
     }
     /**
@@ -304,12 +343,9 @@ class PanelGroupsController extends Controller
     	$userchilds = $user->getChilds()->toArray();
     	$groupchilds = $group->getChilds()->toArray();
     	$childs = array_intersect($userchilds, $groupchilds);
-    	
-    	//Listado de niños que no están en el grupo y pertenecen al padre
-    	$childsNoGroup = array_diff($userchilds, $childs);
+    	//ldd($childs);
     	    	
     	return array(
-    			'childsNoGroup' => $childsNoGroup,
     			'childs' => $childs,
     			'user' => $user,
     			'group' => $group

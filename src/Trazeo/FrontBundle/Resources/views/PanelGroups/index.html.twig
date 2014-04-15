@@ -18,12 +18,26 @@
 						</span>				
 					</div>
 			</div>
-        </div><!-- END col-lg-12 alert alert-info -->
+        </div><!-- END col-lg-12 alert alert-info -->        
+        
+        {% for userAdmin in userAdmin %}
+	        {% for allGroupsAccess in allGroupsAccess %}
+				{% if userAdmin.Id == allGroupsAccess.Group.Id  %}
+	        		<li>El usuario {{ allGroupsAccess.Userextend }} pide acceso al grupo {{ allGroupsAccess.Group }}
+								<a href="{{ path('panel_group_let_join', { 'id': allGroupsAccess.Userextend.Id, 'group':allGroupsAccess.Group.Id }) }}" type="button" class="btn btn-success btn-circle">
+									<i class="fa fa-check"></i>
+								</a>
+	        		
+	        		 </li>
+	        	{% endif %}
+	        {% endfor %}
+        
+        {% endfor %}
 
         <p>&nbsp;</p>
         <div class="alert alert-success">
         	<h4><i class="fa fa-list"></i> Listado de Grupos</h4>
-        </div>
+        </div>   
         
         <div class="panel-group" id="accordion1">
 		{% for userGroup in userGroups %}
@@ -67,6 +81,9 @@
 							</li>
 							<li>
 							<b><i class="fa fa-location-arrow"></i> Ruta asignada:</b> {{ userGroup.route.name }}
+							</li>
+							<li>
+							<a href="{{ path('panel_group_timeline',{'id': userGroup.id}) }}"><button class="btn btn-success">Timeline</button></a>
 							</li>
 						</ul>
 					</div>

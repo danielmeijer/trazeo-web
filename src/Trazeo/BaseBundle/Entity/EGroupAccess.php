@@ -30,9 +30,6 @@ class EGroupAccess
      */
     protected $group;
     
-    
-  
-
     /**
      * Get id
      *
