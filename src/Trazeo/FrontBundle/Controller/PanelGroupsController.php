@@ -94,6 +94,36 @@ class PanelGroupsController extends Controller
 	
 		return $this->redirect($this->generateUrl('panel_group'));
 	}
+	
+	
+	/**
+	 * Request to admin Group.
+	 *
+	 * @Route("/requestjoin/{id}", name="panel_group_requestJoin")
+	 * @Method("GET")
+	 * @Template()
+	 */
+	public function requestJoinGroupAction($id) {
+	
+		$em = $this->getDoctrine()->getManager();
+	
+		$fos_user = $this->container->get('security.context')->getToken()->getUser();
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+	
+		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
+		$adminGroup = $group->getAdmin();
+	
+		$access = new EGroupAccess();
+		$access->setGroup($group);
+		$access->setUserextend($user);
+	
+		$em->persist($access);
+		$em->flush();
+	
+		$container = $this->get('sopinet_flashMessages');
+		$notification = $container->addFlashMessages("success","Solicitud enviada");
+		return $this->redirect($this->generateUrl('panel_group'));
+	}
 		
     /**
      * Lists all Groups entities.

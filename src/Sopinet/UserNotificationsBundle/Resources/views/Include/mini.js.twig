@@ -1,0 +1,9 @@
+	<script>
+		$(".clearNotifications").click(function() {
+			$.ajax({
+			  url: "{{ path('sopinetusernotifications_clear') }}",
+			  }).done(function(content) {
+				  $(".clearNotifications > .badge").fadeOut();
+			});
+		});
+	</script>

@@ -7,6 +7,12 @@ services:
 #        arguments: [@service_id, "plain_value", %parameter%]
 
 services:
+    sopinetusernotifications.twig.base_extension:
+        class: Sopinet\UserNotificationsBundle\Twig\BaseExtension
+        arguments: ['@service_container']
+        tags:
+            - { name: twig.extension }
+            
     sopinet_user_notification:
        class: Sopinet\UserNotificationsBundle\Service\NotificationHelper
        arguments: ["@service_container"]

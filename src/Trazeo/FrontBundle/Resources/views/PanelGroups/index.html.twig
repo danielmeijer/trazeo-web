@@ -22,7 +22,7 @@
 
         <p>&nbsp;</p>
         <div class="alert alert-success">
-        	<h4><i class="fa fa-list-ul"></i>Listado de Grupos</h4>
+        	<h4><i class="fa fa-list"></i> Listado de Grupos</h4>
         </div>
         
         <div class="panel-group" id="accordion1">
@@ -68,9 +68,6 @@
 							<li>
 							<b><i class="fa fa-location-arrow"></i> Ruta asignada:</b> {{ userGroup.route.name }}
 							</li>
-							<li>
-							<a href="{{ path('panel_group_timeline',{'id': userGroup.id}) }}"><button class="btn btn-success">Timeline</button></a>
-							</li>
 						</ul>
 					</div>
 				</div>
@@ -84,10 +81,18 @@
 		        	<h4 class="panel-title">
 		            	<a data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ group.id }}">{{ group.name }}</a>
 		            	<div class="pull-right">
+		            	{% if group.Visibility == 1 %}
+								<a href="{{ path('panel_group_requestJoin', { 'id': group.id }) }}" type="button" class="btn btn-success btn-circle">
+									<i class="fa fa-check"></i>
+								</a>
+								Solicitar acceso
+						{% endif %}
+						{% if group.Visibility == 0 %}
 								<a href="{{ path('panel_group_join', { 'id': group.id }) }}" type="button" class="btn btn-success btn-circle">
 									<i class="fa fa-check"></i>
 								</a>
-								Unirme al grupo
+								Unirme a este grupo	
+						{% endif %}
 		            	<i class="btn btn-warning btn-circle"> {{ group.userextendgroups|length }}</i> {{ "Usuarios"|trans }}
 	            	 	{% if group.Visibility == 0 %}<i class="fa fa-unlock"></i> Público{% endif %}
 		            	 	{% if group.Visibility == 1 %}<i class="fa fa-lock"></i> Privado{% endif %}
@@ -117,7 +122,9 @@
 							<li>
 							<b><i class="fa fa-location-arrow"></i> Ruta asignada:</b> {{ group.route.Name }}
 							</li>
-							
+							<li>
+							<a href="{{ path('panel_group_timeline',{'id': group.id}) }}"><button class="btn btn-success">Timeline</button></a>
+							</li>
 						</ul>
 					</div>
 				</div>

@@ -14,28 +14,39 @@ class NotificationHelper {
 	function __construct(ContainerInterface $container) {
 		$this->_container = $container;
 	}
-
+	
 	/**
-	 * Add notification for user logged (or user by parameter)
-	 * 
-	 * @param String $action
-	 * @param String $object
-	 * @param Integer $object_id (optional)
-	 * @param User $user (optional)
+	 * Create SopinetUserExtend by default
+	 * @param User $user
 	 */
-	function addNotification($action, $objects = null, $objects_id = null, $user = null) {
+	private function _getSopinetUserExtend($user = null) {
 		$em = $this->_container->get("doctrine.orm.entity_manager");
 		if ($user == null) {
 			$user = $this->_container->get('security.context')->getToken()->getUser();
 		}
 		$userextend = $user->getSopinetUserExtend();
-		
 		if ($userextend == null) {
 			$userextend = new \Sopinet\UserBundle\Entity\SopinetUserExtend();
 			$userextend->setUser($user);
 			$em->persist($userextend);
 			$em->flush();
 		}
+		return $userextend;
+	}
+
+	/**
+	 * Add notification for user logged (or user by parameter)
+	 * 
+	 * @param String $action
+	 * @param String $objects (optional)
+	 * @param Integer $objects_id (optional)
+	 * @param String $link (optional)
+	 * @param User $user (optional)
+	 */
+	function addNotification($action, $objects = null, $objects_id = null, $link = null, $user = null) {
+		$em = $this->_container->get("doctrine.orm.entity_manager");
+		
+		$userextend = $this->_getSopinetUserExtend($user);
 
 		//$reNotification = $em->getRepository("SopinetUserNotificationsBundle:Notification");
 		$notification = new Notification();
@@ -45,7 +56,10 @@ class NotificationHelper {
 		}
 		if ($objects_id != null) {
 			$notification->setObjectsId($objects_id);
-		}		
+		}
+		if ($link != null) {
+			$notification->setLink($link);
+		}
 		$notification->setUser($userextend);
 		$notification->setEmail(0);
 		$notification->setView(0);
@@ -56,6 +70,11 @@ class NotificationHelper {
 		return $notification;
 	}
 	
+	/**
+	 * Get String parsed (translated) from Notification
+	 * 
+	 * @param Notification $notification
+	 */
 	function parseNotification(Notification $notification) {
 		//ldd($notification);
 		$em = $this->_container->get("doctrine.orm.entity_manager");
@@ -67,18 +86,52 @@ class NotificationHelper {
 			$elements['%'.$i] = $re->findOneById($objects_id[$i]);
 			$i++;
 		}
-		//ldd($elements);
 		return $this->_container->get('translator')->trans('Notifications.'.$notification->getAction(), $elements);
-		// TODO: Traducir el action de la notification, pasando como parámetros los ELEMENTOS
-		//return $elements;
-		// foreach($notification->getObjects() as $not) 
-		// TODO: Devolver el texto traducido con los objetos
 	}
 	
 	/**
-	 * Coger todas las notificaciones sin leer de un usuario
+	 * Get Notifications from user
+	 * 
+	 * @param User $user
+	 * @param Integer $limit (if it is 0, return ilimited notifications)
+	 * @return Array Notifications
 	 */
-	function getNotifications($user = null) {
+	function getNotifications($user = null, $limit = 5) {
+		$em = $this->_container->get("doctrine.orm.entity_manager");
+		$reNotifications = $em->getRepository("SopinetUserNotificationsBundle:Notification");
+		
+		$userextend = $this->_getSopinetUserExtend($user);
+		if ($limit > 0) {
+			$notifications = $reNotifications->findBy(array(
+					'user' => $userextend,
+					'view' => 0
+					), null, $limit	);
+		} else {
+			$notifications = $reNotifications->findBy(array(
+					'user' => $userextend,
+					'view' => 0
+				));
+		}
+		return $notifications;
 		// Devolvemos las notificaciones
+	}
+	
+	function clearNotifications($user = null) {
+		$em = $this->_container->get("doctrine.orm.entity_manager");
+		$reNotifications = $em->getRepository("SopinetUserNotificationsBundle:Notification");
+		
+		$userextend = $this->_getSopinetUserExtend($user);
+		$notifications = $reNotifications->findBy(array(
+				'user' => $userextend,
+				'view' => 0
+		));
+		$count = 0;
+		foreach($notifications as $notification) {
+			$count++;
+			$notification->setView(1);
+			$em->persist($notification);			
+			$em->flush();
+		}
+		return $count;
 	}
 }

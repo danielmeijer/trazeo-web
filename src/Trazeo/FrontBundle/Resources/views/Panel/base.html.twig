@@ -4,7 +4,14 @@
 
 {% block body %}
 
-{% include 'SopinetTemplateSbadmin2Bundle:Base:navbar.html.twig' %}
+{% embed 'SopinetTemplateSbadmin2Bundle:Base:navbar.html.twig' %}
+	{% block add_navbar %}
+		{% include 'SopinetUserNotificationsBundle:Include:mini.html.twig' with {
+				'notifications': app.user|getSopinetUserNotifications()
+			} %}
+	{% endblock %}
+{% endembed %}
+
 {% include 'SopinetTemplateSbadmin2Bundle:Base:sidebar.html.twig' %}
 	<div id="page-wrapper">
 		{% if pageheader_title is not defined %}
@@ -23,13 +30,9 @@
 	</div>
 
 {% endblock %}
-{#
+
 {% block js %}
 	{{ parent() }}
-	<script>
-	$('.inputDate').datepicker({
-		language: "es"
-        })
-        </script>
+	{% include "SopinetUserNotificationsBundle:Include:mini.js.twig" %}
+	{% include 'SopinetFlashMessagesBundle:Messages:notification.html.twig' %} 	
 {% endblock %}
-#}

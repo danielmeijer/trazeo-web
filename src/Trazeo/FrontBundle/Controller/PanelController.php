@@ -21,11 +21,6 @@ class PanelController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$fos_user = $this->container->get('security.context')->getToken()->getUser();	
     	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
-    
-/**    		$not = $this->container->get('sopinet_user_notification');
-    		$el = $not->addNotification('child_in_group', "TrazeoBaseBundle:EChild,TrazeoBaseBundle:EGroup", "1,2");
-    		ldd($not->parseNotification($el));
-   **/ 	
     	
     	$childs = $user->getChilds();
         $groups = $user->getAdminGroups();
