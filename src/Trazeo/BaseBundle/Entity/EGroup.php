@@ -29,8 +29,7 @@ class EGroup
      */
     protected $admin;
     
-    /** @ORM\ManyToMany(targetEntity="EChild", mappedBy="groups")
-     * @ORM\JoinColumn(name="childs_groups", referencedColumnName="id")
+    /** @ORM\ManyToMany(targetEntity="EChild", inversedBy="groups")
      */
     protected $childs;
 

@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Trazeo\BaseBundle\Entity\EGroup;
+use Trazeo\BaseBundle\Entity\EChild;
 use Trazeo\BaseBundle\Form\GroupType;
 use Trazeo\BaseBundle\Controller\GroupsController;
 
@@ -18,6 +19,26 @@ use Trazeo\BaseBundle\Controller\GroupsController;
  */
 class PanelGroupsController extends Controller
 {
+	/**
+	 * User join Child to Group.
+	 *
+	 * @Route("/{group}/joinchild/{child}", name="panel_group_joinChild")
+	 * @Method("GET")
+	 */
+	public function joinChildAction(EGroup $group, EChild $child) {
+	
+		$em = $this->getDoctrine()->getManager();
+	
+		$fos_user = $this->container->get('security.context')->getToken()->getUser();
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+	
+		$group->addChild($child);
+		//ldd($group->getChilds()->toArray());
+		$em->persist($group);
+		$em->flush();
+	
+		return $this->redirect($this->generateUrl('panel_group_timeline', array('id' => $group->getId())));
+	}
 	
 	/**
 	 * User join Group.
@@ -238,6 +259,24 @@ class PanelGroupsController extends Controller
 
         return $form;
     }
+    
+    /**
+     * @Route("/{id}/timeline", name="panel_group_timeline")
+     * @Template()
+     */
+    public function timelineAction(Egroup $group)
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$fos_user = $this->container->get('security.context')->getToken()->getUser();
+    	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+    	//ldd($group->getChilds()->toArray());
+    	return array(
+    			'user' => $user,
+    			'group' => $group
+    	);
+    
+    }
+    
     /**
      * Edits an existing Groups entity.
      *

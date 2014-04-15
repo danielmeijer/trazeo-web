@@ -1,0 +1,32 @@
+{% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
+
+{% block body_content %}
+
+	<div class="row">
+		<div class="col-lg-8">
+			{% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': group.id} %}
+		</div>
+		<div class="col-lg-4 alert alert-success">
+			<div class="row">
+				<h3>Tus niños</h3>
+				<ul>
+					{% for child in group.childs %}
+						<li>{{ child.nick }}</li>
+					{% endfor %}
+				</ul>
+				<a data-toggle="collapse" data-parent="#accordion1" href="#collapseAddChild">+ Añadir</a>
+				<div id="collapseAddChild" class="panel-collapse collapse">
+					<ul>
+						{% for child in user.childs %}
+							<li><a href="{{ path('panel_group_joinChild', {'group': group.id, 'child': child.id}) }}">{{ child.nick }}</a></li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+			<div class="row">
+				Otros padres
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
