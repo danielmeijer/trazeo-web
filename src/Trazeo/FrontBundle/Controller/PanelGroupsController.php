@@ -274,9 +274,12 @@ class PanelGroupsController extends Controller
     	$userchilds = $user->getChilds()->toArray();
     	$groupchilds = $group->getChilds()->toArray();
     	$childs = array_intersect($userchilds, $groupchilds);
-    	//ldd($childs);
+    	
+    	//Listado de niños que no están en el grupo y pertenecen al padre
+    	$childsNoGroup = array_diff($userchilds, $childs);
     	    	
     	return array(
+    			'childsNoGroup' => $childsNoGroup,
     			'childs' => $childs,
     			'user' => $user,
     			'group' => $group
