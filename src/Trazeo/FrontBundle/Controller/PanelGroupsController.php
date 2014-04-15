@@ -269,8 +269,15 @@ class PanelGroupsController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$fos_user = $this->container->get('security.context')->getToken()->getUser();
     	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
-    	//ldd($group->getChilds()->toArray());
+    	
+    	//Listado de niños que están en el grupo y pertenecen al usuario logueado 
+    	$userchilds = $user->getChilds()->toArray();
+    	$groupchilds = $group->getChilds()->toArray();
+    	$childs = array_intersect($userchilds, $groupchilds);
+    	//ldd($childs);
+    	    	
     	return array(
+    			'childs' => $childs,
     			'user' => $user,
     			'group' => $group
     	);
