@@ -10,7 +10,7 @@
 			<div class="row">
 				<h3>Tus niños</h3>
 				<ul>
-					{% for child in group.childs %}
+					{% for child in childs %}
 						<li>{{ child.nick }}</li>
 					{% endfor %}
 				</ul>
@@ -24,7 +24,12 @@
 				</div>
 			</div>
 			<div class="row">
-				Otros padres
+				<h3>Otros padres</h3>
+				<ul>
+					{% for userextend in group.userextendgroups %}
+						<li>{{ userextend.nick }}</li>
+					{% endfor %}
+				</ul>
 			</div>
 		</div>
 	</div>
