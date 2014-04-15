@@ -25,18 +25,29 @@ class EGroup
      */
     protected $userextendgroups;
     
-    /** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="adminGroup")
+    /** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="adminGroups")
      */
     protected $admin;
     
-    /** @ORM\ManyToMany(targetEntity="EChild", mappedBy="groups")
-     * @ORM\JoinColumn(name="childs_groups", referencedColumnName="id")
+    /** @ORM\ManyToMany(targetEntity="EChild", inversedBy="groups")
      */
     protected $childs;
 
     /** @ORM\ManyToOne(targetEntity="ERoute", inversedBy="groups")
      */
     protected $route;
+    
+    /**
+     *
+     * @ORM\Column(name="visibility", type="string", length=255, nullable=true)
+     */
+    protected $visibility;
+    
+    
+    /** @ORM\OneToMany(targetEntity="EGroupAccess",  mappedBy="group")
+     * @var unknown
+     */
+    protected $access;
     
     
     /**
@@ -210,5 +221,64 @@ class EGroup
     public function getRoute()
     {
         return $this->route;
+    }
+    
+
+    /**
+     * Set visibility
+     *
+     * @param boolean $visibility
+     *
+     * @return EGroup
+     */
+    public function setVisibility($visibility)
+    {
+    	$this->visibility = $visibility;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get visibility
+     *
+     * @return boolean
+     */
+    public function getVisibility()
+    {
+    	return $this->visibility;
+    }
+
+    /**
+     * Add access
+     *
+     * @param \Trazeo\BaseBundle\Entity\EGroupAccess $access
+     *
+     * @return EGroup
+     */
+    public function addAccess(\Trazeo\BaseBundle\Entity\EGroupAccess $access)
+    {
+        $this->access[] = $access;
+
+        return $this;
+    }
+
+    /**
+     * Remove access
+     *
+     * @param \Trazeo\BaseBundle\Entity\EGroupAccess $access
+     */
+    public function removeAccess(\Trazeo\BaseBundle\Entity\EGroupAccess $access)
+    {
+        $this->access->removeElement($access);
+    }
+
+    /**
+     * Get access
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAccess()
+    {
+        return $this->access;
     }
 }

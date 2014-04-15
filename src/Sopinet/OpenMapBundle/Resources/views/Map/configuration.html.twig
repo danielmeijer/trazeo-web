@@ -1,9 +1,19 @@
 <script type="text/javascript">
+	var points=new Array;
+	var POINT=L.latLng;
+</script>
 
-var gk, topo, thunderforest, osm, waymarkedtrails;
+{% for point in routePoints  %}
+<script>
+	var aux='{{ point.location }}'.replace(' ',',');
+	points.push(eval(aux));
+</script>
+{%  endfor %}
 
+<script type="text/javascript">
+	var gk, topo, thunderforest, osm, waymarkedtrails;
 
-L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/public/css/images';  
+	L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/public/css/images';  
 
     gk = 'http://opencache.statkart.no/gatekeeper/gk';
 
@@ -103,31 +113,28 @@ L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/publ
     routing.draw();
     
     //map custom events    
-    var disableRouting=function(e){
-    		e.originalEvent.stopPropagation();
-    		
-    		routing.removeWaypoint(routing.getLast());
+    var disableRouting=function(){
     		$(".leaflet-marker-icon").css("pointer-events","none");
     		routing.draw(false);
     		
-    		$("form > button").removeAttr("disabled");
+    		$("#enviar").removeAttr("disabled");
+    		$("#comenzar").on('click',enableRouting);
+    		$("#comenzar").html("Comenzar");
     		getPointsData();
-    		map.once('dblclick', enableRouting);
     		return false;
     	};
     	
-    var enableRouting=function(e){
-		e.originalEvent.stopPropagation();
-		
+    var enableRouting=function(){	
 		$(".leaflet-marker-icon").css("pointer-events","all");
 		routing.draw(true);
 
-		$("form > button").attr("disabled","true");
-		map.once('dblclick', disableRouting);
+		$("#enviar").attr("disabled","true");
+		$("#comenzar").on('click',disableRouting);
+		$("#comenzar").html("Terminar");
+		
 		return false;
 	};
-   	map.once('dblclick', disableRouting);
-	$("form > button").attr("disabled","true");
+
 	
 	//API data
 	var getWaypoints=function(){
@@ -203,5 +210,9 @@ L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/publ
        	//populate input
     	$("#inputPoints").val(points);    	
     }
+    
     setInterval(updateRouteInfo,3000);
+    loadFromWaypoints(points);
+    disableRouting();
+
 </script>

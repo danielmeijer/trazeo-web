@@ -23,6 +23,15 @@ class GroupType extends AbstractType
         				'data-placement' => 'right',
         				'data-content' => 'Groups.help.name'
         		),'required' => true))
+        		
+        		->add('visibility', 'choice', array(
+        				'choices'   => array(0 => 'Public', 1 => 'Private',2 => 'Hidden'),
+        				'attr' => array(
+        						'placeholder' => 'Group.visibility',
+        						'data-toggle' => 'popover',
+        						'data-placement' => 'right',
+        						'data-content' => 'Group.help.visibility'
+        				)))
         
         ->add('route', null, array(
         		'attr' => array(

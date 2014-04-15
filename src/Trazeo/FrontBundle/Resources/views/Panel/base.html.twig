@@ -34,14 +34,5 @@
 {% block js %}
 	{{ parent() }}
 	{% include "SopinetUserNotificationsBundle:Include:mini.js.twig" %}
+	{% include 'SopinetFlashMessagesBundle:Messages:notification.html.twig' %} 	
 {% endblock %}
-{#
-{% block js %}
-	{{ parent() }}
-	<script>
-	$('.inputDate').datepicker({
-		language: "es"
-        })
-        </script>
-{% endblock %}
-#}

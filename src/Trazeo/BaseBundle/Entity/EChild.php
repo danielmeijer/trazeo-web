@@ -24,7 +24,9 @@ class EChild
      */
     protected $userextendchilds;
     
-    /** @ORM\ManyToMany(targetEntity="EGroup", inversedBy="childs")
+    /** 
+     * @ORM\ManyToMany(targetEntity="EGroup", mappedBy="childs")
+     * @ORM\JoinColumn(name="groups_childs", referencedColumnName="id")
      */
     protected $groups;
 

@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Trazeo\BaseBundle\Entity\EGroup;
+use Trazeo\BaseBundle\Entity\EChild;
 use Trazeo\BaseBundle\Form\GroupType;
 use Trazeo\BaseBundle\Controller\GroupsController;
 
@@ -18,6 +19,26 @@ use Trazeo\BaseBundle\Controller\GroupsController;
  */
 class PanelGroupsController extends Controller
 {
+	/**
+	 * User join Child to Group.
+	 *
+	 * @Route("/{group}/joinchild/{child}", name="panel_group_joinChild")
+	 * @Method("GET")
+	 */
+	public function joinChildAction(EGroup $group, EChild $child) {
+	
+		$em = $this->getDoctrine()->getManager();
+	
+		$fos_user = $this->container->get('security.context')->getToken()->getUser();
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+	
+		$group->addChild($child);
+		//ldd($group->getChilds()->toArray());
+		$em->persist($group);
+		$em->flush();
+	
+		return $this->redirect($this->generateUrl('panel_group_timeline', array('id' => $group->getId())));
+	}
 	
 	/**
 	 * User join Group.
@@ -73,6 +94,36 @@ class PanelGroupsController extends Controller
 	
 		return $this->redirect($this->generateUrl('panel_group'));
 	}
+	
+	
+	/**
+	 * Request to admin Group.
+	 *
+	 * @Route("/requestjoin/{id}", name="panel_group_requestJoin")
+	 * @Method("GET")
+	 * @Template()
+	 */
+	public function requestJoinGroupAction($id) {
+	
+		$em = $this->getDoctrine()->getManager();
+	
+		$fos_user = $this->container->get('security.context')->getToken()->getUser();
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+	
+		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
+		$adminGroup = $group->getAdmin();
+	
+		$access = new EGroupAccess();
+		$access->setGroup($group);
+		$access->setUserextend($user);
+	
+		$em->persist($access);
+		$em->flush();
+	
+		$container = $this->get('sopinet_flashMessages');
+		$notification = $container->addFlashMessages("success","Solicitud enviada");
+		return $this->redirect($this->generateUrl('panel_group'));
+	}
 		
     /**
      * Lists all Groups entities.
@@ -85,12 +136,13 @@ class PanelGroupsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $fos_user = $this->container->get('security.context')->getToken()->getUser();
+        
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
         $userGroups = $user->getGroups();
 
         $allGroups = $em->getRepository('TrazeoBaseBundle:EGroup')->findAll();
         $groups = array_diff($allGroups,$userGroups->toArray());
-            
+        
         return array(
             'groups' => $groups,
         	'userGroups' => $userGroups
@@ -237,6 +289,31 @@ class PanelGroupsController extends Controller
 
         return $form;
     }
+    
+    /**
+     * @Route("/{id}/timeline", name="panel_group_timeline")
+     * @Template()
+     */
+    public function timelineAction(Egroup $group)
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$fos_user = $this->container->get('security.context')->getToken()->getUser();
+    	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+    	
+    	//Listado de niños que están en el grupo y pertenecen al usuario logueado 
+    	$userchilds = $user->getChilds()->toArray();
+    	$groupchilds = $group->getChilds()->toArray();
+    	$childs = array_intersect($userchilds, $groupchilds);
+    	//ldd($childs);
+    	    	
+    	return array(
+    			'childs' => $childs,
+    			'user' => $user,
+    			'group' => $group
+    	);
+    
+    }
+    
     /**
      * Edits an existing Groups entity.
      *
