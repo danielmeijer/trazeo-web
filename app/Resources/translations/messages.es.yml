@@ -74,4 +74,4 @@ Trans:
         option: 'Selecciona una opción'
         
 Notifications:
-    child_in_group: 'El niño $1 ha entrado en el grupo $2'
+    child_in_group: 'El niño %0 ha entrado en el grupo %1'
