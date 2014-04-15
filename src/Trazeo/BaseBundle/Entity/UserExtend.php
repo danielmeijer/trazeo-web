@@ -51,6 +51,11 @@ class UserExtend
     protected $country;
     
     
+    /** @ORM\OneToMany(targetEntity="EGroupAccess", mappedBy="userextend")
+     */
+    protected $access;
+    
+    
     /**
      * @var string
      *
@@ -315,5 +320,40 @@ class UserExtend
     public function getCountry()
     {
         return $this->country;
+    }
+
+
+    /**
+     * Add access
+     *
+     * @param \Trazeo\BaseBundle\Entity\EGroupAccess $access
+     *
+     * @return UserExtend
+     */
+    public function addAccess(\Trazeo\BaseBundle\Entity\EGroupAccess $access)
+    {
+        $this->access[] = $access;
+
+        return $this;
+    }
+
+    /**
+     * Remove access
+     *
+     * @param \Trazeo\BaseBundle\Entity\EGroupAccess $access
+     */
+    public function removeAccess(\Trazeo\BaseBundle\Entity\EGroupAccess $access)
+    {
+        $this->access->removeElement($access);
+    }
+
+    /**
+     * Get access
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAccess()
+    {
+        return $this->access;
     }
 }

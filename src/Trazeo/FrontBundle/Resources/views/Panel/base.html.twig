@@ -23,6 +23,9 @@
 	</div>
 
 {% endblock %}
+	{% block js %} {{ parent() }} 
+		{% include 'SopinetFlashMessagesBundle:Messages:notification.html.twig' %} 
+	{% endblock %}
 {#
 {% block js %}
 	{{ parent() }}
