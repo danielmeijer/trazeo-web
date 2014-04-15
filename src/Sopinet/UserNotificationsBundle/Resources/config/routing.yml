@@ -1,3 +1,7 @@
 sopinet_user_notifications_homepage:
     path:  /hello/{name}
     defaults: { _controller: SopinetUserNotificationsBundle:Default:index }
+    
+public:
+    resource: "@SopinetUserNotificationsBundle/Controller/AjaxController.php"
+    type:     annotation    

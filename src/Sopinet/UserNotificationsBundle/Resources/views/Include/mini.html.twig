@@ -1,0 +1,27 @@
+<li class="dropdown">
+	<a class="dropdown-toggle clearNotifications" data-toggle="dropdown" href="#">
+		<i class="fa fa-bell fa-fw"></i> <span class="badge">{{ notifications|length() }}</span>  <i class="fa fa-caret-down"></i>
+	</a>
+	<ul class="dropdown-menu dropdown-alerts">
+    	{% for notification in notifications %}
+    	<li>
+			<a href="{{ notification.link }}">
+				<div>
+                	<!-- <i class="fa fa-comment fa-fw"></i> -->
+                	{{ notification|parseSopinetUserNotification() }}
+                   	<span class="pull-right text-muted small">{{ notification.createdAt|getTimeAgo() }}</span>
+                </div>
+            </a>    		
+    	</li>
+    	<li class="divider"></li>
+    	{% endfor %}
+    	{% if text_seemore is defined %}
+    	<li>
+    		<a class="text-center" href="{{ link_seemore }}">
+    			{{ text_seemore }}
+    			<i class="fa fa-angle-right"></i>
+    		</a>
+    	</li>
+    	{% endif %}
+    </ul>
+</li>

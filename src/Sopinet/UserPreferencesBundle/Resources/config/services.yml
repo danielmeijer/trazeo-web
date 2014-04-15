@@ -6,7 +6,7 @@ services:
 #        class: %sopinet_user_preferences.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
 services:
-    trazeo.twig.base_extension:
+    sopinetuserpreferences.twig.base_extension:
         class: Sopinet\UserPreferencesBundle\Twig\BaseExtension
         arguments: ['@service_container']
         tags:

@@ -4,6 +4,7 @@ namespace Sopinet\UserNotificationsBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use Doctrine\ORM\Event\OnFlushEventArgs;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
  
 /**
  * @ORM\Entity
@@ -12,6 +13,7 @@ use Doctrine\ORM\Event\OnFlushEventArgs;
  */
 class Notification
 {
+	use ORMBehaviors\Timestampable\Timestampable;
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -53,7 +55,12 @@ class Notification
      * @ORM\ManyToOne(targetEntity="\Sopinet\UserBundle\Entity\SopinetUserExtend", inversedBy="notifications")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true, onDelete="CASCADE") 
      */
-    protected $user; 
+    protected $user;
+    
+    /**
+	 * @ORM\Column(name="link", type="string", length=255, nullable=true)
+     */
+    protected $link;
     
     /**
      * Get id
@@ -201,5 +208,15 @@ class Notification
     public function getUser()
     {
         return $this->user;
+    }
+    
+    public function getLink()
+    {
+    	return $this->link;
+    }
+    
+    public function setLink($link)
+    {
+    	$this->link = $link;
     }
 }
