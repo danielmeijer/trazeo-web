@@ -66,36 +66,7 @@ class PanelGroupsController extends Controller
 		$em->flush();
 
 		return $this->redirect($this->generateUrl('panel_group'));
-	}
-	
-	/**
-	 * User Group Admin join an User.
-	 *
-	 * @Route("/letjoin/{id}/{group}", name="panel_group_let_join")
-	 * @Method("GET")
-	 * @Template()
-	 */
-	public function letJoinGroupAction($id, $group) {
-	
-		$em = $this->getDoctrine()->getManager();
-	
-		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($id);
-		$groupToJoin = $em->getRepository('TrazeoBaseBundle:EGroup')->find($group);
-	
-		if (!$groupToJoin) {
-			throw $this->createNotFoundException('Unable to find Group entity.');
-		}
-	
-		$groupToJoin->addUserextendgroup($user);
-		$em->persist($groupToJoin);
-		$em->flush();
-		
-		$container = $this->get('sopinet_flashMessages');
-		$notification = $container->addFlashMessages("success","El usuario ha sido añadido al grupo");
-	
-		return $this->redirect($this->generateUrl('panel_group'));
-	}
-	
+	}	
 	
 	/**
 	 * User disjoin Group.
@@ -124,7 +95,6 @@ class PanelGroupsController extends Controller
 		return $this->redirect($this->generateUrl('panel_group'));
 	}
 	
-	
 	/**
 	 * Request to admin Group.
 	 *
@@ -138,7 +108,15 @@ class PanelGroupsController extends Controller
 	
 		$fos_user = $this->container->get('security.context')->getToken()->getUser();
 		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
-	
+		
+		$requestJoin = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findByUserextend($user);
+		if($requestJoin == true){
+
+			$container = $this->get('sopinet_flashMessages');
+			$notification = $container->addFlashMessages("warning","Ya has solicitado el acceso");
+			return $this->redirect($this->generateUrl('panel_group'));
+			
+		}
 		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
 		$adminGroup = $group->getAdmin();
 	
@@ -154,6 +132,43 @@ class PanelGroupsController extends Controller
 		return $this->redirect($this->generateUrl('panel_group'));
 	}
 		
+	
+	/**
+	 * User Group Admin join an User.
+	 *
+	 * @Route("/letjoin/{id}/{group}", name="panel_group_let_join")
+	 * @Method("GET")
+	 * @Template()
+	 */
+	public function letJoinGroupAction($id, $group) {
+	
+		$em = $this->getDoctrine()->getManager();
+	
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($id);
+		$groupToJoin = $em->getRepository('TrazeoBaseBundle:EGroup')->find($group);
+	
+		if (!$groupToJoin) {
+			throw $this->createNotFoundException('Unable to find Group entity.');
+		}
+	
+		$groupToJoin->addUserextendgroup($user);
+		$em->persist($groupToJoin);
+		$em->flush();
+		
+		$allRequest = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findAll();
+		$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findOneByUserextend($id);
+		
+		$em->remove($userRequest);
+		$em->flush();
+		//$allRequest= $em->remove($userRequest);
+		
+		$container = $this->get('sopinet_flashMessages');
+		$notification = $container->addFlashMessages("success","El usuario ha sido añadido al grupo");
+	
+		return $this->redirect($this->generateUrl('panel_group'));
+	}
+	
+	
     /**
      * Lists all Groups entities.
      *

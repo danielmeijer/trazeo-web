@@ -47,6 +47,9 @@
 		        	<h4 class="panel-title">
 		            	<a data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ userGroup.id }}">{{ userGroup.name }}</a>
 		            	<div class="pull-right">
+						{% if userGroup.Admin.Id == user.Id %}
+								<i class="fa fa-user"></i> Eres el Administrador
+						{% endif %}	
 			<a href="{{ path('panel_group_disjoin', { 'id': userGroup.id }) }}"" type="button" class="btn btn-danger btn-circle">
 									<i class="fa fa-times"></i>
 								</a>
@@ -115,6 +118,7 @@
 									<i class="fa fa-check"></i>
 								</a>
 								Unirme al grupo
+								<i class="fa fa-user"></i> Administrador
 						{% endif %}
 						
 		            	<i class="btn btn-warning btn-circle"> {{ group.userextendgroups|length }}</i> {{ "Usuarios"|trans }}
