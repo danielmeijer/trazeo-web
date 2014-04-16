@@ -24,10 +24,9 @@
 	        {% for allGroupsAccess in allGroupsAccess %}
 				{% if userAdmin.Id == allGroupsAccess.Group.Id  %}
 	        		<li>El usuario {{ allGroupsAccess.Userextend }} pide acceso al grupo {{ allGroupsAccess.Group }}
-								<a href="{{ path('panel_group_let_join', { 'id': allGroupsAccess.Userextend.Id, 'group':allGroupsAccess.Group.Id }) }}" type="button" class="btn btn-success btn-circle">
-									<i class="fa fa-check"></i>
-								</a>
-	        		
+						<a href="{{ path('panel_group_let_join', { 'id': allGroupsAccess.Userextend.Id, 'group':allGroupsAccess.Group.Id }) }}" type="button" class="btn btn-success btn-circle">
+							<i class="fa fa-check"></i>
+						</a>
 	        		 </li>
 	        	{% endif %}
 	        {% endfor %}
@@ -98,7 +97,7 @@
 		        	<h4 class="panel-title">
 		            	<a data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ group.id }}">{{ group.name }}</a>
 		            	<div class="pull-right">
-		            	{% if group.Visibility == 1 %}
+		            	{% if group.Visibility == 1 and group.Admin.Id != user.Id %}
 								<a href="{{ path('panel_group_requestJoin', { 'id': group.id }) }}" type="button" class="btn btn-success btn-circle">
 									<i class="fa fa-check"></i>
 								</a>
@@ -110,6 +109,14 @@
 								</a>
 								Unirme a este grupo	
 						{% endif %}
+						
+						{% if group.Admin.Id == user.Id %}
+								<a href="{{ path('panel_group_join', { 'id': group.id }) }}" type="button" class="btn btn-success btn-circle">
+									<i class="fa fa-check"></i>
+								</a>
+								Unirme al grupo
+						{% endif %}
+						
 		            	<i class="btn btn-warning btn-circle"> {{ group.userextendgroups|length }}</i> {{ "Usuarios"|trans }}
 	            	 	{% if group.Visibility == 0 %}<i class="fa fa-unlock"></i> Público{% endif %}
 		            	 	{% if group.Visibility == 1 %}<i class="fa fa-lock"></i> Privado{% endif %}

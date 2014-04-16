@@ -184,7 +184,8 @@ class PanelGroupsController extends Controller
             'groups' => $groups,
         	'userGroups' => $userGroups,
         	'userAdmin' => $userAdmin,
-        	'allGroupsAccess' => $allGroupsAccess
+        	'allGroupsAccess' => $allGroupsAccess,
+        	'user' => $user
         );
     }
     /**
