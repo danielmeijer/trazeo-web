@@ -20,13 +20,12 @@ class EChild
      */
     protected $id;
     
-    /** @ORM\ManyToMany(targetEntity="UserExtend", mappedBy="childs")
+    /** @ORM\ManyToMany(targetEntity="UserExtend", inversedBy="childs")
      */
     protected $userextendchilds;
     
     /** 
-     * @ORM\ManyToMany(targetEntity="EGroup", mappedBy="childs")
-     * @ORM\JoinColumn(name="groups_childs", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="EGroup", inversedBy="childs")
      */
     protected $groups;
 

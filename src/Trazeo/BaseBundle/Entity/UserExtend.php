@@ -37,8 +37,8 @@ class UserExtend
      */
     protected $adminRoutes;
     
-    /** @ORM\ManyToMany(targetEntity="EChild", inversedBy="userextendchilds")
-     * @ORM\JoinColumn(name="userextends_childs", referencedColumnName="id")
+    /** @ORM\ManyToMany(targetEntity="EChild", mappedBy="userextendchilds")
+     * @ORM\JoinColumn(name="childs_userextend", referencedColumnName="id")
      */
     protected $childs;
     

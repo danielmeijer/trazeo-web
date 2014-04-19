@@ -4,173 +4,202 @@
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
 {% block body_content %}
-        <div class="col-lg-12 alert alert-success">
-        	<div class="col-md-1">
-        		<i class="fa fa-5x fa-users"></i>
-        	</div>
-        	<div class="col-md-11">
-				<h4>Estos grupos se encuentran en tu ciudad o en la de alguno de tus niños, y podrían interesarte.</h4>
-					<div class="input-group custom-search-form col-md-4">
-						<input type="search" class="form-control" placeholder='{{ "Trans.search.groups"|trans }}'/>
-						<span class="input-group-btn">
-						<button class="btn btn-success" type="button"><i class="fa fa-search"></i></button>
-						</span>				
-					</div>
+
+       <div class="alert">
+			<a href="{{ path('panel') }}">
+				<button type="button" class="btn btn-info btn-outline">
+					<i class="fa fa-home"></i> Panel									
+				</button>			
+			<a href="{{ path('panel_child') }}">
+				<button type="button" class="btn btn-warning btn-outline">
+					<i class="fa fa-list-ul"></i> <i class="fa fa-user"></i> Listado de niños									
+				</button>
+			</a>
+			<a href="{{ path('panel_route') }}">
+				<button type="button" class="btn btn-warning btn-outline">
+					<i class="fa fa-list-ul"></i> <i class="fa fa-location-arrow"></i> Listado de rutas									
+				</button>
+			</a>
+			<div class="pull-right">
+			</a>
+			<a href="{{ path('panel_group_new') }}">
+				<button type="button" class="btn btn-success btn-outline">
+					<i class="fa fa-plus-circle"></i> <i class="fa fa-users"></i> Añadir grupo									
+				</button>
+			</a>
+			<a href="{{ path('panel_child_new') }}">
+				<button type="button" class="btn btn-success btn-outline">
+					<i class="fa fa-plus-circle"></i> <i class="fa fa-user"></i> Añadir hijo a Trazeo									
+				</button>
+			</a>
+			<a href="{{ path('panel_route_new') }}">
+				<button type="button" class="btn btn-success btn-outline">
+					<i class="fa fa-plus-circle"></i> <i class="fa fa-location-arrow"></i> Añadir ruta									
+				</button>
+			</a>
 			</div>
-        </div><!-- END col-lg-12 alert alert-info -->        
-        
+       </div><!-- END col-lg-12 alert alert-info --> 
+
         {% for userAdmin in userAdmin %}
 	        {% for allGroupsAccess in allGroupsAccess %}
 				{% if userAdmin.Id == allGroupsAccess.Group.Id  %}
-	        		<li>El usuario {{ allGroupsAccess.Userextend }} pide acceso al grupo {{ allGroupsAccess.Group }}
+				<div class="alert alert-warning">
+	        		<p>El usuario {{ allGroupsAccess.Userextend }} pide acceso al grupo {{ allGroupsAccess.Group }}
 						<a href="{{ path('panel_group_let_join', { 'id': allGroupsAccess.Userextend.Id, 'group':allGroupsAccess.Group.Id }) }}" type="button" class="btn btn-success btn-circle">
 							<i class="fa fa-check"></i>
 						</a>
-	        		 </li>
+	        		 </p>
+	        	</div>
 	        	{% endif %}
 	        {% endfor %}
-        
         {% endfor %}
-
-        <p>&nbsp;</p>
-        <div class="alert alert-success">
-        	<h4><i class="fa fa-list"></i> Listado de Grupos</h4>
-        </div>   
-        
+   		
+   		
 	<div class="panel-group" id="accordion1">
+          <div class="alert alert-success">
+          	<i class="fa fa-2x fa-users"></i>&nbsp;
+        	<p class="label label-success">Formas parte de los siguientes grupos
+        	<span class="btn btn-default btn-circle">{{ userGroups|length }}</span>
+        	</p>
+        </div>      
 		{% for userGroup in userGroups %}
-		
-			{% if userGroup.Visibility != 2 %}
 				<div class="panel panel-warning">
 					<div class="panel-heading">
 			        	<h4 class="panel-title">
-			            	<a data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ userGroup.id }}">{{ userGroup.name }}</a>
-			            	<div class="pull-right">
 							{% if userGroup.Admin.Id == user.Id %}
-									<i class="fa fa-user"></i> Eres el Administrador
+								<i class="fa fa-user" rel="tooltip-top" title="Eres administrador de este grupo"></i>
 							{% endif %}	
-				<a href="{{ path('panel_group_disjoin', { 'id': userGroup.id }) }}"" type="button" class="btn btn-danger btn-circle">
-										<i class="fa fa-times"></i>
-									</a>
-									Desvincularme del grupo
-			            		<i class="btn btn-warning btn-circle"> {{ userGroup.userextendgroups|length }}</i>
-			            	 	{{ "Usuarios"|trans }}
-			            	 	{% if userGroup.Visibility == 0 %}<i class="fa fa-unlock"></i> Público{% endif %}
-			            	 	{% if userGroup.Visibility == 1 %}<i class="fa fa-lock"></i> Privado{% endif %}
+			            	<a data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ userGroup.id }}">
+			            	{{ userGroup.name }}
+			            	</a>
+			            	<div class="pull-right" style="margin-top:-3px;">
+			            	 	{% if userGroup.Visibility == 0 %}
+									<span type="button" 
+									class="btn btn-success btn-xs" rel="tooltip-top" title="Grupo público">
+										<i class="fa fa-unlock"></i> Público
+									</span>
+								{% endif %}
+			            	 	{% if userGroup.Visibility == 1 %}
+									<span href="#" type="button" 
+									class="btn btn-danger btn-xs" rel="tooltip-top" title="Grupo privado">
+										<i class="fa fa-lock"></i> Privado
+									</span>
+								{% endif %}
+			            	 	{% if userGroup.Visibility == 2 %}
+									<span href="#" type="button" 
+									class="btn btn-warning btn-xs" rel="tooltip-top" title="Grupo oculto">
+										<i class="fa fa-eye-slash"></i> Oculto
+									</span>	
+			            	 	{% endif %}
+								<a href="{{ path('panel_group_timeline',{'id': userGroup.id}) }}" type="button" 
+								class="btn btn-default btn-xs" rel="tooltip-top" title="Chat del grupo">
+									<i class="fa fa-comments-o"></i> Timeline
+								</a>
+								<a href="{{ path('panel_group_disjoin', { 'id': userGroup.id }) }}" type="button" 
+								class="btn btn-default btn-xs" rel="tooltip-top" title="Salir de este grupo">
+									<i class="fa fa-sign-out"></i> Salir
+								</a>
+							{% if userGroup.Admin.Id == user.Id %}
+									<a href="{{ path('panel_group') }}{{ userGroup.id }}/edit" type="button" 
+									class="btn btn-default btn-xs" rel="tooltip-top" title="Editar información">
+										<i class="fa fa-pencil"></i> Editar
+									</a> 
+							{% endif %}
 			            	 </div>
 						</h4>
 					</div>
 					<div id="collapse{{ userGroup.id }}" class="panel-collapse collapse {% if loop.index == 1 %}in{% endif %}">
 						<div class="panel-body">
-							<ul>
-								<li>
-								<i class="fa fa-key"></i>
-									<b>Administrador del grupo:</b> {{ userGroup.admin.Nick }} 
-								</li>
-								<li>
-								<i class="fa fa-user"></i>
-								<b>Miembros del grupo:</b>
-									<ul>
+							<table class="table">
+								<tbody>
+									<tr>
+										<td><i class="fa fa-key"></i></td>
+										<td>Administrador del grupo</td>
+										<td>{{ userGroup.admin.Nick }}</td>
+									</tr>
+									<tr>
+										<td><i class="fa fa-location-arrow"></i></td>
+										<td>Ruta asignada</td>
+										<td>{{ userGroup.route.name }}</td>
+									</tr>
+									<tr>
+										<td><i class="fa fa-user"></i></td>
+										<td>Nº de niños en este grupo</td>
+										<td><i class="btn btn-circle btn-warning"> {{ userGroup.Childs|length }}</i</td>
+									</tr>
+									<tr>
+										<td><i class="fa fa-users"></i></td>
+										<td>Miembros del grupo</td>
+										<td>
 										{% for userGroupsUser in userGroup.userextendgroups %}
-											<li><b>Nombre:</b> {{ userGroupsUser.Nick }}</li>
+											<span class="label label-warning">{{ userGroupsUser.Nick }}</span>
 										{% endfor %}
-									</ul>
-								</li>
-								<li>
-								<i class="fa fa-tasks"></i>
-									<b>Nº de niños en este grupo:</b> {{ userGroup.childs.count }} 
-								</li>
-								<li>
-								<b><i class="fa fa-location-arrow"></i> Ruta asignada:</b> {{ userGroup.route.name }}
-								</li>
-								<li>
-								<a href="{{ path('panel_group_timeline',{'id': userGroup.id}) }}"><button class="btn btn-success">Timeline</button></a>
-								</li>
-							</ul>
+										</td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</div>
-			{% endif %}
-			
-			{% if userGroup.Visibility == 2 and userGroup.Admin.Id == user.Id %}
-				<div class="panel panel-warning">
-					<div class="panel-heading">
-			        	<h4 class="panel-title">
-			            	<a data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ userGroup.id }}">{{ userGroup.name }}</a>
-			            	<div class="pull-right">
-							{% if userGroup.Admin.Id == user.Id %}
-									<i class="fa fa-user"></i> Eres el Administrador
-							{% endif %}	
-				<a href="{{ path('panel_group_disjoin', { 'id': userGroup.id }) }}"" type="button" class="btn btn-danger btn-circle">
-										<i class="fa fa-times"></i>
-									</a>
-									Desvincularme del grupo
-			            		<i class="btn btn-warning btn-circle"> {{ userGroup.userextendgroups|length }}</i>
-			            	 	{{ "Usuarios"|trans }}
-			            	 	<i class="fa fa-eye-slash"></i> Oculto
-			            	 </div>
-						</h4>
-					</div>
-					<div id="collapse{{ userGroup.id }}" class="panel-collapse collapse {% if loop.index == 1 %}in{% endif %}">
-						<div class="panel-body">
-							<ul>
-								<li>
-								<i class="fa fa-key"></i>
-									<b>Administrador del grupo:</b> {{ userGroup.admin.Nick }} 
-								</li>
-								<li>
-								<i class="fa fa-user"></i>
-								<b>Miembros del grupo:</b>
-									<ul>
-										{% for userGroupsUser in userGroup.userextendgroups %}
-											<li><b>Nombre:</b> {{ userGroupsUser.Nick }}</li>
-										{% endfor %}
-									</ul>
-								</li>
-								<li>
-								<i class="fa fa-tasks"></i>
-									<b>Nº de niños en este grupo:</b> {{ userGroup.childs.count }} 
-								</li>
-								<li>
-								<b><i class="fa fa-location-arrow"></i> Ruta asignada:</b> {{ userGroup.route.name }}
-								</li>
-								<li>
-								<a href="{{ path('panel_group_timeline',{'id': userGroup.id}) }}"><button class="btn btn-success">Timeline</button></a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			{% endif %}
-			
 
 		{% endfor %}
+		</div>
+	<div class="panel-group" id="accordion2">
+          <div class="alert alert-success">
+          	<i class="fa fa-2x fa-users"></i>&nbsp;
+        	<p class="label label-success">No eres miembro de los siguientes grupos
+        	<span class="btn btn-default btn-circle ">{{ groups|length }}</span>
+        	</p>
+        </div>    
+        {# Grupos en los que el usuario logueado no está inscrito, aunque sea admin de dicho grupo #}
 		{% for group in groups %}
-		
-		{% if group.Visibility == 2 and group.Admin.Id == user.Id %}
+
+		{% if group.Visibility != 2 or group.Admin.Id == user.Id %}
 			<div class="panel panel-warning">
 				<div class="panel-heading">
 		        	<h4 class="panel-title">
-		            	<a data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ group.id }}">{{ group.name }}</a>
-		            	<div class="pull-right">
-		            	{% if group.Visibility == 1 and group.Admin.Id != user.Id %}
-								<a href="{{ path('panel_group_requestJoin', { 'id': group.id }) }}" type="button" class="btn btn-success btn-circle">
-									<i class="fa fa-check"></i>
-								</a>
-								Solicitar acceso
-						{% endif %}
-								<a href="{{ path('panel_group_join', { 'id': group.id }) }}" type="button" class="btn btn-success btn-circle">
-									<i class="fa fa-check"></i>
-								</a>
-								Unirme a este grupo	
-						
 						{% if group.Admin.Id == user.Id %}
-			
-								<i class="fa fa-user"></i> Administrador
+								<i class="fa fa-user" rel="tooltip-top" title="Eres administrador de este grupo"></i>
 						{% endif %}
-						
-		            	<i class="btn btn-warning btn-circle"> {{ group.userextendgroups|length }}</i> {{ "Usuarios"|trans }}
-								<i class="fa fa-eye-slash"></i> Oculto
+		            	<a data-toggle="collapse" data-parent="#accordion2" href="#collapse{{ group.id }}">{{ group.name }}</a>
+		            	<div class="pull-right">
+			            	 	{% if group.Visibility == 0 %}
+									<span type="button" 
+									class="btn btn-success btn-xs" rel="tooltip-top" title="Grupo público">
+										<i class="fa fa-unlock"></i> Público
+									</span>
+								{% endif %}
+			            	 	{% if group.Visibility == 1 %}
+									<span href="#" type="button" 
+									class="btn btn-danger btn-xs" rel="tooltip-top" title="Grupo privado">
+										<i class="fa fa-lock"></i> Privado
+									</span>
+								{% endif %}
+			            	 	{% if group.Visibility == 2 %}
+									<span href="#" type="button" 
+									class="btn btn-warning btn-xs" rel="tooltip-top" title="Grupo oculto">
+										<i class="fa fa-eye-slash"></i> Oculto
+									</span>	
+			            	 	{% endif %}
+		            	{% if group.Visibility == 1 and group.Admin.Id != user.Id %}
+								<a href="{{ path('panel_group_requestJoin', { 'id': group.id }) }}" type="button" 
+								class="btn btn-default btn-xs" rel="tooltip-top" title="Solictar acceso al grupo">
+									<i class="fa fa-key"></i> Solicitar acceso
+								</a> 
+						{% endif %}
+
+						{% if group.Visibility == 0 or group.Admin.Id == user.Id%}										
+								<a href="{{ path('panel_group_join', { 'id': group.id }) }}" type="button" 
+								class="btn btn-default btn-xs" rel="tooltip-top" title="Unirme a este grupo">
+									<i class="fa fa-users"></i> Unirme
+								</a> 
+						{% endif %}
+						{% if group.Admin.Id == user.Id %}
+								<a href="{{ path('panel_group') }}{{ group.id }}/edit" type="button" 
+								class="btn btn-default btn-xs" rel="tooltip-top" title="Editar información">
+									<i class="fa fa-pencil"></i> Editar
+								</a> 
+						{% endif %}
 		            	</div>
 		            	</h4>
 				</div>
@@ -182,8 +211,7 @@
 								<b>Administrador del grupo:</b> {{ group.admin.Nick }} 
 							</li>
 							<li>
-							<i class="fa fa-user"></i>
-							<b>Miembros del grupo:</b>
+							<b><i class="badge"> {{ group.userextendgroups|length }}</i> Miembros en este grupo:</b>
 								<ul>
 									{% for groupsUser in group.userextendgroups %}
 										<li><b>Nombre:</b> {{ groupsUser.Nick }}</li>
@@ -196,76 +224,6 @@
 							</li>
 							<li>
 							<b><i class="fa fa-location-arrow"></i> Ruta asignada:</b> {{ group.route.Name }}
-							</li>
-							<li>
-							<a href="{{ path('panel_group_timeline',{'id': group.id}) }}"><button class="btn btn-success">Timeline</button></a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		{% endif %}
-		{% if group.Visibility != 2 %}
-			<div class="panel panel-warning">
-				<div class="panel-heading">
-		        	<h4 class="panel-title">
-		            	<a data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ group.id }}">{{ group.name }}</a>
-		            	<div class="pull-right">
-		            	{% if group.Visibility == 1 and group.Admin.Id != user.Id %}
-								<a href="{{ path('panel_group_requestJoin', { 'id': group.id }) }}" type="button" class="btn btn-success btn-circle">
-									<i class="fa fa-check"></i>
-								</a>
-								Solicitar acceso
-						{% endif %}
-		            	{% if group.Visibility == 1 and group.Admin.Id == user.Id %}
-							<a href="{{ path('panel_group_join', { 'id': group.id }) }}" type="button" class="btn btn-success btn-circle">
-									<i class="fa fa-check"></i>
-								</a>
-								Unirme a este grupo	
-						{% endif %}
-						{% if group.Visibility == 0 %}
-								<a href="{{ path('panel_group_join', { 'id': group.id }) }}" type="button" class="btn btn-success btn-circle">
-									<i class="fa fa-check"></i>
-								</a>
-								Unirme a este grupo	
-						{% endif %}
-						
-						{% if group.Admin.Id == user.Id %}
-			
-								<i class="fa fa-user"></i> Administrador
-						{% endif %}
-						
-		            	<i class="btn btn-warning btn-circle"> {{ group.userextendgroups|length }}</i> {{ "Usuarios"|trans }}
-	            	 	{% if group.Visibility == 0 %}<i class="fa fa-unlock"></i> Público{% endif %}
-		            	 	{% if group.Visibility == 1 %}<i class="fa fa-lock"></i> Privado{% endif %}
-		            	</div>
-		            	</h4>
-				</div>
-				<div id="collapse{{ group.id }}" class="panel-collapse collapse">
-					<div class="panel-body">
-						<ul>
-							<li>
-							<i class="fa fa-key"></i>
-								<b>Administrador del grupo:</b> {{ group.admin.Nick }} 
-							</li>
-							<li>
-							<i class="fa fa-user"></i>
-							<b>Miembros del grupo:</b>
-								<ul>
-									{% for groupsUser in group.userextendgroups %}
-										<li><b>Nombre:</b> {{ groupsUser.Nick }}</li>
-									{% endfor %}
-								</ul>
-							</li>
-							<li>
-							<i class="fa fa-tasks"></i>
-								<b>Nº de niños en este grupo:</b> {{ group.childs.count }} 
-							</li>
-							<li>
-							<b><i class="fa fa-location-arrow"></i> Ruta asignada:</b> {{ group.route.Name }}
-							</li>
-							<li>
-							<a href="{{ path('panel_group_timeline',{'id': group.id}) }}"><button class="btn btn-success">Timeline</button></a>
 							</li>
 						</ul>
 					</div>
@@ -273,5 +231,7 @@
 			</div>
 		{% endif %}
 		{% endfor %}
+		<p>&nbsp;</p>
      </div>
+
 {% endblock %}
