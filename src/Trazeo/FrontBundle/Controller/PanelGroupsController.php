@@ -149,7 +149,7 @@ class PanelGroupsController extends Controller
 		
 	
 	/**
-	 * User Group Admin join an User.
+	 * User adminGroup let an User to join with the request Group.
 	 *
 	 * @Route("/letjoin/{id}/{group}", name="panel_group_let_join")
 	 * @Method("GET")
@@ -181,6 +181,30 @@ class PanelGroupsController extends Controller
 		$notification = $container->addFlashMessages("success","El usuario ha sido añadido al grupo");
 	
 		return $this->redirect($this->generateUrl('panel_group'));
+	}
+	
+	/**
+	 * User adminGroup let an User to join with the request Group.
+	 *
+	 * @Route("/denyjoin/{id}", name="panel_group_deny_join")
+	 * @Method("GET")
+	 * @Template()
+	 */
+	
+	public function denyJoinGroupAction($id) {
+		
+		$em = $this->getDoctrine()->getManager();
+		
+		$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findOneByUserextend($id);
+		
+		$em->remove($userRequest);
+		$em->flush();
+		
+		$container = $this->get('sopinet_flashMessages');
+		$notification = $container->addFlashMessages("success","La petición del usuario para unirse al grupo ha sido denegada");
+		
+		return $this->redirect($this->generateUrl('panel_group'));
+		
 	}
 	
 	

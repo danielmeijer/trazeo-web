@@ -6,8 +6,6 @@
 {% block body_content %}
 	
        <div class="alert">
-       		<i class="fa fa-users fa-5x pull-left alert alert-success"></i>
-       <br /><br />
 			<a href="{{ path('panel_child') }}">
 				<button type="button" class="btn btn-default">
 					<i class="fa fa-list-ul"></i> <i class="fa fa-user"></i> Listado de niños									
@@ -37,21 +35,24 @@
 			</a>
 			</div>
        </div><!-- END col-lg-12 alert alert-info --> 
-
+<div class="alert alert-default">
         {% for userAdmin in userAdmin %}
 	        {% for allGroupsAccess in allGroupsAccess %}
 				{% if userAdmin.Id == allGroupsAccess.Group.Id  %}
-				<div class="alert alert-warning">
-	        		<p>El usuario {{ allGroupsAccess.Userextend }} pide acceso al grupo {{ allGroupsAccess.Group }}
-						<a href="{{ path('panel_group_let_join', { 'id': allGroupsAccess.Userextend.Id, 'group':allGroupsAccess.Group.Id }) }}" type="button" class="btn btn-success btn-circle">
-							<i class="fa fa-check"></i>
+	        		<p><b>{{ allGroupsAccess.Userextend }}</b> pide acceso para unirse al grupo <b>{{ allGroupsAccess.Group }}</b> del que eres administrador
+						&nbsp;<a href="{{ path('panel_group_let_join', { 'id': allGroupsAccess.Userextend.Id, 'group':allGroupsAccess.Group.Id }) }}" type="button" class="label label-success">
+							<i class="fa fa-check"></i> Aceptar
+						</a>&nbsp;
+						<a href="{{ path('panel_group_deny_join', { 'id': allGroupsAccess.Userextend.Id }) }}" type="button" class="label label-danger">
+							<i class="fa fa-times"></i> Denegar
 						</a>
 	        		 </p>
-	        	</div>
+	        		<br />
 	        	{% endif %}
+	        	
 	        {% endfor %}
         {% endfor %}
-   		
+   		</div>
    		
 	<div class="panel-group" id="accordion1">
           <div class="alert alert-success">
