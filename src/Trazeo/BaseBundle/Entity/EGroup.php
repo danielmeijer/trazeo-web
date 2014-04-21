@@ -21,18 +21,20 @@ class EGroup
      */
     protected $id;
 
-    /** @ORM\ManyToMany(targetEntity="UserExtend", inversedBy="groups")
-     */
+    /**
+     * @ORM\ManyToMany(targetEntity="UserExtend", inversedBy="groups")
+     * @ORM\JoinTable(name="groups_userextend")
+     **/
     protected $userextendgroups;
     
     /** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="adminGroups")
      */
     protected $admin;
     
-    /** @ORM\ManyToMany(targetEntity="EChild", mappedBy="groups")
-     * @ORM\JoinColumn(name="childs_groups", referencedColumnName="id")
-     * @var unknown
-     */
+    /**
+     * @ORM\ManyToMany(targetEntity="EChild", inversedBy="groups")
+     * @ORM\JoinTable(name="groups_childs")
+     **/
     protected $childs;
 
     /** @ORM\ManyToOne(targetEntity="ERoute", inversedBy="groups")

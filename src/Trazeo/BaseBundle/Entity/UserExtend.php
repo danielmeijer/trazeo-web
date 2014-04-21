@@ -24,22 +24,25 @@ class UserExtend
      */
     protected $user;
     
-    /** @ORM\ManyToMany(targetEntity="EGroup", mappedBy="userextendgroups")
-     * @ORM\JoinColumn(name="groups_userextend", referencedColumnName="id")
+    /**
+     *  @ORM\ManyToMany(targetEntity="EGroup", mappedBy="userextendgroups")
      */
     protected $groups;
     
-    /** @ORM\OneToMany(targetEntity="EGroup", mappedBy="admin")
+    /** 
+     * @ORM\OneToMany(targetEntity="EGroup", mappedBy="admin")
      */
     private $adminGroups;
     
-    /** @ORM\OneToMany(targetEntity="ERoute", mappedBy="admin")
+    /** 
+     * @ORM\OneToMany(targetEntity="ERoute", mappedBy="admin")
      */
     protected $adminRoutes;
     
-    /** @ORM\ManyToMany(targetEntity="EChild", mappedBy="userextendchilds")
-     * @ORM\JoinColumn(name="childs_userextend", referencedColumnName="id")
-     */
+    /**
+     * @ORM\ManyToMany(targetEntity="EChild", inversedBy="userextendchilds")
+     * @ORM\JoinTable(name="usersextend_childs")
+     **/
     protected $childs;
     
     /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\City")

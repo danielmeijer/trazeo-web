@@ -24,7 +24,7 @@ class ChildType extends AbstractType
         					),'required' => true
         			)
         		)
-            ->add('userextendchilds', null, array(
+            /*->add('userextendchilds', null, array(
         			'attr' => array(
         					'placeholder' => 'Route.name',
         					'data-toggle' => 'popover',
@@ -38,7 +38,7 @@ class ChildType extends AbstractType
         					'data-placement' => 'right',
         					'data-content' => 'Children.help.groups'
         					)))
-    		->add('date_birth', 'date', array(
+    		*/->add('date_birth', 'date', array(
     			'widget' => 'single_text',
     			'attr' => array(
     					'class' => 'inputDate', 

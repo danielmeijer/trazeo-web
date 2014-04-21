@@ -139,18 +139,30 @@ class PanelChildrenController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function editAction($id)
+    public function editAction(Echild $child)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $child = $em->getRepository('TrazeoBaseBundle:EChild')->find($id);
+		
+        $fos_user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+        
+        //Comprobamos que el usuario logueado está dentro del array de tutores del niño
+        $userextends = $child->getUserextendchilds()->toArray();
+        $users = array();
+        foreach($userextends as $userextend){
+        	if($user == $userextend){
+        		$users[] = $userextend;
+        	}
+        }
+        
+        if(count($users) == 0)throw $this->createNotFoundException('You have not permission');
 
         if (!$child) {
             throw $this->createNotFoundException('Unable to find Child entity.');
         }
 
         $editForm = $this->createEditForm($child);
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($child);
 
         return array(
             'child'      => $child,
