@@ -42,6 +42,11 @@ class ERoute
 	protected $country;
 	
 	/**
+	 * @ORM\OneToOne(targetEntity="ERide", mappedBy="route")
+	 */
+	protected $ride;
+	
+	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="name", type="string", length=255)
@@ -233,5 +238,29 @@ class ERoute
     public function getPoints()
     {
         return $this->points;
+    }
+
+    /**
+     * Set ride
+     *
+     * @param \Trazeo\BaseBundle\Entity\ERide $ride
+     *
+     * @return ERoute
+     */
+    public function setRide(\Trazeo\BaseBundle\Entity\ERide $ride = null)
+    {
+        $this->ride = $ride;
+
+        return $this;
+    }
+
+    /**
+     * Get ride
+     *
+     * @return \Trazeo\BaseBundle\Entity\ERide 
+     */
+    public function getRide()
+    {
+        return $this->ride;
     }
 }

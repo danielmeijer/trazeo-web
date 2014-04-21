@@ -97,10 +97,8 @@ class ApiController extends Controller {
 	 * @POST("/api/login", name="api_login")
 	 */
 	public function postLoginAction(Request $request){
-		$email = $request->get('email');
-		$pass = $request->get('pass');
-	
-		if ('POST' == $request->getMethod() || true) {
+		//Se usan anotaciones para comprobar si el método es post
+		//if ('POST' == $request->getMethod() || true) {
 			$user = $this->checkPrivateAccess($request);
 	
 			if( $user == false || $user == null ){
@@ -118,28 +116,39 @@ class ApiController extends Controller {
 			->setData($this->doOK($array));
 				
 			return $this->get('fos_rest.view_handler')->handle($view);
-		}else
-			return $this->msgDenied();
+		//}else
+			//return $this->msgDenied();
 	}
 	
 	/**
-	 * @Get("/api/groups")
+	 * @POST("/api/groups")
 	 */
 	public function getGroupsAction(Request $request) {
 		
+		$user = $this->checkPrivateAccess($request);
+		if( $user == false || $user == null ){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied());
+		
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+		
 		$em = $this->get('doctrine.orm.entity_manager');
-		$fos_user = $this->container->get('security.context')->getToken()->getUser();
-		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+		$groups = $userextend->getGroups();
 		
-		//$reGroup = $em->getRepository("TrazeoBaseBundle:EGroup");
-		//$groups = $reGroup->findByUserextendgroups($user);
-		//ldd($user->getGroups()->toArray());
-		$groups = $user->getGroups();
+		foreach($groups as $group){
+			$arrayGroups = array();
+			$arrayGroups['name'] = $group->getName();
+			$arrayGroups['visibility'] = $group->getVisibility();
+			
+			$array[] = $arrayGroups;
+		}
+		$view = View::create()
+		->setStatusCode(200)
+		->setData($array);
 		
-		$view = View::create ()
-		->setStatusCode ( 200 )
-		->setData ( $groups );
-		
-		return $this->get ( 'fos_rest.view_handler' )->handle ( $view );
+		return $this->get('fos_rest.view_handler')->handle($view);
 	}
 }

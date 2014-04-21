@@ -363,4 +363,38 @@ class UserExtend
     {
         return $this->access;
     }
+
+    /**
+     * Add invite
+     *
+     * @param \Trazeo\BaseBundle\Entity\EGroupInvite $invite
+     *
+     * @return UserExtend
+     */
+    public function addInvite(\Trazeo\BaseBundle\Entity\EGroupInvite $invite)
+    {
+        $this->invite[] = $invite;
+
+        return $this;
+    }
+
+    /**
+     * Remove invite
+     *
+     * @param \Trazeo\BaseBundle\Entity\EGroupInvite $invite
+     */
+    public function removeInvite(\Trazeo\BaseBundle\Entity\EGroupInvite $invite)
+    {
+        $this->invite->removeElement($invite);
+    }
+
+    /**
+     * Get invite
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getInvite()
+    {
+        return $this->invite;
+    }
 }

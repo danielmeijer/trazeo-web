@@ -64,4 +64,28 @@ class EPoints
     {
         return $this->route;
     }
+
+    /**
+     * Set pickup
+     *
+     * @param boolean $pickup
+     *
+     * @return EPoints
+     */
+    public function setPickup($pickup)
+    {
+        $this->pickup = $pickup;
+
+        return $this;
+    }
+
+    /**
+     * Get pickup
+     *
+     * @return boolean 
+     */
+    public function getPickup()
+    {
+        return $this->pickup;
+    }
 }

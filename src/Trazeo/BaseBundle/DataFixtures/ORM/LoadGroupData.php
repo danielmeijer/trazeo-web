@@ -25,6 +25,7 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface
 		$team->setName($name);
 		$team->setRoute($manager->merge($this->getReference("route_".$route)));
 		$team->setAdmin($userExtend);
+		$team->setVisibility("0"); //públicas por defecto
 		$team->addChild($manager->merge($this->getReference("child_".$child)));
 		$this->manager->persist($userExtend);
 		$this->manager->persist($team);
