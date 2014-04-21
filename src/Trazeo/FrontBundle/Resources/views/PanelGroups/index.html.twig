@@ -35,7 +35,7 @@
 			</a>
 			</div>
        </div><!-- END col-lg-12 alert alert-info --> 
-<div class="alert alert-default">
+		<div class="alert alert-default">
         {% for userAdmin in userAdmin %}
 	        {% for allGroupsAccess in allGroupsAccess %}
 				{% if userAdmin.Id == allGroupsAccess.Group.Id  %}
@@ -47,11 +47,23 @@
 							<i class="fa fa-times"></i> Denegar
 						</a>
 	        		 </p>
-	        		<br />
 	        	{% endif %}
-	        	
 	        {% endfor %}
         {% endfor %}
+   		</div>
+		<div class="alert">
+	        {% for allGroupInvite in allGroupsInvite %}
+				{% if user.Id == allGroupInvite.Userextend.Id  %}
+	        		<p>Tienes una invitación para unirte al grupo oculto <b>{{ allGroupInvite.Group }}</b>
+						&nbsp;<a href="{{ path('panel_group_accept_invite', { 'id': allGroupInvite.Userextend.Id, 'group':allGroupInvite.Group.Id }) }}" type="button" class="label label-success">
+							<i class="fa fa-check"></i> Aceptar
+						</a>&nbsp;
+						<a href="{{ path('panel_group_deny_invite', { 'id': allGroupInvite.Userextend.Id }) }}" type="button" class="label label-danger">
+							<i class="fa fa-times"></i> Cancelar
+						</a>
+	        		 </p>
+	        	{% endif %}
+	        {% endfor %}
    		</div>
    		
 	<div class="panel-group" id="accordion1">
@@ -137,6 +149,13 @@
 									</tr>
 								</tbody>
 							</table>
+						{% if userGroup.Visibility == 2 and  userGroup.Admin.Id == user.Id %}
+							<form class="col-md-3" action="{{ path('panel_group_invite') }}" method="POST">
+								<input class="form-control" type="email" name="userEmail" placeholder="Correo electrónico" />
+								<input type="hidden" name="group" value="{{ userGroup.id }}"/>
+								<input class="btn btn-success" type="submit" value="Invitar">							
+							</form>
+						{% endif %}
 						</div>
 					</div>
 				</div>
@@ -226,6 +245,13 @@
 							<b><i class="fa fa-location-arrow"></i> Ruta asignada:</b> {{ group.route.Name }}
 							</li>
 						</ul>
+						{% if group.Visibility == 2 and  group.Admin.Id == user.Id %}
+							<form class="col-md-3" action="{{ path('panel_group_invite') }}" method="POST">
+								<input class="form-control" type="email" name="userEmail" placeholder="Correo electrónico" />
+								<input type="hidden" name="group" value="{{ group.id }}"/>
+								<input class="btn btn-success" type="submit" value="Invitar">							
+							</form>
+						{% endif %}
 					</div>
 				</div>
 			</div>

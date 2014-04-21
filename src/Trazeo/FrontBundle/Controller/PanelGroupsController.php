@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Trazeo\BaseBundle\Entity\EGroup;
 use Trazeo\BaseBundle\Entity\EGroupAccess;
+use Trazeo\BaseBundle\Entity\EGroupInvite;
 use Trazeo\BaseBundle\Entity\EChild;
 use Trazeo\BaseBundle\Form\GroupType;
 use Trazeo\BaseBundle\Controller\GroupsController;
@@ -64,7 +65,8 @@ class PanelGroupsController extends Controller
 		$group->addUserextendgroup($user);
 		$em->persist($group);
 		$em->flush();
-
+		$container = $this->get('sopinet_flashMessages');
+		$notification = $container->addFlashMessages("success","Has sido añadido al grupo correctamente");
 		return $this->redirect($this->generateUrl('panel_group'));
 	}	
 	
@@ -170,7 +172,6 @@ class PanelGroupsController extends Controller
 		$em->persist($groupToJoin);
 		$em->flush();
 		
-		$allRequest = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findAll();
 		$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findOneByUserextend($id);
 		
 		$em->remove($userRequest);
@@ -208,6 +209,139 @@ class PanelGroupsController extends Controller
 	}
 	
 	
+	/**
+	 * GroupAdmin invite an User to join a Group.
+	 *
+	 * @Route("/invite", name="panel_group_invite")
+	 * @Method("POST")
+	 * @Template()
+	 */
+	public function inviteGroupAction() {
+	
+		$em = $this->getDoctrine()->getManager();
+		$um = $this->container->get('fos_user.user_manager');
+		
+		
+		$fos_user_current = $this->container->get('security.context')->getToken()->getUser();
+		$user_current =$um->findUserByEmail($fos_user_current);
+	
+		$userEmail = $_POST['userEmail'];	
+		$groupId = $_POST['group'];
+				
+		$fos_user = $um->findUserByEmail($userEmail);
+		if($fos_user != true){
+			$container = $this->get('sopinet_flashMessages');
+			$notification = $container->addFlashMessages("warning","El correo electrónico introducido no corresponde a ningún usuario");
+			return $this->redirect($this->generateUrl('panel_group'));
+		}
+		
+		if($fos_user == $fos_user_current ){
+			$container = $this->get('sopinet_flashMessages');
+			$notification = $container->addFlashMessages("warning","No necesitas invitación para unirte a un grupo del que eres administrador");
+			return $this->redirect($this->generateUrl('panel_group'));
+		}
+		
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+		
+		// Obtener grupo al que se va a unir a través del param $id
+		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($groupId);
+		// Buscar si existe alguna petición con ese UserExtend y ese Group
+		$requestUser = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findOneByUserextend($user);
+		$requestGroup = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findOneByGroup($group);
+	
+		// Comprobar que existen
+		if($requestUser && $requestGroup == true){
+				
+			// Si existen, obtener el id de su registro en la base de datos
+			$requestUserId = $requestUser->getId();
+			$requestGroupId = $requestGroup->getId();
+			// Comprobar que no tienen el mismo id de registro (petición duplicada)
+			if($requestUserId = $requestGroupId) {
+				// Excepción y redirección
+				$container = $this->get('sopinet_flashMessages');
+				$notification = $container->addFlashMessages("warning","Ya has invitado a este usuario anteriormente");
+				return $this->redirect($this->generateUrl('panel_group'));
+					
+			}
+				
+		}else{
+			// Si no existen los UserExtend y Group anteriormente obtenidos,
+			// directamente se crea la petición
+			$access = new EGroupInvite();
+			$access->setGroup($group);
+			$access->setUserextend($user);
+				
+			$em->persist($access);
+			$em->flush();
+				
+			$container = $this->get('sopinet_flashMessages');
+			$notification = $container->addFlashMessages("success","El usuario ha recibido tu invitación para unirse al grupo");
+			return $this->redirect($this->generateUrl('panel_group'));
+				
+		}
+	
+	}
+	
+	
+	/**
+	 * User accept to join with a hidden group.
+	 *
+	 * @Route("/acceptinvite/{id}/{group}", name="panel_group_accept_invite")
+	 * @Method("GET")
+	 * @Template()
+	 */
+	public function acceptInviteGroupAction($id, $group) {
+	
+		$em = $this->getDoctrine()->getManager();
+	
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($id);
+		$groupToJoin = $em->getRepository('TrazeoBaseBundle:EGroup')->find($group);
+	
+		if (!$groupToJoin) {
+			throw $this->createNotFoundException('Unable to find Group entity.');
+		}
+	
+		$groupToJoin->addUserextendgroup($user);
+		$em->persist($groupToJoin);
+		$em->flush();
+
+		$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findOneByUserextend($id);
+	
+		$em->remove($userRequest);
+		$em->flush();
+		//$allRequest= $em->remove($userRequest);
+	
+		$container = $this->get('sopinet_flashMessages');
+		$notification = $container->addFlashMessages("success","Te has unido correctamente al grupo oculto");
+	
+		return $this->redirect($this->generateUrl('panel_group'));
+	}
+	
+	
+	/**
+	 * User adminGroup let an User to join with the request Group.
+	 *
+	 * @Route("/acceptdeny/{id}", name="panel_group_deny_invite")
+	 * @Method("GET")
+	 * @Template()
+	 */
+	
+	public function denyInviteGroupAction($id) {
+	
+		$em = $this->getDoctrine()->getManager();
+	
+		$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findOneByUserextend($id);
+	
+		$em->remove($userRequest);
+		$em->flush();
+	
+		$container = $this->get('sopinet_flashMessages');
+		$notification = $container->addFlashMessages("success","Has rechazado la invitación");
+	
+		return $this->redirect($this->generateUrl('panel_group'));
+	
+	}
+	
     /**
      * Lists all Groups entities.
      *
@@ -229,6 +363,7 @@ class PanelGroupsController extends Controller
         $userAdmin = $em->getRepository('TrazeoBaseBundle:EGroup')->findByAdmin($userId);
         // Listado de todas las peticiones de acceso a un grupo por parte de otros usuarios
         $allGroupsAccess = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findAll();
+        $allGroupsInvite = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findAll();
         
         // Se cogen todos los grupos y se "restan" los cuales el usuario forma parte
         $allGroups = $em->getRepository('TrazeoBaseBundle:EGroup')->findAll();
@@ -239,6 +374,7 @@ class PanelGroupsController extends Controller
         	'userGroups' => $userGroups,
         	'userAdmin' => $userAdmin,
         	'allGroupsAccess' => $allGroupsAccess,
+        	'allGroupsInvite' => $allGroupsInvite,
         	'user' => $user
         );
     }
