@@ -136,7 +136,9 @@ services:
     #apikey_authenticator:
      #   class:     Trazeo\BaseBundle\Security\ApiKeyAuthenticator
       #  arguments: ["@webservice_user_provider"]
-
+    encoderback:
+        class: Trazeo\BaseBundle\Service\EncoderBack
+    
     twig.text_extension:
         class: Twig_Extensions_Extension_Text
         tags:

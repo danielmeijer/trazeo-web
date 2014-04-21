@@ -25,6 +25,11 @@ class EPoints
 	/** @ORM\ManyToOne(targetEntity="ERoute", inversedBy="points")
 	 */
 	protected $route;
+	
+	/**
+	 * @ORM\Column(name="pickup", type="boolean")
+	 */
+	protected $pickup;
 
     /**
      * Get id

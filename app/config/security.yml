@@ -1,6 +1,7 @@
 security:
     encoders:    
-        FOS\UserBundle\Model\UserInterface: sha512
+        FOS\UserBundle\Model\UserInterface:
+            id: encoderback
         #Trazeo\BaseBundle\Security\User\WebserviceUser: sha512
 
     role_hierarchy:
