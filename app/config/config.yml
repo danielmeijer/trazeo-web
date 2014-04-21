@@ -164,6 +164,7 @@ jms_translation:
             extractors: [sonata_admin]
             
 #hwi_oauth:
+    #firewall_name: secured_area
     # name of the firewall in which this bundle is active, this setting MUST be set
  #   firewall_name: secured_area
 

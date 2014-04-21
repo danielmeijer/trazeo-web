@@ -4,6 +4,23 @@ Menu:
     routes: Rutas
     children: Niños/as
 
+Login:
+    title: 'Inicio de sesión'
+    signin: 'Entrar'
+    username: 'Nombre de usuario'
+    password: 'Contraseña'
+    
+Register:
+    email: 'Correo electrónico'
+    name: 'Nombre de usuario'
+    pass: 'Contraseña'
+    repeatpass: 'Repita la contraseña'
+    
+Navbar:
+    profile: 'Perfil'
+    settings: 'Configuración'
+    logout: 'Cerrar sesión'
+
 Panel:
     title: 'Panel de Control'
 
@@ -24,6 +41,15 @@ Route:
         country: 'Páis al que pertenece'
         
 Groups:
+    index:
+        title: 'Sugerencia de grupos'
+        description: 'Estos grupos se encuentran en tu ciudad o en la de alguno de tus niños, y podrían interesarte.'
+    new:
+        title: 'Crear nuevo grupo'
+        description: 'Dale un nombre, una visibilidad y asígnale una ruta'
+        
+
+    
     name: 'Nombre del grupo'
     help:
        name: 'Nombre del grupo'
