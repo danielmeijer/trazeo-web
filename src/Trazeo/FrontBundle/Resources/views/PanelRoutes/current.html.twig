@@ -1,6 +1,3 @@
-{% set activeMenu = "route" %}
-{% set pageheader_title = "Route.show.title"|trans({'%name%': route.name}) %}
-{% set pageheader_description = "Route.show.description"|trans %}
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
 	{% block css %}
@@ -8,7 +5,7 @@
 	   	{% stylesheets
 	    	'@SopinetOpenMapBundle/Resources/public/css/leaflet.css'
 	    	'@SopinetOpenMapBundle/Resources/public/css/plugins/leafletRouting/app.css'
-	    	'@SopinetOpenMapBundle/Resources/public/css/plugins/Control.Geocoder/Control.Geocoder.css'
+	    	'@SopinetOpenMapBundle/Resources/public/css/plugins/Control.OSMGeocoder/Control.OSMGeocoder.css'
 	    	'@SopinetTemplateSbadmin2Bundle/Resources/public/css/plugins/openmap/openmap.css'
 	    	output='css/*.css' filter='cssrewrite' %}
 	    	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
@@ -26,44 +23,15 @@
 				
 				<li id="distance">Distancia:</li>
 			
-				<li>Niños: {{ cont }} apuntados en esta ruta</li>
+				<li>Niños: apuntados en esta ruta</li>
 				
-				<li>Autor: {{ route.admin }}</li>
+				<li>Autor:</li>
 			</ul>
 		</div>
 
 		<h1>MAPA</h1>
-		{% for point in route.points %}
-			<input type="hidden" name="lat{{ loop.index }}" value="{{ point.location.latitude }}">
-			<input type="hidden" name="lng{{ loop.index }}" value="{{ point.location.longitude }}">
-		{% endfor %}
-		<form method="post" action={{ path('panel_save_map') }}>
-			<div id="mapa" class="col-md-12"></div>
-			<input type="hidden" name="id" value="{{ route.id }}" />
-			<button id="comenzar" type="button">Comenzar</button>
-			<button type="submit">Enviar</button>
-		</form>
-	
-		<div class="row">
-			<div class="col-md-6">
-				<h3>Grupos de esta ruta</h3>
-			</div>
-			<div class="col-md-6">
-				<a href="{{ path('panel_group_new') }}">
-					<button type="button" class="btn btn-warning btn-circle">
-						<i class="fa fa-plus"></i>
-					</button>
-					Crear grupo
-				</a>
-			</div>
-		</div>
-		<p>Los usuarios han creado {{ route.groups|length }} grupos en esta ruta</p>
-            
-        {% for group in route.groups %}
-        	{{ group.name }}
-        {% endfor %}
+		<div id="mapa" class="col-md-12"></div>
 {% endblock %}
-
 	
 {% block js %}	
 	{{ parent() }}
@@ -77,9 +45,9 @@
 		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Storage.js'
 		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Draw.js'
 		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Edit.js'
-		'@SopinetOpenMapBundle/Resources/public/js/plugins/Control.Geocoder/Control.Geocoder.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/Control.OSMGeocoder/Control.Geocoder.js'
 	%}
 	<script type="text/javascript" src="{{ asset_url }}"></script>
 	{% endjavascripts %}
-	{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': route.points, 'editable': "true", 'realTime': "false"} %}
+	{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': "",'editable': "false", 'realTime': "true"} %}
 {% endblock %}

@@ -37,6 +37,19 @@ class PanelRoutesController extends Controller
             'routes' => $routes,
         );
     }
+    
+    /**
+     * Lists all Routes entities.
+     *
+     * @Route("/current", name="panel_route_current")
+     * @Method("GET")
+     * @Template()
+     */
+    public function currentAction()
+    {
+    	return array();
+    }
+    
     /**
      * Creates a new Route entity.
      *
