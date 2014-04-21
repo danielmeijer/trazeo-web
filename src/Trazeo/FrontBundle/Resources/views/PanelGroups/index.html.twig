@@ -4,19 +4,15 @@
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
 {% block body_content %}
-
+	
        <div class="alert">
-			<a href="{{ path('panel') }}">
-				<button type="button" class="btn btn-info btn-outline">
-					<i class="fa fa-home"></i> Panel									
-				</button>			
 			<a href="{{ path('panel_child') }}">
-				<button type="button" class="btn btn-warning btn-outline">
+				<button type="button" class="btn btn-default">
 					<i class="fa fa-list-ul"></i> <i class="fa fa-user"></i> Listado de niños									
 				</button>
 			</a>
 			<a href="{{ path('panel_route') }}">
-				<button type="button" class="btn btn-warning btn-outline">
+				<button type="button" class="btn btn-default">
 					<i class="fa fa-list-ul"></i> <i class="fa fa-location-arrow"></i> Listado de rutas									
 				</button>
 			</a>
@@ -39,25 +35,28 @@
 			</a>
 			</div>
        </div><!-- END col-lg-12 alert alert-info --> 
-
+<div class="alert alert-default">
         {% for userAdmin in userAdmin %}
 	        {% for allGroupsAccess in allGroupsAccess %}
 				{% if userAdmin.Id == allGroupsAccess.Group.Id  %}
-				<div class="alert alert-warning">
-	        		<p>El usuario {{ allGroupsAccess.Userextend }} pide acceso al grupo {{ allGroupsAccess.Group }}
-						<a href="{{ path('panel_group_let_join', { 'id': allGroupsAccess.Userextend.Id, 'group':allGroupsAccess.Group.Id }) }}" type="button" class="btn btn-success btn-circle">
-							<i class="fa fa-check"></i>
+	        		<p><b>{{ allGroupsAccess.Userextend }}</b> pide acceso para unirse al grupo <b>{{ allGroupsAccess.Group }}</b> del que eres administrador
+						&nbsp;<a href="{{ path('panel_group_let_join', { 'id': allGroupsAccess.Userextend.Id, 'group':allGroupsAccess.Group.Id }) }}" type="button" class="label label-success">
+							<i class="fa fa-check"></i> Aceptar
+						</a>&nbsp;
+						<a href="{{ path('panel_group_deny_join', { 'id': allGroupsAccess.Userextend.Id }) }}" type="button" class="label label-danger">
+							<i class="fa fa-times"></i> Denegar
 						</a>
 	        		 </p>
-	        	</div>
+	        		<br />
 	        	{% endif %}
+	        	
 	        {% endfor %}
         {% endfor %}
-   		
+   		</div>
    		
 	<div class="panel-group" id="accordion1">
           <div class="alert alert-success">
-          	<i class="fa fa-2x fa-users"></i>&nbsp;
+          	<i class="fa fa-2x fa-check"></i>&nbsp;
         	<p class="label label-success">Formas parte de los siguientes grupos
         	<span class="btn btn-default btn-circle">{{ userGroups|length }}</span>
         	</p>
@@ -146,8 +145,9 @@
 		</div>
 	<div class="panel-group" id="accordion2">
           <div class="alert alert-success">
-          	<i class="fa fa-2x fa-users"></i>&nbsp;
-        	<p class="label label-success">No eres miembro de los siguientes grupos
+          	<i class="fa fa-2x fa-warning"></i>
+          	&nbsp;
+        	<p class="label label-success">Otros grupos que hay en tu ciudad
         	<span class="btn btn-default btn-circle ">{{ groups|length }}</span>
         	</p>
         </div>    

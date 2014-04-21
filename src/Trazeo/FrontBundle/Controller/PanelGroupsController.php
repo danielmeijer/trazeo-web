@@ -105,36 +105,51 @@ class PanelGroupsController extends Controller
 	public function requestJoinGroupAction($id) {
 	
 		$em = $this->getDoctrine()->getManager();
-	
+		// FOSUser y UserExtend correspondiente logueado
 		$fos_user = $this->container->get('security.context')->getToken()->getUser();
 		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+		// Obtener grupo al que se quiere unir a través del param $id
+		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
+		// Buscar si existe alguna petición con ese UserExtend y ese Group
+		$requestUser = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findOneByUserextend($user);
+		$requestGroup = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findOneByGroup($group);
 		
-		$requestJoin = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findByUserextend($user);
-		if($requestJoin == true){
-
+		// Comprobar que existen
+		if($requestUser && $requestGroup == true){
+			
+			// Si existen, obtener el id de su registro en la base de datos
+			$requestUserId = $requestUser->getId();
+			$requestGroupId = $requestGroup->getId();
+			// Comprobar que no tienen el mismo id de registro (petición duplicada)
+			if($requestUserId = $requestGroupId) {
+				// Excepción y redirección
+				$container = $this->get('sopinet_flashMessages');
+				$notification = $container->addFlashMessages("warning","Ya has solicitado el acceso a este grupo anteriormente");
+				return $this->redirect($this->generateUrl('panel_group'));
+					
+			}
+			
+		}else{
+		// Si no existen los UserExtend y Group anteriormente obtenidos,
+		// directamente se crea la petición
+			$access = new EGroupAccess();
+			$access->setGroup($group);
+			$access->setUserextend($user);
+			
+			$em->persist($access);
+			$em->flush();
+			
 			$container = $this->get('sopinet_flashMessages');
-			$notification = $container->addFlashMessages("warning","Ya has solicitado el acceso");
-			return $this->redirect($this->generateUrl('panel_group'));
+			$notification = $container->addFlashMessages("success","Tu solicitud para unirte ha sido enviada al adminsitrador del grupo");
+			return $this->redirect($this->generateUrl('panel_group'));	
 			
 		}
-		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
-		$adminGroup = $group->getAdmin();
-	
-		$access = new EGroupAccess();
-		$access->setGroup($group);
-		$access->setUserextend($user);
-	
-		$em->persist($access);
-		$em->flush();
-	
-		$container = $this->get('sopinet_flashMessages');
-		$notification = $container->addFlashMessages("success","Solicitud enviada");
-		return $this->redirect($this->generateUrl('panel_group'));
+
 	}
 		
 	
 	/**
-	 * User Group Admin join an User.
+	 * User adminGroup let an User to join with the request Group.
 	 *
 	 * @Route("/letjoin/{id}/{group}", name="panel_group_let_join")
 	 * @Method("GET")
@@ -166,6 +181,30 @@ class PanelGroupsController extends Controller
 		$notification = $container->addFlashMessages("success","El usuario ha sido añadido al grupo");
 	
 		return $this->redirect($this->generateUrl('panel_group'));
+	}
+	
+	/**
+	 * User adminGroup let an User to join with the request Group.
+	 *
+	 * @Route("/denyjoin/{id}", name="panel_group_deny_join")
+	 * @Method("GET")
+	 * @Template()
+	 */
+	
+	public function denyJoinGroupAction($id) {
+		
+		$em = $this->getDoctrine()->getManager();
+		
+		$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findOneByUserextend($id);
+		
+		$em->remove($userRequest);
+		$em->flush();
+		
+		$container = $this->get('sopinet_flashMessages');
+		$notification = $container->addFlashMessages("success","La petición del usuario para unirse al grupo ha sido denegada");
+		
+		return $this->redirect($this->generateUrl('panel_group'));
+		
 	}
 	
 	
