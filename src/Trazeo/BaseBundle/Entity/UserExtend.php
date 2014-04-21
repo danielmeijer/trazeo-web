@@ -58,6 +58,10 @@ class UserExtend
      */
     protected $access;
     
+    /** @ORM\OneToMany(targetEntity="EGroupInvite", mappedBy="userextend")
+     */
+    protected $invite;
+    
     
     /**
      * @var string

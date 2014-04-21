@@ -53,6 +53,11 @@ class EGroup
      */
     protected $access;
     
+    /** @ORM\OneToMany(targetEntity="EGroupInvite",  mappedBy="group")
+     * @var unknown
+     */
+    protected $invite;
+    
     
     /**
      * @var string
