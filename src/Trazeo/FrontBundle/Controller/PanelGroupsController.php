@@ -428,14 +428,19 @@ class PanelGroupsController extends Controller
         $groupName = $groupForm->getName();
   
         $groupUnique = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneByName($groupName);
-        $groupUniqueName = $groupUnique->getName();
-      
-        if($groupUniqueName == $groupName){
-        	 
-        	$container = $this->get('sopinet_flashMessages');
-        	$container->addFlashMessages("warning", "Ya existe un grupo con el nombre que has indicado, ");
-        	return $this->redirect($this->generateUrl('panel_group_new'));
+        
+        if($groupUnique == true){
+        	
+        	$groupUniqueName = $groupUnique->getName();	
+
+        	if($groupUniqueName == $groupName){
+        	
+        		$container = $this->get('sopinet_flashMessages');
+        		$container->addFlashMessages("warning", "Ya existe un grupo con el nombre que has indicado, ");
+        		return $this->redirect($this->generateUrl('panel_group_new'));
+        	}
         }
+
         
         
         if ($form->isValid()) {
