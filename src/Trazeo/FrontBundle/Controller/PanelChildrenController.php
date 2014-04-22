@@ -230,24 +230,36 @@ class PanelChildrenController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        /*
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
-        */
+        $em = $this->getDoctrine()->getManager();
+        $fos_user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+        $child = $em->getRepository('TrazeoBaseBundle:EChild')->find($id);
+        
+        $container = $this->get('sopinet_flashMessages');
+        if (!$child) {
+        	$notification = $container->addFlashMessages("warning","El niño que intentas eliminar no existe");
+        	return $this->redirect($this->generateUrl('panel_child'));
+        }
+        
+        $userextends = $child->getUserextendchilds()->toArray();
+        $users = array();
+        foreach($userextends as $userextend){
+        	if($user == $userextend){
+        		$users[] = $userextend;
+        	}
+        }
+        
+		if($users){
 
-        //if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $child = $em->getRepository('TrazeoBaseBundle:EChild')->find($id);
-
-            if (!$child) {
-                throw $this->createNotFoundException('Unable to find Child entity.');
-            }
-
-            $em->remove($child);
-            $em->flush();
-        //}
-
-        return $this->redirect($this->generateUrl('panel_child'));
+			$em->remove($child);
+			$em->flush();
+			$notification = $container->addFlashMessages("success","El niño ha sido eliminado");
+			return $this->redirect($this->generateUrl('panel_child'));
+			
+		}else {
+			$notification = $container->addFlashMessages("error","Sólo un tutor puede eliminar un niño");
+			return $this->redirect($this->generateUrl('panel_child'));	
+		}
     }
 
     /**

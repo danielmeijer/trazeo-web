@@ -16,8 +16,8 @@ class Builder extends ContainerAware
         $menu->addChild('Home', array(
         	'route' => 'panel_dashboard'
         ))
-        ->setLabel($this->container->get('translator')->trans('Menu.home'));
-        $menu['Home']->setAttribute('icon', 'fa-home');
+        ->setLabel("");
+        $menu['Home']->setAttribute('icon', 'fa-home fa-2x');
         if ($options['activeMenu'] == "home") {
         	$menu['Home']->setAttribute('class', 'active');
         }
@@ -26,8 +26,8 @@ class Builder extends ContainerAware
         $menu->addChild('Child', array(
         		'route' => 'panel_child'
         ))
-        ->setLabel($this->container->get('translator')->trans('Menu.child'));
-        $menu['Child']->setAttribute('icon', 'fa-user');
+        ->setLabel("");
+        $menu['Child']->setAttribute('icon', 'fa-user fa-2x');
         if ($options['activeMenu'] == "routes") {
         	$menu['Child']->setAttribute('class', 'active');
         }
@@ -36,8 +36,8 @@ class Builder extends ContainerAware
         $menu->addChild('Group', array(
         		'route' => 'panel_group'
         		))
-        ->setLabel($this->container->get('translator')->trans('Menu.group'));
-        $menu['Group']->setAttribute('icon', 'fa-users');
+        ->setLabel("");
+        $menu['Group']->setAttribute('icon', 'fa-users fa-2x');
         if ($options['activeMenu'] == "group") {
         	$menu['Group']->setAttribute('class', 'active');
         }
@@ -46,8 +46,8 @@ class Builder extends ContainerAware
         $menu->addChild('Route', array(
         		'route' => 'panel_route'
         ))
-        ->setLabel($this->container->get('translator')->trans('Menu.route'));
-        $menu['Route']->setAttribute('icon', 'fa-location-arrow');
+        ->setLabel("");
+        $menu['Route']->setAttribute('icon', 'fa-location-arrow fa-2x');
         if ($options['activeMenu'] == "route") {
         	$menu['Route']->setAttribute('class', 'active');
         }

@@ -36,14 +36,7 @@
         <!-- START Resume -->
 			<div class="col-md-12 resume">
 				<h2 class="col-md-12  alert alert-warning">Mi Resumen</h2>
-				
-				<i class="alert">
-				{% for notification in notifications  %}
-						<li>{{ notification.Action  }},{{ notification.Objects  }},{{ notification.Objectsid }} </li>
-				{% endfor %}
-				
-				</i>
-				
+
 				<!-- START resumeChilds -->
 				<div class="col-md-12 resumeChilds well">
 					<div class="col-md-10">
@@ -120,7 +113,7 @@
 							                <td>{{ group.name }}</td>
 							                <td>
 												<i class="fa fa-pencil"></i> <a href="{{ path('panel_group') }}{{ group.id }}/edit">Editar</a>
-												&nbsp;<i class="fa fa-trash-o"></i> <a data-href="{{ path('panel_group_delete', {'id': group.id }) }}" data-toggle="confirmation">Eliminar</a>
+												&nbsp;<i class="fa fa-trash-o"></i> <a href="{{ path('panel_group_delete', {'id': group.id }) }}" >Eliminar</a>
 							                </td>
 							            </tr>
 							        {% endfor %}

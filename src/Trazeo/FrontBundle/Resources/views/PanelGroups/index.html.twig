@@ -55,10 +55,10 @@
 				{% if user.Id == allGroupInvite.Userextend.Id  %}
 				<div class="alert alert-default">
 	        		<p>Tienes una invitación para unirte al grupo oculto <b>{{ allGroupInvite.Group }}</b>
-						&nbsp;<a href="{{ path('panel_group_accept_invite', { 'id': allGroupInvite.Userextend.Id, 'group':allGroupInvite.Group.Id }) }}" type="button" class="label label-success">
+						&nbsp;<a href="{{ path('panel_group_invite_accept', { 'id': allGroupInvite.Userextend.Id, 'group':allGroupInvite.Group.Id }) }}" type="button" class="label label-success">
 							<i class="fa fa-check"></i> Aceptar
 						</a>&nbsp;
-						<a href="{{ path('panel_group_deny_invite', { 'id': allGroupInvite.Userextend.Id }) }}" type="button" class="label label-danger">
+						<a href="{{ path('panel_group_invite_deny', { 'id': allGroupInvite.Userextend.Id }) }}" type="button" class="label label-danger">
 							<i class="fa fa-times"></i> Cancelar
 						</a>
 	        		 </p>

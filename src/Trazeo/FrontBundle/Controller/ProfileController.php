@@ -73,6 +73,25 @@ class ProfileController extends Controller
 	
 	}
 	
+	/**
+	 * Deletes a UserExtend entity.
+	 *
+	 * @Route("/profile_delete", name="panel_profile_delete")
+	 */
+	public function deleteAction(Request $request)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$um = $this->container->get('fos_user.user_manager');
+		 
+		$fos_user = $this->container->get('security.context')->getToken()->getUser();
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+	
+		$em->remove($user);
+		$em->remove($fos_user);
+		$em->flush();
+	
+		return $this->redirect($this->generateUrl('home'));
+	}	
 }
 
 

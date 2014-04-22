@@ -272,27 +272,39 @@ class PanelRoutesController extends Controller
     /**
      * Deletes a Routes entity.
      *
-     * @Route("/{id}", name="panel_route_delete")
-     * @Method("DELETE")
+     * @Route("/{id}/delete", name="panel_route_delete")
+     * @Method("GET")
      */
     public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+    	
+    	$fos_user = $this->container->get('security.context')->getToken()->getUser();
+    	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+    	$userId = $user->getId();
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $route = $em->getRepository('TrazeoBaseBundle:ERoute')->find($id);
-
-            if (!$route) {
-                throw $this->createNotFoundException('Unable to find Routes entity.');
-            }
-
-            $em->remove($route);
-            $em->flush();
+        $route = $em->getRepository('TrazeoBaseBundle:ERoute')->find($id);
+        
+        $container = $this->get('sopinet_flashMessages');
+        
+        if (!$route) {
+        	$notification = $container->addFlashMessages("warning","La ruta que intentas eliminar no existe");
+        	return $this->redirect($this->generateUrl('panel_route'));
         }
+        
+        $routeAdmin = $route->getAdmin();
+        
+		if($routeAdmin == $user){
 
-        return $this->redirect($this->generateUrl('panel_route'));
+			$em->remove($route);
+			$em->flush();
+			$notification = $container->addFlashMessages("success","La ruta ha sido eliminada");
+			return $this->redirect($this->generateUrl('panel_route'));
+			
+		}else {
+			$notification = $container->addFlashMessages("error","Sólo el administrador puede eliminar una ruta");
+			return $this->redirect($this->generateUrl('panel_route'));	
+		}
     }
     /**
      * Creates a form to delete a Routes entity by id.
