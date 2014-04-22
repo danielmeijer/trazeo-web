@@ -364,8 +364,8 @@
 
     setInterval(updateRouteInfo,3000);
     if(points)loadFromWaypoints(points);
+    disableRouting();
     if(!editable){
-        disableRouting();
         map.on('mousemove',function(e){map.options.center=e.latlng});
     }
 
