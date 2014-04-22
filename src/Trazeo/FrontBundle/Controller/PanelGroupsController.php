@@ -54,15 +54,16 @@ class PanelGroupsController extends Controller
 		
 		$fos_user = $this->container->get('security.context')->getToken()->getUser();
 		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
-		
+	
 		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
+		$container = $this->get('sopinet_flashMessages');
+		
 		$groupAdmin = $group->getAdmin();
 		$groupVisibility = $group->getVisibility();
 		$container = $this->get('sopinet_flashMessages');
 		
 		if($groupAdmin == $user){
 			if (!$group) {
-				$container = $this->get('sopinet_flashMessages');
 				$notification = $container->addFlashMessages("warning","El grupo no existe o ha sido eliminado");
 				return $this->redirect($this->generateUrl('panel_group'));
 			}
@@ -70,18 +71,15 @@ class PanelGroupsController extends Controller
 			$group->addUserextendgroup($user);
 			$em->persist($group);
 			$em->flush();
-			$container = $this->get('sopinet_flashMessages');
 			$notification = $container->addFlashMessages("success","Has sido añadido al grupo correctamente");
 			return $this->redirect($this->generateUrl('panel_group'));
-				
-			
-			
-		}elseif ($groupVisibility == 2 ){
-			$notification = $container->addFlashMessages("warning","Sólo puedes unirte a un grupo oculto mediante invitación.");
+					
+		}elseif ($groupVisibility == 1 ){
+			$notification = $container->addFlashMessages("warning","El grupo al que intentas unirte es privado. Necesitas una autorización");
 			return $this->redirect($this->generateUrl('panel_group'));
 			
-		}elseif ($groupVisibility == 1 ) {
-			$notification = $container->addFlashMessages("warning","El grupo al que intentas unirte es privado. Necesitas una autorización");
+		}elseif ($groupVisibility == 2 ) {
+			$notification = $container->addFlashMessages("warning","Sólo puedes unirte a un grupo oculto mediante invitación");
 			return $this->redirect($this->generateUrl('panel_group'));
 
 	}	
@@ -321,7 +319,7 @@ class PanelGroupsController extends Controller
 	/**
 	 * User accept to join with a hidden group.
 	 *
-	 * @Route("/acceptinvite/{id}/{group}", name="panel_group_accept_invite")
+	 * @Route("/inviteaccept/{id}/{group}", name="panel_group_invite_accept")
 	 * @Method("GET")
 	 * @Template()
 	 */
@@ -356,7 +354,7 @@ class PanelGroupsController extends Controller
 	/**
 	 * User adminGroup let an User to join with the request Group.
 	 *
-	 * @Route("/acceptdeny/{id}", name="panel_group_deny_invite")
+	 * @Route("/invitedeny/{id}", name="panel_group_invite_deny")
 	 * @Method("GET")
 	 * @Template()
 	 */
@@ -630,27 +628,40 @@ class PanelGroupsController extends Controller
     /**
      * Deletes a Groups entity.
      *
-     * @Route("/{id}", name="panel_group_delete")
-     * @Method("DELETE")
+     * @Route("/{id}/delete", name="panel_group_delete")
+     * @Method("GET")
      */
     public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
+    	$em = $this->getDoctrine()->getManager();
+    	
+    	$fos_user = $this->container->get('security.context')->getToken()->getUser();
+    	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+    	$userId = $user->getId();
 
-            if (!$group) {
-                throw $this->createNotFoundException('Unable to find Group entity.');
-            }
-
-            $em->remove($group);
-            $em->flush();
+        $group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
+        
+        $container = $this->get('sopinet_flashMessages');
+        
+        if (!$group) {
+        	$notification = $container->addFlashMessages("warning","El grupo que intentas eliminar no existe");
+        	return $this->redirect($this->generateUrl('panel_group'));
         }
+        
+        $groupAdmin = $group->getAdmin();
+        
+		if($groupAdmin == $user){
 
-        return $this->redirect($this->generateUrl('panel_group'));
+			$em->remove($group);
+			$em->flush();
+			$notification = $container->addFlashMessages("success","El grupo ha sido eliminado");
+			return $this->redirect($this->generateUrl('panel_group'));
+			
+		}else {
+			$notification = $container->addFlashMessages("error","Sólo el administrador puede eliminar un grupo");
+			return $this->redirect($this->generateUrl('panel_group'));	
+		}
     }
 
     /**
