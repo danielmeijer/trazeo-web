@@ -72,11 +72,11 @@ class ApiController extends Controller {
 	 * Funcion que controla si el usuario está logueado o se comprueba con su email y pass
 	 */
 	private function checkPrivateAccess(Request $request) {
-		$user = $this->get('security.context')->getToken()->getUser();
+		//$user = $this->get('security.context')->getToken()->getUser();
 	
-		if ($user != null && $user != "anon.") {
+		/*if ($user != null && $user != "anon.") {
 			return $user;
-		}
+		}*/
 	
 		// TODO: ACTIVAR, QUITAR FALSE / NO HACE FALTA ESTA COMPROBACION
 // 		if ('POST' != $request->getMethod() && false) {
@@ -137,7 +137,7 @@ class ApiController extends Controller {
 		$em = $this->get('doctrine.orm.entity_manager');
 		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 		$groups = $userextend->getGroups();
-		
+		$array = array();
 		foreach($groups as $group){
 			$arrayGroups = array();
 			$arrayGroups['name'] = $group->getName();
@@ -147,7 +147,7 @@ class ApiController extends Controller {
 		}
 		$view = View::create()
 		->setStatusCode(200)
-		->setData($array);
+		->setData($this->doOK($array));
 		
 		return $this->get('fos_rest.view_handler')->handle($view);
 	}
