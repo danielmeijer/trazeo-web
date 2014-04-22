@@ -1,13 +1,17 @@
 <script type="text/javascript">
 	var points=new Array;
-	var POINT=L.latLng;
+	POINT=function(lat,lng){
+		this.latLng=new L.LatLng(lat,lng);
+		var pick=false;
+		this.pickup=pick;
+		};
 	var editable= {{ editable }};
 	var realTime= {{ realTime }};
 </script>
 
 {% for point in routePoints  %}
 <script>
-	var aux='{{ point.location }}'.replace(' ',',');
+	var aux="new "+'{{ point.location }}'.replace(' ',',');
 	points.push(eval(aux));
 </script>
 {%  endfor %}
@@ -16,6 +20,7 @@
 	var gk, topo, thunderforest, osm, waymarkedtrails;
 	var menu=null;
 	var flagMenu=null;
+	var icon="leaflet-marker-icon leaflet-zoom-animated leaflet-clickable leaflet-marker-draggable";
 	L.Icon.Default.imagePath = '/trazeo-web/src/Sopinet/OpenMapBundle/Resources/public/css/images';  
 
     gk = 'http://opencache.statkart.no/gatekeeper/gk';
@@ -44,16 +49,6 @@
       ,center: new L.LatLng(37.8938548, -4.788015299999984)
       ,zoom: 16
     });
-
-    //L.control.layers({
-       // 'Vista ciudad': osm,
-      //  'Vista nocturna': midnight,
-    //}, {
-        //'Señalizar senderos': waymarkedtrails,
-      //  'Señalizar autopistas': motorways
-    //}).addTo(map);
-
-    //map.attributionControl.addAttribution('&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors');
 
 
     //Routing Machine plugin info
@@ -119,11 +114,6 @@
 		map.setView(result.center);
     }
 	control.addTo(map);
-    //var osmGeocoder = new L.Control.OSMGeocoder(options);
-   	//map.addControl(osmGeocoder);
-    
-    
-    map.doubleClickZoom.disable();
     routing.draw();
 
 
@@ -149,7 +139,8 @@
 		$("#enviar").attr("disabled","disabled");
 		$("#comenzar").on('click',disableRouting);
 		$("#comenzar").html("Terminar");
-		for(var marker in map._layers)if(map._layers[marker]._icon)map._layers[marker].on('contextmenu',showPopUpMenu);
+		for(var marker in map._layers)if(map._layers[marker]._icon && map._layers[marker]._icon.className===icon)
+			map._layers[marker].on('contextmenu',showPopUpMenu);
 	
 		return false;
 	};
@@ -163,26 +154,26 @@
 	};
 
     var loadFromWaypoints=function(waypoints){
-	for(var index=0;waypoints.length>index;index++){
-	    var marker, latlng, last;
+		for(var index=0;waypoints.length>index;index++){
+		    var marker, latlng, last;
 
-	    latlng = waypoints[index];
+	    	latlng = waypoints[index].latLng;
 	    
-	    if (routing.options.snapping) {
-	      latlng = L.LineUtil.snapToLayers(latlng, null, routing.options.snapping);
-	    }
-	    marker = new L.Marker(latlng);
-	    last = routing.getLast();
+	    	if (routing.options.snapping) {
+	      		latlng = L.LineUtil.snapToLayers(latlng, null, routing.options.snapping);
+	    	}
+	    	marker = new L.Marker(latlng);
+	    	last = routing.getLast();
 
-	    routing._draw._trailer.setLatLngs([latlng, latlng]);
-	    routing.addWaypoint(marker, last, null, function(err, data) {
-	      // console.log(err, data);
-	    });
-	    if (last !== null) {
-	    	routing._draw._trailer.setLatLngs([last.getLatLng(), latlng]);
-	}
-	}
-	routing.draw();	
+	    	routing._draw._trailer.setLatLngs([latlng, latlng]);
+	    	routing.addWaypoint(marker, last, null, function(err, data) {
+	      	// console.log(err, data);
+	    	});
+	    	if (last !== null) {
+	    		routing._draw._trailer.setLatLngs([last.getLatLng(), latlng]);
+			}
+			marker.pickUp=waypoints[index].pickup;
+		}
 	};   	
 
 
@@ -209,44 +200,50 @@
     	}
     	if(first && last)$("#distance").html("Distancia: "+getDistance()+" m");
     	$(".leaflet-marker-icon").on();
-    	for(var marker in map._layers)if(map._layers[marker]._icon)map._layers[marker].on('contextmenu',showPopUpMenu);
+    	for(var marker in map._layers)if(map._layers[marker]._icon && map._layers[marker]._icon.className===icon)
+        	map._layers[marker].on('contextmenu',showPopUpMenu);
     	if(flagMenu){
         	enableRouting();
         	flagMenu=null;
 		}
     }
     
+
+
     
     var getDistance=function(){
     	var distance=0;
-	for(var i=0;getWaypoints().length-1>i;i++){
-	var actual=getWaypoints()[i];
-	var next=getWaypoints()[i+1];
-	distance+=Math.floor(actual.distanceTo(next));
-	}    	
-	return distance;
+		for(var i=0;getWaypoints().length-1>i;i++){
+			var actual=getWaypoints()[i];
+			var next=getWaypoints()[i+1];
+			distance+=Math.floor(actual.distanceTo(next));
+		}    	
+		return distance;
     }
+
+
     
     var getPointsData=function(){
     	//create input
-    	var points="";
+    	var pointList="";
     	if(document.getElementById("inputPoints")==null){
         	var lat=document.createElement("INPUT");
            	lat.id="inputPoints";
            	lat.name="inputPoints";
-           	
            	document.getElementById("mapa").appendChild(lat);  
     	}
-    	for(var marker in map._layers)if(map._layers[marker]._icon){
-    		if(points!=""){
-    			points+=";";
-        		}
-    		if(!map._layers[marker].pickUp)map._layers[marker].pickUp=false;
-    		var pick=+map._layers[marker].pickUp;
-           	points+=map._layers[marker]._latlng.lat+","+map._layers[marker]._latlng.lng+","+pick;
-        }       	
+    	//getting points info from map
+    	for(var marker in map._layers)
+        	if(map._layers[marker]._icon && map._layers[marker]._icon.className===icon){
+    			if(pointList!=""){
+    				pointList+=";";
+        			}
+    			if(!map._layers[marker].pickUp)map._layers[marker].pickUp=false;
+    			var pick=+map._layers[marker].pickUp;
+           		pointList+=map._layers[marker]._latlng.lat+","+map._layers[marker]._latlng.lng+","+pick;
+        };       	
        	//populate input
-    	$("#inputPoints").val(points); 
+    	$("#inputPoints").val(pointList); 
     }
 
 
@@ -306,6 +303,7 @@
 	
 			recogida.appendTo($(".pop-up-menu"));
 			borrar.appendTo($(".pop-up-menu"));
+			
         	// add a viewreset event listener for updating layer's position, do the latter
  	      	map.on('viewreset', this._reset, this);
     	    this._reset();
@@ -328,17 +326,16 @@
      	   L.DomUtil.setPosition(this._el, pos);
    	 }
 	});
+
+
+
     
 	var showPopUpMenu=function(e){
 		if(menu!=null)return;
 		menu=new PopUpMenu(e.latlng,e.target);
 		map.addLayer(menu);
 		$(".pop-up-menu").focus();
-		$(".pop-up-menu").css(
-		{'background':'grey',
-	 
-		});
-		//$(".pop-up-menu").on('blur',map.removeLayer(menu));
+		$(".pop-up-menu").css({'background':'grey'});
 	}
 
 
@@ -369,8 +366,6 @@
     setInterval(updateRouteInfo,3000);
     if(points)loadFromWaypoints(points);
     disableRouting();
-    if(!editable){
-        map.on('mousemove',function(e){map.options.center=e.latlng});
-    }
+    if(!editable){map.on('mousemove',function(e){map.options.center=e.latlng});}
 
 </script>

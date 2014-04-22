@@ -211,9 +211,8 @@ class PanelRoutesController extends Controller
 		//ldd($request);
 		$id = $request->get('id');
 		$inputPoints = $request->get('inputPoints');
-		$pickup = $request->get('pickup');
 		$points = explode(";", $inputPoints);
-	
+
 		$em = $this->getDoctrine()->getManager();
 
         $route = $em->getRepository('TrazeoBaseBundle:ERoute')->find($id);
@@ -222,12 +221,12 @@ class PanelRoutesController extends Controller
 		for($i = 0;$i < count($points);$i++)
 		{
 			
-			$latlng = explode(",", str_replace(array("(", ")"), "", $points[$i]));
+			$latlng = explode(",", $points[$i]);
 
 			$punto = new EPoints();
 			$punto->setLocation(new SimplePoint($latlng[0], $latlng[1]));
 			$punto->setRoute($route);
-			$punto->setPickup($pickup);
+			$punto->setPickup($latlng[2]);
 			$em->persist($punto);
 		}
     	$em->flush();
