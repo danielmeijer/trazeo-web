@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Entity Group
  *
- * @ORM\Table("e_group")
+ * @ORM\Table(name="e_group")
  * @ORM\Entity
  */
 class EGroup
@@ -67,9 +67,8 @@ class EGroup
     protected $name;
 
     public function __toString(){
-    	if($this->name == "")
-    		return (string)$this->id;
-    	return $this->name;
+ 
+    	return $this->getName();
     }
 
   
