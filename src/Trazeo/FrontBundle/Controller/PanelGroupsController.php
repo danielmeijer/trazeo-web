@@ -62,7 +62,7 @@ class PanelGroupsController extends Controller
 		$groupVisibility = $group->getVisibility();
 		$container = $this->get('sopinet_flashMessages');
 		
-		if($groupAdmin == $user){
+		if($groupAdmin == $user || $groupVisibility == 0){
 			if (!$group) {
 				$notification = $container->addFlashMessages("warning","El grupo no existe o ha sido eliminado");
 				return $this->redirect($this->generateUrl('panel_group'));
@@ -208,7 +208,7 @@ class PanelGroupsController extends Controller
 	/**
 	 * User adminGroup let an User to join with the request Group.
 	 *
-	 * @Route("/denyjoin/{id}{group}", name="panel_group_deny_join")
+	 * @Route("/denyjoin/{id}/{group}", name="panel_group_deny_join")
 	 * @Method("GET")
 	 * @Template()
 	 */
@@ -228,7 +228,7 @@ class PanelGroupsController extends Controller
 		$em->flush();
 		
 		$container = $this->get('sopinet_flashMessages');
-		$notification = $container->addFlashMessages("success","La petición del usuario para unirse al grupo ha sido denegada");
+		$notification = $container->addFlashMessages("success","Has rechazado la petición para unirte al grupo");
 		
 		$not = $this->container->get('sopinet_user_notification');
 		$el = $not->addNotification(
@@ -354,7 +354,7 @@ class PanelGroupsController extends Controller
 	/**
 	 * User adminGroup let an User to join with the request Group.
 	 *
-	 * @Route("/invitedeny/{id}", name="panel_group_invite_deny")
+	 * @Route("/invitedeny/{id}/{group}", name="panel_group_invite_deny")
 	 * @Method("GET")
 	 * @Template()
 	 */
@@ -394,20 +394,19 @@ class PanelGroupsController extends Controller
         
         // Grupos de los cuales el usuario es administrador
         $userAdmin = $em->getRepository('TrazeoBaseBundle:EGroup')->findByAdmin($userId);
-        // Listado de todas las peticiones de acceso a un grupo por parte de otros usuarios
-        $allGroupsAccess = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findAll();
-        $allGroupsInvite = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findAll();
-        
+        // Listado de todas las peticiones de acceso a un grupo por parte de otros usuarios        
         // Se cogen todos los grupos y se "restan" los cuales el usuario forma parte
         $allGroups = $em->getRepository('TrazeoBaseBundle:EGroup')->findAll();
         $groups = array_diff($allGroups,$userGroups->toArray());
         
+        $allGroupsAccess = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findAll();
+        $allGroupsInvite = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findAll();
         return array(
-            'groups' => $groups,
         	'userGroups' => $userGroups,
         	'userAdmin' => $userAdmin,
         	'allGroupsAccess' => $allGroupsAccess,
         	'allGroupsInvite' => $allGroupsInvite,
+        	'groups' => $groups,
         	'user' => $user
         );
     }

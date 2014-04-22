@@ -43,7 +43,7 @@
 						&nbsp;<a href="{{ path('panel_group_let_join', { 'id': allGroupsAccess.Userextend.Id, 'group':allGroupsAccess.Group.Id }) }}" type="button" class="label label-success">
 							<i class="fa fa-check"></i> Aceptar
 						</a>&nbsp;
-						<a href="{{ path('panel_group_deny_join', { 'id': allGroupsAccess.Userextend.Id , 'group': allGroupsAccess.Group.Id }) }}" type="button" class="label label-danger">
+						<a href="{{ path('panel_group_deny_join', { 'id': allGroupsAccess.Userextend.Id , 'group':allGroupsAccess.Group.Id }) }}" type="button" class="label label-danger">
 							<i class="fa fa-times"></i> Denegar
 						</a>
 	        		 </p>
@@ -58,7 +58,7 @@
 						&nbsp;<a href="{{ path('panel_group_invite_accept', { 'id': allGroupInvite.Userextend.Id, 'group':allGroupInvite.Group.Id }) }}" type="button" class="label label-success">
 							<i class="fa fa-check"></i> Aceptar
 						</a>&nbsp;
-						<a href="{{ path('panel_group_invite_deny', { 'id': allGroupInvite.Userextend.Id }) }}" type="button" class="label label-danger">
+						<a href="{{ path('panel_group_invite_deny', { 'id': allGroupInvite.Userextend.Id ,'group': allGroupInvite.Group.Id }) }}" type="button" class="label label-danger">
 							<i class="fa fa-times"></i> Cancelar
 						</a>
 	        		 </p>
@@ -173,7 +173,7 @@
         {# Grupos en los que el usuario logueado no está inscrito, aunque sea admin de dicho grupo #}
 		{% for group in groups %}
 
-		{% if group.Visibility != 2 or group.Admin.Id == user.Id %}
+		{% if group.Visibility != 2 or group.Admin.Id == user.Id	 %}
 			<div class="panel panel-warning">
 				<div class="panel-heading">
 		        	<h4 class="panel-title">
