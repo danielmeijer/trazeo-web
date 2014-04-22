@@ -146,7 +146,7 @@
 		$(".leaflet-marker-icon").css("pointer-events","all");
 		if(menu==null)routing.draw(true);
 
-		$("#enviar").attr("disabled","true");
+		$("#enviar").attr("disabled","disabled");
 		$("#comenzar").on('click',disableRouting);
 		$("#comenzar").html("Terminar");
 		for(var marker in map._layers)if(map._layers[marker]._icon)map._layers[marker].on('contextmenu',showPopUpMenu);
@@ -235,19 +235,23 @@
            	lat.id="inputPoints";
            	lat.name="inputPoints";
            	
-           	document.getElementById("mapa").appendChild(lat);  	
+           	document.getElementById("mapa").appendChild(lat);  
     	}
     	for(var marker in map._layers)if(map._layers[marker]._icon){
-    		if(points!="")points+=";";
+    		if(points!=""){
+    			points+=";";
+        		}
     		if(!map._layers[marker].pickUp)map._layers[marker].pickUp=false;
-           	points+=("("+map._layers[marker]._latlng.lat+","+map._layers[marker]._latlng.lng+","+map._layers[marker].pickUp+")");
+    		var pick=+map._layers[marker].pickUp;
+           	points+=map._layers[marker]._latlng.lat+","+map._layers[marker]._latlng.lng+","+pick;
         }       	
        	//populate input
-    	$("#inputPoints").val(points);  	
+    	$("#inputPoints").val(points); 
     }
 
 
 
+   
 
     //PopUpMenu Layer and Event
     var PopUpMenu = L.Class.extend({

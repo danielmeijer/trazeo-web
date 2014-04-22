@@ -34,6 +34,7 @@
 
 		<h1>MAPA</h1>
 		{% for point in route.points %}
+			<input type="hidden" name="pickup{{ loop.index }}" value="false">
 			<input type="hidden" name="lat{{ loop.index }}" value="{{ point.location.latitude }}">
 			<input type="hidden" name="lng{{ loop.index }}" value="{{ point.location.longitude }}">
 		{% endfor %}
@@ -41,7 +42,7 @@
 			<div id="mapa" class="col-md-12"></div>
 			<input type="hidden" name="id" value="{{ route.id }}" />
 			<button id="comenzar" type="button">Comenzar</button>
-			<button type="submit">Enviar</button>
+			<button type="submit" id="enviar">Enviar</button>
 		</form>
 	
 		<div class="row">
