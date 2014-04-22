@@ -25,15 +25,24 @@
         <!-- END currentGropus -->
         
         <!-- START Buttons -->
-        <div class="col-md-12">
-        	<p class="col-md-2"><a class="btn btn-primary btn-outline" href="{{ path('panel_group') }}"><i class="fa fa-user"></i> Unirme a un grupo</a></p>
-        	<p class="col-md-2"><a class="btn btn-primary btn-outline" href="{{ path('panel_route') }}"><i class="fa fa-location-arrow"></i> Buscar una ruta</a></p>
+        <div class="btn-group">
+        	<p>
+        	<a class="btn btn-default" href="{{ path('panel_group') }}"><i class="fa fa-user"></i> Listado de grupos</a>
+        	<a class="btn btn-default" href="{{ path('panel_route') }}"><i class="fa fa-location-arrow"></i> Buscar una ruta</a>
+        	</p>
         </div>
         <!-- END Buttons -->
 
         <!-- START Resume -->
 			<div class="col-md-12 resume">
 				<h2 class="col-md-12  alert alert-warning">Mi Resumen</h2>
+				
+				<i class="alert">
+				{% for notification in notifications  %}
+						<li>{{ notification.Action  }},{{ notification.Objects  }},{{ notification.Objectsid }} </li>
+				{% endfor %}
+				
+				</i>
 				
 				<!-- START resumeChilds -->
 				<div class="col-md-12 resumeChilds well">

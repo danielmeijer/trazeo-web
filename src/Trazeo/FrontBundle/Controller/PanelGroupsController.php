@@ -35,7 +35,6 @@ class PanelGroupsController extends Controller
 		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
 	
 		$group->addChild($child);
-		//ldd($group->getChilds()->toArray());
 		$em->persist($group);
 		$em->flush();
 	
@@ -57,18 +56,36 @@ class PanelGroupsController extends Controller
 		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
 		
 		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
-		
-		if (!$group) {
-			throw $this->createNotFoundException('Unable to find Group entity.');
-		}
-		
-		$group->addUserextendgroup($user);
-		$em->persist($group);
-		$em->flush();
+		$groupAdmin = $group->getAdmin();
+		$groupVisibility = $group->getVisibility();
 		$container = $this->get('sopinet_flashMessages');
-		$notification = $container->addFlashMessages("success","Has sido añadido al grupo correctamente");
-		return $this->redirect($this->generateUrl('panel_group'));
+		
+		if($groupAdmin == $user){
+			if (!$group) {
+				$container = $this->get('sopinet_flashMessages');
+				$notification = $container->addFlashMessages("warning","El grupo no existe o ha sido eliminado");
+				return $this->redirect($this->generateUrl('panel_group'));
+			}
+				
+			$group->addUserextendgroup($user);
+			$em->persist($group);
+			$em->flush();
+			$container = $this->get('sopinet_flashMessages');
+			$notification = $container->addFlashMessages("success","Has sido añadido al grupo correctamente");
+			return $this->redirect($this->generateUrl('panel_group'));
+				
+			
+			
+		}elseif ($groupVisibility == 2 ){
+			$notification = $container->addFlashMessages("warning","Sólo puedes unirte a un grupo oculto mediante invitación.");
+			return $this->redirect($this->generateUrl('panel_group'));
+			
+		}elseif ($groupVisibility == 1 ) {
+			$notification = $container->addFlashMessages("warning","El grupo al que intentas unirte es privado. Necesitas una autorización");
+			return $this->redirect($this->generateUrl('panel_group'));
+
 	}	
+}
 	
 	/**
 	 * User disjoin Group.
@@ -112,10 +129,16 @@ class PanelGroupsController extends Controller
 		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
 		// Obtener grupo al que se quiere unir a través del param $id
 		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
+		$groupVisibility = $group->getVisibility();
 		// Buscar si existe alguna petición con ese UserExtend y ese Group
 		$requestUser = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findOneByUserextend($user);
 		$requestGroup = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findOneByGroup($group);
-		
+		$container = $this->get('sopinet_flashMessages');
+		if ($groupVisibility == 2 ){
+			$notification = $container->addFlashMessages("warning","Sólo puedes unirte a un grupo oculto mediante invitación.");
+			return $this->redirect($this->generateUrl('panel_group'));
+				
+		}
 		// Comprobar que existen
 		if($requestUser && $requestGroup == true){
 			
@@ -125,7 +148,7 @@ class PanelGroupsController extends Controller
 			// Comprobar que no tienen el mismo id de registro (petición duplicada)
 			if($requestUserId = $requestGroupId) {
 				// Excepción y redirección
-				$container = $this->get('sopinet_flashMessages');
+
 				$notification = $container->addFlashMessages("warning","Ya has solicitado el acceso a este grupo anteriormente");
 				return $this->redirect($this->generateUrl('panel_group'));
 					
@@ -187,22 +210,35 @@ class PanelGroupsController extends Controller
 	/**
 	 * User adminGroup let an User to join with the request Group.
 	 *
-	 * @Route("/denyjoin/{id}", name="panel_group_deny_join")
+	 * @Route("/denyjoin/{id}{group}", name="panel_group_deny_join")
 	 * @Method("GET")
 	 * @Template()
 	 */
 	
-	public function denyJoinGroupAction($id) {
+	public function denyJoinGroupAction($id, $group) {
 		
 		$em = $this->getDoctrine()->getManager();
+		$um = $this->container->get('fos_user.user_manager');
 		
 		$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findOneByUserextend($id);
+		$groupRequest = $em->getRepository('TrazeoBaseBundle:EGroup')->find($group);
+		$group = $groupRequest->getId();
+		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($id);
+		$fos_user = $um->findUserByUsername($userextend);
 		
 		$em->remove($userRequest);
 		$em->flush();
 		
 		$container = $this->get('sopinet_flashMessages');
 		$notification = $container->addFlashMessages("success","La petición del usuario para unirse al grupo ha sido denegada");
+		
+		$not = $this->container->get('sopinet_user_notification');
+		$el = $not->addNotification(
+				'group_join_deny',
+				"TrazeoBaseBundle:EGroup",
+				$group,
+				$this->generateUrl('panel_dashboard'), $fos_user
+		);
 		
 		return $this->redirect($this->generateUrl('panel_group'));
 		
@@ -281,7 +317,6 @@ class PanelGroupsController extends Controller
 		}
 	
 	}
-	
 	
 	/**
 	 * User accept to join with a hidden group.
@@ -483,12 +518,24 @@ class PanelGroupsController extends Controller
      */
     public function editAction($id)
     {
+
         $em = $this->getDoctrine()->getManager();
-
+        $fos_user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
         $group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
-
+        
+        $userId = $user->getId();
+        $groupAdmin = $group->getAdmin();
+        $container = $this->get('sopinet_flashMessages');
+        if($groupAdmin != $user ){
+        
+        	$notification = $container->addFlashMessages("error","No tienes autorización para editar este grupo");
+        	return $this->redirect($this->generateUrl('panel_group'));
+        }
         if (!$group) {
-            throw $this->createNotFoundException('Unable to find Group entity.');
+        	
+        	$notification = $container->addFlashMessages("warning","No existe el grupo o ha sido eliminado");
+        	return $this->redirect($this->generateUrl('panel_group'));
         }
 
         $editForm = $this->createEditForm($group);

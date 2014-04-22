@@ -101,3 +101,4 @@ Trans:
         
 Notifications:
     child_in_group: 'El niño %0 ha entrado en el grupo %1'
+    group_join_deny: 'Se ha rechazado tu petición para unirte al grupo %1'
