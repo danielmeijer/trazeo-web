@@ -21,8 +21,9 @@
 	var menu=null;
 	var flagMenu=null;
 	var icon="leaflet-marker-icon leaflet-zoom-animated leaflet-clickable leaflet-marker-draggable";
-
-		L.Icon.Default.imagePath = '/src/Sopinet/OpenMapBundle/Resources/public/css/images';  
+	console.log("{{ pathIcon }}")
+	console.log("{{ app.request.get('_route') }}")
+		L.Icon.Default.imagePath = '{{ pathIcon }}'; 
 
     gk = 'http://opencache.statkart.no/gatekeeper/gk';
 
