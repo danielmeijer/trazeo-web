@@ -12,11 +12,8 @@ security:
         #webservice:
          #   id: webservice_user_provider
         fos_userbundle:
-            id: fos_user.user_provider.username
-
-    
+            id: fos_user.user_manager
            
-
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }       
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }

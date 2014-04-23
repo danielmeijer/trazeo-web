@@ -4,6 +4,13 @@ imports:
     - { resource: "../../vendor/sopinet/userbundle/Sopinet/UserBundle/Resources/config/config.yml" }
     - { resource: ../../vendor/knplabs/doctrine-behaviors/config/orm-services.yml }    
 
+parameters:
+    #sopinet_user_facebook_id: "202407359917838"
+    #sopinet_user_facebook_secret: "5963af0550e8be4b14fc40413f63f72b"
+    sopinet_user_google_id: "117653870600-b4p1coann87l067i57rdcah8jpksb6ba.apps.googleusercontent.com"
+    sopinet_user_google_secret: "5g0PxCoOCnDQe7dADh-zeI7V"
+    #sopinet_user_sucess: "trazeo.login_success_handler"
+
 framework:
     #esi:            ~
     translator:      { fallback: es }
@@ -162,11 +169,6 @@ jms_translation:
             ignored_domains: [routes]
             excluded_dirs: [cache, data, logs]
             extractors: [sonata_admin]
-            
-#hwi_oauth:
-    #firewall_name: secured_area
-    # name of the firewall in which this bundle is active, this setting MUST be set
- #   firewall_name: secured_area
 
 #FOSRest
 fos_rest:

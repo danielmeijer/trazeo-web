@@ -1,3 +1,10 @@
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix:   /connect
+
+google_login:
+    pattern: /login/check-google
+    
 sopinet_user_notifications:
     resource: "@SopinetUserNotificationsBundle/Resources/config/routing.yml"
     prefix:   /
@@ -87,7 +94,3 @@ fos_comment_api:
     resource: "@FOSCommentBundle/Resources/config/routing.yml"
     prefix: /api
     defaults: { _format: html }
-    
-#hwi_oauth_redirect:
-   # resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
-    #prefix:   /connect
