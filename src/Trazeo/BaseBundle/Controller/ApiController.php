@@ -208,4 +208,35 @@ class ApiController extends Controller {
 		}
 		
 	}
+	
+	/**
+	 * @POST("/api/ride/data")
+	 */
+	public function getDataRideAction(Request $request) {
+	
+		//Comprobar si el ride asociado al grupo está creado(hasRide=1)
+		$id_ride = $request->get('id_ride');
+	
+		$user = $this->checkPrivateAccess($request);
+		if( $user == false || $user == null ){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied());
+	
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+	
+		$em = $this->get('doctrine.orm.entity_manager');
+	
+		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+		
+		$ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
+		
+		$view = View::create()
+		->setStatusCode(200)
+		->setData($this->doOK($ride));
+			
+		return $this->get('fos_rest.view_handler')->handle($view);
+	
+	}
 }
