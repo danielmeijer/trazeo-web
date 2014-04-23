@@ -82,5 +82,5 @@
 	%}
 	<script type="text/javascript" src="{{ asset_url }}"></script>
 	{% endjavascripts %}
-	{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': route.points, 'editable': "true", 'realTime': "false"} %}
+	{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'pathIcon': pathIcon,'routePoints': route.points, 'editable': "true", 'realTime': "false"} %}
 {% endblock %}

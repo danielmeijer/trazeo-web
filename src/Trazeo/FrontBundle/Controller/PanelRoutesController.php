@@ -144,13 +144,16 @@ class PanelRoutesController extends Controller
         if (!$route) {
             throw $this->createNotFoundException('Unable to find Route entity.');
         }
+        
+        $pathIcon = __DIR__.'/../../../Sopinet/OpenMapBundle/Resources/public/css/images';
 
         //$deleteForm = $this->createDeleteForm($id);
 		//$location = $route->getLocation();
 		//ldd($route->getPoints()->toArray());
         return array(
         	'cont'		  => $cont,
-            'route'      => $route
+            'route'      => $route,
+        	'pathIcon' => $pathIcon
             //'delete_form' => $deleteForm->createView(),
         );
     }
