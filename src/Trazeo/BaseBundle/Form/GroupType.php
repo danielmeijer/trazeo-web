@@ -25,12 +25,12 @@ class GroupType extends AbstractType
         		),'required' => true))
         		
         		->add('visibility', 'choice', array(
-        				'choices'   => array(0 => 'Public', 1 => 'Private',2 => 'Hidden'),
+        				'choices'   => array(0 => 'Groups.visibility.public', 1 => 'Groups.visibility.private',2 => 'Groups.visibility.hidden'),
         				'attr' => array(
-        						'placeholder' => 'Group.visibility',
+        						'placeholder' => 'Groups.visibility',
         						'data-toggle' => 'popover',
         						'data-placement' => 'right',
-        						'data-content' => 'Group.help.visibility'
+        						'data-content' => 'Groups.help.visibility'
         				)))
         
         ->add('route', null, array(

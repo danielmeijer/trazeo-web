@@ -53,7 +53,11 @@
 										<td><i class="fa fa-users"></i></td>
 										<td>Grupos con esta ruta:</td>
 										<td>
-											{{ route.admin.nick }}
+											{% for routeGroup in route.Groups %}
+											<a href="{{ path('panel_group') }}{{ routeGroup.Id }}">
+												<span class="label label-warning">{{ routeGroup.name }}</span>
+											</a>
+											{% endfor %} 
 										</td>
 									</tr>
 									<tr>

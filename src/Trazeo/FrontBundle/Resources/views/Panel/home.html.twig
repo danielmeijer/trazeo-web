@@ -36,7 +36,7 @@
 						<h4 class="alert alert-warning">
 						Aún no has registrado a ninguno de tus niños
 						&nbsp;&nbsp;
-						<a class="btn btn-warning btn-outline" href="{{ path('panel_child_new') }}"><i class="fa fa-hand-o-right"></i> Añadir hijo a Trazeo</a>
+						<a class="btn btn-warning btn-outline" href="{{ path('panel_child_new') }}"><i class="fa fa-hand-o-right"></i> Añadir niño a Trazeo</a>
 						</h4>
 					</div>
 				{% elseif childs|length > 0 %}
@@ -67,12 +67,12 @@
 						</div>
 					</div>
 					<div class="col-md-2">
-						<h5 class="alert alert-success text-center">								
-						<a href="{{ path('panel_child_new') }}">
-							<button type="button" class="btn btn-success btn-circle btn-md">
+						<h5 class="alert alert-success text-center"><i class="fa fa-user"></i>&nbsp; Registrar niño</h5>
+						<a href="{{ path('panel_child_new') }}" class="col-md-offset-3">
+							<button type="button" class="btn btn-success btn-circle btn-outline btn-xl">
 									<i class="fa fa-plus"></i>
 							</button>
-						</a> Registrar niño</h5>
+						</a>
 					</div>				
 				{% endif %}
 
@@ -109,7 +109,7 @@
 							                <td>{{ group.name }}</td>
 							                <td>
 												<i class="fa fa-pencil"></i> <a href="{{ path('panel_group') }}{{ group.id }}/edit">Editar</a>
-												&nbsp;<i class="fa fa-trash-o"></i> <a href="{{ path('panel_group_delete', {'id': group.id }) }}" >Eliminar</a>
+												&nbsp;<i class="fa fa-trash-o"></i> <a data-href="{{ path('panel_group_delete', {'id': group.id }) }}" data-toggle="confirmation"" >Eliminar</a>
 							                </td>
 							            </tr>
 							        {% endfor %}
@@ -119,27 +119,18 @@
 					</div>
 
 					<div class="col-md-2">
-						<h5 class="alert alert-success text-center">Crear Grupo</h5>
-							<div class="row">
-								<div class="col-lg-12 text-center">
-								<a href="{{ path('panel_group_new') }}">
-									<button type="button" class="btn btn-success btn-circle btn-md">
-											<i class="fa fa-plus"></i>									
-									</button>
-								</a>
-								</div>
-							</div>
-							&nbsp;
-						<h5 class="alert alert-success text-center">Buscar Grupo</h5>
-							<div class="row">
-								<div class="col-lg-12 text-center">
-								<a href="{{ path('panel_group') }}">
-									<button type="button" class="btn btn-success btn-circle btn-md">
-											<i class="fa fa-search"></i>
-									</button>
-									</a>
-								</div>
-							</div>
+						<h5 class="alert alert-success text-center"><i class="fa fa-users"></i>&nbsp; Crear grupo</h5>
+						<a href="{{ path('panel_group_new') }}" class="col-md-offset-4">
+							<button type="button" class="btn btn-success btn-circle btn-outline btn-lg">
+									<i class="fa fa-plus"></i>
+							</button>
+						</a>
+						<br /><br /><br />
+						<a href="{{ path('panel_group') }}">
+							<button class="btn btn-success btn-block btn-sm text-center">
+									<i class="fa fa-search"></i>&nbsp; Buscar grupo
+							</button>
+						</a>
 					</div>
 					{% endif %}
 				</div>
@@ -185,27 +176,18 @@
 					</div>
 
 					<div class="col-md-2">
-						<h5 class="alert alert-success text-center">Crear Ruta</h5>
-							<div class="row">
-								<div class="col-lg-12 text-center">
-								<a href="{{ path('panel_route_new') }}">
-									<button type="button" class="btn btn-success btn-circle btn-md">
-											<i class="fa fa-plus"></i>									
-									</button>
-								</a>
-								</div>
-							</div>
-							&nbsp;
-						<h5 class="alert alert-success text-center">Buscar Ruta</h5>
-							<div class="row">
-								<div class="col-lg-12 text-center">
-								<a href="{{ path('panel_route') }}">
-									<button type="button" class="btn btn-success btn-circle btn-md">
-											<i class="fa fa-search"></i>
-									</button>
-									</a>
-								</div>
-							</div>
+						<h5 class="alert alert-success text-center"><i class="fa fa-location-arrow"></i>&nbsp; Crear ruta</h5>
+						<a href="{{ path('panel_group_new') }}" class="col-md-offset-4">
+							<button type="button" class="btn btn-success btn-circle btn-outline btn-lg">
+									<i class="fa fa-plus"></i>
+							</button>
+						</a>
+						<br /><br /><br />
+						<a href="{{ path('panel_route') }}">
+							<button class="btn btn-success btn-block btn-sm text-center">
+									<i class="fa fa-search"></i>&nbsp; Buscar ruta
+							</button>
+						</a>
 					</div>
 					{% endif %}
 				</div>

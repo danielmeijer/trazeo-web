@@ -511,7 +511,7 @@ class PanelGroupsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('TrazeoBaseBundle:Groups')->find($id);
+        $entity = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Groups entity.');
@@ -520,7 +520,7 @@ class PanelGroupsController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'group'      => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }

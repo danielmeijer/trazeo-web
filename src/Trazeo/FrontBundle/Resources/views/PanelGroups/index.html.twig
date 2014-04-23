@@ -117,7 +117,9 @@
 									<tr>
 										<td><i class="fa fa-location-arrow"></i></td>
 										<td>Ruta asignada</td>
-										<td>{{ userGroup.route.name }}</td>
+										<td>
+											<a href="{{ path('panel_route') }}{{ userGroup.route.id }}">{{ userGroup.route.name }}</a>
+										</td>
 									</tr>
 									<tr>
 										<td><i class="fa fa-user"></i></td>
@@ -221,7 +223,9 @@
 									<tr>
 										<td><i class="fa fa-location-arrow"></i></td>
 										<td>Ruta asignada</td>
-										<td>{{ group.route.name }}</td>
+										<td>
+											<a href="{{ path('panel_route') }}{{ group.route.id }}">{{ group.route.name }}</a>
+										</td>
 									</tr>
 									<tr>
 										<td><i class="fa fa-user"></i></td>
