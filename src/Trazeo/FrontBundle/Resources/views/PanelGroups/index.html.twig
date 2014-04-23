@@ -4,37 +4,23 @@
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
 {% block body_content %}
-	
-       <div class="alert">
-			<a href="{{ path('panel_child') }}">
-				<button type="button" class="btn btn-default">
-					<i class="fa fa-list-ul"></i> <i class="fa fa-user"></i> Listado de niños									
-				</button>
-			</a>
-			<a href="{{ path('panel_route') }}">
-				<button type="button" class="btn btn-default">
-					<i class="fa fa-list-ul"></i> <i class="fa fa-location-arrow"></i> Listado de rutas									
-				</button>
-			</a>
-			<div class="pull-right">
-			</a>
-			<a href="{{ path('panel_group_new') }}">
-				<button type="button" class="btn btn-success btn-outline">
-					<i class="fa fa-plus-circle"></i> <i class="fa fa-users"></i> Añadir grupo									
-				</button>
-			</a>
-			<a href="{{ path('panel_child_new') }}">
-				<button type="button" class="btn btn-success btn-outline">
-					<i class="fa fa-plus-circle"></i> <i class="fa fa-user"></i> Añadir hijo a Trazeo									
-				</button>
-			</a>
-			<a href="{{ path('panel_route_new') }}">
-				<button type="button" class="btn btn-success btn-outline">
-					<i class="fa fa-plus-circle"></i> <i class="fa fa-location-arrow"></i> Añadir ruta									
-				</button>
-			</a>
+
+        <div class="col-lg-12 alert alert-success">
+        	<div class="col-md-1">
+        		<i class="fa fa-5x fa-users"></i>
+        	</div>
+        	<div class="col-md-10">
+				<h4>Listado de grupos creados en Trazeo</h4>
+					<div class="input-group custom-search-form col-md-4">
+						<input type="search" class="form-control" placeholder='{{ "Trans.search.group"|trans }}'/>
+						<span class="input-group-btn">
+						<button class="btn btn-success" type="button"><i class="fa fa-search"></i></button>
+						</span>				
+					</div>
 			</div>
-       </div><!-- END col-lg-12 alert alert-info --> 
+        </div><!-- END col-lg-12 alert alert-info -->
+        <p>&nbsp;</p>
+
         {% for userAdmin in userAdmin %}
 	        {% for allGroupsAccess in allGroupsAccess %}
 				{% if userAdmin.Id == allGroupsAccess.Group.Id  %}
@@ -103,8 +89,8 @@
 									</span>	
 			            	 	{% endif %}
 								<a href="{{ path('panel_group_timeline',{'id': userGroup.id}) }}" type="button" 
-								class="btn btn-default btn-xs" rel="tooltip-top" title="Chat del grupo">
-									<i class="fa fa-comments-o"></i> Timeline
+								class="btn btn-default btn-xs" rel="tooltip-top" title="Timeline de grupo">
+									<i class="fa fa-comments-o"></i> Chat del grupo
 								</a>
 								<a href="{{ path('panel_group_disjoin', { 'id': userGroup.id }) }}" type="button" 
 								class="btn btn-default btn-xs" rel="tooltip-top" title="Salir de este grupo">
@@ -131,7 +117,9 @@
 									<tr>
 										<td><i class="fa fa-location-arrow"></i></td>
 										<td>Ruta asignada</td>
-										<td>{{ userGroup.route.name }}</td>
+										<td>
+											<a href="{{ path('panel_route') }}{{ userGroup.route.id }}">{{ userGroup.route.name }}</a>
+										</td>
 									</tr>
 									<tr>
 										<td><i class="fa fa-user"></i></td>
@@ -224,27 +212,38 @@
 				</div>
 				<div id="collapse{{ group.id }}" class="panel-collapse collapse">
 					<div class="panel-body">
-						<ul>
-							<li>
-							<i class="fa fa-key"></i>
-								<b>Administrador del grupo:</b> {{ group.admin.Nick }} 
-							</li>
-							<li>
-							<b><i class="badge"> {{ group.userextendgroups|length }}</i> Miembros en este grupo:</b>
-								<ul>
-									{% for groupsUser in group.userextendgroups %}
-										<li><b>Nombre:</b> {{ groupsUser.Nick }}</li>
-									{% endfor %}
-								</ul>
-							</li>
-							<li>
-							<i class="fa fa-tasks"></i>
-								<b>Nº de niños en este grupo:</b> {{ group.childs.count }} 
-							</li>
-							<li>
-							<b><i class="fa fa-location-arrow"></i> Ruta asignada:</b> {{ group.route.Name }}
-							</li>
-						</ul>
+
+							<table class="table">
+								<tbody>
+									<tr>
+										<td><i class="fa fa-key"></i></td>
+										<td>Administrador del grupo</td>
+										<td>{{ group.admin.Nick }}</td>
+									</tr>
+									<tr>
+										<td><i class="fa fa-location-arrow"></i></td>
+										<td>Ruta asignada</td>
+										<td>
+											<a href="{{ path('panel_route') }}{{ group.route.id }}">{{ group.route.name }}</a>
+										</td>
+									</tr>
+									<tr>
+										<td><i class="fa fa-user"></i></td>
+										<td>Nº de niños en este grupo</td>
+										<td><i class="btn btn-circle btn-warning"> {{ group.Childs|length }}</i</td>
+									</tr>
+									<tr>
+										<td><i class="fa fa-users"></i></td>
+										<td>Miembros del grupo</td>
+										<td>
+										{% for groupUser in group.userextendgroups %}
+											<span class="label label-warning">{{ groupUser.Nick }}</span>
+										{% endfor %}
+										</td>
+									</tr>
+								</tbody>
+							</table>
+					
 						{% if group.Visibility == 2 and  group.Admin.Id == user.Id %}
 							<form class="col-md-3" action="{{ path('panel_group_invite') }}" method="POST">
 								<input class="form-control" type="email" name="userEmail" placeholder="Correo electrónico" />
@@ -253,6 +252,8 @@
 							</form>
 						{% endif %}
 					</div>
+					
+	
 				</div>
 			</div>
 		{% endif %}

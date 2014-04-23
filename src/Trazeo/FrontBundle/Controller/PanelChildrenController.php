@@ -154,11 +154,16 @@ class PanelChildrenController extends Controller
         		$users[] = $userextend;
         	}
         }
-        
-        if(count($users) == 0)throw $this->createNotFoundException('You have not permission');
+        $container = $this->get('sopinet_flashMessages');
+        if(count($users) == 0){
+        	
+        	$notification = $container->addFlashMessages("error","No tienes permisos para editar la información de este niño");
+        	return $this->redirect($this->generateUrl('panel_child'));
+        }
 
         if (!$child) {
-            throw $this->createNotFoundException('Unable to find Child entity.');
+        	$notification = $container->addFlashMessages("warning","El registro indicado no existe");
+        	return $this->redirect($this->generateUrl('panel_child'));
         }
 
         $editForm = $this->createEditForm($child);
@@ -237,7 +242,7 @@ class PanelChildrenController extends Controller
         
         $container = $this->get('sopinet_flashMessages');
         if (!$child) {
-        	$notification = $container->addFlashMessages("warning","El niño que intentas eliminar no existe");
+        	$notification = $container->addFlashMessages("warning","El registro del niño que intentas eliminar no existe");
         	return $this->redirect($this->generateUrl('panel_child'));
         }
         
@@ -253,11 +258,11 @@ class PanelChildrenController extends Controller
 
 			$em->remove($child);
 			$em->flush();
-			$notification = $container->addFlashMessages("success","El niño ha sido eliminado");
+			$notification = $container->addFlashMessages("success","El registro de niño ha sido eliminado");
 			return $this->redirect($this->generateUrl('panel_child'));
 			
 		}else {
-			$notification = $container->addFlashMessages("error","Sólo un tutor puede eliminar un niño");
+			$notification = $container->addFlashMessages("error","Sólo un tutor puede eliminar un registro niño");
 			return $this->redirect($this->generateUrl('panel_child'));	
 		}
     }

@@ -5,5 +5,72 @@
 
 		{% block body_content %}
 		
-			
+	<div class="panel-group" id="accordion2">   
+        {# Grupos en los que el usuario logueado no está inscrito, aunque sea admin de dicho grupo #}
+			<div class="panel panel-warning">
+				<div class="panel-heading">
+		        	<h4 class="panel-title">
+		            	<a data-toggle="collapse" data-parent="#accordion2" href="#collapse{{ group.id }}">{{ group.name }}</a>
+			            	<div class="pull-right" style="margin-top:-3px;">
+			            	 	{% if group.Visibility == 0 %}
+									<span type="button" 
+									class="btn btn-success btn-xs" rel="tooltip-top" title="Grupo público">
+										<i class="fa fa-unlock"></i> Público
+									</span>
+								{% endif %}
+			            	 	{% if group.Visibility == 1 %}
+									<span href="#" type="button" 
+									class="btn btn-danger btn-xs" rel="tooltip-top" title="Grupo privado">
+										<i class="fa fa-lock"></i> Privado
+									</span>
+								{% endif %}
+			            	 	{% if group.Visibility == 2 %}
+									<span href="#" type="button" 
+									class="btn btn-warning btn-xs" rel="tooltip-top" title="Grupo oculto">
+										<i class="fa fa-eye-slash"></i> Oculto
+									</span>	
+			            	 	{% endif %}
+			            	 </div>
+		            </h4>
+				</div>
+				<div id="collapse{{ group.id }}" class="panel-collapse collapse in">
+					<div class="panel-body">
+
+							<table class="table">
+								<tbody>
+									<tr>
+										<td><i class="fa fa-key"></i></td>
+										<td>Administrador del grupo</td>
+										<td>{{ group.admin.Nick }}</td>
+									</tr>
+									<tr>
+										<td><i class="fa fa-location-arrow"></i></td>
+										<td>Ruta asignada</td>
+										<td>
+											<a href="{{ path('panel_route') }}{{ group.route.id }}">{{ group.route.name }}</a>
+										</td>
+									</tr>
+									<tr>
+										<td><i class="fa fa-user"></i></td>
+										<td>Nº de niños en este grupo</td>
+										<td><i class="btn btn-circle btn-warning"> {{ group.Childs|length }}</i</td>
+									</tr>
+									<tr>
+										<td><i class="fa fa-users"></i></td>
+										<td>Miembros del grupo</td>
+										<td>
+										{% for groupUser in group.userextendgroups %}
+											<span class="label label-warning">{{ groupUser.Nick }}</span>
+										{% endfor %}
+										</td>
+									</tr>
+								</tbody>
+							</table>
+					</div>
+					
+	
+				</div>
+			</div>
+		<p>&nbsp;</p>
+     </div>
 		{% endblock %}

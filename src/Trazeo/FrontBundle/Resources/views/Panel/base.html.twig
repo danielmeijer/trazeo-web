@@ -23,8 +23,31 @@
 				'description': pageheader_description
 				} 
 			%}
+	{% block panel_nav %}
+       <div class="alert">
+			<div class="pull-right">
+			<a href="{{ path('panel_child_new') }}">
+				<button type="button" class="btn btn-success btn-outline">
+					<i class="fa fa-plus-circle"></i> <i class="fa fa-user"></i> Añadir hijo a Trazeo									
+				</button>
+			</a>
+			<a href="{{ path('panel_group_new') }}">
+				<button type="button" class="btn btn-success btn-outline">
+					<i class="fa fa-plus-circle"></i> <i class="fa fa-users"></i> Añadir grupo									
+				</button>
+			</a>
+			<a href="{{ path('panel_route_new') }}">
+				<button type="button" class="btn btn-success btn-outline">
+					<i class="fa fa-plus-circle"></i> <i class="fa fa-location-arrow"></i> Añadir ruta									
+				</button>
+			</a>
+			</div>
+       </div>
+       <br />
+       {% endblock %}
+			
+			
 		{% block body_content %}
-		
 			
 		{% endblock %}
 	</div>

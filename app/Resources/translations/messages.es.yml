@@ -47,7 +47,11 @@ Groups:
     new:
         title: 'Crear nuevo grupo'
         description: 'Dale un nombre, una visibilidad y asígnale una ruta'
-        
+
+    visibility:
+        public: 'Público'
+        private: 'Privado'
+        hidden: 'Oculto'
 
     
     name: 'Nombre del grupo'

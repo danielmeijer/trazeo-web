@@ -23,22 +23,23 @@
 			</div>
         </div>
         <!-- END currentGropus -->
-        
-        <!-- START Buttons -->
-        <div class="btn-group">
-        	<p>
-        	<a class="btn btn-default" href="{{ path('panel_group') }}"><i class="fa fa-user"></i> Listado de grupos</a>
-        	<a class="btn btn-default" href="{{ path('panel_route') }}"><i class="fa fa-location-arrow"></i> Buscar una ruta</a>
-        	</p>
-        </div>
-        <!-- END Buttons -->
 
         <!-- START Resume -->
 			<div class="col-md-12 resume">
-				<h2 class="col-md-12  alert alert-warning">Mi Resumen</h2>
+				<h2 class="col-md-12  alert alert-warning">Panel de control</h2>
 
 				<!-- START resumeChilds -->
 				<div class="col-md-12 resumeChilds well">
+				{% if childs|length <= 0 %}
+					<div>
+						<i class="fa fa-user fa-5x pull-left alert-warning"></i>
+						<h4 class="alert alert-warning">
+						Aún no has registrado a ninguno de tus niños
+						&nbsp;&nbsp;
+						<a class="btn btn-warning btn-outline" href="{{ path('panel_child_new') }}"><i class="fa fa-hand-o-right"></i> Añadir niño a Trazeo</a>
+						</h4>
+					</div>
+				{% elseif childs|length > 0 %}
 					<div class="col-md-10">
 						<h4 class="alert alert-success">Mis Niños <i class="btn btn-success btn-circle pull-right">{{ childs.count }}</i></h4>
 						<div class="alert alert-warning">
@@ -65,36 +66,31 @@
 							</table>
 						</div>
 					</div>
-
 					<div class="col-md-2">
-						<h5 class="alert alert-success text-center">Crear niño</h5>
+						<h5 class="alert alert-success text-center"><i class="fa fa-user"></i>&nbsp; Registrar niño</h5>
+						<a href="{{ path('panel_child_new') }}" class="col-md-offset-3">
+							<button type="button" class="btn btn-success btn-circle btn-outline btn-xl">
+									<i class="fa fa-plus"></i>
+							</button>
+						</a>
+					</div>				
+				{% endif %}
 
-							<div class="row">
-								<div class="col-lg-12 text-center">
-								<a href="{{ path('panel_child_new') }}">
-									<button type="button" class="btn btn-success btn-circle btn-md">
-											<i class="fa fa-plus"></i>
-									</button>
-								</a>
-								</div>
-							</div>
-							&nbsp;
-						<h5 class="alert alert-success text-center">Buscar niño</h5>
-							<div class="row">
-								<div class="col-lg-12 text-center">
-								<a href="{{ path('panel_child') }}">
-									<button type="button" class="btn btn-success btn-circle btn-md">
-											<i class="fa fa-search"></i>
-									</button>
-								</a>
-								</div>
-							</div>
-					</div>
 				</div>
 				<!-- END resumeChilds -->
 				
 				<!-- START resumeGroups -->
 				<div class="col-md-12 resumeGroups well">
+			{% if groups|length <= 0 %}
+					<div>
+						<i class="fa fa-users fa-5x pull-left alert-warning"></i>
+						<h4 class="alert alert-warning">
+						Crear un nuevo grupo para recuperar el camino al cole a pie
+						&nbsp;&nbsp;
+						<a class="btn btn-warning btn-outline" href="{{ path('panel_group_new') }}"><i class="fa fa-hand-o-right"></i> Crear un grupo</a>
+						</h4>
+					</div>
+				{% elseif groups|length > 0 %}
 					<div class="col-md-10">
 						<h4 class="alert alert-success">Mis Grupos <i class="btn btn-success btn-circle pull-right">{{ groups.count }}</i></h4>
 						<div class="alert alert-warning">
@@ -113,7 +109,7 @@
 							                <td>{{ group.name }}</td>
 							                <td>
 												<i class="fa fa-pencil"></i> <a href="{{ path('panel_group') }}{{ group.id }}/edit">Editar</a>
-												&nbsp;<i class="fa fa-trash-o"></i> <a href="{{ path('panel_group_delete', {'id': group.id }) }}" >Eliminar</a>
+												&nbsp;<i class="fa fa-trash-o"></i> <a data-href="{{ path('panel_group_delete', {'id': group.id }) }}" data-toggle="confirmation"" >Eliminar</a>
 							                </td>
 							            </tr>
 							        {% endfor %}
@@ -123,33 +119,35 @@
 					</div>
 
 					<div class="col-md-2">
-						<h5 class="alert alert-success text-center">Crear Grupo</h5>
-							<div class="row">
-								<div class="col-lg-12 text-center">
-								<a href="{{ path('panel_group_new') }}">
-									<button type="button" class="btn btn-success btn-circle btn-md">
-											<i class="fa fa-plus"></i>									
-									</button>
-								</a>
-								</div>
-							</div>
-							&nbsp;
-						<h5 class="alert alert-success text-center">Buscar Grupo</h5>
-							<div class="row">
-								<div class="col-lg-12 text-center">
-								<a href="{{ path('panel_group') }}">
-									<button type="button" class="btn btn-success btn-circle btn-md">
-											<i class="fa fa-search"></i>
-									</button>
-									</a>
-								</div>
-							</div>
+						<h5 class="alert alert-success text-center"><i class="fa fa-users"></i>&nbsp; Crear grupo</h5>
+						<a href="{{ path('panel_group_new') }}" class="col-md-offset-4">
+							<button type="button" class="btn btn-success btn-circle btn-outline btn-lg">
+									<i class="fa fa-plus"></i>
+							</button>
+						</a>
+						<br /><br /><br />
+						<a href="{{ path('panel_group') }}">
+							<button class="btn btn-success btn-block btn-sm text-center">
+									<i class="fa fa-search"></i>&nbsp; Buscar grupo
+							</button>
+						</a>
 					</div>
+					{% endif %}
 				</div>
 				<!-- END resumeGroups -->	
 				
 				<!-- START resumeGroups -->
 				<div class="col-md-12 resumeGroups well">
+				{% if routes|length <= 0 %}
+					<div>
+						<i class="fa fa-location-arrow fa-5x pull-left alert-warning"></i>
+						<h4 class="alert alert-warning">
+						Crea una nueva ruta en tu ciudad
+						&nbsp;&nbsp;
+						<a class="btn btn-warning btn-outline" href="{{ path('panel_route_new') }}"><i class="fa fa-hand-o-right"></i> Definir nueva ruta</a>
+						</h4>
+					</div>
+				{% elseif routes|length > 0 %}
 					<div class="col-md-10">
 						<h4 class="alert alert-success">Mis Rutas <i class="btn btn-success btn-circle pull-right">{{ routes.count }}</i></h4>
 						<div class="alert alert-warning">
@@ -178,28 +176,20 @@
 					</div>
 
 					<div class="col-md-2">
-						<h5 class="alert alert-success text-center">Crear Ruta</h5>
-							<div class="row">
-								<div class="col-lg-12 text-center">
-								<a href="{{ path('panel_route_new') }}">
-									<button type="button" class="btn btn-success btn-circle btn-md">
-											<i class="fa fa-plus"></i>									
-									</button>
-								</a>
-								</div>
-							</div>
-							&nbsp;
-						<h5 class="alert alert-success text-center">Buscar Ruta</h5>
-							<div class="row">
-								<div class="col-lg-12 text-center">
-								<a href="{{ path('panel_route') }}">
-									<button type="button" class="btn btn-success btn-circle btn-md">
-											<i class="fa fa-search"></i>
-									</button>
-									</a>
-								</div>
-							</div>
+						<h5 class="alert alert-success text-center"><i class="fa fa-location-arrow"></i>&nbsp; Crear ruta</h5>
+						<a href="{{ path('panel_group_new') }}" class="col-md-offset-4">
+							<button type="button" class="btn btn-success btn-circle btn-outline btn-lg">
+									<i class="fa fa-plus"></i>
+							</button>
+						</a>
+						<br /><br /><br />
+						<a href="{{ path('panel_route') }}">
+							<button class="btn btn-success btn-block btn-sm text-center">
+									<i class="fa fa-search"></i>&nbsp; Buscar ruta
+							</button>
+						</a>
 					</div>
+					{% endif %}
 				</div>
 				<!-- END resumeRoutes -->			
 

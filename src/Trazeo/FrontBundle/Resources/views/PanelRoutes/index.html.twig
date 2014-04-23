@@ -27,35 +27,48 @@
 			<div class="panel panel-warning">
 				<div class="panel-heading">
 		        	<h4 class="panel-title">
-		            	<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ route.id }}">{{ route.name }}<div class="pull-right"><i class="btn btn-warning btn-circle"> {{ route.groups|length }}</i> {{ "Menu.groups"|trans }}</div></a>
+		            	<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ route.id }}">{{ route.name }}</a>
+						<div class="pull-right"><span class="label label-success">{{ "Menu.groups"|trans }} {{ route.groups|length }}</span></div>
 					</h4>
 				</div>
 				<div id="collapse{{ route.id }}" class="panel-collapse collapse {% if loop.index == 1 %}in{% endif %}">
 					<div class="panel-body">
-						<ul>
-							<li>
-								<i class="fa fa-key"></i>
-								<b>Administrador de la ruta:</b> {{ route.admin.nick }} 
-							</li>
-							<li>
-								<i class="fa fa-location-arrow"></i><a href="{{ path('panel_route_show', { 'id': route.id }) }}""> Mapa de la ruta</a>
-							</li>
-							<li>
-								<i class="fa fa-users"></i>
-								<b>Grupos con esta ruta:</b>
-								<ul>
-								{% for routesGroups in route.groups %}
-									<li>
-										<i class="fa fa-angle-right"></i> {{ routesGroups.name }}
-									</li>
-								{% endfor %}
-								</ul>
-							</li>
-							<li>
-								<i class="fa fa-globe"></i>	
-								<b>País:</b> {% if route.country != null %}{{ route.country.name }}{% endif %}
-							</li>
-						</ul>
+						<table class="table">
+								<tbody>
+									<tr>
+										<td><i class="fa fa-key"></i></td>
+										<td>Administrador de la ruta:</td>
+										<td>
+											{{ route.admin.nick }}
+										</td>
+									</tr>
+									<tr>
+										<td><i class="fa fa-location-arrow"></i></td>
+										<td>Recorrido</td>
+										<td>
+											<a href="{{ path('panel_route_show', { 'id': route.id }) }}"">Ver el mapa de la ruta</a>
+										</td>
+									</tr>
+									<tr>
+										<td><i class="fa fa-users"></i></td>
+										<td>Grupos con esta ruta:</td>
+										<td>
+											{% for routeGroup in route.Groups %}
+											<a href="{{ path('panel_group') }}{{ routeGroup.Id }}">
+												<span class="label label-warning">{{ routeGroup.name }}</span>
+											</a>
+											{% endfor %} 
+										</td>
+									</tr>
+									<tr>
+										<td><i class="fa fa-globe"></i></td>
+										<td>Localización</td>
+										<td>
+											{% if route.country != null %}{{ route.country.name }}{% endif %}
+										</td>
+									</tr>
+								</tbody>
+							</table>
 					</div>
 				</div>
 			</div>
