@@ -68,14 +68,17 @@ class PanelRoutesController extends Controller
         $route = new ERoute();
         $form = $this->createCreateForm($route);
         $form->handleRequest($request);
-
+	
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $route->setAdmin($user);
             $em->persist($route);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('panel_route'));
+            $formData = $form->getData();
+            $routeId = $formData->getId();
+
+            return $this->redirect($this->generateUrl('panel_route_edit',array('id'=>$routeId)));
         }
 
         return array(

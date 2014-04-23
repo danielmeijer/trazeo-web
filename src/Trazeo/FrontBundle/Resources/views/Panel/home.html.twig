@@ -58,7 +58,7 @@
 							                <td>{{ child.nick }}</td>
 							                <td>
 												<i class="fa fa-pencil"></i> <a href="{{ path('panel_child_edit', {'id': child.id}) }}">Editar</a>
-												&nbsp;<i class="fa fa-trash-o"></i> <a data-href="{{ path('panel_child_delete', {'id': child.id }) }}" data-toggle="confirmation">Eliminar</a>
+												&nbsp;<i class="fa fa-trash-o"></i> <a style="cursor:pointer;" data-href="{{ path('panel_child_delete', {'id': child.id }) }}" data-toggle="confirmation">Eliminar</a>
 							                </td>
 							            </tr>
 							        {% endfor %}
@@ -109,7 +109,7 @@
 							                <td>{{ group.name }}</td>
 							                <td>
 												<i class="fa fa-pencil"></i> <a href="{{ path('panel_group') }}{{ group.id }}/edit">Editar</a>
-												&nbsp;<i class="fa fa-trash-o"></i> <a data-href="{{ path('panel_group_delete', {'id': group.id }) }}" data-toggle="confirmation"" >Eliminar</a>
+												&nbsp;<i class="fa fa-trash-o"></i> <a style="cursor:pointer;" data-href="{{ path('panel_group_delete', {'id': group.id }) }}" data-toggle="confirmation"" >Eliminar</a>
 							                </td>
 							            </tr>
 							        {% endfor %}
@@ -166,7 +166,7 @@
 							                <td>{{ route.name }}</td>
 							                <td>
 												<i class="fa fa-pencil"></i> <a href="{{ path('panel_route_edit', {'id': route.id }) }}">Editar</a>
-												&nbsp;<i class="fa fa-trash-o"></i> <a data-href="{{ path('panel_route_delete', {'id': route.id }) }}" data-toggle="confirmation">Eliminar</a>
+												&nbsp;<i class="fa fa-trash-o"></i> <a style="cursor:pointer;" data-href="{{ path('panel_route_delete', {'id': route.id }) }}" data-toggle="confirmation">Eliminar</a>
 							                </td>
 							            </tr>
 							        {% endfor %}

@@ -453,6 +453,11 @@ class PanelGroupsController extends Controller
             
             $em->persist($group);
             $em->flush();
+            
+            $formData = $form->getData();
+            $groupId = $formData->getId();
+            
+            return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
 
             return $this->redirect($this->generateUrl('panel_group'));
         }
