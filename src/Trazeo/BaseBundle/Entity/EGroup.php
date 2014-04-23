@@ -58,6 +58,17 @@ class EGroup
      */
     protected $invite;
     
+    /** 
+     * @ORM\OneToOne(targetEntity="ERide", mappedBy="group")
+     */
+    protected $ride;
+    
+    /**
+     *
+     * @ORM\Column(name="hasRide", type="boolean")
+     */
+    protected $hasRide;
+    
     
     /**
      * @var string
@@ -322,5 +333,53 @@ class EGroup
     public function getInvite()
     {
         return $this->invite;
+    }
+
+    /**
+     * Set hasRide
+     *
+     * @param boolean $hasRide
+     *
+     * @return EGroup
+     */
+    public function setHasRide($hasRide)
+    {
+        $this->hasRide = $hasRide;
+
+        return $this;
+    }
+
+    /**
+     * Get hasRide
+     *
+     * @return boolean 
+     */
+    public function getHasRide()
+    {
+        return $this->hasRide;
+    }
+
+    /**
+     * Set ride
+     *
+     * @param \Trazeo\BaseBundle\Entity\ERide $ride
+     *
+     * @return EGroup
+     */
+    public function setRide(\Trazeo\BaseBundle\Entity\ERide $ride = null)
+    {
+        $this->ride = $ride;
+
+        return $this;
+    }
+
+    /**
+     * Get ride
+     *
+     * @return \Trazeo\BaseBundle\Entity\ERide 
+     */
+    public function getRide()
+    {
+        return $this->ride;
     }
 }

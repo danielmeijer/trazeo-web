@@ -25,25 +25,30 @@ class ERide
 	protected $id;
 	
 	/**
-	 * @ORM\Column(name="time_ini", type="datetime")
+	 * @ORM\Column(name="time_ini", type="datetime", nullable=true)
 	 */
 	protected $time_ini;
 	
 	/**
-	 * @ORM\Column(name="time_fin", type="datetime")
+	 * @ORM\Column(name="time_fin", type="datetime", nullable=true)
 	 */
 	protected $time_fin;
 	
 	/**
-	 * @ORM\OneToOne(targetEntity="ERoute", inversedBy="ride")
-	 * @ORM\JoinColumn(name="route_id", referencedColumnName="id")
+	 * @ORM\OneToOne(targetEntity="EGroup", inversedBy="ride")
+	 * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
 	 **/
-	protected $route;
+	protected $group;
 	
 	/**
 	 * @ORM\OneToMany(targetEntity="EEvent", mappedBy="ride")
 	 **/
 	protected $events;
+	
+	/**
+	 * @ORM\Column(name="go", type="boolean", nullable=true)
+	 */
+	protected $go;
 
     /**
      * Get id
@@ -166,5 +171,53 @@ class ERide
     public function getEvents()
     {
         return $this->events;
+    }
+
+    /**
+     * Set group
+     *
+     * @param \Trazeo\BaseBundle\Entity\EGroup $group
+     *
+     * @return ERide
+     */
+    public function setGroup(\Trazeo\BaseBundle\Entity\EGroup $group = null)
+    {
+        $this->group = $group;
+
+        return $this;
+    }
+
+    /**
+     * Get group
+     *
+     * @return \Trazeo\BaseBundle\Entity\EGroup 
+     */
+    public function getGroup()
+    {
+        return $this->group;
+    }
+
+    /**
+     * Set go
+     *
+     * @param boolean $go
+     *
+     * @return ERide
+     */
+    public function setGo($go)
+    {
+        $this->go = $go;
+
+        return $this;
+    }
+
+    /**
+     * Get go
+     *
+     * @return boolean 
+     */
+    public function getGo()
+    {
+        return $this->go;
     }
 }

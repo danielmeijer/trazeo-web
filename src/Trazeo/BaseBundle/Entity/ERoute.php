@@ -42,11 +42,6 @@ class ERoute
 	protected $country;
 	
 	/**
-	 * @ORM\OneToOne(targetEntity="ERide", mappedBy="route")
-	 */
-	protected $ride;
-	
-	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="name", type="string", length=255)
