@@ -14,6 +14,7 @@ use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Route;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Symfony\Component\HttpFoundation\Response;
+use Trazeo\BaseBundle\Entity\ERide;
 
 class ApiController extends Controller {
 	
@@ -150,5 +151,61 @@ class ApiController extends Controller {
 		->setData($this->doOK($array));
 		
 		return $this->get('fos_rest.view_handler')->handle($view);
+	}
+	
+	/**
+	 * @POST("/api/ride/createNew")
+	 */
+	public function getCreateNewRideAction(Request $request) {
+	
+		//Comprobar si el ride asociado al grupo está creado(hasRide=1)
+		$id_group = $request->get('id_group');
+		
+		$user = $this->checkPrivateAccess($request);
+		if( $user == false || $user == null ){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied());
+	
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+	
+		$em = $this->get('doctrine.orm.entity_manager');
+		
+		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+		
+		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneBy(array("id" => $id_group, "admin" => $userextend->getId()));
+		//ldd($group);
+		// Si el grupo tiene Paseo asociado, devuelve el paseo
+		if($group->getHasRide() == 1 && $group->getRide() != null){
+			$array['id_ride'] = $group->getRide()->getId();
+			
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->doOK($array));
+			
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+		// Sino, se crea un paseo y se asocia al grupo
+		else{ 
+			$ride = new ERide();
+			//TODO: En la relación Group-Ride, evitar los dos set
+			$ride->setGroup($group);
+			
+			$em->persist($ride);
+			$group->setHasRide(1);
+			$group->setRide($ride);
+			$em->persist($group);
+			$em->flush();
+			
+			$array['id_ride'] = $group->getRide()->getId();
+			
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->doOK($array));
+			
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+		
 	}
 }
