@@ -237,7 +237,7 @@ class PanelChildrenController extends Controller
         
         $container = $this->get('sopinet_flashMessages');
         if (!$child) {
-        	$notification = $container->addFlashMessages("warning","El niño que intentas eliminar no existe");
+        	$notification = $container->addFlashMessages("warning","El registro del niño que intentas eliminar no existe");
         	return $this->redirect($this->generateUrl('panel_child'));
         }
         
@@ -253,11 +253,11 @@ class PanelChildrenController extends Controller
 
 			$em->remove($child);
 			$em->flush();
-			$notification = $container->addFlashMessages("success","El niño ha sido eliminado");
+			$notification = $container->addFlashMessages("success","El registro de niño ha sido eliminado");
 			return $this->redirect($this->generateUrl('panel_child'));
 			
 		}else {
-			$notification = $container->addFlashMessages("error","Sólo un tutor puede eliminar un niño");
+			$notification = $container->addFlashMessages("error","Sólo un tutor puede eliminar un registro niño");
 			return $this->redirect($this->generateUrl('panel_child'));	
 		}
     }
