@@ -15,6 +15,8 @@ use FOS\RestBundle\Controller\Annotations\Route;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Symfony\Component\HttpFoundation\Response;
 use Trazeo\BaseBundle\Entity\ERide;
+use Trazeo\BaseBundle\Entity\EEvent;
+use Sopinet\Bundle\SimplePointBundle\ORM\Type\SimplePoint;
 
 class ApiController extends Controller {
 	
@@ -141,6 +143,7 @@ class ApiController extends Controller {
 		$array = array();
 		foreach($groups as $group){
 			$arrayGroups = array();
+			$arrayGroups['id'] = $group->getId();
 			$arrayGroups['name'] = $group->getName();
 			$arrayGroups['visibility'] = $group->getVisibility();
 			
@@ -191,7 +194,7 @@ class ApiController extends Controller {
 			$ride = new ERide();
 			//TODO: En la relación Group-Ride, evitar los dos set
 			$ride->setGroup($group);
-			
+			$ride->setTimeIni($ride->getCreatedAt());
 			$em->persist($ride);
 			$group->setHasRide(1);
 			$group->setRide($ride);
@@ -214,7 +217,6 @@ class ApiController extends Controller {
 	 */
 	public function getDataRideAction(Request $request) {
 	
-		//Comprobar si el ride asociado al grupo está creado(hasRide=1)
 		$id_ride = $request->get('id_ride');
 	
 		$user = $this->checkPrivateAccess($request);
@@ -235,6 +237,48 @@ class ApiController extends Controller {
 		$view = View::create()
 		->setStatusCode(200)
 		->setData($this->doOK($ride));
+			
+		return $this->get('fos_rest.view_handler')->handle($view);
+	
+	}
+	
+	/**
+	 * Guarda en el servidor la nueva posición del Grupo
+	 * @POST("/api/ride/sendPosition")
+	 */
+	public function getSendPositionRideAction(Request $request) {
+	
+		$id_ride = $request->get('id_ride');
+		$latitude = $request->get('latitude');
+		$longitude = $request->get('longitude');
+	
+		$user = $this->checkPrivateAccess($request);
+		if( $user == false || $user == null ){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied());
+	
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+	
+		$em = $this->get('doctrine.orm.entity_manager');
+		
+		//$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+	
+		$ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
+		
+		$event = new EEvent();
+		$event->setRide($ride);
+		$event->setAction("point");
+		$event->setData("(".$latitude.",".$longitude.")");
+		//$event->setLocation(new SimplePoint($latitude, $longitude));
+		
+		$em->persist($event);
+		$em->flush();
+		
+		$view = View::create()
+		->setStatusCode(200)
+		->setData($this->doOK("ok"));
 			
 		return $this->get('fos_rest.view_handler')->handle($view);
 	
