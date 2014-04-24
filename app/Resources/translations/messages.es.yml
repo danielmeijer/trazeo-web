@@ -3,6 +3,11 @@ Menu:
     groups: Grupos
     routes: Rutas
     children: Niños/as
+    tooltip:
+        home: Inicio
+        child: Niños/as
+        group: Grupos
+        route: Rutas
 
 Login:
     title: 'Inicio de sesión'

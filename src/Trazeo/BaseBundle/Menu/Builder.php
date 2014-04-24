@@ -12,7 +12,7 @@ class Builder extends ContainerAware
 
         if (!isset($options['activeMenu'])) $options['activeMenu'] = "Home";
         
-        $attr = array('icon'=>'fa-home fa-2x','attributes'=>array('rel'=>'tooltip-right','data-original-title'=>'Inicio'));
+        //$attr = array('icon'=>'fa-home fa-2x','attributes'=>array('rel'=>'tooltip-right','data-original-title'=>'Inicio'));
         
         // Home
         $menu->addChild('Home', array(
@@ -20,7 +20,8 @@ class Builder extends ContainerAware
         ))
                 
         ->setLabel("");
-        $menu['Home']->setAttributes($attr);
+        $menu['Home']->setAttribute('icon', 'fa-home fa-2x');
+        $menu['Home']->setAttribute('tooltip', 'Menu.tooltip.home');
         if ($options['activeMenu'] == "home") {
         	$menu['Home']->setAttribute('class', 'active');
         }
@@ -31,6 +32,7 @@ class Builder extends ContainerAware
         ))
         ->setLabel("");
         $menu['Child']->setAttribute('icon', 'fa-user fa-2x');
+        $menu['Child']->setAttribute('tooltip', 'Menu.tooltip.child');
         if ($options['activeMenu'] == "routes") {
         	$menu['Child']->setAttribute('class', 'active');
         }
@@ -41,6 +43,7 @@ class Builder extends ContainerAware
         		))
         ->setLabel("");
         $menu['Group']->setAttribute('icon', 'fa-users fa-2x');
+        $menu['Group']->setAttribute('tooltip', 'Menu.tooltip.group');
         if ($options['activeMenu'] == "group") {
         	$menu['Group']->setAttribute('class', 'active');
         }
@@ -51,6 +54,7 @@ class Builder extends ContainerAware
         ))
         ->setLabel("");
         $menu['Route']->setAttribute('icon', 'fa-location-arrow fa-2x');
+        $menu['Route']->setAttribute('tooltip', 'Menu.tooltip.route');
         if ($options['activeMenu'] == "route") {
         	$menu['Route']->setAttribute('class', 'active');
         }
