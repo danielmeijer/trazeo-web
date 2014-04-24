@@ -65,7 +65,7 @@ class EGroup
     
     /**
      *
-     * @ORM\Column(name="hasRide", type="boolean")
+     * @ORM\Column(name="hasRide", type="boolean", nullable=true)
      */
     protected $hasRide;
     
