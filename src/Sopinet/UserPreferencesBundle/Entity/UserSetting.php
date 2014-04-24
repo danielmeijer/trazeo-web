@@ -202,7 +202,7 @@ class UserSetting
     
     public function getDescription()
     {
-    	return $this->getName() . "_description";
+    	return $this->getName() . ".description";
     }
 
     /**

@@ -19,7 +19,7 @@
 				<li{% if i == 0 %} class="active"{% endif %}>
 					<a data-toggle="tab" href="#setting_tab_{{ setting.id }}">
 						<i class="icon-{{ setting.icon }}"></i>
-						{{ setting.name|trans }}
+						{{ "preference."~setting.name|trans }}
 					</a>
 				</li>
 				{% set i = i + 1 %}
@@ -31,7 +31,7 @@
 				{% for setting in settings %}		
 				<div id="setting_tab_{{ setting.id }}" class="fade tab-pane{% if i == 0 %} in active{% endif %}">
 					<div class="row-fluid">
-						<span class="span7">{{ setting.description|trans }}</span>
+						<span class="span7">{{ "preference."~setting.description|trans }}</span>
 						<span class="span5">
 							{% if setting.type == "Enum" %}
 								{% if setting.optionscont == 2 %}
@@ -45,7 +45,7 @@
 										{% for value in setting.optionsarr %}
 											<label>
 												<input {% if (app.user|getUserValue(setting)) == value %}checked="checked" {% endif %}name="setting_{{ setting.id }}" type="radio" class="ace" value="{{ value }}"/>
-												<span class="lbl">{{ ("settings_"~value)|trans }}</span>
+												<span class="lbl">{{ ("preference."~setting.name~".value."~value)|trans }}</span>
 											</label>
 										{% endfor %}
 										</div>
