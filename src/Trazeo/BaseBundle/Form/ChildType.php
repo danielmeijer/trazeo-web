@@ -49,7 +49,7 @@ class ChildType extends AbstractType
     			'format' => 'dd/MM/yyyy','required' => true))
     			
             ->add('visibility', 'choice', array(
-            		'choices'   => array(1 => 'Enabled', 0 => 'Disabled'),
+            		'choices'   => array(1 => 'Children.visibility.enabled', 0 => 'Children.visibility.disabled'),
             		'attr' => array(
             				'placeholder' => 'Children.sex',
             				'data-toggle' => 'popover',

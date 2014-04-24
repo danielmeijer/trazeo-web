@@ -23,6 +23,8 @@ Navbar:
 
 Panel:
     title: 'Panel de Control'
+    
+Email: 'Correo electrónico'
 
 Userextend:
     help:
@@ -33,6 +35,9 @@ Userextend:
         edit: 'Editar perfil'
 
 Route:
+    index:
+        title: Rutas de paseo
+        description: Listado de rutas creadas por los usuarios para definir los caminos al cole
     name: 'Nombre de la ruta'
     show:
         title: "Ruta: %name%"
@@ -61,6 +66,9 @@ Groups:
         
         
 Children:
+    index:
+        title: Listado de tus niños
+        description: En este apartado puedes consultar toda la información referente a tus niños registrados en Trazeo
     nick: 'Nombre del niño'
     date: 'Fecha de nacimiento'
     help:
@@ -70,6 +78,12 @@ Children:
         datebirth: 'Fecha de nacimiento'
         sex: 'Género'
         visibility: 'Visibilidad'
+    visibility:
+        enabled: 'Público'
+        disabled: 'Privado'
+    sex:
+        boy: 'Niño'
+        girl: 'Niña'
 
 Trans:
     alternative: 'ES Alternative Translation'

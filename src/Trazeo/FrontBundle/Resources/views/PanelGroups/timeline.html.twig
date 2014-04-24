@@ -31,7 +31,7 @@
 				<div id="collapseAddChild" class="panel-collapse collapse">
 				<br />
 				{% if childsNoGroup|length <= 0 %}
-				<p class="alert alert-warning">Sin resultados <a class="btn btn-warning btn-xs pull-right"><i class="fa fa-plus-circle"></i> Registrar niño </a></p>
+				<p class="alert alert-warning">Sin resultados <a href="{{ path('panel_child_new') }}" class="btn btn-warning btn-xs pull-right"><i class="fa fa-plus-circle"></i> Registrar niño </a></p>
 				
 				{% endif %}
 					<ul>
@@ -48,9 +48,6 @@
 						{% endfor %}
 					</ul>
 				</div>
-				
-				
-				
 			</div>
 			<div class="row">
 			<br />
@@ -61,6 +58,22 @@
 					{% endfor %}
 				</ul>
 			</div>
+			
+			<br />
+			<div class="row">
+				<h4 class="alert alert-success"><i class="fa fa-envelope"></i>&nbsp; Invitar al grupo</h4>
+					<p class="alert alert-warning">Envía una notificación a otros padres para que puedan unirse a este grupo.</p>	
+					<form class="input-group custom-search-form" action="{{ path('panel_group_invite') }}" method="POST">
+						<input required type="email" name="userEmail" class="form-control" placeholder='{{ "Email"|trans }}'/>
+						<input type="hidden" name="group" value="{{ group.id }}"/>
+						<span class="input-group-btn">
+						<button class="btn btn-warning" type="submit"><i class="fa fa-check"></i></button>
+						</span>				
+					</form>
+					
+					
+			</div>
+			
 		</div>
 	</div>
 
