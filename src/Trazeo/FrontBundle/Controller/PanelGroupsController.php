@@ -221,9 +221,9 @@ class PanelGroupsController extends Controller
 		$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findOneByUserextend($id);
 		$groupRequest = $em->getRepository('TrazeoBaseBundle:EGroup')->find($group);
 		$group = $groupRequest->getId();
-		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($id);
-		$fos_user = $um->findUserByUsername($userextend);
 		
+		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($id);
+		$fos_user= $userextend->getUser(); 
 		$em->remove($userRequest);
 		$em->flush();
 		

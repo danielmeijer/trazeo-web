@@ -38,6 +38,19 @@ class ProfileController extends Controller
 	    );
 	}
 	
+	
+	/**
+	 * @Route("/profile_notifications", name="panel_profile_notifications"))
+	 * @Template()
+	 */
+	public function profileNotificationsAction()
+	{
+		$sup = $this->container->get('sopinet_user_notification');
+		$notifications = $sup->getAllNotifications();
+
+		return array('notifications' => $notifications);
+	}
+	
 	/**
 	 * @Route("/profile_save", name="panel_profile_save")
 	 * @Template

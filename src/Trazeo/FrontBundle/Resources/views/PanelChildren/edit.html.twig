@@ -3,19 +3,14 @@
 {% set pageheader_description = "Children.edit.description"|trans %}
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
-		{% block body_content %}
-		           
+		{% block body_content %} 
 			<div class="row">
-                	<h4 class="alert alert-success"><i class="fa fa-user"></i>&nbsp; {{ child.nick }}</h4>
+                <h4 class="alert alert-success"><i class="fa fa-user"></i>&nbsp; {{ child.nick }}</h4>
                 <div class="alert alert-warning">
-       
-    {{ form(edit_form) }}
-
-        <ul class="record_actions">
-
-    <li>{{ form(delete_form) }}</li>    
-
+    				{{ form(edit_form) }}
+		        	<ul class="record_actions">
+						<li>{{ form(delete_form) }}</li>    
+					</ul>
                 </div>
             </div>
-		
 		{% endblock %}

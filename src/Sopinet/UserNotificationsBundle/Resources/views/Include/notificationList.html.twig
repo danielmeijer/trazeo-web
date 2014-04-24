@@ -1,0 +1,16 @@
+<h4 class="alert alert-success">
+	<i class="fa fa-clipboard"></i>&nbsp; Listado de todas las notificaciones que has recibido
+	<span class="btn btn-circle btn-success pull-right">{{ notifications|length() }}</span>
+</h4><br />
+    	{% for notification in notifications %}
+    	<li class="col-md-8 col-md-offset-1" style="list-style-type:none;">
+			<a class="alert-warning" href="{{ notification.link }}">
+				<div>
+                	<i class="fa fa-comment fa-fw"></i>&nbsp;
+                	{{ notification|parseSopinetUserNotification() }}
+                   <span class="pull-right text-muted small"><i class="fa fa-clock-o"></i>&nbsp; {{ notification.createdAt|getTimeAgo() }}</span>
+                </div>
+            </a>    		
+    	</li>
+    	<br /><br />
+    	{% endfor %}

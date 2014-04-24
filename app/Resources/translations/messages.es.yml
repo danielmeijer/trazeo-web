@@ -26,7 +26,15 @@ Panel:
     
 Email: 'Correo electrónico'
 
+Settings:
+    index:
+        title: 'Notificaciones'
+        description: 'Personaliza tus avisos de notificaciones en la plataforma de trazeo'
+
 Userextend:
+    index:
+        title: 'Perfil de usuario'
+        description: 'Administra tu datos de usuario en Trazeo'
     help:
         nick: 'Nombre de  usuario'
         groups: 'Grupos de los que quieres formar parte'
@@ -38,6 +46,9 @@ Route:
     index:
         title: Rutas de paseo
         description: Listado de rutas creadas por los usuarios para definir los caminos al cole
+    edit:
+        title: 'Editar datos de ruta'
+        description: 'Establece un nombre e indica a qué país y ciudad pertenece'
     name: 'Nombre de la ruta'
     show:
         title: "Ruta: %name%"
@@ -48,7 +59,10 @@ Route:
 Groups:
     index:
         title: 'Sugerencia de grupos'
-        description: 'Estos grupos se encuentran en tu ciudad o en la de alguno de tus niños, y podrían interesarte.'
+        description: 'Estos grupos se encuentran en tu ciudad o en la de alguno de tus niños, y podrían interesarte'
+    edit:
+        title: 'Editar datos de grupo'
+        description: 'Indica el tipo de visibilidad y asígnale una ruta'
     new:
         title: 'Crear nuevo grupo'
         description: 'Dale un nombre, una visibilidad y asígnale una ruta'
@@ -124,4 +138,12 @@ Notifications:
     child_in_group: 'El niño %0 ha entrado en el grupo %1'
     group_join_deny: 'Se ha rechazado tu petición para unirte al grupo %0'
     
-    
+
+preference:
+    notification_email:
+        description: 'Configura cuando quieres que Trazeo te envíe notificaciones'
+        name: 'Notificaiones por email'
+        value:
+            never: 'Nunca'
+            day: 'Cada día'
+            now: 'Cuando se produzcan'
