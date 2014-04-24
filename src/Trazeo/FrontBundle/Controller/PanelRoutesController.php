@@ -30,7 +30,6 @@ class PanelRoutesController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $routes = $em->getRepository('TrazeoBaseBundle:ERoute')->findAll();
 
         return array(
@@ -168,20 +167,29 @@ class PanelRoutesController extends Controller
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
+        $fos_user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
         $route = $em->getRepository('TrazeoBaseBundle:ERoute')->find($id);
-
+        
+        $userId = $user->getId();
+        $routeAdmin = $route->getAdmin();
+        $container = $this->get('sopinet_flashMessages');
+        if($routeAdmin != $user ){
+        
+        	$notification = $container->addFlashMessages("error","No tienes autorización para editar esta ruta");
+        	return $this->redirect($this->generateUrl('panel_route'));
+        }
         if (!$route) {
-            throw $this->createNotFoundException('Unable to find Routes entity.');
+        	
+        	$notification = $container->addFlashMessages("warning","No existe la ruta o ha sido eliminada");
+        	return $this->redirect($this->generateUrl('panel_route'));
         }
 
         $editForm = $this->createEditForm($route);
-        //$deleteForm = $this->createDeleteForm($id);
 
         return array(
             'route'      => $route,
             'edit_form'   => $editForm->createView(),
-            //'delete_form' => $deleteForm->createView(),
         );
     }
 

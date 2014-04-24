@@ -12,12 +12,15 @@ class Builder extends ContainerAware
 
         if (!isset($options['activeMenu'])) $options['activeMenu'] = "Home";
         
+        $attr = array('icon'=>'fa-home fa-2x','attributes'=>array('rel'=>'tooltip-right','data-original-title'=>'Inicio'));
+        
         // Home
         $menu->addChild('Home', array(
-        	'route' => 'panel_dashboard'
+        	'route' => 'panel_dashboard',
         ))
+                
         ->setLabel("");
-        $menu['Home']->setAttribute('icon', 'fa-home fa-2x');
+        $menu['Home']->setAttributes($attr);
         if ($options['activeMenu'] == "home") {
         	$menu['Home']->setAttribute('class', 'active');
         }

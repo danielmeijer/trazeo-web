@@ -26,10 +26,18 @@
 		<div class="panel-group" id="accordion">
 			<div class="panel panel-warning">
 				<div class="panel-heading">
-		        	<h4 class="panel-title">
+		        	<h4 class="panel-title" style="cursor:pointer;" data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ route.id }}">
 		            	<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ route.id }}">{{ route.name }}</a>
-						<div class="pull-right"><span class="label label-success">{{ "Menu.groups"|trans }} {{ route.groups|length }}</span></div>
 					</h4>
+					<div class="pull-right" style="margin-top:-20px;">
+						{% if app.user.id == route.Admin.id %}
+							<a href="{{ path('panel_route') }}{{ route.id }}/edit" type="button" 
+							class="btn btn-default btn-xs" rel="tooltip-top" title="Editar información">
+								<i class="fa fa-pencil"></i> Editar
+							</a>
+						{% endif %}
+					<span class="label label-success">{{ "Menu.groups"|trans }} {{ route.groups|length }}</span>
+					</div>
 				</div>
 				<div id="collapse{{ route.id }}" class="panel-collapse collapse {% if loop.index == 1 %}in{% endif %}">
 					<div class="panel-body">
