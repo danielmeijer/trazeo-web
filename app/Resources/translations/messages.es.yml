@@ -141,7 +141,15 @@ Trans:
         
 Notifications:
     child_in_group: 'El niño %0 ha entrado en el grupo %1'
-    group_join_deny: 'Se ha rechazado tu petición para unirte al grupo %0'
+    group:
+        join:
+            deny: 'Se ha rechazado tu petición para unirte al grupo %0'
+            let: 'Se ha aceptado tu petición para unirte al grupo %0'
+            request: 'El usuario %0 ha solicitado unirse al grupo %1'
+        invite:
+            user: 'Has recibido una invitación para unirte al grupo %0'
+            accept: 'El usuario %0 ha aceptado la invitación para unirse al grupo %1'
+            deny: 'El usuario %0 ha rechazado la invitación para unirse al grupo %1'
     
 
 preference:
