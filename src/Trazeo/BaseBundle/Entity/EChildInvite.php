@@ -5,12 +5,12 @@ namespace Trazeo\BaseBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Entity EGroupInvite
+ * Entity EChildInvite
  *
- * @ORM\Table("e_groupinvite")
+ * @ORM\Table("e_childinvite")
  * @ORM\Entity
  */
-class EGroupInvite
+class EChildInvite
 {
     /**
      * @var integer
@@ -21,15 +21,17 @@ class EGroupInvite
      */
     protected $id;
 
-    /** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="inviteGroup")
+    /** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="inviteChild")
      */
     protected $userextend;
     
-    /** @ORM\ManyToOne(targetEntity="EGroup", inversedBy="inviteGroup")
+    /** @ORM\ManyToOne(targetEntity="EChild", inversedBy="inviteChild")
      * @var unknown
      */
-    protected $group;
+    protected $child;
     
+    
+
     /**
      * Get id
      *
@@ -40,13 +42,12 @@ class EGroupInvite
         return $this->id;
     }
 
-
     /**
      * Set userextend
      *
      * @param \Trazeo\BaseBundle\Entity\UserExtend $userextend
      *
-     * @return EGroupInvite
+     * @return EChildInvite
      */
     public function setUserextend(\Trazeo\BaseBundle\Entity\UserExtend $userextend = null)
     {
@@ -66,26 +67,26 @@ class EGroupInvite
     }
 
     /**
-     * Set group
+     * Set child
      *
-     * @param \Trazeo\BaseBundle\Entity\EGroup $group
+     * @param \Trazeo\BaseBundle\Entity\EChild $child
      *
-     * @return EGroupInvite
+     * @return EChildInvite
      */
-    public function setGroup(\Trazeo\BaseBundle\Entity\EGroup $group = null)
+    public function setChild(\Trazeo\BaseBundle\Entity\EChild $child = null)
     {
-        $this->group = $group;
+        $this->child = $child;
 
         return $this;
     }
 
     /**
-     * Get group
+     * Get child
      *
-     * @return \Trazeo\BaseBundle\Entity\EGroup 
+     * @return \Trazeo\BaseBundle\Entity\EChild 
      */
-    public function getGroup()
+    public function getChild()
     {
-        return $this->group;
+        return $this->child;
     }
 }

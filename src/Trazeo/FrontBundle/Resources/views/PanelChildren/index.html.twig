@@ -4,11 +4,22 @@
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
 		{% block body_content %}               
-
+	        {% for allChildInvite in allChildsInvite %}
+				{% if user.Id == allChildInvite.Userextend.Id  %}
+				<div class="alert alert-default">
+	        		<p>Tienes una invitación para ser tutor del niño <b>{{ allChildInvite.Child }}</b>
+						&nbsp;<a href="{{ path('panel_child_invite_accept', { 'id': allChildInvite.Userextend.Id, 'child':allChildInvite.Child.Id }) }}" type="button" class="label label-success">
+							<i class="fa fa-check"></i> Aceptar
+						</a>&nbsp;
+						<a href="{{ path('panel_child_invite_deny', { 'id': allChildInvite.Userextend.Id ,'child': allChildInvite.Child.Id }) }}" type="button" class="label label-danger">
+							<i class="fa fa-times"></i> Cancelar
+						</a>
+	        		 </p>
+	        	</div>
+	        	{% endif %}
+	        {% endfor %}
 		<div class="panel-group" id="accordion">
 		{% for child in childs %}
-		
-		
 			<div class="panel panel-warning">
 				<div class="panel-heading">
 		        	<h4 class="panel-title" style="cursor:pointer;" data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ child.id }}">
@@ -71,6 +82,11 @@
 									</tr>
 								</tbody>
 							</table>
+							<form class="col-md-3" action="{{ path('panel_child_invite') }}" method="POST">
+								<input class="form-control" type="email" name="userEmail" placeholder="Correo electrónico" />
+								<input type="hidden" name="child" value="{{ child.id }}"/>
+								<input class="btn btn-success" type="submit" value="Invitar">							
+							</form>
 					</div> 
 				</div>
 			</div>

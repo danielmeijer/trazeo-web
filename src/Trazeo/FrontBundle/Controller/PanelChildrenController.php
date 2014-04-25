@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Trazeo\BaseBundle\Entity\EChild;
+use Trazeo\BaseBundle\Entity\EChildInvite;
 use Trazeo\BaseBundle\Form\ChildType;
 
 /**
@@ -17,6 +18,88 @@ use Trazeo\BaseBundle\Form\ChildType;
  */
 class PanelChildrenController extends Controller
 {
+	
+	/**
+	 * Children tutor invite other Users to be child tutor.
+	 *
+	 * @Route("/invite", name="panel_child_invite")
+	 * @Method("POST")
+	 * @Template()
+	 */
+	public function inviteChildAction() {
+	
+		$em = $this->getDoctrine()->getManager();
+		$um = $this->container->get('fos_user.user_manager');
+	
+		$fos_user_current = $this->container->get('security.context')->getToken()->getUser();
+		$user_current =$um->findUserByEmail($fos_user_current);
+	
+		$userEmail = $_POST['userEmail'];
+		$childId = $_POST['child'];
+	
+		$fos_user = $um->findUserByEmail($userEmail);
+		if($fos_user != true){
+			$container = $this->get('sopinet_flashMessages');
+			$notification = $container->addFlashMessages("warning","El correo electrónico introducido no corresponde a ningún usuario");
+			return $this->redirect($this->generateUrl('panel_child'));
+		}
+	
+		if($fos_user == $fos_user_current ){
+			$container = $this->get('sopinet_flashMessages');
+			$notification = $container->addFlashMessages("warning","Ya eres tutor de este niño");
+			return $this->redirect($this->generateUrl('panel_child'));
+		}
+	
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+	
+		// Obtener grupo al que se va a unir a través del param $id
+		$child = $em->getRepository('TrazeoBaseBundle:EChild')->find($childId);
+	
+		// Buscar si existe alguna petición con ese UserExtend y ese Group
+		$requestUser = $em->getRepository('TrazeoBaseBundle:EChildInvite')->findOneByUserextend($user);
+		$requestChild = $em->getRepository('TrazeoBaseBundle:EChildInvite')->findOneByChild($child);
+	
+		// Comprobar que existen
+		if($requestUser && $requestChild == true){
+	
+			// Si existen, obtener el id de su registro en la base de datos
+			$requestUserId = $requestUser->getId();
+			$requestChildId = $requestChild->getId();
+			// Comprobar que no tienen el mismo id de registro (petición duplicada)
+			if($requestUserId = $requestChildId) {
+				// Excepción y redirección
+				$container = $this->get('sopinet_flashMessages');
+				$notification = $container->addFlashMessages("warning","Ya has invitado a este usuario anteriormente");
+				return $this->redirect($this->generateUrl('panel_child'));
+					
+			}
+	
+		}else{
+			// Si no existen los UserExtend y Group anteriormente obtenidos,
+			// directamente se crea la petición
+				
+			$not = $this->container->get('sopinet_user_notification');
+			$el = $not->addNotification(
+					'child.invite.user',
+					"TrazeoBaseBundle:EChild",
+					$childId,
+					$this->generateUrl('panel_child'), $fos_user
+			);
+				
+			$access = new EChildInvite();
+			$access->setChild($child);
+			$access->setUserextend($user);
+	
+			$em->persist($access);
+			$em->flush();
+	
+			$container = $this->get('sopinet_flashMessages');
+			$notification = $container->addFlashMessages("success","El usuario ha recibido tu invitación para ser tutor del niño");
+			return $this->redirect($this->generateUrl('panel_child'));
+	
+		}
+	
+	}
 
     /**
      * Lists all Child entities.
@@ -31,13 +114,108 @@ class PanelChildrenController extends Controller
 
         $fos_user = $this->container->get('security.context')->getToken()->getUser();
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+        $allChildsInvite = $em->getRepository('TrazeoBaseBundle:EChildInvite')->findAll();
         
         $childs = $user->getChilds();
 
         return array(
             'childs' => $childs,
+        	'allChildsInvite' => $allChildsInvite,
+        	'user' => $user,
         );
     }
+    
+    
+    /**
+     * User accept to be children tutor.
+     *
+     * @Route("/inviteaccept/{id}/{child}", name="panel_child_invite_accept")
+     * @Method("GET")
+     * @Template()
+     */
+    public function acceptInviteGroupAction($id, $child) {
+    
+    	$em = $this->getDoctrine()->getManager();
+  
+    	//$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($id);
+    	
+
+    	$fos_user = $this->container->get('security.context')->getToken()->getUser();
+    	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+    	
+    	$childToJoin = $em->getRepository('TrazeoBaseBundle:EChild')->find($child);
+    	$container = $this->get('sopinet_flashMessages');
+    
+    	if (!$childToJoin) {
+    		$notification = $container->addFlashMessages("success","No puedes unirte al grupo porque ha sido eliminado");
+    		return $this->redirect($this->generateUrl('panel_child'));
+    	}
+    
+    	$childToJoin->addUserextendchild($user);
+    	$em->persist($childToJoin);
+    	$em->flush();
+    
+    	$userRequest = $em->getRepository('TrazeoBaseBundle:EChildInvite')->findOneByUserextend($id);
+    
+    	//$em->remove($userRequest);
+    	//$em->flush();
+    
+    	/*$groupAdmin = $childToJoin->getAdmin();
+    	$groupAdminUser = $em->getRepository('TrazeoBaseBundle:Userextend')->find($groupAdmin);
+    	$groupAdmin_fos_user = $groupAdminUser->getUser();
+    
+    	$not = $this->container->get('sopinet_user_notification');
+    	$el = $not->addNotification(
+    			'child.invite.accept',
+    			"TrazeoBaseBundle:Userextend,TrazeoBaseBundle:EGroup",
+    			$id . "," . $group ,
+    			$this->generateUrl('panel_group'), $groupAdmin_fos_user
+    	);*/
+    
+    
+    	$notification = $container->addFlashMessages("success","Has aceptado la invitación para ser tutor");
+    	return $this->redirect($this->generateUrl('panel_child'));
+    }
+    
+    
+    /**
+     * User adminGroup let an User to join with the request Group.
+     *
+     * @Route("/invitedeny/{id}/{child}", name="panel_child_invite_deny")
+     * @Method("GET")
+     * @Template()
+     */
+    
+    public function denyInviteGroupAction($id,$child) {
+    
+    	$em = $this->getDoctrine()->getManager();
+    
+    	$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findOneByUserextend($id);
+    
+    	$em->remove($userRequest);
+    	$em->flush();
+    
+    	$groupEntity = $em->getRepository('TrazeoBaseBundle:EGroup')->find($group);
+    	$groupAdmin = $groupEntity->getAdmin();
+    	$groupAdminUser = $em->getRepository('TrazeoBaseBundle:Userextend')->find($groupAdmin);
+    	$groupAdmin_fos_user = $groupAdminUser->getUser();
+    
+    	$not = $this->container->get('sopinet_user_notification');
+    	$el = $not->addNotification(
+    			'child.invite.deny',
+    			"TrazeoBaseBundle:Userextend,TrazeoBaseBundle:EGroup",
+    			$id . "," . $group ,
+    			$this->generateUrl('panel_group'), $groupAdmin_fos_user
+    	);
+    
+    	$container = $this->get('sopinet_flashMessages');
+    	$notification = $container->addFlashMessages("success","Has rechazado la invitación");
+    
+    	return $this->redirect($this->generateUrl('panel_group'));
+    
+    }
+    
+    
     /**
      * Creates a new Childs entity.
      *
@@ -155,7 +333,7 @@ class PanelChildrenController extends Controller
         	}
         }
         $container = $this->get('sopinet_flashMessages');
-        if(count($users) == 0){
+        if(count($users) < 1){
         	
         	$notification = $container->addFlashMessages("error","No tienes permisos para editar la información de este niño");
         	return $this->redirect($this->generateUrl('panel_child'));

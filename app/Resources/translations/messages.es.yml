@@ -140,7 +140,12 @@ Trans:
         option: 'Selecciona una opción'
         
 Notifications:
-    child_in_group: 'El niño %0 ha entrado en el grupo %1'
+    child:
+        invite: 
+            user: 'Has recibido una invitación para ser tutor del niño %0'
+            accept: 'El usuario %0 ha aceptado la invitación para ser tutor del niño %1'
+            deny: 'El usuario %0 ha rechazado la invitación para ser tutor del niño %1'
+        joingroup: 'El niño %0 ha entrado en el grupo %1'
     group:
         join:
             deny: 'Se ha rechazado tu petición para unirte al grupo %0'
@@ -160,3 +165,8 @@ preference:
             never: 'Nunca'
             day: 'Cada día'
             now: 'Cuando se produzcan'
+            
+Confirmation:
+    question: '¿Estás seguro?'
+    yes: 'Sí'
+    no: 'No'

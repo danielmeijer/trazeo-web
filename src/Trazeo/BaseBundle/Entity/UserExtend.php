@@ -44,7 +44,7 @@ class UserExtend
     protected $adminRoutes;
     
     /**
-     * @ORM\ManyToMany(targetEntity="EChild", inversedBy="userextendchilds")
+     * @ORM\ManyToMany(targetEntity="EChild", mappedBy="userextendchilds")
      * @ORM\JoinTable(name="usersextend_childs")
      **/
     protected $childs;
@@ -64,7 +64,11 @@ class UserExtend
     
     /** @ORM\OneToMany(targetEntity="EGroupInvite", mappedBy="userextend")
      */
-    protected $invite;
+    protected $inviteGroup;
+    
+    /** @ORM\OneToMany(targetEntity="EChildInvite", mappedBy="userextend")
+     */
+    protected $inviteChild;
     
     
     /**
@@ -400,5 +404,73 @@ class UserExtend
     public function getInvite()
     {
         return $this->invite;
+    }
+
+    /**
+     * Add inviteGroup
+     *
+     * @param \Trazeo\BaseBundle\Entity\EGroupInvite $inviteGroup
+     *
+     * @return UserExtend
+     */
+    public function addInviteGroup(\Trazeo\BaseBundle\Entity\EGroupInvite $inviteGroup)
+    {
+        $this->inviteGroup[] = $inviteGroup;
+
+        return $this;
+    }
+
+    /**
+     * Remove inviteGroup
+     *
+     * @param \Trazeo\BaseBundle\Entity\EGroupInvite $inviteGroup
+     */
+    public function removeInviteGroup(\Trazeo\BaseBundle\Entity\EGroupInvite $inviteGroup)
+    {
+        $this->inviteGroup->removeElement($inviteGroup);
+    }
+
+    /**
+     * Get inviteGroup
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getInviteGroup()
+    {
+        return $this->inviteGroup;
+    }
+
+    /**
+     * Add inviteChild
+     *
+     * @param \Trazeo\BaseBundle\Entity\EChildInvite $inviteChild
+     *
+     * @return UserExtend
+     */
+    public function addInviteChild(\Trazeo\BaseBundle\Entity\EChildInvite $inviteChild)
+    {
+        $this->inviteChild[] = $inviteChild;
+
+        return $this;
+    }
+
+    /**
+     * Remove inviteChild
+     *
+     * @param \Trazeo\BaseBundle\Entity\EChildInvite $inviteChild
+     */
+    public function removeInviteChild(\Trazeo\BaseBundle\Entity\EChildInvite $inviteChild)
+    {
+        $this->inviteChild->removeElement($inviteChild);
+    }
+
+    /**
+     * Get inviteChild
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getInviteChild()
+    {
+        return $this->inviteChild;
     }
 }
