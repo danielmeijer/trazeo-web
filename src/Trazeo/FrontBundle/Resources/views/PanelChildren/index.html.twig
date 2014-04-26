@@ -11,7 +11,7 @@
 						&nbsp;<a href="{{ path('panel_child_invite_accept', { 'id': allChildInvite.Userextend.Id, 'child':allChildInvite.Child.Id, 'sender':allChildInvite.Sender.Id }) }}" type="button" class="label label-success">
 							<i class="fa fa-check"></i> Aceptar
 						</a>&nbsp;
-						<a href="{{ path('panel_child_invite_deny', { 'id': allChildInvite.Userextend.Id ,'child': allChildInvite.Child.Id }) }}" type="button" class="label label-danger">
+						<a href="{{ path('panel_child_invite_deny', { 'id': allChildInvite.Userextend.Id ,'child': allChildInvite.Child.Id, 'sender':allChildInvite.Sender.Id }) }}" type="button" class="label label-danger">
 							<i class="fa fa-times"></i> Cancelar
 						</a>
 	        		 </p>

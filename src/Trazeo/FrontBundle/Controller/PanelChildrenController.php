@@ -153,7 +153,6 @@ class PanelChildrenController extends Controller
     	$userextend = $userRequest->getUserextend();
     	
     	$userSender = $em->getRepository('TrazeoBaseBundle:Userextend')->findOneById($sender);
-    	
     	$fos_userSender = $userSender->getUser();
 
     	$childToJoin->addUserextendchild($userextend);
@@ -167,7 +166,7 @@ class PanelChildrenController extends Controller
     			'child.invite.accept',
     			"TrazeoBaseBundle:Userextend,TrazeoBaseBundle:EChild",
     			$id . "," . $child,
-    			$this->generateUrl('panel_group'), $fos_userSender
+    			$this->generateUrl('panel_child'), $fos_userSender
     	);
     
     
@@ -177,39 +176,36 @@ class PanelChildrenController extends Controller
     
     
     /**
-     * User adminGroup let an User to join with the request Group.
+     * User refuse an invite to be child tutor.
      *
-     * @Route("/invitedeny/{id}/{child}", name="panel_child_invite_deny")
+     * @Route("/invitedeny/{id}/{child}/{sender}", name="panel_child_invite_deny")
      * @Method("GET")
      * @Template()
      */
     
-    public function denyInviteGroupAction($id,$child) {
+    public function denyInviteChildAction($id,$child,$sender) {
     
     	$em = $this->getDoctrine()->getManager();
     
-    	$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findOneByUserextend($id);
+    	$userRequest = $em->getRepository('TrazeoBaseBundle:EChildInvite')->findOneByUserextend($id);
     
     	$em->remove($userRequest);
     	$em->flush();
     
-    	$groupEntity = $em->getRepository('TrazeoBaseBundle:EGroup')->find($group);
-    	$groupAdmin = $groupEntity->getAdmin();
-    	$groupAdminUser = $em->getRepository('TrazeoBaseBundle:Userextend')->find($groupAdmin);
-    	$groupAdmin_fos_user = $groupAdminUser->getUser();
-    
+    	$userSender = $em->getRepository('TrazeoBaseBundle:Userextend')->findOneById($sender);
+    	$fos_userSender = $userSender->getUser();
     	$not = $this->container->get('sopinet_user_notification');
     	$el = $not->addNotification(
     			'child.invite.deny',
-    			"TrazeoBaseBundle:Userextend,TrazeoBaseBundle:EGroup",
-    			$id . "," . $group ,
-    			$this->generateUrl('panel_group'), $groupAdmin_fos_user
+    			"TrazeoBaseBundle:Userextend,TrazeoBaseBundle:EChild",
+    			$id . "," . $child,
+    			$this->generateUrl('panel_child'), $fos_userSender
     	);
     
     	$container = $this->get('sopinet_flashMessages');
     	$notification = $container->addFlashMessages("success","Has rechazado la invitación");
     
-    	return $this->redirect($this->generateUrl('panel_group'));
+    	return $this->redirect($this->generateUrl('panel_child'));
     
     }
     
@@ -232,8 +228,8 @@ class PanelChildrenController extends Controller
             $fos_user = $this->container->get('security.context')->getToken()->getUser();
             $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
             
-            $user->addChild($child);
-            
+            //$user->addChild($child);
+            $child->addUserextendchild($user);            
             $em->persist($child);
             $em->flush();
 
