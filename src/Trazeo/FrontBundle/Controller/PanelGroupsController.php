@@ -98,17 +98,18 @@ class PanelGroupsController extends Controller
 	
 		$fos_user = $this->container->get('security.context')->getToken()->getUser();
 		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
-	
+		$container = $this->get('sopinet_flashMessages');
 		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
 	
 		if (!$group) {
-			throw $this->createNotFoundException('Unable to find Group entity.');
+			$notification = $container->addFlashMessages("warning","El grupo ha sido eliminado");
+			return $this->redirect($this->generateUrl('panel_group'));
 		}
 	
 		$group->removeUserextendgroup($user);
 		$em->persist($group);
 		$em->flush();
-	
+		$notification = $container->addFlashMessages("warning","Has salido del grupo");
 		return $this->redirect($this->generateUrl('panel_group'));
 	}
 	

@@ -31,6 +31,10 @@
 							class="btn btn-default btn-xs" rel="tooltip-top" title="Editar información">
 								<i class="fa fa-pencil"></i> Editar
 							</a>
+							<a href="{{ path('panel_child_disjoin', { 'id': child.id }) }}" type="button" 
+							class="btn btn-default btn-xs" rel="tooltip-top" title="Dejar de ser tutor del niño">
+								<i class="fa fa-sign-out"></i> Desvincularme
+							</a>
 			        	<span class="label label-success">{{ "Tutores"|trans }} {{ child.userextendchilds|length }}</span>
 	            	 </div>
 				</div>

@@ -109,6 +109,36 @@ class PanelChildrenController extends Controller
 		}
 
 	}
+	
+	
+	/**
+	 * User disjoin as child tutor.
+	 *
+	 * @Route("/disjoin/{id}", name="panel_child_disjoin")
+	 * @Method("GET")
+	 * @Template()
+	 */
+	public function disJoinChildAction($id) {
+	
+		$em = $this->getDoctrine()->getManager();
+	
+		$fos_user = $this->container->get('security.context')->getToken()->getUser();
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+		$container = $this->get('sopinet_flashMessages');
+		$child = $em->getRepository('TrazeoBaseBundle:EChild')->find($id);
+	
+		if (!$child) {
+			$notification = $container->addFlashMessages("warning","El registro del niño ha sido eliminado");
+			return $this->redirect($this->generateUrl('panel_child'));
+		}
+	
+		$child->removeUserextendchild($user);
+		$em->persist($child);
+		$em->flush();
+	
+		return $this->redirect($this->generateUrl('panel_child'));
+	}
+	
 
     /**
      * Lists all Child entities.
