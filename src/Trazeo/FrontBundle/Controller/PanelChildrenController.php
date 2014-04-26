@@ -31,29 +31,38 @@ class PanelChildrenController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$um = $this->container->get('fos_user.user_manager');
 
+		$container = $this->get('sopinet_flashMessages');
+		
 		$fos_user_current = $this->container->get('security.context')->getToken()->getUser();
 		$user_current =$em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user_current);
 
 		$userEmail = $_POST['userEmail'];
 		$childId = $_POST['child'];
-
+		
 		$fos_user = $um->findUserByEmail($userEmail);
-		if($fos_user != true){
-			$container = $this->get('sopinet_flashMessages');
-			$notification = $container->addFlashMessages("warning","El correo electrónico introducido no corresponde a ningún usuario");
-			return $this->redirect($this->generateUrl('panel_child'));
-		}
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+		
 
 		if($fos_user == $fos_user_current ){
-			$container = $this->get('sopinet_flashMessages');
 			$notification = $container->addFlashMessages("warning","Ya eres tutor de este niño");
 			return $this->redirect($this->generateUrl('panel_child'));
 		}
-
-		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
-
-		// Obtener grupo al que se va a unir a través del param $id
+		
 		$child = $em->getRepository('TrazeoBaseBundle:EChild')->find($childId);
+		$childUsers = $child->getUserextendchilds();
+		
+		foreach($childUsers as $childUser){
+			if($user == $childUser){
+		
+				$notification = $container->addFlashMessages("warning","El usuario ya es uno de los tutores del niño");
+				return $this->redirect($this->generateUrl('panel_child'));
+			}
+		}
+
+		if($fos_user != true){
+			$notification = $container->addFlashMessages("warning","El correo electrónico introducido no corresponde a ningún usuario");
+			return $this->redirect($this->generateUrl('panel_child'));
+		}
 
 		// Buscar si existe alguna petición con ese UserExtend y ese Group
 		$requestUser = $em->getRepository('TrazeoBaseBundle:EChildInvite')->findOneByUserextend($user);
@@ -68,7 +77,6 @@ class PanelChildrenController extends Controller
 			// Comprobar que no tienen el mismo id de registro (petición duplicada)
 			if($requestUserId = $requestChildId) {
 				// Excepción y redirección
-				$container = $this->get('sopinet_flashMessages');
 				$notification = $container->addFlashMessages("warning","Ya has invitado a este usuario anteriormente");
 				return $this->redirect($this->generateUrl('panel_child'));
 

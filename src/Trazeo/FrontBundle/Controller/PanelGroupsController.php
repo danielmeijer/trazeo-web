@@ -285,27 +285,38 @@ class PanelGroupsController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$um = $this->container->get('fos_user.user_manager');
 		
+		$container = $this->get('sopinet_flashMessages');
 		
 		$fos_user_current = $this->container->get('security.context')->getToken()->getUser();
 		$user_current =$um->findUserByEmail($fos_user_current);
 	
 		$userEmail = $_POST['userEmail'];	
 		$groupId = $_POST['group'];
-				
+		
 		$fos_user = $um->findUserByEmail($userEmail);
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+		
+		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($groupId);
+		$groupUsers = $group->getUserextendgroups();
+		
+		foreach($groupUsers as $groupUser){
+			if($user == $groupUser){
+				
+				$notification = $container->addFlashMessages("warning","El usuario ya forma parte del grupo");
+				return $this->redirect($this->generateUrl('panel_group'));		
+			}
+		}
+		
+		
 		if($fos_user != true){
-			$container = $this->get('sopinet_flashMessages');
 			$notification = $container->addFlashMessages("warning","El correo electrónico introducido no corresponde a ningún usuario");
 			return $this->redirect($this->generateUrl('panel_group'));
 		}
 		
 		if($fos_user == $fos_user_current ){
-			$container = $this->get('sopinet_flashMessages');
 			$notification = $container->addFlashMessages("warning","No necesitas invitación para unirte a un grupo del que eres administrador");
 			return $this->redirect($this->generateUrl('panel_group'));
 		}
-		
-		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
 		
 		// Obtener grupo al que se va a unir a través del param $id
 		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($groupId);
@@ -323,7 +334,6 @@ class PanelGroupsController extends Controller
 			// Comprobar que no tienen el mismo id de registro (petición duplicada)
 			if($requestUserId = $requestGroupId) {
 				// Excepción y redirección
-				$container = $this->get('sopinet_flashMessages');
 				$notification = $container->addFlashMessages("warning","Ya has invitado a este usuario anteriormente");
 				return $this->redirect($this->generateUrl('panel_group'));
 					
@@ -466,6 +476,7 @@ class PanelGroupsController extends Controller
         
         $allGroupsAccess = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findAll();
         $allGroupsInvite = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findAll();
+              
         return array(
         	'userGroups' => $userGroups,
         	'userAdmin' => $userAdmin,
