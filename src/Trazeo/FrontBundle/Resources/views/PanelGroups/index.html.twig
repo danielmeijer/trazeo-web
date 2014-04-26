@@ -138,11 +138,18 @@
 								</tbody>
 							</table>
 						{% if userGroup.Visibility == 2 and  userGroup.Admin.Id == user.Id %}
-							<form class="col-md-3" action="{{ path('panel_group_invite') }}" method="POST">
-								<input class="form-control" type="email" name="userEmail" placeholder="Correo electrónico" />
-								<input type="hidden" name="group" value="{{ userGroup.id }}"/>
-								<input class="btn btn-success" type="submit" value="Invitar">							
-							</form>
+						<p class="text-muted">
+						<i class="fa fa-envelope"></i>&nbsp;
+							Envía una invitación a otros usuarios para que puedan unirse a este grupo oculto
+						</p>
+						<form class="col-md-3 input-group custom-search-form" action="{{ path('panel_group_invite') }}" method="POST">
+							<input required type="email" name="userEmail" class="form-control" placeholder='{{ "Email"|trans }}'/>
+							<input type="hidden" name="group" value="{{ userGroup.id }}"/>
+							<span class="input-group-btn">
+							<button class="btn btn-warning" type="submit"><i class="fa fa-check"></i></button>
+							</span>				
+						</form>
+							
 						{% endif %}
 						</div>
 					</div>
@@ -164,11 +171,11 @@
 		{% if group.Visibility != 2 or group.Admin.Id == user.Id	 %}
 			<div class="panel panel-warning">
 				<div class="panel-heading">
-		        	<h4 class="panel-title" style="cursor:pointer;" data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ group.id }}">
+		        	<h4 class="panel-title" style="cursor:pointer;" data-toggle="collapse" data-parent="#accordion2" href="#collapse{{ group.id }}">
 						{% if group.Admin.Id == user.Id %}
 								<i class="fa fa-user" rel="tooltip-top" title="Eres administrador de este grupo"></i>
 						{% endif %}
-		            	<a data-toggle="collapse" data-parent="#accordion2" href="#collapse{{ group.id }}">{{ group.name }}</a>
+		            	<a data-toggle="collapse" data-parent="accordion2" href="#collapse{{ group.id }}">{{ group.name }}</a>
 					</h4>
 	            	<div class="pull-right" style="margin-top:-20px;">
 		            	 	{% if group.Visibility == 0 %}
@@ -243,12 +250,11 @@
 									</tr>
 								</tbody>
 							</table>
-					
 						{% if group.Visibility == 2 and  group.Admin.Id == user.Id %}
 							<form class="col-md-3" action="{{ path('panel_group_invite') }}" method="POST">
 								<input class="form-control" type="email" name="userEmail" placeholder="Correo electrónico" />
 								<input type="hidden" name="group" value="{{ group.id }}"/>
-								<input class="btn btn-success" type="submit" value="Invitar">							
+								<input class="btn btn-warning" type="submit" value="Invitar">							
 							</form>
 						{% endif %}
 					</div>

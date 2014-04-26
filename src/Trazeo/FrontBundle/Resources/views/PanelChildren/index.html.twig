@@ -18,12 +18,12 @@
 	        	</div>
 	        	{% endif %}
 	        {% endfor %}
-		<div class="panel-group" id="accordion">
+		<div class="panel-group" id="accordion1">
 		{% for child in childs %}
 			<div class="panel panel-warning">
 				<div class="panel-heading">
 		        	<h4 class="panel-title" style="cursor:pointer;" data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ child.id }}">
-		            	<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ child.id }}">{{ child.nick }}</a>
+		            	<a data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ child.id }}">{{ child.nick }}</a>
 					</h4>
 	            	<div class="pull-right" style="margin-top:-20px;">
 	            	
@@ -57,7 +57,9 @@
 										<td>Grupos en los que está inscrito</td>
 										<td>
 											{% for childGroup in child.groups %}
-												<span class="label label-warning">{{ childGroup.name }}</span>
+												<span class="label">
+													<a href="{{ path('panel_group_timeline',{'id': childGroup.id}) }}">{{ childGroup.name }}</a>
+												</span>
 											{% endfor %} 
 										</td>
 									</tr>
@@ -85,12 +87,18 @@
 										</td>
 									</tr>
 								</tbody>
-							</table>
-							<form class="col-md-3" action="{{ path('panel_child_invite') }}" method="POST">
-								<input class="form-control" type="email" name="userEmail" placeholder="Correo electrónico" />
-								<input type="hidden" name="child" value="{{ child.id }}"/>
-								<input class="btn btn-success" type="submit" value="Invitar">							
-							</form>
+							</table>							
+						<p class="text-muted">
+						<i class="fa fa-envelope"></i>&nbsp;
+							Envía una invitación a otros usuarios para que sean uno de los tutores de este niño
+						</p>
+						<form class="col-md-3 input-group custom-search-form" action="{{ path('panel_child_invite') }}" method="POST">
+							<input required type="email" name="userEmail" class="form-control" placeholder='{{ "Email"|trans }}'/>
+							<input type="hidden" name="child" value="{{ child.id }}"/>
+							<span class="input-group-btn">
+							<button class="btn btn-warning" type="submit"><i class="fa fa-check"></i></button>
+							</span>				
+						</form>
 					</div> 
 				</div>
 			</div>

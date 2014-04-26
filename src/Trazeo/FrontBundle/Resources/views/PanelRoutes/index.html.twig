@@ -23,11 +23,11 @@
 		
 		
 	{% for route in routes %}
-		<div class="panel-group" id="accordion">
+		<div class="panel-group" id="accordion1">
 			<div class="panel panel-warning">
 				<div class="panel-heading">
 		        	<h4 class="panel-title" style="cursor:pointer;" data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ route.id }}">
-		            	<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ route.id }}">{{ route.name }}</a>
+		            	<a data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ route.id }}">{{ route.name }}</a>
 					</h4>
 					<div class="pull-right" style="margin-top:-20px;">
 						{% if app.user.id == route.Admin.id %}

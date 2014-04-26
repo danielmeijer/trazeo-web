@@ -54,7 +54,7 @@ class PanelChildrenController extends Controller
 		foreach($childUsers as $childUser){
 			if($user == $childUser){
 		
-				$notification = $container->addFlashMessages("warning","El usuario ya es uno de los tutores del niño");
+				$notification = $container->addFlashMessages("warning","El usuario al que quieres invitar ya es uno de los tutores del niño");
 				return $this->redirect($this->generateUrl('panel_child'));
 			}
 		}
@@ -260,7 +260,7 @@ class PanelChildrenController extends Controller
         $form = $this->createCreateForm($child);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid()) 
             $em = $this->getDoctrine()->getManager();
             
             $fos_user = $this->container->get('security.context')->getToken()->getUser();
@@ -272,12 +272,6 @@ class PanelChildrenController extends Controller
             $em->flush();
 
             return $this->redirect($this->generateUrl('panel_child'));
-        }
-
-        return array(
-            'child' => $child,
-            'form'   => $form->createView(),
-        );
     }
 
     /**
