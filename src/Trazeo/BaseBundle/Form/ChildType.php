@@ -24,14 +24,14 @@ class ChildType extends AbstractType
         					),'required' => true
         			)
         		)
-            ->add('userextendchilds', null, array(
+          /*  ->add('userextendchilds', null, array(
         			'attr' => array(
         					'placeholder' => 'Route.name',
         					'data-toggle' => 'popover',
         					'data-placement' => 'right',
         					'data-content' => 'Children.help.userextend'
         					)))
-            /*->add('groups', null, array(
+            ->add('groups', null, array(
         			'attr' => array(
         					'placeholder' => 'Route.name',
         					'data-toggle' => 'popover',

@@ -70,6 +70,10 @@ class UserExtend
      */
     protected $inviteChild;
     
+    /** @ORM\OneToMany(targetEntity="EChildInvite", mappedBy="sender")
+     */
+    protected $inviteChildSender;
+    
     
     /**
      * @var string
@@ -472,5 +476,39 @@ class UserExtend
     public function getInviteChild()
     {
         return $this->inviteChild;
+    }
+
+    /**
+     * Add inviteChildSender
+     *
+     * @param \Trazeo\BaseBundle\Entity\EChildInvite $inviteChildSender
+     *
+     * @return UserExtend
+     */
+    public function addInviteChildSender(\Trazeo\BaseBundle\Entity\EChildInvite $inviteChildSender)
+    {
+        $this->inviteChildSender[] = $inviteChildSender;
+
+        return $this;
+    }
+
+    /**
+     * Remove inviteChildSender
+     *
+     * @param \Trazeo\BaseBundle\Entity\EChildInvite $inviteChildSender
+     */
+    public function removeInviteChildSender(\Trazeo\BaseBundle\Entity\EChildInvite $inviteChildSender)
+    {
+        $this->inviteChildSender->removeElement($inviteChildSender);
+    }
+
+    /**
+     * Get inviteChildSender
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getInviteChildSender()
+    {
+        return $this->inviteChildSender;
     }
 }

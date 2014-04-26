@@ -30,6 +30,9 @@ class EChildInvite
      */
     protected $child;
     
+    /** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="inviteChildSender")
+     */
+    protected $sender;
     
 
     /**
@@ -88,5 +91,29 @@ class EChildInvite
     public function getChild()
     {
         return $this->child;
+    }
+
+    /**
+     * Set sender
+     *
+     * @param \Trazeo\BaseBundle\Entity\UserExtend $sender
+     *
+     * @return EChildInvite
+     */
+    public function setSender(\Trazeo\BaseBundle\Entity\UserExtend $sender = null)
+    {
+        $this->sender = $sender;
+
+        return $this;
+    }
+
+    /**
+     * Get sender
+     *
+     * @return \Trazeo\BaseBundle\Entity\UserExtend 
+     */
+    public function getSender()
+    {
+        return $this->sender;
     }
 }

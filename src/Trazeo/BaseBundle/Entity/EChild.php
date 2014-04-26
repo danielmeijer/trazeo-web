@@ -21,6 +21,7 @@ class EChild
     protected $id;
     
     /** @ORM\ManyToMany(targetEntity="UserExtend", inversedBy="childs")
+     * @var unknown
      */
     protected $userextendchilds;
     

@@ -8,7 +8,7 @@
 				{% if user.Id == allChildInvite.Userextend.Id  %}
 				<div class="alert alert-default">
 	        		<p>Tienes una invitación para ser tutor del niño <b>{{ allChildInvite.Child }}</b>
-						&nbsp;<a href="{{ path('panel_child_invite_accept', { 'id': allChildInvite.Userextend.Id, 'child':allChildInvite.Child.Id }) }}" type="button" class="label label-success">
+						&nbsp;<a href="{{ path('panel_child_invite_accept', { 'id': allChildInvite.Userextend.Id, 'child':allChildInvite.Child.Id, 'sender':allChildInvite.Sender.Id }) }}" type="button" class="label label-success">
 							<i class="fa fa-check"></i> Aceptar
 						</a>&nbsp;
 						<a href="{{ path('panel_child_invite_deny', { 'id': allChildInvite.Userextend.Id ,'child': allChildInvite.Child.Id }) }}" type="button" class="label label-danger">
