@@ -557,6 +557,11 @@ class PanelGroupsController extends Controller
         $form = $this->createForm(new GroupType(), $group, array(
             'action' => $this->generateUrl('panel_group_create'),
             'method' => 'POST',
+        	'attr' => array(
+        				'Groups.help.name' => $this->get('translator')->trans('Groups.help.name'),
+        				'Groups.help.visibility' => $this->get('translator')->trans('Groups.help.visibility'),
+        				'Groups.help.route' => $this->get('translator')->trans('Groups.help.route')
+        		)
         ));
 
         $form->add('submit', 'submit', array('label' => 'Create'));

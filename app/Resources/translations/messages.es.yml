@@ -82,6 +82,7 @@ Groups:
     help:
        name: 'Nombre del grupo'
        route: 'Asignar una ruta a este grupo'
+       visibility: 'Visibilidad del grupo'
         
         
 Children:
@@ -91,16 +92,16 @@ Children:
     nick: 'Nombre del niño'
     date: 'Fecha de nacimiento'
     help:
-        name: 'Nombre del niño'
+        nick: 'Nombre del niño'
         userextend: 'Tutores del niño'
         groups: 'Asignar a un grupo'
         datebirth: 'Fecha de nacimiento'
-        sex: 'Género'
+        gender: 'Género'
         visibility: 'Visibilidad'
     visibility:
         enabled: 'Público'
         disabled: 'Privado'
-    sex:
+    gender:
         boy: 'Niño'
         girl: 'Niña'
     edit:

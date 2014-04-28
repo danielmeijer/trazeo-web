@@ -285,6 +285,12 @@ class PanelChildrenController extends Controller
         $form = $this->createForm(new ChildType(), $child, array(
             'action' => $this->generateUrl('panel_child_create'),
             'method' => 'POST',
+        	'attr' => array(
+        				'Children.help.nick' => $this->get('translator')->trans('Children.help.nick'),
+        				'Children.help.datebirth' => $this->get('translator')->trans('Children.help.datebirth'),
+        				'Children.help.visibility' => $this->get('translator')->trans('Children.help.visibility'),
+        				'Children.help.gender' => $this->get('translator')->trans('Children.help.gender'),
+        		)
         ));
 
         $form->add('submit', 'submit', array('label' => 'Create'));

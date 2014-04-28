@@ -20,7 +20,7 @@ class ChildType extends AbstractType
         					'placeholder' => 'Children.nick',
         					'data-toggle' => 'popover',
         					'data-placement' => 'right',
-        					'data-content' => 'Children.help.nick'
+        					'data-content' => $options['attr']['Children.help.nick']
         					),'required' => true
         			)
         		)
@@ -45,7 +45,8 @@ class ChildType extends AbstractType
     					'placeholder' => 'Children.date',
     					'data-toggle' => 'popover',
     					'data-placement' => 'right',
-    					'data-content' => 'Children.help.dateBirth'),
+    					'data-content' => $options['attr']['Children.help.datebirth']
+    			),
     			'format' => 'dd/MM/yyyy','required' => true))
     			
             ->add('visibility', 'choice', array(
@@ -54,16 +55,16 @@ class ChildType extends AbstractType
             				'placeholder' => 'Children.sex',
             				'data-toggle' => 'popover',
             				'data-placement' => 'right',
-            				'data-content' => 'Children.help.visibility'
+            				'data-content' => $options['attr']['Children.help.visibility']
             		)))
             		
             ->add('gender', 'choice', array(
-            		'choices' => array('boy' => 'Children.sex.boy', 'girl' => 'Children.sex.girl'),
+            		'choices' => array('boy' => 'Children.gender.boy', 'girl' => 'Children.gender.girl'),
         			'attr' => array(
-        					'placeholder' => 'Children.sex',
+        					'placeholder' => 'Children.gender',
         					'data-toggle' => 'popover',
         					'data-placement' => 'right',
-        					'data-content' => 'Children.help.sex'
+        					'data-content' => $options['attr']['Children.help.gender']
         					)
         			)
         		)

@@ -20,7 +20,7 @@ class RouteType extends AbstractType
         					'placeholder' => 'Route.name',
         					'data-toggle' => 'popover',
         					'data-placement' => 'right',
-        					'data-content' => 'Route.help.name'
+        					'data-content' => $options['attr']['Route.help.name']
         					),'required' => true))
             ->add('country', 'entity', array(
             		'class' => 'JJsGeonamesBundle:Country',
@@ -28,7 +28,7 @@ class RouteType extends AbstractType
             				'class' => 'chosen-select',
             				'data-toggle' => 'popover',
             				'data-placement' => 'right',
-            				'data-content' => 'Children.help.country'
+            				'data-content' => $options['attr']['Route.help.country']
             		),
             		'required' => false, //Para permitir hacer submit con una opción 'vacía'
             		'empty_value' => 'España', //Valor que aparece por defecto si no tiene un país asignado

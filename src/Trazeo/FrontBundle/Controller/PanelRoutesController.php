@@ -109,6 +109,10 @@ class PanelRoutesController extends Controller
         $form = $this->createForm(new RouteType(), $route, array(
             'action' => $this->generateUrl('panel_route_create'),
             'method' => 'POST',
+        	'attr' => array(
+        				'Route.help.name' => $this->get('translator')->trans('Route.help.name'),
+        				'Route.help.country' => $this->get('translator')->trans('Route.help.country')
+        		)
         ));
 
         $form->add('submit', 'submit', array('label' => 'Create'));

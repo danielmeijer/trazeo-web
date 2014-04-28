@@ -15,13 +15,14 @@ class GroupType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+    	
         $builder
         ->add('name', null, array(
         		'attr' => array(
         				'placeholder' => 'Groups.name',
         				'data-toggle' => 'popover',
         				'data-placement' => 'right',
-        				'data-content' => 'Groups.help.name'
+        				'data-content' => $options['attr']['Groups.help.name']
         		),'required' => true))
         		
         		->add('visibility', 'choice', array(
@@ -30,7 +31,7 @@ class GroupType extends AbstractType
         						'placeholder' => 'Groups.visibility',
         						'data-toggle' => 'popover',
         						'data-placement' => 'right',
-        						'data-content' => 'Groups.help.visibility'
+        						'data-content' => $options['attr']['Groups.help.visibility']
         				)))
         
         ->add('route', null, array(
@@ -38,7 +39,7 @@ class GroupType extends AbstractType
         				'placeholder' => 'Groups.name',
         				'data-toggle' => 'popover',
         				'data-placement' => 'right',
-        				'data-content' => 'Groups.help.route'
+        				'data-content' => $options['attr']['Groups.help.route']
         		)),
         		array('empty_value' => 'Trans.select.option'));
     }

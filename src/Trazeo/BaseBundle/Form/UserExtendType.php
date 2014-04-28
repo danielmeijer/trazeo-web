@@ -20,7 +20,7 @@ class UserExtendType extends AbstractType
         					'placeholder' => 'Children.nick',
         					'data-toggle' => 'popover',
         					'data-placement' => 'right',
-        					'data-content' => 'Userextend.help.nick'
+        					'data-content' => $options['attr']['Userextend.help.nick']
         					),
             		'required' => true
         			)

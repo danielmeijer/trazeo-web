@@ -28,7 +28,13 @@ class ProfileController extends Controller
     	$sopinetuser = $em->getRepository('\Sopinet\UserBundle\Entity\SopinetUserExtend')->findOneByUser($fos_user->getId());
     	
     	$form_profile = $this->createForm(new UserType(), $fos_user);
-    	$form_userextend = $this->createForm(new UserExtendType(), $userextend);
+    	$form_userextend = $this->createForm(new UserExtendType(), $userextend, array(
+            'action' => $this->generateUrl('panel_userextend_create'),
+            'method' => 'POST',
+        	'attr' => array(
+        				'Userextend.help.nick' => $this->get('translator')->trans('Userextend.help.nick')	
+        		)
+        	));
 
 	    return array(
 	    		'form_profile' => $form_profile->createView(),
