@@ -1,6 +1,6 @@
 <li class="dropdown">
 	<a class="dropdown-toggle clearNotifications" data-toggle="dropdown" href="#">
-		<i class="fa fa-bell fa-fw"></i> <span class="badge">{{ notifications|length() }}</span>  <i class="fa fa-caret-down"></i>
+		<i class="fa fa-bell fa-fw"></i>{% if notifications|length() > 0 %} <span class="badge">{{ notifications|length() }}</span> {% endif %} <i class="fa fa-caret-down"></i>
 	</a>
 	<ul class="dropdown-menu dropdown-alerts">
     	{% for notification in notifications %}

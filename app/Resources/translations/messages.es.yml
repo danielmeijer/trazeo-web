@@ -8,7 +8,7 @@ Menu:
         child: Niños/as
         group: Grupos
         route: Rutas
-
+        
 Login:
     title: 'Inicio de sesión'
     signin: 'Entrar'
@@ -160,7 +160,7 @@ Notifications:
 preference:
     notification_email:
         description: 'Configura cuando quieres que Trazeo te envíe notificaciones'
-        name: 'Notificaiones por email'
+        name: 'Notificaciones por email'
         value:
             never: 'Nunca'
             day: 'Cada día'

@@ -28,6 +28,9 @@ class UserExtendType extends AbstractType
              ->add('country', 'entity', array(
             		'class' => 'JJsGeonamesBundle:Country',
             		'attr' => array('class' => 'chosen-select'),
+             		'required' => false, //Para permitir hacer submit con una opción 'vacía'
+             		'empty_value' => 'España', //Valor que aparece por defecto si no tiene un país asignado
+    				'empty_data'  => 263, //Dato que se registra en la base de datos si se hace un commit con esta selección 'vacía'
             		'property' => 'name'))
             ->add('city', 'entity', array(
             		'class' => 'JJsGeonamesBundle:City',
