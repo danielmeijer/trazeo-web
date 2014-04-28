@@ -58,7 +58,7 @@ class GenerateEmailsCommand extends ContainerAwareCommand
     			->setFrom(array("info@trazeo.com" => "Trazeo"))
     			->setTo($user->getEmail())
     			//->setCc($setCC)
-    			->setBody($con->get('templating')->render('SopinetTemplateAceBundle:Emails:notifyUser.html.twig', array('user' => $user, 'entries' => $entries, 'comments' => $comments)), 'text/html');
+    			->setBody($con->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:notifyUser.html.twig', array('user' => $user, 'notifications' => $notifications)), 'text/html');
     			//->setBody("Este es el cuerpo del delito");
     			$con->get('mailer')->send($message);    			
 
