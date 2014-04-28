@@ -304,19 +304,19 @@ class PanelGroupsController extends Controller
 			if($user == $groupUser){
 				
 				$notification = $container->addFlashMessages("warning","El usuario ya forma parte del grupo");
-				return $this->redirect($this->generateUrl('panel_group'));		
+				return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));		
 			}
 		}
 		
 		
 		if($fos_user != true){
 			$notification = $container->addFlashMessages("warning","El correo electrónico introducido no corresponde a ningún usuario");
-			return $this->redirect($this->generateUrl('panel_group'));
+			return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
 		}
 		
 		if($fos_user == $fos_user_current ){
 			$notification = $container->addFlashMessages("warning","No necesitas invitación para unirte a un grupo del que eres administrador");
-			return $this->redirect($this->generateUrl('panel_group'));
+			return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
 		}
 		
 		// Obtener grupo al que se va a unir a través del param $id
@@ -336,7 +336,7 @@ class PanelGroupsController extends Controller
 			if($requestUserId = $requestGroupId) {
 				// Excepción y redirección
 				$notification = $container->addFlashMessages("warning","Ya has invitado a este usuario anteriormente");
-				return $this->redirect($this->generateUrl('panel_group'));
+				return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
 					
 			}
 				
@@ -361,7 +361,7 @@ class PanelGroupsController extends Controller
 				
 			$container = $this->get('sopinet_flashMessages');
 			$notification = $container->addFlashMessages("success","El usuario ha recibido tu invitación para unirse al grupo");
-			return $this->redirect($this->generateUrl('panel_group'));
+			return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
 				
 		}
 	
@@ -410,7 +410,7 @@ class PanelGroupsController extends Controller
 
 
 		$notification = $container->addFlashMessages("success","Te has unido correctamente al grupo oculto");	
-		return $this->redirect($this->generateUrl('panel_group'));
+		return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$group)));
 	}
 	
 	

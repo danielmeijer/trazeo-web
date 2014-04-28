@@ -25,8 +25,12 @@ class UserType extends AbstractType
         		'invalid_message' => 'Ambas contraseñas deben coincidir',
         		'required' => false,
         		'options' => array('attr' => array('class' => 'password-field')),
-        		'first_options' => array('attr' => array('placeholder' => 'Form.profile.pass')),
-        		'second_options' => array ('attr' => array('placeholder' => 'Form.profile.repeatpass')),
+        		'first_options' => array('attr' => array('placeholder' => 'Form.profile.pass',        					'data-toggle' => 'popover',
+        					'data-placement' => 'right',
+        					'data-content' => 'Form.profile.pass')),
+        		'second_options' => array ('attr' => array('placeholder' => 'Form.profile.repeatpass',        					'data-toggle' => 'popover',
+        					'data-placement' => 'right',
+        					'data-content' => 'Form.profile.repeatpass')),
         		
     		))
         ;

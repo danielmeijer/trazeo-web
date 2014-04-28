@@ -170,3 +170,181 @@ Confirmation:
     question: '¿Estás seguro?'
     yes: 'Sí'
     no: 'No'
+    
+Menu:
+    home: Inicio
+    groups: Grupos
+    routes: Rutas
+    children: Niños/as
+    tooltip:
+        home: Inicio
+        child: Niños/as
+        group: Grupos
+        route: Rutas
+
+Login:
+    title: 'Inicio de sesión'
+    signin: 'Entrar'
+    username: 'Nombre de usuario'
+    password: 'Contraseña'
+    
+Register:
+    email: 'Correo electrónico'
+    name: 'Nombre de usuario'
+    pass: 'Contraseña'
+    repeatpass: 'Repita la contraseña'
+    
+Navbar:
+    profile: 'Perfil'
+    settings: 'Configuración'
+    logout: 'Cerrar sesión'
+
+Panel:
+    title: 'Panel de Control'
+    
+Email: 'Correo electrónico'
+
+Settings:
+    index:
+        title: 'Notificaciones'
+        description: 'Personaliza tus avisos de notificaciones en la plataforma de trazeo'
+
+Userextend:
+    index:
+        title: 'Perfil de usuario'
+        description: 'Administra tu datos de usuario en Trazeo'
+    help:
+        nick: 'Nombre de  usuario'
+        groups: 'Grupos de los que quieres formar parte'
+    profile:
+        title: 'Perfil de usuario'
+        edit: 'Editar perfil'
+
+Route:
+    index:
+        title: Rutas de paseo
+        description: Listado de rutas creadas por los usuarios para definir los caminos al cole
+    edit:
+        title: 'Editar datos de ruta'
+        description: 'Establece un nombre e indica a qué país y ciudad pertenece'
+    name: 'Nombre de la ruta'
+    show:
+        title: "Ruta: %name%"
+    help:
+        name: 'Nombre descriptivo de la ruta'
+        country: 'Páis al que pertenece'
+        
+Groups:
+    index:
+        title: 'Sugerencia de grupos'
+        description: 'Estos grupos se encuentran en tu ciudad o en la de alguno de tus niños, y podrían interesarte'
+    edit:
+        title: 'Editar datos de grupo'
+        description: 'Indica el tipo de visibilidad y asígnale una ruta'
+    new:
+        title: 'Crear nuevo grupo'
+        description: 'Dale un nombre, una visibilidad y asígnale una ruta'
+
+    visibility:
+        public: 'Público'
+        private: 'Privado'
+        hidden: 'Oculto'
+
+    
+    name: 'Nombre del grupo'
+    help:
+       name: 'Nombre del grupo'
+       route: 'Asignar una ruta a este grupo'
+        
+        
+Children:
+    index:
+        title: Listado de tus niños
+        description: En este apartado puedes consultar toda la información referente a tus niños registrados en Trazeo
+    nick: 'Nombre del niño'
+    date: 'Fecha de nacimiento'
+    help:
+        name: 'Nombre del niño'
+        userextend: 'Tutores del niño'
+        groups: 'Asignar a un grupo'
+        datebirth: 'Fecha de nacimiento'
+        sex: 'Género'
+        visibility: 'Visibilidad'
+    visibility:
+        enabled: 'Público'
+        disabled: 'Privado'
+    sex:
+        boy: 'Niño'
+        girl: 'Niña'
+    edit:
+        title: 'Editar datos de niño'
+        description: 'Sólo utilizamos estos datos para darte un mejor servicio. Sólo tú podrás verlos, ningún otro padre o madre'
+
+Trans:
+    alternative: 'ES Alternative Translation'
+    description: 'ES Description'
+    head: 'Trazeo traducciones'
+    meaning: 'ES Meaning'
+    notfound: 'ES No messages found'
+
+    save:
+        success: 'La traducción se ha guardado'
+        wrong: 'ES Could not be saved'
+
+    sources: 'ES Sources'
+
+    subtitle:
+        exist: 'ES Existing Messagess'
+        new: 'ES New Messages'
+
+    table:
+        id: 'ES Id'
+        info: 'ES Additional Information'
+        translation: 'ES Translation'
+
+    title: 'ES Available Messages'
+    
+    search:
+        groups: 'Buscar Grupos'
+        routes: 'Buscar Rutas'
+        children: 'Buscar Niños'
+        
+    select:
+        option: 'Selecciona una opción'
+        
+Notifications:
+    child:
+        invite: 
+            user: 'Has recibido una invitación para ser tutor del niño %0'
+            accept: 'El usuario %0 ha aceptado la invitación para ser tutor del niño %1'
+            deny: 'El usuario %0 ha rechazado la invitación para ser tutor del niño %1'
+        joingroup: 'El niño %0 ha entrado en el grupo %1'
+    group:
+        join:
+            deny: 'Se ha rechazado tu petición para unirte al grupo %0'
+            let: 'Se ha aceptado tu petición para unirte al grupo %0'
+            request: 'El usuario %0 ha solicitado unirse al grupo %1'
+        invite:
+            user: 'Has recibido una invitación para unirte al grupo %0'
+            accept: 'El usuario %0 ha aceptado la invitación para unirse al grupo %1'
+            deny: 'El usuario %0 ha rechazado la invitación para unirse al grupo %1'
+    
+
+preference:
+    notification_email:
+        description: 'Configura cuando quieres que Trazeo te envíe notificaciones'
+        name: 'Notificaiones por email'
+        value:
+            never: 'Nunca'
+            day: 'Cada día'
+            now: 'Cuando se produzcan'
+            
+Confirmation:
+    question: '¿Estás seguro?'
+    yes: 'Sí'
+    no: 'No'
+    
+Form:
+    profile:
+        pass: 'Contraseña'
+        repeatpass: 'Confirmar contraseña'
