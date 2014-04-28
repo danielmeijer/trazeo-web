@@ -80,7 +80,7 @@ class PanelRoutesController extends Controller
         $form = $this->createCreateForm($route);
         $form->handleRequest($request);
 	
-        if ($form->isValid()) {
+        if ($form->isValid())
             $em = $this->getDoctrine()->getManager();
             $route->setAdmin($user);
             $em->persist($route);
@@ -90,7 +90,6 @@ class PanelRoutesController extends Controller
             $routeId = $formData->getId();
 
             return $this->redirect($this->generateUrl('panel_route_edit',array('id'=>$routeId)));
-        }
 
         return array(
             'route' => $route,
