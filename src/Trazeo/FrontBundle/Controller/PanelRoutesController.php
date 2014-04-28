@@ -3,6 +3,7 @@
 namespace Trazeo\FrontBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -11,6 +12,7 @@ use Trazeo\BaseBundle\Entity\ERoute;
 use Trazeo\BaseBundle\Entity\EPoints;
 use Trazeo\BaseBundle\Form\RouteType;
 use Sopinet\Bundle\SimplePointBundle\ORM\Type\SimplePoint;
+
 
 /**
  * PanelRoutes controller.
@@ -51,14 +53,23 @@ class PanelRoutesController extends Controller
     	);
     }
     
-    public function lastEvent(){
+    /**
+     * Get Last Point.
+     *
+     * @Route("/current/lastEvent",name="panel_route_last")
+     * @Method("GET")
+     */
+    public function lastEventAction(){
     	$em = $this->getDoctrine()->getManager();
     	$reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
+    	
     	$events = $reEvent->findByAction("point", array('createdAt' => 'DESC'));
     	$lastEvent = $events[0];
-    	return array(
-    			'lastEvent' => $lastEvent
-    	);
+    	
+    	//return  new Response(array(
+    		//	'lastEvent' => $lastEvent));
+    	return new Response($lastEvent);
+    	//return new Response("POINT(10 10)");
     }
     
     /**
