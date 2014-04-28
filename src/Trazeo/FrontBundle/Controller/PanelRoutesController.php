@@ -40,13 +40,25 @@ class PanelRoutesController extends Controller
     /**
      * Lists all Routes entities.
      *
-     * @Route("/current", name="panel_route_current")
+     * @Route("/{id}/current", name="panel_route_current")
      * @Method("GET")
      * @Template()
      */
-    public function currentAction()
+    public function currentAction(ERoute $route)
     {
-    	return array();
+    	return array(
+    		'route' => $route
+    	);
+    }
+    
+    public function lastEvent(){
+    	$em = $this->getDoctrine()->getManager();
+    	$reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
+    	$events = $reEvent->findByAction("point", array('createdAt' => 'DESC'));
+    	$lastEvent = $events[0];
+    	return array(
+    			'lastEvent' => $lastEvent
+    	);
     }
     
     /**
@@ -227,11 +239,16 @@ class PanelRoutesController extends Controller
 		$em = $this->getDoctrine()->getManager();
 
         $route = $em->getRepository('TrazeoBaseBundle:ERoute')->find($id);
-    	
-    	$punto = new EPoints();
+        $points = $em->getRepository('TrazeoBaseBundle:EPoints')->findByRoute($route->getId());
+    	ldd($points);
+    	if(count($route->getPoints()->toArray()) != 0){
+    		$points = $em->getRepository('TrazeoBaseBundle:EPoints')->findByRoute($route->getId());
+    		foreach($points as $point){
+    			$em->remove($point);
+    		}
+    	}
 		for($i = 0;$i < count($points);$i++)
 		{
-			
 			$latlng = explode(",", $points[$i]);
 
 			$punto = new EPoints();

@@ -30,6 +30,9 @@ class RouteType extends AbstractType
             				'data-placement' => 'right',
             				'data-content' => 'Children.help.country'
             		),
+            		'required' => false, //Para permitir hacer submit con una opción 'vacía'
+            		'empty_value' => 'España', //Valor que aparece por defecto si no tiene un país asignado
+            		'empty_data'  => 263, //Dato que se registra en la base de datos si se hace un commit con esta selección 'vacía'
             		'property' => 'name'
            	));
     }
