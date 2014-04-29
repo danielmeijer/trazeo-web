@@ -74,19 +74,22 @@
 						</h4>
 		            	<div class="pull-right" style="margin-top:-20px;">
 		            	 	{% if userGroup.Visibility == 0 %}
-								<span type="button" 
+								<span type="button" id="member-{{ userGroup.id }}" groupVisibility="0"
+								changeVisibility="{{ path('panel_group_changeVisibility', { 'id': userGroup.id, 'visibility': "replace" }) }}";
 								class="btn btn-success btn-xs" rel="tooltip-top" title="Grupo público">
 									<i class="fa fa-unlock"></i> Público
 								</span>
 							{% endif %}
 		            	 	{% if userGroup.Visibility == 1 %}
-								<span href="#" type="button" 
+								<span href="#" type="button" id="member-{{ userGroup.id }}" groupVisibility="1"
+								changeVisibility="{{ path('panel_group_changeVisibility', { 'id': userGroup.id, 'visibility': "replace" }) }}";
 								class="btn btn-danger btn-xs" rel="tooltip-top" title="Grupo privado">
 									<i class="fa fa-lock"></i> Privado
 								</span>
 							{% endif %}
 		            	 	{% if userGroup.Visibility == 2 %}
-								<span href="#" type="button" 
+								<span href="#" type="button" id="member-{{ userGroup.id }}" groupVisibility="2"
+								changeVisibility="{{ path('panel_group_changeVisibility', { 'id': userGroup.id, 'visibility': "replace" }) }}";
 								class="btn btn-warning btn-xs" rel="tooltip-top" title="Grupo oculto">
 									<i class="fa fa-eye-slash"></i> Oculto
 								</span>	
@@ -104,6 +107,9 @@
 								class="btn btn-default btn-xs" rel="tooltip-top" title="Editar información">
 									<i class="fa fa-pencil"></i> Editar
 								</a> 
+								<script type="text/javascript">
+									document.getElementById("member-{{ userGroup.id }}").setAttribute("data-toggle","confirmationChange");
+								</script> 		
 						{% endif %}
 		            	 </div>
 					</div>
@@ -181,19 +187,22 @@
 					</h4>
 	            	<div class="pull-right" style="margin-top:-20px;">
 		            	 	{% if group.Visibility == 0 %}
-								<span type="button" 
+								<span type="button" groupVisibility="0" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
+								id="nomember-{{ group.id }}"
 								class="btn btn-success btn-xs" rel="tooltip-top" title="Grupo público">
 									<i class="fa fa-unlock"></i> Público
 								</span>
 							{% endif %}
 		            	 	{% if group.Visibility == 1 %}
-								<span href="#" type="button" 
+								<span href="#" type="button" groupVisibility="1" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
+								id="nomember-{{ group.id }}"
 								class="btn btn-danger btn-xs" rel="tooltip-top" title="Grupo privado">
 									<i class="fa fa-lock"></i> Privado
 								</span>
 							{% endif %}
 		            	 	{% if group.Visibility == 2 %}
-								<span href="#" type="button" 
+								<span href="#" type="button" groupVisibility="2" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
+								id="nomember-{{ group.id }}"
 								class="btn btn-warning btn-xs" rel="tooltip-top" title="Grupo oculto">
 									<i class="fa fa-eye-slash"></i> Oculto
 								</span>	
@@ -216,6 +225,9 @@
 							class="btn btn-default btn-xs" rel="tooltip-top" title="Editar información">
 								<i class="fa fa-pencil"></i> Editar
 							</a> 
+							<script type="text/javascript">
+									document.getElementById("nomember-{{ group.id }}").setAttribute("data-toggle","confirmationChange");
+							</script> 
 					{% endif %}
 	            	</div>
 				</div>
