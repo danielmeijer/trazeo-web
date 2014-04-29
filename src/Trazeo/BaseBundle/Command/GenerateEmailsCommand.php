@@ -50,17 +50,30 @@ class GenerateEmailsCommand extends ContainerAwareCommand
     		$reNOT = $em->getRepository("SopinetUserNotificationsBundle:Notification");
     		$notifications = $reNOT->findBy(array('user' => $user, 'email' => 0));
     		if (count($notifications) > 0) {
-    			$output->writeln('<comment>Poniendo en cola de envío por email '.count($notifications).' notificaciones para el usuario '.$user->getEmail().'</comment>');
+    			$output->writeln('<comment>Poniendo en cola de envío por email '.count($notifications).' notificaciones para el usuario '.$user->getUser()->getEmail().'</comment>');
     			    			
+    			//$entries = array();
+    			//$comments = array();
+    			foreach($notifications as $not) {
+    				/*if ($not->getAction() == "entry") {
+    					$entries[] = $not->getObjectComplete();
+    				} else if ($not->getAction() == "entry_comment") {
+    					$comments[] = $not->getObjectComplete();
+    				}*/
+    				$not->setEmail(1);
+    				$em->persist($not);
+    				$em->flush();
+    			}
+    			
     			$message = \Swift_Message::newInstance()
     			// TODO: Traducir
     			->setSubject("Tiene ".count($notifications)." novedades")
     			->setFrom(array("info@trazeo.com" => "Trazeo"))
-    			->setTo($user->getEmail())
+    			->setTo($user->getUser()->getEmail())
     			//->setCc($setCC)
     			->setBody($con->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:notifyUser.html.twig', array('user' => $user, 'notifications' => $notifications)), 'text/html');
     			//->setBody("Este es el cuerpo del delito");
-    			$con->get('mailer')->send($message);    			
+    			$ok = $con->get('mailer')->send($message);
 
     			$output->writeln('<info>Hecho</info>');
     		}
