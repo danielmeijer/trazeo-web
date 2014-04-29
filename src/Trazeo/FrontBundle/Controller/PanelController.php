@@ -28,13 +28,15 @@ class PanelController extends Controller
     	$childs = $user->getChilds();
         $groups = $user->getAdminGroups();
     	$routes = $user->getAdminRoutes();
+    	$groupsMember = $user->getGroups();
 
     	$twig_variables = array(
             'user' => $user,
     		'childs' => $childs,
             'groups' => $groups,
     		'routes' => $routes,
-    		'notifications' => $not
+    		'notifications' => $not,
+    		'groupsMember' => $groupsMember
     	);
 	    return $this->render('TrazeoFrontBundle:Panel:home.html.twig', $twig_variables);
 	}
