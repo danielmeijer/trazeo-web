@@ -10,19 +10,23 @@
         		<i class="fa fa-5x fa-clock-o"></i>
         	</div>
         	<div class="col-md-11">
+        		{% if groupsRide %}
 					<h3>Hay paseos en marcha</h3>
 					<p>Los siguientes grupos están en marcha y tienes ninos apuntados en ellos:</p>
 					<br />
-					{% for group in groupsMember %}
-						{% if group.hasRide == 1 %}
+					{% for group in groupsRide %}
 							<ul class="col-md-5">
 								<li><i class="fa fa-users"></i>&nbsp; <a rel="tooltip-right" title="Panel del grupo" href="{{ path('panel_group_timeline',{'id': group.id}) }}">{{ group.Name }}</a></li>
 							</ul>
 							<ul class="col-md-5">
 								<li><i class="fa fa-mail-forward"></i><a rel="tooltip-right" title="Mapa de la ruta" href="{{ path('panel_route') }}{{ group.Route.Id }}">&nbsp; Ir al paseo</a></li>
 							</ul>
-					    {% endif %}
+					    
 					{% endfor %}
+				{% else %}
+					<h3>No hay paseos en marcha</h3>
+					<p>Actualmente ninguno de los grupos en los que estás inscrito está realizando un paseo</p>
+				{% endif %}
 			</div>
         </div>
         <!-- END currentGropus -->
