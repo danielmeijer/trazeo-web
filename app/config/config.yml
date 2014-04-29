@@ -39,6 +39,7 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         fos_csrf_provider: "@form.csrf_provider"
+        base_url: %base_url%
     form:
         resources:
             - 'SopinetTemplateSbadmin2Bundle:Form:bootstrap.html.twig'  
