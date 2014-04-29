@@ -1,0 +1,59 @@
+{% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
+
+	{% block css %}
+		{{ parent() }}
+	   	{% stylesheets
+	    	'@SopinetOpenMapBundle/Resources/public/css/leaflet.css'
+	    	'@SopinetOpenMapBundle/Resources/public/css/plugins/leafletRouting/app.css'
+	    	'@SopinetTemplateSbadmin2Bundle/Resources/public/css/plugins/openmap/openmap.css'
+	    	'@SopinetOpenMapBundle/Resources/public/css/plugins/Control.Geocoder/Control.Geocoder.css'
+	    	output='css/*.css' filter='cssrewrite' %}
+	    	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+		{% endstylesheets %}
+ 	{% endblock %}
+{% block body_content %}
+
+		<div class="row">
+			<ul>			
+				<li id="finish">Empieza en:</li>
+				
+				<li id="start">Termina en:</li>
+				
+				<li >Descripción:</li>
+				
+				<li id="distance">Distancia:</li>
+			
+				<li>Niños: apuntados en esta ruta</li>
+				
+				<li>Autor:</li>
+			</ul>
+		</div>
+
+		<h1>MAPA</h1>
+		<div id="mapa" class="col-md-12"></div>
+		
+        <script type="text/javascript">
+        var lastRoute="{{ path('panel_ride_last', {'id': ride.id}) }}";
+
+    	</script>
+{% endblock %}
+		
+	
+{% block js %}	
+	{{ parent() }}
+	{% javascripts 
+		'@SopinetOpenMapBundle/Resources/public/js/leaflet.js'
+		'@SopinetOpenMapBundle/Resources/public/js/leaflet-src.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/utils/LineUtil.Snapping.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/utils/Marker.Snapping.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/utils/Polyline.Snapping.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Storage.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Draw.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Edit.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/Control.Geocoder/Control.Geocoder.js'
+	%}
+	<script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+	{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': "",'editable': "false", 'realTime': "true"} %}
+{% endblock %}

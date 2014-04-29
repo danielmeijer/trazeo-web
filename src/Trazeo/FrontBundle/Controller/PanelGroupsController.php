@@ -663,6 +663,11 @@ class PanelGroupsController extends Controller
         $form = $this->createForm(new GroupType(), $group, array(
             'action' => $this->generateUrl('panel_group_update', array('id' => $group->getId())),
             'method' => 'PUT',
+        	'attr' => array(
+        				'Groups.help.name' => $this->get('translator')->trans('Groups.help.name'),
+        				'Groups.help.name2' => $this->get('translator')->trans('Groups.help.name2'),
+        				'Groups.help.route' => $this->get('translator')->trans('Groups.help.route')
+        		)
         ));
 
         $form->add('submit', 'submit', array('label' => 'Update'));

@@ -24,6 +24,10 @@ groups:
     
 routes:
     resource: "@TrazeoFrontBundle/Controller/PanelRoutesController.php"
+    type:     annotation
+    
+rides:
+    resource: "@TrazeoFrontBundle/Controller/PanelRidesController.php"
     type:     annotation  
     
 userextend:

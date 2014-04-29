@@ -40,40 +40,6 @@ class PanelRoutesController extends Controller
     }
     
     /**
-     * Lists all Routes entities.
-     *
-     * @Route("/{id}/current", name="panel_route_current")
-     * @Method("GET")
-     * @Template()
-     */
-    public function currentAction(ERoute $route)
-    {
-    	return array(
-    		'route' => $route
-    	);
-    }
-    
-    /**
-     * Get Last Point.
-     *
-     * @Route("/current/lastEvent",name="panel_route_last")
-     * @Method("GET")
-     */
-    public function lastEventAction(){
-    	$em = $this->getDoctrine()->getManager();
-    	$reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
-    	
-    	$events = $reEvent->findByAction("point", array('createdAt' => 'DESC'));
-    	$lastEvent = $events[0];
-    	//ldd($lastEvent);
-    	//return  new Response(array(
-    		//	'lastEvent' => $lastEvent));
-    		
-    	return new Response($lastEvent->getData());
-    	//return new Response("POINT(10 10)");
-    }
-    
-    /**
      * Creates a new Route entity.
      *
      * @Route("/", name="panel_route_create")
@@ -232,6 +198,10 @@ class PanelRoutesController extends Controller
         $form = $this->createForm(new RouteType(), $route, array(
             'action' => $this->generateUrl('panel_route_update', array('id' => $route->getId())),
             'method' => 'PUT',
+        	'attr' => array(
+        				'Route.help.name' => $this->get('translator')->trans('Route.help.name'),
+        				'Route.help.country' => $this->get('translator')->trans('Route.help.country')
+        		)
         ));
 
         $form->add('submit', 'submit', array('label' => 'Update'));
