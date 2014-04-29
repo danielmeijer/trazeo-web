@@ -65,10 +65,10 @@ class PanelRoutesController extends Controller
     	
     	$events = $reEvent->findByAction("point", array('createdAt' => 'DESC'));
     	$lastEvent = $events[0];
-    	
+    	//ldd($lastEvent);
     	//return  new Response(array(
     		//	'lastEvent' => $lastEvent));
-    	return new Response($lastEvent);
+    	return new Response($lastEvent->getData());
     	//return new Response("POINT(10 10)");
     }
     
