@@ -86,7 +86,7 @@
 											<td><i class="fa fa-calendar-o"></i>&nbsp; {{ child.datebirth|getTimeAgo}}</td>
 							                <td>
 												<a class="btn btn-xs btn-default" href="{{ path('panel_child_edit', {'id': child.id}) }}"><i class="fa fa-pencil"></i>&nbsp; Editar</a>
-												<a class="btn btn-xs btn-default" style="cursor:pointer;" data-href="{{ path('panel_child_delete', {'id': child.id }) }}" data-toggle="confirmation"><i class="fa fa-trash-o"></i>&nbsp; Eliminar</a>
+												<a class="btn btn-xs btn-default" style="cursor:pointer;" data-btnCancelLabel='{{ 'Confirmation.no'|trans }}' data-btnOkLabel='{{ 'Confirmation.yes'|trans }}' data-href="{{ path('panel_child_delete', {'id': child.id }) }}" data-toggle="confirmation" data-title='{{ 'Confirmation.question'|trans }}'><i class="fa fa-trash-o"></i>&nbsp; Eliminar</a>
 							                </td>
 							            </tr>
 							        {% endfor %}
@@ -151,7 +151,7 @@
 							                <td><a href="{{ path('panel_route')}}{{ group.Route.Id }}">{{ group.Route.Name }}</a></td>
 							                <td>
 												<a class="btn btn-xs btn-default" href="{{ path('panel_group') }}{{ group.id }}/edit"><i class="fa fa-pencil"></i>&nbsp;  Editar</a>
-												<a class="btn btn-xs btn-default" style="cursor:pointer;" data-href="{{ path('panel_group_delete', {'id': group.id }) }}" data-toggle="confirmation"" ><i class="fa fa-trash-o"></i>&nbsp; Eliminar</a>
+												<a class="btn btn-xs btn-default" style="cursor:pointer;" data-href="{{ path('panel_group_delete', {'id': group.id }) }}" data-toggle="confirmation"" data-title='{{ 'Confirmation.question'|trans }}' data-btnCancelLabel='{{ 'Confirmation.no'|trans }}' data-btnOkLabel='{{ 'Confirmation.yes'|trans }}'><i class="fa fa-trash-o"></i>&nbsp; Eliminar</a>
 							                </td>
 							            </tr>
 							        {% endfor %}
@@ -204,7 +204,7 @@
 							                <td><a href="{{ path('panel_route')}}{{ route.Id }}"><i class="fa fa-map-marker"></i>&nbsp; Ver</a></td>
 							                <td>
 												<a class="btn btn-xs btn-default" href="{{ path('panel_route_edit', {'id': route.id }) }}"><i class="fa fa-pencil"></i>&nbsp;  Editar</a>
-												<a class="btn btn-xs btn-default" style="cursor:pointer;" data-href="{{ path('panel_route_delete', {'id': route.id }) }}" data-toggle="confirmation"><i class="fa fa-trash-o"></i>&nbsp; Eliminar</a>
+												<a class="btn btn-xs btn-default" style="cursor:pointer;" data-href="{{ path('panel_route_delete', {'id': route.id }) }}" data-toggle="confirmation" data-btnCancelLabel='{{ 'Confirmation.no'|trans }}' data-btnOkLabel='{{ 'Confirmation.yes'|trans }}' data-title='{{ 'Confirmation.question'|trans }}'><i class="fa fa-trash-o"></i>&nbsp; Eliminar</a>
 							                </td>
 							            </tr>
 							        {% endfor %}

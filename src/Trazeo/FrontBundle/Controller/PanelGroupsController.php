@@ -22,12 +22,12 @@ use Trazeo\BaseBundle\Controller\GroupsController;
 class PanelGroupsController extends Controller
 {
 	/**
-	 * User join Child to Group.
+	 * User change visibility of a Group.
 	 *
-	 * @Route("/{group}/changevisibility/{visibility}", name="panel_group_joinChild")
+	 * @Route("/{id}/changevisibility/{visibility}", name="panel_group_changeVisibility")
 	 * @Method("GET")
 	 */
-	public function changeVisibility(EGroup $group, $visibility){
+	public function changeVisibility(EGroup $id, $visibility){
 		$em = $this->getDoctrine()->getManager();
         $fos_user = $this->container->get('security.context')->getToken()->getUser();
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
@@ -41,6 +41,8 @@ class PanelGroupsController extends Controller
         }
         else{
 			$group->setVisibility($visibility);
+			$em->persist($group);
+			$em->flush();
         }
         
         return $this->redirect($this->generateUrl('panel_group'));
