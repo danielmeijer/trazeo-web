@@ -9,6 +9,7 @@
 		{% include 'SopinetUserNotificationsBundle:Include:mini.html.twig' with {
 				'notifications': app.user|getSopinetUserNotifications()
 			} %}
+			
 	{% endblock %}
 {% endembed %}
 
@@ -16,7 +17,7 @@
 	<div id="page-wrapper">
 		{% if pageheader_title is not defined %}
 			{% set pageheader_title = "Trazeo" %}
-			{% set pageheader_description = "" %}
+			{% set pageheader_description = "La aplicación web / móvil para recuperar el camino al cole a pie" %}
 		{% endif %}
 			{% include 'SopinetTemplateSbadmin2Bundle:Base:pageheader.html.twig' with {
 				'title': pageheader_title,
@@ -28,7 +29,7 @@
 			<div class="pull-right">
 			<a href="{{ path('panel_child_new') }}">
 				<button type="button" class="btn btn-success btn-outline">
-					<i class="fa fa-plus-circle"></i> <i class="fa fa-user"></i> Añadir hijo a Trazeo									
+					<i class="fa fa-plus-circle"></i> <i class="fa fa-user"></i> Añadir niño a Trazeo									
 				</button>
 			</a>
 			<a href="{{ path('panel_group_new') }}">

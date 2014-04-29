@@ -74,6 +74,9 @@ class PanelUserController extends Controller
         $form = $this->createForm(new UserExtendType(), $entity, array(
             'action' => $this->generateUrl('panel_userextend_create'),
             'method' => 'POST',
+        	'attr' => array(
+        				'Userextend.help.nick' => $this->get('translator')->trans('Userextend.help.nick')	
+        		)
         ));
 
         $form->add('submit', 'submit', array('label' => 'Create'));

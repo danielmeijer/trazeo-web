@@ -5,8 +5,8 @@
 	   	{% stylesheets
 	    	'@SopinetOpenMapBundle/Resources/public/css/leaflet.css'
 	    	'@SopinetOpenMapBundle/Resources/public/css/plugins/leafletRouting/app.css'
-	    	'@SopinetOpenMapBundle/Resources/public/css/plugins/Control.OSMGeocoder/Control.OSMGeocoder.css'
 	    	'@SopinetTemplateSbadmin2Bundle/Resources/public/css/plugins/openmap/openmap.css'
+	    	'@SopinetOpenMapBundle/Resources/public/css/plugins/Control.Geocoder/Control.Geocoder.css'
 	    	output='css/*.css' filter='cssrewrite' %}
 	    	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
 		{% endstylesheets %}
@@ -31,7 +31,21 @@
 
 		<h1>MAPA</h1>
 		<div id="mapa" class="col-md-12"></div>
+		{% for point in route.points %}
+			<input type="hidden" name="pickup{{ loop.index }}" value="false">
+			<input type="hidden" name="lat{{ loop.index }}" value="{{ point.location.latitude }}">
+			<input type="hidden" name="lng{{ loop.index }}" value="{{ point.location.longitude }}">
+		{% endfor %}
+            
+        {% for group in route.groups %}
+        	{{ group.name }}
+        {% endfor %}
+        <script type="text/javascript">
+        var lastRoute="{{ path('panel_route_last') }}";
+
+    	</script>
 {% endblock %}
+		
 	
 {% block js %}	
 	{{ parent() }}
@@ -45,7 +59,7 @@
 		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Storage.js'
 		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Draw.js'
 		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Edit.js'
-		'@SopinetOpenMapBundle/Resources/public/js/plugins/Control.OSMGeocoder/Control.Geocoder.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/Control.Geocoder/Control.Geocoder.js'
 	%}
 	<script type="text/javascript" src="{{ asset_url }}"></script>
 	{% endjavascripts %}

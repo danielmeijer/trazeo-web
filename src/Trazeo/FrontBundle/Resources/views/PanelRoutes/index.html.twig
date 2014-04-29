@@ -11,25 +11,34 @@
         	</div>
         	<div class="col-md-11">
 				<h4>Estas rutas se encuentran en tu ciudad y podrían interesarte.</h4>
-		
+				<form action="{{ path('panel_route') }}">
 					<div class="input-group custom-search-form col-md-4">						
 						<input type="search" class="form-control" placeholder='{{ "Trans.search.routes"|trans }}'/>
 						<span class="input-group-btn">
-						<button class="btn btn-success" type="button"><i class="fa fa-search"></i></button>
+						<button class="btn btn-success" type="submit"><i class="fa fa-search"></i></button>
 						</span>	
 					</div>
+				</form>
 			</div>
 		</div>
 		
 		
 	{% for route in routes %}
-		<div class="panel-group" id="accordion">
+		<div class="panel-group" id="accordion1">
 			<div class="panel panel-warning">
 				<div class="panel-heading">
-		        	<h4 class="panel-title">
-		            	<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ route.id }}">{{ route.name }}</a>
-						<div class="pull-right"><span class="label label-success">{{ "Menu.groups"|trans }} {{ route.groups|length }}</span></div>
+		        	<h4 class="panel-title" style="cursor:pointer;" data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ route.id }}">
+		            	<a data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ route.id }}">{{ route.name }}</a>
 					</h4>
+					<div class="pull-right" style="margin-top:-20px;">
+						{% if app.user.id == route.Admin.id %}
+							<a href="{{ path('panel_route') }}{{ route.id }}/edit" type="button" 
+							class="btn btn-default btn-xs" rel="tooltip-top" title="Editar información">
+								<i class="fa fa-pencil"></i> Editar
+							</a>
+						{% endif %}
+					<span class="label label-success">{{ "Menu.groups"|trans }} {{ route.groups|length }}</span>
+					</div>
 				</div>
 				<div id="collapse{{ route.id }}" class="panel-collapse collapse {% if loop.index == 1 %}in{% endif %}">
 					<div class="panel-body">

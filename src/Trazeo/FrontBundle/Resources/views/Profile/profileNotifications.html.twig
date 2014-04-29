@@ -1,0 +1,9 @@
+{% set activeMenu = "home" %}
+{% set pageheader_title = "User.notifications.title"|trans %}
+{% set pageheader_description = "User.notifications.description"|trans %}
+{% extends 'TrazeoFrontBundle:Panel:base.html.twig' %} 
+{% block body_content %}
+	{% block add_navbar %}
+		{% include 'SopinetUserNotificationsBundle:Include:notificationList.html.twig' %}
+	{% endblock %}
+{% endblock %}

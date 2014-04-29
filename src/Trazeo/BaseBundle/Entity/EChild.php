@@ -20,7 +20,8 @@ class EChild
      */
     protected $id;
     
-    /** @ORM\ManyToMany(targetEntity="UserExtend", mappedBy="childs")
+    /** @ORM\ManyToMany(targetEntity="UserExtend", inversedBy="childs")
+     * @var unknown
      */
     protected $userextendchilds;
     
@@ -49,6 +50,11 @@ class EChild
      * @ORM\Column(name="visibility", type="boolean")
      */
     protected $visibility;
+    
+    /** @ORM\OneToMany(targetEntity="EChildInvite",  mappedBy="child")
+     * @var unknown
+     */
+    protected $inviteChild;
 
 
 	/**
@@ -244,5 +250,39 @@ class EChild
     public function getGroups()
     {
         return $this->groups;
+    }
+
+    /**
+     * Add inviteChild
+     *
+     * @param \Trazeo\BaseBundle\Entity\EChildInvite $inviteChild
+     *
+     * @return EChild
+     */
+    public function addInviteChild(\Trazeo\BaseBundle\Entity\EChildInvite $inviteChild)
+    {
+        $this->inviteChild[] = $inviteChild;
+
+        return $this;
+    }
+
+    /**
+     * Remove inviteChild
+     *
+     * @param \Trazeo\BaseBundle\Entity\EChildInvite $inviteChild
+     */
+    public function removeInviteChild(\Trazeo\BaseBundle\Entity\EChildInvite $inviteChild)
+    {
+        $this->inviteChild->removeElement($inviteChild);
+    }
+
+    /**
+     * Get inviteChild
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getInviteChild()
+    {
+        return $this->inviteChild;
     }
 }

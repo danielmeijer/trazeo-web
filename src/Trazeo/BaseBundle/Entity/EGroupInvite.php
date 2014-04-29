@@ -5,7 +5,7 @@ namespace Trazeo\BaseBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Entity EGroupAccess
+ * Entity EGroupInvite
  *
  * @ORM\Table("e_groupinvite")
  * @ORM\Entity
@@ -21,11 +21,11 @@ class EGroupInvite
      */
     protected $id;
 
-    /** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="invite")
+    /** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="inviteGroup")
      */
     protected $userextend;
     
-    /** @ORM\ManyToOne(targetEntity="EGroup", inversedBy="invite")
+    /** @ORM\ManyToOne(targetEntity="EGroup", inversedBy="inviteGroup")
      * @var unknown
      */
     protected $group;

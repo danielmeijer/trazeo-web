@@ -116,6 +116,27 @@ class NotificationHelper {
 		// Devolvemos las notificaciones
 	}
 	
+	
+	/**
+	 * Get All Notifications from user
+	 *
+	 * @param User $user
+	 * @return Array Notifications
+	 */
+	function getAllNotifications($user = null) {
+		$em = $this->_container->get("doctrine.orm.entity_manager");
+		$reNotifications = $em->getRepository("SopinetUserNotificationsBundle:Notification");
+	
+		$userextend = $this->_getSopinetUserExtend($user);
+			$notifications = $reNotifications->findBy(array(
+					'user' => $userextend,
+					'view' => -1
+			));
+		return $notifications;
+		// Devolvemos todas las notificaciones
+	}
+	
+	
 	function clearNotifications($user = null) {
 		$em = $this->_container->get("doctrine.orm.entity_manager");
 		$reNotifications = $em->getRepository("SopinetUserNotificationsBundle:Notification");

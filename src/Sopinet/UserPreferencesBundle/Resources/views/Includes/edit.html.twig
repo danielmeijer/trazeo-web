@@ -19,7 +19,7 @@
 				<li{% if i == 0 %} class="active"{% endif %}>
 					<a data-toggle="tab" href="#setting_tab_{{ setting.id }}">
 						<i class="icon-{{ setting.icon }}"></i>
-						{{ "preference."~setting.name|trans }}
+						{{ ("preference."~setting.name~".name")|trans }}
 					</a>
 				</li>
 				{% set i = i + 1 %}
@@ -31,7 +31,7 @@
 				{% for setting in settings %}
 				<div id="setting_tab_{{ setting.id }}" class="fade tab-pane{% if i == 0 %} in active{% endif %}">
 					<div class="row-fluid">
-						<span class="span7">{{ "preference."~setting.description|trans }}</span>
+						<span class="span7">{{ ("preference."~setting.description)|trans }}</span>
 						<span class="span5">
 							{% if setting.type == "Enum" %}
 								{% if setting.optionscont == 2 %}

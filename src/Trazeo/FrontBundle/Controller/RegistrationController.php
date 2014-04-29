@@ -26,7 +26,7 @@ public function registerAction()
                 $route = 'panel'; //override route: fos_user_registration_confirmed -> panel
             }
 
-            $this->setFlash('fos_user_success', 'registration.flash.user_created');
+            $this->setFlash('fos_user_success', $this->container->get('translator')->trans('registration.flash.user_created'));
             $url = $this->container->get('router')->generate($route);
             $response = new RedirectResponse($url);
 

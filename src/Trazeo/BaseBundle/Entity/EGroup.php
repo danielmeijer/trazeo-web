@@ -56,7 +56,7 @@ class EGroup
     /** @ORM\OneToMany(targetEntity="EGroupInvite",  mappedBy="group")
      * @var unknown
      */
-    protected $invite;
+    protected $inviteGroup;
     
     /** 
      * @ORM\OneToOne(targetEntity="ERide", mappedBy="group")
@@ -381,5 +381,39 @@ class EGroup
     public function getRide()
     {
         return $this->ride;
+    }
+
+    /**
+     * Add inviteGroup
+     *
+     * @param \Trazeo\BaseBundle\Entity\EGroupInvite $inviteGroup
+     *
+     * @return EGroup
+     */
+    public function addInviteGroup(\Trazeo\BaseBundle\Entity\EGroupInvite $inviteGroup)
+    {
+        $this->inviteGroup[] = $inviteGroup;
+
+        return $this;
+    }
+
+    /**
+     * Remove inviteGroup
+     *
+     * @param \Trazeo\BaseBundle\Entity\EGroupInvite $inviteGroup
+     */
+    public function removeInviteGroup(\Trazeo\BaseBundle\Entity\EGroupInvite $inviteGroup)
+    {
+        $this->inviteGroup->removeElement($inviteGroup);
+    }
+
+    /**
+     * Get inviteGroup
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getInviteGroup()
+    {
+        return $this->inviteGroup;
     }
 }

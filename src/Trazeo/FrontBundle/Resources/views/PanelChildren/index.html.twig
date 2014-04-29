@@ -4,24 +4,39 @@
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
 		{% block body_content %}               
-
-		<div class="panel-group" id="accordion">
+	        {% for allChildInvite in allChildsInvite %}
+				{% if user.Id == allChildInvite.Userextend.Id  %}
+				<div class="alert alert-default">
+	        		<p>Tienes una invitación para ser tutor del niño <b>{{ allChildInvite.Child }}</b>
+						&nbsp;<a href="{{ path('panel_child_invite_accept', { 'id': allChildInvite.Userextend.Id, 'child':allChildInvite.Child.Id, 'sender':allChildInvite.Sender.Id }) }}" type="button" class="label label-success">
+							<i class="fa fa-check"></i> Aceptar
+						</a>&nbsp;
+						<a href="{{ path('panel_child_invite_deny', { 'id': allChildInvite.Userextend.Id ,'child': allChildInvite.Child.Id, 'sender':allChildInvite.Sender.Id }) }}" type="button" class="label label-danger">
+							<i class="fa fa-times"></i> Cancelar
+						</a>
+	        		 </p>
+	        	</div>
+	        	{% endif %}
+	        {% endfor %}
+		<div class="panel-group" id="accordion1">
 		{% for child in childs %}
-		
-		
 			<div class="panel panel-warning">
 				<div class="panel-heading">
-		        	<h4 class="panel-title">
-		            	<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ child.id }}">{{ child.nick }}</a>
-		            	<div class="pull-right">
-		            	
-								<a href="{{ path('panel_child') }}{{ child.id }}/edit" type="button" 
-								class="btn btn-default btn-xs" rel="tooltip-top" title="Editar información">
-									<i class="fa fa-pencil"></i> Editar
-								</a>
-				        	<span class="label label-success">{{ "Tutores"|trans }} {{ child.userextendchilds|length }}</span>
-		            	 </div>
+		        	<h4 class="panel-title" style="cursor:pointer;" data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ child.id }}">
+		            	<a data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ child.id }}">{{ child.nick }}</a>
 					</h4>
+	            	<div class="pull-right" style="margin-top:-20px;">
+	            	
+							<a href="{{ path('panel_child') }}{{ child.id }}/edit" type="button" 
+							class="btn btn-default btn-xs" rel="tooltip-top" title="Editar información">
+								<i class="fa fa-pencil"></i> Editar
+							</a>
+							<a href="{{ path('panel_child_disjoin', { 'id': child.id }) }}" type="button" 
+							class="btn btn-default btn-xs" rel="tooltip-top" title="Dejar de ser tutor del niño">
+								<i class="fa fa-sign-out"></i> Desvincularme
+							</a>
+			        	<span class="label label-success">{{ "Tutores"|trans }} {{ child.userextendchilds|length }}</span>
+	            	 </div>
 				</div>
 				<div id="collapse{{ child.id }}" class="panel-collapse collapse {% if loop.index == 1 %}in{% endif %}">
 					<div class="panel-body">
@@ -42,7 +57,9 @@
 										<td>Grupos en los que está inscrito</td>
 										<td>
 											{% for childGroup in child.groups %}
-												<span class="label label-warning">{{ childGroup.name }}</span>
+												<span class="label">
+													<a href="{{ path('panel_group_timeline',{'id': childGroup.id}) }}">{{ childGroup.name }}</a>
+												</span>
 											{% endfor %} 
 										</td>
 									</tr>
@@ -70,7 +87,18 @@
 										</td>
 									</tr>
 								</tbody>
-							</table>
+							</table>							
+						<p class="text-muted">
+						<i class="fa fa-envelope"></i>&nbsp;
+							Envía una invitación a otros usuarios para que sean uno de los tutores de este niño
+						</p>
+						<form class="col-md-3 input-group custom-search-form" action="{{ path('panel_child_invite') }}" method="POST">
+							<input required type="email" name="userEmail" class="form-control" placeholder='{{ "Email"|trans }}'/>
+							<input type="hidden" name="child" value="{{ child.id }}"/>
+							<span class="input-group-btn">
+							<button class="btn btn-warning" type="submit"><i class="fa fa-check"></i></button>
+							</span>				
+						</form>
 					</div> 
 				</div>
 			</div>

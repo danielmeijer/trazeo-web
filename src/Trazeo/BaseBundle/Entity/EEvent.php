@@ -13,7 +13,7 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
  */
 class EEvent
 {
-	use \Sopinet\Bundle\SimplePointBundle\Model\GeoLocation;
+	//use \Sopinet\Bundle\SimplePointBundle\Model\GeoLocation;
 	use ORMBehaviors\Timestampable\Timestampable;
 	/**
 	 * @var integer

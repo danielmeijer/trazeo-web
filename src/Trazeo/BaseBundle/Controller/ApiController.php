@@ -283,4 +283,84 @@ class ApiController extends Controller {
 		return $this->get('fos_rest.view_handler')->handle($view);
 	
 	}
+	
+	/**
+	 * Guarda en el servidor la nueva posición del Grupo
+	 * @POST("/api/ride/sendChildInRide")
+	 */
+	public function getSendChildInRideAction(Request $request) {
+	
+		$id_ride = $request->get('id_ride');
+		$id_child = $request->get('id_child');
+	
+		$user = $this->checkPrivateAccess($request);
+		if( $user == false || $user == null ){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied());
+	
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+	
+		$em = $this->get('doctrine.orm.entity_manager');
+	
+		//$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+	
+		$ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
+	
+		$event = new EEvent();
+		$event->setRide($ride);
+		$event->setAction("in");
+		$event->setData($id_child);
+	
+		$em->persist($event);
+		$em->flush();
+	
+		$view = View::create()
+		->setStatusCode(200)
+		->setData($this->doOK("ok"));
+			
+		return $this->get('fos_rest.view_handler')->handle($view);
+	
+	}
+	
+	/**
+	 * Guarda en el servidor la nueva posición del Grupo
+	 * @POST("/api/ride/sendChildInRide")
+	 */
+	public function getSendChildOutRideAction(Request $request) {
+	
+		$id_ride = $request->get('id_ride');
+		$id_child = $request->get('id_child');
+	
+		$user = $this->checkPrivateAccess($request);
+		if( $user == false || $user == null ){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied());
+	
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+	
+		$em = $this->get('doctrine.orm.entity_manager');
+	
+		//$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+	
+		$ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
+	
+		$event = new EEvent();
+		$event->setRide($ride);
+		$event->setAction("out");
+		$event->setData($id_child);
+	
+		$em->persist($event);
+		$em->flush();
+	
+		$view = View::create()
+		->setStatusCode(200)
+		->setData($this->doOK("ok"));
+			
+		return $this->get('fos_rest.view_handler')->handle($view);
+	
+	}
 }

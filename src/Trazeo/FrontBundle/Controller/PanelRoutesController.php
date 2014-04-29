@@ -3,6 +3,7 @@
 namespace Trazeo\FrontBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -11,6 +12,7 @@ use Trazeo\BaseBundle\Entity\ERoute;
 use Trazeo\BaseBundle\Entity\EPoints;
 use Trazeo\BaseBundle\Form\RouteType;
 use Sopinet\Bundle\SimplePointBundle\ORM\Type\SimplePoint;
+
 
 /**
  * PanelRoutes controller.
@@ -30,24 +32,11 @@ class PanelRoutesController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $routes = $em->getRepository('TrazeoBaseBundle:ERoute')->findAll();
 
         return array(
             'routes' => $routes,
         );
-    }
-    
-    /**
-     * Lists all Routes entities.
-     *
-     * @Route("/current", name="panel_route_current")
-     * @Method("GET")
-     * @Template()
-     */
-    public function currentAction()
-    {
-    	return array();
     }
     
     /**
@@ -69,7 +58,7 @@ class PanelRoutesController extends Controller
         $form = $this->createCreateForm($route);
         $form->handleRequest($request);
 	
-        if ($form->isValid()) {
+        if ($form->isValid())
             $em = $this->getDoctrine()->getManager();
             $route->setAdmin($user);
             $em->persist($route);
@@ -79,7 +68,6 @@ class PanelRoutesController extends Controller
             $routeId = $formData->getId();
 
             return $this->redirect($this->generateUrl('panel_route_edit',array('id'=>$routeId)));
-        }
 
         return array(
             'route' => $route,
@@ -99,6 +87,10 @@ class PanelRoutesController extends Controller
         $form = $this->createForm(new RouteType(), $route, array(
             'action' => $this->generateUrl('panel_route_create'),
             'method' => 'POST',
+        	'attr' => array(
+        				'Route.help.name' => $this->get('translator')->trans('Route.help.name'),
+        				'Route.help.country' => $this->get('translator')->trans('Route.help.country')
+        		)
         ));
 
         $form->add('submit', 'submit', array('label' => 'Create'));
@@ -168,20 +160,29 @@ class PanelRoutesController extends Controller
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
+        $fos_user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
         $route = $em->getRepository('TrazeoBaseBundle:ERoute')->find($id);
-
+        
+        $userId = $user->getId();
+        $routeAdmin = $route->getAdmin();
+        $container = $this->get('sopinet_flashMessages');
+        if($routeAdmin != $user ){
+        
+        	$notification = $container->addFlashMessages("error","No tienes autorización para editar esta ruta");
+        	return $this->redirect($this->generateUrl('panel_route'));
+        }
         if (!$route) {
-            throw $this->createNotFoundException('Unable to find Routes entity.');
+        	
+        	$notification = $container->addFlashMessages("warning","No existe la ruta o ha sido eliminada");
+        	return $this->redirect($this->generateUrl('panel_route'));
         }
 
         $editForm = $this->createEditForm($route);
-        //$deleteForm = $this->createDeleteForm($id);
 
         return array(
             'route'      => $route,
             'edit_form'   => $editForm->createView(),
-            //'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -197,6 +198,10 @@ class PanelRoutesController extends Controller
         $form = $this->createForm(new RouteType(), $route, array(
             'action' => $this->generateUrl('panel_route_update', array('id' => $route->getId())),
             'method' => 'PUT',
+        	'attr' => array(
+        				'Route.help.name' => $this->get('translator')->trans('Route.help.name'),
+        				'Route.help.country' => $this->get('translator')->trans('Route.help.country')
+        		)
         ));
 
         $form->add('submit', 'submit', array('label' => 'Update'));
@@ -219,11 +224,16 @@ class PanelRoutesController extends Controller
 		$em = $this->getDoctrine()->getManager();
 
         $route = $em->getRepository('TrazeoBaseBundle:ERoute')->find($id);
-    	
-    	$punto = new EPoints();
+        $points = $em->getRepository('TrazeoBaseBundle:EPoints')->findByRoute($route->getId());
+    	ldd($points);
+    	if(count($route->getPoints()->toArray()) != 0){
+    		$points = $em->getRepository('TrazeoBaseBundle:EPoints')->findByRoute($route->getId());
+    		foreach($points as $point){
+    			$em->remove($point);
+    		}
+    	}
 		for($i = 0;$i < count($points);$i++)
 		{
-			
 			$latlng = explode(",", $points[$i]);
 
 			$punto = new EPoints();

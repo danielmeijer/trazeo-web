@@ -7,11 +7,30 @@
 		};
 	var editable= {{ editable }};
 	var realTime= {{ realTime }};
+
+	var addLast=function(){
+		$.ajax({
+			url: lastRoute
+			,success: function(response){
+				var point=response.replace(' ',',');
+				var aux="new "+point;
+		     	var point=eval(aux);
+				poly.addLatLng(point.latLng);
+				map.fitBounds(poly.getBounds());
+			}
+			,error: function(XMLHttpRequest, textStatus, errorThrown)
+			{
+				alert('Error : ' + errorThrown);
+			}
+		})
+
+	}
 </script>
 
 {% for point in routePoints  %}
 <script>
 	var aux="new "+'{{ point.location }}'.replace(' ',',');
+	
 	points.push(eval(aux));
 </script>
 {%  endfor %}
@@ -73,6 +92,11 @@
       ,routing: {
         router: router
       }
+      ,icons: {
+      start: new L.Icon({iconUrl:"{{ asset('bundles/sopinetopenmap/css/images') }}"+'/marker-icon-start.png'})
+      ,end: new L.Icon({iconUrl:"{{ asset('bundles/sopinetopenmap/css/images') }}"+'/marker-icon-start.png'})
+      ,normal: new L.Icon.Default()
+      }
       ,snapping: {
         layers: []
       }
@@ -121,24 +145,24 @@
 
     
     //map custom events    
-    var disableRouting=function(){
+    L.Map.prototype.disableRouting=function(){
     	$(".leaflet-marker-icon").css("pointer-events","none");
     	routing.draw(false);
     	
     	$("#enviar").removeAttr("disabled");
-    	$("#comenzar").on('click',enableRouting);
+    	$("#comenzar").on('click',map.enableRouting);
     	$("#comenzar").html("Comenzar");
-    	getPointsData();
+    	map.getPointsData();
     	return false;
     };
     	
-    var enableRouting=function(){	
+    L.Map.prototype.enableRouting=function(){	
         if(!editable)return;
 		$(".leaflet-marker-icon").css("pointer-events","all");
 		if(menu==null)routing.draw(true);
 
 		$("#enviar").attr("disabled","disabled");
-		$("#comenzar").on('click',disableRouting);
+		$("#comenzar").on('click',map.disableRouting);
 		$("#comenzar").html("Terminar");
 		for(var marker in map._layers)if(map._layers[marker]._icon && map._layers[marker]._icon.className===icon)
 			map._layers[marker].on('contextmenu',showPopUpMenu);
@@ -150,11 +174,11 @@
 
 	
 	//API data
-	var getWaypoints=function(){
+	L.Map.prototype.getWaypoints=function(){
 		return routing.getWaypoints();
 	};
 
-    var loadFromWaypoints=function(waypoints){
+	L.Map.prototype.loadFromWaypoints=function(waypoints){
 		for(var index=0;waypoints.length>index;index++){
 		    var marker, latlng, last;
 
@@ -181,7 +205,13 @@
 
 	
 	//methods
-    var updateRouteInfo=function(e){
+	L.Map.prototype.createPickUpWaypoint=function(marker){
+
+		if(marker._icon)marker._icon.src="{{ asset('bundles/sopinetopenmap/css/images') }}"+'/marker-icon-start.png';
+		marker.pickUp=true;	
+		};
+		
+	L.Map.prototype.updateRouteInfo=function(e){
     	var first=routing.getFirst();
     	var last=routing.getLast();
     	var distance=0;
@@ -199,32 +229,32 @@
 	    		$("#start").html("Termina en: "+ r.name);				    		
 	    	});
     	}
-    	if(first && last)$("#distance").html("Distancia: "+getDistance()+" m");
+    	if(first && last)$("#distance").html("Distancia: "+map.getDistance()+" m");
     	$(".leaflet-marker-icon").on();
     	for(var marker in map._layers)if(map._layers[marker]._icon && map._layers[marker]._icon.className===icon)
         	map._layers[marker].on('contextmenu',showPopUpMenu);
     	if(flagMenu){
-        	enableRouting();
+        	map.enableRouting();
         	flagMenu=null;
 		}
-    }
+    };
     
 
 
     
-    var getDistance=function(){
+	L.Map.prototype.getDistance=function(){
     	var distance=0;
-		for(var i=0;getWaypoints().length-1>i;i++){
-			var actual=getWaypoints()[i];
-			var next=getWaypoints()[i+1];
+		for(var i=0;map.getWaypoints().length-1>i;i++){
+			var actual=map.getWaypoints()[i];
+			var next=map.getWaypoints()[i+1];
 			distance+=Math.floor(actual.distanceTo(next));
 		}    	
 		return distance;
-    }
+    };
 
 
     
-    var getPointsData=function(){
+	L.Map.prototype.getPointsData=function(){
     	//create input
     	var pointList="";
     	if(document.getElementById("inputPoints")==null){
@@ -245,7 +275,7 @@
         };       	
        	//populate input
     	$("#inputPoints").val(pointList); 
-    }
+    };
 
 
 
@@ -268,14 +298,19 @@
     	},
 
     	pickUpWaypoint: function(e){
-        	this._marker.pickUp=true;
+        	map.createPickUpWaypoint(this._marker);
             map.removeLayer(menu);
             stop(e);
         },
-
+        
+    	cancelMenu: function(e){
+            map.removeLayer(menu);
+            stop(e);
+        },
+        
         onAdd: function (map) {
         	this._map = map;
-    		disableRouting();
+    		map.disableRouting();
 
     	    // create a DOM element and put it into one of the map panes
         	this._el = L.DomUtil.create('div', 'pop-up-menu leaflet-zoom-hide');
@@ -298,12 +333,23 @@
 			borrar.attr('type','button');
 			borrar.html("Borrar punto");
 	
+
 			var erase=this.removeWaypoint.bind(this);
 			borrar.on('click',erase);
 
-	
+			var c=document.createElement("button");	
+			c.id="cancelar";
+			document.getElementById("mapa").appendChild(c);  	
+			var cancelar=$("#cancelar");
+			cancelar.attr('type','button');
+			cancelar.html("Cancelar Acción");
+
+			var cancel=this.cancelMenu.bind(this);
+			cancelar.on('click',cancel);
+			
 			recogida.appendTo($(".pop-up-menu"));
 			borrar.appendTo($(".pop-up-menu"));
+			cancelar.appendTo($(".pop-up-menu"));
 			
         	// add a viewreset event listener for updating layer's position, do the latter
  	      	map.on('viewreset', this._reset, this);
@@ -316,7 +362,8 @@
      	    $("#borrar").remove();
      	   	map.getPanes().overlayPane.removeChild(this._el);
     	    map.off('viewreset', this._reset, this);
-    	    enableRouting();
+    	    routing.rerouteAllSegments(this._reset);
+    	    map.enableRouting();
     	    menu=null;
     	    flagMenu=true;
    	 	},
@@ -343,30 +390,27 @@
 
 
 	//Mapa tiempo real
-	var realTimeUpdate= function(points){
+	L.Map.prototype.realTimeUpdate= function(points){
 			poly.setLatLngs(points);
 		}
 	
 	//Metodo de Prueba para el mapa en tiempo real
-	var generatePoint=function(){
+	L.Map.prototype.generatePoint=function(){
 			var punto=map.options.center;
 			return punto;
 		}    
-	poly=L.polyline(generatePoint());
-	poly.addTo(map);
+
 	
-	if(realTime)setInterval(function(){
-		var point=generatePoint();
-		poly.addLatLng(point);
-		map.fitBounds(poly.getBounds());
-		}
-	,1000);
+	if(realTime){
+		poly=L.polyline(map.generatePoint());
+		poly.addTo(map);
+		setInterval(addLast,30000);
+	}
 
 
 
-    setInterval(updateRouteInfo,3000);
-    if(points)loadFromWaypoints(points);
-    disableRouting();
-    if(!editable){map.on('mousemove',function(e){map.options.center=e.latlng});}
+    setInterval(map.updateRouteInfo,3000);
+    if(points)map.loadFromWaypoints(points);
+    map.disableRouting();
 
 </script>
