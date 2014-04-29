@@ -350,3 +350,7 @@ Form:
     profile:
         pass: 'Contraseña'
         repeatpass: 'Confirmar contraseña'
+        
+registration:
+    flash:
+        user_created: El usuario se ha creado satisfactoriamente
