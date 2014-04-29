@@ -68,6 +68,7 @@ class PanelRoutesController extends Controller
     	//ldd($lastEvent);
     	//return  new Response(array(
     		//	'lastEvent' => $lastEvent));
+    		
     	return new Response($lastEvent->getData());
     	//return new Response("POINT(10 10)");
     }
