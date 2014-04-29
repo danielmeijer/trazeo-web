@@ -24,6 +24,31 @@ class PanelGroupsController extends Controller
 	/**
 	 * User join Child to Group.
 	 *
+	 * @Route("/{group}/changevisibility/{visibility}", name="panel_group_joinChild")
+	 * @Method("GET")
+	 */
+	public function changeVisibility(EGroup $group, $visibility){
+		$em = $this->getDoctrine()->getManager();
+        $fos_user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+        $group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
+        
+        $userId = $user->getId();
+        $groupAdmin = $group->getAdmin();
+        $container = $this->get('sopinet_flashMessages');
+        if($groupAdmin != $user ){        
+        	$notification = $container->addFlashMessages("error","No tienes autorización para editar este grupo");        
+        }
+        else{
+			$group->setVisibility($visibility);
+        }
+        
+        return $this->redirect($this->generateUrl('panel_group'));
+	}
+	
+	/**
+	 * User join Child to Group.
+	 *
 	 * @Route("/{group}/joinchild/{child}", name="panel_group_joinChild")
 	 * @Method("GET")
 	 */
