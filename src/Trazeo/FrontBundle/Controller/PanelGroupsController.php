@@ -559,7 +559,7 @@ class PanelGroupsController extends Controller
             'method' => 'POST',
         	'attr' => array(
         				'Groups.help.name' => $this->get('translator')->trans('Groups.help.name'),
-        				'Groups.help.visibility' => $this->get('translator')->trans('Groups.help.visibility'),
+        				'Groups.help.name2' => $this->get('translator')->trans('Groups.help.name2'),
         				'Groups.help.route' => $this->get('translator')->trans('Groups.help.route')
         		)
         ));

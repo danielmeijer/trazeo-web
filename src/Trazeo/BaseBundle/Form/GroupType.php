@@ -31,7 +31,7 @@ class GroupType extends AbstractType
         						'placeholder' => 'Groups.visibility',
         						'data-toggle' => 'popover',
         						'data-placement' => 'right',
-        						'data-content' => $options['attr']['Groups.help.visibility']
+        						'data-content' => $options['attr']['Groups.help.name2']
         				)))
         
         ->add('route', null, array(

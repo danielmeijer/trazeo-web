@@ -14,6 +14,7 @@ class ChildType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+    	ldd($options);
         $builder
             ->add('nick', null, array(
         			'attr' => array(

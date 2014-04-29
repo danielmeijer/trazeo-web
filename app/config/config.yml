@@ -91,12 +91,14 @@ knp_menu:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: smtp
+    transport: %mailer_transport%
     encryption: tls
-    host:      smtp.trazeo.es
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
-    spool:     { type: memory }
+    host:      %mailer_host%
+    username:  %mailer_user%
+    password:  %mailer_password%
+    spool:
+        type:                 file
+        path:                 "%kernel.cache_dir%/swiftmailer/spool"
 
 # FOSUserBundle Configuration
 
