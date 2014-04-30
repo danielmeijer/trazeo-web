@@ -14,9 +14,9 @@ class PanelController extends Controller
 {
 /**
 * @Route("/", name="panel_dashboard")
-* @Template
+* @Template()
 */
-   public function indexAction(Request $request)
+   public function homeAction(Request $request)
    {
 	   	$em = $this->getDoctrine()->getManager();
 	   	$fos_user = $this->container->get('security.context')->getToken()->getUser();	
@@ -32,21 +32,20 @@ class PanelController extends Controller
 	   	
 	   	$groupsRide = array();
 	   	
-	       foreach($groupsMember as $groupMember){
-	       	if($groupMember->getHasRide() == 0){
-	       	 $groupsRide[] = $groupMember;
+	    foreach($groupsMember as $groupMember){
+	    	if($groupMember->getHasRide() == 1){
+	       		$groupsRide[] = $groupMember;
 	       	}
-	       }
+	    }
 	
-	   	$twig_variables = array(
-	           'user' => $user,
-	   	 'childs' => $childs,
-	           'groups' => $groups,
-	   	 'routes' => $routes,
-	   	 'notifications' => $not,
-	   	 'groupsRide' => $groupsRide
+	   	return array(
+	    			'user' => $user,
+	   	 			'childs' => $childs,
+	           		'groups' => $groups,
+	   	 			'routes' => $routes,
+	   	 			'notifications' => $not,
+	   	 			'groupsRide' => $groupsRide
 	   	);
-	   return $this->render('TrazeoFrontBundle:Panel:home.html.twig', $twig_variables);
 	}
 
 }

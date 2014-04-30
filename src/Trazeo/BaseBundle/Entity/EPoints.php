@@ -30,6 +30,11 @@ class EPoints
 	 * @ORM\Column(name="pickup", type="boolean")
 	 */
 	protected $pickup;
+	
+	/**
+	 * @ORM\Column(name="description", type="string", length=255)
+	 */
+	protected $description;
 
     /**
      * Get id
@@ -87,5 +92,29 @@ class EPoints
     public function getPickup()
     {
         return $this->pickup;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return EPoints
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

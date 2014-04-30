@@ -19,7 +19,7 @@
 								<li><i class="fa fa-users"></i>&nbsp; <a rel="tooltip-right" title="Panel del grupo" href="{{ path('panel_group_timeline',{'id': group.id}) }}">{{ group.Name }}</a></li>
 							</ul>
 							<ul class="col-md-5">
-								<li><i class="fa fa-mail-forward"></i><a rel="tooltip-right" title="Mapa de la ruta" href="{{ path('panel_route') }}{{ group.Route.Id }}">&nbsp; Ir al paseo</a></li>
+								<li><i class="fa fa-mail-forward"></i><a rel="tooltip-right" title="Mapa de la ruta" href="{{ path('panel_ride_current', {'id': group.ride.id}) }}">&nbsp; Ir al paseo</a></li>
 							</ul>
 					    
 					{% endfor %}
@@ -141,7 +141,7 @@
 							                <td><i class="fa fa-users"></i></td>
 							                <td>{{ group.name }}</td>
 							                {% if  group.Visibility == 0 %}
-							                <td><i rel="tooltip-top" title="Acceso libre" class="fa fa-lock btn btn-xs btn-success"></i>&nbsp; Público</td>
+							                <td><i rel="tooltip-top" title="Acceso libre" class="fa fa-unlock btn btn-xs btn-success"></i>&nbsp; Público</td>
 							                {% elseif group.Visibility == 1 %}
 							                <td><i rel="tooltip-top" title="Acceso mediante solicitud" class="fa fa-lock btn btn-xs btn-danger"></i>&nbsp; Privado</td>
 							                {% elseif group.Visibility == 2 %}

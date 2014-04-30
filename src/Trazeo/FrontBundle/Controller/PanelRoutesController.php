@@ -240,6 +240,7 @@ class PanelRoutesController extends Controller
 			$punto->setLocation(new SimplePoint($latlng[0], $latlng[1]));
 			$punto->setRoute($route);
 			$punto->setPickup($latlng[2]);
+			$punto->setDescription($latlng[3]);
 			$em->persist($punto);
 		}
     	$em->flush();
