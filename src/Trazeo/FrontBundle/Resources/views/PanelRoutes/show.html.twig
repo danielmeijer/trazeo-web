@@ -37,6 +37,7 @@
 			<input type="hidden" name="pickup{{ loop.index }}" value="false">
 			<input type="hidden" name="lat{{ loop.index }}" value="{{ point.location.latitude }}">
 			<input type="hidden" name="lng{{ loop.index }}" value="{{ point.location.longitude }}">
+			<input type="hidden" name="description{{ loop.index }}" value="{{ point.location.description }}">
 		{% endfor %}
 		<form method="post" action={{ path('panel_save_map') }}>
 			<div id="mapa" class="col-md-12"></div>
