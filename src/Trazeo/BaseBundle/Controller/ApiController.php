@@ -16,6 +16,7 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Symfony\Component\HttpFoundation\Response;
 use Trazeo\BaseBundle\Entity\ERide;
 use Trazeo\BaseBundle\Entity\EEvent;
+use Trazeo\BaseBundle\Entity\EReport;
 use Sopinet\Bundle\SimplePointBundle\ORM\Type\SimplePoint;
 
 class ApiController extends Controller {
@@ -359,6 +360,50 @@ class ApiController extends Controller {
 		$view = View::create()
 		->setStatusCode(200)
 		->setData($this->doOK("ok"));
+			
+		return $this->get('fos_rest.view_handler')->handle($view);
+	
+	}
+	
+	/**
+	 * Guarda en el servidor la nueva posición del Grupo
+	 * @POST("/api/ride/report")
+	 */
+	public function getReportAction(Request $request) {
+	
+		$id_ride = $request->get('id_ride');
+		$texto = $request->get('texto');
+		$tipo_de_incidencia = $request->get('tipo_de_incidencia');
+	
+		$user = $this->checkPrivateAccess($request);
+		if( $user == false || $user == null ){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied());
+	
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+	
+		$em = $this->get('doctrine.orm.entity_manager');
+	
+		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+	
+		$ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
+	
+		$report = new EReport();
+		$report->setText($texto);
+		$report->setUserextend($userextend);
+		$report->setRide($ride);
+		$report->setType($tipo_de_incidencia);
+
+		$em->persist($report);
+		$em->flush();
+		
+		$array['id'] = $report->getId();
+		
+		$view = View::create()
+		->setStatusCode(200)
+		->setData($this->doOK($array));
 			
 		return $this->get('fos_rest.view_handler')->handle($view);
 	

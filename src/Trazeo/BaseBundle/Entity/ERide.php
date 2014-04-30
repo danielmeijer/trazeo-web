@@ -46,6 +46,11 @@ class ERide
 	protected $events;
 	
 	/**
+	 * @ORM\OneToMany(targetEntity="EReport", mappedBy="ride")
+	 **/
+	protected $reports;
+	
+	/**
 	 * @ORM\Column(name="go", type="boolean", nullable=true)
 	 */
 	protected $go;
@@ -219,5 +224,39 @@ class ERide
     public function getGo()
     {
         return $this->go;
+    }
+
+    /**
+     * Add reports
+     *
+     * @param \Trazeo\BaseBundle\Entity\EReport $reports
+     *
+     * @return ERide
+     */
+    public function addReport(\Trazeo\BaseBundle\Entity\EReport $reports)
+    {
+        $this->reports[] = $reports;
+
+        return $this;
+    }
+
+    /**
+     * Remove reports
+     *
+     * @param \Trazeo\BaseBundle\Entity\EReport $reports
+     */
+    public function removeReport(\Trazeo\BaseBundle\Entity\EReport $reports)
+    {
+        $this->reports->removeElement($reports);
+    }
+
+    /**
+     * Get reports
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getReports()
+    {
+        return $this->reports;
     }
 }

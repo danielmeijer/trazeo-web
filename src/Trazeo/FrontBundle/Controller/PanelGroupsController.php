@@ -14,7 +14,6 @@ use Trazeo\BaseBundle\Entity\EChild;
 use Trazeo\BaseBundle\Form\GroupType;
 use Trazeo\BaseBundle\Controller\GroupsController;
 
-
 /**
  * Groups controller.
  *
@@ -23,11 +22,7 @@ use Trazeo\BaseBundle\Controller\GroupsController;
 class PanelGroupsController extends Controller
 {
 	/**
-<<<<<<< HEAD
-	 * User change visibility of Group.
-=======
 	 * User change visibility of a Group.
->>>>>>> fcc0532b4224381a6babc8a77758f5c293ec5993
 	 *
 	 * @Route("/{id}/changevisibility/{visibility}", name="panel_group_changeVisibility")
 	 * @Method("GET")
@@ -41,19 +36,15 @@ class PanelGroupsController extends Controller
         $userId = $user->getId();
         $groupAdmin = $group->getAdmin();
         $container = $this->get('sopinet_flashMessages');
-        
         if($groupAdmin != $user ){        
         	$notification = $container->addFlashMessages("error","No tienes autorización para editar este grupo");        
         }
         else{
 			$group->setVisibility($visibility);
-<<<<<<< HEAD
 			$em->persist($group);
-=======
-			$em->persist($group);
->>>>>>> fcc0532b4224381a6babc8a77758f5c293ec5993
 			$em->flush();
         }
+        
         return $this->redirect($this->generateUrl('panel_group'));
 	}
 	

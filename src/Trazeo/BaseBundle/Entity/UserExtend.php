@@ -44,6 +44,11 @@ class UserExtend
     protected $adminRoutes;
     
     /**
+     * @ORM\OneToMany(targetEntity="EReport", mappedBy="userextend")
+     **/
+    protected $reports;
+    
+    /**
      * @ORM\ManyToMany(targetEntity="EChild", mappedBy="userextendchilds")
      * @ORM\JoinTable(name="usersextend_childs")
      **/
@@ -510,5 +515,39 @@ class UserExtend
     public function getInviteChildSender()
     {
         return $this->inviteChildSender;
+    }
+
+    /**
+     * Add reports
+     *
+     * @param \Trazeo\BaseBundle\Entity\EReport $reports
+     *
+     * @return UserExtend
+     */
+    public function addReport(\Trazeo\BaseBundle\Entity\EReport $reports)
+    {
+        $this->reports[] = $reports;
+
+        return $this;
+    }
+
+    /**
+     * Remove reports
+     *
+     * @param \Trazeo\BaseBundle\Entity\EReport $reports
+     */
+    public function removeReport(\Trazeo\BaseBundle\Entity\EReport $reports)
+    {
+        $this->reports->removeElement($reports);
+    }
+
+    /**
+     * Get reports
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getReports()
+    {
+        return $this->reports;
     }
 }
