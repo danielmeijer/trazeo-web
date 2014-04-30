@@ -106,11 +106,13 @@
 								id="member-{{ userGroup.id }}"
 								class="btn btn-warning btn-xs" rel="tooltip-top" title="Grupo oculto">
 									<i class="fa fa-eye-slash"></i> Oculto
-								</span>	
-								<script type="text/javascript">
-									document.getElementById("member-{{ userGroup.id }}").setAttribute("data-toggle","confirmationChange");
-								</script> 									
+								</span>									
 		            	 	{% endif %}
+		            	 	{% if userGroup.Admin.Id == user.Id %}
+		            	 		<script type="text/javascript">
+									document.getElementById("member-{{ userGroup.id }}").setAttribute("data-toggle","confirmationChange");
+								</script> 	
+							{% endif %}
 		            	 </div>
 					</div>
 					<div id="collapse{{ userGroup.id }}" class="panel-collapse collapse {% if loop.index == 1 %}in{% endif %}">
