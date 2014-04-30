@@ -10,16 +10,23 @@
         		<i class="fa fa-5x fa-clock-o"></i>
         	</div>
         	<div class="col-md-11">
-					<h3>Hay grupos en marcha</h3>
+        		{% if groupsRide %}
+					<h3>Hay paseos en marcha</h3>
 					<p>Los siguientes grupos están en marcha y tienes ninos apuntados en ellos:</p>
-					<ul class="col-md-3">
-						<li><i class="fa fa-group"></i> Grupo 1</li>
-						<li><i class="fa fa-group"></i> Grupo 2</li>
-					</ul>
-					<ul class="col-md-3">
-						<li><i class="fa fa-mail-forward"></i> Ir al grupo</li>
-					<li><i class="fa fa-mail-forward"></i> Ir al grupo</li>
-					</ul>
+					<br />
+					{% for group in groupsRide %}
+							<ul class="col-md-5">
+								<li><i class="fa fa-users"></i>&nbsp; <a rel="tooltip-right" title="Panel del grupo" href="{{ path('panel_group_timeline',{'id': group.id}) }}">{{ group.Name }}</a></li>
+							</ul>
+							<ul class="col-md-5">
+								<li><i class="fa fa-mail-forward"></i><a rel="tooltip-right" title="Mapa de la ruta" href="{{ path('panel_route') }}{{ group.Route.Id }}">&nbsp; Ir al paseo</a></li>
+							</ul>
+					    
+					{% endfor %}
+				{% else %}
+					<h3>No hay paseos en marcha</h3>
+					<p>Actualmente ninguno de los grupos en los que estás inscrito está realizando un paseo</p>
+				{% endif %}
 			</div>
         </div>
         <!-- END currentGropus -->
@@ -40,25 +47,46 @@
 						</h4>
 					</div>
 				{% elseif childs|length > 0 %}
-					<div class="col-md-10">
-						<h4 class="alert alert-success">Mis Niños <i style="margin-top:-5px;" class="btn btn-success btn-circle pull-right">{{ childs.count }}</i></h4>
+					<div>
+						<h1 class="alert"> <span class="alert alert-warning"><i class="fa fa-user"></i> Mis Niños</span> 
+							<span class="pull-right">
+								<a class="btn btn-xs btn-success" href="{{ path('panel_child_new') }}">
+									<i class="fa fa-plus-circle"></i>&nbsp; Registar Niño/a
+								</a>
+								<a class="btn btn-xs btn-success" href="{{ path('panel_child') }}">
+									<i class="fa fa-list-ul"></i>&nbsp; Listado de niños/as
+								</a>
+							</span>
+						</h1>
 						<div class="alert alert-warning">
 							<table class="table">
 								<thead>
 									<tr>
-										<th><i class="fa fa-user"></i></th>
+										<th>#</th>
 										<th>Nombre</th>
+										<th>Visibilidad</th>
+										<th>Edad</th>
 										<th>Opciones</th>
 									</tr>
 								</thead>
 							        <tbody>
 							        {% for child in childs %}
 							            <tr>
-							                <td>&nbsp;</td>
+							            {% if  child.Gender == "boy" %}
+							                <td><i class="fa fa-male"></i></td>
+							            {% else %}  
+							               <td><i class="fa fa-female"></i></td>
+							             {% endif %}
 							                <td>{{ child.nick }}</td>
+							                {% if  child.Visibility == 1 %}
+							                <td><i rel="tooltip-top" title="Visible para todos" class="fa fa-eye btn btn-xs btn-success"></i>&nbsp; Público</td>
+							                {% else %}
+							                <td><i rel="tooltip-top" title="Sólo visible para tutores" class="fa fa-eye-slash btn btn-xs btn-warning"></i>&nbsp; Oculto</td>
+							                {% endif %}
+											<td><i class="fa fa-calendar-o"></i>&nbsp; {{ child.datebirth|getTimeAgo}}</td>
 							                <td>
-												<i class="fa fa-pencil"></i> <a href="{{ path('panel_child_edit', {'id': child.id}) }}">Editar</a>
-												&nbsp;<i class="fa fa-trash-o"></i> <a style="cursor:pointer;" data-href="{{ path('panel_child_delete', {'id': child.id }) }}" data-toggle="confirmation">Eliminar</a>
+												<a class="btn btn-xs btn-default" href="{{ path('panel_child_edit', {'id': child.id}) }}"><i class="fa fa-pencil"></i>&nbsp; Editar</a>
+												<a class="btn btn-xs btn-default" style="cursor:pointer;" data-btnCancelLabel='{{ 'Confirmation.no'|trans }}' data-btnOkLabel='{{ 'Confirmation.yes'|trans }}' data-href="{{ path('panel_child_delete', {'id': child.id }) }}" data-toggle="confirmation" data-title='{{ 'Confirmation.question'|trans }}'><i class="fa fa-trash-o"></i>&nbsp; Eliminar</a>
 							                </td>
 							            </tr>
 							        {% endfor %}
@@ -66,14 +94,7 @@
 							</table>
 						</div>
 					</div>
-					<div class="col-md-2">
-						<h5 class="alert alert-success text-center"><i class="fa fa-user"></i>&nbsp; Registrar niño</h5>
-						<a href="{{ path('panel_child_new') }}" class="col-md-offset-3">
-							<button type="button" class="btn btn-success btn-circle btn-outline btn-xl">
-									<i class="fa fa-plus"></i>
-							</button>
-						</a>
-					</div>				
+				
 				{% endif %}
 
 				</div>
@@ -91,46 +112,52 @@
 						</h4>
 					</div>
 				{% elseif groups|length > 0 %}
-					<div class="col-md-10">
-						<h4 class="alert alert-success">Mis Grupos <i style="margin-top:-5px;" class="btn btn-success btn-circle pull-right">{{ groups.count }}</i></h4>
+					<div>
+						<h1 class="alert"> <span class="alert alert-warning"><i class="fa fa-users"></i> Mis Grupos</span> 
+							<span class="pull-right">
+								<a class="btn btn-xs btn-success" href="{{ path('panel_group_new') }}">
+									<i class="fa fa-plus-circle"></i>&nbsp; Añadir Grupo
+								</a>
+								<a class="btn btn-xs btn-success" href="{{ path('panel_group') }}">
+									<i class="fa fa-list-ul"></i>&nbsp; Listado de grupos
+								</a>
+							</span>
+						</h1>
 						<div class="alert alert-warning">
 							<table class="table">
 								<thead>
 									<tr>
-										<th><i class="fa fa-users"></i></th>
+										<th>#</th>
 										<th>Nombre</th>
+										<th>Visibilidad</th>
+										<th>Panel</th>
+										<th>Ruta</th>
 										<th>Opciones</th>
 									</tr>
 								</thead>
 							        <tbody>
 							        {% for group in groups %}
 							            <tr>
-							                <td>&nbsp;</td>
+							                <td><i class="fa fa-users"></i></td>
 							                <td>{{ group.name }}</td>
+							                {% if  group.Visibility == 0 %}
+							                <td><i rel="tooltip-top" title="Acceso libre" class="fa fa-lock btn btn-xs btn-success"></i>&nbsp; Público</td>
+							                {% elseif group.Visibility == 1 %}
+							                <td><i rel="tooltip-top" title="Acceso mediante solicitud" class="fa fa-lock btn btn-xs btn-danger"></i>&nbsp; Privado</td>
+							                {% elseif group.Visibility == 2 %}
+							                <td><i rel="tooltip-top" title="Acceso mediante invitación del administrador" class="fa fa-eye-slash btn btn-xs btn-warning"></i>&nbsp; Oculto</td>
+							                {% endif %}
+							                <td><a href="{{ path('panel_group_timeline',{'id': group.id}) }}"><i class="fa fa-comments-o"></i>&nbsp; Chat del grupo</a></td>
+							                <td><a href="{{ path('panel_route')}}{{ group.Route.Id }}">{{ group.Route.Name }}</a></td>
 							                <td>
-												<i class="fa fa-pencil"></i> <a href="{{ path('panel_group') }}{{ group.id }}/edit">Editar</a>
-												&nbsp;<i class="fa fa-trash-o"></i> <a style="cursor:pointer;" data-href="{{ path('panel_group_delete', {'id': group.id }) }}" data-toggle="confirmation"" >Eliminar</a>
+												<a class="btn btn-xs btn-default" href="{{ path('panel_group') }}{{ group.id }}/edit"><i class="fa fa-pencil"></i>&nbsp;  Editar</a>
+												<a class="btn btn-xs btn-default" style="cursor:pointer;" data-href="{{ path('panel_group_delete', {'id': group.id }) }}" data-toggle="confirmation"" data-title='{{ 'Confirmation.question'|trans }}' data-btnCancelLabel='{{ 'Confirmation.no'|trans }}' data-btnOkLabel='{{ 'Confirmation.yes'|trans }}'><i class="fa fa-trash-o"></i>&nbsp; Eliminar</a>
 							                </td>
 							            </tr>
 							        {% endfor %}
 							        </tbody>
 							</table>
 						</div>
-					</div>
-
-					<div class="col-md-2">
-						<h5 class="alert alert-success text-center"><i class="fa fa-users"></i>&nbsp; Crear grupo</h5>
-						<a href="{{ path('panel_group_new') }}" class="col-md-offset-4">
-							<button type="button" class="btn btn-success btn-circle btn-outline btn-lg">
-									<i class="fa fa-plus"></i>
-							</button>
-						</a>
-						<br /><br /><br />
-						<a href="{{ path('panel_group') }}">
-							<button class="btn btn-success btn-block btn-sm text-center">
-									<i class="fa fa-search"></i>&nbsp; Buscar grupo
-							</button>
-						</a>
 					</div>
 					{% endif %}
 				</div>
@@ -148,46 +175,42 @@
 						</h4>
 					</div>
 				{% elseif routes|length > 0 %}
-					<div class="col-md-10">
-						<h4 class="alert alert-success">Mis Rutas <i style="margin-top:-5px;" class="btn btn-success btn-circle pull-right">{{ routes.count }}</i></h4>
+					<div>
+						<h1 class="alert"> <span class="alert alert-warning"><i class="fa fa-location-arrow"></i> Mis Rutas</span> 
+							<span class="pull-right">
+								<a class="btn btn-xs btn-success" href="{{ path('panel_route_new') }}">
+									<i class="fa fa-plus-circle"></i>&nbsp; Crear Ruta
+								</a>
+								<a class="btn btn-xs btn-success" href="{{ path('panel_route') }}">
+									<i class="fa fa-list-ul"></i>&nbsp; Listado de rutas
+								</a>
+							</span>
+						</h1>
 						<div class="alert alert-warning">
 							<table class="table">
 								<thead>
 									<tr>
-										<th><i class="fa fa-location-arrow"></i></th>
+										<th>#</th>
 										<th>Nombre</th>
+										<th>Mapa del paseo</th>
 										<th>Opciones</th>
 									</tr>
 								</thead>
 							        <tbody>
 							        {% for route in routes %}
 							            <tr>
-							                <td>&nbsp;</td>
+							                <td><i class="fa fa-location-arrow"></i></td>
 							                <td>{{ route.name }}</td>
+							                <td><a href="{{ path('panel_route')}}{{ route.Id }}"><i class="fa fa-map-marker"></i>&nbsp; Ver</a></td>
 							                <td>
-												<i class="fa fa-pencil"></i> <a href="{{ path('panel_route_edit', {'id': route.id }) }}">Editar</a>
-												&nbsp;<i class="fa fa-trash-o"></i> <a style="cursor:pointer;" data-href="{{ path('panel_route_delete', {'id': route.id }) }}" data-toggle="confirmation">Eliminar</a>
+												<a class="btn btn-xs btn-default" href="{{ path('panel_route_edit', {'id': route.id }) }}"><i class="fa fa-pencil"></i>&nbsp;  Editar</a>
+												<a class="btn btn-xs btn-default" style="cursor:pointer;" data-href="{{ path('panel_route_delete', {'id': route.id }) }}" data-toggle="confirmation" data-btnCancelLabel='{{ 'Confirmation.no'|trans }}' data-btnOkLabel='{{ 'Confirmation.yes'|trans }}' data-title='{{ 'Confirmation.question'|trans }}'><i class="fa fa-trash-o"></i>&nbsp; Eliminar</a>
 							                </td>
 							            </tr>
 							        {% endfor %}
 							        </tbody>
 							</table>
 						</div>
-					</div>
-
-					<div class="col-md-2">
-						<h5 class="alert alert-success text-center"><i class="fa fa-location-arrow"></i>&nbsp; Crear ruta</h5>
-						<a href="{{ path('panel_group_new') }}" class="col-md-offset-4">
-							<button type="button" class="btn btn-success btn-circle btn-outline btn-lg">
-									<i class="fa fa-plus"></i>
-							</button>
-						</a>
-						<br /><br /><br />
-						<a href="{{ path('panel_route') }}">
-							<button class="btn btn-success btn-block btn-sm text-center">
-									<i class="fa fa-search"></i>&nbsp; Buscar ruta
-							</button>
-						</a>
 					</div>
 					{% endif %}
 				</div>

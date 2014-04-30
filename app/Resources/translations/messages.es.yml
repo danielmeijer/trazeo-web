@@ -354,3 +354,6 @@ Form:
 registration:
     flash:
         user_created: El usuario se ha creado satisfactoriamente
+        
+Btn:
+    success: 'Guardar'

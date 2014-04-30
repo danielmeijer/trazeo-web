@@ -29,6 +29,17 @@ class PanelController extends Controller
         $groups = $user->getAdminGroups();
     	$routes = $user->getAdminRoutes();
     	$groupsMember = $user->getGroups();
+<<<<<<< HEAD
+=======
+    	
+    	$groupsRide = array();
+    	
+		        foreach($groupsMember as $groupMember){
+		        	if($groupMember->getHasRide() == 0){
+		        		$groupsRide[] = $groupMember;
+		        	}
+        	}
+>>>>>>> fcc0532b4224381a6babc8a77758f5c293ec5993
 
     	$twig_variables = array(
             'user' => $user,
@@ -36,7 +47,11 @@ class PanelController extends Controller
             'groups' => $groups,
     		'routes' => $routes,
     		'notifications' => $not,
+<<<<<<< HEAD
     		'groupsMember' => $groupsMember
+=======
+    		'groupsRide' => $groupsRide
+>>>>>>> fcc0532b4224381a6babc8a77758f5c293ec5993
     	);
 	    return $this->render('TrazeoFrontBundle:Panel:home.html.twig', $twig_variables);
 	}

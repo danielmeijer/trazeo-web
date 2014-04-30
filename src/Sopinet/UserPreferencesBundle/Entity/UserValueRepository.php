@@ -8,14 +8,14 @@
 		 * Obtiene el valor de un usuario para una configuración
 		 * Si existe la configuración la devuelve, sino, retorna el valor por defecto.
 		 * 
-		 * @param User <Entity> $user
+		 * @param SopinetUserExtend <Entity> $sopinetuserextend
 		 * @param UserSetting <Entity> $usersetting
 		 * @return string Value
 		 */
-		public function getValue($user, $usersetting) {
+		public function getValue($sopinetuserextend, $usersetting) {
 			$em = $this->getEntityManager();
 			$reUserValue = $em->getRepository("SopinetUserPreferencesBundle:UserValue");
-			$findUV = $reUserValue->findOneBy(array('user' => $user, 'setting' => $usersetting));
+			$findUV = $reUserValue->findOneBy(array('user' => $sopinetuserextend, 'setting' => $usersetting));
 			if ($findUV == null) {
 				return $usersetting->getDefaultoption();
 			} else {

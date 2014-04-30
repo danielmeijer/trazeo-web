@@ -74,6 +74,7 @@
 						</h4>
 		            	<div class="pull-right" style="margin-top:-20px;">
 <<<<<<< HEAD
+<<<<<<< HEAD
 		            	 	{% if userGroup.Visibility == 0 %}
 								<span type="button" id="member-{{ userGroup.id }}" groupVisibility="0"
 								changeVisibility="{{ path('panel_group_changeVisibility', { 'id': userGroup.id, 'visibility': "replace" }) }}";
@@ -96,7 +97,10 @@
 								</span>	
 		            	 	{% endif %}
 =======
+
 >>>>>>> 502de8302815ffdd1ee61a9fb79a1a3e26593721
+=======
+>>>>>>> fcc0532b4224381a6babc8a77758f5c293ec5993
 							<a href="{{ path('panel_group_timeline',{'id': userGroup.id}) }}" type="button" 
 							class="btn btn-default btn-xs" rel="tooltip-top" title="Timeline de grupo">
 								<i class="fa fa-comments-o"></i> Chat del grupo
@@ -105,6 +109,7 @@
 							class="btn btn-default btn-xs" rel="tooltip-top" title="Desvincularme del grupo">
 								<i class="fa fa-sign-out"></i> Salir
 							</a>
+<<<<<<< HEAD
 <<<<<<< HEAD
 						{% if userGroup.Admin.Id == user.Id %}
 								<a href="{{ path('panel_group') }}{{ userGroup.id }}/edit" type="button" 
@@ -116,6 +121,8 @@
 								</script> 		
 						{% endif %}
 =======
+=======
+>>>>>>> fcc0532b4224381a6babc8a77758f5c293ec5993
 							{% if userGroup.Admin.Id == user.Id %}
 									<a href="{{ path('panel_group') }}{{ userGroup.id }}/edit" type="button" 
 									class="btn btn-default btn-xs" rel="tooltip-top" title="Editar información">
@@ -123,24 +130,46 @@
 									</a> 
 							{% endif %}
 			            	 	{% if userGroup.Visibility == 0 %}
+<<<<<<< HEAD
 									<span type="button" 
+=======
+									<span type="button" groupVisibility="0" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
+									id="member-{{ userGroup.id }}"
+>>>>>>> fcc0532b4224381a6babc8a77758f5c293ec5993
 									class="btn btn-success btn-xs" rel="tooltip-top" title="Grupo público">
 										<i class="fa fa-unlock"></i> Público
 									</span>
 								{% endif %}
 			            	 	{% if userGroup.Visibility == 1 %}
+<<<<<<< HEAD
 									<span href="#" type="button" 
+=======
+									<span href="#" type="button" groupVisibility="1" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
+									id="member-{{ userGroup.id }}" 
+>>>>>>> fcc0532b4224381a6babc8a77758f5c293ec5993
 									class="btn btn-danger btn-xs" rel="tooltip-top" title="Grupo privado">
 										<i class="fa fa-lock"></i> Privado
 									</span>
 								{% endif %}
 		            	 	{% if userGroup.Visibility == 2 %}
+<<<<<<< HEAD
 								<span href="#" type="button" 
 								class="btn btn-warning btn-xs" rel="tooltip-top" title="Grupo oculto">
 									<i class="fa fa-eye-slash"></i> Oculto
 								</span>	
 		            	 	{% endif %}
 >>>>>>> 502de8302815ffdd1ee61a9fb79a1a3e26593721
+=======
+								<span href="#" type="button" groupVisibility="2" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
+								id="member-{{ userGroup.id }}"
+								class="btn btn-warning btn-xs" rel="tooltip-top" title="Grupo oculto">
+									<i class="fa fa-eye-slash"></i> Oculto
+								</span>	
+								<script type="text/javascript">
+									document.getElementById("member-{{ userGroup.id }}").setAttribute("data-toggle","confirmationChange");
+								</script> 									
+		            	 	{% endif %}
+>>>>>>> fcc0532b4224381a6babc8a77758f5c293ec5993
 		            	 </div>
 					</div>
 					<div id="collapse{{ userGroup.id }}" class="panel-collapse collapse {% if loop.index == 1 %}in{% endif %}">
@@ -217,6 +246,7 @@
 					</h4>
 	            	<div class="pull-right" style="margin-top:-20px;">
 <<<<<<< HEAD
+<<<<<<< HEAD
 		            	 	{% if group.Visibility == 0 %}
 								<span type="button" groupVisibility="0" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
 								id="nomember-{{ group.id }}"
@@ -261,6 +291,8 @@
 							</script> 
 					{% endif %}
 =======
+=======
+>>>>>>> fcc0532b4224381a6babc8a77758f5c293ec5993
 		            	{% if group.Visibility == 1 and group.Admin.Id != user.Id %}
 								<a href="{{ path('panel_group_requestJoin', { 'id': group.id }) }}" type="button" 
 								class="btn btn-default btn-xs" rel="tooltip-top" title="Solictar acceso al grupo">
@@ -281,24 +313,47 @@
 								</a> 
 						{% endif %}
 	            	 	{% if group.Visibility == 0 %}
+<<<<<<< HEAD
 							<span type="button" 
+=======
+							<span type="button"   groupVisibility="0" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
+							id="nomember-{{ group.id }}"
+>>>>>>> fcc0532b4224381a6babc8a77758f5c293ec5993
 							class="btn btn-success btn-xs" rel="tooltip-top" title="Grupo público">
 								<i class="fa fa-unlock"></i> Público
 							</span>
 						{% endif %}
 	            	 	{% if group.Visibility == 1 %}
+<<<<<<< HEAD
 							<span href="#" type="button" 
+=======
+							<span href="#" type="button" groupVisibility="1" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
+							id="nomember-{{ group.id }}"
+>>>>>>> fcc0532b4224381a6babc8a77758f5c293ec5993
 							class="btn btn-danger btn-xs" rel="tooltip-top" title="Grupo privado">
 								<i class="fa fa-lock"></i> Privado
 							</span>
 						{% endif %}
 	            	 	{% if group.Visibility == 2 %}
+<<<<<<< HEAD
 							<span href="#" type="button" 
+=======
+							<span href="#" type="button" groupVisibility="2" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
+							id="nomember-{{ group.id }}"
+>>>>>>> fcc0532b4224381a6babc8a77758f5c293ec5993
 							class="btn btn-warning btn-xs" rel="tooltip-top" title="Grupo oculto">
 								<i class="fa fa-eye-slash"></i> Oculto
 							</span>	
 	            	 	{% endif %}
+<<<<<<< HEAD
 >>>>>>> 502de8302815ffdd1ee61a9fb79a1a3e26593721
+=======
+						{% if group.Admin.Id == user.Id %}
+						<script type="text/javascript">
+								document.getElementById("nomember-{{ group.id }}").setAttribute("data-toggle","confirmationChange");
+						</script> 
+				{% endif %}
+>>>>>>> fcc0532b4224381a6babc8a77758f5c293ec5993
 	            	</div>
 				</div>
 				<div id="collapse{{ group.id }}" class="panel-collapse collapse">
