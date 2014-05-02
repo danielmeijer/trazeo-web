@@ -1,5 +1,6 @@
 <script type="text/javascript">
 	var points=new Array;
+	var events=new Array;
 	POINT=function(lat,lng){
 		this.latLng=new L.LatLng(lat,lng);
 		var pick=false;
@@ -13,9 +14,13 @@
 			url: lastRoute
 			,success: function(response){
 				var point=response.replace(' ',',');
-				var aux="new "+point;
+				var aux="new POINT"+point;
 		     	var point=eval(aux);
-				poly.addLatLng(point.latLng);
+				if(typeof poly==='undefined'){
+					poly=new L.polyline(point.latLng);
+					poly.addTo(map);
+				}
+				else poly.addLatLng(point.latLng);
 				map.fitBounds(poly.getBounds());
 			}
 			,error: function(XMLHttpRequest, textStatus, errorThrown)
@@ -30,8 +35,17 @@
 {% for point in routePoints  %}
 <script>
 	var aux="new "+'{{ point.location }}'.replace(' ',',');
-	
 	points.push(eval(aux));
+</script>
+{%  endfor %}
+
+console.log("here");
+
+{% for event in rideEvents  %}
+<script>
+	var aux="new POINT"+'{{ event.data }}';
+	
+	events.push(eval(aux));
 </script>
 {%  endfor %}
 
@@ -180,6 +194,16 @@
 	L.Map.prototype.getWaypoints=function(){
 		return routing.getWaypoints();
 	};
+
+	L.Map.prototype.loadFromEvents=function(events){
+		var i=0;
+		if(typeof poly==='undefined'){
+			poly=new L.polyline(events[i].latLng);
+			poly.addTo(map);
+			i++
+		}
+		for(;i<events.length;i++)poly.addLatLng(events[i].latLng);
+	}
 
 	L.Map.prototype.loadFromWaypoints=function(waypoints){
 		for(var index=0;waypoints.length>index;index++){
@@ -470,8 +494,7 @@
 
 	
 	if(realTime){
-		poly=L.polyline(map.generatePoint());
-		poly.addTo(map);
+	    if(events.length>0)map.loadFromEvents(events);
 		setInterval(addLast,30000);
 	}
 
