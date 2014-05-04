@@ -141,11 +141,17 @@
 							                <td><i class="fa fa-users"></i></td>
 							                <td><a href="{{ path('panel_group_show', {'id': }) }}"{{ group.name }}</td>
 							                {% if  group.Visibility == 0 %}
-							                <td><i rel="tooltip-top" title="Acceso libre" class="fa fa-unlock btn btn-xs btn-success"></i>&nbsp; Público</td>
+							                <td><i rel="tooltip-top" title="Acceso libre" class="fa fa-unlock btn btn-xs btn-success"
+							                groupVisibility="0" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
+											id="visibility-{{ group.id }}" data-toggle="confirmationChange"></i>&nbsp; Público</td>
 							                {% elseif group.Visibility == 1 %}
-							                <td><i rel="tooltip-top" title="Acceso mediante solicitud" class="fa fa-lock btn btn-xs btn-danger"></i>&nbsp; Privado</td>
+							                <td><i rel="tooltip-top" title="Acceso mediante solicitud" class="fa fa-lock btn btn-xs btn-danger"
+							                groupVisibility="1" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
+											id="visibility-{{ group.id }}" data-toggle="confirmationChange"></i>&nbsp; Privado</td>
 							                {% elseif group.Visibility == 2 %}
-							                <td><i rel="tooltip-top" title="Acceso mediante invitación del administrador" class="fa fa-eye-slash btn btn-xs btn-warning"></i>&nbsp; Oculto</td>
+							                <td><i rel="tooltip-top" title="Acceso mediante invitación del administrador" class="fa fa-eye-slash btn btn-xs btn-warning"
+							                groupVisibility="2" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
+											id="visibility-{{ group.id }}" data-toggle="confirmationChange"></i>&nbsp; Oculto</td>
 							                {% endif %}
 							                <td><a href="{{ path('panel_group_timeline',{'id': group.id}) }}"><i class="fa fa-comments-o"></i>&nbsp; Chat del grupo</a></td>
 							                <td><a href="{{ path('panel_route')}}{{ group.Route.Id }}">{{ group.Route.Name }}</a></td>
