@@ -139,7 +139,7 @@
 							        {% for group in groups %}
 							            <tr>
 							                <td><i class="fa fa-users"></i></td>
-							                <td>{{ group.name }}</td>
+							                <td><a href="{{ path('panel_group_show', {'id': }) }}"{{ group.name }}</td>
 							                {% if  group.Visibility == 0 %}
 							                <td><i rel="tooltip-top" title="Acceso libre" class="fa fa-unlock btn btn-xs btn-success"></i>&nbsp; Público</td>
 							                {% elseif group.Visibility == 1 %}
