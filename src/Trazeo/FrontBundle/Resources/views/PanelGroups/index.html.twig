@@ -26,16 +26,17 @@
         {% for userAdmin in userAdmin %}
 	        {% for allGroupsAccess in allGroupsAccess %}
 				{% if userAdmin.Id == allGroupsAccess.Group.Id  %}
-				<div class="alert alert-default">
-	        		<p><b>{{ allGroupsAccess.Userextend }}</b> pide acceso para unirse al grupo <b>{{ allGroupsAccess.Group }}</b> del que eres administrador
+				<div>
+	        		<td><b>{{ allGroupsAccess.Userextend }}</b> pide acceso para unirse al grupo <b>{{ allGroupsAccess.Group }}</b> del que eres administrador
 						&nbsp;<a href="{{ path('panel_group_let_join', { 'id': allGroupsAccess.Userextend.Id, 'group':allGroupsAccess.Group.Id }) }}" type="button" class="label label-success">
 							<i class="fa fa-check"></i> Aceptar
 						</a>&nbsp;
 						<a href="{{ path('panel_group_deny_join', { 'id': allGroupsAccess.Userextend.Id , 'group':allGroupsAccess.Group.Id }) }}" type="button" class="label label-danger">
 							<i class="fa fa-times"></i> Denegar
 						</a>
-	        		 </p>
+	        		 </td>
 				</div>
+				<br />
 	        	{% endif %}
 	        {% endfor %}
         {% endfor %}

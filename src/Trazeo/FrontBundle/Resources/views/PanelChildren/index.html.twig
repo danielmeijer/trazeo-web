@@ -6,16 +6,17 @@
 		{% block body_content %}               
 	        {% for allChildInvite in allChildsInvite %}
 				{% if user.Id == allChildInvite.Userextend.Id  %}
-				<div class="alert alert-default">
-	        		<p>Tienes una invitación para ser tutor del niño <b>{{ allChildInvite.Child }}</b>
+				<div>
+	        		<td>Tienes una invitación para ser tutor del niño <b>{{ allChildInvite.Child }}</b>
 						&nbsp;<a href="{{ path('panel_child_invite_accept', { 'id': allChildInvite.Userextend.Id, 'child':allChildInvite.Child.Id, 'sender':allChildInvite.Sender.Id }) }}" type="button" class="label label-success">
 							<i class="fa fa-check"></i> Aceptar
 						</a>&nbsp;
 						<a href="{{ path('panel_child_invite_deny', { 'id': allChildInvite.Userextend.Id ,'child': allChildInvite.Child.Id, 'sender':allChildInvite.Sender.Id }) }}" type="button" class="label label-danger">
 							<i class="fa fa-times"></i> Cancelar
 						</a>
-	        		 </p>
+	        		 </td>
 	        	</div>
+	        	<br />
 	        	{% endif %}
 	        {% endfor %}
 		<div class="panel-group" id="accordion1">
