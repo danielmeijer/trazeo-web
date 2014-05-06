@@ -227,25 +227,30 @@
 		}
 	};   	
 
-	$("#enviar").submit(function(){
+	$("form").submit(function(){
     	//create input
     	var pointList="";
     	if(document.getElementById("inputPoints")==null){
         	var lat=document.createElement("INPUT");
            	lat.id="inputPoints";
            	lat.name="inputPoints";
-           	document.getElementById("mapa").appendChild(lat);  
+           	lat.type="hidden";
+           	document.getElementById("form").appendChild(lat);  
     	}
+    	
     	if(document.getElementById("distanceInput")==null){
         	var dist=document.createElement("INPUT");
            	dist.id="distanceInput";
            	dist.name="distanceInput";
-           	document.getElementById("mapa").appendChild(dist);  
+           	dist.type="hidden";
+           	document.getElementById("form").appendChild(dist);  
     	}
+    	
     	if(routing.getLast()&&routing.getLast().pickUp==false){
     		routing.getLast().pickUp=true;
         	routing.getLast().pickUpText="Punto fin";    		
         }
+        
     	if(routing.getFirst()&&routing.getFirst().pickUp==false){
         	routing.getFirst().pickUp=true;
         	routing.getFirst().pickUpText="Punto inicio";
@@ -257,7 +262,7 @@
     				pointList+=";";
         			}
     			if(!map._layers[marker].pickUp)map._layers[marker].pickUp=false;
-    			var pick=+map._layers[marker].pickUp+','+map._layers[marker].pickUpText;
+    			var pick=+map._layers[marker].pickUp+','+(map._layers[marker].pickUpText || "");
            		pointList+=map._layers[marker]._latlng.lat+","+map._layers[marker]._latlng.lng+","+pick;
         };       	
        	//populate input
@@ -406,13 +411,18 @@
 			}	
 
 			if(!this._marker.pickUp || this._marker.pickUp==false){ 
-			var t=document.createElement("input");
-			t.id="textRecogida";
-			document.getElementById("mapa").appendChild(t);
-			var text=$("#textRecogida");
-			text.attr('type','input');
-			if(this._marker.pickUpText)	text.val(this._marker.pickUpText);
-			else text.val("punto de recogida");
+				var t=document.createElement("input");
+				t.id="textRecogida";
+				document.getElementById("mapa").appendChild(t);
+				var text=$("#textRecogida");
+				text.attr('type','input');
+				if(this._marker.pickUpText)	text.val(this._marker.pickUpText);
+				else{
+					text.val('Cargando');
+					geocoder.reverse(this._marker.getLatLng(), map.options.crs.scale(24), function(results) {
+						text.val(results[0].name.split(',')[0]);
+    	    		});
+				}
 			}
 			
 			var b=document.createElement("button");	

@@ -39,9 +39,11 @@
 			<input type="hidden" name="lng{{ loop.index }}" value="{{ point.location.longitude }}">
 			<input type="hidden" name="description{{ loop.index }}" value="{{ point.description }}">
 		{% endfor %}
-		<form method="post" action={{ path('panel_save_map') }}>
+		<form method="post" action={{ path('panel_save_map') }} id="form">
 			<div id="mapa" class="col-md-12"></div>
-			<input type="hidden" name="id" value="{{ route.id }}" />
+			<input type="hidden" name="id" value="{{ route.id }}" />			
+			<input type="hidden" id="inputPoints" name="inputPoints" value="" />
+			<input type="hidden" id="distanceInput" name="distanceInput" value="" />
 			<button id="comenzar" type="button">Comenzar</button>
 			<button type="submit" id="enviar">Enviar</button>
 		</form>

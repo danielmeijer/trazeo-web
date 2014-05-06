@@ -235,7 +235,7 @@ class PanelRoutesController extends Controller
 
         $route = $em->getRepository('TrazeoBaseBundle:ERoute')->find($id);
         $points = $em->getRepository('TrazeoBaseBundle:EPoints')->findByRoute($route->getId());
-    	ldd($points);
+    	ldd($request);
     	if(count($route->getPoints()->toArray()) != 0){
     		$points = $em->getRepository('TrazeoBaseBundle:EPoints')->findByRoute($route->getId());
     		foreach($points as $point){
