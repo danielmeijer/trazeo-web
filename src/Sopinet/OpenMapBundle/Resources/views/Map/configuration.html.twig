@@ -9,6 +9,7 @@
 	var editable= {{ editable }};
 	var realTime= {{ realTime }};
 
+	
 	var addLast=function(){
 		$.ajax({
 			url: lastRoute
@@ -235,6 +236,12 @@
            	lat.name="inputPoints";
            	document.getElementById("mapa").appendChild(lat);  
     	}
+    	if(document.getElementById("distanceInput")==null){
+        	var dist=document.createElement("INPUT");
+           	dist.id="distanceInput";
+           	dist.name="distanceInput";
+           	document.getElementById("mapa").appendChild(dist);  
+    	}
     	if(routing.getLast()&&routing.getLast().pickUp==false){
     		routing.getLast().pickUp=true;
         	routing.getLast().pickUpText="Punto fin";    		
@@ -254,7 +261,8 @@
            		pointList+=map._layers[marker]._latlng.lat+","+map._layers[marker]._latlng.lng+","+pick;
         };       	
        	//populate input
-    	$("#inputPoints").val(pointList); 
+    	$("#inputPoints").val(pointList);
+    	$("#distanceInput").val(map.getDistance()); 
     });
 	
 	//methods

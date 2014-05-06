@@ -3,6 +3,7 @@
 {% set pageheader_description = "Children.index.description"|trans %}
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
+
 		{% block body_content %}               
 	        {% for allChildInvite in allChildsInvite %}
 				{% if user.Id == allChildInvite.Userextend.Id  %}
