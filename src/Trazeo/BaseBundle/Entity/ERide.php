@@ -13,7 +13,6 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
  */
 class ERide
 {
-	use \Sopinet\Bundle\SimplePointBundle\Model\GeoLocation;
 	use ORMBehaviors\Timestampable\Timestampable;
 	/**
 	 * @var integer
@@ -46,6 +45,11 @@ class ERide
 	protected $events;
 	
 	/**
+	 * @ORM\OneToMany(targetEntity="EChild", mappedBy="ride")
+	 **/
+	protected $childs;
+	
+	/**
 	 * @ORM\OneToMany(targetEntity="EReport", mappedBy="ride")
 	 **/
 	protected $reports;
@@ -54,6 +58,11 @@ class ERide
 	 * @ORM\Column(name="go", type="boolean", nullable=true)
 	 */
 	protected $go;
+	
+	/**
+	 * @ORM\Column(name="duration", type="string", length=255)
+	 */
+	protected $duration;
 
     /**
      * Get id
@@ -258,5 +267,63 @@ class ERide
     public function getReports()
     {
         return $this->reports;
+    }
+
+    /**
+     * Add childs
+     *
+     * @param \Trazeo\BaseBundle\Entity\EChild $childs
+     *
+     * @return ERide
+     */
+    public function addChild(\Trazeo\BaseBundle\Entity\EChild $childs)
+    {
+        $this->childs[] = $childs;
+
+        return $this;
+    }
+
+    /**
+     * Remove childs
+     *
+     * @param \Trazeo\BaseBundle\Entity\EChild $childs
+     */
+    public function removeChild(\Trazeo\BaseBundle\Entity\EChild $childs)
+    {
+        $this->childs->removeElement($childs);
+    }
+
+    /**
+     * Get childs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getChilds()
+    {
+        return $this->childs;
+    }
+
+    /**
+     * Set duration
+     *
+     * @param string $duration
+     *
+     * @return ERide
+     */
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
+
+        return $this;
+    }
+
+    /**
+     * Get duration
+     *
+     * @return string 
+     */
+    public function getDuration()
+    {
+        return $this->duration;
     }
 }

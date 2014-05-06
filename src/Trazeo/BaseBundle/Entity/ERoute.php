@@ -44,6 +44,13 @@ class ERoute
 	/**
 	 * @var string
 	 *
+	 * @ORM\Column(name="distance", type="string", length=50)
+	 */
+	protected $distance;
+	
+	/**
+	 * @var string
+	 *
 	 * @ORM\Column(name="name", type="string", length=255)
 	 */
 	protected $name;
@@ -257,5 +264,29 @@ class ERoute
     public function getRide()
     {
         return $this->ride;
+    }
+
+    /**
+     * Set distance
+     *
+     * @param string $distance
+     *
+     * @return ERoute
+     */
+    public function setDistance($distance)
+    {
+        $this->distance = $distance;
+
+        return $this;
+    }
+
+    /**
+     * Get distance
+     *
+     * @return string 
+     */
+    public function getDistance()
+    {
+        return $this->distance;
     }
 }

@@ -29,6 +29,12 @@ class EChild
      *  @ORM\ManyToMany(targetEntity="EGroup", mappedBy="childs")
      */
     protected $groups;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="ERide", inversedBy="childs")
+     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
+     **/
+    protected $ride;
 
     /**
      * @var string
@@ -284,5 +290,29 @@ class EChild
     public function getInviteChild()
     {
         return $this->inviteChild;
+    }
+
+    /**
+     * Set ride
+     *
+     * @param \Trazeo\BaseBundle\Entity\ERide $ride
+     *
+     * @return EChild
+     */
+    public function setRide(\Trazeo\BaseBundle\Entity\ERide $ride = null)
+    {
+        $this->ride = $ride;
+
+        return $this;
+    }
+
+    /**
+     * Get ride
+     *
+     * @return \Trazeo\BaseBundle\Entity\ERide 
+     */
+    public function getRide()
+    {
+        return $this->ride;
     }
 }

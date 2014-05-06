@@ -30,6 +30,7 @@ class UpdatedListener implements EventSubscriber {
 			$userExtend = new UserExtend();
 			
 			$userExtend->setNick($email);
+			$userExtend->setTutorial(0);
 			$userExtend->setUser($entity);
 			$em->persist($userExtend);
 			$em->flush();

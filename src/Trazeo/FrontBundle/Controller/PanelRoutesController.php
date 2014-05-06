@@ -229,13 +229,14 @@ class PanelRoutesController extends Controller
 		//ldd($request);
 		$id = $request->get('id');
 		$inputPoints = $request->get('inputPoints');
+		$distance = $request->get('distanceInput');
 		$points = explode(";", $inputPoints);
 
 		$em = $this->getDoctrine()->getManager();
 
         $route = $em->getRepository('TrazeoBaseBundle:ERoute')->find($id);
-        $points = $em->getRepository('TrazeoBaseBundle:EPoints')->findByRoute($route->getId());
-    	ldd($request);
+        //$points = $em->getRepository('TrazeoBaseBundle:EPoints')->findByRoute($route->getId());
+    	//ldd($request);
     	if(count($route->getPoints()->toArray()) != 0){
     		$points = $em->getRepository('TrazeoBaseBundle:EPoints')->findByRoute($route->getId());
     		foreach($points as $point){
@@ -253,6 +254,8 @@ class PanelRoutesController extends Controller
 			$punto->setDescription($latlng[3]);
 			$em->persist($punto);
 		}
+		$route->setDistance($distance);
+		$em->persist($route);
     	$em->flush();
     
     	return $this->redirect($this->generateUrl('panel_route_show', array('id' => $id)));

@@ -195,7 +195,8 @@ class ApiController extends Controller {
 			$ride = new ERide();
 			//TODO: En la relación Group-Ride, evitar los dos set
 			$ride->setGroup($group);
-			$ride->setTimeIni($ride->getCreatedAt());
+			$ride->setTimeIni(new \DateTime());
+			$ride->setGo(1);
 			$em->persist($ride);
 			$group->setHasRide(1);
 			$group->setRide($ride);
@@ -308,12 +309,31 @@ class ApiController extends Controller {
 		//$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 	
 		$ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
+		$child = $em->getRepository('TrazeoBaseBundle:EChild')->findOneById($id_child);
+		$userextends = $child->getUserextendchilds()->toArray();
 	
+		//Creamos evento de entrada de un niño
 		$event = new EEvent();
 		$event->setRide($ride);
 		$event->setAction("in");
 		$event->setData($id_child);
+		
+		//Registramos al niño dentro del paseo
+		$child->setRide($ride);
+		
+		//Notificamos a sus tutores
+		foreach($userextends as $userextend){
+			$not = $this->container->get('sopinet_user_notification');
+			$not->addNotification(
+					"Notify.parents.child.in",
+					"TrazeoBaseBundle:Userextend,TrazeoBaseBundle:EChild",
+					$userextend->getId() . "," . $child->getId(),
+					$this->generateUrl('panel_dashboard'),
+					$userextend->getUser()
+			);
+		}
 	
+		$em->persist($child);
 		$em->persist($event);
 		$em->flush();
 	
@@ -327,7 +347,7 @@ class ApiController extends Controller {
 	
 	/**
 	 * Guarda en el servidor la nueva posición del Grupo
-	 * @POST("/api/ride/sendChildInRide")
+	 * @POST("/api/ride/sendChildOutRide")
 	 */
 	public function getSendChildOutRideAction(Request $request) {
 	
@@ -348,12 +368,30 @@ class ApiController extends Controller {
 		//$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 	
 		$ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
+		$child = $em->getRepository('TrazeoBaseBundle:EChild')->findOneById($id_child);
+		$userextends = $child->getUserextendchilds()->toArray();
 	
 		$event = new EEvent();
 		$event->setRide($ride);
 		$event->setAction("out");
 		$event->setData($id_child);
-	
+		
+		//Eliminamos el niño del paseo
+		$child->setRide(null);
+		
+		$not = $this->container->get('sopinet_user_notification');
+		//Notificamos a sus tutores
+		foreach($userextends as $userextend){
+			$not->addNotification(
+					"Notify.parents.child.out",
+					"TrazeoBaseBundle:Userextend,TrazeoBaseBundle:EChild",
+					$userextend->getId() . "," . $child->getId(),
+					$this->generateUrl('panel_dashboard'),
+					$userextend->getUser()
+			);
+		}
+		
+		$em->persist($child);
 		$em->persist($event);
 		$em->flush();
 	
@@ -362,6 +400,68 @@ class ApiController extends Controller {
 		->setData($this->doOK("ok"));
 			
 		return $this->get('fos_rest.view_handler')->handle($view);
+	
+	}
+	
+	/**
+	 * @POST("/api/ride/finish")
+	 */
+	public function getFinishRideAction(Request $request) {
+	
+		//Comprobar si el ride asociado al grupo está creado(hasRide=1)
+		$id_ride = $request->get('id_ride');
+	
+		$user = $this->checkPrivateAccess($request);
+		if( $user == false || $user == null ){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied());
+	
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+	
+		$em = $this->get('doctrine.orm.entity_manager');
+	
+		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+	
+		
+		$ride = $em->getRepository('TrazeoBaseBundle:ERide')->find($id_ride);
+		$group = $ride->getGroup();
+		
+		//Cálculo del tiempo transcurrido en el paseo
+		$inicio = $ride->getTimeIni();
+		$fin = new \DateTime();
+		
+		$diff = $inicio->diff($fin);
+		$duration = $diff->h." horas, ".$diff->i." minutos y ".$diff->s." segundos";
+		
+		$ride->setDuration($duration);
+		$ride->setTimeFin($fin);
+		$ride->setGo(0);
+		$em->persist($ride);
+
+		$em->flush();
+		
+		$userextends = $group->getUserextendgroups();
+		
+		$not = $this->container->get('sopinet_user_notification');
+		foreach($userextend as $userextends)
+		{
+			$not->addNotification(
+					"Notify.parents.child.out",
+					"TrazeoBaseBundle:ERide",
+					$ride->getId(),
+					$this->generateUrl('panel_dashboard'),
+					$userextend->getUser()
+			);
+		}
+			
+		$view = View::create()
+		->setStatusCode(200)
+		->setData($this->doOK("ok"));
+			
+		return $this->get('fos_rest.view_handler')->handle($view);
+		
 	
 	}
 	
