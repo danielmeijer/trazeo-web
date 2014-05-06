@@ -11,10 +11,11 @@ Children:
     help:
         datebirth: 'Fecha de nacimiento'
         groups: 'Asignar a un grupo'
-        name: 'Nombre del niño'
+        nick: 'Nombre del niño'
         sex: Género
         userextend: 'Tutores del niño'
         visibility: Visibilidad
+        gender: Género, Niño/a 
 
     index:
         description: 'En este apartado puedes consultar toda la información referente a tus niños registrados en Trazeo'
@@ -50,6 +51,7 @@ Groups:
     help:
         name: 'Nombre del grupo'
         route: 'Asignar una ruta a este grupo'
+        name2: 'Visibilidad / Accesibilidad al grupo'
 
     index:
         description: 'Estos grupos se encuentran en tu ciudad o en la de alguno de tus niños, y podrían interesarte'
@@ -58,7 +60,7 @@ Groups:
     name: 'Nombre del grupo'
 
     new:
-        description: 'Dale un nombre, una visibilidad y asígnale una ruta'
+        description: 'Indica un nombre, define quíen podrá acceder a él y asígnale una ruta'
         title: 'Crear nuevo grupo'
 
     visibility:
@@ -119,6 +121,9 @@ Register:
     repeatpass: 'Repita la contraseña'
 
 Route:
+    new:
+        title: Crear nueva ruta
+        description: Asígnale un nombre que de a los demás usuarios una idea de la zona o recorrido
     edit:
         description: 'Establece un nombre e indica a qué país y ciudad pertenece'
         title: 'Editar datos de ruta'
