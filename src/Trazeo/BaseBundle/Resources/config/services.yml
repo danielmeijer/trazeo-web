@@ -9,6 +9,14 @@ services:
 #        arguments: [@service_id, "plain_value", %parameter%]
     #webservice_user_provider:
      #   class: "%webservice_user_provider.class%"
+    wsse.security.authentication.provider:
+        class: Trazeo\BaseBundle\Security\Authentication\Provider\WsseProvider
+        arguments: ["", "%kernel.cache_dir%/security/nonces"]
+
+    wsse.security.authentication.listener:
+        class: Trazeo\BaseBundle\Security\Firewall\WsseListener
+        arguments: ["@security.context", "@security.authentication.manager"] 
+    
     sopinet.comments.vote_persistence_listener:
         class: %sopinet.comments.vote_persistence_listener.class%
         arguments: [ @fos_comment.manager.vote.default, @security.context ]

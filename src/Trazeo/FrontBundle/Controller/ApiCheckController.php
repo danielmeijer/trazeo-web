@@ -18,7 +18,6 @@ class ApiCheckController extends Controller
 	 */
     public function apicheckAction()
     {
-    	
 	    return array();
 	}
 

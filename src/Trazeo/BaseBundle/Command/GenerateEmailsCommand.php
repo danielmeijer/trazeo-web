@@ -64,14 +64,14 @@ class GenerateEmailsCommand extends ContainerAwareCommand
     				$em->persist($not);
     				$em->flush();
     			}
-    			
+    			$token = base64_encode(sha1(base64_decode(uniqid()).gmdate("Y-m-d\TH:i:s\Z").$user->getUser()->getPassword(), true));
     			$message = \Swift_Message::newInstance()
     			// TODO: Traducir
     			->setSubject("Tiene ".count($notifications)." novedades")
     			->setFrom(array("info@trazeo.com" => "Trazeo"))
     			->setTo($user->getUser()->getEmail())
     			//->setCc($setCC)
-    			->setBody($con->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:notifyUser.html.twig', array('user' => $user, 'notifications' => $notifications)), 'text/html');
+    			->setBody($con->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:notifyUser.html.twig', array('user' => $user, 'notifications' => $notifications, 'token' => $token)), 'text/html');
     			//->setBody("Este es el cuerpo del delito");
     			$ok = $con->get('mailer')->send($message);
 

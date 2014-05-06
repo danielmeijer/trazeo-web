@@ -5,6 +5,7 @@ namespace Application\Sonata\UserBundle\Entity;
 use FOS\UserBundle\Entity\User as BaseUser;
 use FOS\MessageBundle\Model\ParticipantInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
 /**
  * @ORM\Entity
@@ -24,7 +25,7 @@ class User extends BaseUser
         parent::__construct();
 
     }
-    
+    use ORMBehaviors\Timestampable\Timestampable;
     /**
      * @ORM\OneToOne(targetEntity="Sopinet\UserBundle\Entity\SopinetUserExtend", mappedBy="user")
      * @ORM\JoinColumn(name="sopinetuserextend_id", referencedColumnName="id")

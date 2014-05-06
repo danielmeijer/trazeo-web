@@ -20,7 +20,7 @@ class UserExtendType extends AbstractType
         					'placeholder' => 'Children.nick',
         					'data-toggle' => 'popover',
         					'data-placement' => 'right',
-        					'data-content' => $options['attr']['Userextend.help.nick']
+        					'data-content' => ""
         					),
             		'required' => true
         			)
@@ -30,7 +30,7 @@ class UserExtendType extends AbstractType
             		'attr' => array('class' => 'chosen-select'),
              		'required' => false, //Para permitir hacer submit con una opción 'vacía'
              		'empty_value' => 'España', //Valor que aparece por defecto si no tiene un país asignado
-    				'empty_data'  => 263, //Dato que se registra en la base de datos si se hace un commit con esta selección 'vacía'
+    				'empty_data'  => 68, //Dato que se registra en la base de datos si se hace un commit con esta selección 'vacía'
             		'property' => 'name'))
             ->add('city', 'entity', array(
             		'class' => 'JJsGeonamesBundle:City',

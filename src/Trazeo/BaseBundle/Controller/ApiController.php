@@ -103,6 +103,7 @@ class ApiController extends Controller {
 	public function postLoginAction(Request $request){
 		//Se usan anotaciones para comprobar si el método es post
 		//if ('POST' == $request->getMethod() || true) {
+			ldd($this->get('security.context')->getToken()->getUser());
 			$user = $this->checkPrivateAccess($request);
 	
 			if( $user == false || $user == null ){
