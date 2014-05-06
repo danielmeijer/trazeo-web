@@ -37,6 +37,14 @@ class PanelController extends Controller
 	       		$groupsRide[] = $groupMember;
 	       	}
 	    }
+	    $tutorial = 0;
+	    if(!$user->getTutorial()){
+	    	$user->setTutorial(1);
+	    	$em->persist($user);
+	    	$em->flush();
+	    	//ver tutorial
+	    	$tutorial = 1;
+	    }
 	
 	   	return array(
 	    			'user' => $user,
@@ -44,7 +52,8 @@ class PanelController extends Controller
 	           		'groups' => $groups,
 	   	 			'routes' => $routes,
 	   	 			'notifications' => $not,
-	   	 			'groupsRide' => $groupsRide
+	   	 			'groupsRide' => $groupsRide,
+	   				'tutorial' => $tutorial
 	   	);
 	}
 
