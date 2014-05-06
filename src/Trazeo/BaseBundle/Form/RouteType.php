@@ -32,6 +32,7 @@ class RouteType extends AbstractType
             		),
             		'required' => false, //Para permitir hacer submit con una opción 'vacía'
             		'empty_value' => 'España', //Valor que aparece por defecto si no tiene un país asignado
+            		'empty_data' => $options['attr']['default'],
             		'property' => 'name'
            	));
     }

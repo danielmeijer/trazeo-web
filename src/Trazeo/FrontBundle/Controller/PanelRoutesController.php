@@ -84,12 +84,17 @@ class PanelRoutesController extends Controller
      */
     private function createCreateForm(ERoute $route)
     {
+    	$em = $this->getDoctrine()->getManager();
+    	$spainCode = $em->getRepository('JJs\Bundle\GeonamesBundle\Entity\Country')->findOneByCode("ES");
+    	$spainCodeId = $spainCode->getId();
+    	
         $form = $this->createForm(new RouteType(), $route, array(
             'action' => $this->generateUrl('panel_route_create'),
             'method' => 'POST',
         	'attr' => array(
         				'Route.help.name' => $this->get('translator')->trans('Route.help.name'),
-        				'Route.help.country' => $this->get('translator')->trans('Route.help.country')
+        				'Route.help.country' => $this->get('translator')->trans('Route.help.country'),
+        				'default' => $spainCodeId
         		)
         ));
 
@@ -195,12 +200,17 @@ class PanelRoutesController extends Controller
     */
     private function createEditForm(ERoute $route)
     {
+    	$em = $this->getDoctrine()->getManager();
+    	$spainCode = $em->getRepository('JJs\Bundle\GeonamesBundle\Entity\Country')->findOneByCode("ES");
+    	$spainCodeId = $spainCode->getId();
+    	
         $form = $this->createForm(new RouteType(), $route, array(
             'action' => $this->generateUrl('panel_route_update', array('id' => $route->getId())),
             'method' => 'PUT',
         	'attr' => array(
         				'Route.help.name' => $this->get('translator')->trans('Route.help.name'),
-        				'Route.help.country' => $this->get('translator')->trans('Route.help.country')
+        				'Route.help.country' => $this->get('translator')->trans('Route.help.country'),
+        				'default' => $spainCodeId
         		)
         ));
 
