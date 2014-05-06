@@ -1,7 +1,6 @@
 {% set activeMenu = "route" %}
 {% set pageheader_title = "Route.index.title"|trans %}
 {% set pageheader_description = "Route.index.description"|trans %}
-{% set tutorial = "routes" %}
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
 {% block body_content %}
@@ -92,15 +91,11 @@
 		
 {% block js %} {{ parent() }} 
 
-	{% if tutorial is not defined or tutorial == 'none' %}
-	<!-- Non Tutorial -->
-	<script type="text/javascript">
-		console.log("non-tutorial");
-	</script>
-	{%  elseif tutorial == 'routes' %}
 	<input type="hidden" id="path_home" value="{{ path('panel_dashboard') }}">
-	{% set tutorial = "last" %}
+
 	<script type="text/javascript">
+	if(localStorage.getItem('tutorial')=='routes'){
+		localStorage.setItem('tutorial','none');
    		var trip = new Trip([
    	                         { 
    	                             sel : $('.panel.panel-warning'),
@@ -122,6 +117,7 @@
    	                             content : 'Aqui muestra la ruta',
    	                             position: 'e',
    	                             callback: function(){
+   	                            	localStorage.setItem('tutorial','last');
                               	 	var url = $('#path_home').attr('value');    
                              	 	window.location.replace(url);
     	   	                     }
@@ -132,6 +128,7 @@
         					 skipUndefinedTrip: true
     				});
 		trip.start();
+	}
 	</script>	
-	{% endif %}
+
 {% endblock %}

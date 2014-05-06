@@ -29,14 +29,14 @@
 	            	<div class="pull-right" style="margin-top:-20px;">
 	            	
 							<a href="{{ path('panel_child') }}{{ child.id }}/edit" type="button" 
-							class="btn btn-default btn-xs" rel="tooltip-top" title="Editar información">
+							class="btn btn-default btn-xs edit" rel="tooltip-top" title="Editar información">
 								<i class="fa fa-pencil"></i> Editar
 							</a>
 							<a href="{{ path('panel_child_disjoin', { 'id': child.id }) }}" type="button" 
-							class="btn btn-default btn-xs" rel="tooltip-top" title="Dejar de ser tutor del niño">
+							class="btn btn-default btn-xs disjoin" rel="tooltip-top" title="Dejar de ser tutor del niño">
 								<i class="fa fa-sign-out"></i> Desvincularme
 							</a>
-			        	<span class="label label-success">{{ "Tutores"|trans }} {{ child.userextendchilds|length }}</span>
+			        	<span class="label label-success tutores">{{ "Tutores"|trans }} {{ child.userextendchilds|length }}</span>
 	            	 </div>
 				</div>
 				<div id="collapse{{ child.id }}" class="panel-collapse collapse {% if loop.index == 1 %}in{% endif %}">
@@ -107,3 +107,46 @@
 		{% endfor %}
 		</div>
 {% endblock%}
+
+{% block js %}
+	{{ parent() }} 
+	<input type="hidden" id="path_home" value="{{ path('panel_dashboard') }}">
+	<script type="text/javascript">
+	if(localStorage.getItem('tutorial')=='child'){
+		localStorage.setItem('tutorial','none');
+   		var trip = new Trip([
+   	                         { 
+   	                             sel : $('.panel.panel-warning'),
+   	                             content : 'Aqui aparecera la información de los niños de los que eres tutor',
+   	                             position: 'n'
+   	                         },
+   	                         { 
+   	                             sel : $(".edit"),
+   	                             content : 'Aqui podra editar la información de un niño',
+   	                             position: 'n'
+   	                         },
+   	                         { 
+   	                             sel : $(".disjoin"),
+   	                             content : 'Aqui podra desvincularse como tutor de un niño',
+   	                             position: 'n'
+   	                         },
+   	                         { 
+   	                             sel : $(".tutores"),
+   	                             content : 'Aqui muestra el numero de tutores de un niño',
+   	                             position: 'w',
+   	                             callback: function(){
+   	                            	localStorage.setItem('tutorial','groups');
+                               	 	var url = $('#path_home').attr('value');    
+                              	 	window.location.replace(url);
+     	   	                     }
+   	   	                         
+   	                         },
+   	                         
+                      ], {
+        					 delay : 2500,
+        					 skipUndefinedTrip: true
+    				});
+		trip.start();
+	}
+	</script>	
+{% endblock %}

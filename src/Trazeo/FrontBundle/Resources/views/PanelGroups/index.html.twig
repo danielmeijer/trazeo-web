@@ -75,37 +75,37 @@
 						</h4>
 		            	<div class="pull-right" style="margin-top:-20px;">
 							<a href="{{ path('panel_group_timeline',{'id': userGroup.id}) }}" type="button" 
-							class="btn btn-default btn-xs" rel="tooltip-top" title="Timeline de grupo">
+							class="btn btn-default btn-xs group-timeline" rel="tooltip-top" title="Timeline de grupo">
 								<i class="fa fa-comments-o"></i> Chat del grupo
 							</a>
 							<a href="{{ path('panel_group_disjoin', { 'id': userGroup.id }) }}" type="button" 
-							class="btn btn-default btn-xs" rel="tooltip-top" title="Desvincularme del grupo">
+							class="btn btn-default btn-xs group-disjoin" rel="tooltip-top" title="Desvincularme del grupo">
 								<i class="fa fa-sign-out"></i> Salir
 							</a>
 							{% if userGroup.Admin.Id == user.Id %}
 									<a href="{{ path('panel_group') }}{{ userGroup.id }}/edit" type="button" 
-									class="btn btn-default btn-xs" rel="tooltip-top" title="Editar información">
+									class="btn btn-default btn-xs group-edit" rel="tooltip-top" title="Editar información">
 										<i class="fa fa-pencil"></i> Editar
 									</a> 
 							{% endif %}
 			            	 	{% if userGroup.Visibility == 0 %}
 									<span type="button" groupVisibility="0" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': userGroup.id, 'visibility': "replace" }) }}";
 									id="member-{{ userGroup.id }}"
-									class="btn btn-success btn-xs" rel="tooltip-top" title="Grupo público">
+									class="btn btn-success btn-xs group-visibility" rel="tooltip-top" title="Grupo público">
 										<i class="fa fa-unlock"></i> Público
 									</span>
 								{% endif %}
 			            	 	{% if userGroup.Visibility == 1 %}
 									<span href="#" type="button" groupVisibility="1" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': userGroup.id, 'visibility': "replace" }) }}";
 									id="member-{{ userGroup.id }}" 
-									class="btn btn-danger btn-xs" rel="tooltip-top" title="Grupo privado">
+									class="btn btn-danger btn-xs group-visibility" rel="tooltip-top" title="Grupo privado">
 										<i class="fa fa-lock"></i> Privado
 									</span>
 								{% endif %}
 		            	 	{% if userGroup.Visibility == 2 %}
 								<span href="#" type="button" groupVisibility="2" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': userGroup.id, 'visibility': "replace" }) }}";
 								id="member-{{ userGroup.id }}"
-								class="btn btn-warning btn-xs" rel="tooltip-top" title="Grupo oculto">
+								class="btn btn-warning btn-xs group-visibility" rel="tooltip-top" title="Grupo oculto">
 									<i class="fa fa-eye-slash"></i> Oculto
 								</span>									
 		            	 	{% endif %}
@@ -198,34 +198,34 @@
 	
 						{% if group.Visibility == 0 or group.Admin.Id == user.Id%}										
 								<a href="{{ path('panel_group_join', { 'id': group.id }) }}" type="button" 
-								class="btn btn-default btn-xs" rel="tooltip-top" title="Unirme a este grupo">
+								class="btn btn-default btn-xs group-join" rel="tooltip-top" title="Unirme a este grupo">
 									<i class="fa fa-users"></i> Unirme
 								</a> 
 						{% endif %}
 						{% if group.Admin.Id == user.Id %}
 								<a href="{{ path('panel_group') }}{{ group.id }}/edit" type="button" 
-								class="btn btn-default btn-xs" rel="tooltip-top" title="Editar información">
+								class="btn btn-default btn-xs group-edit" rel="tooltip-top" title="Editar información">
 									<i class="fa fa-pencil"></i> Editar
 								</a> 
 						{% endif %}
 	            	 	{% if group.Visibility == 0 %}
 							<span type="button"   groupVisibility="0" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
 							id="nomember-{{ group.id }}"
-							class="btn btn-success btn-xs" rel="tooltip-top" title="Grupo público">
+							class="btn btn-success btn-xs group-visibility" rel="tooltip-top" title="Grupo público">
 								<i class="fa fa-unlock"></i> Público
 							</span>
 						{% endif %}
 	            	 	{% if group.Visibility == 1 %}
 							<span href="#" type="button" groupVisibility="1" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
 							id="nomember-{{ group.id }}"
-							class="btn btn-danger btn-xs" rel="tooltip-top" title="Grupo privado">
+							class="btn btn-danger btn-xs group-visibility" rel="tooltip-top" title="Grupo privado">
 								<i class="fa fa-lock"></i> Privado
 							</span>
 						{% endif %}
 	            	 	{% if group.Visibility == 2 %}
 							<span href="#" type="button" groupVisibility="2" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
 							id="nomember-{{ group.id }}"
-							class="btn btn-warning btn-xs" rel="tooltip-top" title="Grupo oculto">
+							class="btn btn-warning btn-xs group-visibility" rel="tooltip-top" title="Grupo oculto">
 								<i class="fa fa-eye-slash"></i> Oculto
 							</span>	
 	            	 	{% endif %}
@@ -286,4 +286,66 @@
 		<p>&nbsp;</p>
      </div>
 
+{% endblock %}
+
+{% block js %} {{ parent() }} 
+	<input type="hidden" id="path_home" value="{{ path('panel_dashboard') }}">
+
+	<script type="text/javascript">
+	if(localStorage.getItem('tutorial')=='groups'){
+		localStorage.setItem('tutorial','none');
+   		var trip = new Trip([
+   	                         { 
+   	                             sel : $('.panel.panel-warning'),
+   	                             content : 'Aqui aparecera la información de las rutas',
+   	                             position: 'n'
+   	                         },
+   	                         { 
+   	                             sel : $(".join-admin"),
+   	                             content : '???',
+   	                             position: 'n'
+   	                         },
+   	                         { 
+   	                             sel : $(".group-timeline"),
+   	                             content : 'Aqui podra chatear con el resto de tutores del grupo',
+   	                             position: 'n'
+   	                         },
+   	                         { 
+   	                             sel : $(".group-disjoin"),
+   	                             content : 'Aqui podra salir de un grupo',
+   	                             position: 'n'
+   	                         },
+   	                         { 
+   	                             sel : $(".group-join"),
+   	                             content : 'Aqui podra unirse a un grupo',
+   	                             position: 'n'
+   	                         },
+   	                         { 
+   	                             sel : $(".group-request-join"),
+   	                             content : 'Aqui podra solicitar acesso a un grupo privado',
+   	                             position: 'n'
+   	                         },
+   	                         { 
+   	                             sel : $(".group-edit"),
+   	                             content : 'Aqui podra editar la información de un grupo',
+   	                             position: 'n'
+   	                         },  
+   	                         { 
+   	                             sel : $(".group-visibility"),
+   	                             content : 'Aqui podra cambiar la visibilidad del grupo si es administrador del mismo',
+   	                             position: 'w',
+   	                             callback: function(){
+   	                            	localStorage.setItem('tutorial','routes');
+                             	 	var url = $('#path_home').attr('value');    
+                            	 	window.location.replace(url);
+   	   	                         }
+   	                         }
+   	                         
+                      ], {
+        					 delay : 2500,
+        					 skipUndefinedTrip: true
+    				});
+		trip.start();
+	}
+	</script>	
 {% endblock %}

@@ -554,4 +554,28 @@ class UserExtend
     {
         return $this->reports;
     }
+
+    /**
+     * Set tutorial
+     *
+     * @param boolean $tutorial
+     *
+     * @return UserExtend
+     */
+    public function setTutorial($tutorial)
+    {
+        $this->tutorial = $tutorial;
+
+        return $this;
+    }
+
+    /**
+     * Get tutorial
+     *
+     * @return boolean 
+     */
+    public function getTutorial()
+    {
+        return $this->tutorial;
+    }
 }

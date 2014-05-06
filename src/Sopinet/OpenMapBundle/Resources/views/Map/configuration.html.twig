@@ -39,7 +39,6 @@
 </script>
 {%  endfor %}
 
-console.log("here");
 
 {% for event in rideEvents  %}
 <script>
@@ -52,7 +51,6 @@ console.log("here");
 <script type="text/javascript">
 	var gk, topo, thunderforest, osm, waymarkedtrails;
 	var menu=null;
-	var flagMenu=null;
 	var icon="leaflet-marker-icon leaflet-zoom-animated leaflet-clickable leaflet-marker-draggable";
 	
 	L.Icon.Default.imagePath = '{{ asset('bundles/sopinetopenmap/css/images') }}'; 
@@ -318,10 +316,7 @@ console.log("here");
     	$(".leaflet-marker-icon").on();
     	for(var marker in map._layers)if(map._layers[marker]._icon && map._layers[marker]._icon.className===icon)
         	map._layers[marker].on('contextmenu',showPopUpMenu);
-    	if(flagMenu){
-        	map.enableRouting();
-        	flagMenu=null;
-		}
+
     };
     
 
@@ -454,9 +449,8 @@ console.log("here");
      	   	map.getPanes().overlayPane.removeChild(this._el);
     	    map.off('viewreset', this._reset, this);
     	    routing.rerouteAllSegments(this._reset);
-    	    map.enableRouting();
+    	    setTimeout(map.enableRouting, 500);
     	    menu=null;
-    	    flagMenu=true;
     	    map.updateRouteInfo();
    	 	},
 
