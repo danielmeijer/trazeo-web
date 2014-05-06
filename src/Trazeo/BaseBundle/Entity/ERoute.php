@@ -44,7 +44,7 @@ class ERoute
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="distance", type="string", length=50)
+	 * @ORM\Column(name="distance", type="string", length=50, nullable=true)
 	 */
 	protected $distance;
 	
