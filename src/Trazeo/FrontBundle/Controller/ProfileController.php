@@ -27,12 +27,16 @@ class ProfileController extends Controller
     	$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
     	$sopinetuser = $em->getRepository('\Sopinet\UserBundle\Entity\SopinetUserExtend')->findOneByUser($fos_user->getId());
     	
+    	$spainCode = $em->getRepository('JJs\Bundle\GeonamesBundle\Entity\Country')->findOneByCode("ES");
+    	$spainCodeId = $spainCode->getId();
+    	 
     	$form_profile = $this->createForm(new UserType(), $fos_user);
     	$form_userextend = $this->createForm(new UserExtendType(), $userextend, array(
             'action' => $this->generateUrl('panel_userextend_create'),
             'method' => 'POST',
         	'attr' => array(
-        				'Userextend.help.nick' => $this->get('translator')->trans('Userextend.help.nick')	
+        				'Userextend.help.nick' => $this->get('translator')->trans('Userextend.help.nick'),
+        				'default' => $spainCodeId
         		)
         	));
 
@@ -63,15 +67,24 @@ class ProfileController extends Controller
 	 */
 	
 	public function profilesaveAction(Request $request) {
-		//ldd($request);
 		//TODO: Guardar los datos recibidos del formulario
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		$fos_user = $this->get('security.context')->getToken()->getUser();
 		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+		
+		$spainCode = $em->getRepository('JJs\Bundle\GeonamesBundle\Entity\Country')->findOneByCode("ES");
+		$spainCodeId = $spainCode->getId();
+		
 		$form_profile = $this->createForm(new UserType(), $fos_user);
-		$form_userextend = $this->createForm(new UserExtendType(), $userextend);
-		 
+    	$form_userextend = $this->createForm(new UserExtendType(), $userextend, array(
+            'action' => $this->generateUrl('panel_userextend_create'),
+            'method' => 'POST',
+        	'attr' => array(
+        				'Userextend.help.nick' => $this->get('translator')->trans('Userextend.help.nick'),
+        				'default' => $spainCodeId,
+        		)
+        	));
 		$form_profile->bind($request);
 		$form_userextend->bind($request);
 		

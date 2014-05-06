@@ -29,6 +29,9 @@
 			<div class="panel panel-warning">
 				<div class="panel-heading">
 		        	<h4 class="panel-title" style="cursor:pointer;" data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ route.id }}">
+						{% if app.user.id == route.Admin.id %}
+							<i class="fa fa-user" rel="tooltip-top" title="Eres administrador de este grupo"></i>
+						{% endif %}
 		            	<a data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ route.id }}">{{ route.name }}</a>
 					</h4>
 					<div class="pull-right" style="margin-top:-20px;">
@@ -57,6 +60,7 @@
 										<td>Recorrido</td>
 										<td>
 											<a class="route-show" href="{{ path('panel_route_show', { 'id': route.id }) }}"">Ver el mapa de la ruta</a>
+											<a href="{{ path('panel_route_show', { 'id': route.id }) }}"><i class="fa fa-map-marker"></i>&nbsp; Ver mapa de la ruta</a>
 										</td>
 									</tr>
 									<tr>
