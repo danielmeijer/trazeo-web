@@ -49,17 +49,11 @@ class GenerateEmailsCommand extends ContainerAwareCommand
     	foreach($users as $user) {
     		$reNOT = $em->getRepository("SopinetUserNotificationsBundle:Notification");
     		$notifications = $reNOT->findBy(array('user' => $user, 'email' => 0));
+
     		if (count($notifications) > 0) {
     			$output->writeln('<comment>Poniendo en cola de envío por email '.count($notifications).' notificaciones para el usuario '.$user->getUser()->getEmail().'</comment>');
-    			    			
-    			//$entries = array();
-    			//$comments = array();
-    			foreach($notifications as $not) {
-    				/*if ($not->getAction() == "entry") {
-    					$entries[] = $not->getObjectComplete();
-    				} else if ($not->getAction() == "entry_comment") {
-    					$comments[] = $not->getObjectComplete();
-    				}*/
+    			
+    			foreach($notifications as $not) {  				
     				$not->setEmail(1);
     				$em->persist($not);
     				$em->flush();

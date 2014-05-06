@@ -286,7 +286,7 @@ class PanelChildrenController extends Controller
             'action' => $this->generateUrl('panel_child_create'),
             'method' => 'POST',
         	'attr' => array(
-        				'Children.help.nick' => $this->get('translator')->trans('Children.help.date'),
+        				'Children.help.nick' => $this->get('translator')->trans('Children.help.nick'),
         				'Children.help.datebirth' => $this->get('translator')->trans('Children.help.datebirth'),
         				'Children.help.visibility' => $this->get('translator')->trans('Children.help.visibility'),
         				'Children.help.gender' => $this->get('translator')->trans('Children.help.gender'),
@@ -398,7 +398,7 @@ class PanelChildrenController extends Controller
             'action' => $this->generateUrl('panel_child_update', array('id' => $child->getId())),
             'method' => 'PUT',
         	'attr' => array(
-        				'Children.help.nick' => $this->get('translator')->trans('Children.help.date'),
+        				'Children.help.nick' => $this->get('translator')->trans('Children.help.nick'),
         				'Children.help.datebirth' => $this->get('translator')->trans('Children.help.datebirth'),
         				'Children.help.visibility' => $this->get('translator')->trans('Children.help.visibility'),
         				'Children.help.gender' => $this->get('translator')->trans('Children.help.gender'),

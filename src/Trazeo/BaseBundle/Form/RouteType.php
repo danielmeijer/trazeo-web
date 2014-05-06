@@ -32,7 +32,11 @@ class RouteType extends AbstractType
             		),
             		'required' => false, //Para permitir hacer submit con una opción 'vacía'
             		'empty_value' => 'España', //Valor que aparece por defecto si no tiene un país asignado
+<<<<<<< HEAD
             		'empty_data'  => 68, //Dato que se registra en la base de datos si se hace un commit con esta selección 'vacía'
+=======
+            		'empty_data' => $options['attr']['default'],
+>>>>>>> 559d4c28f21da1b9d53ad2a723e0136455b66c04
             		'property' => 'name'
            	));
     }

@@ -1,5 +1,4 @@
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
-
 {% block body_content %}
     <!-- START Bootstrap row -->
 	<div class="row">
@@ -139,13 +138,19 @@
 							        {% for group in groups %}
 							            <tr>
 							                <td><i class="fa fa-users"></i></td>
-							                <td>{{ group.name }}</td>
+							                <td><a href="{{ path('panel_group') }}{{ group.id }}"</a>{{ group.Name }} </td>
 							                {% if  group.Visibility == 0 %}
-							                <td><i rel="tooltip-top" title="Acceso libre" class="fa fa-unlock btn btn-xs btn-success"></i>&nbsp; Público</td>
+							                <td><i rel="tooltip-top" title="Acceso libre" class="fa fa-unlock btn btn-xs btn-success"
+							                groupVisibility="0" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
+											id="visibility-{{ group.id }}" data-toggle="confirmationChange"></i>&nbsp; Público</td>
 							                {% elseif group.Visibility == 1 %}
-							                <td><i rel="tooltip-top" title="Acceso mediante solicitud" class="fa fa-lock btn btn-xs btn-danger"></i>&nbsp; Privado</td>
+							                <td><i rel="tooltip-top" title="Acceso mediante solicitud" class="fa fa-lock btn btn-xs btn-danger"
+							                groupVisibility="1" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
+											id="visibility-{{ group.id }}" data-toggle="confirmationChange"></i>&nbsp; Privado</td>
 							                {% elseif group.Visibility == 2 %}
-							                <td><i rel="tooltip-top" title="Acceso mediante invitación del administrador" class="fa fa-eye-slash btn btn-xs btn-warning"></i>&nbsp; Oculto</td>
+							                <td><i rel="tooltip-top" title="Acceso mediante invitación del administrador" class="fa fa-eye-slash btn btn-xs btn-warning"
+							                groupVisibility="2" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
+											id="visibility-{{ group.id }}" data-toggle="confirmationChange"></i>&nbsp; Oculto</td>
 							                {% endif %}
 							                <td><a href="{{ path('panel_group_timeline',{'id': group.id}) }}"><i class="fa fa-comments-o"></i>&nbsp; Chat del grupo</a></td>
 							                <td><a href="{{ path('panel_route')}}{{ group.Route.Id }}">{{ group.Route.Name }}</a></td>
@@ -224,6 +229,149 @@
     <!-- END Bootstrap row -->
 {% endblock %}
 
-{% block js %} {{ parent() }} 
+{% block js %}
+	{{ parent() }} 
 	{% include 'SopinetFlashMessagesBundle:Messages:notification.html.twig' %} 
+	{% if tutorial == 1 %}
+	<!-- Enable Tutorial -->
+	<script type="text/javascript">
+		localStorage.setItem('tutorial','child');
+	</script>
+	{% endif %}
+	
+	<!-- First Steps -->	
+	{% set children_description = "Children.index.description"|trans %}
+	<input type="hidden" id="children_desc" value="{{ children_description }}">
+	
+	{% set groups_description = "Groups.index.description"|trans %}
+	<input type="hidden" id="groups_desc" value="{{ groups_description }}">
+	
+	{% set route_description = "Route.index.description"|trans %}
+	<input type="hidden" id="route_desc" value="{{ route_description }}">
+	
+	<input type="hidden" id="child_ref" value="{{ path('panel_child')}}">
+	<input type="hidden" id="route_ref" value="{{ path('panel_route')}}">
+	<input type="hidden" id="group_ref" value="{{ path('panel_group')}}">
+	
+	<script type="text/javascript">
+		 switch(localStorage.getItem('tutorial')){
+		 case 'child':
+			 localStorage.setItem('tutorial','none');
+			 var trip = new Trip([
+		    	                     { 
+		       	                     	 sel : $('b'),
+		       	                         content : 'Bienvenido a Trazeo, a continuación te explicaré las funciones basicas',
+		       	                         position: 'e'
+		       	                     },
+		   	                         { 
+		   	                             sel : $('#new_child'),
+		   	                             content : 'Aqui podemos añadir niños a trazeo',
+		   	                             position: 'n'
+		   	                         },
+		   	                         { 
+		   	                             sel : $('#new_group'),
+		   	                             content : 'Aqui podemos crear nuevos grupos',
+		   	                             position: 'n'
+		   	                         },
+		   	                         { 
+		   	                             sel : $('#new_route'),
+		   	                             content : 'Aqui podemos crear una nueva ruta',
+		   	                             position: 'n'
+		   	                         },
+			                         { 
+		    	                         sel : $('.fa-home.fa-2x'),
+		        	                     content : 'Esta es la pantalla de inicio',
+		            	                 position: 'e'
+		                	         },
+		                    	     { 
+		                        	     sel : $('.fa-user.fa-2x'),
+		                            	 content : $('#children_desc').val(),
+		                        	     position: 'e'
+		                         	 },
+		                         	{ 
+		                            	sel : $('.fa-users.fa-2x'),
+		                             	content : $('#groups_desc').val(),
+		                             	position: 'e'
+		                         	},
+		                         	{ 
+		                                sel : $('.fa-location-arrow.fa-2x'),
+		                             	content : 'Listado de rutas creadas por los usuarios para definir los caminos al cole',
+		                             	position: 'e'
+		                         	},
+		                         	{ 
+		                            	sel : $('.fa-user.fa-2x'),
+		                             	content : 'Echemos un vistazo a la pantalla de niños',
+		                             	position: 'e',
+		                             	callback: function(){ 
+		                             		localStorage.setItem('tutorial','child');
+		                            	 	var url = $('#child_ref').val();    
+		                            	 	window.location.replace(url);
+		                                 }
+		                         	}
+		  	            	   	],//options 
+		 	               		{
+		    	    		 		delay : 2500,
+		    	    		 		skipUndefinedTrip: true
+		    	    		 		//tripTheme: 'white'
+		    					}
+		 				);
+					trip.start();
+					break;
+		 case 'groups':
+			 localStorage.setItem('tutorial','none');
+	   		 var trip = new Trip([
+	   	                         { 
+	   	                             sel : $('.fa-users.fa-2x'),
+	   	                             content : 'Echemos un vistazo a la pantalla de grupos',
+	   	                             position: 'e',
+	   	                             callback: function(){ 
+	   	                            		localStorage.setItem('tutorial','groups');
+	   	                            	 	var url = $('#group_ref').val();    
+	   	                            	 	//console.log(url);
+	   	                            	 	window.location.replace(url);
+	   	                                 }
+	   	                         }
+	   	                      ], {
+	   	        					 delay : 2500,
+	   	        					 skipUndefinedTrip: true
+	   	    				});
+	   				trip.start();
+	   				break;
+		 case 'routes':
+			 localStorage.setItem('tutorial','none');
+	  		 var trip = new Trip([
+	  	                         { 
+	  	                             sel : $('.fa-location-arrow.fa-2x'),
+	  	                             content : 'Echemos un vistazo a la pantalla de rutas',
+	  	                             position: 'e',
+	  	                             callback: function(){ 
+	  	                            		localStorage.setItem('tutorial','routes');
+	  	                            	 	var url = $('#route_ref').val();    
+	  	                            	 	//console.log(url);
+	  	                            	 	window.location.replace(url);
+	  	                                 }
+	  	                         }
+	  	                      ], {
+	  	        					 delay : 2500,
+	  	        					 skipUndefinedTrip: true
+	  	    				});
+	  				trip.start();
+	  				break;
+		 case 'last':
+			 localStorage.setItem('tutorial','none');
+	   		 var trip = new Trip([
+	      	                     { 
+	        	                     	 sel : $('b'),
+	        	                         content : 'Aqui termina nuestro paseo por Trazeo, disfruta de la aplicación',
+	        	                         position: 'e'
+	        	                     }
+	                       ], {
+	         					 delay : 2500,
+	         					 skipUndefinedTrip: true
+	     				});
+	 			trip.start();
+	 			break;	
+		 }
+
+	</script>		
 {% endblock %}

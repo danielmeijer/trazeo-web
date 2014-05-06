@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>{% block title %}JMSTranslationBundle UI{% endblock %}</title>
+        <title>{% block title %}Trazeo Traducciones {% endblock %}</title>
         <link rel="stylesheet" type="text/css" media="screen" href="{{ asset("bundles/jmstranslation/css/bootstrap.css") }}" />
         <link rel="stylesheet" type="text/css" media="screen" href="{{ asset("bundles/jmstranslation/css/layout.css") }}" />
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
@@ -12,8 +12,9 @@
         <div class="topbar">
             <div class="topbar-inner">
                 <div class="container">
-                    <h3><a href="{{ path("jms_translation_index") }}" class="logo">{{ "Trans.head"|trans }}</a></h3>
-                    
+                    <h3>
+                    <img style="margin-top:5px;" class="pull-left" width="30" height="30" src="{{ asset('images/trazeito.png') }}" alt="Trazeo" title="Trazeo" />
+                    <a style="text-shadow:none;margin-left:5px;" href="{{ path("jms_translation_index") }}">{{ "Trans.head"|trans }}</a></h3>
                 </div>
             </div>
         </div>

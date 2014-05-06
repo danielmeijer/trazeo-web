@@ -55,5 +55,5 @@
 	%}
 	<script type="text/javascript" src="{{ asset_url }}"></script>
 	{% endjavascripts %}
-	{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': "",'editable': "false", 'realTime': "true"} %}
+	{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': "",'editable': "false", 'realTime': "true", 'rideEvents': events} %}
 {% endblock %}

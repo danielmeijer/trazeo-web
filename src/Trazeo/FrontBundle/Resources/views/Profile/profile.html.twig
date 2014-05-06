@@ -3,15 +3,13 @@
 {% set pageheader_description = "Userextend.index.description"|trans %}
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %} {% block
 body_content %}
-
+<span style="cursor:pointer;" class="label label-warning pull-right" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash-o"></i> Eliminar cuenta</span>
 <form class="form-horizontal" id="profile-edit" method="post" action="{{ path('panel_profile_save') }}">
-
 	<ul class="nav nav-tabs nav-bottom">
 		<li class="active"><a href="#location" data-toggle="tab">Location</a></li>
 		<li><a href="#profile" data-toggle="tab">Profile</a></li>
 		<li><a href="#avatar" data-toggle="tab">Avatar</a></li>
 	</ul>
-
 	<!-- Tab panes -->
 	<div class="container">
 		<div class="tab-content">
@@ -26,10 +24,9 @@ body_content %}
 			{{ form_errors(form_userextend) }}
 		</div>
 	</div>
-	<button type="submit" class="btn btn-outline btn-success">Btn.success</button>
+	<br />
+	<button type="submit" class="btn btn-outline btn-success"><i class="fa fa-save"></i>&nbsp; {{ "Btn.success" |trans }}</button>
 </form>
-<br />
-	<button class="btn btn-danger btn-outline" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash-o"></i> Eliminar cuenta</button>
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -40,7 +37,7 @@ body_content %}
         <h4 class="modal-title" id="myModalLabel">Eliminar cuenta</h4>
       </div>
       <div class="modal-body">
-		Pronto podrás eliminar tu cuenta de usuario tú mismo.<br /><br /> Si por cualquier motivo deseas borrar tu perfil ahora,
+		Si deseas eliminar tu perfil ahora,
 		 ponte en contacto con nosotros a través del email <a href="mailto:info@trazeo.es">info@trazeo.es</a> y procesaremos tu petición.
       </div>
       <div class="modal-footer">

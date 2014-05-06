@@ -4,6 +4,12 @@
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
 		{% block body_content %}
-                {{ form(form) }}
+			<div class="row">
+                <div class="col-lg-12">
+                	<h4 class="alert alert-success"><i class="fa fa-users"></i>&nbsp; Nuevo Grupo</h4>
+                </div>
+                <div class="col-lg-12 alert alert-warning">
+    				{{ form(form) }}
+            	</div>
 		
 		{% endblock %}

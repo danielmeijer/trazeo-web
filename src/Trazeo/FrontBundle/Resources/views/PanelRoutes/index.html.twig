@@ -28,16 +28,19 @@
 			<div class="panel panel-warning">
 				<div class="panel-heading">
 		        	<h4 class="panel-title" style="cursor:pointer;" data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ route.id }}">
+						{% if app.user.id == route.Admin.id %}
+							<i class="fa fa-user" rel="tooltip-top" title="Eres administrador de esta ruta"></i>
+						{% endif %}
 		            	<a data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ route.id }}">{{ route.name }}</a>
 					</h4>
 					<div class="pull-right" style="margin-top:-20px;">
 						{% if app.user.id == route.Admin.id %}
 							<a href="{{ path('panel_route') }}{{ route.id }}/edit" type="button" 
-							class="btn btn-default btn-xs" rel="tooltip-top" title="Editar información">
+							class="btn btn-default btn-xs edit-route" rel="tooltip-top" title="Editar información">
 								<i class="fa fa-pencil"></i> Editar
 							</a>
 						{% endif %}
-					<span class="label label-success">{{ "Menu.groups"|trans }} {{ route.groups|length }}</span>
+					<span class="label label-success route-goups-count">{{ "Menu.groups"|trans }} {{ route.groups|length }}</span>
 					</div>
 				</div>
 				<div id="collapse{{ route.id }}" class="panel-collapse collapse {% if loop.index == 1 %}in{% endif %}">
@@ -55,7 +58,8 @@
 										<td><i class="fa fa-location-arrow"></i></td>
 										<td>Recorrido</td>
 										<td>
-											<a href="{{ path('panel_route_show', { 'id': route.id }) }}"">Ver el mapa de la ruta</a>
+											<a class="route-show" href="{{ path('panel_route_show', { 'id': route.id }) }}"">Ver el mapa de la ruta</a>
+											<a href="{{ path('panel_route_show', { 'id': route.id }) }}"><i class="fa fa-map-marker"></i>&nbsp; Ver mapa de la ruta</a>
 										</td>
 									</tr>
 									<tr>
@@ -85,3 +89,46 @@
 	{% endfor %}
 {% endblock %}
 		
+{% block js %} {{ parent() }} 
+
+	<input type="hidden" id="path_home" value="{{ path('panel_dashboard') }}">
+
+	<script type="text/javascript">
+	if(localStorage.getItem('tutorial')=='routes'){
+		localStorage.setItem('tutorial','none');
+   		var trip = new Trip([
+   	                         { 
+   	                             sel : $('.panel.panel-warning'),
+   	                             content : 'Aqui aparecera la información de las rutas',
+   	                             position: 'n'
+   	                         },
+   	                         { 
+   	                             sel : $(".edit-route"),
+   	                             content : 'Aqui podra editar la información de una ruta',
+   	                             position: 'n'
+   	                         },
+   	                         { 
+   	                             sel : $(".route-goups-count"),
+   	                             content : 'Aqui aparecera el numero de grupos vinculados a una ruta',
+   	                             position: 'n'
+   	                         },
+   	                         { 
+   	                             sel : $(".route-show"),
+   	                             content : 'Aqui muestra la ruta',
+   	                             position: 'e',
+   	                             callback: function(){
+   	                            	localStorage.setItem('tutorial','last');
+                              	 	var url = $('#path_home').attr('value');    
+                             	 	window.location.replace(url);
+    	   	                     }
+   	                         }
+   	                         
+                      ], {
+        					 delay : 2500,
+        					 skipUndefinedTrip: true
+    				});
+		trip.start();
+	}
+	</script>	
+
+{% endblock %}

@@ -62,6 +62,10 @@ class UserExtend
      */
     protected $country;
     
+    /**    
+     * @ORM\Column(name="tutorial", type="boolean")
+     */
+    protected $tutorial;
     
     /** @ORM\OneToMany(targetEntity="EGroupAccess", mappedBy="userextend")
      */
@@ -549,5 +553,29 @@ class UserExtend
     public function getReports()
     {
         return $this->reports;
+    }
+
+    /**
+     * Set tutorial
+     *
+     * @param boolean $tutorial
+     *
+     * @return UserExtend
+     */
+    public function setTutorial($tutorial)
+    {
+        $this->tutorial = $tutorial;
+
+        return $this;
+    }
+
+    /**
+     * Get tutorial
+     *
+     * @return boolean 
+     */
+    public function getTutorial()
+    {
+        return $this->tutorial;
     }
 }

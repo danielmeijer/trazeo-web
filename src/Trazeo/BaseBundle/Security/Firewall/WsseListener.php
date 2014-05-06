@@ -30,12 +30,13 @@ class WsseListener implements ListenerInterface
         
         $x_wsse = 'UsernameToken Username="'.$request->get('username').'", PasswordDigest="'.$request->get('password').'", Nonce="'.$request->get('nonce').'", Created="'.$request->get('created').'"';
         //$x_wsse = 'UsernameToken Username="trazeo", PasswordDigest="f42cvwUKrAMzJfqNJ1Q/2SEorJ4=", Nonce="'.$nonce.'", Created="'.$created.'"';
-
-        $request->headers->add(array('X-WSSE' => $x_wsse));
+		
+        $request->headers->add(array('x-wsse' => $x_wsse));
         
         $wsseRegex = '/UsernameToken Username="([^"]+)", PasswordDigest="([^"]+)", Nonce="([^"]+)", Created="([^"]+)"/';
-        //ldd(preg_match($wsseRegex, $request->headers->get('x-wsse'), $matches));
+        
         if (!$request->headers->has('x-wsse') || 1 !== preg_match($wsseRegex, $request->headers->get('x-wsse'), $matches)) {
+        	ldd("luismi".$request->headers->has('x-wsse').preg_match($wsseRegex, $request->headers->get('x-wsse'), $matches));
         	return;
         }
         
