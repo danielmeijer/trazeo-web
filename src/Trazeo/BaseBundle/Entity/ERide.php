@@ -60,7 +60,7 @@ class ERide
 	protected $go;
 	
 	/**
-	 * @ORM\Column(name="duration", type="string", length=255)
+	 * @ORM\Column(name="duration", type="string", length=255, nullable=true)
 	 */
 	protected $duration;
 
