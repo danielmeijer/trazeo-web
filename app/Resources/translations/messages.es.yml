@@ -1,3 +1,5 @@
+'Bad credentials': 'Nombre de usuario o Contraseña inválido'
+
 Btn:
     success: Guardar
 
@@ -10,12 +12,12 @@ Children:
 
     help:
         datebirth: 'Fecha de nacimiento'
+        gender: 'Género, Niño/a'
         groups: 'Asignar a un grupo'
         nick: 'Nombre del niño'
         sex: Género
         userextend: 'Tutores del niño'
         visibility: Visibilidad
-        gender: Género, Niño/a 
 
     index:
         description: 'En este apartado puedes consultar toda la información referente a tus niños registrados en Trazeo'
@@ -50,8 +52,8 @@ Groups:
 
     help:
         name: 'Nombre del grupo'
-        route: 'Asignar una ruta a este grupo'
         name2: 'Visibilidad / Accesibilidad al grupo'
+        route: 'Asignar una ruta a este grupo'
 
     index:
         description: 'Estos grupos se encuentran en tu ciudad o en la de alguno de tus niños, y podrían interesarte'
@@ -121,9 +123,6 @@ Register:
     repeatpass: 'Repita la contraseña'
 
 Route:
-    new:
-        title: Crear nueva ruta
-        description: Asígnale un nombre que de a los demás usuarios una idea de la zona o recorrido
     edit:
         description: 'Establece un nombre e indica a qué país y ciudad pertenece'
         title: 'Editar datos de ruta'
@@ -138,6 +137,10 @@ Route:
 
     name: 'Nombre de la ruta'
 
+    new:
+        description: 'Asígnale un nombre que de a los demás usuarios una idea de la zona o recorrido'
+        title: 'Crear nueva ruta'
+
     show:
         title: 'Ruta: %name%'
 
@@ -147,15 +150,15 @@ Settings:
         title: Notificaciones
 
 Trans:
-    alternative: 'ES Alternative Translation'
-    description: 'ES Description'
+    alternative: 'Traducción alternativa'
+    description: Descripción
     head: 'Trazeo traducciones'
-    meaning: 'ES Meaning'
-    notfound: 'ES No messages found'
+    meaning: Significado
+    notfound: 'No hay mensajes'
 
     save:
         success: 'La traducción se ha guardado'
-        wrong: 'ES Could not be saved'
+        wrong: 'ERROR. No se ha guardado la traducción'
 
     search:
         children: 'Buscar Niños'
@@ -165,18 +168,21 @@ Trans:
     select:
         option: 'Selecciona una opción'
 
-    sources: 'ES Sources'
+    sources: 'Fuente / Origen'
 
     subtitle:
-        exist: 'ES Existing Messagess'
-        new: 'ES New Messages'
+        exist: 'Mensajes existentes'
+        new: 'Nuevos mensajes'
 
     table:
-        id: 'ES Id'
-        info: 'ES Additional Information'
-        translation: 'ES Translation'
+        id: Identificador
+        info: 'Información adicional'
+        translation: Traducción
 
-    title: 'ES Available Messages'
+    title: 'Mensajes disponibles para ser traducidos (es-ES , Spanish - Spain)'
+
+'User account is disabled':
+    '': 'Cuenta de usuario desactivada'
 
 Userextend:
     help:
@@ -191,6 +197,43 @@ Userextend:
         edit: 'Editar perfil'
         title: 'Perfil de usuario'
 
+change_password:
+    flash:
+        success: 'La contraseña se ha cambiado con éxito'
+
+    submit: 'Cambiar contraseña'
+
+form:
+    current_password: 'Contraseña actual:'
+    email: 'Email:'
+    group_name: 'Nombre de grupo:'
+    new_password: 'Nueva contraseña:'
+    new_password_confirmation: 'Repita la contraseña:'
+    password: 'Contraseña:'
+    password_confirmation: 'Repita la contraseña:'
+    username: 'Nombre de usuario:'
+
+group:
+    edit:
+        submit: 'Actualizar grupo'
+
+    flash:
+        created: 'El grupo ha sido creado'
+        deleted: 'El grupo ha sido borrado'
+        updated: 'El grupo ha sido actualizado'
+
+    new:
+        submit: 'Crear grupo'
+
+    show:
+        name: 'Nombre de grupo'
+
+layout:
+    logged_in_as: 'Identificado como %username%'
+    login: Entrar
+    logout: Salir
+    register: Registrar
+
 preference:
     notification_email:
         description: 'Configura cuando quieres que Trazeo te envíe notificaciones'
@@ -201,6 +244,54 @@ preference:
             never: Nunca
             now: 'Cuando se produzcan'
 
+profile:
+    edit:
+        submit: 'Actualizar usuario'
+
+    flash:
+        updated: 'El perfil ha sido actualizado'
+
+    show:
+        email: Email
+        username: 'Nombre de usuario'
+
 registration:
+    back: 'Volver a la página original.'
+    check_email: 'Se ha enviado un email a %email%. Contiene un enlace de activación que debes presionar para activar tu cuenta.'
+    confirmed: 'Felicidades %username%, tu cuenta está ahora confirmada.'
+
+    email:
+        message: "Hola %username%!\n\nPara completar la validación de tu cuenta - por favor visita %confirmationUrl%\n\nAtentamente,\nel Equipo.\n"
+        subject: 'Bienvenido %username%!'
+
     flash:
         user_created: 'El usuario se ha creado satisfactoriamente'
+
+    submit: Registrar
+
+resetting:
+    check_email: 'Un email ha sido enviado a %email%. Contiene un enlace de activación que debes presionar para restablecer tu contraseña.'
+
+    email:
+        message: "Hola %username%!\n\nPara restablecer tu contraseña - por favor visita %confirmationUrl%\n\nAtentamente,\nel Equipo.\n"
+        subject: 'Restablecer Contraseña'
+
+    flash:
+        success: 'La contraseña se ha cambiado con éxito'
+
+    password_already_requested: 'La contraseña para este usuario ya ha sido solicitada dentro de las 24 horas.'
+
+    request:
+        invalid_username: 'El usuario o dirección de correo "%username%" no existe.'
+        submit: 'Restablecer contraseña'
+        username: 'Nombre de usuario:'
+
+    reset:
+        submit: 'Cambiar contraseña'
+
+security:
+    login:
+        password: 'Contraseña:'
+        remember_me: Recordar
+        submit: Entrar
+        username: 'Nombre de usuario:'
