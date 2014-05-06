@@ -62,6 +62,10 @@ class UserExtend
      */
     protected $country;
     
+    /**    
+     * @ORM\Column(name="tutorial", type="boolean")
+     */
+    protected $tutorial;
     
     /** @ORM\OneToMany(targetEntity="EGroupAccess", mappedBy="userextend")
      */
