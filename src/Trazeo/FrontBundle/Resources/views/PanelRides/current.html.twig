@@ -30,8 +30,23 @@
 		</div>
 
 		<h1>MAPA</h1>
-		<div id="mapa" class="col-md-12"></div>
+		<div style="margin-bottom:5%;" id="mapa" class="col-md-12"></div>
 		
+		{% if sponsors %}
+			<div class="col-md-12">
+				<h3 class="alert alert-success"><i class="fa fa-shield"></i>&nbsp; {{ 'Sponsors.current'|trans }}</h3>
+				<br />
+				{%  for sponsor in sponsors %}
+				<div class="col-md-3">
+					<p class="alert-warning">{{ sponsor.Nick }}</p>
+					<img class="img-responsive" src='{{ sponsor.Image }}'/>
+				</div>
+				{% endfor %}
+			</div>
+		 {% endif %}
+		<p>&nbsp;</p>
+		
+				
         <script type="text/javascript">
         var lastRoute="{{ path('panel_ride_last', {'id': ride.id}) }}";
 
