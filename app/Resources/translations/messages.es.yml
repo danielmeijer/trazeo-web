@@ -114,7 +114,7 @@ Notifications:
             request: 'El usuario %0 ha solicitado unirse al grupo %1'
 
 Panel:
-    title: 'Panel de Control'
+    title: 'Panel de control'
 
 Register:
     email: 'Correo electrónico'

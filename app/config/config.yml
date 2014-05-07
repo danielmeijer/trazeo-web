@@ -13,7 +13,7 @@ parameters:
 
 framework:
     #esi:            ~
-    translator:      { fallback: es }
+    translator:      { fallback: en }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -189,6 +189,22 @@ fos_comment:
             comment: Sopinet\TimelineBundle\Entity\Comment
             thread: Sopinet\TimelineBundle\Entity\Thread
             vote: Sopinet\TimelineBundle\Entity\Vote
-            
 
-   
+            
+#Lunetics LocaleBundle
+lunetics_locale:
+    strict_mode: true
+    allowed_locales:
+       - es    
+       - en
+    guessing_order:
+       - query
+       - router           
+       - session
+       - cookie
+       - browser
+    cookie:
+       set_on_change: true
+       
+       
+         
