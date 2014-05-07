@@ -86,8 +86,8 @@ class PanelRidesController extends FOSRestController
     	$reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
     	
     	$query = $reEvent->createQueryBuilder('e')
-    	->where('e.id > :lastid')
-    	->setParameter('lastid', $lastid)
+    	->where('e.id > :lastid AND e.ride = :ride')
+    	->setParameters(array('lastid' => $lastid, 'ride' => $ride))
     	->orderBy('e.createdAt', 'ASC')
     	->getQuery();
     	

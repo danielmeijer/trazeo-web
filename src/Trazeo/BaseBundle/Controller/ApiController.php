@@ -434,11 +434,18 @@ class ApiController extends Controller {
 		$reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
 		
 		$ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
+		// TODO: Lo ideal sería coger el último PUNTO con un REPOSITORY
 		$events = $reEvent->findBy(array('action' => "point", 'ride' => $ride->getId()), array('createdAt' => 'DESC'));
 	
+		if (count($events) > 0) {
+			$data = $events[0];
+		} else {
+			$data = null;
+		}
+		
 		$view = View::create()
 		->setStatusCode(200)
-		->setData($this->doOK($events[0]));
+		->setData($this->doOK($data));
 			
 		return $this->get('fos_rest.view_handler')->handle($view);
 	
