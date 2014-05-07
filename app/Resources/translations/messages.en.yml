@@ -77,16 +77,16 @@ Login:
     username: 'Nombre de usuario'
 
 Menu:
-    children: Niños/as
+    children: Children
     groups: Grupos
     home: Inicio
     routes: Rutas
 
     tooltip:
-        child: Niños/as
-        group: Grupos
-        home: Inicio
-        route: Rutas
+        child: Children
+        group: Groups
+        home: Home
+        route: Routes
 
 Navbar:
     logout: 'Cerrar sesión'
@@ -114,7 +114,7 @@ Notifications:
             request: 'El usuario %0 ha solicitado unirse al grupo %1'
 
 Panel:
-    title: 'Panel de Control'
+    title: 'Dashboard'
 
 Register:
     email: 'Correo electrónico'
