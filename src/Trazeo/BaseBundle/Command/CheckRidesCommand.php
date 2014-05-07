@@ -41,9 +41,10 @@ class CheckRidesCommand extends ContainerAwareCommand
     	$dateCurrent = new \DateTime();
 
     	$result = $lastEventDate->diff($dateCurrent);
-    	// Nº de horas
- 		$hours = $result->h;
- 		if($hours > 0){
+    	// Nº de minutos
+ 		$minutes = $result->i;
+ 		//ldd($minutes);
+ 		if($minutes > 5){
  			
  			$rideId = $lastEvent->getRide()->getId(); 			
  			$ride = $em->getRepository("TrazeoBaseBundle:ERide")->find($rideId);
