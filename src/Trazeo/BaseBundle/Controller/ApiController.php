@@ -245,7 +245,7 @@ class ApiController extends Controller {
 	}
 	
 	/**
-	 * Guarda en el servidor la nueva posición del Grupo
+	 * Guarda en el servidor la nueva posición del Paseo
 	 * @POST("/api/ride/sendPosition")
 	 */
 	public function getSendPositionRideAction(Request $request) {
@@ -280,7 +280,7 @@ class ApiController extends Controller {
 		
 		$view = View::create()
 		->setStatusCode(200)
-		->setData($this->doOK("ok"));
+		->setData($this->doOK($event));
 			
 		return $this->get('fos_rest.view_handler')->handle($view);
 	
