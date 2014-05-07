@@ -56,6 +56,7 @@ class AppKernel extends Kernel
             new Sopinet\UserPreferencesBundle\SopinetUserPreferencesBundle(),
             new Sopinet\UserNotificationsBundle\SopinetUserNotificationsBundle(),
         	new Sopinet\FlashMessagesBundle\SopinetFlashMessagesBundle(),
+        	new Lunetics\LocaleBundle\LuneticsLocaleBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
