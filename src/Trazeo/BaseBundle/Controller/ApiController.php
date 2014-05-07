@@ -318,7 +318,7 @@ class ApiController extends Controller {
 		$event = new EEvent();
 		$event->setRide($ride);
 		$event->setAction("in");
-		$event->setData($id_child);
+		$event->setData($id_child."/".$child->getNick());
 		$event->setLocation(new SimplePoint($latitude, $longitude));
 		
 		//Registramos al niño dentro del paseo
@@ -379,7 +379,7 @@ class ApiController extends Controller {
 		$event = new EEvent();
 		$event->setRide($ride);
 		$event->setAction("out");
-		$event->setData($id_child);
+		$event->setData($id_child."/".$child->getNick());
 		$event->setLocation(new SimplePoint($latitude, $longitude));
 		
 		//Eliminamos el niño del paseo
@@ -458,8 +458,9 @@ class ApiController extends Controller {
 		$not = $this->container->get('sopinet_user_notification');
 		foreach($userextend as $userextends)
 		{
+			ldd("llega");
 			$not->addNotification(
-					"Notify.parents.child.out",
+					"Ride.finish",
 					"TrazeoBaseBundle:ERide",
 					$ride->getId(),
 					$this->generateUrl('panel_dashboard'),
@@ -484,7 +485,7 @@ class ApiController extends Controller {
 	
 		$id_ride = $request->get('id_ride');
 		$texto = $request->get('texto');
-		$tipo_de_incidencia = $request->get('tipo_de_incidencia');
+		//$tipo_de_incidencia = $request->get('tipo_de_incidencia');
 	
 		$user = $this->checkPrivateAccess($request);
 		if( $user == false || $user == null ){
@@ -505,9 +506,16 @@ class ApiController extends Controller {
 		$report->setText($texto);
 		$report->setUserextend($userextend);
 		$report->setRide($ride);
-		$report->setType($tipo_de_incidencia);
+		//$report->setType($tipo_de_incidencia);
 
 		$em->persist($report);
+		$em->flush();
+		$event = new EEvent();
+		$event->setRide($ride);
+		$event->setAction("report");
+		$event->setData($report->getId()."/".$texto);
+		
+		$em->persist($event);
 		$em->flush();
 		
 		$array['id'] = $report->getId();

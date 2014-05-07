@@ -29,11 +29,6 @@ class EReport
 	protected $text;
 	
 	/**
-	 * @ORM\Column(name="type", type="string", length=255)
-	 */
-	protected $type;
-	
-	/**
 	 * @ORM\ManyToOne(targetEntity="ERide", inversedBy="reports")
 	 * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
 	 **/
