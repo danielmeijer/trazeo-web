@@ -4,12 +4,16 @@ namespace Trazeo\BaseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * Entity EEvent
  *
  * @ORM\Table("e_event")
  * @ORM\Entity
+ * 
+ * @ExclusionPolicy("all")
  */
 class EEvent
 {
@@ -17,20 +21,23 @@ class EEvent
 	use ORMBehaviors\Timestampable\Timestampable;
 	/**
 	 * @var integer
-	 *
+	 * 
 	 * @ORM\Column(name="id", type="integer")
 	 * @ORM\Id
 	 * @ORM\GeneratedValue(strategy="AUTO")
+	 * @Expose
 	 */
 	protected $id;
 	
 	/**
 	 * @ORM\Column(name="action", type="string", length=50)
+	 * @Expose
 	 */
 	protected $action; //point, in, out
 	
 	/**
 	 * @ORM\Column(name="data", type="string", length=255)
+	 * @Expose
 	 */
 	protected $data; //(x,y), child_id
 	
