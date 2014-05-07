@@ -484,7 +484,9 @@ class ApiController extends Controller {
 	public function getReportAction(Request $request) {
 	
 		$id_ride = $request->get('id_ride');
-		$texto = $request->get('texto');
+		$texto = $request->get('text');
+		$latitude = $request->get('latitude');
+		$longitude = $request->get('longitude');
 		//$tipo_de_incidencia = $request->get('tipo_de_incidencia');
 	
 		$user = $this->checkPrivateAccess($request);
@@ -514,6 +516,7 @@ class ApiController extends Controller {
 		$event->setRide($ride);
 		$event->setAction("report");
 		$event->setData($report->getId()."/".$texto);
+		$event->setLocation(new SimplePoint($latitude, $longitude));
 		
 		$em->persist($event);
 		$em->flush();
