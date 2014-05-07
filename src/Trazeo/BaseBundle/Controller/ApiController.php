@@ -410,12 +410,49 @@ class ApiController extends Controller {
 	}
 	
 	/**
+	 * Mandar último punto del paseo
+	 * @POST("/api/ride/lastPoint")
+	 */
+	public function getlastPointRideAction(Request $request) {
+	
+		$id_ride = $request->get('id_ride');
+		$latitude = $request->get('latitude');
+		$longitude = $request->get('longitude');
+	
+		$user = $this->checkPrivateAccess($request);
+		if( $user == false || $user == null ){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied());
+	
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+	
+		$em = $this->get('doctrine.orm.entity_manager');
+	
+		//$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+		$reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
+		
+		$ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
+		$events = $reEvent->findBy(array('action' => "point", 'ride' => $ride->getId()), array('createdAt' => 'DESC'));
+	
+		$view = View::create()
+		->setStatusCode(200)
+		->setData($this->doOK($events[0]));
+			
+		return $this->get('fos_rest.view_handler')->handle($view);
+	
+	}
+	
+	/**
 	 * @POST("/api/ride/finish")
 	 */
 	public function getFinishRideAction(Request $request) {
 	
 		//Comprobar si el ride asociado al grupo está creado(hasRide=1)
 		$id_ride = $request->get('id_ride');
+		$latitude = $request->get('latitude');
+		$longitude = $request->get('longitude');
 	
 		$user = $this->checkPrivateAccess($request);
 		if( $user == false || $user == null ){
@@ -446,10 +483,15 @@ class ApiController extends Controller {
 		
 		$ride->setDuration($duration);
 		$ride->setGroupid($group->getId());
-		$ride->setGroup(null);	
-		
-		
+		$ride->setGroup(null);
 		$em->persist($ride);
+		
+		$event = new EEvent();
+		$event->setRide($ride);
+		$event->setAction("finish");
+		$event->setData("");
+		$event->setLocation(new SimplePoint($latitude, $longitude));
+		$em->persist($event);
 
 		$em->flush();
 		
