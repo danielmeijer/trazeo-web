@@ -180,7 +180,7 @@ class ApiController extends Controller {
 		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 		
 		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneBy(array("id" => $id_group, "admin" => $userextend->getId()));
-		//ldd($group);
+		
 		// Si el grupo tiene Paseo asociado(está en marcha), devuelve el paseo
 		if($group->getHasRide() == 1 && $group->getRide() != null){
 			$array['id_ride'] = $group->getRide()->getId();
@@ -466,7 +466,6 @@ class ApiController extends Controller {
 		$em = $this->get('doctrine.orm.entity_manager');
 	
 		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
-	
 		
 		$ride = $em->getRepository('TrazeoBaseBundle:ERide')->find($id_ride);
 		$group = $ride->getGroup();
@@ -500,7 +499,6 @@ class ApiController extends Controller {
 		$not = $this->container->get('sopinet_user_notification');
 		foreach($userextend as $userextends)
 		{
-			ldd("llega");
 			$not->addNotification(
 					"Ride.finish",
 					"TrazeoBaseBundle:ERide",
