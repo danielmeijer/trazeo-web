@@ -36,7 +36,7 @@
 				<h2 class="col-md-12  alert alert-warning"><i class="fa fa-cogs"></i>&nbsp; Panel de control</h2>
 
 				<!-- START resumeChilds -->
-				<div class="col-md-12 resumeChilds alert alert-warning">
+				<div class="col-md-12 resumeChilds alert alert-warning" id="childs">
 				{% if childs|length <= 0 %}
 					<div>
 						<i class="fa fa-user fa-5x pull-left alert-warning"></i>
@@ -101,7 +101,7 @@
 				<!-- END resumeChilds -->
 				
 				<!-- START resumeGroups -->
-				<div class="col-md-12 resumeGroups alert alert-warning">
+				<div class="col-md-12 resumeGroups alert alert-warning" id="groups">
 			{% if groups|length <= 0 %}
 					<div>
 						<i class="fa fa-users fa-5x pull-left alert-warning"></i>
@@ -170,7 +170,7 @@
 				<!-- END resumeGroups -->	
 				
 				<!-- START resumeGroups -->
-				<div class="col-md-12 resumeGroups resumeRoutes alert alert-warning">
+				<div class="col-md-12 resumeGroups resumeRoutes alert alert-warning" id="routes">
 				{% if routes|length <= 0 %}
 					<div>
 						<i class="fa fa-location-arrow fa-5x pull-left alert-warning"></i>
@@ -257,6 +257,7 @@
 	<script type="text/javascript">
 		 switch(localStorage.getItem('tutorial')){
 		 case 'home':
+			 var loc=$(location).attr('href').toString();
 			 localStorage.setItem('tutorial','none');
 			 $('*').click(function(e){e.preventDefault();});
 			 $('body').on({'mousewheel': function(e) {
@@ -269,22 +270,27 @@
 		    	                     { 
 		       	                     	 sel : $('b'),
 		       	                         content : 'Bienvenido a Trazeo, a continuación te explicaré las funciones basicas',
-		       	                         position: 'e'
+		       	                         position: 'e',
+		       	                      	 callback: function(){$(location).attr('href',loc+"#childs")}
 		       	                     },
 		   	                         { 
 		   	                             sel : $('.resumeChilds'),
 		   	                             content : 'En el panel de niños, podras añadir niños a trazeo',
-		   	                             position: 'n'
-		   	                         },
+		   	                             position: 'n',
+		   	                         	 callback: function(){$(location).attr('href',loc+"#groups")}	
+			       	                     		
+		       	                     },
 		   	                         { 
 		   	                             sel : $('.resumeGroups'),
 		   	                             content : 'Aqui podras crear grupos, definir la visibilidad del grupo, chatear con otros tutores y asignar una ruta para el grupo',
-		   	                             position: 'n'
+		   	                             position: 'n',
+		   	                          	 callback: function(){$(location).attr('href',loc+"#routes")}					       	                         
 		   	                         },
 		   	                         { 
 		   	                             sel : $('.resumeRoutes'),
 		   	                             content : 'Aqui podras crear nuevas rutas o consultar rutas ya existentes',
 		   	                             position: 'n'
+		   	                          	 
 		   	                         },
 		      	                    { 
 	        	                    	 sel : $('b'),
@@ -299,7 +305,7 @@
 	        	                     }
 		  	            	   	],//options 
 		 	               		{
-		    	    		 		delay : 8000,
+		    	    		 		delay : 6000,
 		    	    		 		//skipUndefinedTrip: false
 		    	    		 		tripTheme: 'white'
 		    	    		 		,backToTopWhenEnded:true
