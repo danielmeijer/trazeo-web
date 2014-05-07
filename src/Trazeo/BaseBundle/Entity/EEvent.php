@@ -13,7 +13,6 @@ use JMS\Serializer\Annotation\Expose;
  * @ORM\Table("e_event")
  * @ORM\Entity
  * 
- * @ExclusionPolicy("all")
  */
 class EEvent
 {
@@ -25,25 +24,23 @@ class EEvent
 	 * @ORM\Column(name="id", type="integer")
 	 * @ORM\Id
 	 * @ORM\GeneratedValue(strategy="AUTO")
-	 * @Expose
 	 */
 	protected $id;
 	
 	/**
 	 * @ORM\Column(name="action", type="string", length=50)
-	 * @Expose
 	 */
 	protected $action; //point, in, out
 	
 	/**
 	 * @ORM\Column(name="data", type="string", length=255)
-	 * @Expose
 	 */
 	protected $data; //(x,y), child_id
 	
 	/**
 	 * @ORM\ManyToOne(targetEntity="ERide", inversedBy="events")
 	 * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
+	 * @Exclude
 	 **/
 	protected $ride;
 
