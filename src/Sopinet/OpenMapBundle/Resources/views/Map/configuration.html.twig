@@ -8,29 +8,10 @@
 		};
 	var editable= {{ editable }};
 	var realTime= {{ realTime }};
-
-	
-	var addLast=function(){
-		$.ajax({
-			url: lastRoute
-			,success: function(response){
-				var point=response.replace(' ',',');
-				var aux="new POINT"+point;
-		     	var point=eval(aux);
-				if(typeof poly==='undefined'){
-					poly=new L.polyline(point.latLng);
-					poly.addTo(map);
-				}
-				else poly.addLatLng(point.latLng);
-				map.fitBounds(poly.getBounds());
-			}
-			,error: function(XMLHttpRequest, textStatus, errorThrown)
-			{
-				alert('Error : ' + errorThrown);
-			}
-		})
-
-	}
+	timeFromLastUpdate=0;
+	lastRoute=lastRoute.replace("5","");
+	lastId="0";
+	events.push(new POINT(0,0));
 </script>
 
 {% for point in routePoints  %}
@@ -43,9 +24,7 @@
 
 {% for event in rideEvents  %}
 <script>
-	var aux="new POINT"+'{{ event.data }}';
-	
-	events.push(eval(aux));
+	events.push(new POINT({{ event.location.latitude }},{{ event.location.longitude }}));
 </script>
 {%  endfor %}
 
@@ -64,6 +43,7 @@
       attribution: 'tiles &copy; <a target="_blank" href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       styleId: 22677
     });
+    //preload image icon
 	$("#mapa").append("<img id='preload' src="+"{{ asset('bundles/sopinetopenmap/css/images') }}"+"/marker-icon-start.png>");
 	$("#preload").hide();
     //cloudmade APi Key and info
@@ -193,7 +173,7 @@
 	L.Map.prototype.getWaypoints=function(){
 		return routing.getWaypoints();
 	};
-
+	
 	L.Map.prototype.loadFromEvents=function(events){
 		var i=0;
 		if(typeof poly==='undefined'){
@@ -346,9 +326,6 @@
     };
 
 
-
-
-
     //PopUpMenu Layer and Event
     var PopUpMenu = L.Class.extend({
     	
@@ -492,7 +469,146 @@
 
 
 
+	//
+	//param{string/timestamp} a
+	//return number time in secs
+	//
+	var timestampToSecs=function(a){
+		return(a.split(" ")[0]*360+a.split(" ")[1]*60+a.split(" ")[0]*1);
+		}
 
+	var addLast=function(){
+		$.ajax({
+			url: lastRoute+lastId
+			,success: function(response){
+				console.log(response);
+				if(response.length==0)timeFromLastUpdate+=30;
+				for(var i=0;i<response.length;i++){
+				lastId=response.id;
+				switch(response[i].action){
+					case 'point':
+						map.eventManager.addPoint(response[i]);
+						break;
+					case 'in':
+						map.eventManager.joinChild(response[i]);
+						break;
+					case 'out':
+						map.eventManager.disjoinChild(response[i]);
+						break;
+					case 'finish':
+						map.eventManager.finishRoute(response[i]);
+						break;
+					case 'report':
+						map.eventManager.addIssue(response[i]);
+						break;
+					}
+				}
+				
+			}
+			,error: function(XMLHttpRequest, textStatus, errorThrown)
+			{
+				console.log('Error : ' + errorThrown);
+			}
+		})
+
+	}
+
+	//Event Manager(handle events from DB) 				
+	L.Map.prototype.eventManager=
+		{
+			addPoint: function(response){
+				//tiempo de respuesta cortado 
+				if(timeFromLastUpdate>120){
+					var point=new POINT(response.location.latitude,response.location.longitude);
+					poly=new L.polyline(point.latLng);
+					poly.addTo(map);
+					map.fitBounds(poly.getBounds());
+					timeFromLastUpdate=0;
+					//<i class="fa fa-info-circle"></i>
+					}
+				//evento nuevo 
+				else{
+					var point=new POINT(response.location.latitude,response.location.longitude);
+					if(typeof poly==='undefined'){
+						poly=new L.polyline(point.latLng);
+						poly.addTo(map);
+					}
+					
+					else poly.addLatLng(point.latLng);
+					map.fitBounds(poly.getBounds());
+					timeFromLastUpdate=0;
+				}
+				
+			}
+
+		,joinChild:	function(response){
+			//tiempo de respuesta cortado 
+			if(timeFromLastUpdate>120){
+			}
+			else{
+				var point=new POINT(response.location.latitude,response.location.longitude);
+				//add join child icon to map 
+				var myIcon = L.divIcon({className: '',html: "<i class='fa fa-user fa-2x' id='"+response.id+"'></i>"});	
+				L.marker(point.latLng, {icon: myIcon}).addTo(map);
+				$("#"+response.id).css('cssText', 'color: green !important');
+				//function for show name on hover 
+				var nameChild=function(response){$("#"+this.id).append("<p style='color: green; font-size: 0.5em'>"+this.data.split('/')[1]+"</p>")}.bind(response);
+				var clearChildName=function(response){$("#"+this.id).html('');}.bind(response);
+				$("#"+response.id).hover(nameChild,clearChildName);
+			}
+		}
+		
+		,disjoinChild:	function(response){
+			//tiempo de respuesta cortado 
+			if(timeFromLastUpdate>120){
+				
+			}
+			else{
+				var point=new POINT(response.location.latitude,response.location.longitude);
+				//add join child icon to map 
+				var myIcon = L.divIcon({className: '',html: "<i class='fa fa-user fa-2x' id='"+response.id+"'></i>"});	
+				L.marker(point.latLng, {icon: myIcon}).addTo(map);
+				$("#"+response.id).css('cssText', 'color: red !important');
+				//function for show name on hover 
+				var nameChild=function(response){$("#"+this.id).append("<p style='color: red; font-size: 0.5em'>"+this.data.split('/')[1]+"</p>")}.bind(response);
+				var clearChildName=function(response){$("#"+this.id).html('');}.bind(response);
+				$("#"+response.id).hover(nameChild,clearChildName);
+			}
+		}
+		
+		,finishRoute:	function(response){
+			//tiempo de respuesta cortado 
+			if(timeFromLastUpdate>120){
+				lastId=response.id;
+			}
+			else{
+				lastId=response.id;
+				var point=new POINT(response.location.latitude,response.location.longitude);
+			
+				var myIcon = L.divIcon({className: '',html: "<i class='fa fa-flag fa-2x' id='"+response.id+"'></i>"});	
+				L.marker(point.latLng, {icon: myIcon}).addTo(map);
+				$("#"+response.id).css('cssText', 'color: green !important');
+				var finishHover=function(response){$("#"+this.id).append("<p style='color: green; font-size: 0.5em'>final de ruta</p>")}.bind(response);
+				var clearFinishHover=function(response){$("#"+this.id).html('');}.bind(response);
+				
+				$("#"+response.id).hover(finishHover,clearFinishHover);
+			}
+		}
+		,addIssue:	function(response){
+			//tiempo de respuesta cortado 
+			if(timeFromLastUpdate>120){
+
+			}
+			else{
+				var point=new POINT(response.location.latitude,response.location.longitude);
+				
+				var myIcon = L.divIcon({className: '',html: "<i class='fa fa-exclamation-circle fa-2x' id='"+response.id+"'></i>"});	
+				L.marker(point.latLng, {icon: myIcon}).addTo(map);
+				$("#"+response.id).css('cssText', 'color: yellow !important');
+				$("#"+response.id).hover(function(){},function(){});
+			}
+		}
+	};
 	//Mapa tiempo real
 	L.Map.prototype.realTimeUpdate= function(points){
 			poly.setLatLngs(points);
@@ -507,7 +623,7 @@
 	
 	if(realTime){
 	    if(events.length>0)map.loadFromEvents(events);
-		setInterval(addLast,30000);
+		setInterval(addLast,5000);
 	}
 
 
