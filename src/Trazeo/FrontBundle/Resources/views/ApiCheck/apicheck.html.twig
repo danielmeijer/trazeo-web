@@ -1,18 +1,69 @@
-<<<<<<< HEAD
-<form method="post" action="ride/finish">
-	<input type="text" name="email">
-	<input type="text" name="pass">
-	<input type="text" name="id_ride">
-=======
-<form method="post" action="ride/sendPosition">
-	<input type="text" name="id_ride">
-	<input type="text" name="email">
-	<input type="text" name="pass">
-	<input type="text" name="latitude">
-	<input type="text" name="longitude">
-	<!-- <input type="text" name="texto">
-	<input type="text" name="tipo_de_incidencia"> -->
->>>>>>> a65987aaf3e91908c9db47f9fc59d52842564f0e
-	
-	<input type="submit">
+<h3>Trazeo - LOGIN</h3>
+<form action="login" method="post">
+	<input type="text" name="email" value="trazeo@trazeo.es"/>
+	<input type="text" name="pass" value="a3cd14aa603f9574b1917d2b8595e4b9"/>
+	<input type="submit"/>
+</form>
+
+<h3>Trazeo - GROUPS</h3>
+<form action="groups" method="post">
+	<input type="text" name="email" value="trazeo@trazeo.es"/>
+	<input type="text" name="pass" value="a3cd14aa603f9574b1917d2b8595e4b9"/>
+	<input type="submit"/>
+</form>
+
+<h3>Trazeo - CREATENEW</h3>
+<form action="ride/createNew" method="post">
+	<input type="text" name="email" value="trazeo@trazeo.es"/>
+	<input type="text" name="pass" value="a3cd14aa603f9574b1917d2b8595e4b9"/>
+	<input type="text" name="id_group" value="1" />
+	<input type="submit"/>
+</form>
+
+<h3>Trazeo - POSITION</h3>
+<form action="ride/sendPosition" method="post">
+	<input type="text" name="email" value="trazeo@trazeo.es"/>
+	<input type="text" name="pass" value="a3cd14aa603f9574b1917d2b8595e4b9"/>
+	<input type="text" name="id_ride" value="1" />
+	<input type="text" name="latitude" value="23.23"/>
+	<input type="text" name="longitude" value="-4.78500964"/>
+	<input type="submit"/>
+</form>
+
+<h3>Trazeo - CHILD IN</h3>
+<form action="ride/sendChildInRide" method="post">
+	<input type="text" name="email" value="trazeo@trazeo.es"/>
+	<input type="text" name="pass" value="a3cd14aa603f9574b1917d2b8595e4b9"/>
+	<input type="text" name="id_ride" value="1" />
+	<input type="text" name="id_child" value="1" />
+	<input type="text" name="latitude" value="23.23"/>
+	<input type="text" name="longitude" value="-4.78500964"/>
+	<input type="submit"/>
+</form>
+
+<h3>Trazeo - CHILD OUT</h3>
+<form action="ride/sendChildOutRide" method="post">
+	<input type="text" name="email" value="trazeo@trazeo.es"/>
+	<input type="text" name="pass" value="a3cd14aa603f9574b1917d2b8595e4b9"/>
+	<input type="text" name="latitude" value="23.23"/>
+	<input type="text" name="longitude" value="-4.78500964"/>
+	<input type="text" name="id_ride" value="1" />
+	<input type="text" name="id_child" value="1" />
+	<input type="submit"/>
+</form>
+
+<h3>Trazeo - FINISH</h3>
+<form action="ride/finish" method="post">
+	<input type="text" name="id_ride" value="4" />
+	<input type="text" name="email" value="trazeo@trazeo.es"/>
+	<input type="text" name="pass" value="a3cd14aa603f9574b1917d2b8595e4b9"/>
+	<input type="submit"/>
+</form>
+
+<h3>Trazeo - DATA</h3>
+<form action="ride/data" method="post">
+	<input type="text" name="id_ride" value="1" />
+	<input type="text" name="email" value="trazeo@trazeo.es"/>
+	<input type="text" name="pass" value="a3cd14aa603f9574b1917d2b8595e4b9"/>
+	<input type="submit"/>
 </form>

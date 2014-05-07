@@ -147,6 +147,7 @@ class ApiController extends Controller {
 			$arrayGroups['id'] = $group->getId();
 			$arrayGroups['name'] = $group->getName();
 			$arrayGroups['visibility'] = $group->getVisibility();
+			$arrayGroups['hasride'] = $group->getHasRide();
 			
 			$array[] = $arrayGroups;
 		}
@@ -180,7 +181,7 @@ class ApiController extends Controller {
 		
 		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneBy(array("id" => $id_group, "admin" => $userextend->getId()));
 		//ldd($group);
-		// Si el grupo tiene Paseo asociado, devuelve el paseo
+		// Si el grupo tiene Paseo asociado(está en marcha), devuelve el paseo
 		if($group->getHasRide() == 1 && $group->getRide() != null){
 			$array['id_ride'] = $group->getRide()->getId();
 			
@@ -195,8 +196,7 @@ class ApiController extends Controller {
 			$ride = new ERide();
 			//TODO: En la relación Group-Ride, evitar los dos set
 			$ride->setGroup($group);
-			$ride->setTimeIni(new \DateTime());
-			$ride->setGo(1);
+			//$ride->setGo(1);
 			$em->persist($ride);
 			$group->setHasRide(1);
 			$group->setRide($ride);
@@ -272,8 +272,8 @@ class ApiController extends Controller {
 		$event = new EEvent();
 		$event->setRide($ride);
 		$event->setAction("point");
-		$event->setData("(".$latitude.",".$longitude.")");
-		//$event->setLocation(new SimplePoint($latitude, $longitude));
+		$event->setLocation(new SimplePoint($latitude, $longitude));
+		$event->setData("");
 		
 		$em->persist($event);
 		$em->flush();
@@ -294,6 +294,8 @@ class ApiController extends Controller {
 	
 		$id_ride = $request->get('id_ride');
 		$id_child = $request->get('id_child');
+		$latitude = $request->get('latitude');
+		$longitude = $request->get('longitude');
 	
 		$user = $this->checkPrivateAccess($request);
 		if( $user == false || $user == null ){
@@ -317,6 +319,7 @@ class ApiController extends Controller {
 		$event->setRide($ride);
 		$event->setAction("in");
 		$event->setData($id_child);
+		$event->setLocation(new SimplePoint($latitude, $longitude));
 		
 		//Registramos al niño dentro del paseo
 		$child->setRide($ride);
@@ -353,6 +356,8 @@ class ApiController extends Controller {
 	
 		$id_ride = $request->get('id_ride');
 		$id_child = $request->get('id_child');
+		$latitude = $request->get('latitude');
+		$longitude = $request->get('longitude');
 	
 		$user = $this->checkPrivateAccess($request);
 		if( $user == false || $user == null ){
@@ -375,6 +380,7 @@ class ApiController extends Controller {
 		$event->setRide($ride);
 		$event->setAction("out");
 		$event->setData($id_child);
+		$event->setLocation(new SimplePoint($latitude, $longitude));
 		
 		//Eliminamos el niño del paseo
 		$child->setRide(null);
@@ -429,15 +435,20 @@ class ApiController extends Controller {
 		$group = $ride->getGroup();
 		
 		//Cálculo del tiempo transcurrido en el paseo
-		$inicio = $ride->getTimeIni();
+		$inicio = $ride->getCreatedAt();
 		$fin = new \DateTime();
 		
 		$diff = $inicio->diff($fin);
 		$duration = $diff->h." horas, ".$diff->i." minutos y ".$diff->s." segundos";
 		
+		$group->setHasRide(0);
+		$em->persist($group);
+		
 		$ride->setDuration($duration);
-		$ride->setTimeFin($fin);
-		$ride->setGo(0);
+		$ride->setGroupid($group->getId());
+		$ride->setGroup(null);	
+		
+		
 		$em->persist($ride);
 
 		$em->flush();

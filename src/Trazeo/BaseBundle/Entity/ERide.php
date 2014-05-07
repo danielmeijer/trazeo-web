@@ -24,18 +24,8 @@ class ERide
 	protected $id;
 	
 	/**
-	 * @ORM\Column(name="time_ini", type="datetime", nullable=true)
-	 */
-	protected $time_ini;
-	
-	/**
-	 * @ORM\Column(name="time_fin", type="datetime", nullable=true)
-	 */
-	protected $time_fin;
-	
-	/**
 	 * @ORM\OneToOne(targetEntity="EGroup", inversedBy="ride")
-	 * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="group_id", referencedColumnName="id", nullable=true)
 	 **/
 	protected $group;
 	
@@ -55,14 +45,14 @@ class ERide
 	protected $reports;
 	
 	/**
-	 * @ORM\Column(name="go", type="boolean", nullable=true)
-	 */
-	protected $go;
-	
-	/**
 	 * @ORM\Column(name="duration", type="string", length=255, nullable=true)
 	 */
 	protected $duration;
+	
+	/**
+	 * @ORM\Column(name="groupid", type="string", length=50, nullable=true)
+	 */
+	protected $groupid;
 
     /**
      * Get id
@@ -325,5 +315,29 @@ class ERide
     public function getDuration()
     {
         return $this->duration;
+    }
+
+    /**
+     * Set groupid
+     *
+     * @param string $groupid
+     *
+     * @return ERide
+     */
+    public function setGroupid($groupid)
+    {
+        $this->groupid = $groupid;
+
+        return $this;
+    }
+
+    /**
+     * Get groupid
+     *
+     * @return string 
+     */
+    public function getGroupid()
+    {
+        return $this->groupid;
     }
 }
