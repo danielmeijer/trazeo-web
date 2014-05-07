@@ -48,8 +48,8 @@
 		
 				
         <script type="text/javascript">
-        var lastRoute="{{ path('panel_ride_last', {'id': ride.id}) }}";
-
+        var lastId=0;
+        var lastRoute="{{ path('panel_ride_lasts', {'id': ride.id,'lastid': 0}) }}";
     	</script>
 {% endblock %}
 		

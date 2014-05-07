@@ -8,36 +8,10 @@
 		};
 	var editable= {{ editable }};
 	var realTime= {{ realTime }};
-<<<<<<< HEAD
 	timeFromLastUpdate=0;
-	lastRoute=lastRoute.replace("5","");
+	lastRoute=lastRoute.replace("0","");
 	lastId="0";
 	events.push(new POINT(0,0));
-=======
-
-	
-	var addLast=function(){
-		$.ajax({
-			url: lastRoute
-			,success: function(response){
-				var point=response.replace(' ',',');
-				var aux="new POINT"+point;
-		     	var point=eval(aux);
-				if(typeof poly==='undefined'){
-					poly=new L.polyline(point.latLng);
-					poly.addTo(map);
-				}
-				else poly.addLatLng(point.latLng);
-				map.fitBounds(poly.getBounds());
-			}
-			,error: function(XMLHttpRequest, textStatus, errorThrown)
-			{
-				//alert('Error : ' + errorThrown);
-			}
-		})
-
-	}
->>>>>>> 7de7eaaadf2215d6f51a1720bdd2ef3fc9650160
 </script>
 
 {% for point in routePoints  %}
@@ -502,7 +476,7 @@
 	var timestampToSecs=function(a){
 		return(a.split(" ")[0]*360+a.split(" ")[1]*60+a.split(" ")[0]*1);
 		}
-
+	lastId=events.length;
 	var addLast=function(){
 		$.ajax({
 			url: lastRoute+lastId
