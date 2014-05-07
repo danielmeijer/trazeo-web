@@ -4,6 +4,16 @@ Btn:
     success: Guardar
 
 Children:
+    mine: Mis niños
+    empty: Aún no has registrado a ninguno de tus niños
+    register: Registrar mis niños/as en Trazeo
+    new: Registar Niño/a
+    list: Listado de niños/as
+    data: 
+        name: Nombre
+        visibility: Visibilidad
+        age: Edad
+        options: Opciones
     date: 'Fecha de nacimiento'
 
     edit:
@@ -46,6 +56,15 @@ Form:
         repeatpass: 'Confirmar contraseña'
 
 Groups:
+    data:
+        name: Nombre
+        visibility: Visibilidad
+        activity: Actividad del grupo
+        route: Ruta
+        chat: Chat del grupo
+    mine: Mis grupos
+    list: Listado de grupos
+    empty: Crea un nuevo grupo de usuarios y asígnale una ruta de paseo
     edit:
         description: 'Indica el tipo de visibilidad y asígnale una ruta'
         title: 'Editar datos de grupo'
@@ -123,6 +142,13 @@ Register:
     repeatpass: 'Repita la contraseña'
 
 Route:
+    mine: Mis Rutas
+    list: Listado de rutas
+    empty: Traza una ruta de paseo segura en tu ciudad para ir al cole
+    data: 
+        name: Nombre
+        map: Mapa de la ruta
+        options: Opciones
     edit:
         description: 'Establece un nombre e indica a qué país y ciudad pertenece'
         title: 'Editar datos de ruta'
@@ -140,9 +166,6 @@ Route:
     new:
         description: 'Asígnale un nombre que de a los demás usuarios una idea de la zona o recorrido'
         title: 'Crear nueva ruta'
-
-    show:
-        title: 'Ruta: %name%'
 
 Settings:
     index:
@@ -295,3 +318,16 @@ security:
         remember_me: Recordar
         submit: Entrar
         username: 'Nombre de usuario:'
+        
+Ride:
+    yes:
+        title: Hay paseos en marcha
+        description: Los siguientes grupos están en marcha y tienes ninos apuntados en ellos
+    no:
+        title: No hay paseos en marcha
+        description: Actualmente ninguno de los grupos en los que estás inscrito está realizando un paseo
+    go: Ir al paseo
+        
+Options:
+    edit: Editar
+    delete: Eliminar
