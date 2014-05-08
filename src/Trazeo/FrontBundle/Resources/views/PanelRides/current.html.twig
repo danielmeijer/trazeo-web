@@ -72,5 +72,5 @@
 	
 	<script type="text/javascript" src="{{ asset_url }}"></script>
 	{% endjavascripts %}
-	{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': "",'editable': "false", 'realTime': "true", 'rideEvents': ''} %}
+	{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': route.points,'editable': "false", 'realTime': "true", 'rideEvents': ''} %}
 {% endblock %}
