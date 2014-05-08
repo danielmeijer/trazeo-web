@@ -47,7 +47,7 @@ class PanelSettingsController extends Controller
 		// TODO: Traducir mensaje de Guardadas Preferencias de Usuario
 		$notification = $container->addFlashMessages("success","Guardadas preferencias de usuario");
 		
-		return $this->redirect($this->generateUrl('panel_dashboard'));
+		return $this->redirect($this->generateUrl('panel_user_settings'));
 	}
 }
 

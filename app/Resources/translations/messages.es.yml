@@ -57,12 +57,14 @@ Form:
         repeatpass: 'Confirmar contraseña'
 
 Groups:
+    noRoute: Ninguna ruta asignada 
     data:
         name: Nombre
         visibility: Visibilidad
         activity: Actividad del grupo
         route: Ruta
         chat: Chat del grupo
+        options: Opciones
     mine: Mis grupos
     list: Listado de grupos
     empty: Crea un nuevo grupo de usuarios y asígnale una ruta de paseo
