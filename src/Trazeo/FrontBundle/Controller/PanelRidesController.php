@@ -43,8 +43,12 @@ class PanelRidesController extends FOSRestController
     	$routeId = $group->getRoute()->getId();
     	$route = $em->getRepository('TrazeoBaseBundle:ERoute')->findOneById($routeId);
     	
-    	$city = $route->getCity()->getId();
-    	$sponsors = $em->getRepository('TrazeoBaseBundle:ESponsor')->findByCity($city);
+    	if ($route->getCity() != null) {
+	    	$city = $route->getCity()->getId();
+	    	$sponsors = $em->getRepository('TrazeoBaseBundle:ESponsor')->findByCity($city);
+    	} else {
+    		$sponsors = null;
+    	}
     	
     	return array(
     		'ride' => $ride,
