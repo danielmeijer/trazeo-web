@@ -477,7 +477,7 @@
 	var timestampToSecs=function(a){
 		return(a.split(" ")[0]*360+a.split(" ")[1]*60+a.split(" ")[0]*1);
 		}
-	lastId=events.length;
+	lastId=0;
 	var addLast=function(){
 		$.ajax({
 			url: lastRoute+lastId
@@ -606,7 +606,11 @@
 				var myIcon = L.divIcon({className: '',html: "<i class='fa fa-exclamation-circle fa-2x' id='"+response.id+"'></i>"});	
 				L.marker(point.latLng, {icon: myIcon}).addTo(map);
 				$("#"+response.id).css('cssText', 'color: yellow !important');
-				$("#"+response.id).hover(function(){},function(){});
+
+				var finishHover=function(response){$("#"+this.id).append("<p style='color: green; font-size: 0.5em'>"+this.data+"</p>")}.bind(response);
+				var clearFinishHover=function(response){$("#"+this.id).html('');}.bind(response);
+				
+				$("#"+response.id).hover(finishHover,clearFinishHover);
 			}
 		}
 	};
