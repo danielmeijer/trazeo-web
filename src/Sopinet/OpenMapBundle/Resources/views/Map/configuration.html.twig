@@ -607,12 +607,11 @@
 				L.marker(point.latLng, {icon: myIcon}).addTo(map);
 				$("#"+response.id).css('cssText', 'color: yellow !important');
 
-				var finishHover=function(response){$("#"+this.id).append("<p style='color: green; font-size: 0.5em'>"+this.data+"</p>")}.bind(response);
+				var finishHover=function(response){$("#"+this.id).append("<p style='color: yellow; font-size: 0.5em'>"+this.data+"</p>")}.bind(response);
 				var clearFinishHover=function(response){$("#"+this.id).html('');}.bind(response);
 				
 				$("#"+response.id).hover(finishHover,clearFinishHover);
 			}
-			
 		}
 	};
 	//Mapa tiempo real
