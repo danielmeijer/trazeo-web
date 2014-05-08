@@ -130,7 +130,11 @@
 										<td><i class="fa fa-location-arrow"></i></td>
 										<td>Ruta asignada</td>
 										<td>
+										{% if userGroup.route %}
 											<a href="{{ path('panel_route') }}{{ userGroup.route.id }}">{{ userGroup.route.name }}</a>
+										{% else %}
+											{{ 'Groups.noRoute'|trans }}
+										{% endif %}
 										</td>
 									</tr>
 									<tr>

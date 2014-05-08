@@ -33,6 +33,7 @@
 		"sopinet/simple-point-bundle": "dev-master",
 		"sopinet/flash-messages-bundle" : "dev-master",
 		"jms/serializer": "dev-master",
-		"lunetics/locale-bundle": "2.2.*"
+		"lunetics/locale-bundle": "2.2.*",
+		"endroid/qrcode-bundle": "dev-master"
 	}
 }

@@ -90,17 +90,28 @@
 									</tr>
 								</tbody>
 							</table>							
+					<div class="col-md-6 pull-right">	
 						<p class="text-muted">
 						<i class="fa fa-envelope"></i>&nbsp;
 							Envía una invitación a otros usuarios para que sean uno de los tutores de este niño
 						</p>
-						<form class="col-md-3 input-group custom-search-form" action="{{ path('panel_child_invite') }}" method="POST">
+						<form class="input-group custom-search-form" action="{{ path('panel_child_invite') }}" method="POST">
 							<input required type="email" name="userEmail" class="form-control" placeholder='{{ "Email"|trans }}'/>
 							<input type="hidden" name="child" value="{{ child.id }}"/>
 							<span class="input-group-btn">
 							<button class="btn btn-warning" type="submit"><i class="fa fa-check"></i></button>
 							</span>				
 						</form>
+					</div>
+						<div class="col-md-6 pull-left">
+							<h4 class="alert alert-warning">Código identificador</h4>
+							<p class="col-md-9 pull-left">El siguiente código es único y está asignado a tu niño/a <span class="alert-warning"><b>{{ child.nick }}</b></span>. 
+							Descárgalo haciendo click en él e imprímelo para que el monitor pueda registarlo en los paseos en marcha.</p>
+							<a download="Código_Identificador" href={{ qrcode_url(child.id, 'jpg', 110) }}>
+							<img style="margin-top:-20px;" class="pull-right" src="{{ qrcode_url(child.id, 'jpg', 110) }}" />
+							</a>
+							
+						</div>
 					</div> 
 				</div>
 			</div>
