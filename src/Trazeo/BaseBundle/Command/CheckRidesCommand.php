@@ -35,6 +35,7 @@ class CheckRidesCommand extends ContainerAwareCommand
     	// Recoger el campo createdAt de cada evento
     	$lastEvent = $events[0];
     	$lastEventDate = $lastEvent->getCreatedAt();
+    	$lastEventTimestamp = $lastEventDate->getTimestamp();
 
     	$output->writeln('<info>Revisando si el último evento creado fue hace más de 5min....</info>');
     	$output->writeln('<info>Eliminando...</info>');
@@ -42,16 +43,17 @@ class CheckRidesCommand extends ContainerAwareCommand
     	// Current datetime
     	$dateCurrent = new \DateTime();
 
-    	$result = $lastEventDate->diff($dateCurrent);
-    	// Nº de minutos
- 		$minutes = $result->i;
- 		
+    	$now = $dateCurrent->getTimestamp();
+    	
+    	// Nº de minutos en formato timestamp(5min = 300)
+    	$minutes = $now - $lastEventTimestamp;
+    	
  		$rideId = $lastEvent->getRide()->getId();
  		$ride = $em->getRepository("TrazeoBaseBundle:ERide")->find($rideId);
  		$rideGroup = $ride->getGroup();
  		
  		//ldd($minutes);
- 		if($minutes >= 5 && $rideGroup != null){
+ 		if($minutes >= 300 && $rideGroup != null){
  			
  			// Detener el paseo del grupo
  			$rideGroup->setHasRide(0);
