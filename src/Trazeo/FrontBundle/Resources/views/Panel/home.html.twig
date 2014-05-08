@@ -19,6 +19,7 @@
 								<li><i class="fa fa-users"></i>&nbsp; <a href="{{ path('panel_group_timeline',{'id': group.id}) }}">{{ group.Name }}</a></li>
 							</ul>
 							<ul class="col-md-5">
+								<li><i class="fa fa-mail-forward"></i><a href="{{ path('panel_ride_current', {'id': group.ride.id}) }}">&nbsp; {{ 'Ride.go'|trans }}</a></li>
 							</ul>
 					    
 					{% endfor %}
@@ -277,11 +278,11 @@
 		 };
 		 //styles on tutorial stoped 
 		 var tutorialStoped=function(){
-    			 $('*').off("click", "*",this);
+    			 $('*').off("click", "*",prevent);
     			 $('*').off('mousewheel');
     			 $('#wrapper').css('opacity','1');
     			 localStorage.setItem('tutorial','none');
-             }.bind(prevent);
+             };
          //global options for tutotials
          var options={
                  		delay : 4000
