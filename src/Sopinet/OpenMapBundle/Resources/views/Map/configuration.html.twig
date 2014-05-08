@@ -532,7 +532,6 @@
 					}
 					
 					else poly.addLatLng(point.latLng);
-					map.fitBounds(poly.getBounds());
 					timeFromLastUpdate=0;
 				}
 				
@@ -604,7 +603,6 @@
 			var lastPreviousPoint=poly.getLatLngs()[poly.getLatLngs().length-1];
 			poly=new L.polyline(point.latLng);
 			poly.addTo(map);
-			map.fitBounds(poly.getBounds());
 			timeFromLastUpdate=0;
 
 			//Icons for conexion lost info 
