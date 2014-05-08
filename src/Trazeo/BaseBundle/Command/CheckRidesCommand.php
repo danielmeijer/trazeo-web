@@ -31,62 +31,75 @@ class CheckRidesCommand extends ContainerAwareCommand
     	$con->set('request', new Request(), 'request');
     	$em  = $con->get('doctrine')->getManager();
     	
-    	$events = $em->getRepository("TrazeoBaseBundle:EEvent")->findBy(array(),array("createdAt" => "DESC"));
-    	// Recoger el campo createdAt de cada evento
-    	$lastEvent = $events[0];
-    	$lastEventDate = $lastEvent->getCreatedAt();
-    	$lastEventTimestamp = $lastEventDate->getTimestamp();
+    	//Sacar grupos en marcha
+    	$rides = $em->getRepository("TrazeoBaseBundle:ERide")->findByGroupid(null);
+    	
+    	foreach($rides as $ride){
+    		//Ordenar los eventos de cada grupo
+    		$reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
+    		 
+    		$query = $reEvent->createQueryBuilder('e')
+    		->where('e.ride = :ride')
+    		->setParameters(array('ride' => $ride))
+    		->orderBy('e.createdAt', 'DESC')
+    		->getQuery();
+    		 
+    		$events = $query->getResult();
 
-    	$output->writeln('<info>Revisando si el último evento creado fue hace más de 5min....</info>');
-    	$output->writeln('<info>Eliminando...</info>');
-    	
-    	// Current datetime
-    	$dateCurrent = new \DateTime();
-
-    	$now = $dateCurrent->getTimestamp();
-    	
-    	// Nº de minutos en formato timestamp(5min = 300)
-    	$minutes = $now - $lastEventTimestamp;
-    	
- 		$rideId = $lastEvent->getRide()->getId();
- 		$ride = $em->getRepository("TrazeoBaseBundle:ERide")->find($rideId);
- 		$rideGroup = $ride->getGroup();
- 		
- 		//ldd($minutes);
- 		if($minutes >= 300 && $rideGroup != null){
- 			
- 			// Detener el paseo del grupo
- 			$rideGroup->setHasRide(0);
- 			
- 			$em->persist($rideGroup);
- 			
- 			//Cálculo del tiempo transcurrido en el paseo
- 			$inicio = $ride->getCreatedAt();
- 			$fin = new \DateTime();
- 			
- 			$diff = $inicio->diff($fin);
- 			$duration = $diff->h." horas, ".$diff->i." minutos y ".$diff->s." segundos";
- 			
- 			$ride->setDuration($duration);
- 			$ride->setGroupid($rideGroup->getId());
- 			$ride->setGroup(null);
- 			$em->persist($ride);
- 			
- 			$event = new EEvent();
- 			$event->setRide($ride);
- 			$event->setAction("finish");
- 			$event->setData("");
- 			//$event->setLocation(new SimplePoint($latitude, $longitude));
- 			$em->persist($event); 			
- 						
- 			$em->flush();
- 			
- 			$output->writeln('<fg=yellow>Paseo del grupo ' . $rideGroup->getName() . ' detenido</fg=yellow>');
- 		}else{
- 			
- 			$output->writeln('<fg=yellow>No hay ningún paseo que detener</fg=yellow>');
- 		}
-    	
+	    	$lastEvent = $events[0];
+	    	$lastEventDate = $lastEvent->getCreatedAt();
+	    	$lastEventTimestamp = $lastEventDate->getTimestamp();
+	
+	    	$output->writeln('<info>Revisando si el último evento creado fue hace más de 5min....</info>');
+	    	$output->writeln('<info>Eliminando...</info>');
+	    	
+	    	// Current datetime
+	    	$dateCurrent = new \DateTime();
+	
+	    	$now = $dateCurrent->getTimestamp();
+	    	
+	    	// Nº de minutos en formato timestamp(5min = 300)
+	    	$minutes = $now - $lastEventTimestamp;
+	    	
+	 		$rideId = $lastEvent->getRide()->getId();
+	 		$ride = $em->getRepository("TrazeoBaseBundle:ERide")->find($rideId);
+	 		$rideGroup = $ride->getGroup();
+	 		
+	 		//ldd($minutes);
+	 		if($minutes >= 300 && $rideGroup != null){
+	 			
+	 			// Detener el paseo del grupo
+	 			$rideGroup->setHasRide(0);
+	 			
+	 			$em->persist($rideGroup);
+	 			
+	 			//Cálculo del tiempo transcurrido en el paseo
+	 			$inicio = $ride->getCreatedAt();
+	 			$fin = new \DateTime();
+	 			
+	 			$diff = $inicio->diff($fin);
+	 			$duration = $diff->h." horas, ".$diff->i." minutos y ".$diff->s." segundos";
+	 			
+	 			$ride->setDuration($duration);
+	 			$ride->setGroupid($rideGroup->getId());
+	 			$ride->setGroup(null);
+	 			$em->persist($ride);
+	 			
+	 			$event = new EEvent();
+	 			$event->setRide($ride);
+	 			$event->setAction("finish");
+	 			$event->setData("");
+	 			//$event->setLocation(new SimplePoint($latitude, $longitude));
+	 			$em->persist($event); 			
+	 						
+	 			$em->flush();
+	 			
+	 			$output->writeln('<fg=yellow>Paseo del grupo ' . $rideGroup->getName() . ' detenido</fg=yellow>');
+	 		}else{
+	 			
+	 			$output->writeln('<fg=yellow>No hay ningún paseo que detener</fg=yellow>');
+	 		}
+    	}
     	$output->writeln('<info>Hecho</info>');
     }
 }
