@@ -245,7 +245,7 @@ class ApiController extends Controller {
 	}
 	
 	/**
-	 * Guarda en el servidor la nueva posición del Grupo
+	 * Guarda en el servidor la nueva posición del Paseo
 	 * @POST("/api/ride/sendPosition")
 	 */
 	public function getSendPositionRideAction(Request $request) {
@@ -280,7 +280,7 @@ class ApiController extends Controller {
 		
 		$view = View::create()
 		->setStatusCode(200)
-		->setData($this->doOK("ok"));
+		->setData($this->doOK($event));
 			
 		return $this->get('fos_rest.view_handler')->handle($view);
 	
@@ -434,11 +434,18 @@ class ApiController extends Controller {
 		$reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
 		
 		$ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
+		// TODO: Lo ideal sería coger el último PUNTO con un REPOSITORY
 		$events = $reEvent->findBy(array('action' => "point", 'ride' => $ride->getId()), array('createdAt' => 'DESC'));
 	
+		if (count($events) > 0) {
+			$data = $events[0];
+		} else {
+			$data = null;
+		}
+		
 		$view = View::create()
 		->setStatusCode(200)
-		->setData($this->doOK($events[0]));
+		->setData($this->doOK($data));
 			
 		return $this->get('fos_rest.view_handler')->handle($view);
 	

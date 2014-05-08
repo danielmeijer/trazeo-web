@@ -109,6 +109,10 @@
 						{{ 'Groups.empty'|trans }}
 						&nbsp;&nbsp;
 						<a class="btn btn-warning btn-outline" href="{{ path('panel_group_new') }}"><i class="fa fa-hand-o-right"></i> {{ 'Groups.new.title'|trans }}</a>
+							&nbsp;
+						<a class="btn btn-warning btn-outline" href="{{ path('panel_group') }}">
+							<i class="fa fa-list-ul"></i>&nbsp; {{ 'Groups.list'|trans }}
+						</a>
 						</h4>
 					</div>
 				{% elseif groups|length > 0 %}
@@ -178,6 +182,10 @@
 						{{ 'Route.empty'|trans }}
 						&nbsp;&nbsp;
 						<a class="btn btn-warning btn-outline" href="{{ path('panel_route_new') }}"><i class="fa fa-hand-o-right"></i> {{ 'Route.new.title'|trans }}</a>
+							&nbsp;
+						<a class="btn btn-warning btn-outline" href="{{ path('panel_route') }}">
+							<i class="fa fa-list-ul"></i>&nbsp; {{ 'Route.list'|trans }}
+						</a>
 						</h4>
 					</div>
 				{% elseif routes|length > 0 %}
