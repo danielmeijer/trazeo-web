@@ -260,16 +260,16 @@ class PanelChildrenController extends Controller
         $form = $this->createCreateForm($child);
         $form->handleRequest($request);
         $em = $this->getDoctrine()->getManager();
-        
-        if ($form->isValid())             
-            $fos_user = $this->container->get('security.context')->getToken()->getUser();
+
+        if ($form) {            
+        $fos_user = $this->container->get('security.context')->getToken()->getUser();
+   
             $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
-            
             //$user->addChild($child);
             $child->addUserextendchild($user);            
             $em->persist($child);
             $em->flush();
-
+        }
             return $this->redirect($this->generateUrl('panel_child'));
     }
 

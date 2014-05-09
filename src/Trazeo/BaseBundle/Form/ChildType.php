@@ -47,7 +47,7 @@ class ChildType extends AbstractType
     					'data-placement' => 'right',
     					'data-content' => $options['attr']['Children.help.datebirth']
     			),
-    			'format' => 'dd/MM/yyyy','required' => true))
+    			'format' => 'MM/dd/yyyy','required' => true))
     			
             ->add('visibility', 'choice', array(
             		'choices'   => array(1 => 'Children.visibility.enabled', 0 => 'Children.visibility.disabled'),

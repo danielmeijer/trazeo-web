@@ -46,7 +46,7 @@ class EChild
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateBirth", type="datetime")
+     * @ORM\Column(name="dateBirth", type="date")
      */
     protected $dateBirth;
 
