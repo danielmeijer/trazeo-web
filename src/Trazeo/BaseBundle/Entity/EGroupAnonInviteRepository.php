@@ -28,6 +28,10 @@
 			->setTo($userEmail)
 			->setBody($con->get('templating')->render('TrazeoFrontBundle:PanelGroups:email_invite.html.twig', array('link' => $link), 'text/html'));
 			$ok = $con->get('mailer')->send($message);
+			
+			echo '<pre>';
+			print_r($ok);
+			echo '</pre>';
 
 			return $eGAI;
 		}	
