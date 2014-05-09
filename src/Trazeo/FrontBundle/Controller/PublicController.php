@@ -119,15 +119,6 @@ class PublicController extends Controller
     		$em->persist($user);
     		$em->flush();
 
-    		// Logueamos Usuario
-   			$token = new UsernamePasswordToken($user, null, "your_firewall_name", $user->getRoles());
-   			$this->get("security.context")->setToken($token); //now the user is logged in
-    			 
-   			// Lanzamos evento de Login
-   			$request = $this->get("request");
-   			$event = new InteractiveLoginEvent($request, $token);
-   			$this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
-
     		// Creamos la invitación
     		$not = $this->container->get('sopinet_user_notification');
     		$el = $not->addNotification(
@@ -143,6 +134,15 @@ class PublicController extends Controller
     		
     		$em->persist($access);
     		$em->flush();
+    		
+    		// Logueamos Usuario
+    		$token = new UsernamePasswordToken($user, null, "your_firewall_name", $user->getRoles());
+    		$this->get("security.context")->setToken($token); //now the user is logged in
+    		
+    		// Lanzamos evento de Login
+    		$request = $this->get("request");
+    		$event = new InteractiveLoginEvent($request, $token);
+    		$this->get("event_dispatcher")->dispatch("security.interactive_login", $event);    		
     		
     		$container = $this->get('sopinet_flashMessages');
     		$notification = $container->addFlashMessages("success","¡Bienvenido a Trazeo!");
