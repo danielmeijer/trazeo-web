@@ -48,7 +48,7 @@
 	</table>
 </div>
 
-		<h3 class="alert alert-success"><i class="fa fa-map-marker"></i>&nbsp; Mapa de la ruta</h3>
+		<h3 class="alert alert-success"><i class="fa fa-map-marker"></i>&nbsp; Mapa del paseo</h3>
 		{% for point in route.points %}
 			<input type="hidden" name="pickup{{ loop.index }}" value="false">
 			<input type="hidden" name="lat{{ loop.index }}" value="{{ point.location.latitude }}">
@@ -64,25 +64,32 @@
 			<button class="btn btn-default" id="comenzar" type="button">&nbsp; Comenzar</button>
 			<button class="btn btn-success" type="submit" id="enviar"><i class="fa fa-save"></i>&nbsp; Guardar</button>
 		</form>
-	
+	<br />
 		<div class="row">
-			<div class="col-md-6">
-				<h3>Grupos de esta ruta</h3>
-			</div>
-			<div class="col-md-6">
-				<a href="{{ path('panel_group_new') }}">
-					<button type="button" class="btn btn-warning btn-circle">
-						<i class="fa fa-plus"></i>
-					</button>
-					Crear grupo
+			<h3 class="alert alert-success"><i class="fa fa-users"></i>&nbsp; Grupos con esta ruta
+			</span>
+				<a href="{{ path('panel_group_new') }}" class="label label-success pull-right">
+					<i class="fa fa-plus-circle"></i>&nbsp; Crear nuevo Grupo
 				</a>
-			</div>
+			</h3>
+			{% if route.groups | length > 0 %}	
+			        <table class="table alert-warning col-md-12">
+			        	<tbody>
+			        	{% for group in route.groups %}
+							<tr>
+								<td>#</td>
+								<td> {{ group.name }}</td>
+							</tr>
+						{% endfor %}
+			        	</tbody>
+			        </table>
+			{% else %}
+				<p class="alert alert-warning col-md-6">
+				<i class="fa fa-warning"></i>&nbsp;		
+				No ningún grupo con esta ruta asignada</p>	
+			{% endif %}
 		</div>
-		<p>Los usuarios han creado {{ route.groups|length }} grupos en esta ruta</p>
-            
-        {% for group in route.groups %}
-        	{{ group.name }}
-        {% endfor %}
+		<br />
 {% endblock %}
 
 	
