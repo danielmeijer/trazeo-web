@@ -1,0 +1,41 @@
+{% extends "SopinetTemplateSbadmin2Bundle:Login:layout.html.twig" %}
+
+{% block fos_user_content %}
+	{% if csrf_token is not defined %}
+		{% set csrf_token = render(controller('SopinetTemplateSbadmin2Bundle:Default:getToken')) %}
+	{% endif %}
+	
+	<form action="{{ path("home_execInvite_user") }}" method="post">
+		<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+		
+		{% if (redirect is defined) %}
+	    	<input type="hidden" name="_redirect" id="redirect" value="{{ redirect }} "/>
+	    {% endif %}	
+	   	{% if (error is defined) %}
+	    	<div class="help-block">{{ error|trans({}, 'FOSUserBundle') }}</div>
+		{% endif %}
+		
+		<p>Ha sido invitado a Registrarse en Trazeo, por favor, indique una contraseña (de su elección para los futuros accesos).</p>
+		
+		<input type="hidden" name="id" id="id" value="{{ id }}"/>
+		<input type="hidden" name="token" id="token" value="{{ token }}"/>
+		
+		<div class="form-group">
+			<input disabled="disabled" type="text" id="email" name="_email" class="form-control" value="{{ email }}" />
+		</div> <!-- /password -->
+		
+		<div class="form-group">
+			<input type="password" id="password1" value="" name="_password1" placeholder="{{ "Login.password"|trans }}" class="form-control" required="required" />
+		</div> <!-- /password -->
+		
+		<div class="form-group">
+			<input type="password" id="password2" value="" name="_password2" placeholder="{{ "Register.repeatpass"|trans }}" class="form-control" required="required" />
+		</div> <!-- /password -->
+		
+		<div class="login-actions">
+								
+			<button class="login-action btn btn-lg btn-success btn-block" name="submitLogin">{{ "Login.signin"|trans }}</button>
+			
+		</div> <!-- .actions -->
+	</form>
+{% endblock %}

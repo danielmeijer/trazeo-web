@@ -318,7 +318,7 @@ class PanelGroupsController extends Controller
 	 * @Method("POST")
 	 * @Template()
 	 */
-	public function inviteGroupAction() {
+	public function inviteGroupAction(Request $request) {
 	
 		$em = $this->getDoctrine()->getManager();
 		$um = $this->container->get('fos_user.user_manager');
@@ -327,9 +327,9 @@ class PanelGroupsController extends Controller
 		
 		$fos_user_current = $this->container->get('security.context')->getToken()->getUser();
 		$user_current =$um->findUserByEmail($fos_user_current);
-	
-		$userEmail = $_POST['userEmail'];	
-		$groupId = $_POST['group'];
+		
+		$userEmail = $request->get('userEmail');
+		$groupId = $request->get('group');
 		
 		$fos_user = $um->findUserByEmail($userEmail);
 		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
@@ -347,7 +347,12 @@ class PanelGroupsController extends Controller
 		
 		
 		if($fos_user != true){
-			$notification = $container->addFlashMessages("warning","El correo electrónico introducido no corresponde a ningún usuario");
+			// Si el usuario no está registrado, habrá que registrarlo
+			$reGAI = $em->getRepository('TrazeoBaseBundle:EGroupAnonInvite');
+			$reGAI->createNew($group, $userEmail, $this);
+			
+			// $notification = $container->addFlashMessages("warning","El correo electrónico introducido no corresponde a ningún usuario");
+			$notification = $container->addFlashMessages("success","Se ha enviado un email al usuario invitándolo al sistema Trazeo y a este grupo.");
 			return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
 		}
 		

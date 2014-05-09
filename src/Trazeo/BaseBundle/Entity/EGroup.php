@@ -58,6 +58,11 @@ class EGroup
      */
     protected $inviteGroup;
     
+    /** @ORM\OneToMany(targetEntity="EGroupInvite",  mappedBy="group")
+     * @var unknown
+     */
+    protected $inviteGroupAnon;    
+    
     /** 
      * @ORM\OneToOne(targetEntity="ERide", mappedBy="group")
      */
@@ -413,5 +418,39 @@ class EGroup
     public function getInviteGroup()
     {
         return $this->inviteGroup;
+    }
+
+    /**
+     * Add inviteGroupAnon
+     *
+     * @param \Trazeo\BaseBundle\Entity\EGroupInvite $inviteGroupAnon
+     *
+     * @return EGroup
+     */
+    public function addInviteGroupAnon(\Trazeo\BaseBundle\Entity\EGroupInvite $inviteGroupAnon)
+    {
+        $this->inviteGroupAnon[] = $inviteGroupAnon;
+
+        return $this;
+    }
+
+    /**
+     * Remove inviteGroupAnon
+     *
+     * @param \Trazeo\BaseBundle\Entity\EGroupInvite $inviteGroupAnon
+     */
+    public function removeInviteGroupAnon(\Trazeo\BaseBundle\Entity\EGroupInvite $inviteGroupAnon)
+    {
+        $this->inviteGroupAnon->removeElement($inviteGroupAnon);
+    }
+
+    /**
+     * Get inviteGroupAnon
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getInviteGroupAnon()
+    {
+        return $this->inviteGroupAnon;
     }
 }

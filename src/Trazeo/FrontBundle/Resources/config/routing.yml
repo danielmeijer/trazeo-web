@@ -27,8 +27,8 @@ routes:
     type:     annotation
     
 rides:
-    resource: "@TrazeoFrontBundle/Controller/PanelRidesController.php"
     type:     annotation  
+    resource: "@TrazeoFrontBundle/Controller/PanelRidesController.php"
     
 userextend:
     resource: "@TrazeoFrontBundle/Controller/PanelUserController.php"

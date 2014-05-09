@@ -26,7 +26,6 @@ class EGroupInvite
     protected $userextend;
     
     /** @ORM\ManyToOne(targetEntity="EGroup", inversedBy="inviteGroup")
-     * @var unknown
      */
     protected $group;
     
