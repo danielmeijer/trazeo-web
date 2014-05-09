@@ -121,6 +121,7 @@ class PublicController extends Controller
     		$em->flush();
     		
     		// Creamos el UserExtend
+    		/*
     		$userExtend = new UserExtend();
     		$userExtend->setNick($inviterow->getEmail());
     		$userExtend->setTutorial(0);
@@ -131,7 +132,8 @@ class PublicController extends Controller
     		// Terminamos de guardar la relación con User
     		$user->setUserExtend($userExtend);
     		$em->persist($user);
-    		$em->flush();    		
+    		$em->flush();
+    		*/    		
 
     		// Creamos la invitación
     		$not = $this->container->get('sopinet_user_notification');
