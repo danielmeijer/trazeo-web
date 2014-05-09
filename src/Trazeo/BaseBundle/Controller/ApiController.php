@@ -61,9 +61,12 @@ class ApiController extends Controller {
 	private function checkUser($email, $password){
 	
 		$user = $this->getDoctrine()->getRepository('\Application\Sonata\UserBundle\Entity\User')->findOneBy(array ("email"=>$email, "password"=>$password));
-	
+				
 		if ($user == null){
-			return false;
+			$user = $this->getDoctrine()->getRepository('\Application\Sonata\UserBundle\Entity\User')->findOneBy(array ("username"=>$email, "password"=>$password));
+			if ($user == null){
+				return false;
+			}
 		}
 		if ($password == $user->getPassword()){
 			return $user;
