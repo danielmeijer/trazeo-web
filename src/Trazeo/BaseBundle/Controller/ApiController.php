@@ -165,6 +165,8 @@ class ApiController extends Controller {
 	
 		//Comprobar si el ride asociado al grupo está creado(hasRide=1)
 		$id_group = $request->get('id_group');
+		$latitude = $request->get('latitude');
+		$longitude = $request->get('longitude');
 		
 		$user = $this->checkPrivateAccess($request);
 		if( $user == false || $user == null ){
@@ -205,6 +207,13 @@ class ApiController extends Controller {
 				$group->setRide($ride);
 				$em->persist($group);
 				$em->flush();
+				
+				$event = new EEvent();
+				$event->setRide($ride);
+				$event->setAction("start");
+				$event->setData("");
+				$event->setLocation(new SimplePoint($latitude, $longitude));
+				$em->persist($event);
 				
 				$array['id_ride'] = $group->getRide()->getId();
 				
