@@ -383,7 +383,7 @@
 
     	    // create a DOM element and put it into one of the map panes
         	this._el = L.DomUtil.create('div', 'pop-up-menu leaflet-zoom-hide');
-        	map.getPanes().overlayPane.appendChild(this._el);
+        	map.getPanes().popupPane.appendChild(this._el);
 
             // ... initialize other DOM elements, add listeners, etc.
 
@@ -459,7 +459,7 @@
      	   	$("#recogida").remove();
      	    $("#borrar").remove();
      	    $("#cancelar").remove()
-     	   	map.getPanes().overlayPane.removeChild(this._el);
+     	   	map.getPanes().popupPane.removeChild(this._el);
     	    map.off('viewreset', this._reset, this);
     	    routing.rerouteAllSegments(this._reset);
     	    setTimeout(map.enableRouting, 500);
@@ -474,9 +474,6 @@
      	   	L.DomUtil.setPosition(this._el, pos);
      	   }
    	 	}
-   	 	,options: {
-   	 		autoZIndex: true
-      	}
       
 	});
 
@@ -691,6 +688,7 @@
                     ,{"id":7,"action":"point","data":"","location":{"latitude":37.89514747,"longitude":-4.78676005},"created_at":"2014-05-07T12:58:27+0200","updated_at":"2014-05-07T12:58:27+0200"}
                     ,{"id":8,"action":"point","data":"","location":{"latitude":37.89496104,"longitude":-4.78654327},"created_at":"2014-05-07T12:58:39+0200","updated_at":"2014-05-07T12:58:39+0200"}
                     ,{"id":10,"action":"in","data":"6/trazeo_niño_1","location":{"latitude":37.89496104,"longitude":-4.78654327},"created_at":"2014-05-07T12:58:39+0200","updated_at":"2014-05-07T12:58:39+0200"}
+                    ,{"id":11,"action":"out","data":"6/trazeo_niño_1","location":{"latitude":37.89496104,"longitude":-4.78654327},"created_at":"2014-05-07T12:58:39+0200","updated_at":"2014-05-07T12:58:39+0200"}
                     ,{"id":9,"action":"point","data":"","location":{"latitude":37.89476429,"longitude":-4.7863204},"created_at":"2014-05-07T12:58:52+0200","updated_at":"2014-05-07T12:58:52+0200"}]
 	var fakeRequest=function(response){
 		switch(response.action){
