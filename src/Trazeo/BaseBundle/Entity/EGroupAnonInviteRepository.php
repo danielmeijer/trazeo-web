@@ -32,6 +32,7 @@
 			echo '<pre>';
 			print_r($ok);
 			echo '</pre>';
+			exit();
 
 			return $eGAI;
 		}	
