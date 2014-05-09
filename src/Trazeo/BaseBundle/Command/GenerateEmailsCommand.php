@@ -58,7 +58,7 @@ class GenerateEmailsCommand extends ContainerAwareCommand
     				$em->persist($not);
     				$em->flush();
     			}
-    			
+
     			$message = \Swift_Message::newInstance()
     			// TODO: Traducir
     			->setSubject("Tiene ".count($notifications)." novedades")

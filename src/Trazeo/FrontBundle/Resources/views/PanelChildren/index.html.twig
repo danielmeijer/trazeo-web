@@ -107,7 +107,7 @@
 							<h4 class="alert alert-warning">Código identificador</h4>
 							<p class="col-md-9 pull-left">El siguiente código es único y está asignado a tu niño/a <span class="alert-warning"><b>{{ child.nick }}</b></span>. 
 							Descárgalo haciendo click en él e imprímelo para que el monitor pueda registarlo en los paseos en marcha.</p>
-							<a download="Código_Identificador" href={{ qrcode_url(child.id, 'jpg', 110) }}>
+							<a download="Código_Identificador_{{ child.nick }}" href={{ qrcode_url(child.id, 'jpg', 110) }}>
 							<img style="margin-top:-20px;" class="pull-right" src="{{ qrcode_url(child.id, 'jpg', 110) }}" />
 							</a>
 							
