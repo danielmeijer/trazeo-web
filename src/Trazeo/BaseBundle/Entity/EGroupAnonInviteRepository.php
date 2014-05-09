@@ -26,13 +26,8 @@
 			->setSubject("Ha sido invitado al sistema de Trazeo")
 			->setFrom(array("info@trazeo.com" => "Trazeo"))
 			->setTo($userEmail)
-			->setBody($con->get('templating')->render('TrazeoFrontBundle:PanelGroups:email_invite.html.twig', array('link' => $link), 'text/html'));
+			->setBody($con->get('templating')->render('TrazeoFrontBundle:PanelGroups:email_invite.html.twig', array('link' => $link)), 'text/html');
 			$ok = $con->get('mailer')->send($message);
-			
-			echo '<pre>';
-			print_r($ok);
-			echo '</pre>';
-			exit();
 
 			return $eGAI;
 		}	
