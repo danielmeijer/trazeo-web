@@ -16,6 +16,7 @@
 {% for point in routePoints  %}
 <script>
 	var aux="new "+'{{ point.location }}'.replace(' ',',');
+	aux.pickUpText='{{ point.description }}';
 	points.push(eval(aux));
 </script>
 {%  endfor %}
@@ -84,7 +85,8 @@
         return cb(null, L.GeoJSON.geometryToLayer(geojson));
       });
     }
-    
+  	
+ 
     routing = new L.Routing({
       position: 'topleft'
       ,routing: {
@@ -105,7 +107,13 @@
     	    }
       }
     });
+ 	 //Routing plugin methods overrided 
+	routing._waypointClickHandler= function(e){
+		showPopUpMenu(e);
+	}  
     map.addControl(routing);
+		
+		
 
    
     
@@ -148,8 +156,9 @@
     	routing.draw(false);
     	
     	$("#enviar").removeAttr("disabled");
+    	$("#enviar").css('opacity','1');
     	$("#comenzar").on('click',map.enableRouting);
-    	$("#comenzar").html("Comenzar");
+    	$("#comenzar").html('<i class="fa fa-flag"></i>Comenzar');
 
     	return false;
     };
@@ -160,8 +169,9 @@
 		if(menu==null)routing.draw(true);
 
 		$("#enviar").attr("disabled","disabled");
+    	$("#enviar").css('opacity','0.7');
 		$("#comenzar").on('click',map.disableRouting);
-		$("#comenzar").html("Terminar");
+		$("#comenzar").html('<i class="fa fa-flag"></i>Terminar');
 		for(var marker in map._layers)if(map._layers[marker]._icon && map._layers[marker]._icon.className===icon)
 			map._layers[marker].on('contextmenu',showPopUpMenu);
 	
@@ -179,7 +189,7 @@
 	L.Map.prototype.loadFromEvents=function(events){
 		var i=0;
 		if(typeof poly==='undefined'){
-			poly=new L.polyline(events[i].latLng,{dashArray: "10, 20"});
+			poly=new L.polyline(events[i].latLng,{dashArray: "10, 20",color:"green"});
 			poly.addTo(map);
 			i++
 		}
@@ -206,6 +216,7 @@
 	    		routing._draw._trailer.setLatLngs([last.getLatLng(), latlng]);
 			}
 			marker.pickUp=waypoints[index].pickup;
+			if(marker.pickUp)map.createPickUpWaypoint(marker,waypoints[index].pickUpText);
 		}
 	};   	
 
@@ -253,11 +264,13 @@
     });
 	
 	//methods
-	L.Map.prototype.createPickUpWaypoint=function(marker){
+	L.Map.prototype.createPickUpWaypoint=function(marker,text){
 		if(marker._icon){
 			map.changeMarker(marker,'start');
 			marker.pickUp=true;
-			marker.pickUpText=$("#textRecogida").val();
+			if(text==='Cargando')text=" ";
+			marker.pickUpText=text;
+			marker._icon.title=text;
 		}	
 	};
 	
@@ -266,6 +279,7 @@
 			map.changeMarker(marker,'normal');
 			marker.pickUp=false;
 			marker.pickUpText=null;
+			marker._icon.title="";
 		}	
 	};	
 	
@@ -293,7 +307,7 @@
     		first=first.getLatLng();
     		geocoder.reverse(first, map.options.crs.scale(map.getZoom()), function(results) {
 				var r = results[0];
-				$("#finish").html("Empieza en: "+ r.name);
+				$("#start").html(r.name);
     		});
     	}
     	if(last){
@@ -304,14 +318,14 @@
     		last=last.getLatLng();
     		geocoder.reverse(last, map.options.crs.scale(map.getZoom()), function(results) {
 				var r = results[0];
-	    		$("#start").html("Termina en: "+ r.name);				    		
+	    		$("#finish").html(r.name);				    		
 	    	});
     	}
-    	if(first && last)$("#distance").html("Distancia: "+map.getDistance()+" m");
+    	if(first && last)$("#distance").html(map.getDistance()+" m");
     	$(".leaflet-marker-icon").on();
     	for(var marker in map._layers)if(map._layers[marker]._icon && map._layers[marker]._icon.className===icon)
         	map._layers[marker].on('contextmenu',showPopUpMenu);
-
+    	routing.rerouteAllSegments(function(){});
     };
     
 
@@ -340,18 +354,20 @@
     	
     	removeWaypoint: function(e){
            routing.removeWaypoint(this._marker, function(){});
+           routing.rerouteAllSegments(function(){});
            map.removeLayer(menu);
            stop(e);
     	},
 
     	pickUpWaypoint: function(e){
-        	map.createPickUpWaypoint(this._marker);
+        	map.createPickUpWaypoint(this._marker,$("#textRecogida").val());
             map.removeLayer(menu);
             stop(e);
         },
         
     	removePickUpWaypoint: function(e){
         	map.removePickUpWaypoint(this._marker);
+        	routing.rerouteAllSegments(function(){});
             map.removeLayer(menu);
             stop(e);
         },     
@@ -453,9 +469,15 @@
 
     	_reset: function () {
      	   // update layer's position
-      	  var pos = this._map.latLngToLayerPoint(this._latlng);
-     	   L.DomUtil.setPosition(this._el, pos);
-   	 }
+     	   if(this._latlng){
+      	  	var pos = map.latLngToLayerPoint(this._latlng);
+     	   	L.DomUtil.setPosition(this._el, pos);
+     	   }
+   	 	}
+   	 	,options: {
+   	 		autoZIndex: true
+      	}
+      
 	});
 
 
@@ -463,8 +485,9 @@
     
 	var showPopUpMenu=function(e){
 		if(menu!=null)return;
-		menu=new PopUpMenu(e.latlng,e.target);
-		map.addLayer(menu);
+		menu=new PopUpMenu(e.marker._latlng,e.marker);
+		map.setView(e.marker._latlng);
+		map.addLayer(menu,false);
 		$(".pop-up-menu").focus();
 		$(".pop-up-menu").css({'background':'grey'});
 	}
@@ -507,7 +530,7 @@
 							break;
 						}
 					}
-					map.eventManager.addTrazeoIcon(response[i-1]);
+					map.eventManager.updateTrazeoIcon(response[i-1]);
 				}
 			}
 			,error: function(XMLHttpRequest, textStatus, errorThrown)
@@ -528,24 +551,28 @@
 				else{
 					var point=new POINT(response.location.latitude,response.location.longitude);
 					if(typeof poly==='undefined'){
-						poly=new L.polyline(point.latLng,{dashArray: "10, 20"});	
+						poly=new L.polyline(point.latLng,{dashArray: "10, 20",color:"green"});	
 						poly.addTo(map);
 					}
 					
 					else poly.addLatLng(point.latLng);
-					//prueba
-					var point=new POINT(0,0);
-					poly.addLatLng(point.latLng);
 					timeFromLastUpdate=0;
 				}
 				
 			}
-		,addTrazeoIcon: function(response){
-			var htmlInner='<img class="img-responsive pull-left" width="25" height="25" src="/trazeo-web/web/images/trazeito.png" alt="Trazeo" title="Trazeo" style="position: absolute">';
-			var myIcon = L.divIcon({className: '',html: htmlInner});
-			var point=new POINT(response.location.latitude,response.location.longitude);
-			//add join child icon to map 
-			L.marker(point.latLng, {icon: myIcon}).addTo(map);	
+		,updateTrazeoIcon: function(response){
+			if($('.trazeo-map-icon').length==0){
+				var htmlInner='<img class="img-responsive pull-left" width="25" height="25" src="/trazeo-web/web/images/trazeito.png" alt="Trazeo" title="Trazeo" style="position: absolute">';
+				var myIcon = L.divIcon({className: 'trazeo-map-icon',html: htmlInner});
+				var point=new POINT(response.location.latitude,response.location.longitude);
+				//add join child icon to map 
+				trazeoMapMarker=L.marker(point.latLng, {icon: myIcon});
+				trazeoMapMarker.addTo(map);	
+			}
+			else{
+				var point=new POINT(response.location.latitude,response.location.longitude);
+				trazeoMapMarker.setLatLng(point.latLng)
+			}
 		}
 			
 		,joinChild:	function(response){
@@ -612,7 +639,7 @@
 			
 			var point=new POINT(response.location.latitude,response.location.longitude);
 			var lastPreviousPoint=poly.getLatLngs()[poly.getLatLngs().length-1];
-			poly=new L.polyline(point.latLng,{dashArray: "10, 20"});
+			poly=new L.polyline(point.latLng,{dashArray: "10, 20",color:"green"});
 			poly.addTo(map);
 			timeFromLastUpdate=0;
 
@@ -637,20 +664,9 @@
 		}
 	};
 	//Mapa tiempo real
-	L.Map.prototype.realTimeUpdate= function(points){
-			poly.setLatLngs(points);
-		}
-	
-	//Metodo de Prueba para el mapa en tiempo real
-	L.Map.prototype.generatePoint=function(){
-			var punto=map.options.center;
-			return punto;
-		}    
-
-	
 	if(realTime){
 	    if(events.length>0)map.loadFromEvents(events);
-		var dbRequest=setInterval(addLast,5000);
+		//var dbRequest=setInterval(addLast,5000);
 	}
 
 
@@ -660,4 +676,49 @@
     map.updateRouteInfo();
     map.disableRouting();
 
+
+
+
+
+
+    /*SIMULATE EVENT SENDER
+    var fakeEvents=[
+                    {"id":2,"action":"point","data":"","location":{"latitude":37.89613041,"longitude":-4.78772315},"created_at":"2014-05-07T12:57:44+0200","updated_at":"2014-05-07T12:57:44+0200"}
+                    ,{"id":3,"action":"point","data":"","location":{"latitude":37.89593041,"longitude":-4.78752310},"created_at":"2014-05-07T12:57:48+0200","updated_at":"2014-05-07T12:57:48+0200"}
+                    ,{"id":4,"action":"point","data":"","location":{"latitude":37.89573041,"longitude":-4.78732306},"created_at":"2014-05-07T12:57:58+0200","updated_at":"2014-05-07T12:57:58+0200"}
+                    ,{"id":5,"action":"point","data":"","location":{"latitude":37.89554544,"longitude":-4.7871335},"created_at":"2014-05-07T12:58:10+0200","updated_at":"2014-05-07T12:58:10+0200"}
+                    ,{"id":6,"action":"point","data":"","location":{"latitude":37.89534610,"longitude":-4.78692795},"created_at":"2014-05-07T12:58:20+0200","updated_at":"2014-05-07T12:58:20+0200"}
+                    ,{"id":7,"action":"point","data":"","location":{"latitude":37.89514747,"longitude":-4.78676005},"created_at":"2014-05-07T12:58:27+0200","updated_at":"2014-05-07T12:58:27+0200"}
+                    ,{"id":8,"action":"point","data":"","location":{"latitude":37.89496104,"longitude":-4.78654327},"created_at":"2014-05-07T12:58:39+0200","updated_at":"2014-05-07T12:58:39+0200"}
+                    ,{"id":10,"action":"in","data":"6/trazeo_niño_1","location":{"latitude":37.89496104,"longitude":-4.78654327},"created_at":"2014-05-07T12:58:39+0200","updated_at":"2014-05-07T12:58:39+0200"}
+                    ,{"id":9,"action":"point","data":"","location":{"latitude":37.89476429,"longitude":-4.7863204},"created_at":"2014-05-07T12:58:52+0200","updated_at":"2014-05-07T12:58:52+0200"}]
+	var fakeRequest=function(response){
+		switch(response.action){
+					case 'point':
+						map.eventManager.addPoint(response);
+						break;
+					case 'in':
+						map.eventManager.joinChild(response);
+						break;
+					case 'out':
+						map.eventManager.disjoinChild(response);
+						break;
+					case 'finish':
+						map.eventManager.finishRoute(response);
+						clearInterval(dbRequest);
+						break;
+					case 'report':
+						map.eventManager.addIssue(response);
+						break;
+					}
+		map.eventManager.updateTrazeoIcon(response);
+   };
+   fakeIndex=0;
+   setInterval(function(){
+	   					if(fakeIndex>fakeEvents.length-1)return;
+	   					console.log(fakeEvents[fakeIndex].action);
+	   					fakeRequest(fakeEvents[fakeIndex]);
+	   					fakeIndex++;
+   				},
+   				2000);*/
 </script>
