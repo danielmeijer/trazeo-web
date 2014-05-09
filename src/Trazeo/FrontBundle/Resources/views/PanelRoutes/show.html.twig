@@ -16,23 +16,39 @@
  	{% endblock %}
 {% block body_content %}
 
-		<div class="row">
-			<ul>			
-				<li id="finish">Empieza en:</li>
-				
-				<li id="start">Termina en:</li>
-				
-				<li >Descripción:</li>
-				
-				<li id="distance">Distancia:</li>
-			
-				<li>Niños: {{ cont }} apuntados en esta ruta</li>
-				
-				<li>Autor: {{ route.admin }}</li>
-			</ul>
-		</div>
+<div class="alert-warning">
+	<table class="table">
+		<tbody>
+			<tr>
+				<td><i class="fa fa-flag-o"></i></td>
+				<td>Empieza en </td>
+				<td id="start"></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-flag-checkered"></i></td>
+				<td>Termina en </td>
+				<td id="finish"></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-road"></i></td>
+				<td>Distancia </td>
+				<td id="distance"></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-user"></i></td>
+				<td>Niños</td>
+				<td>{{ cont }} apuntados en esta ruta</td>
+			</tr>	
+			<tr>
+				<td><i class="fa fa-key"></i></td>
+				<td>Autor</td>
+				<td>{{ route.admin }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
 
-		<h1>MAPA</h1>
+		<h3 class="alert alert-success"><i class="fa fa-map-marker"></i>&nbsp; Mapa de la ruta</h3>
 		{% for point in route.points %}
 			<input type="hidden" name="pickup{{ loop.index }}" value="false">
 			<input type="hidden" name="lat{{ loop.index }}" value="{{ point.location.latitude }}">
@@ -44,8 +60,9 @@
 			<input type="hidden" name="id" value="{{ route.id }}" />			
 			<input type="hidden" id="inputPoints" name="inputPoints" value="" />
 			<input type="hidden" id="distanceInput" name="distanceInput" value="" />
-			<button id="comenzar" type="button">Comenzar</button>
-			<button type="submit" id="enviar">Enviar</button>
+			<p>&nbsp;</p>
+			<button class="btn btn-default" id="comenzar" type="button">&nbsp; Comenzar</button>
+			<button class="btn btn-success" type="submit" id="enviar"><i class="fa fa-save"></i>&nbsp; Guardar</button>
 		</form>
 	
 		<div class="row">
