@@ -179,37 +179,42 @@ class ApiController extends Controller {
 		
 		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 		
-		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneBy(array("id" => $id_group, "admin" => $userextend->getId()));
+		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneBy(array("id" => $id_group));
+		$members = $group->getUserextendgroups()->toArray();
 		
-		// Si el grupo tiene Paseo asociado(está en marcha), devuelve el paseo
-		if($group->getHasRide() == 1 && $group->getRide() != null){
-			$array['id_ride'] = $group->getRide()->getId();
+		if(in_array($userextend, $members)){
+
+			// Si el grupo tiene Paseo asociado(está en marcha), devuelve el paseo
+			if($group->getHasRide() == 1 && $group->getRide() != null){
+				$array['id_ride'] = $group->getRide()->getId();
+				
+				$view = View::create()
+				->setStatusCode(200)
+				->setData($this->doOK($array));
+				
+				return $this->get('fos_rest.view_handler')->handle($view);
+			}
+			// Sino, se crea un paseo y se asocia al grupo
+			else{ 
+				$ride = new ERide();
+				//TODO: En la relación Group-Ride, evitar los dos set
+				$ride->setGroup($group);
+				//$ride->setGo(1);
+				$em->persist($ride);
+				$group->setHasRide(1);
+				$group->setRide($ride);
+				$em->persist($group);
+				$em->flush();
+				
+				$array['id_ride'] = $group->getRide()->getId();
+				
+				$view = View::create()
+				->setStatusCode(200)
+				->setData($this->doOK($array));
+				
+				return $this->get('fos_rest.view_handler')->handle($view);
+			}
 			
-			$view = View::create()
-			->setStatusCode(200)
-			->setData($this->doOK($array));
-			
-			return $this->get('fos_rest.view_handler')->handle($view);
-		}
-		// Sino, se crea un paseo y se asocia al grupo
-		else{ 
-			$ride = new ERide();
-			//TODO: En la relación Group-Ride, evitar los dos set
-			$ride->setGroup($group);
-			//$ride->setGo(1);
-			$em->persist($ride);
-			$group->setHasRide(1);
-			$group->setRide($ride);
-			$em->persist($group);
-			$em->flush();
-			
-			$array['id_ride'] = $group->getRide()->getId();
-			
-			$view = View::create()
-			->setStatusCode(200)
-			->setData($this->doOK($array));
-			
-			return $this->get('fos_rest.view_handler')->handle($view);
 		}
 		
 	}
