@@ -11,7 +11,6 @@
 	timeFromLastUpdate=0;
 	lastRoute=lastRoute.replace("0","");
 	lastId="0";
-	events.push(new POINT(0,0));
 </script>
 
 {% for point in routePoints  %}
@@ -180,7 +179,7 @@
 	L.Map.prototype.loadFromEvents=function(events){
 		var i=0;
 		if(typeof poly==='undefined'){
-			poly=new L.polyline(events[i].latLng);
+			poly=new L.polyline(events[i].latLng,{dashArray: "10, 20"});
 			poly.addTo(map);
 			i++
 		}
@@ -486,28 +485,30 @@
 			,success: function(response){
 				console.log(response);
 				if(response.length==0)timeFromLastUpdate+=30;
-				for(var i=0;i<response.length;i++){
-				lastId=response[i].id;
-				switch(response[i].action){
-					case 'point':
-						map.eventManager.addPoint(response[i]);
-						break;
-					case 'in':
-						map.eventManager.joinChild(response[i]);
-						break;
-					case 'out':
-						map.eventManager.disjoinChild(response[i]);
-						break;
-					case 'finish':
-						map.eventManager.finishRoute(response[i]);
-						clearInterval(dbRequest);
-						break;
-					case 'report':
-						map.eventManager.addIssue(response[i]);
-						break;
+				else{
+					for(var i=0;i<response.length;i++){
+					lastId=response[i].id;
+					switch(response[i].action){
+						case 'point':
+							map.eventManager.addPoint(response[i]);
+							break;
+						case 'in':
+							map.eventManager.joinChild(response[i]);
+							break;
+						case 'out':
+							map.eventManager.disjoinChild(response[i]);
+							break;
+						case 'finish':
+							map.eventManager.finishRoute(response[i]);
+							clearInterval(dbRequest);
+							break;
+						case 'report':
+							map.eventManager.addIssue(response[i]);
+							break;
+						}
 					}
+					map.eventManager.addTrazeoIcon(response[i-1]);
 				}
-				
 			}
 			,error: function(XMLHttpRequest, textStatus, errorThrown)
 			{
@@ -527,16 +528,26 @@
 				else{
 					var point=new POINT(response.location.latitude,response.location.longitude);
 					if(typeof poly==='undefined'){
-						poly=new L.polyline(point.latLng);
+						poly=new L.polyline(point.latLng,{dashArray: "10, 20"});	
 						poly.addTo(map);
 					}
 					
 					else poly.addLatLng(point.latLng);
+					//prueba
+					var point=new POINT(0,0);
+					poly.addLatLng(point.latLng);
 					timeFromLastUpdate=0;
 				}
 				
 			}
-
+		,addTrazeoIcon: function(response){
+			var htmlInner='<img class="img-responsive pull-left" width="25" height="25" src="/trazeo-web/web/images/trazeito.png" alt="Trazeo" title="Trazeo" style="position: absolute">';
+			var myIcon = L.divIcon({className: '',html: htmlInner});
+			var point=new POINT(response.location.latitude,response.location.longitude);
+			//add join child icon to map 
+			L.marker(point.latLng, {icon: myIcon}).addTo(map);	
+		}
+			
 		,joinChild:	function(response){
 			//tiempo de respuesta cortado 
 			if(timeFromLastUpdate>120)this.conexionLostHandler(response);
@@ -589,9 +600,9 @@
 				
 			var myIcon = L.divIcon({className: '',html: "<i class='fa fa-exclamation-circle fa-2x' id='"+response.id+"'></i>"});	
 			L.marker(point.latLng, {icon: myIcon}).addTo(map);
-			$("#"+response.id).css('cssText', 'color: yellow !important');
+			$("#"+response.id).css('cssText', 'color: red !important');
 
-			var finishHover=function(response){$("#"+this.id).append("<p style='color: yellow; font-size: 0.5em'>"+this.data+"</p>")}.bind(response);
+			var finishHover=function(response){$("#"+this.id).append("<p style='color: red; font-size: 0.5em'>"+this.data+"</p>")}.bind(response);
 			var clearFinishHover=function(response){$("#"+this.id).html('');}.bind(response);
 				
 			$("#"+response.id).hover(finishHover,clearFinishHover);
@@ -601,7 +612,7 @@
 			
 			var point=new POINT(response.location.latitude,response.location.longitude);
 			var lastPreviousPoint=poly.getLatLngs()[poly.getLatLngs().length-1];
-			poly=new L.polyline(point.latLng);
+			poly=new L.polyline(point.latLng,{dashArray: "10, 20"});
 			poly.addTo(map);
 			timeFromLastUpdate=0;
 

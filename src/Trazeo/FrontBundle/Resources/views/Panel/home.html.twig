@@ -262,23 +262,55 @@
 	<input type="hidden" id="group_ref" value="{{ path('panel_group')}}">
 	
 	<script type="text/javascript">
-		 switch(localStorage.getItem('tutorial')){
-		 case 'home':
-			 var loc=$(location).attr('href').toString();
+		 var prevent=function(e){e.preventDefault();}
+		 //styles on tutorial running 
+		 var tutorialRunning=function(){
 			 localStorage.setItem('tutorial','none');
-			 $('*').click(function(e){e.preventDefault();});
-			 $('body').on({'mousewheel': function(e) {
+			 $('*').click(prevent);
+			 $('body').on('mousewheel',function(e) {
 				     e.preventDefault();
 				     e.stopPropagation();
 				     }
-				 });
-			 $('#wrapper').css('opacity','0.25');			 
-			 			var trip = new Trip([
+				 );
+			 $('#wrapper').css('opacity','0.25');
+		 };
+		 //styles on tutorial stoped 
+		 var tutorialStoped=function(){
+    			 $('*').off("click", "*",prevent);
+    			 $('*').off('mousewheel');
+    			 $('#wrapper').css('opacity','1');
+    			 localStorage.setItem('tutorial','none');
+             };
+         //global options for tutotials
+         var options={
+                 		delay : 4000
+                 		,backToTopWhenEnded: true
+		    	    	,skipUndefinedTrip: true
+		    	    	,tripTheme: 'white'
+		    	    	,onTripStart: tutorialRunning
+		    	    	,onTripEnd: tutorialStoped
+		    	    	,onTripClose: tutorialStoped
+			    	    ,showCloseBox: true
+			    	    ,showNavigation : true
+			    	    ,prevLabel: "<i class='fa fa-backward fa-2x' style='color:#428bca !important'></i>"
+				    	,nextLabel: "<i class='fa fa-forward fa-2x' style='color:#428bca !important'></i>"
+					    ,finishLabel: "<i class='fa fa-stop fa-2x' style='color:#428bca !important'></i>"
+					    ,closeBoxLabel: "<i class='fa fa-sign-out' style='color:#428bca !important'>saltar</i>"
+						
+		    		};
+ 		
+ 		 //switch between diferents tutorials 
+		 switch(localStorage.getItem('tutorial')){
+		 case 'home':
+			 var loc=$(location).attr('href').toString();
+			 //global options customize 
+					 			var trip = new Trip([
 		    	                     { 
-		       	                     	 sel : $('b'),
-		       	                         content : 'Bienvenido a Trazeo, a continuación te explicaré las funciones basicas',
-		       	                         position: 'e',
-		       	                      	 callback: function(){$(location).attr('href',loc+"#childs")}
+			    	                     
+		       	                     	 sel : $('b')
+		       	                         ,content : 'Bienvenido a Trazeo, a continuación te explicaré las funciones basicas'
+		       	                         ,position: 'e'
+		       	                      	 ,callback: function(){$(location).attr('href',loc+"#childs")}
 		       	                     },
 		   	                         { 
 		   	                             sel : $('.resumeChilds'),
@@ -300,29 +332,19 @@
 		   	                          	 
 		   	                         },
 		      	                    { 
-	        	                    	 sel : $('b'),
-	        	                         content : 'Aqui termina nuestro paseo por Trazeo, disfruta de la aplicación',
-	        	                         position: 'e',
-	        	                         callback: function(){
-	        	                			 $('*').off();
-	        	                			 $('#wrapper').css('opacity','1');
-	        	                			 localStorage.setItem('tutorial','none');
-	        	                         }
-	        	                        
+	        	                    	 sel : $('b')
+	        	                         ,content : 'Aqui termina nuestro paseo por Trazeo, disfruta de la aplicación'
+	        	                         ,position: 'e'
+		        	                     ,canGoNext: 'false'
+			        	                 ,finishLabel: 'Saber más'
+				        	             ,callback: function(){localStorage.setItem('tutorial','child');}
 	        	                     }
-		  	            	   	],//options 
-		 	               		{
-		    	    		 		delay : 6000,
-		    	    		 		//skipUndefinedTrip: false
-		    	    		 		tripTheme: 'white'
-		    	    		 		,backToTopWhenEnded:true
-		    					}
-		 				);
+		  	            	   	],
+		  	            	   	options);
 					trip.start();
 					break;
 
 		 case 'child':
-			 localStorage.setItem('tutorial','none');
 			 var trip = new Trip([
 		    	                     { 
 		       	                     	 sel : $('b'),
@@ -374,17 +396,11 @@
 		                            	 	window.location.replace(url);
 		                                 }
 		                         	}
-		  	            	   	],//options 
-		 	               		{
-		    	    		 		delay : 2500,
-		    	    		 		skipUndefinedTrip: true
-		    	    		 		//tripTheme: 'white'
-		    					}
-		 				);
+		  	            	   	],
+		  	            	   	options);
 					trip.start();
 					break;
 		 case 'groups':
-			 localStorage.setItem('tutorial','none');
 	   		 var trip = new Trip([
 	   	                         { 
 	   	                             sel : $('.fa-users.fa-2x'),
@@ -397,14 +413,12 @@
 	   	                            	 	window.location.replace(url);
 	   	                                 }
 	   	                         }
-	   	                      ], {
-	   	        					 delay : 2500,
-	   	        					 skipUndefinedTrip: true
-	   	    				});
+	   	                         
+	   	                      	 ],
+	   	                      	 options);
 	   				trip.start();
 	   				break;
 		 case 'routes':
-			 localStorage.setItem('tutorial','none');
 	  		 var trip = new Trip([
 	  	                         { 
 	  	                             sel : $('.fa-location-arrow.fa-2x'),
@@ -417,24 +431,19 @@
 	  	                            	 	window.location.replace(url);
 	  	                                 }
 	  	                         }
-	  	                      ], {
-	  	        					 delay : 2500,
-	  	        					 skipUndefinedTrip: true
-	  	    				});
+	  	                      	],
+	  	                      	options);
 	  				trip.start();
 	  				break;
 		 case 'last':
-			 localStorage.setItem('tutorial','none');
 	   		 var trip = new Trip([
 	      	                     { 
 	        	                     	 sel : $('b'),
 	        	                         content : 'Aqui termina nuestro paseo por Trazeo, disfruta de la aplicación',
 	        	                         position: 'e'
 	        	                     }
-	                       ], {
-	         					 delay : 2500,
-	         					 skipUndefinedTrip: true
-	     				});
+	                       		],
+	                       		options);
 	 			trip.start();
 	 			break;	
 		 }
