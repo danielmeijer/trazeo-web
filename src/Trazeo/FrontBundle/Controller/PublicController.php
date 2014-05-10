@@ -118,22 +118,7 @@ class PublicController extends Controller
     		$user->setEnabled(1);
     		
     		$em->persist($user);
-    		$em->flush();
-    		
-    		// Creamos el UserExtend
-    		/*
-    		$userExtend = new UserExtend();
-    		$userExtend->setNick($inviterow->getEmail());
-    		$userExtend->setTutorial(0);
-    		$userExtend->setUser($user);
-    		$em->persist($userExtend);
-    		$em->flush();
-    		
-    		// Terminamos de guardar la relación con User
-    		$user->setUserExtend($userExtend);
-    		$em->persist($user);
-    		$em->flush();
-    		*/    		
+    		$em->flush();		
 
     		// Creamos la invitación
     		$not = $this->container->get('sopinet_user_notification');
@@ -144,9 +129,11 @@ class PublicController extends Controller
     				$this->generateUrl('panel_group'), $user
     		);
     			
+			$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+
     		$access = new EGroupInvite();
     		$access->setGroup($inviterow->getGroup());
-    		$access->setUserextend($user->getUserExtend());
+    		$access->setUserextend($userextend);
     		
     		$em->persist($access);
     		$em->flush();
@@ -161,10 +148,9 @@ class PublicController extends Controller
     		$this->get("event_dispatcher")->dispatch("security.interactive_login", $event);    		
     		
     		$container = $this->get('sopinet_flashMessages');
-    		$notification = $container->addFlashMessages("success","¡Bienvenido a Trazeo!");
+    		$notification = $container->addFlashMessages("success","¡Bienvenido! Acepta la invitación al Grupo y comienza a usar Trazeo");
     		//return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
-    		return $this->redirect($this->generateUrl('panel_dashboard'));
-    		// TODO: Crear un Usuario y redirigir 	
+    		return $this->redirect($this->generateUrl('panel_group')); 	
     	} else {
 			die("Error");
     	}
