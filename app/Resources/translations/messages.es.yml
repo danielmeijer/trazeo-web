@@ -323,6 +323,9 @@ security:
         username: 'Nombre de usuario:'
         
 Ride:
+    current:
+        title: Paseo en marcha 
+        description: Puedes ver en tiempo real el recorrido de esta ruta y consultar todos sus datos
     yes:
         title: Hay paseos en marcha
         description: Los siguientes grupos están en marcha y tienes ninos apuntados en ellos
