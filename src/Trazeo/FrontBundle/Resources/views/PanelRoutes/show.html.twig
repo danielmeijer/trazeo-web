@@ -110,30 +110,30 @@
 	
 	<script type="text/javascript" src="{{ asset_url }}"></script>
 	<script>
-	var prevent=function(e){e.preventDefault();}
-		 //styles on tutorial running 
-		 var tutorialRunning=function(){
+	var running=0;
+	 var prevent=function(e){
+		 if(running==1){
+		 e.preventDefault();
+		 e.stopPropagation();
+		 }
+	 }
+	 //styles on tutorial running 
+	 var tutorialRunning=function(){
+		 running=1;
+		 localStorage.setItem('tutorial','none');
+		 $('*').click(prevent);
+		 $('body').on('mousewheel',prevent);
+	 };
+	 //styles on tutorial stoped 
+	 var tutorialStoped=function(){
+		     running=0;
 			 localStorage.setItem('tutorial','none');
-			 $('*').click(prevent);
-			 $('body').on('mousewheel',function(e) {
-				     e.preventDefault();
-				     e.stopPropagation();
-				     }
-				 );
-			 $('#wrapper').css('opacity','0.25');
-		 };
-		 //styles on tutorial stoped 
-		 var tutorialStoped=function(){
-    			 $('*').off("click", "*",prevent);
-    			 $('*').off('mousewheel');
-    			 $('#wrapper').css('opacity','1');
-    			 //localStorage.setItem('tutorial','none');
-             };
+         };
+
          //global options for tutotials
          var options={
                  		delay : 4000
-                 		,backToTopWhenEnded: true
-		    	    	,skipUndefinedTrip: true
+		    	    	,skipUndefinedTrip: false
 		    	    	,tripTheme: 'white'
 		    	    	,onTripStart: tutorialRunning
 		    	    	,onTripEnd: tutorialStoped
@@ -156,7 +156,7 @@
 	       	                         ,content : 'Bienvenido al sistema de creación de rutas'
 	       	                         ,position: 'e'
 			   	                     ,showNavigation: true
-	       	                         ,callback: function(){$('#comenzar').on("click",trip.next.bind(trip));} 
+	       	                         ,callback: function(){$('#comenzar').one("click",trip.next.bind(trip))} 
 	       	                     },
 	   	                         { 
 	   	                             sel : $('#comenzar')
@@ -165,8 +165,7 @@
 		   	                         ,canGoNext: true
 		   	                         ,delay: -1
 		       	                     ,callback: function(){
-			       	                    	$('#comenzar').off("click", "#comenzar");
-				       	                    $('#mapa').on("click",trip.next.bind(trip));
+				       	                    $('#mapa').one("click",trip.next.bind(trip));
 				       	                    }
 		   	                         		   	                         
 	       	                     },
@@ -178,22 +177,31 @@
 			   	                     ,canGoNext: false
 			   	                     ,canGoPrev: false
 			   	                     ,callback: function(){
-			       	                    	$('#mapa').off("click", "#mapa");
-				       	                    $('.leaflet-marker-icon').on("click",trip.next.bind(trip);
+				       	                    setTimeout(function(){$('.leaflet-marker-icon').one("click",trip.next.bind(trip))},300);
 				   	                     }
 	   	                         },
 	   	                         { 
 	   	                             sel : $('#mapa')
 	   	                             ,content : 'Haz click en los marcadores que indican los puntos para editar sus opciones'
 	   	                             ,position: 'n'
-		   	                         ,delay: -1	   	                             
+		   	                         ,delay: -1	   	                  
+			   	                     ,callback: function(){
+				       	                    setTimeout(function(){$('.pop-up-menu >button').one("click",trip.next.bind(trip))},300);
+				   	                     }
 	   	                         },
-	      	                    { 
+	   	                         { 
+	   	                             sel : $('#mapa')
+	   	                             ,content : 'Puedes editar las opciones de los puntos'
+	   	                             ,position: 'n'
+		   	                         ,delay: -1	   	                  
+		   	                         ,callback: function(){$('#comenzar').one("click",trip.next.bind(trip))}
+	   	                         },
+	   	                         { 
         	                    	 sel : $('#comenzar')
         	                         ,content : 'Haz click en terminar cuando ya tengas la ruta definida'
         	                         ,position: 'e'
             	                     ,delay: -1
-        	                     }
+	       	                    }
         	                     ,
         	                     { 
         	                    	 sel : $('#enviar')
