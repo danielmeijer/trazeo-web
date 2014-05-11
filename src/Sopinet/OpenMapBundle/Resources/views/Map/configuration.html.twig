@@ -353,8 +353,8 @@
     	},
     	
     	removeWaypoint: function(e){
-           routing.removeWaypoint(this._marker, function(){});
-           routing.rerouteAllSegments(function(){});
+           routing.removeWaypoint(this._marker, function(){routing._draw.disable()});
+           if(routing.getWaypoints().length>0)routing.rerouteAllSegments(function(){});
            map.removeLayer(menu);
            stop(e);
     	},
@@ -396,13 +396,13 @@
 			if(!this._marker.pickUp || this._marker.pickUp==false){ 
 				recogida.html("Crear punto de recogida");
 				var pickUp=this.pickUpWaypoint.bind(this);
-				recogida.on('click',pickUp);
+				recogida.one('click',pickUp);
 			
 			}
 			else{
 				recogida.html("Eliminar punto de recogida");
 				var pickUp=this.removePickUpWaypoint.bind(this);
-				recogida.on('click',pickUp);
+				recogida.one('click',pickUp);
 			}	
 
 			if(!this._marker.pickUp || this._marker.pickUp==false){ 
@@ -430,7 +430,7 @@
 	
 
 			var erase=this.removeWaypoint.bind(this);
-			borrar.on('click',erase);
+			borrar.one('click',erase);
 
 			var c=document.createElement("button");	
 			c.id="cancelar";
@@ -441,7 +441,7 @@
 			cancelar.html("Cancelar Acción");
 
 			var cancel=this.cancelMenu.bind(this);
-			cancelar.on('click',cancel);
+			cancelar.one('click',cancel);
 			
 			recogida.appendTo($(".pop-up-menu"));
 			if(!this._marker.pickUp || this._marker.pickUp==false)text.appendTo($(".pop-up-menu"));
