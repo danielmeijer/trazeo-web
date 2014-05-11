@@ -559,7 +559,7 @@
 			}
 		,updateTrazeoIcon: function(response){
 			if($('.trazeo-map-icon').length==0){
-				var htmlInner='<img class="img-responsive pull-left" width="25" height="25" src="/trazeo-web/web/images/trazeito.png" alt="Trazeo" title="Trazeo" style="position: absolute">';
+				var htmlInner='<img class="img-responsive pull-left" width="25" height="25" src="../../../../images/trazeito.png" alt="Trazeo" title="Trazeo" style="position: absolute">';
 				var myIcon = L.divIcon({className: 'trazeo-map-icon',html: htmlInner});
 				var point=new POINT(response.location.latitude,response.location.longitude);
 				//add join child icon to map 
@@ -663,7 +663,7 @@
 	//Mapa tiempo real
 	if(realTime){
 	    if(events.length>0)map.loadFromEvents(events);
-		//var dbRequest=setInterval(addLast,5000);
+		var dbRequest=setInterval(addLast,5000);
 	}
 
 
