@@ -57,7 +57,6 @@ class ProfileController extends Controller
 	{
 		$sup = $this->container->get('sopinet_user_notification');
 		$notifications = $sup->getAllNotifications();
-
 		return array('notifications' => $notifications);
 	}
 	
