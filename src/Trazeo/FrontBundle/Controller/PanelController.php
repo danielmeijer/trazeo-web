@@ -42,11 +42,7 @@ class PanelController extends Controller
 	    	$user->setTutorial(1);
 	    	$em->persist($user);
 	    	$em->flush();
-	    	//ver tutorial
-	    	// TODO: Temporalmente desactivo el tutorial (Fernando), lo hago porque hay un fallo al terminar
-	    	// el mismo que no te permite clicar en ningún sitio, y es poco usable
-	    	// cuando se arregle ese fallo lo activamos de nuevo, poniendo tutorial = 1
-	    	$tutorial = 0;
+	    	$tutorial = 1;
 	    }
 	
 	   	return array(
