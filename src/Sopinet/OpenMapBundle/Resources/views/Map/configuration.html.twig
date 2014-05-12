@@ -63,10 +63,11 @@
       attribution: 'overlay &copy; <a target="_blank" href="http://hiking.waymarkedtrails.org">Waymarked Trails</a> '
               + '(<a target="_blank" href="http://creativecommons.org/licenses/by-sa/3.0/de/deed.en">CC-BY-SA 3.0 DE</a>)'
     });
-
+	if(points.length>1)var center=points[0].latLng;
+	else center=new L.LatLng(37.8938548, -4.788015299999984)
     map = new L.Map('mapa', {
       layers: [osm]
-      ,center: new L.LatLng(37.8938548, -4.788015299999984)
+      ,center: center
       ,zoom: 16
       ,scrollWheelZoom: false
     });
@@ -225,28 +226,28 @@
 	$("form").submit(function(){
     	//create input
     	var pointList="";
-    	if(document.getElementById("inputPoints")==null){
+    	/*if(document.getElementById("inputPoints")==null){
         	var lat=document.createElement("INPUT");
            	lat.id="inputPoints";
            	lat.name="inputPoints";
            	lat.type="hidden";
            	document.getElementById("form").appendChild(lat);  
-    	}
+    	}*/
     	
-    	if(document.getElementById("distanceInput")==null){
+    	/*if(document.getElementById("distanceInput")==null){
         	var dist=document.createElement("INPUT");
            	dist.id="distanceInput";
            	dist.name="distanceInput";
            	dist.type="hidden";
            	document.getElementById("form").appendChild(dist);  
-    	}
+    	}*/
     	
-    	if(routing.getLast()&&routing.getLast().pickUp==false){
+    	if((routing.getLast()&&routing.getLast().pickUp==false)|| typeof routing.getLast().pickUp==='undefined'){
     		routing.getLast().pickUp=true;
         	routing.getLast().pickUpText="Punto fin";    		
         }
         
-    	if(routing.getFirst()&&routing.getFirst().pickUp==false){
+    	if((routing.getFirst()&&routing.getFirst().pickUp==false)|| typeof routing.getFirst().pickUp==='undefined'){
         	routing.getFirst().pickUp=true;
         	routing.getFirst().pickUpText="Punto inicio";
 		}
@@ -492,7 +493,6 @@
 			menu=new PopUpMenu(e.latlng,e.target);
 			map.setView(e.latlng);
 		}
-		
 		map.addLayer(menu,false);
 		$(".pop-up-menu").focus();
 		$(".pop-up-menu").css({'background':'grey'});
@@ -591,9 +591,10 @@
 			L.marker(point.latLng, {icon: myIcon}).addTo(map);
 			$("#"+response.id).css('cssText', 'color: green !important');
 			//function for show name on hover 
-			var nameChild=function(response){$("#"+this.id).append("<p style='color: green; font-size: 0.5em'>"+this.data.split('/')[1]+"</p>")}.bind(response);
-			var clearChildName=function(response){$("#"+this.id).html('');}.bind(response);
-			$("#"+response.id).hover(nameChild,clearChildName);
+			//var nameChild=function(response){$("#"+this.id).append("<p style='color: green; font-size: 0.5em'>"+this.data.split('/')[1]+"</p>")}.bind(response);
+			//var clearChildName=function(response){$("#"+this.id).html('');}.bind(response);
+			//$("#"+response.id).hover(nameChild,clearChildName);
+			$("#"+response.id).attr('title',response.data.split('/')[1]);
 		}
 		
 		,disjoinChild:	function(response){
@@ -605,9 +606,11 @@
 			L.marker(point.latLng, {icon: myIcon}).addTo(map);
 			$("#"+response.id).css('cssText', 'color: red !important');
 			//function for show name on hover 
-			var nameChild=function(response){$("#"+this.id).append("<p style='color: red; font-size: 0.5em'>"+this.data.split('/')[1]+"</p>")}.bind(response);
-			var clearChildName=function(response){$("#"+this.id).html('');}.bind(response);
-			$("#"+response.id).hover(nameChild,clearChildName);
+			//var nameChild=function(response){$("#"+this.id).append("<p style='color: red; font-size: 0.5em'>"+this.data.split('/')[1]+"</p>")}.bind(response);
+			//var clearChildName=function(response){$("#"+this.id).html('');}.bind(response);
+			//$("#"+response.id).hover(nameChild,clearChildName);
+			$("#"+response.id).attr('title',response.data.split('/')[1]);
+			
 		}
 		
 		,finishRoute:	function(response){
@@ -619,10 +622,10 @@
 			var myIcon = L.divIcon({className: '',html: "<i class='fa fa-flag fa-2x' id='"+response.id+"'></i>"});	
 			L.marker(point.latLng, {icon: myIcon}).addTo(map);
 			$("#"+response.id).css('cssText', 'color: green !important');
-			var finishHover=function(response){$("#"+this.id).append("<p style='color: green; font-size: 0.5em'>final de ruta</p>")}.bind(response);
-			var clearFinishHover=function(response){$("#"+this.id).html('');}.bind(response);
+			//var finishHover=function(response){$("#"+this.id).append("<p style='color: green; font-size: 0.5em'>final de ruta</p>")}.bind(response);
+			//var clearFinishHover=function(response){$("#"+this.id).html('');}.bind(response);
 				
-			$("#"+response.id).hover(finishHover,clearFinishHover);
+			$("#"+response.id).attr('title',response.data.split('/')[1]);
 		}
 		
 		,addIssue:	function(response){
@@ -635,10 +638,10 @@
 			L.marker(point.latLng, {icon: myIcon}).addTo(map);
 			$("#"+response.id).css('cssText', 'color: red !important');
 
-			var finishHover=function(response){$("#"+this.id).append("<p style='color: red; font-size: 0.5em'>"+this.data+"</p>")}.bind(response);
-			var clearFinishHover=function(response){$("#"+this.id).html('');}.bind(response);
+			//var finishHover=function(response){$("#"+this.id).append("<p style='color: red; font-size: 0.5em'>"+this.data+"</p>")}.bind(response);
+			//var clearFinishHover=function(response){$("#"+this.id).html('');}.bind(response);
 				
-			$("#"+response.id).hover(finishHover,clearFinishHover);
+			$("#"+response.id).attr('title',response.data.split('/')[1]);
 		}
 		
 		,conexionLostHandler: function(response){
@@ -655,18 +658,21 @@
 			L.marker(lastPreviousPoint, {icon: myIcon}).addTo(map);
 			$("#"+response.id).css('cssText', 'color: red !important');
 			//function for show alert on hover 
-			var hover=function(response){$("#"+this.id).append("<p style='color: red; font-size: 0.5em'>En este punto se perdio la conexión</p>")}.bind(response);
-			var clearHover=function(response){$("#"+this.id).html('');}.bind(response);
-			$("#"+response.id).hover(hover,clearHover);
-
+			//var hover=function(response){$("#"+this.id).append("<p style='color: red; font-size: 0.5em'>En este punto se perdio la conexión</p>")}.bind(response);
+			//var clearHover=function(response){$("#"+this.id).html('');}.bind(response);
+			//$("#"+response.id).hover(hover,clearHover);
+			$("#"+response.id).attr('title',response.data.split('/')[1]);
+			
 
 			var myIcon = L.divIcon({className: '',html: "<i class='fa fa-minus-circle fa-2x' id='"+response.id+"_conexion'></i>"});	
 			L.marker(lastPreviousPoint, {icon: myIcon}).addTo(map);
 			$("#"+response.id+'_conexion').css('cssText', 'color: red !important');
 			//function for show name on hover 
-			var hover=function(response){$("#"+this.id+'_conexion').append("<p style='color: red; font-size: 0.5em'>En este punto se recupero la conexión</p>")}.bind(response);
-			var clearHover=function(response){$("#"+this.id+'_conexion').html('');}.bind(response);
-			$("#"+response.id+'_conexion').hover(hover,clearHover);
+			//var hover=function(response){$("#"+this.id+'_conexion').append("<p style='color: red; font-size: 0.5em'>En este punto se recupero la conexión</p>")}.bind(response);
+			//var clearHover=function(response){$("#"+this.id+'_conexion').html('');}.bind(response);
+			//$("#"+response.id+'_conexion').hover(hover,clearHover);
+			$("#"+response.id).attr('title',response.data.split('/')[1]);
+			
 		}
 	};
 	//Mapa tiempo real
@@ -698,7 +704,9 @@
                     ,{"id":8,"action":"point","data":"","location":{"latitude":37.89496104,"longitude":-4.78654327},"created_at":"2014-05-07T12:58:39+0200","updated_at":"2014-05-07T12:58:39+0200"}
                     ,{"id":10,"action":"in","data":"6/trazeo_niño_1","location":{"latitude":37.89496104,"longitude":-4.78654327},"created_at":"2014-05-07T12:58:39+0200","updated_at":"2014-05-07T12:58:39+0200"}
                     ,{"id":11,"action":"out","data":"6/trazeo_niño_1","location":{"latitude":37.89496104,"longitude":-4.78654327},"created_at":"2014-05-07T12:58:39+0200","updated_at":"2014-05-07T12:58:39+0200"}
-                    ,{"id":9,"action":"point","data":"","location":{"latitude":37.89476429,"longitude":-4.7863204},"created_at":"2014-05-07T12:58:52+0200","updated_at":"2014-05-07T12:58:52+0200"}]
+                    ,{"id":9,"action":"point","data":"","location":{"latitude":37.89476429,"longitude":-4.7863204},"created_at":"2014-05-07T12:58:52+0200","updated_at":"2014-05-07T12:58:52+0200"}
+    				,{"id":12,"action":"point","data":"","location":{"latitude":37.89306429,"longitude":-4.7852204},"created_at":"2014-05-07T12:58:52+0200","updated_at":"2014-05-07T12:58:52+0200"}]
+    
 	var fakeRequest=function(response){
 		switch(response.action){
 					case 'point':
