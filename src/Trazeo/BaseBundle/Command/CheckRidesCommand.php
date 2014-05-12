@@ -35,6 +35,9 @@ class CheckRidesCommand extends ContainerAwareCommand
     	$rides = $em->getRepository("TrazeoBaseBundle:ERide")->findByGroupid(null);
     	
     	foreach($rides as $ride){
+    		
+    		
+    		/*
     		//Ordenar los eventos de cada grupo
     		$reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
     		 
@@ -52,22 +55,20 @@ class CheckRidesCommand extends ContainerAwareCommand
 	
 	    	$output->writeln('<info>Revisando si el último evento creado fue hace más de 5min....</info>');
 	    	$output->writeln('<info>Eliminando...</info>');
-	    	
+	    	*/
 	    	// Current datetime
 	    	$dateCurrent = new \DateTime();
 	
 	    	$now = $dateCurrent->getTimestamp();
 	    	
+	    	$rideupdated = $ride->getUpdatedAt()->getTimestamp();
+
 	    	// Nº de minutos en formato timestamp(5min = 300)
-	    	$minutes = $now - $lastEventTimestamp;
-	    	
-	 		$rideId = $lastEvent->getRide()->getId();
-	 		$ride = $em->getRepository("TrazeoBaseBundle:ERide")->find($rideId);
+	    	$minutes = $now - $rideupdated;
+
 	 		$rideGroup = $ride->getGroup();
 	 		
-	 		//ldd($minutes);
 	 		if($minutes >= 300 && $rideGroup != null){
-	 			
 	 			// Detener el paseo del grupo
 	 			$rideGroup->setHasRide(0);
 	 			
@@ -100,6 +101,7 @@ class CheckRidesCommand extends ContainerAwareCommand
 	 			$output->writeln('<fg=yellow>No hay ningún paseo que detener</fg=yellow>');
 	 		}
     	}
+    	
     	$output->writeln('<info>Hecho</info>');
     }
 }
