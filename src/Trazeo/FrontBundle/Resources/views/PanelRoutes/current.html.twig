@@ -1,7 +1,3 @@
-{% set activeMenu = "route" %}
-{% set pageheader_title = "Ride.current.title"|trans %}
-{% set pageheader_description = "Ride.current.description"|trans %}
-
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
 	{% block css %}
@@ -38,49 +34,30 @@
 			<tr>
 				<td><i class="fa fa-user"></i></td>
 				<td>Niños</td>
-				<td> apuntados en esta ruta</td>
-			</tr>
-			{% if route is defined %}	
+				<td>{{ cont }} apuntados en esta ruta</td>
+			</tr>	
 			<tr>
 				<td><i class="fa fa-key"></i></td>
 				<td>Autor</td>
 				<td>{{ route.admin }}</td>
 			</tr>
-			{% endif %}
 		</tbody>
 	</table>
 </div>
 
 		<h3 class="alert alert-success"><i class="fa fa-map-marker"></i>&nbsp; Mapa del paseo</h3>
-		<div id="mapa" class="col-md-12"></div>
-		{% if route is defined %}
-			{% if sponsors|length() > 0 %}
-				<div class="col-md-12">
-					<h3 class="alert alert-success"><i class="fa fa-shield"></i>&nbsp; {{ 'Sponsors.current'|trans }}</h3>
-					<br />
-					{%  for sponsor in sponsors %}
-					<div class="col-md-3">
-						<p class="alert-warning">{{ sponsor.Nick }}</p>
-						<img class="img-responsive" src='{{ sponsor.Image }}'/>
-					</div>
-					{% endfor %}
-				</div>
-			{% else %}
-			<div class="col-md-12">
-					<h3 class="alert alert-success"><i class="fa fa-shield"></i>&nbsp; Patrocina este paseo</h3>
-					<div class="alert alert-warning">
-						<i class="fa fa-envelope"></i>&nbsp; Escríbenos un email a &nbsp;<a class="btn btn-warning btn-xs btn-outline" href="mailto:info@trazeo.es">info@trazeo.es</a>
-					</div>
-			</div>
-			 {% endif %}
-		{% endif %}
-		<p>&nbsp;</p>
-
-		
-				
+		{% for point in route.points %}
+			<input type="hidden" name="pickup{{ loop.index }}" value="false">
+			<input type="hidden" name="lat{{ loop.index }}" value="{{ point.location.latitude }}">
+			<input type="hidden" name="lng{{ loop.index }}" value="{{ point.location.longitude }}">
+		{% endfor %}
+            
+        {% for group in route.groups %}
+        	{{ group.name }}
+        {% endfor %}
         <script type="text/javascript">
-        var lastId=0;
-        var lastRoute="{{ path('panel_ride_lasts', {'id': ride.id,'lastid': 0}) }}";
+        var lastRoute="{{ path('panel_route_last') }}";
+
     	</script>
 {% endblock %}
 		
@@ -99,12 +76,7 @@
 		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Edit.js'
 		'@SopinetOpenMapBundle/Resources/public/js/plugins/Control.Geocoder/Control.Geocoder.js'
 	%}
-	
 	<script type="text/javascript" src="{{ asset_url }}"></script>
 	{% endjavascripts %}
-		{% if route is defined %}
-			{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': route.points,'editable': "false", 'realTime': "true", 'rideEvents': ''} %}
-		{% else %}
-			{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'editable': "false", 'realTime': "true", 'rideEvents': ''} %}
-		{% endif %}
+	{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': "",'editable': "false", 'realTime': "true"} %}
 {% endblock %}

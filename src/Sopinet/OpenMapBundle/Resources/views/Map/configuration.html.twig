@@ -13,13 +13,15 @@
 	lastId="0";
 </script>
 
-{% for point in routePoints  %}
-<script>
-	var aux="new "+'{{ point.location }}'.replace(' ',',');
-	aux.pickUpText='{{ point.description }}';
-	points.push(eval(aux));
-</script>
-{%  endfor %}
+{% if routePoints is defined %}
+	{% for point in routePoints  %}
+	<script>
+		var aux="new "+'{{ point.location }}'.replace(' ',',');
+		aux.pickUpText='{{ point.description }}';
+		points.push(eval(aux));
+	</script>
+	{%  endfor %}
+{% endif %}
 
 
 
