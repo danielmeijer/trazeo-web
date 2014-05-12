@@ -40,7 +40,9 @@ class PanelRidesController extends FOSRestController
     	$groupId = $ride->getGroup()->getId();
     	$group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneById($groupId);
     	
-    	if($routeId = $group->getRoute()->getId()){
+    	if($group->getRoute() == true){
+    		
+    		$routeId = $group->getRoute()->getId();
     		
     		$route = $em->getRepository('TrazeoBaseBundle:ERoute')->findOneById($routeId);
     		 
