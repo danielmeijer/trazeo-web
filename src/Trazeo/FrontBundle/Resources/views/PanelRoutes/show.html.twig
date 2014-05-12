@@ -49,12 +49,7 @@
 </div>
 
 		<h3 class="alert alert-success"><i class="fa fa-map-marker"></i>&nbsp; Mapa del paseo</h3>
-		{% for point in route.points %}
-			<input type="hidden" name="pickup{{ loop.index }}" value="false">
-			<input type="hidden" name="lat{{ loop.index }}" value="{{ point.location.latitude }}">
-			<input type="hidden" name="lng{{ loop.index }}" value="{{ point.location.longitude }}">
-			<input type="hidden" name="description{{ loop.index }}" value="{{ point.description }}">
-		{% endfor %}
+
 		<form method="post" action={{ path('panel_save_map') }} id="form">
 			<div id="mapa" class="col-md-12"></div>
 			<input type="hidden" name="id" value="{{ route.id }}" />			
@@ -109,93 +104,96 @@
 	%}
 	
 	<script type="text/javascript" src="{{ asset_url }}"></script>
+	{% if tutorialmap == 1 %}
+	<!-- Enable Tutorial -->
+	<script type="text/javascript">
+		localStorage.setItem('tutorial','map');
+	</script>
+	{% endif %}
 	<script>
 	var running=0;
-	 var prevent=function(e){
+	var prevent=function(e){
 		 if(running==1){
 		 e.preventDefault();
 		 e.stopPropagation();
 		 }
 	 }
-	 //styles on tutorial running 
-	 var tutorialRunning=function(){
+	//styles on tutorial running 
+	var tutorialRunning=function(){
 		 running=1;
 		 localStorage.setItem('tutorial','none');
 		 $('*').click(prevent);
 		 $('body').on('mousewheel',prevent);
 	 };
 	 //styles on tutorial stoped 
-	 var tutorialStoped=function(){
+	var tutorialStoped=function(){
 		     running=0;
 			 localStorage.setItem('tutorial','none');
          };
 
          //global options for tutotials
-         var options={
-                 		delay : 4000
-		    	    	,skipUndefinedTrip: false
-		    	    	,tripTheme: 'white'
-		    	    	,onTripStart: tutorialRunning
-		    	    	,onTripEnd: tutorialStoped
-		    	    	,onTripClose: tutorialStoped
-			    	    ,showCloseBox: true
-			    	    ,showNavigation : false
-			    	    ,expose: true
-			    	    ,prevLabel: "<i class='fa fa-backward fa-2x' style='color:#428bca !important'></i>"
-				    	,nextLabel: "<i class='fa fa-forward fa-2x' style='color:#428bca !important'></i>"
-					    ,finishLabel: "<i class='fa fa-stop fa-2x' style='color:#428bca !important'></i>"
-					    ,closeBoxLabel: "<i class='fa fa-sign-out' style='color:#428bca !important'>saltar</i>"
+    var options={
+               		delay : 4000
+	    	    	,skipUndefinedTrip: false
+	    	    	,tripTheme: 'white'
+	    	    	,onTripStart: tutorialRunning
+	    	    	,onTripEnd: tutorialStoped
+	    	    	,onTripClose: tutorialStoped
+		    	    ,showCloseBox: true
+		    	    ,showNavigation : false
+		    	    ,expose: true
+		    	    ,prevLabel: "<i class='fa fa-backward fa-2x' style='color:#428bca !important'></i>"
+			    	,nextLabel: "<i class='fa fa-forward fa-2x' style='color:#428bca !important'></i>"
+				    ,finishLabel: "<i class='fa fa-stop fa-2x' style='color:#428bca !important'></i>"
+				    ,closeBoxLabel: "<i class='fa fa-sign-out' style='color:#428bca !important'>saltar</i>"
 						
-		    		};
-         var fun=function(){};
- 		if(localStorage.getItem('tutorial')=='map'){
- 			var trip = new Trip([
-	    	                     { 
-		    	                     
-	       	                     	 sel : $('b')
-	       	                         ,content : 'Bienvenido al sistema de creación de rutas'
-	       	                         ,position: 'e'
-			   	                     ,showNavigation: true
-	       	                         ,callback: function(){$('#comenzar').one("click",trip.next.bind(trip))} 
-	       	                     },
-	   	                         { 
-	   	                             sel : $('#comenzar')
-	   	                             ,content : 'Primero pulsa comenzar para empezar a definir la ruta'
-	   	                             ,position: 'e'
-		   	                         ,canGoNext: true
-		   	                         ,delay: -1
-		       	                     ,callback: function(){
-				       	                    $('#mapa').one("click",trip.next.bind(trip));
-				       	                    }
+	    		};
+ 	if(localStorage.getItem('tutorial')=='map'){
+ 		var trip = new Trip([
+	   	                     { 
+		    	               	 sel : $('b')
+	    	                     ,content : 'Bienvenido al sistema de creación de rutas'
+	        	                 ,position: 'e'
+	  	        	             ,showNavigation: true
+	                	         ,callback: function(){$('#comenzar').one("click",trip.next.bind(trip))} 
+	   	                     },
+	                         { 
+	                            sel : $('#comenzar')
+	   	                        ,content : 'Primero pulsa comenzar para empezar a definir la ruta'
+	   	                        ,position: 'e'
+		   	                    ,canGoNext: true
+		   	                    ,delay: -1
+		       	               	,callback: function(){
+				       	          $('#mapa').one("click",trip.next.bind(trip));
+				       	         }
 		   	                         		   	                         
-	       	                     },
-	   	                         { 
-	   	                             sel : $('#mapa')
-	   	                             ,content : 'Luego haz click en el mapa, para cada punto que quieras añadir a la ruta'
-	   	                             ,position: 'n'
-	   	                             ,delay: -1
-			   	                     ,canGoNext: false
-			   	                     ,canGoPrev: false
-			   	                     ,callback: function(){
-				       	                    setTimeout(function(){$('.leaflet-marker-icon').one("click",trip.next.bind(trip))},300);
-				   	                     }
-	   	                         },
-	   	                         { 
-	   	                             sel : $('#mapa')
-	   	                             ,content : 'Haz click en los marcadores que indican los puntos para editar sus opciones'
-	   	                             ,position: 'n'
-		   	                         ,delay: -1	   	                  
-			   	                     ,callback: function(){
-				       	                    setTimeout(function(){$('.pop-up-menu >button').one("click",trip.next.bind(trip))},300);
-				   	                     }
-	   	                         },
-	   	                         { 
-	   	                             sel : $('#mapa')
-	   	                             ,content : 'Puedes editar las opciones de los puntos'
-	   	                             ,position: 'n'
-		   	                         ,delay: -1	   	                  
-		   	                         ,callback: function(){$('#comenzar').one("click",trip.next.bind(trip))}
-	   	                         },
+	       	                 },
+	   	                     { 
+	   	                         sel : $('#mapa')
+	   	                         ,content : 'Luego haz click en el mapa, para cada punto que quieras añadir a la ruta'
+	   	                         ,position: 'n'
+	   	                         ,delay: -1
+			   	                 ,canGoNext: false
+			   	                 ,canGoPrev: false
+			   	                 ,callback: function(){
+				       	         setTimeout(function(){$('.leaflet-marker-icon').one("click",trip.next.bind(trip))},300)}
+	   	                     },
+	   	                     { 
+	   	                         sel : $('#mapa')
+	   	                         ,content : 'Haz click en los marcadores que indican los puntos para editar sus opciones'
+	   	                         ,position: 'n'
+		   	                     ,delay: -1	   	                  
+			   	                 ,callback: function(){
+				       	             setTimeout(function(){$('.pop-up-menu >button').one("click",trip.next.bind(trip))},300);
+				   	             }
+	   	                     },
+	   	                     { 
+	   	                         sel : $('#mapa')
+	   	                         ,content : 'Puedes editar las opciones de los puntos'
+	   	                         ,position: 'n'
+		   	                     ,delay: -1	   	                  
+		   	                     ,callback: function(){$('#comenzar').one("click",trip.next.bind(trip))}
+	   	                      },
 	   	                         { 
         	                    	 sel : $('#comenzar')
         	                         ,content : 'Haz click en terminar cuando ya tengas la ruta definida'
@@ -206,7 +204,7 @@
         	                     { 
         	                    	 sel : $('#enviar')
         	                         ,content : 'Finalmente, si quieres guardar los cambios, haz click en este boton'
-        	                         ,position: 'n'
+        	                         ,position: 'e'
     			   	                 ,showNavigation: true
         	                     }
         	                     
