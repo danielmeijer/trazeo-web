@@ -1,0 +1,82 @@
+{% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
+
+	{% block css %}
+		{{ parent() }}
+	   	{% stylesheets
+	    	'@SopinetOpenMapBundle/Resources/public/css/leaflet.css'
+	    	'@SopinetOpenMapBundle/Resources/public/css/plugins/leafletRouting/app.css'
+	    	'@SopinetTemplateSbadmin2Bundle/Resources/public/css/plugins/openmap/openmap.css'
+	    	'@SopinetOpenMapBundle/Resources/public/css/plugins/Control.Geocoder/Control.Geocoder.css'
+	    	output='css/*.css' filter='cssrewrite' %}
+	    	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+		{% endstylesheets %}
+ 	{% endblock %}
+{% block body_content %}
+
+<div class="alert-warning">
+	<table class="table">
+		<tbody>
+			<tr>
+				<td><i class="fa fa-flag-o"></i></td>
+				<td>Empieza en </td>
+				<td id="start"></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-flag-checkered"></i></td>
+				<td>Termina en </td>
+				<td id="finish"></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-road"></i></td>
+				<td>Distancia </td>
+				<td id="distance"></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-user"></i></td>
+				<td>Niños</td>
+				<td>{{ cont }} apuntados en esta ruta</td>
+			</tr>	
+			<tr>
+				<td><i class="fa fa-key"></i></td>
+				<td>Autor</td>
+				<td>{{ route.admin }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+		<h3 class="alert alert-success"><i class="fa fa-map-marker"></i>&nbsp; Mapa del paseo</h3>
+		{% for point in route.points %}
+			<input type="hidden" name="pickup{{ loop.index }}" value="false">
+			<input type="hidden" name="lat{{ loop.index }}" value="{{ point.location.latitude }}">
+			<input type="hidden" name="lng{{ loop.index }}" value="{{ point.location.longitude }}">
+		{% endfor %}
+            
+        {% for group in route.groups %}
+        	{{ group.name }}
+        {% endfor %}
+        <script type="text/javascript">
+        var lastRoute="{{ path('panel_route_last') }}";
+
+    	</script>
+{% endblock %}
+		
+	
+{% block js %}	
+	{{ parent() }}
+	{% javascripts 
+		'@SopinetOpenMapBundle/Resources/public/js/leaflet.js'
+		'@SopinetOpenMapBundle/Resources/public/js/leaflet-src.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/utils/LineUtil.Snapping.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/utils/Marker.Snapping.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/utils/Polyline.Snapping.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Storage.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Draw.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Edit.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/Control.Geocoder/Control.Geocoder.js'
+	%}
+	<script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+	{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': "",'editable': "false", 'realTime': "true"} %}
+{% endblock %}

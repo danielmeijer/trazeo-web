@@ -33,7 +33,7 @@ class Builder extends ContainerAware
         ->setLabel("");
         $menu['Child']->setAttribute('icon', 'fa-user fa-2x');
         $menu['Child']->setAttribute('tooltip', 'Menu.tooltip.child');
-        if ($options['activeMenu'] == "routes") {
+        if ($options['activeMenu'] == "route") {
         	$menu['Child']->setAttribute('class', 'active');
         }
         
