@@ -39,12 +39,14 @@
 				<td><i class="fa fa-user"></i></td>
 				<td>Niños</td>
 				<td> apuntados en esta ruta</td>
-			</tr>	
+			</tr>
+			{% if route %}	
 			<tr>
 				<td><i class="fa fa-key"></i></td>
 				<td>Autor</td>
 				<td>{{ route.admin }}</td>
 			</tr>
+			{% endif %}
 		</tbody>
 	</table>
 </div>
@@ -98,5 +100,9 @@
 	
 	<script type="text/javascript" src="{{ asset_url }}"></script>
 	{% endjavascripts %}
-	{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': route.points,'editable': "false", 'realTime': "true", 'rideEvents': ''} %}
+		{% if route %}
+			{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': route.points,'editable': "false", 'realTime': "true", 'rideEvents': ''} %}
+		{% else %}
+			{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'editable': "false", 'realTime': "true", 'rideEvents': ''} %}
+		{% endif %}
 {% endblock %}
