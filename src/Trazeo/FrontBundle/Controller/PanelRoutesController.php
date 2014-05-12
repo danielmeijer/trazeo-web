@@ -237,7 +237,6 @@ class PanelRoutesController extends Controller
      */
     public function saveMapAction(Request $request)
     {
-		//ldd($request);
 		$id = $request->get('id');
 		$inputPoints = $request->get('inputPoints');
 		$distance = $request->get('distanceInput');
@@ -249,10 +248,12 @@ class PanelRoutesController extends Controller
         //$points = $em->getRepository('TrazeoBaseBundle:EPoints')->findByRoute($route->getId());
     	//ldd($request);
     	if(count($route->getPoints()->toArray()) != 0){
-    		$points = $em->getRepository('TrazeoBaseBundle:EPoints')->findByRoute($route->getId());
-    		foreach($points as $point){
-    			$em->remove($point);
+    		$pointsRm = $em->getRepository('TrazeoBaseBundle:EPoints')->findByRoute($route->getId());
+    		
+    		foreach($pointsRm as $pointRm){
+    			$em->remove($pointRm);
     		}
+    		$em->flush();
     	}
 		for($i = 0;$i < count($points);$i++)
 		{
