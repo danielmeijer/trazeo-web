@@ -255,7 +255,11 @@
 										<td><i class="fa fa-location-arrow"></i></td>
 										<td>Ruta asignada</td>
 										<td>
+										{% if group.route %}
 											<a href="{{ path('panel_route') }}{{ group.route.id }}">{{ group.route.name }}</a>
+										{% else %}
+											Ninguna ruta asignada										
+										{% endif %}
 										</td>
 									</tr>
 									<tr>
