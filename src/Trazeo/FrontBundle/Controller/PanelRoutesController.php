@@ -144,11 +144,20 @@ class PanelRoutesController extends Controller
         if (!$route) {
             throw $this->createNotFoundException('Unable to find Route entity.');
         }
+        
+        $tutorialmap = 0;
+        if(!$user->getTutorialMap()){
+        	$user->setTutorialMap(1);
+        	$em->persist($user);
+        	$em->flush();
+        	$tutorialmap = 1;
+        }
 
         //$deleteForm = $this->createDeleteForm($id);
 		//$location = $route->getLocation();
 		//ldd($route->getPoints()->toArray());
         return array(
+        	'tutorialmap' => $tutorialmap,
         	'cont'		  => $cont,
             'route'      => $route
             //'delete_form' => $deleteForm->createView(),

@@ -67,6 +67,11 @@ class UserExtend
      */
     protected $tutorial;
     
+    /**
+     * @ORM\Column(name="tutorialMap", type="boolean")
+     */
+    protected $tutorialMap;
+    
     /** @ORM\OneToMany(targetEntity="EGroupAccess", mappedBy="userextend")
      */
     protected $access;
@@ -577,5 +582,29 @@ class UserExtend
     public function getTutorial()
     {
         return $this->tutorial;
+    }
+
+    /**
+     * Set tutorialMap
+     *
+     * @param boolean $tutorialMap
+     *
+     * @return UserExtend
+     */
+    public function setTutorialMap($tutorialMap)
+    {
+        $this->tutorialMap = $tutorialMap;
+
+        return $this;
+    }
+
+    /**
+     * Get tutorialMap
+     *
+     * @return boolean 
+     */
+    public function getTutorialMap()
+    {
+        return $this->tutorialMap;
     }
 }
