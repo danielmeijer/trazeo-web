@@ -40,22 +40,32 @@ class PanelRidesController extends FOSRestController
     	$groupId = $ride->getGroup()->getId();
     	$group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneById($groupId);
     	
-    	$routeId = $group->getRoute()->getId();
-    	$route = $em->getRepository('TrazeoBaseBundle:ERoute')->findOneById($routeId);
-    	
-    	if ($route->getCity() != null) {
-	    	$city = $route->getCity()->getId();
-	    	$sponsors = $em->getRepository('TrazeoBaseBundle:ESponsor')->findByCity($city);
-    	} else {
-    		$sponsors = null;
-    	}
-    	
-    	return array(
-    		'route' => $route,
-    		'ride' => $ride,
-    		'events' => $events,
-    		'sponsors' => $sponsors
-    	);
+    	if($routeId = $group->getRoute()->getId()){
+    		
+    		$route = $em->getRepository('TrazeoBaseBundle:ERoute')->findOneById($routeId);
+    		 
+    		if ($route->getCity() != null) {
+    			$city = $route->getCity()->getId();
+    			$sponsors = $em->getRepository('TrazeoBaseBundle:ESponsor')->findByCity($city);
+    		} else {
+    			$sponsors = null;
+    		}
+    		 
+    		return array(
+    				'route' => $route,
+    				'ride' => $ride,
+    				'events' => $events,
+    				'sponsors' => $sponsors
+    		);
+    		
+    	}else{
+    		return array(
+    				'ride' => $ride,
+    				'events' => $events,
+    				'sponsors' => $sponsors
+    		);	
+    		
+    	}	
     }
     
     /**
