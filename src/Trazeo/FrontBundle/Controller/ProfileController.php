@@ -39,7 +39,8 @@ class ProfileController extends Controller
         				'default' => $spainCodeId
         		)
         	));
-
+    	//TODO: Error cuando las contraseñas no coinciden
+    	
 	    return array(
 	    		'form_profile' => $form_profile->createView(),
 	    		'form_userextend' => $form_userextend->createView(),
@@ -57,7 +58,7 @@ class ProfileController extends Controller
 	{
 		$sup = $this->container->get('sopinet_user_notification');
 		$notifications = $sup->getAllNotifications();
-		
+
 		return array('notifications' => $notifications);
 	}
 	
@@ -70,7 +71,7 @@ class ProfileController extends Controller
 		//TODO: Guardar los datos recibidos del formulario
 		
 		$em = $this->getDoctrine()->getEntityManager();
-		$fos_user = $this->get('security.context')->getToken()->getUser();
+		$fos_user = $this->container->get('security.context')->getToken()->getUser();
 		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
 		
 		$spainCode = $em->getRepository('JJs\Bundle\GeonamesBundle\Entity\Country')->findOneByCode("ES");
@@ -85,21 +86,28 @@ class ProfileController extends Controller
         				'default' => $spainCodeId,
         		)
         	));
-		$form_profile->bind($request);
+    	//Guarda la pass en una variable antes de que se pise en el bind
+    	$password = $fos_user->getPassword();
+		
+    	$form_profile->bind($request);
 		$form_userextend->bind($request);
 		
 		$registration = $form_profile->getData();
 		$data_userextend = $form_userextend->getData();
 		
-		//Encriptar la password
-		$factory = $this->get('security.encoder_factory');
-		$encoder = $factory->getEncoder($fos_user);
-		$password = $encoder->encodePassword($registration->getPassword(), $fos_user->getSalt());
+		if($registration->getPassword() != null){
+			//Encriptar la password
+			$factory = $this->get('security.encoder_factory');
+			$encoder = $factory->getEncoder($fos_user);
+			$password = $encoder->encodePassword($registration->getPassword(), $fos_user->getSalt());		
+		}
+		
 		$registration->setPassword($password);
 		
 		$em->persist($registration);
 		$em->persist($data_userextend);
 		$em->flush();
+			
 		
 		return $this->redirect($this->generateUrl('panel_profile'));
 	
@@ -125,7 +133,3 @@ class ProfileController extends Controller
 		return $this->redirect($this->generateUrl('home'));
 	}	
 }
-
-
-
-
