@@ -1,3 +1,7 @@
+{% set activeMenu = "route" %}
+{% set pageheader_title = "Ride.current.title"|trans %}
+{% set pageheader_description = "Ride.current.description"|trans %}
+
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
 	{% block css %}
@@ -13,26 +17,41 @@
  	{% endblock %}
 {% block body_content %}
 
-		<div class="row">
-			<ul>			
-				<li id="finish">Empieza en:</li>
-				
-				<li id="start">Termina en:</li>
-				
-				<li >Descripción:</li>
-				
-				<li id="distance">Distancia:</li>
-			
-				<li>Niños: apuntados en esta ruta</li>
-				
-				<li>Autor:</li>
-			</ul>
-		</div>
+<div class="alert-warning">
+	<table class="table">
+		<tbody>
+			<tr>
+				<td><i class="fa fa-flag-o"></i></td>
+				<td>Empieza en </td>
+				<td id="start"></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-flag-checkered"></i></td>
+				<td>Termina en </td>
+				<td id="finish"></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-road"></i></td>
+				<td>Distancia </td>
+				<td id="distance"></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-user"></i></td>
+				<td>Niños</td>
+				<td> apuntados en esta ruta</td>
+			</tr>	
+			<tr>
+				<td><i class="fa fa-key"></i></td>
+				<td>Autor</td>
+				<td>{{ route.admin }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
 
-		<h1>MAPA</h1>
-		<div style="margin-bottom:5%;" id="mapa" class="col-md-12"></div>
-		
-		{% if sponsors is defined %}
+		<h3 class="alert alert-success"><i class="fa fa-map-marker"></i>&nbsp; Mapa del paseo</h3>
+		<div id="mapa" class="col-md-12"></div>
+		{% if sponsors|length() > 0 %}
 			<div class="col-md-12">
 				<h3 class="alert alert-success"><i class="fa fa-shield"></i>&nbsp; {{ 'Sponsors.current'|trans }}</h3>
 				<br />
@@ -43,6 +62,13 @@
 				</div>
 				{% endfor %}
 			</div>
+		{% else %}
+		<div class="col-md-12">
+				<h3 class="alert alert-success"><i class="fa fa-shield"></i>&nbsp; Patrocina este paseo</h3>
+				<div class="alert alert-warning">
+					<i class="fa fa-envelope"></i>&nbsp; Escríbenos un email a &nbsp;<a class="btn btn-warning btn-xs btn-outline" href="mailto:info@trazeo.es">info@trazeo.es</a>
+				</div>
+		</div>
 		 {% endif %}
 		<p>&nbsp;</p>
 

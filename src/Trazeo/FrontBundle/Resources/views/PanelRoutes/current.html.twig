@@ -13,24 +13,39 @@
  	{% endblock %}
 {% block body_content %}
 
-		<div class="row">
-			<ul>			
-				<li id="finish">Empieza en:</li>
-				
-				<li id="start">Termina en:</li>
-				
-				<li >Descripción:</li>
-				
-				<li id="distance">Distancia:</li>
-			
-				<li>Niños: apuntados en esta ruta</li>
-				
-				<li>Autor:</li>
-			</ul>
-		</div>
+<div class="alert-warning">
+	<table class="table">
+		<tbody>
+			<tr>
+				<td><i class="fa fa-flag-o"></i></td>
+				<td>Empieza en </td>
+				<td id="start"></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-flag-checkered"></i></td>
+				<td>Termina en </td>
+				<td id="finish"></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-road"></i></td>
+				<td>Distancia </td>
+				<td id="distance"></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-user"></i></td>
+				<td>Niños</td>
+				<td>{{ cont }} apuntados en esta ruta</td>
+			</tr>	
+			<tr>
+				<td><i class="fa fa-key"></i></td>
+				<td>Autor</td>
+				<td>{{ route.admin }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
 
-		<h1>MAPA</h1>
-		<div id="mapa" class="col-md-12"></div>
+		<h3 class="alert alert-success"><i class="fa fa-map-marker"></i>&nbsp; Mapa del paseo</h3>
 		{% for point in route.points %}
 			<input type="hidden" name="pickup{{ loop.index }}" value="false">
 			<input type="hidden" name="lat{{ loop.index }}" value="{{ point.location.latitude }}">
