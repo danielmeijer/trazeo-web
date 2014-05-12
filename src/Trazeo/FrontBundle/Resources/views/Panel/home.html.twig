@@ -239,7 +239,8 @@
 
 {% block js %}
 	{{ parent() }} 
-	{% include 'SopinetFlashMessagesBundle:Messages:notification.html.twig' %} 
+	{% include 'SopinetFlashMessagesBundle:Messages:notification.html.twig' %}
+	var running=0;
 	{% if tutorial == 1 %}
 	<!-- Enable Tutorial -->
 	<script type="text/javascript">
@@ -262,22 +263,23 @@
 	<input type="hidden" id="group_ref" value="{{ path('panel_group')}}">
 	
 	<script type="text/javascript">
-		 var prevent=function(e){e.preventDefault();}
+		 var prevent=function(e){
+			 if(running==1){
+			 e.preventDefault();
+			 e.stopPropagation();
+			 }
+		 }
 		 //styles on tutorial running 
 		 var tutorialRunning=function(){
+			 running=1;
 			 localStorage.setItem('tutorial','none');
 			 $('*').click(prevent);
-			 $('body').on('mousewheel',function(e) {
-				     e.preventDefault();
-				     e.stopPropagation();
-				     }
-				 );
+			 $('body').on('mousewheel',prevent);
 			 $('#wrapper').css('opacity','0.25');
 		 };
 		 //styles on tutorial stoped 
 		 var tutorialStoped=function(){
-    			 $('*').off("click", "*",prevent);
-    			 $('*').off('mousewheel');
+			     running=0;
     			 $('#wrapper').css('opacity','1');
     			 localStorage.setItem('tutorial','none');
              };
