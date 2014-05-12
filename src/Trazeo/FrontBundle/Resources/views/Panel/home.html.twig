@@ -2,57 +2,60 @@
 {% block body_content %}
     <!-- START Bootstrap row -->
 	<div class="row">
-        <!-- START currentGroups -->
+        <!-- START rideGroups -->
+		{% if groupsRide %}
         <div class="col-lg-12 currentGroups alert alert-success">
         	<div class="col-md-1">
         		<i class="fa fa-5x fa-clock-o"></i>
         	</div>
         	<div class="col-md-11">
-        		{% if groupsRide %}
-					<h3>{{ 'Ride.yes.title'|trans }}</h3>
-					<p>{{ 'Ride.yes.description'|trans }}</p>
-					<br />
-					{% for group in groupsRide %}
-							<ul class="col-md-5">
-								<li><i class="fa fa-users"></i>&nbsp; <a href="{{ path('panel_group_timeline',{'id': group.id}) }}">{{ group.Name }}</a></li>
-							</ul>
-							<ul class="col-md-5">
-								<li><i class="fa fa-mail-forward"></i><a href="{{ path('panel_ride_current', {'id': group.ride.id}) }}">&nbsp; {{ 'Ride.go'|trans }}</a></li>
-							</ul>
-					    
-					{% endfor %}
-				{% else %}
-					<h3>{{ 'Ride.no.title'|trans }}</h3>
-					<p>{{ 'Ride.no.description'|trans }}</p>
-				{% endif %}
+				<h3>{{ 'Ride.yes.title'|trans }}</h3>
+				<p>{{ 'Ride.yes.description'|trans }}</p>
+				<br />
+				{% for group in groupsRide %}
+						<ul class="col-md-5">
+							<li><i class="fa fa-users"></i>&nbsp; <a href="{{ path('panel_group_timeline',{'id': group.id}) }}">{{ group.Name }}</a></li>
+						</ul>
+						<ul class="col-md-5">
+							<li><i class="fa fa-mail-forward"></i><a href="{{ path('panel_ride_current', {'id': group.ride.id}) }}">&nbsp; {{ 'Ride.go'|trans }}</a></li>
+						</ul>
+				    
+				{% endfor %}
 			</div>
         </div>
-        <!-- END currentGropus -->
+			{% else %}
+        {% endif %}
+        <!-- END rideGropus -->
 
         <!-- START Resume -->
-			<div class="col-md-12 resume">
-				<h2 class="col-md-12  alert alert-warning"><i class="fa fa-cogs"></i>&nbsp; {{ 'Panel.title'|trans }}</h2>
-
-				<!-- START resumeChilds -->
-				<div class="col-md-12 resumeChilds alert alert-warning" id="childs">
-				{% if childs|length <= 0 %}
+			<div class="col-md-12 resume">				
+				<!-- START resumeGroups -->
+			{% if groups|length <= 0 %}
+				
+				<!-- START resumeRoutes -->
+				<div class="col-md-12 resumeRoutes alert alert-warning" id="routes">
+				{% if routes|length <= 0 %}
 					<div>
-						<i class="fa fa-user fa-5x pull-left alert-warning"></i>
+						<i class="fa fa-location-arrow fa-5x pull-left alert-warning"></i>
 						<h4 class="alert alert-warning">
-						{{ 'Children.empty'|trans }}
+						{{ 'Route.empty'|trans }}
 						&nbsp;&nbsp;
-						<a class="btn btn-warning btn-outline" href="{{ path('panel_child_new') }}"><i class="fa fa-hand-o-right"></i> {{ 'Children.register'|trans }}</a>
+						<a class="btn btn-warning btn-outline" href="{{ path('panel_route_new') }}"><i class="fa fa-hand-o-right"></i> {{ 'Route.new.title'|trans }}</a>
+							&nbsp;
+						<a class="btn btn-warning btn-outline" href="{{ path('panel_route') }}">
+							<i class="fa fa-list-ul"></i>&nbsp; {{ 'Route.list'|trans }}
+						</a>
 						</h4>
 					</div>
-				{% elseif childs|length > 0 %}
+				{% elseif routes|length > 0 %}
 					<div>
-						<h1 class="alert"> <span class="alert alert-warning"><i class="fa fa-user"></i> {{ 'Children.mine'|trans }}</span> 
+						<h1 class="alert"> <span class="alert alert-warning"><i class="fa fa-location-arrow"></i> {{ 'Route.mine'|trans }}</span> 
 							<span class="pull-right">
-								<a class="btn btn-xs btn-success" href="{{ path('panel_child_new') }}">
-									<i class="fa fa-plus-circle"></i>&nbsp; {{ 'Children.new'|trans }}
+								<a class="btn btn-xs btn-success" href="{{ path('panel_route_new') }}">
+									<i class="fa fa-plus-circle"></i>&nbsp; {{ 'Route.new.title'|trans }}
 								</a>
-								<a class="btn btn-xs btn-success" href="{{ path('panel_child') }}">
-									<i class="fa fa-list-ul"></i>&nbsp; {{ 'Children.list'|trans }}
+								<a class="btn btn-xs btn-success" href="{{ path('panel_route') }}">
+									<i class="fa fa-list-ul"></i>&nbsp; {{ 'Route.list'|trans }}
 								</a>
 							</span>
 						</h1>
@@ -61,30 +64,20 @@
 								<thead>
 									<tr>
 										<th>#</th>
-										<th>{{ 'Children.data.name'|trans }}</th>
-										<th>{{ 'Children.data.visibility'|trans }}</th>
-										<th>{{ 'Children.data.age'|trans }}</th>
-										<th>{{ 'Children.data.options'|trans }}</th>
+										<th>{{ 'Route.data.name'|trans }}</th>
+										<th>{{ 'Route.data.map'|trans }}</th>
+										<th>{{ 'Route.data.options'|trans }}</th>
 									</tr>
 								</thead>
 							        <tbody>
-							        {% for child in childs %}
+							        {% for route in routes %}
 							            <tr>
-							            {% if  child.Gender == "boy" %}
-							                <td><i class="fa fa-male"></i></td>
-							            {% else %}  
-							               <td><i class="fa fa-female"></i></td>
-							             {% endif %}
-							                <td>{{ child.nick }}</td>
-							                {% if  child.Visibility == 1 %}
-							                <td><i class="fa fa-eye btn btn-xs btn-success"></i>&nbsp; {{ 'Groups.visibility.public'|trans }}</td>
-							                {% else %}
-							                <td><i class="fa fa-eye-slash btn btn-xs btn-warning"></i>&nbsp; {{ 'Groups.visibility.hidde'|trans }}</td>
-							                {% endif %}
-											<td><i class="fa fa-calendar-o"></i>&nbsp; {{ child.datebirth|getTimeAgo}}</td>
+							                <td><i class="fa fa-location-arrow"></i></td>
+							                <td>{{ route.name }}</td>
+							                <td><a href="{{ path('panel_route')}}{{ route.Id }}"><i class="fa fa-map-marker"></i>&nbsp; Ver</a></td>
 							                <td>
-												<a class="btn btn-xs btn-default" href="{{ path('panel_child_edit', {'id': child.id}) }}"><i class="fa fa-pencil"></i>&nbsp; {{ 'Options.edit'|trans }}</a>
-												<a class="btn btn-xs btn-default" style="cursor:pointer;" data-btnCancelLabel='{{ 'Confirmation.no'|trans }}' data-btnOkLabel='{{ 'Confirmation.yes'|trans }}' data-href="{{ path('panel_child_delete', {'id': child.id }) }}" data-toggle="confirmation" data-title='{{ 'Confirmation.question'|trans }}'><i class="fa fa-trash-o"></i>&nbsp; {{ 'Options.delete'|trans }}</a>
+												<a class="btn btn-xs btn-default" href="{{ path('panel_route_edit', {'id': route.id }) }}"><i class="fa fa-pencil"></i>&nbsp;  {{ 'Options.edit'|trans }}</a>
+												<a class="btn btn-xs btn-default" style="cursor:pointer;" data-href="{{ path('panel_route_delete', {'id': route.id }) }}" data-toggle="confirmation" data-btnCancelLabel='{{ 'Confirmation.no'|trans }}' data-btnOkLabel='{{ 'Confirmation.yes'|trans }}' data-title='{{ 'Confirmation.question'|trans }}'><i class="fa fa-trash-o"></i>&nbsp; {{ 'Options.delete'|trans }}</a>
 							                </td>
 							            </tr>
 							        {% endfor %}
@@ -92,15 +85,11 @@
 							</table>
 						</div>
 					</div>
-				
-				{% endif %}
-
+					{% endif %}
 				</div>
-				<!-- END resumeChilds -->
-				
-				<!-- START resumeGroups -->
-				<div class="col-md-12 resumeGroups alert alert-warning" id="groups">
-			{% if groups|length <= 0 %}
+				<!-- END resumeRoutes -->	
+					
+			<div class="col-md-12 resumeGroups alert alert-warning" id="groups">
 					<div>
 						<i class="fa fa-users fa-5x pull-left alert-warning"></i>
 						<h4 class="alert alert-warning">
@@ -113,7 +102,12 @@
 						</a>
 						</h4>
 					</div>
+				</div>
+					
+					
+					
 				{% elseif groups|length > 0 %}
+				<div class="col-md-12 resumeGroups alert alert-warning" id="groups">
 					<div>
 						<h1 class="alert"> <span class="alert alert-warning"><i class="fa fa-users"></i> {{ 'Groups.mine'|trans }}</span> 
 							<span class="pull-right">
@@ -171,12 +165,11 @@
 							</table>
 						</div>
 					</div>
-					{% endif %}
 				</div>
-				<!-- END resumeGroups -->	
 				
-				<!-- START resumeGroups -->
-				<div class="col-md-12 resumeGroups resumeRoutes alert alert-warning" id="routes">
+				
+				<!-- START resumeRoutes -->
+				<div class="col-md-12 resumeRoutes alert alert-warning" id="routes">
 				{% if routes|length <= 0 %}
 					<div>
 						<i class="fa fa-location-arrow fa-5x pull-left alert-warning"></i>
@@ -230,7 +223,81 @@
 					</div>
 					{% endif %}
 				</div>
-				<!-- END resumeRoutes -->				
+				<!-- END resumeRoutes -->	
+				
+					{% endif %}
+				<!-- END resumeGroups -->	
+				
+			
+				
+				
+				
+				
+						
+				<!-- START resumeChilds -->
+				<div class="col-md-12 resumeChilds alert alert-warning" id="childs">
+				{% if childs|length <= 0 %}
+					<div>
+						<i class="fa fa-user fa-5x pull-left alert-warning"></i>
+						<h4 class="alert alert-warning">
+						{{ 'Children.empty'|trans }}
+						&nbsp;&nbsp;
+						<a class="btn btn-warning btn-outline" href="{{ path('panel_child_new') }}"><i class="fa fa-hand-o-right"></i> {{ 'Children.register'|trans }}</a>
+						</h4>
+					</div>
+				{% elseif childs|length > 0 %}
+					<div>
+						<h1 class="alert"> <span class="alert alert-warning"><i class="fa fa-user"></i> {{ 'Children.mine'|trans }}</span> 
+							<span class="pull-right">
+								<a class="btn btn-xs btn-success" href="{{ path('panel_child_new') }}">
+									<i class="fa fa-plus-circle"></i>&nbsp; {{ 'Children.new.title'|trans }}
+								</a>
+								<a class="btn btn-xs btn-success" href="{{ path('panel_child') }}">
+									<i class="fa fa-list-ul"></i>&nbsp; {{ 'Children.list'|trans }}
+								</a>
+							</span>
+						</h1>
+						<div class="alert alert-warning">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>{{ 'Children.data.name'|trans }}</th>
+										<th>{{ 'Children.data.visibility'|trans }}</th>
+										<th>{{ 'Children.data.age'|trans }}</th>
+										<th>{{ 'Children.data.options'|trans }}</th>
+									</tr>
+								</thead>
+							        <tbody>
+							        {% for child in childs %}
+							            <tr>
+							            {% if  child.Gender == "boy" %}
+							                <td><i class="fa fa-male"></i></td>
+							            {% else %}  
+							               <td><i class="fa fa-female"></i></td>
+							             {% endif %}
+							                <td>{{ child.nick }}</td>
+							                {% if  child.Visibility == 1 %}
+							                <td><i class="fa fa-eye btn btn-xs btn-success"></i>&nbsp; {{ 'Children.visibility.public'|trans }}</td>
+							                {% else %}
+							                <td><i class="fa fa-eye-slash btn btn-xs btn-warning"></i>&nbsp; {{ 'Children.visibility.private'|trans }}</td>
+							                {% endif %}
+											<td><i class="fa fa-calendar-o"></i>&nbsp; {{ child.datebirth|getTimeAgo}}</td>
+							                <td>
+												<a class="btn btn-xs btn-default" href="{{ path('panel_child_edit', {'id': child.id}) }}"><i class="fa fa-pencil"></i>&nbsp; {{ 'Options.edit'|trans }}</a>
+												<a class="btn btn-xs btn-default" style="cursor:pointer;" data-btnCancelLabel='{{ 'Confirmation.no'|trans }}' data-btnOkLabel='{{ 'Confirmation.yes'|trans }}' data-href="{{ path('panel_child_delete', {'id': child.id }) }}" data-toggle="confirmation" data-title='{{ 'Confirmation.question'|trans }}'><i class="fa fa-trash-o"></i>&nbsp; {{ 'Options.delete'|trans }}</a>
+							                </td>
+							            </tr>
+							        {% endfor %}
+							        </tbody>
+							</table>
+						</div>
+					</div>
+				
+				{% endif %}
+
+				</div>
+				<!-- END resumeChilds -->	
 			</div>
 			<!-- END Resume -->
     </div>
