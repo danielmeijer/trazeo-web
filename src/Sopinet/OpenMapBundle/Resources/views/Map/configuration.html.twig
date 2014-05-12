@@ -17,8 +17,10 @@
 	{% for point in routePoints  %}
 	<script>
 		var aux="new "+'{{ point.location }}'.replace(' ',',');
+		aux=eval(aux);
 		aux.pickUpText='{{ point.description }}';
-		points.push(eval(aux));
+		aux.pickup=('{{ point.pickup }}'==1);
+		points.push(aux);
 	</script>
 	{%  endfor %}
 {% endif %}
@@ -161,7 +163,7 @@
     	$("#enviar").removeAttr("disabled");
     	$("#enviar").css('opacity','1');
     	$("#comenzar").on('click',map.enableRouting);
-    	$("#comenzar").html('<i class="fa fa-flag"></i>Comenzar');
+    	$("#comenzar").html('<i class="fa fa-flag"></i>&nbspComenzar');
 
     	return false;
     };
@@ -226,21 +228,21 @@
 	$("form").submit(function(){
     	//create input
     	var pointList="";
-    	/*if(document.getElementById("inputPoints")==null){
+    	if(document.getElementById("inputPoints")==null){
         	var lat=document.createElement("INPUT");
            	lat.id="inputPoints";
            	lat.name="inputPoints";
            	lat.type="hidden";
            	document.getElementById("form").appendChild(lat);  
-    	}*/
+    	}
     	
-    	/*if(document.getElementById("distanceInput")==null){
+    	if(document.getElementById("distanceInput")==null){
         	var dist=document.createElement("INPUT");
            	dist.id="distanceInput";
            	dist.name="distanceInput";
            	dist.type="hidden";
            	document.getElementById("form").appendChild(dist);  
-    	}*/
+    	}
     	
     	if((routing.getLast()&&routing.getLast().pickUp==false)|| typeof routing.getLast().pickUp==='undefined'){
     		routing.getLast().pickUp=true;
@@ -303,10 +305,11 @@
     	var last=routing.getLast();
     	var distance=0;
     	if(first){
-        	map.changeMarker(first,'start');
+        	map.createPickUpWaypoint(first,'Punto inicio');
     		if(first._routing.nextMarker && first._routing.nextMarker!==last && 
-    	    		(!first._routing.nextMarker.pickUp || first._routing.nextMarker.pickUp==false))
-	    			map.changeMarker(first._routing.nextMarker,'normal');
+    	    		(!first._routing.nextMarker.pickUp || first._routing.nextMarker.pickUp==false
+    	    			|| first._routing.nextMarker.pickUpText=='Punto inicio'))
+					map.removePickUpWaypoint(first._routing.nextMarker);
     		first=first.getLatLng();
     		geocoder.reverse(first, map.options.crs.scale(map.getZoom()), function(results) {
 				var r = results[0];
@@ -314,11 +317,12 @@
     		});
     	}
     	if(last){
-        	map.changeMarker(last,'start');
+        	map.createPickUpWaypoint(last,'Punto fin');
     		if(last._routing.prevMarker && last._routing.prevMarker!==routing.getFirst() &&
-    	    		( !last._routing.prevMarker.pickUp ||last._routing.prevMarker.pickUp==false))
-	    			map.changeMarker(last._routing.prevMarker,'normal');
-    		last=last.getLatLng();
+    	    		( !last._routing.prevMarker.pickUp ||last._routing.prevMarker.pickUp==false
+    	    		|| last._routing.prevMarker.pickUpText=='Punto fin'))
+    				map.removePickUpWaypoint(last._routing.prevMarker);
+	  		last=last.getLatLng();
     		geocoder.reverse(last, map.options.crs.scale(map.getZoom()), function(results) {
 				var r = results[0];
 	    		$("#finish").html(r.name);				    		
@@ -418,6 +422,7 @@
 				else{
 					text.val('Cargando');
 					geocoder.reverse(this._marker.getLatLng(), map.options.crs.scale(24), function(results) {
+						var r=results[0];
 						text.val(results[0].name.split(',')[0]);
     	    		});
 				}
@@ -624,8 +629,8 @@
 			$("#"+response.id).css('cssText', 'color: green !important');
 			//var finishHover=function(response){$("#"+this.id).append("<p style='color: green; font-size: 0.5em'>final de ruta</p>")}.bind(response);
 			//var clearFinishHover=function(response){$("#"+this.id).html('');}.bind(response);
-				
-			$("#"+response.id).attr('title',response.data.split('/')[1]);
+			//$("#"+response.id).hover(nameChild,clearChildName);
+			$("#"+response.id).attr('title','fin de ruta');
 		}
 		
 		,addIssue:	function(response){
@@ -634,15 +639,17 @@
 
 			var point=new POINT(response.location.latitude,response.location.longitude);
 				
-			var myIcon = L.divIcon({className: '',html: "<i class='fa fa-exclamation-circle fa-2x' id='"+response.id+"'></i>"});	
+			var myIcon = L.divIcon({className: '',html: "<i rel='tooltip-top' class='fa fa-exclamation-circle fa-2x' id='"+response.id+"'></i>"});	
 			L.marker(point.latLng, {icon: myIcon}).addTo(map);
 			$("#"+response.id).css('cssText', 'color: red !important');
 
-			//var finishHover=function(response){$("#"+this.id).append("<p style='color: red; font-size: 0.5em'>"+this.data+"</p>")}.bind(response);
+			//var finishHover=function(response){$("#"+this.id).append("<p rel='tooltip-up' style='color: red; font-size: 0.5em title='"+this.data.split('/')[1]+"'></p>")}.bind(response);
 			//var clearFinishHover=function(response){$("#"+this.id).html('');}.bind(response);
-				
+			//$("#"+response.id).hover(nameChild,clearChildName);	
 			$("#"+response.id).attr('title',response.data.split('/')[1]);
 		}
+		
+		/* DESACTIVADO POR AHORA
 		
 		,conexionLostHandler: function(response){
 			
@@ -672,10 +679,12 @@
 			//var clearHover=function(response){$("#"+this.id+'_conexion').html('');}.bind(response);
 			//$("#"+response.id+'_conexion').hover(hover,clearHover);
 			$("#"+response.id).attr('title',response.data.split('/')[1]);
+
 			
-		}
+			
+		}*/
 	};
-	//Mapa tiempo real
+	//Mapa tiempo real 
 	if(realTime){
 	    if(events.length>0)map.loadFromEvents(events);
 		var dbRequest=setInterval(addLast,5000);
@@ -683,7 +692,7 @@
 
 
 
-    setInterval(map.updateRouteInfo,3000);
+    setInterval(map.updateRouteInfo,1000);
     if(points)map.loadFromWaypoints(points);
     map.updateRouteInfo();
     map.disableRouting();
@@ -705,7 +714,9 @@
                     ,{"id":10,"action":"in","data":"6/trazeo_niño_1","location":{"latitude":37.89496104,"longitude":-4.78654327},"created_at":"2014-05-07T12:58:39+0200","updated_at":"2014-05-07T12:58:39+0200"}
                     ,{"id":11,"action":"out","data":"6/trazeo_niño_1","location":{"latitude":37.89496104,"longitude":-4.78654327},"created_at":"2014-05-07T12:58:39+0200","updated_at":"2014-05-07T12:58:39+0200"}
                     ,{"id":9,"action":"point","data":"","location":{"latitude":37.89476429,"longitude":-4.7863204},"created_at":"2014-05-07T12:58:52+0200","updated_at":"2014-05-07T12:58:52+0200"}
-    				,{"id":12,"action":"point","data":"","location":{"latitude":37.89306429,"longitude":-4.7852204},"created_at":"2014-05-07T12:58:52+0200","updated_at":"2014-05-07T12:58:52+0200"}]
+                    ,{"id":13,"action":"report","data":"6/report_1","location":{"latitude":37.89476429,"longitude":-4.7863204},"created_at":"2014-05-07T12:58:52+0200","updated_at":"2014-05-07T12:58:52+0200"}
+                    
+                    ,{"id":12,"action":"point","data":"","location":{"latitude":37.89306429,"longitude":-4.7852204},"created_at":"2014-05-07T12:58:52+0200","updated_at":"2014-05-07T12:58:52+0200"}]
     
 	var fakeRequest=function(response){
 		switch(response.action){
