@@ -451,7 +451,7 @@ class PanelGroupsController extends Controller
 		);
 
 
-		$notification = $container->addFlashMessages("success","Te has unido correctamente al grupo oculto");	
+		$notification = $container->addFlashMessages("success","Te has unido correctamente al grupo");	
 		return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$group)));
 	}
 	

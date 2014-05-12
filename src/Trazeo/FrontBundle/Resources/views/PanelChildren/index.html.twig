@@ -50,7 +50,7 @@
 										<td>Tutores</td>
 										<td>
 											{% for childUser in child.userextendchilds %}
-												<span class="label label-warning">{{ childUser.nick }}</span>
+												<span class="text-success">{{ childUser.nick }}</span>
 											{% endfor %} 
 										</td>
 									</tr>
@@ -68,13 +68,17 @@
 									<tr>
 										<td><i class="fa fa-star"></i></td>
 										<td>Género</td>
-										<td>{{ child.gender }}</td>
+										{% if child.gender == 'boy' %}
+										<td>{{ 'Children.gender.boy'|trans }}</td>
+										{% else %}
+										<td>{{ 'Children.gender.girl'|trans }}</td>
+										{% endif %}
 									</tr>
 									<tr>
 										<td><i class="fa fa-calendar-o"></i></td>
 										<td>Fecha de nacimiento</td>
 										<td>
-											{{ child.datebirth |date("d/m/Y") }} 
+											{{ child.datebirth |date("d M, Y") |trans }} 
 										</td>
 									</tr>
 									<tr>

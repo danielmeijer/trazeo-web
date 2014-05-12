@@ -1,4 +1,4 @@
-'Bad credentials': 'Nombre de usuario o Contraseña inválido'
+Bad credentials: 'Nombre de usuario o Contraseña inválido'
 Sponsors:
     current: Patrocinadores
 Btn:
@@ -8,7 +8,9 @@ Children:
     mine: Mis niños
     empty: Aún no has registrado a ninguno de tus niños
     register: Registrar mis niños/as en Trazeo
-    new: Registar Niño/a
+    new:
+        title: Registar Niño/a
+        description: Aquí puedes registart a tus niños en la plataforma y posteriormente asignarlos a un grupo
     list: Listado de niños/as
     data: 
         name: Nombre
@@ -36,7 +38,7 @@ Children:
 
     nick: 'Nombre del niño'
 
-    sex:
+    gender:
         boy: Niño
         girl: Niña
 
