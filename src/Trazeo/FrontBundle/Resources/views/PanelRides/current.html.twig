@@ -40,7 +40,7 @@
 				<td>Niños</td>
 				<td> apuntados en esta ruta</td>
 			</tr>
-			{% if route %}	
+			{% if route is defined %}	
 			<tr>
 				<td><i class="fa fa-key"></i></td>
 				<td>Autor</td>
@@ -100,7 +100,7 @@
 	
 	<script type="text/javascript" src="{{ asset_url }}"></script>
 	{% endjavascripts %}
-		{% if route %}
+		{% if route is defined %}
 			{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': route.points,'editable': "false", 'realTime': "true", 'rideEvents': ''} %}
 		{% else %}
 			{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'editable': "false", 'realTime': "true", 'rideEvents': ''} %}
