@@ -63,8 +63,7 @@ class PanelRidesController extends FOSRestController
     	}else{
     		return array(
     				'ride' => $ride,
-    				'events' => $events,
-    				'sponsors' => $sponsors
+    				'events' => $events
     		);	
     		
     	}	
