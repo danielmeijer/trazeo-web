@@ -19,7 +19,7 @@ class LoadSettingData extends AbstractFixture implements OrderedFixtureInterface
 		$setting_email->setType("Enum");
 		$setting_email->setName("notification_email");
 		$setting_email->setIcon("icon-comments-alt");
-		$setting_email->setOptions("never,day,now");
+		$setting_email->setOptions("never,now");
 		$setting_email->setDefaultOption("now");
 		
 		$manager->persist($setting_email);
