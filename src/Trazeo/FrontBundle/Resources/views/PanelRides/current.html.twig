@@ -53,25 +53,27 @@
 
 		<h3 class="alert alert-success"><i class="fa fa-map-marker"></i>&nbsp; Mapa del paseo</h3>
 		<div id="mapa" class="col-md-12"></div>
-		{% if sponsors|length() > 0 %}
+		{% if route is defined %}
+			{% if sponsors|length() > 0 %}
+				<div class="col-md-12">
+					<h3 class="alert alert-success"><i class="fa fa-shield"></i>&nbsp; {{ 'Sponsors.current'|trans }}</h3>
+					<br />
+					{%  for sponsor in sponsors %}
+					<div class="col-md-3">
+						<p class="alert-warning">{{ sponsor.Nick }}</p>
+						<img class="img-responsive" src='{{ sponsor.Image }}'/>
+					</div>
+					{% endfor %}
+				</div>
+			{% else %}
 			<div class="col-md-12">
-				<h3 class="alert alert-success"><i class="fa fa-shield"></i>&nbsp; {{ 'Sponsors.current'|trans }}</h3>
-				<br />
-				{%  for sponsor in sponsors %}
-				<div class="col-md-3">
-					<p class="alert-warning">{{ sponsor.Nick }}</p>
-					<img class="img-responsive" src='{{ sponsor.Image }}'/>
-				</div>
-				{% endfor %}
+					<h3 class="alert alert-success"><i class="fa fa-shield"></i>&nbsp; Patrocina este paseo</h3>
+					<div class="alert alert-warning">
+						<i class="fa fa-envelope"></i>&nbsp; Escríbenos un email a &nbsp;<a class="btn btn-warning btn-xs btn-outline" href="mailto:info@trazeo.es">info@trazeo.es</a>
+					</div>
 			</div>
-		{% else %}
-		<div class="col-md-12">
-				<h3 class="alert alert-success"><i class="fa fa-shield"></i>&nbsp; Patrocina este paseo</h3>
-				<div class="alert alert-warning">
-					<i class="fa fa-envelope"></i>&nbsp; Escríbenos un email a &nbsp;<a class="btn btn-warning btn-xs btn-outline" href="mailto:info@trazeo.es">info@trazeo.es</a>
-				</div>
-		</div>
-		 {% endif %}
+			 {% endif %}
+		{% endif %}
 		<p>&nbsp;</p>
 
 		
