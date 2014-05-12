@@ -134,6 +134,8 @@ class PanelRoutesController extends Controller
         $em = $this->getDoctrine()->getManager();
         $route = $em->getRepository('TrazeoBaseBundle:ERoute')->find($id);
         $reGroups = $em->getRepository('TrazeoBaseBundle:EGroup');
+        $fos_user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
         $groups = $reGroups->findByRoute($route);
         $cont = 0;
         foreach($groups as $group){
