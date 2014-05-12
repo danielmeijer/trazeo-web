@@ -26,9 +26,13 @@ class PanelController extends Controller
 	   	$not = $em->getRepository('SopinetUserNotificationsBundle:Notification')->findByUser($userId);
 	
 	   	$childs = $user->getChilds();
-	    $groups = $user->getAdminGroups();
+	    $groupsAdmin = $user->getAdminGroups();
 	   	$routes = $user->getAdminRoutes();
+	   	
 	   	$groupsMember = $user->getGroups();
+	   	
+	   	$allGroups = $em->getRepository('TrazeoBaseBundle:EGroup')->findAll();
+	   	$groupsUser = array_diff($groupsMember->toArray(),$groupsAdmin->toArray());
 	   	
 	   	$groupsRide = array();
 	   	
@@ -48,11 +52,13 @@ class PanelController extends Controller
 	   	return array(
 	    			'user' => $user,
 	   	 			'childs' => $childs,
-	           		'groups' => $groups,
+	           		'groupsAdmin' => $groupsAdmin,
 	   	 			'routes' => $routes,
 	   	 			'notifications' => $not,
 	   	 			'groupsRide' => $groupsRide,
-	   				'tutorial' => $tutorial
+	   				'tutorial' => $tutorial,
+	   				'groupsUser' => $groupsUser,
+	   				'groupsMember' => $groupsMember
 	   	);
 	}
 

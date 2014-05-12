@@ -1,3 +1,5 @@
+Admin: Eres el administrador de este grupo
+ChangeVisibility: Cambiar visibilidad 
 Bad credentials: 'Nombre de usuario o Contraseña inválido'
 Sponsors:
     current: Patrocinadores
@@ -62,8 +64,9 @@ Groups:
     noRoute: Ninguna ruta asignada 
     data:
         name: Nombre
+        activity: Actividad
+        member: Miembro del grupo
         visibility: Visibilidad
-        activity: Actividad del grupo
         route: Ruta
         chat: Chat del grupo
         options: Opciones

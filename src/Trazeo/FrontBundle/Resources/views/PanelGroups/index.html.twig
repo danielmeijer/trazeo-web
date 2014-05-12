@@ -87,7 +87,7 @@
 							</a>
 							<a href="{{ path('panel_group_disjoin', { 'id': userGroup.id }) }}" type="button" 
 							class="btn btn-default btn-xs group-disjoin" rel="tooltip-top" title="Desvincularme del grupo">
-								<i class="fa fa-sign-out"></i> Salir
+								<i class="fa fa-sign-out"></i> Desvincularme
 							</a>
 							{% if userGroup.Admin.Id == user.Id %}
 									<a href="{{ path('panel_group') }}{{ userGroup.id }}/edit" type="button" 

@@ -30,7 +30,7 @@
         <!-- START Resume -->
 			<div class="col-md-12 resume">				
 				<!-- START resumeGroups -->
-			{% if groups|length <= 0 %}
+			{% if groupsAdmin and groupsMember|length <= 0 %}
 				
 				<!-- START resumeRoutes -->
 				<div class="col-md-12 resumeRoutes alert alert-warning" id="routes">
@@ -106,7 +106,7 @@
 					
 					
 					
-				{% elseif groups|length > 0 %}
+				{% elseif groupsAdmin or groupsMember|length > 0 %}
 				<div class="col-md-12 resumeGroups alert alert-warning" id="groups">
 					<div>
 						<h1 class="alert"> <span class="alert alert-warning"><i class="fa fa-users"></i> {{ 'Groups.mine'|trans }}</span> 
@@ -125,31 +125,41 @@
 									<tr>
 										<th>#</th>
 										<th>{{ 'Groups.data.name'|trans }}</th>
-										<th>{{ 'Groups.data.visibility'|trans }}</th>
 										<th>{{ 'Groups.data.activity'|trans }}</th>
+										<th>{{ 'Groups.data.member'|trans }}</th>
+										<th>{{ 'Groups.data.visibility'|trans }}</th>
 										<th>{{ 'Groups.data.route'|trans }}</th>
 										<th>{{ 'Groups.data.options'|trans }}</th>
 									</tr>
 								</thead>
 							        <tbody>
-							        {% for group in groups %}
+							        {% for group in groupsAdmin %}
 							            <tr>
 							                <td><i class="fa fa-users"></i></td>
-							                <td><a href="{{ path('panel_group') }}{{ group.id }}"</a>{{ group.Name }} </td>
+							                <td><i rel="tooltip-top" title='{{ 'Admin'|trans }}' class="fa fa-key"></i>&nbsp; <a href="{{ path('panel_group') }}{{ group.id }}">{{ group.Name }}</a></td>
+											<td><a href="{{ path('panel_group_timeline',{'id': group.id}) }}"><i class="fa fa-comments-o"></i>&nbsp; {{ 'Groups.data.chat'|trans }}</a></td>
+											<td>
+							        		{% for groupMember in groupsMember %}
+												{% if groupMember.UserextendGroups == group.UserextendGroups %}
+													Desvincularme
+												{% else %}
+													Unirme
+												{% endif %}
+											{% endfor %}
+											</td>
 							                {% if  group.Visibility == 0 %}
-							                <td><i rel="tooltip-top" title="Acceso libre" class="fa fa-unlock btn btn-xs btn-success"
+							                <td><i rel="tooltip-top" title='{{ 'ChangeVisibility'|trans }}' class="fa fa-unlock btn btn-xs btn-success"
 							                groupVisibility="0" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
 											id="visibility-{{ group.id }}" data-toggle="confirmationChange"></i>&nbsp; {{ 'Groups.visibility.public'|trans }}</td>
 							                {% elseif group.Visibility == 1 %}
-							                <td><i rel="tooltip-top" title="Acceso mediante solicitud" class="fa fa-lock btn btn-xs btn-danger"
+							                <td><i rel="tooltip-top" title='{{ 'ChangeVisibility'|trans }}' class="fa fa-lock btn btn-xs btn-danger"
 							                groupVisibility="1" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
 											id="visibility-{{ group.id }}" data-toggle="confirmationChange"></i>&nbsp; {{ 'Groups.visibility.private'|trans }}</td>
 							                {% elseif group.Visibility == 2 %}
-							                <td><i rel="tooltip-top" title="Acceso mediante invitación del administrador" class="fa fa-eye-slash btn btn-xs btn-warning"
+							                <td><i rel="tooltip-top" title='{{ 'ChangeVisibility'|trans }}' class="fa fa-eye-slash btn btn-xs btn-warning"
 							                groupVisibility="2" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
 											id="visibility-{{ group.id }}" data-toggle="confirmationChange"></i>&nbsp; {{ 'Groups.visibility.hidden'|trans }}</td>
 							                {% endif %}
-							                <td><a href="{{ path('panel_group_timeline',{'id': group.id}) }}"><i class="fa fa-comments-o"></i>&nbsp; {{ 'Groups.data.chat'|trans }}</a></td>
 							                {% if group.route %}
 							                <td><a href="{{ path('panel_route')}}{{ group.Route.Id }}">{{ group.Route.Name }}</a></td>
 							                {% else %}
@@ -158,6 +168,40 @@
 							                <td>
 												<a class="btn btn-xs btn-default" href="{{ path('panel_group') }}{{ group.id }}/edit"><i class="fa fa-pencil"></i>&nbsp;  {{ 'Options.edit'|trans }}</a>
 												<a class="btn btn-xs btn-default" style="cursor:pointer;" data-href="{{ path('panel_group_delete', {'id': group.id }) }}" data-toggle="confirmation"" data-title='{{ 'Confirmation.question'|trans }}' data-btnCancelLabel='{{ 'Confirmation.no'|trans }}' data-btnOkLabel='{{ 'Confirmation.yes'|trans }}'><i class="fa fa-trash-o"></i>&nbsp; {{ 'Options.delete'|trans }}</a>
+							                </td>
+							            </tr>
+							        {% endfor %}
+							        {% for groupUser in groupsUser %}
+							            <tr>
+							                <td><i class="fa fa-users"></i></td>
+							                <td><a href="{{ path('panel_group') }}{{ groupUser.id }}"</a>{{ groupUser.Name }} </td>
+							                <td><a href="{{ path('panel_group_timeline',{'id': groupUser.id}) }}"><i class="fa fa-comments-o"></i>&nbsp; {{ 'Groups.data.chat'|trans }}</a></td>
+											<td>
+												<a href="{{ path('panel_group_disjoin', { 'id': groupUser.id }) }}" type="button" 
+												class="group-disjoin">
+													<i class="fa fa-sign-out"></i> Desvincularme del grupo
+												</a>											
+											</td>
+							                {% if  groupUser.Visibility == 0 %}
+							                <td>
+							                	<i class="fa fa-unlock"></i>&nbsp;{{ 'Groups.visibility.public'|trans }}
+							                </td>
+							                {% elseif groupUser.Visibility == 1 %}
+							                <td>
+							                	<i class="fa fa-lock btn btn-xs btn-danger"></i>&nbsp;{{ 'Groups.visibility.private'|trans }}
+							                </td>
+							                {% elseif groupUser.Visibility == 2 %}
+							                <td>
+							                	<i class="fa fa-eye-slash btn btn-xs btn-warning"></i>&nbsp;{{ 'Groups.visibility.hidden'|trans }}
+							                </td>
+							                {% endif %}
+							                {% if groupUser.route %}
+							                <td><a href="{{ path('panel_route')}}{{ groupUser.Route.Id }}">{{ groupUser.Route.Name }}</a></td>
+							                {% else %}
+							                <td>{{ 'Groups.noRoute'|trans }}</td>
+							                {% endif %}
+							                <td>
+							                	&nbsp;
 							                </td>
 							            </tr>
 							        {% endfor %}
@@ -280,7 +324,7 @@
 							                {% if  child.Visibility == 1 %}
 							                <td><i class="fa fa-eye btn btn-xs btn-success"></i>&nbsp; {{ 'Children.visibility.public'|trans }}</td>
 							                {% else %}
-							                <td><i class="fa fa-eye-slash btn btn-xs btn-warning"></i>&nbsp; {{ 'Children.visibility.private'|trans }}</td>
+							                <td><i class="fa fa-eye-slash btn btn-xs btn-danger"></i>&nbsp; {{ 'Children.visibility.private'|trans }}</td>
 							                {% endif %}
 											<td><i class="fa fa-calendar-o"></i>&nbsp; {{ child.datebirth|getTimeAgo}}</td>
 							                <td>
