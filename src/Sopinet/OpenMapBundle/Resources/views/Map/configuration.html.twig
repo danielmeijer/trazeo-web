@@ -484,8 +484,15 @@
     
 	var showPopUpMenu=function(e){
 		if(menu!=null)return;
-		menu=new PopUpMenu(e.marker._latlng,e.marker);
-		map.setView(e.marker._latlng);
+		if(e.marker){
+			menu=new PopUpMenu(e.marker._latlng,e.marker);
+			map.setView(e.marker._latlng);
+		}
+		else{ 
+			menu=new PopUpMenu(e.latlng,e.target);
+			map.setView(e.latlng);
+		}
+		
 		map.addLayer(menu,false);
 		$(".pop-up-menu").focus();
 		$(".pop-up-menu").css({'background':'grey'});
