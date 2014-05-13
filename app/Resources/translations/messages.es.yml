@@ -1,5 +1,7 @@
 Description: La aplicación web / móvil para recuperar el camino al cole a pie
-Admin: Eres el administrador de este grupo
+Admin:
+    yes: Eres administrador de este grupo
+    no: Disponible para el administrador
 Join: Unirme a este grupo
 DisJoin: Desvincularme
 NoAccess: Sin acceso
@@ -71,7 +73,8 @@ Form:
         repeatpass: 'Confirmar contraseña'
 
 Groups:
-    noRoute: Ninguna ruta asignada 
+    noRoute: Ninguna ruta asignada
+    noMember: Debes formar parte del grupo 
     data:
         name: Nombre
         activity: Actividad

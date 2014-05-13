@@ -31,7 +31,7 @@
 							                <td><i class="fa fa-users"></i></td>
 							                <td>
 							                	{% if groupMember.Admin.Id == user.Id %}
-							                		<i rel="tooltip-top" title='{{ 'Admin'|trans }}' class="fa fa-key"></i>&nbsp;
+							                		<i rel="tooltip-top" title='{{ 'Admin.yes'|trans }}' class="fa fa-key"></i>&nbsp;
 							                	{% endif %}
 							                 {{ groupMember.Name }}</td>
 											<td><a href="{{ path('panel_group_timeline',{'id': groupMember.id}) }}"><i class="fa fa-comments-o"></i>&nbsp; {{ 'Groups.data.chat'|trans }}</a></td>
@@ -76,7 +76,7 @@
 												<a class="btn btn-xs btn-default" style="cursor:pointer;" data-href="{{ path('panel_group_delete', {'id': groupMember.id }) }}" data-toggle="confirmation"" data-title='{{ 'Confirmation.question'|trans }}' data-btnCancelLabel='{{ 'Confirmation.no'|trans }}' data-btnOkLabel='{{ 'Confirmation.yes'|trans }}'><i class="fa fa-trash-o"></i>&nbsp; {{ 'Options.delete'|trans }}</a>
 							                </td>
 							                {% else %}
-							                <td>&nbsp;</td>
+							                <td class="btn-xs"><i class="fa fa-ban"></i>&nbsp; {{ 'Admin.no'|trans }}</td>
 							                {% endif %}
 							            </tr>
 							        {% endfor %}
@@ -86,9 +86,9 @@
 							            <tr>
 							                <td><i class="fa fa-users"></i></td>
 							                <td>
-							                	<i rel="tooltip-top" title='{{ 'Admin'|trans }}' class="fa fa-key"></i>&nbsp;
+							                	<i rel="tooltip-top" title='{{ 'Admin.yes'|trans }}' class="fa fa-key"></i>&nbsp;
 							                 {{ restGroup.Name }}</td>
-											<td><i class="fa fa-warning	"></i>&nbsp; {{ 'NoAccess'|trans }}</a></td>
+											<td><i rel="tooltip-top" title='{{ 'Groups.noMember'|trans }}' class="fa fa-warning"></i>&nbsp; {{ 'NoAccess'|trans }}</a></td>
 											<td>
 												<a href="{{ path('panel_group_join', { 'id': restGroup.id }) }}" type="button" 
 												class="btn btn-default btn-xs group-join">
@@ -130,7 +130,7 @@
 												<a class="btn btn-xs btn-default" style="cursor:pointer;" data-href="{{ path('panel_group_delete', {'id': restGroup.id }) }}" data-toggle="confirmation"" data-title='{{ 'Confirmation.question'|trans }}' data-btnCancelLabel='{{ 'Confirmation.no'|trans }}' data-btnOkLabel='{{ 'Confirmation.yes'|trans }}'><i class="fa fa-trash-o"></i>&nbsp; {{ 'Options.delete'|trans }}</a>
 							                </td>
 							                {% else %}
-							                <td>&nbsp;</td>
+							                <td class="btn-xs"><i class="fa fa-ban"></i>&nbsp; {{ 'Admin.no'|trans }}</td>
 							                {% endif %}
 							            </tr>
 							            {% endif %}
