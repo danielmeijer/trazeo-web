@@ -67,7 +67,7 @@ class PanelRoutesController extends Controller
             $formData = $form->getData();
             $routeId = $formData->getId();
 
-            return $this->redirect($this->generateUrl('panel_route_edit',array('id'=>$routeId)));
+            return $this->redirect($this->generateUrl('panel_route_show',array('id'=>$routeId)));
 
         return array(
             'route' => $route,
