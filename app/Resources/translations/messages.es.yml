@@ -1,4 +1,7 @@
 Admin: Eres el administrador de este grupo
+Join: Unirme a este grupo
+DisJoin: Desvincularme
+NoAccess: Sin acceso
 ChangeVisibility: Cambiar visibilidad 
 Bad credentials: 'Nombre de usuario o Contraseña inválido'
 Sponsors:

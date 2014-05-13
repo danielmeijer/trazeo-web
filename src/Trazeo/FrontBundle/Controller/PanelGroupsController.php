@@ -102,22 +102,22 @@ class PanelGroupsController extends Controller
 		if($groupAdmin == $user || $groupVisibility == 0){
 			if (!$group) {
 				$notification = $container->addFlashMessages("warning","El grupo no existe o ha sido eliminado");
-				return $this->redirect($this->generateUrl('panel_group'));
+				return $this->redirect($this->generateUrl('panel_dashboard'));
 			}
 				
 			$group->addUserextendgroup($user);
 			$em->persist($group);
 			$em->flush();
 			$notification = $container->addFlashMessages("success","Has sido añadido al grupo correctamente");
-			return $this->redirect($this->generateUrl('panel_group'));
+			return $this->redirect($this->generateUrl('panel_dashboard'));
 					
 		}elseif ($groupVisibility == 1 ){
 			$notification = $container->addFlashMessages("warning","El grupo al que intentas unirte es privado. Necesitas una autorización");
-			return $this->redirect($this->generateUrl('panel_group'));
+			return $this->redirect($this->generateUrl('panel_dashboard'));
 			
 		}elseif ($groupVisibility == 2 ) {
 			$notification = $container->addFlashMessages("warning","Sólo puedes unirte a un grupo oculto mediante invitación");
-			return $this->redirect($this->generateUrl('panel_group'));
+			return $this->redirect($this->generateUrl('panel_dashboard'));
 
 	}	
 }
@@ -140,14 +140,14 @@ class PanelGroupsController extends Controller
 	
 		if (!$group) {
 			$notification = $container->addFlashMessages("warning","El grupo ha sido eliminado");
-			return $this->redirect($this->generateUrl('panel_group'));
+			return $this->redirect($this->generateUrl('panel_dashboard'));
 		}
 	
 		$group->removeUserextendgroup($user);
 		$em->persist($group);
 		$em->flush();
 		$notification = $container->addFlashMessages("warning","Has salido del grupo");
-		return $this->redirect($this->generateUrl('panel_group'));
+		return $this->redirect($this->generateUrl('panel_dashboard'));
 	}
 	
 	/**
