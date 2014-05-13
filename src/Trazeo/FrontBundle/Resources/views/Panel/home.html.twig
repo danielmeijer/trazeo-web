@@ -392,7 +392,7 @@
 		 var tutorialStoped=function(){
 			     running=0;
     			 $('#wrapper').css('opacity','1');
-    			 localStorage.setItem('tutorial','none');
+    			 //localStorage.setItem('tutorial','none');
              };
          //global options for tutotials
          var options={
@@ -411,13 +411,14 @@
 					    ,closeBoxLabel: "<i class='fa fa-sign-out' style='color:#428bca !important'>saltar</i>"
 						
 		    		};
- 		
- 		 //switch between diferents tutorials 
+
+ 		 //switch between diferents tutorials
+ 		  
 		 var tutorial=function(){switch(localStorage.getItem('tutorial')){
 		 case 'home':
 			 var loc=$(location).attr('href').toString();
 			 //global options customize 
-					 			var trip = new Trip([
+					 			 trip = new Trip([
 		    	                     { 
 			    	                     
 		       	                     	 sel : $('b')
@@ -448,9 +449,9 @@
 	        	                    	 sel : $('b')
 	        	                         ,content : 'Aqui termina nuestro paseo por Trazeo, disfruta de la aplicación'
 	        	                         ,position: 'e'
-		        	                     ,canGoNext: 'false'
-			        	                 ,finishLabel: 'Saber más'
-				        	             ,callback: function(){localStorage.setItem('tutorial','child');setTimeout(tutorial(),300);}
+		        	                     ,canGoNext: false
+			        	                 ,finishLabel: '<span onclick="tutorialExtendido()">Saber más</span>'
+				        	             //,callback: function(){localStorage.setItem('tutorial','child');setTimeout(tutorial(),300);}
 	        	                     }
 		  	            	   	],
 		  	            	   	options);
@@ -458,12 +459,7 @@
 					break;
 
 		 case 'child':
-			 var trip = new Trip([
-		    	                     { 
-		       	                     	 sel : $('b'),
-		       	                         content : 'Bienvenido a Trazeo, a continuación te explicaré las funciones basicas',
-		       	                         position: 'e'
-		       	                     },
+			  trip = new Trip([
 		   	                         { 
 		       	                    	 sel : $('#new_child'),
 		   	                             content : 'Aqui podemos añadir niños a trazeo',
@@ -514,7 +510,7 @@
 					trip.start();
 					break;
 		 case 'groups':
-	   		 var trip = new Trip([
+	   		  trip = new Trip([
 	   	                         { 
 	   	                             sel : $('.fa-users.fa-2x'),
 	   	                             content : 'Echemos un vistazo a la pantalla de grupos',
@@ -532,7 +528,7 @@
 	   				trip.start();
 	   				break;
 		 case 'routes':
-	  		 var trip = new Trip([
+	  		  trip = new Trip([
 	  	                         { 
 	  	                             sel : $('.fa-location-arrow.fa-2x'),
 	  	                             content : 'Echemos un vistazo a la pantalla de rutas',
@@ -549,7 +545,7 @@
 	  				trip.start();
 	  				break;
 		 case 'last':
-	   		 var trip = new Trip([
+	   		  trip = new Trip([
 	      	                     { 
 	        	                     	 sel : $('b'),
 	        	                         content : 'Aqui termina nuestro paseo por Trazeo, disfruta de la aplicación',
@@ -560,6 +556,16 @@
 	 			trip.start();
 	 			break;	
 		 }}
-	tutorial();
+		 
+		var tutorialExtendido=function(){
+			localStorage.setItem('tutorial','child');
+			trip.settings.backToTopWhenEnded=false;
+			trip.settings.onTripEnd=function(){};			
+			tutorial();
+		}
+		 
+ 		tutorial();
+
+  		 
 	</script>		
 {% endblock %}
