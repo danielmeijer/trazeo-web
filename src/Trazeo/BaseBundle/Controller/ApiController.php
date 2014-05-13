@@ -211,6 +211,20 @@ class ApiController extends Controller {
 				$em->persist($group);
 				$em->flush();
 				
+				$userextends = $group->getUserextendgroups()->toArray();
+				
+				$not = $this->container->get('sopinet_user_notification');
+				foreach($userextends as $userextend)
+				{
+					$not->addNotification(
+							"Ride.start",
+							"TrazeoBaseBundle:ERide",
+							$ride->getId(),
+							$this->generateUrl('panel_dashboard'),
+							$userextend->getUser()
+					);
+				}
+				
 				$event = new EEvent();
 				$event->setRide($ride);
 				$event->setAction("start");
@@ -521,7 +535,7 @@ class ApiController extends Controller {
 		$userextends = $group->getUserextendgroups();
 		
 		$not = $this->container->get('sopinet_user_notification');
-		foreach($userextend as $userextends)
+		foreach($userextends as $userextend)
 		{
 			$not->addNotification(
 					"Ride.finish",
