@@ -27,7 +27,7 @@
 						<br />
 					{% endfor %}
 				</ul>
-				<a class="label label-warning" data-toggle="collapse" data-parent="#accordion1" href="#collapseAddChild">Vincular alguno de mis niños con este grupo &nbsp;<i class="fa fa-chevron-down"></i></a>
+				<a class="label label-warning" data-toggle="collapse" data-parent="#accordion1" href="#collapseAddChild">Vincular alguno de mis niños con este grupo &nbsp;<i class="fa fa-chevron-down"></i>&nbsp;</a>
 				<div id="collapseAddChild" class="panel-collapse collapse">
 				<br />
 				{% if childsNoGroup|length <= 0 %}
@@ -49,6 +49,34 @@
 					</ul>
 				</div>
 			</div>
+			
+			<div class="row">
+			<br />
+				<h4 class="alert alert-success"><i class="fa fa-location-arrow"></i> &nbsp;Ruta del grupo</h4>
+				{% if group.Route %}
+				<ul><li class="alert-warning"><i class="fa fa-map-marker"></i>&nbsp; {{ group.Route.Name }}</li></ul>
+				{% else %}
+				<ul><li class="alert-warning"><i class="fa fa-map-marker"></i>&nbsp; Ninguna ruta asignada </li></ul>
+				{% endif %}
+				{% if group.Admin.Id == user.Id %}
+				<a class="label label-warning" data-toggle="collapse" data-parent="#accordion2" href="#collapseRoutes">Cambiar la ruta de este grupo &nbsp;<i class="fa fa-chevron-down"></i>&nbsp;</a>
+				<div id="collapseRoutes" class="panel-collapse collapse">
+					<br />
+					<ul>
+						{% for route in routes %}
+							<li class="alert-warning">
+							<i class="fa fa-location-arrow"></i>&nbsp;
+							<a href="{{ path('panel_group_setRoute', {'group':group.id, 'route':route.id}) }}">{{ route.name }}</a>
+							</li>
+							<br />
+						{% endfor %}
+					</ul>
+				</div>
+				{% endif %}
+			</div>
+			
+			
+			
 			<div class="row">
 			<br />
 				<h4 class="alert alert-success"><i class="fa fa-list-ul"></i> &nbsp;Otros padres</h4>
@@ -61,7 +89,7 @@
 			
 			<br />
 			<div class="row">
-				<h4 class="alert alert-success"><i class="fa fa-envelope"></i>&nbsp; Invitar al grupo</h4>
+				<h4 class="alert alert-success"><i class="fa fa-envelope"></i>&nbsp; Envía un invitación</h4>
 					<p class="alert alert-warning">Envía una notificación a otros padres para que puedan unirse a este grupo.</p>	
 					<form class="input-group custom-search-form" action="{{ path('panel_group_invite') }}" method="POST">
 						<input required type="email" name="userEmail" class="form-control" placeholder='{{ "Email"|trans }}'/>

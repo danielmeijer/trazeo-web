@@ -96,7 +96,7 @@ Groups:
         route: 'Asignar una ruta a este grupo'
 
     index:
-        description: 'Estos grupos se encuentran en tu ciudad o en la de alguno de tus niños, y podrían interesarte'
+        description: 'Listado completo de todos los grupos existentes y visibles en la plataforma'
         title: 'Sugerencia de grupos'
 
     name: 'Nombre del grupo'

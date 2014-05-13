@@ -8,11 +8,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Trazeo\BaseBundle\Entity\EGroup;
+use Trazeo\BaseBundle\Entity\ERoute;
 use Trazeo\BaseBundle\Entity\EGroupAccess;
 use Trazeo\BaseBundle\Entity\EGroupInvite;
 use Trazeo\BaseBundle\Entity\EChild;
 use Trazeo\BaseBundle\Form\GroupType;
 use Trazeo\BaseBundle\Controller\GroupsController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * Groups controller.
@@ -102,22 +104,22 @@ class PanelGroupsController extends Controller
 		if($groupAdmin == $user || $groupVisibility == 0){
 			if (!$group) {
 				$notification = $container->addFlashMessages("warning","El grupo no existe o ha sido eliminado");
-				return $this->redirect($this->generateUrl('panel_dashboard'));
+				return $this->redirect($this->generateUrl('panel_group'));
 			}
 				
 			$group->addUserextendgroup($user);
 			$em->persist($group);
 			$em->flush();
 			$notification = $container->addFlashMessages("success","Has sido añadido al grupo correctamente");
-			return $this->redirect($this->generateUrl('panel_dashboard'));
+			return $this->redirect($this->generateUrl('panel_group'));
 					
 		}elseif ($groupVisibility == 1 ){
 			$notification = $container->addFlashMessages("warning","El grupo al que intentas unirte es privado. Necesitas una autorización");
-			return $this->redirect($this->generateUrl('panel_dashboard'));
+			return $this->redirect($this->generateUrl('panel_group'));
 			
 		}elseif ($groupVisibility == 2 ) {
 			$notification = $container->addFlashMessages("warning","Sólo puedes unirte a un grupo oculto mediante invitación");
-			return $this->redirect($this->generateUrl('panel_dashboard'));
+			return $this->redirect($this->generateUrl('panel_group'));
 
 	}	
 }
@@ -140,14 +142,14 @@ class PanelGroupsController extends Controller
 	
 		if (!$group) {
 			$notification = $container->addFlashMessages("warning","El grupo ha sido eliminado");
-			return $this->redirect($this->generateUrl('panel_dashboard'));
+			return $this->redirect($this->generateUrl('panel_group'));
 		}
 	
 		$group->removeUserextendgroup($user);
 		$em->persist($group);
 		$em->flush();
 		$notification = $container->addFlashMessages("warning","Has salido del grupo");
-		return $this->redirect($this->generateUrl('panel_dashboard'));
+		return $this->redirect($this->generateUrl('panel_group'));
 	}
 	
 	/**
@@ -731,6 +733,7 @@ class PanelGroupsController extends Controller
     	$userchilds = $user->getChilds()->toArray();
     	$groupchilds = $group->getChilds()->toArray();
     	$childs = array_intersect($userchilds, $groupchilds);
+    	$routes = $em->getRepository('TrazeoBaseBundle:ERoute')->findAll();
     	
     	//Listado de niños que no están en el grupo y pertenecen al padre
     	$childsNoGroup = array_diff($userchilds, $childs);
@@ -739,10 +742,36 @@ class PanelGroupsController extends Controller
     			'childsNoGroup' => $childsNoGroup,
     			'childs' => $childs,
     			'user' => $user,
-    			'group' => $group
+    			'group' => $group,
+    			'routes' => $routes
     	);
     
     }
+    
+    
+	/**
+	 * Let AdminGroup to change Group Route.
+	 *
+	 * @Route("/setroute/{group}/{route}", name="panel_group_setRoute")
+	 * @Template()
+	 */
+    
+	public function seRouteAction($group,$route) {
+
+		$em = $this->getDoctrine()->getManager();
+
+		$groupEntity = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneById($group);
+		$routeEntity = $em->getRepository('TrazeoBaseBundle:ERoute')->find($route);
+	
+		$groupEntity->setRoute($routeEntity);
+		$em->persist($groupEntity);
+		$em->flush();
+		$container = $this->get('sopinet_flashMessages');
+		$notification = $container->addFlashMessages("success","La ruta ha sido asignada a este grupo");
+		return $this->redirect($this->generateUrl('panel_group_timeline', array('id' => $group)));
+	}
+    
+    
     
     /**
      * Edits an existing Groups entity.
