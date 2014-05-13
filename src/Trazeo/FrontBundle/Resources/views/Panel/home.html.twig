@@ -316,7 +316,6 @@
 {% block js %}
 	{{ parent() }} 
 	{% include 'SopinetFlashMessagesBundle:Messages:notification.html.twig' %}
-	var running=0;
 	{% if tutorial == 1 %}
 	<!-- Enable Tutorial -->
 	<script type="text/javascript">
@@ -339,6 +338,7 @@
 	<input type="hidden" id="group_ref" value="{{ path('panel_group')}}">
 
 	<script type="text/javascript">
+	var running=0;
 		 var prevent=function(e){
 			 if(running==1){
 			 e.preventDefault();
