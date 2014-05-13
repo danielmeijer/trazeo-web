@@ -159,6 +159,7 @@ class PanelRoutesController extends Controller
 		//$location = $route->getLocation();
 		//ldd($route->getPoints()->toArray());
         return array(
+        	'user' => $user,
         	'tutorialmap' => $tutorialmap,
         	'cont'		  => $cont,
             'route'      => $route

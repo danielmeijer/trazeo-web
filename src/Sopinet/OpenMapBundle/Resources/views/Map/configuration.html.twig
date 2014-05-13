@@ -1,3 +1,9 @@
+{% set start_button = "Route.show.buttons.start"|trans %}
+{% set end_button = "Route.show.buttons.end"|trans %}
+{% set erase_button = "Route.show.buttons.erase"|trans %}
+{% set pickup_button = "Route.show.buttons.pickup"|trans %}
+{% set pickup_erase_button = "Route.show.buttons.pickupErase"|trans %}
+{% set cancel_button = "Route.show.buttons.cancel"|trans %}
 <script type="text/javascript">
 	var points=new Array;
 	var events=new Array;
@@ -8,11 +14,17 @@
 		};
 	var editable= {{ editable }};
 	var realTime= {{ realTime }};
+	console.log(editable);
 	timeFromLastUpdate=0;
-	lastRoute=lastRoute.replace("0","");
+	//lastRoute=lastRoute.replace("0","");
 	lastId="0";
+	if(!editable){
+			$("#comenzar").hide();
+			$("#deshacer").hide();
+			$("#enviar").hide();								
+		};
+	
 </script>
-
 {% if routePoints is defined %}
 	{% for point in routePoints  %}
 	<script>
@@ -23,6 +35,7 @@
 		points.push(aux);
 	</script>
 	{%  endfor %}
+	
 {% endif %}
 
 
@@ -38,11 +51,12 @@
 <script type="text/javascript">
 	var gk, topo, thunderforest, osm, waymarkedtrails;
 	var menu=null;
+	var last_actions=null
 	var icon="leaflet-marker-icon leaflet-zoom-animated leaflet-clickable leaflet-marker-draggable";
 	
 	L.Icon.Default.imagePath = '{{ asset('bundles/sopinetopenmap/css/images') }}'; 
-	L.Icon.Default.prototype.options.iconSize[1]=33;
-	L.Icon.Default.prototype.options.iconSize[0]=20;
+	L.Icon.Default.prototype.options.iconSize[1]=35;
+	L.Icon.Default.prototype.options.iconSize[0]=22;
     gk = 'http://opencache.statkart.no/gatekeeper/gk';
 
     osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -159,12 +173,15 @@
     L.Map.prototype.disableRouting=function(){
     	$(".leaflet-marker-icon").css("pointer-events","none");
     	routing.draw(false);
-    	
+
+    	if(routing.getWaypoints().length>0){
     	$("#enviar").removeAttr("disabled");
     	$("#enviar").css('opacity','1');
+    	}
     	$("#comenzar").on('click',map.enableRouting);
-    	$("#comenzar").html('<i class="fa fa-flag"></i>&nbspComenzar');
+    	$("#comenzar").html('<i class="fa fa-flag"></i>&nbsp'+'{{ start_button }}');
 
+    	
     	return false;
     };
     	
@@ -177,7 +194,7 @@
     	$("#enviar").css('opacity','0.7');
 		$("#deshacer").on('click',map.removeLast);
 		$("#comenzar").on('click',map.disableRouting);
-		$("#comenzar").html('<i class="fa fa-flag"></i>Terminar');
+		$("#comenzar").html('<i class="fa fa-flag"></i>&nbsp'+'{{ end_button }}');
 		for(var marker in map._layers)if(map._layers[marker]._icon && map._layers[marker]._icon.className===icon)
 			map._layers[marker].on('contextmenu',showPopUpMenu);
 	
@@ -301,6 +318,7 @@
 		}
 	}
 	L.Map.prototype.removeLast=function(){
+		if(routing.getLast())
 			routing.removeWaypoint(routing.getLast(),function(){
 				if(routing.getWaypoints.length==0)
 				routing._segments.clearLayers()
@@ -371,6 +389,7 @@
     	removeWaypoint: function(e){
            routing.removeWaypoint(this._marker, function(){routing._draw.disable()});
            if(routing.getWaypoints().length>0)routing.rerouteAllSegments(function(){});
+           //last_events.push(map.removePickUpWaypoint(this).bind(this._marker)); 
            map.removeLayer(menu);
            stop(e);
     	},
@@ -378,6 +397,7 @@
     	pickUpWaypoint: function(e){
         	map.createPickUpWaypoint(this._marker,$("#textRecogida").val());
             map.removeLayer(menu);
+            last_events.push(map.removePickUpWaypoint(this).bind(this._marker));
             stop(e);
         },
         
@@ -410,13 +430,14 @@
 			recogida.attr('type','button');
 			
 			if(!this._marker.pickUp || this._marker.pickUp==false){ 
-				recogida.html("Crear punto de recogida");
+				recogida.html('{{ pickup_button }}');//"Crear punto de recogida"
 				var pickUp=this.pickUpWaypoint.bind(this);
 				recogida.one('click',pickUp);
+				
 			
 			}
 			else{
-				recogida.html("Eliminar punto de recogida");
+				recogida.html('{{ pickup_erase_button }}');//"Eliminar punto de recogida"
 				var pickUp=this.removePickUpWaypoint.bind(this);
 				recogida.one('click',pickUp);
 			}	
@@ -443,7 +464,7 @@
 			var borrar=$("#borrar");
 			borrar.attr('type','button');
 			borrar.css('width','100%');
-			borrar.html("Borrar punto");
+			borrar.html('{{ erase_button }}');//Borrar punto
 	
 
 			var erase=this.removeWaypoint.bind(this);
@@ -455,7 +476,7 @@
 			var cancelar=$("#cancelar");
 			cancelar.attr('type','button');
 			cancelar.css('width','100%');
-			cancelar.html("Cancelar Acción");
+			cancelar.html('{{ cancel_button }}');//Cancelar Acción
 
 			var cancel=this.cancelMenu.bind(this);
 			cancelar.one('click',cancel);

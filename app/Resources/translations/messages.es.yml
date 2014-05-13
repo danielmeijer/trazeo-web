@@ -164,6 +164,25 @@ Route:
     show:
         title: Ruta: %name%
         description: Mapa de paseo y datos referentes a la ruta
+        start: Empieza en
+        end: Termina en
+        distance: Distancía
+        childs: Niños/as
+        signed: apuntados en esta ruta
+        creator: Autor
+        map: Mapa del paseo
+        buttons:
+            start: Comenzar 
+            end: Terminar 
+            erase: Borrar punto 
+            pickup: Crear punto de recogida 
+            pickupErase: Eliminar punto de recogida 
+            cancel: Cancelar Acción 
+            undo: Deshacer 
+            save: Guardar
+        groups: Grupos con esta ruta
+        create: Crear nuevo Grupo
+        unasigned: No ningún grupo con esta ruta asignada
     mine: Mis Rutas
     list: Listado de rutas
     empty: Traza una ruta de paseo segura en tu ciudad para ir al cole

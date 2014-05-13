@@ -1,6 +1,10 @@
 {% set activeMenu = "route" %}
 {% set pageheader_title = "Route.show.title"|trans({'%name%': route.name}) %}
 {% set pageheader_description = "Route.show.description"|trans %}
+
+
+
+
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
 	{% block css %}
@@ -21,34 +25,34 @@
 		<tbody>
 			<tr>
 				<td><i class="fa fa-flag-o"></i></td>
-				<td>Empieza en </td>
+				<td>{{"Route.show.start"|trans}}</td>
 				<td id="start"></td>
 			</tr>
 			<tr>
 				<td><i class="fa fa-flag-checkered"></i></td>
-				<td>Termina en </td>
+				<td>{{"Route.show.end"|trans}}</td>
 				<td id="finish"></td>
 			</tr>
 			<tr>
 				<td><i class="fa fa-road"></i></td>
-				<td>Distancia </td>
+				<td>{{"Route.show.distance"|trans}}</td>
 				<td id="distance"></td>
 			</tr>
 			<tr>
 				<td><i class="fa fa-user"></i></td>
-				<td>Niños</td>
-				<td>{{ cont }} apuntados en esta ruta</td>
+				<td>{{"Route.show.childs"|trans}}</td>
+				<td>{{ cont }} {{"Route.show.signed"|trans}}</td>
 			</tr>	
 			<tr>
 				<td><i class="fa fa-key"></i></td>
-				<td>Autor</td>
+				<td>{{"Route.show.creator"|trans}}</td>
 				<td>{{ route.admin }}</td>
 			</tr>
 		</tbody>
 	</table>
 </div>
 
-		<h3 class="alert alert-success"><i class="fa fa-map-marker"></i>&nbsp; Mapa del paseo</h3>
+		<h3 class="alert alert-success"><i class="fa fa-map-marker"></i>&nbsp; {{"Route.show.map"|trans}}</h3>
 
 		<form method="post" action={{ path('panel_save_map') }} id="form">
 			<div id="mapa" class="col-md-12"></div>
@@ -56,16 +60,16 @@
 			<input type="hidden" id="inputPoints" name="inputPoints" value="" />
 			<input type="hidden" id="distanceInput" name="distanceInput" value="" />
 			<p>&nbsp;</p>
-			<button class="btn btn-default" id="comenzar" type="button">&nbsp; Comenzar</button>
-			<button class="btn btn-default" id="deshacer" type="button"><i class="fa fa-undo"></i>&nbsp; Deshacer</button>
-			<button class="btn btn-success" type="submit" id="enviar"><i class="fa fa-save"></i>&nbsp; Guardar</button>
+			<button class="btn btn-default" id="comenzar" type="button">&nbsp; {{"Route.show.buttons.start"|trans}}</button>
+			<button class="btn btn-default" id="deshacer" type="button"><i class="fa fa-undo"></i>&nbsp; {{"Route.show.buttons.undo"|trans}}</button>
+			<button class="btn btn-success" type="submit" id="enviar" disabled="disabled"><i class="fa fa-save"></i>&nbsp; {{"Route.show.buttons.save"|trans}}</button>
 		</form>
 	<br />
 		<div class="row">
-			<h3 class="alert alert-success"><i class="fa fa-users"></i>&nbsp; Grupos con esta ruta
+			<h3 class="alert alert-success"><i class="fa fa-users"></i>&nbsp; {{"Route.show.groups"|trans}}
 			</span>
 				<a href="{{ path('panel_group_new') }}" class="label label-success pull-right">
-					<i class="fa fa-plus-circle"></i>&nbsp; Crear nuevo Grupo
+					<i class="fa fa-plus-circle"></i>&nbsp; {{"Route.show.create"|trans}}
 				</a>
 			</h3>
 			{% if route.groups | length > 0 %}	
@@ -82,7 +86,7 @@
 			{% else %}
 				<p class="alert alert-warning col-md-6">
 				<i class="fa fa-warning"></i>&nbsp;		
-				No ningún grupo con esta ruta asignada</p>	
+				{{"Route.show.unasigned"|trans}}</p>	
 			{% endif %}
 		</div>
 		<br />
@@ -215,5 +219,10 @@
 	 	}
      </script>
 	{% endjavascripts %}
-	{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': route.points, 'editable': "true", 'realTime': "false", 'rideEvents': ""} %}
-{% endblock %}
+		{% if route.admin.id==user.id %}
+			{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': route.points,'editable': "true", 'realTime': "true", 'rideEvents': ''} %}
+			#
+		{% else %}
+			{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': route.points,'editable': "false", 'realTime': "true", 'rideEvents': ''} %}
+		{% endif %}
+	{% endblock %}
