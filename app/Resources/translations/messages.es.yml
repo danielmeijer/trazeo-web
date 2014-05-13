@@ -1,13 +1,20 @@
+Description: La aplicación web / móvil para recuperar el camino al cole a pie
 Admin: Eres el administrador de este grupo
 Join: Unirme a este grupo
 DisJoin: Desvincularme
 NoAccess: Sin acceso
 ChangeVisibility: Cambiar visibilidad 
 Bad credentials: 'Nombre de usuario o Contraseña inválido'
+
+DeleteAccount:
+    title: Eliminar cuenta
+    description: Si deseas eliminar tu perfil ahora, ponte en contacto con nosotros a través del email info@trazeo.es y procesaremos tu petición.
+
 Sponsors:
     current: Patrocinadores
 Btn:
     success: Guardar
+    back: volver
 
 Children:
     mine: Mis niños
@@ -124,6 +131,10 @@ Navbar:
     settings: Configuración
 
 Notifications:
+    title: Listado de notificaciones
+    description: Puedes consultar y revisar todas las notificaciones que te han sido enviadas como usuario de la plataforma
+    link: Consultar el historial de notificaciones
+    list: Historial de todas las notificaciones que has recibido
     child:
         invite:
             accept: 'El usuario %0 ha aceptado la invitación para ser tutor del niño %1'
@@ -230,6 +241,9 @@ Userextend:
     profile:
         edit: 'Editar perfil'
         title: 'Perfil de usuario'
+        location: Localización
+        profile: Datos de perfil
+        avatar: Avatar
 
 change_password:
     flash:

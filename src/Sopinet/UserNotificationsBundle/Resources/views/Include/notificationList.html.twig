@@ -1,5 +1,5 @@
 <h4 class="alert alert-success">
-	<i class="fa fa-clipboard"></i>&nbsp; Listado de todas las notificaciones que has recibido
+	<i class="fa fa-clipboard"></i>&nbsp; {{ 'Notifications.list'|trans }}
 	<span class="btn btn-circle btn-success pull-right">{{ notifications|length() }}</span>
 </h4><br />
     	{% for notification in notifications %}

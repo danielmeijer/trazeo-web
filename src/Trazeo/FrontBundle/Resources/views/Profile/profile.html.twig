@@ -3,12 +3,12 @@
 {% set pageheader_description = "Userextend.index.description"|trans %}
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %} {% block
 body_content %}
-<span style="cursor:pointer;" class="label label-warning pull-right" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash-o"></i> Eliminar cuenta</span>
+<span style="cursor:pointer;" class="label label-warning pull-right" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash-o"></i> {{ 'DeleteAccount.title'|trans }}</span>
 <form class="form-horizontal" id="profile-edit" method="post" action="{{ path('panel_profile_save') }}">
 	<ul class="nav nav-tabs nav-bottom">
-		<li class="active"><a href="#location" data-toggle="tab">Location</a></li>
-		<li><a href="#profile" data-toggle="tab">Profile</a></li>
-		<li><a href="#avatar" data-toggle="tab">Avatar</a></li>
+		<li class="active"><a href="#location" data-toggle="tab">{{ 'Userextend.profile.location'|trans }}</a></li>
+		<li><a href="#profile" data-toggle="tab">{{ 'Userextend.profile.profile'|trans }}</a></li>
+		<li><a href="#avatar" data-toggle="tab">{{ 'Userextend.profile.avatar'|trans }}</a></li>
 	</ul>
 	<!-- Tab panes -->
 	<div class="container">
@@ -19,7 +19,7 @@ body_content %}
 			<div class="tab-pane fade" id="profile">
 				{{ form_widget(form_profile) }}
 			</div>
-			<div class="tab-pane fade" id="avatar">posible avatar</div>
+			<div class="tab-pane fade" id="avatar"><i class="alert alert-warning fa fa-user fa-4x"></i></div>
 			{{ form_errors(form_profile) }}
 			{{ form_errors(form_userextend) }}
 		</div>
@@ -34,14 +34,13 @@ body_content %}
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Eliminar cuenta</h4>
+        <h4 class="modal-title" id="myModalLabel">{{ 'DeleteAccount.title'|trans }}</h4>
       </div>
       <div class="modal-body">
-		Si deseas eliminar tu perfil ahora,
-		 ponte en contacto con nosotros a través del email <a href="mailto:info@trazeo.es">info@trazeo.es</a> y procesaremos tu petición.
+			{{ 'DeleteAccount.description'|trans }}
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fa fa-mail-reply-all"></i> volver</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fa fa-mail-reply-all"></i> {{ 'Btn.back'|trans }}</button>
       </div>
     </div>
   </div>
