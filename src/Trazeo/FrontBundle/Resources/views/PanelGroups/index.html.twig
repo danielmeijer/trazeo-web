@@ -13,17 +13,11 @@
         	<div class="col-md-10">
 				<h4>Listado de grupos creados en Trazeo</h4>
 				<form action="{{ path('panel_group') }}">
-					<a class="pull-right" href="{{ path('panel_group_new') }}">
+					<a class="pull-left" href="{{ path('panel_group_new') }}">
 						<button type="button" class="btn btn-success" id="new_group">
-							 <i class="fa fa-users"></i>&nbsp; {{ 'Groups.new.title'|trans }}									
+							 <i class="fa fa-plus-circle"></i>&nbsp; {{ 'Groups.new.title'|trans }}									
 						</button>
 					</a>	
-					<div class="input-group custom-search-form col-md-4">
-						<input type="search" class="form-control" placeholder='{{ "Trans.search.group"|trans }}'/>
-						<span class="input-group-btn">
-						<button class="btn btn-success" type="submit"><i class="fa fa-search"></i></button>
-						</span>	
-					</div>
 				</form>	
 			</div>
 		
@@ -61,247 +55,140 @@
 	        	</div>
 	        	{% endif %}
 	        {% endfor %}
-   		
-	<div class="panel-group" id="accordion1">
-          <div class="alert alert-success">
-          	<i class="fa fa-2x fa-check"></i>&nbsp;
-        	<p class="label label-success">Formas parte de los siguientes grupos
-        	<span class="btn btn-default btn-circle">{{ userGroups|length }}</span>
-        	</p>
-        </div>      
-		{% for userGroup in userGroups %}
-				<div class="panel panel-warning">
-					<div class="panel-heading">
-			        	<h4 class="panel-title" style="cursor:pointer;" data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ userGroup.id }}">
-							{% if userGroup.Admin.Id == user.Id %}
-								<i class="fa fa-user" rel="tooltip-top" title="Eres administrador de este grupo"></i>
-							{% endif %}	
-			            	<a data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ userGroup.id }}">
-			            	{{ userGroup.name }}
-			            	</a>
-						</h4>
-		            	<div class="pull-right" style="margin-top:-20px;">
-							<a href="{{ path('panel_group_timeline',{'id': userGroup.id}) }}" type="button" 
-							class="btn btn-default btn-xs group-timeline" rel="tooltip-top" title="Timeline de grupo">
-								<i class="fa fa-comments-o"></i> Chat del grupo
-							</a>
-							<a href="{{ path('panel_group_disjoin', { 'id': userGroup.id }) }}" type="button" 
-							class="btn btn-default btn-xs group-disjoin">
-								<i class="fa fa-sign-out"></i> {{ 'DisJoin'|trans }}
-							</a>
-							{% if userGroup.Admin.Id == user.Id %}
-									<a href="{{ path('panel_group') }}{{ userGroup.id }}/edit" type="button" 
-									class="btn btn-default btn-xs group-edit">
-										<i class="fa fa-pencil"></i> {{ 'Options.edit'|trans }}
-									</a> 
-							{% endif %}
-			            	 	{% if userGroup.Visibility == 0 %}
-									<span type="button" groupVisibility="0" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': userGroup.id, 'visibility': "replace" }) }}";
-									id="member-{{ userGroup.id }}"
-									class="btn btn-success btn-xs group-visibility" rel="tooltip-top" title="Grupo público">
-										<i class="fa fa-unlock"></i> {{ 'Groups.visibility.public'|trans }}
-									</span>
-								{% endif %}
-			            	 	{% if userGroup.Visibility == 1 %}
-									<span href="#" type="button" groupVisibility="1" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': userGroup.id, 'visibility': "replace" }) }}";
-									id="member-{{ userGroup.id }}" 
-									class="btn btn-danger btn-xs group-visibility" rel="tooltip-top" title="Grupo privado">
-										<i class="fa fa-lock"></i> {{ 'Groups.visibility.private'|trans }}
-									</span>
-								{% endif %}
-		            	 	{% if userGroup.Visibility == 2 %}
-								<span href="#" type="button" groupVisibility="2" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': userGroup.id, 'visibility': "replace" }) }}";
-								id="member-{{ userGroup.id }}"
-								class="btn btn-warning btn-xs group-visibility" rel="tooltip-top" title="Grupo oculto">
-									<i class="fa fa-eye-slash"></i> {{ 'Groups.visibility.hidden'|trans }}
-								</span>									
-		            	 	{% endif %}
-		            	 	{% if userGroup.Admin.Id == user.Id %}
-		            	 		<script type="text/javascript">
-									document.getElementById("member-{{ userGroup.id }}").setAttribute("data-toggle","confirmationChange");
-								</script> 	
-							{% endif %}
-		            	 </div>
-					</div>
-					<div id="collapse{{ userGroup.id }}" class="panel-collapse collapse {% if loop.index == 1 %}in{% endif %}">
-						<div class="panel-body">
+
+				<!-- START resumeGroups -->
+				<div class="resumeGroups alert alert-warning" id="groups">
+					<div>
+						<div class="alert alert-warning">
 							<table class="table">
-								<tbody>
+								<thead>
 									<tr>
-										<td><i class="fa fa-key"></i></td>
-										<td>Administrador del grupo</td>
-										<td>{{ userGroup.admin.Nick }}</td>
+										<th>#</th>
+										<th>{{ 'Groups.data.name'|trans }}</th>
+										<th>{{ 'Groups.data.activity'|trans }}</th>
+										<th>{{ 'Groups.data.member'|trans }}</th>
+										<th>{{ 'Groups.data.visibility'|trans }}</th>
+										<th>{{ 'Groups.data.route'|trans }}</th>
+										<th>{{ 'Groups.data.options'|trans }}</th>
 									</tr>
-									<tr>
-										<td><i class="fa fa-location-arrow"></i></td>
-										<td>Ruta asignada</td>
-										<td>
-										{% if userGroup.route %}
-											<a href="{{ path('panel_route') }}{{ userGroup.route.id }}">{{ userGroup.route.name }}</a>
-										{% else %}
-											{{ 'Groups.noRoute'|trans }}
-										{% endif %}
-										</td>
-									</tr>
-									<tr>
-										<td><i class="fa fa-user"></i></td>
-										<td>Nº de niños en este grupo</td>
-										<td><i class="btn btn-circle btn-warning"> {{ userGroup.Childs|length }}</i</td>
-									</tr>
-									<tr>
-										<td><i class="fa fa-users"></i></td>
-										<td>Miembros del grupo</td>
-										<td>
-										{% for userGroupsUser in userGroup.userextendgroups %}
-											<span class="label label-warning">{{ userGroupsUser.Nick }}</span>
-										{% endfor %}
-										</td>
-									</tr>
-								</tbody>
+								</thead>
+							        <tbody>
+							        {% for groupMember in groupsMember %}
+							            <tr>
+							                <td><i class="fa fa-users"></i></td>
+							                <td>
+							                	{% if groupMember.Admin.Id == user.Id %}
+							                		<i rel="tooltip-top" title='{{ 'Admin'|trans }}' class="fa fa-key"></i>&nbsp;
+							                	{% endif %}
+							                 {{ groupMember.Name }}</td>
+											<td><a href="{{ path('panel_group_timeline',{'id': groupMember.id}) }}"><i class="fa fa-comments-o"></i>&nbsp; {{ 'Groups.data.chat'|trans }}</a></td>
+											<td>
+												<a href="{{ path('panel_group_disjoin', { 'id': groupMember.id }) }}" type="button" 
+												class="btn btn-default btn-xs group-disjoin">
+													<i class="fa fa-sign-out"></i> {{ 'DisJoin'|trans }}
+												</a>
+											</td>
+											{% if groupMember.Admin.Id == user.Id %}
+								                {% if  groupMember.Visibility == 0 %}
+								                <td><i rel="tooltip-top" title='{{ 'ChangeVisibility'|trans }}' class="fa fa-unlock btn btn-xs btn-success"
+								                groupVisibility="0" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': groupMember.id, 'visibility': "replace" }) }}";
+												id="visibility-{{ groupMember.id }}" data-toggle="confirmationChange"></i>&nbsp; {{ 'Groups.visibility.public'|trans }}</td>
+								                {% elseif groupMember.Visibility == 1 %}
+								                <td><i rel="tooltip-top" title='{{ 'ChangeVisibility'|trans }}' class="fa fa-lock btn btn-xs btn-danger"
+								                groupVisibility="1" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': groupMember.id, 'visibility': "replace" }) }}";
+												id="visibility-{{ groupMember.id }}" data-toggle="confirmationChange"></i>&nbsp; {{ 'Groups.visibility.private'|trans }}</td>
+								                {% elseif groupMember.Visibility == 2 %}
+								                <td><i rel="tooltip-top" title='{{ 'ChangeVisibility'|trans }}' class="fa fa-eye-slash btn btn-xs btn-warning"
+								                groupVisibility="2" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': groupMember.id, 'visibility': "replace" }) }}";
+												id="visibility-{{ groupMember.id }}" data-toggle="confirmationChange"></i>&nbsp; {{ 'Groups.visibility.hidden'|trans }}</td>
+								                {% endif %}
+								             {% else %}   
+								             {% if  groupMember.Visibility == 0 %}
+								                <td><i class="fa fa-unlock btn btn-xs btn-success"></i>&nbsp; {{ 'Groups.visibility.public'|trans }}</td>
+								                {% elseif groupMember.Visibility == 1 %}
+								                <td><i class="fa fa-unlock btn btn-xs btn-danger"></i>&nbsp; {{ 'Groups.visibility.private'|trans }}</td>
+								                {% elseif groupMember.Visibility == 2 %}
+								                <td><i class="fa fa-unlock btn btn-xs btn-warning"></i>&nbsp; {{ 'Groups.visibility.hidden'|trans }}</td>
+								              {% endif %}
+							                {% endif %}
+							               
+							                {% if groupMember.route %}
+							                <td><a href="{{ path('panel_route')}}{{ groupMember.Route.Id }}">{{ groupMember.Route.Name }}</a></td>
+							                {% else %}
+							                <td>{{ 'Groups.noRoute'|trans }}</td>
+							                {% endif %}
+											{% if groupMember.Admin.Id == user.Id %}
+							                <td>
+												<a class="btn btn-xs btn-default" href="{{ path('panel_group') }}{{ groupMember.id }}/edit"><i class="fa fa-pencil"></i>&nbsp;  {{ 'Options.edit'|trans }}</a>
+												<a class="btn btn-xs btn-default" style="cursor:pointer;" data-href="{{ path('panel_group_delete', {'id': groupMember.id }) }}" data-toggle="confirmation"" data-title='{{ 'Confirmation.question'|trans }}' data-btnCancelLabel='{{ 'Confirmation.no'|trans }}' data-btnOkLabel='{{ 'Confirmation.yes'|trans }}'><i class="fa fa-trash-o"></i>&nbsp; {{ 'Options.delete'|trans }}</a>
+							                </td>
+							                {% else %}
+							                <td>&nbsp;</td>
+							                {% endif %}
+							            </tr>
+							        {% endfor %}
+							        
+							        {% for restGroup in restGroups %}
+							            <tr>
+							                <td><i class="fa fa-users"></i></td>
+							                <td>
+							                {% if restGroup.Admin.Id == user.Id %}
+							                	<i rel="tooltip-top" title='{{ 'Admin'|trans }}' class="fa fa-key"></i>&nbsp;
+							                {% endif %}
+							                 {{ restGroup.Name }}</td>
+											<td><i class="fa fa-warning	"></i>&nbsp; {{ 'NoAccess'|trans }}</a></td>
+											<td>
+												<a href="{{ path('panel_group_join', { 'id': restGroup.id }) }}" type="button" 
+												class="btn btn-default btn-xs group-join">
+													<i class="fa fa-sign-in"></i> {{ 'Join'|trans }}
+												</a> 
+											</td>
+											{% if restGroup.Admin.Id == user.Id %}
+								                {% if  restGroup.Visibility == 0 %}
+								                <td><i rel="tooltip-top" title='{{ 'ChangeVisibility'|trans }}' class="fa fa-unlock btn btn-xs btn-success"
+								                groupVisibility="0" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': restGroup.id, 'visibility': "replace" }) }}";
+												id="visibility-{{ restGroup.id }}" data-toggle="confirmationChange"></i>&nbsp; {{ 'Groups.visibility.public'|trans }}</td>
+								                {% elseif restGroup.Visibility == 1 %}
+								                <td><i rel="tooltip-top" title='{{ 'ChangeVisibility'|trans }}' class="fa fa-lock btn btn-xs btn-danger"
+								                groupVisibility="1" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': restGroup.id, 'visibility': "replace" }) }}";
+												id="visibility-{{ restGroup.id }}" data-toggle="confirmationChange"></i>&nbsp; {{ 'Groups.visibility.private'|trans }}</td>
+								                {% elseif restGroup.Visibility == 2 %}
+								                <td><i rel="tooltip-top" title='{{ 'ChangeVisibility'|trans }}' class="fa fa-eye-slash btn btn-xs btn-warning"
+								                groupVisibility="2" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': restGroup.id, 'visibility': "replace" }) }}";
+												id="visibility-{{ restGroup.id }}" data-toggle="confirmationChange"></i>&nbsp; {{ 'Groups.visibility.hidden'|trans }}</td>
+								                {% endif %}
+								             {% else %}   
+								             {% if  restGroup.Visibility == 0 %}
+								                <td><i class="fa fa-unlock btn btn-xs btn-success"></i>&nbsp; {{ 'Groups.visibility.public'|trans }}</td>
+								                {% elseif restGroup.Visibility == 1 %}
+								                <td><i class="fa fa-unlock btn btn-xs btn-danger"></i>&nbsp; {{ 'Groups.visibility.private'|trans }}</td>
+								                {% elseif restGroup.Visibility == 2 %}
+								                <td><i class="fa fa-unlock btn btn-xs btn-warning"></i>&nbsp; {{ 'Groups.visibility.hidden'|trans }}</td>
+								              {% endif %}
+							                {% endif %}
+							               
+							                {% if restGroup.route %}
+							                <td><a href="{{ path('panel_route')}}{{ restGroup.Route.Id }}">{{ restGroup.Route.Name }}</a></td>
+							                {% else %}
+							                <td>{{ 'Groups.noRoute'|trans }}</td>
+							                {% endif %}
+											{% if restGroup.Admin.Id == user.Id %}
+							                <td>
+												<a class="btn btn-xs btn-default" href="{{ path('panel_group') }}{{ restGroup.id }}/edit"><i class="fa fa-pencil"></i>&nbsp;  {{ 'Options.edit'|trans }}</a>
+												<a class="btn btn-xs btn-default" style="cursor:pointer;" data-href="{{ path('panel_group_delete', {'id': restGroup.id }) }}" data-toggle="confirmation"" data-title='{{ 'Confirmation.question'|trans }}' data-btnCancelLabel='{{ 'Confirmation.no'|trans }}' data-btnOkLabel='{{ 'Confirmation.yes'|trans }}'><i class="fa fa-trash-o"></i>&nbsp; {{ 'Options.delete'|trans }}</a>
+							                </td>
+							                {% else %}
+							                <td>&nbsp;</td>
+							                {% endif %}
+							            </tr>
+							        {% endfor %}
+							        </tbody>
 							</table>
-						{% if userGroup.Visibility == 2 and  userGroup.Admin.Id == user.Id %}
-						<p class="text-muted">
-						<i class="fa fa-envelope"></i>&nbsp;
-							Envía una invitación a otros usuarios para que puedan unirse a este grupo oculto
-						</p>
-						<form class="col-md-3 input-group custom-search-form" action="{{ path('panel_group_invite') }}" method="POST">
-							<input required type="email" name="userEmail" class="form-control" placeholder='{{ "Email"|trans }}'/>
-							<input type="hidden" name="group" value="{{ userGroup.id }}"/>
-							<span class="input-group-btn">
-							<button class="btn btn-warning" type="submit"><i class="fa fa-check"></i></button>
-							</span>				
-						</form>
-							
-						{% endif %}
 						</div>
 					</div>
 				</div>
 
-		{% endfor %}
-		</div>
-	<div class="panel-group" id="accordion2">
-          <div class="alert alert-success">
-          	<i class="fa fa-2x fa-warning"></i>
-          	&nbsp;
-        	<p class="label label-success">Otros grupos que hay en tu ciudad
-        	<span class="btn btn-default btn-circle ">{{ groups|length }}</span>
-        	</p>
-        </div>    
-        {# Grupos en los que el usuario logueado no está inscrito, aunque sea admin de dicho grupo #}
-		{% for group in groups %}
-
-		{% if group.Visibility != 2 or group.Admin.Id == user.Id	 %}
-			<div class="panel panel-warning">
-				<div class="panel-heading">
-		        	<h4 class="panel-title" style="cursor:pointer;" data-toggle="collapse" data-parent="#accordion2" href="#collapse{{ group.id }}">
-						{% if group.Admin.Id == user.Id %}
-								<i class="fa fa-user" rel="tooltip-top" title="Eres administrador de este grupo"></i>
-						{% endif %}
-		            	<a data-toggle="collapse" data-parent="accordion2" href="#collapse{{ group.id }}">{{ group.name }}</a>
-					</h4>
-	            	<div class="pull-right" style="margin-top:-20px;">
-		            	{% if group.Visibility == 1 and group.Admin.Id != user.Id %}
-								<a href="{{ path('panel_group_requestJoin', { 'id': group.id }) }}" type="button" 
-								class="btn btn-default btn-xs" rel="tooltip-top" title="Solictar acceso al grupo">
-									<i class="fa fa-key"></i> Solicitar acceso
-								</a> 
-						{% endif %}
-	
-						{% if group.Visibility == 0 or group.Admin.Id == user.Id%}										
-								<a href="{{ path('panel_group_join', { 'id': group.id }) }}" type="button" 
-								class="btn btn-default btn-xs group-join">
-									<i class="fa fa-users"></i> {{ 'Join'|trans }}
-								</a> 
-						{% endif %}
-						{% if group.Admin.Id == user.Id %}
-								<a href="{{ path('panel_group') }}{{ group.id }}/edit" type="button" 
-								class="btn btn-default btn-xs group-edit" rel="tooltip-top" title="Editar información">
-									<i class="fa fa-pencil"></i> Editar
-								</a> 
-						{% endif %}
-	            	 	{% if group.Visibility == 0 %}
-							<span type="button"   groupVisibility="0" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
-							id="nomember-{{ group.id }}"
-							class="btn btn-success btn-xs group-visibility" rel="tooltip-top" title="Grupo público">
-								<i class="fa fa-unlock"></i> {{ 'Groups.visibility.public'|trans }}
-							</span>
-						{% endif %}
-	            	 	{% if group.Visibility == 1 %}
-							<span href="#" type="button" groupVisibility="1" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
-							id="nomember-{{ group.id }}"
-							class="btn btn-danger btn-xs group-visibility" rel="tooltip-top" title="Grupo privado">
-								<i class="fa fa-lock"></i> {{ 'Groups.visibility.private'|trans }}
-							</span>
-						{% endif %}
-	            	 	{% if group.Visibility == 2 %}
-							<span href="#" type="button" groupVisibility="2" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
-							id="nomember-{{ group.id }}"
-							class="btn btn-warning btn-xs group-visibility" rel="tooltip-top" title="Grupo oculto">
-								<i class="fa fa-eye-slash"></i> {{ 'Groups.visibility.hidden'|trans }}
-							</span>	
-	            	 	{% endif %}
-						{% if group.Admin.Id == user.Id %}
-						<script type="text/javascript">
-								document.getElementById("nomember-{{ group.id }}").setAttribute("data-toggle","confirmationChange");
-						</script> 
-				{% endif %}
-	            	</div>
-				</div>
-				<div id="collapse{{ group.id }}" class="panel-collapse collapse">
-					<div class="panel-body">
-
-							<table class="table">
-								<tbody>
-									<tr>
-										<td><i class="fa fa-key"></i></td>
-										<td>Administrador del grupo</td>
-										<td>{{ group.admin.Nick }}</td>
-									</tr>
-									<tr>
-										<td><i class="fa fa-location-arrow"></i></td>
-										<td>Ruta asignada</td>
-										<td>
-										{% if group.route %}
-											<a href="{{ path('panel_route') }}{{ group.route.id }}">{{ group.route.name }}</a>
-										{% else %}
-											Ninguna ruta asignada										
-										{% endif %}
-										</td>
-									</tr>
-									<tr>
-										<td><i class="fa fa-user"></i></td>
-										<td>Nº de niños en este grupo</td>
-										<td><i class="btn btn-circle btn-warning"> {{ group.Childs|length }}</i</td>
-									</tr>
-									<tr>
-										<td><i class="fa fa-users"></i></td>
-										<td>Miembros del grupo</td>
-										<td>
-										{% for groupUser in group.userextendgroups %}
-											<span class="label label-warning">{{ groupUser.Nick }}</span>
-										{% endfor %}
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						{% if group.Visibility == 2 and  group.Admin.Id == user.Id %}
-							<form class="col-md-3" action="{{ path('panel_group_invite') }}" method="POST">
-								<input class="form-control" type="email" name="userEmail" placeholder="Correo electrónico" />
-								<input type="hidden" name="group" value="{{ group.id }}"/>
-								<input class="btn btn-warning" type="submit" value="Invitar">							
-							</form>
-						{% endif %}
-					</div>
-					
-	
-				</div>
-			</div>
-		{% endif %}
-		{% endfor %}
-		<p>&nbsp;</p>
-     </div>
-
-{% endblock %}
+{% endblock %}{# END body_content #}
 
 {% block js %} {{ parent() }} 
 	<input type="hidden" id="path_home" value="{{ path('panel_dashboard') }}">

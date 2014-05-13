@@ -500,35 +500,35 @@ class PanelGroupsController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $fos_user = $this->container->get('security.context')->getToken()->getUser();
-        
-        $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
-        // Grupos a los que pertenece el usuario
-        $userGroups = $user->getGroups();
-        $userId = $user->getId();
-        
-        // Grupos de los cuales el usuario es administrador
-        $userAdmin = $em->getRepository('TrazeoBaseBundle:EGroup')->findByAdmin($userId);
-        // Listado de todas las peticiones de acceso a un grupo por parte de otros usuarios        
-        // Se cogen todos los grupos y se "restan" los cuales el usuario forma parte
-        $allGroups = $em->getRepository('TrazeoBaseBundle:EGroup')->findAll();
-        $groups = array_diff($allGroups,$userGroups->toArray());
-        
-        $allGroupsAccess = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findAll();
-        $allGroupsInvite = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findAll();
-              
-        return array(
-        	'userGroups' => $userGroups,
-        	'userAdmin' => $userAdmin,
-        	'allGroupsAccess' => $allGroupsAccess,
-        	'allGroupsInvite' => $allGroupsInvite,
-        	'groups' => $groups,
-        	'user' => $user
-        );
-    }
+	public function indexAction()
+	{
+		$em = $this->getDoctrine()->getManager();
+		$fos_user = $this->container->get('security.context')->getToken()->getUser();
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+		$userId = $user->getId();
+		 
+		$groupsMember = $user->getGroups();
+		$allGroups = $em->getRepository('TrazeoBaseBundle:EGroup')->findAll();
+		$restGroups = array_diff($allGroups,$groupsMember->toArray());
+	
+		$groupsAdmin = $user->getAdminGroups();
+		$userAdmin = $em->getRepository('TrazeoBaseBundle:EGroup')->findByAdmin($userId);
+		
+		$allGroupsAccess = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findAll();
+		$allGroupsInvite = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findAll();
+	
+		return array(
+				'user' => $user,
+				'userAdmin' => $userAdmin,
+				'groupsAdmin' => $groupsAdmin,
+				'allGroupsAccess' => $allGroupsAccess,
+				'allGroupsInvite' => $allGroupsInvite,
+				'restGroups' => $restGroups,
+				'groupsMember' => $groupsMember
+	
+		);
+	}
+
     /**
      * Creates a new Group entity.
      *
