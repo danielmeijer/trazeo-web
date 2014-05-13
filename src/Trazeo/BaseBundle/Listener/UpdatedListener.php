@@ -19,13 +19,13 @@ class UpdatedListener implements EventSubscriber {
 	}	
 
 	public function postPersist(LifecycleEventArgs $args) {
-		$this->execUpdate($args);
+		$this->execUpdate($args, 'persist');
 	}
 	public function postUpdate(LifecycleEventArgs $args) {
-		$this->execUpdate($args);
+		$this->execUpdate($args, 'update');
 	}
 	
-	public function execUpdate($args) {
+	public function execUpdate($args, $action) {
 		$entity = $args->getEntity();
 		$em = $args->getEntityManager();
 		
@@ -37,7 +37,8 @@ class UpdatedListener implements EventSubscriber {
 				$em->flush();
 			}
 		}
-		if ($entity instanceof FOSUser) {
+		// Sólo se ejecuta la primera vez que guardamos el usuario (persist), no en cada Update
+		if ($entity instanceof FOSUser && $action == 'persist') {
 		
 			$email = $entity->getEmail();
 			$userExtend = new UserExtend();

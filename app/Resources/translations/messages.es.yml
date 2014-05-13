@@ -1,3 +1,5 @@
+Admin: Eres el administrador de este grupo
+ChangeVisibility: Cambiar visibilidad 
 Bad credentials: 'Nombre de usuario o Contraseña inválido'
 Sponsors:
     current: Patrocinadores
@@ -43,8 +45,8 @@ Children:
         girl: Niña
 
     visibility:
-        disabled: Privado
-        enabled: Público
+        private: Privado
+        public: Público
 
 Confirmation:
     no: No
@@ -62,8 +64,9 @@ Groups:
     noRoute: Ninguna ruta asignada 
     data:
         name: Nombre
+        activity: Actividad
+        member: Miembro del grupo
         visibility: Visibilidad
-        activity: Actividad del grupo
         route: Ruta
         chat: Chat del grupo
         options: Opciones
@@ -137,9 +140,6 @@ Notifications:
             let: 'Se ha aceptado tu petición para unirte al grupo %0'
             request: 'El usuario %0 ha solicitado unirse al grupo %1'
 
-Panel:
-    title: 'Panel de control'
-
 Register:
     email: 'Correo electrónico'
     name: 'Nombre de usuario'
@@ -147,6 +147,9 @@ Register:
     repeatpass: 'Repita la contraseña'
 
 Route:
+    show:
+        title: Ruta: %name%
+        description: Mapa de paseo y datos referentes a la ruta
     mine: Mis Rutas
     list: Listado de rutas
     empty: Traza una ruta de paseo segura en tu ciudad para ir al cole
@@ -190,7 +193,7 @@ Trans:
 
     search:
         children: 'Buscar Niños'
-        groups: 'Buscar Grupos'
+        group: 'Buscar Grupos'
         routes: 'Buscar Rutas'
 
     select:
@@ -331,9 +334,6 @@ Ride:
     yes:
         title: Hay paseos en marcha
         description: Los siguientes grupos están en marcha y tienes ninos apuntados en ellos
-    no:
-        title: No hay paseos en marcha
-        description: Actualmente ninguno de los grupos en los que estás inscrito está realizando un paseo
     go: Ir al paseo
         
 Options:

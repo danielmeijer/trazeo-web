@@ -675,12 +675,12 @@ class PanelGroupsController extends Controller
         if($groupAdmin != $user ){
         
         	$notification = $container->addFlashMessages("error","No tienes autorización para editar este grupo");
-        	return $this->redirect($this->generateUrl('panel_group'));
+        	return $this->redirect($this->generateUrl('panel_dashboard'));
         }
         if (!$group) {
         	
         	$notification = $container->addFlashMessages("warning","No existe el grupo o ha sido eliminado");
-        	return $this->redirect($this->generateUrl('panel_group'));
+        	return $this->redirect($this->generateUrl('panel_dashboard'));
         }
 
         $editForm = $this->createEditForm($group);
@@ -798,7 +798,7 @@ class PanelGroupsController extends Controller
         
         if (!$group) {
         	$notification = $container->addFlashMessages("warning","El grupo que intentas eliminar no existe");
-        	return $this->redirect($this->generateUrl('panel_group'));
+        	return $this->redirect($this->generateUrl('panel_dashboard'));
         }
         
         $groupAdmin = $group->getAdmin();
@@ -808,11 +808,11 @@ class PanelGroupsController extends Controller
 			$em->remove($group);
 			$em->flush();
 			$notification = $container->addFlashMessages("success","El grupo ha sido eliminado");
-			return $this->redirect($this->generateUrl('panel_group'));
+			return $this->redirect($this->generateUrl('panel_dashboard'));
 			
 		}else {
 			$notification = $container->addFlashMessages("error","Sólo el administrador puede eliminar un grupo");
-			return $this->redirect($this->generateUrl('panel_group'));	
+			return $this->redirect($this->generateUrl('panel_dashboard'));	
 		}
     }
 

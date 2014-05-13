@@ -26,26 +26,7 @@
 				} 
 			%}
 	{% block panel_nav %}
-       <div class="alert">
-			<div class="pull-right">
-			<a href="{{ path('panel_child_new') }}">
-				<button type="button" class="btn btn-success btn-outline" id="new_child">
-					 <i class="fa fa-user"></i> Registrar niño en Trazeo									
-				</button>
-			</a>
-			<a href="{{ path('panel_group_new') }}">
-				<button type="button" class="btn btn-success btn-outline " id="new_group">
-					 <i class="fa fa-users"></i> Añadir grupo									
-				</button>
-			</a>
-			<a href="{{ path('panel_route_new') }}">
-				<button type="button" class="btn btn-success btn-outline" id="new_route">
-					 <i class="fa fa-location-arrow"></i> Añadir ruta									
-				</button>
-			</a>
-			</div>
-       </div>
-       <br />
+
        {% endblock %}
 			
 			

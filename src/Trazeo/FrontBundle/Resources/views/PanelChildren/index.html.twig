@@ -3,7 +3,6 @@
 {% set pageheader_description = "Children.index.description"|trans %}
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
-
 		{% block body_content %}               
 	        {% for allChildInvite in allChildsInvite %}
 				{% if user.Id == allChildInvite.Userextend.Id  %}
@@ -20,6 +19,14 @@
 	        	<br />
 	        	{% endif %}
 	        {% endfor %}
+	        <div>
+			<a class="" href="{{ path('panel_child_new') }}">
+				<button type="button" class="btn btn-success" id="new_child">
+					 <i class="fa fa-user"></i>&nbsp; {{ 'Children.new.title'|trans }}									
+				</button>
+			</a>
+			</div>
+			<br />
 		<div class="panel-group" id="accordion1">
 		{% for child in childs %}
 			<div class="panel panel-warning">

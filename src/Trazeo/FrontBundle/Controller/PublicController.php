@@ -150,7 +150,7 @@ class PublicController extends Controller
     		$container = $this->get('sopinet_flashMessages');
     		$notification = $container->addFlashMessages("success","¡Bienvenido! Acepta la invitación al Grupo y comienza a usar Trazeo");
     		//return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
-    		return $this->redirect($this->generateUrl('panel_group')); 	
+    		return $this->redirect($this->generateUrl('panel_dashboard')); 	
     	} else {
 			die("Error");
     	}
