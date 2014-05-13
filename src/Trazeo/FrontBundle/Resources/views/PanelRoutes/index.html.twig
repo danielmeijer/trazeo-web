@@ -12,15 +12,13 @@
         	<div class="col-md-10">
 				<h4>Estas rutas se encuentran en tu ciudad y podrían interesarte</h4>
 				<form action="{{ path('panel_route') }}">
-					<a class="pull-right" href="{{ path('panel_route_new') }}">
-						<button type="button" class="btn btn-success" id="new_group">
-							 <i class="fa fa-location-arrow"></i>&nbsp; {{ 'Route.new.title'|trans }}									
-						</button>
-					</a>	
+						
 					<div class="input-group custom-search-form col-md-4">
-						<input type="search" class="form-control" placeholder='{{ "Trans.search.routes"|trans }}'/>
-						<span class="input-group-btn">
-						<button class="btn btn-success" type="submit"><i class="fa fa-search"></i></button>
+						<a href="{{ path('panel_route_new') }}">
+							<button type="button" class="btn btn-success" id="new_group">
+								 <i class="fa fa-plus"></i>&nbsp; {{ 'Route.new.title'|trans }}									
+							</button>
+						</a>
 						</span>	
 					</div>
 				</form>	
@@ -28,10 +26,10 @@
 		
         </div><!-- END col-lg-12 alert alert-info -->
         <p>&nbsp;</p>
-
-		
-	{% for route in routes %}
+        {% include 'TrazeoFrontBundle:PanelRoutes:_customRoutes.html.twig' with {'routes': routes} %}
+{#
 		<div class="panel-group" id="accordion1">
+		{% for route in routes %}
 			<div class="panel panel-warning">
 				<div class="panel-heading">
 		        	<h4 class="panel-title" style="cursor:pointer;" data-toggle="collapse" data-parent="#accordion1" href="#collapse{{ route.id }}">
@@ -91,9 +89,10 @@
 							</table>
 					</div>
 				</div>
-			</div>
-		</div>
+			</div>	
 	{% endfor %}
+	</div>
+	#}
 {% endblock %}
 		
 {% block js %} {{ parent() }} 
