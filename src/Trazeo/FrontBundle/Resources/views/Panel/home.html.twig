@@ -302,7 +302,7 @@
 		    		};
  		
  		 //switch between diferents tutorials 
-		 switch(localStorage.getItem('tutorial')){
+		 var tutorial=function(){switch(localStorage.getItem('tutorial')){
 		 case 'home':
 			 var loc=$(location).attr('href').toString();
 			 //global options customize 
@@ -339,7 +339,7 @@
 	        	                         ,position: 'e'
 		        	                     ,canGoNext: 'false'
 			        	                 ,finishLabel: 'Saber más'
-				        	             ,callback: function(){localStorage.setItem('tutorial','child');}
+				        	             ,callback: function(){localStorage.setItem('tutorial','child');setTimeout(tutorial(),300);}
 	        	                     }
 		  	            	   	],
 		  	            	   	options);
@@ -448,7 +448,7 @@
 	                       		options);
 	 			trip.start();
 	 			break;	
-		 }
-
+		 }}
+	tutorial();
 	</script>		
 {% endblock %}
