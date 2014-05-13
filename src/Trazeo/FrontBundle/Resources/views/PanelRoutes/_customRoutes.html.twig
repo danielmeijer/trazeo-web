@@ -13,7 +13,7 @@
 	            <tr>
 	                <td><i class="fa fa-location-arrow"></i></td>
 	                <td>{{ route.name }}</td>
-	                <td><a href="{{ path('panel_route')}}{{ route.Id }}"><i class="fa fa-map-marker"></i>&nbsp; Ver</a></td>
+	                <td><a href="{{ path('panel_route')}}{{ route.Id }}"><button class="btn btn-xs btn-success"><i class="fa fa-map-marker"></i>&nbsp; {{ "Route.map.edit"|trans }}</button></a></td>
 	                <td>
 	                	{% if app.user.id == route.admin.user.id %}
 							<a class="btn btn-xs btn-default" href="{{ path('panel_route_edit', {'id': route.id }) }}"><i class="fa fa-pencil"></i>&nbsp;  {{ 'Options.edit'|trans }}</a>

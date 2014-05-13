@@ -216,6 +216,9 @@ Route:
     new:
         description: 'Asígnale un nombre que de a los demás usuarios una idea de la zona o recorrido'
         title: 'Crear nueva ruta'
+        
+    map:
+        edit: 'Editar mapa'
 
 Settings:
     index:
