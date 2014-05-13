@@ -138,10 +138,12 @@ Notifications:
     child:
         invite:
             accept: 'El usuario %0 ha aceptado la invitación para ser tutor del niño %1'
-            deny: 'El usuario %0 ha rechazado la invitación para ser tutor del niño %1'
+            deny: 'El usuario/a %0 ha rechazado la invitación para ser tutor del niño %1'
             user: 'Has recibido una invitación para ser tutor del niño %0'
 
-        joingroup: 'El niño %0 ha entrado en el grupo %1'
+        joingroup: 'El niño/a %0 ha entrado en el grupo %1'
+        in: 'El niño/a %0 ha sido registrado en el paseo del grupo %1'
+        out: 'El niño/a %0 ha salio del paseo del grupo %1'
 
     group:
         invite:
@@ -153,6 +155,10 @@ Notifications:
             deny: 'Se ha rechazado tu petición para unirte al grupo %0'
             let: 'Se ha aceptado tu petición para unirte al grupo %0'
             request: 'El usuario %0 ha solicitado unirse al grupo %1'
+    ride:
+        start: 'El paseo para el grupo %0 ha comenzado.'
+        finish: 'El paseo para el grupo %0 ha finalizado.' 
+        
 
 Register:
     email: 'Correo electrónico'

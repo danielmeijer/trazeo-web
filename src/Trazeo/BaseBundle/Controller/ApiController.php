@@ -217,9 +217,9 @@ class ApiController extends Controller {
 				foreach($userextends as $userextend)
 				{
 					$not->addNotification(
-							"Ride.start",
-							"TrazeoBaseBundle:ERide",
-							$ride->getId(),
+							"ride.start",
+							"TrazeoBaseBundle:EGroup",
+							$group->getId(),
 							$this->generateUrl('panel_dashboard'),
 							$userextend->getUser()
 					);
@@ -364,9 +364,9 @@ class ApiController extends Controller {
 		foreach($userextends as $userextend){
 			$not = $this->container->get('sopinet_user_notification');
 			$not->addNotification(
-					"Notify.parents.child.in",
-					"TrazeoBaseBundle:Userextend,TrazeoBaseBundle:EChild",
-					$userextend->getId() . "," . $child->getId(),
+					"child.in",
+					"TrazeoBaseBundle:EChild,TrazeoBaseBundle:EGroup",
+					$child->getId() . "," . $ride->getGroup()->getId(),
 					$this->generateUrl('panel_dashboard'),
 					$userextend->getUser()
 			);
@@ -428,9 +428,9 @@ class ApiController extends Controller {
 		//Notificamos a sus tutores
 		foreach($userextends as $userextend){
 			$not->addNotification(
-					"Notify.parents.child.out",
-					"TrazeoBaseBundle:Userextend,TrazeoBaseBundle:EChild",
-					$userextend->getId() . "," . $child->getId(),
+					"child.out",
+					"TrazeoBaseBundle:EChild,TrazeoBaseBundle:EGroup",
+					$child->getId() . "," . $ride->getGroup()->getId(),
 					$this->generateUrl('panel_dashboard'),
 					$userextend->getUser()
 			);
@@ -544,9 +544,9 @@ class ApiController extends Controller {
 		foreach($userextends as $userextend)
 		{
 			$not->addNotification(
-					"Ride.finish",
-					"TrazeoBaseBundle:ERide",
-					$ride->getId(),
+					"ride.finish",
+					"TrazeoBaseBundle:EGroup",
+					$group->getId(),
 					$this->generateUrl('panel_dashboard'),
 					$userextend->getUser()
 			);
