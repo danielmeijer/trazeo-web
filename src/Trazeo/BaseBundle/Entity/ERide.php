@@ -340,4 +340,8 @@ class ERide
     {
         return $this->groupid;
     }
+    
+    public function __toString() {
+    	return "";
+    }
 }
