@@ -86,34 +86,34 @@
 								<i class="fa fa-comments-o"></i> Chat del grupo
 							</a>
 							<a href="{{ path('panel_group_disjoin', { 'id': userGroup.id }) }}" type="button" 
-							class="btn btn-default btn-xs group-disjoin" rel="tooltip-top" title="Desvincularme del grupo">
-								<i class="fa fa-sign-out"></i> Desvincularme
+							class="btn btn-default btn-xs group-disjoin">
+								<i class="fa fa-sign-out"></i> {{ 'DisJoin'|trans }}
 							</a>
 							{% if userGroup.Admin.Id == user.Id %}
 									<a href="{{ path('panel_group') }}{{ userGroup.id }}/edit" type="button" 
-									class="btn btn-default btn-xs group-edit" rel="tooltip-top" title="Editar información">
-										<i class="fa fa-pencil"></i> Editar
+									class="btn btn-default btn-xs group-edit">
+										<i class="fa fa-pencil"></i> {{ 'Options.edit'|trans }}
 									</a> 
 							{% endif %}
 			            	 	{% if userGroup.Visibility == 0 %}
 									<span type="button" groupVisibility="0" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': userGroup.id, 'visibility': "replace" }) }}";
 									id="member-{{ userGroup.id }}"
 									class="btn btn-success btn-xs group-visibility" rel="tooltip-top" title="Grupo público">
-										<i class="fa fa-unlock"></i> Público
+										<i class="fa fa-unlock"></i> {{ 'Groups.visibility.public'|trans }}
 									</span>
 								{% endif %}
 			            	 	{% if userGroup.Visibility == 1 %}
 									<span href="#" type="button" groupVisibility="1" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': userGroup.id, 'visibility': "replace" }) }}";
 									id="member-{{ userGroup.id }}" 
 									class="btn btn-danger btn-xs group-visibility" rel="tooltip-top" title="Grupo privado">
-										<i class="fa fa-lock"></i> Privado
+										<i class="fa fa-lock"></i> {{ 'Groups.visibility.private'|trans }}
 									</span>
 								{% endif %}
 		            	 	{% if userGroup.Visibility == 2 %}
 								<span href="#" type="button" groupVisibility="2" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': userGroup.id, 'visibility': "replace" }) }}";
 								id="member-{{ userGroup.id }}"
 								class="btn btn-warning btn-xs group-visibility" rel="tooltip-top" title="Grupo oculto">
-									<i class="fa fa-eye-slash"></i> Oculto
+									<i class="fa fa-eye-slash"></i> {{ 'Groups.visibility.hidden'|trans }}
 								</span>									
 		            	 	{% endif %}
 		            	 	{% if userGroup.Admin.Id == user.Id %}
@@ -209,8 +209,8 @@
 	
 						{% if group.Visibility == 0 or group.Admin.Id == user.Id%}										
 								<a href="{{ path('panel_group_join', { 'id': group.id }) }}" type="button" 
-								class="btn btn-default btn-xs group-join" rel="tooltip-top" title="Unirme a este grupo">
-									<i class="fa fa-users"></i> Unirme
+								class="btn btn-default btn-xs group-join">
+									<i class="fa fa-users"></i> {{ 'Join'|trans }}
 								</a> 
 						{% endif %}
 						{% if group.Admin.Id == user.Id %}
@@ -223,21 +223,21 @@
 							<span type="button"   groupVisibility="0" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
 							id="nomember-{{ group.id }}"
 							class="btn btn-success btn-xs group-visibility" rel="tooltip-top" title="Grupo público">
-								<i class="fa fa-unlock"></i> Público
+								<i class="fa fa-unlock"></i> {{ 'Groups.visibility.public'|trans }}
 							</span>
 						{% endif %}
 	            	 	{% if group.Visibility == 1 %}
 							<span href="#" type="button" groupVisibility="1" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
 							id="nomember-{{ group.id }}"
 							class="btn btn-danger btn-xs group-visibility" rel="tooltip-top" title="Grupo privado">
-								<i class="fa fa-lock"></i> Privado
+								<i class="fa fa-lock"></i> {{ 'Groups.visibility.private'|trans }}
 							</span>
 						{% endif %}
 	            	 	{% if group.Visibility == 2 %}
 							<span href="#" type="button" groupVisibility="2" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': group.id, 'visibility': "replace" }) }}";
 							id="nomember-{{ group.id }}"
 							class="btn btn-warning btn-xs group-visibility" rel="tooltip-top" title="Grupo oculto">
-								<i class="fa fa-eye-slash"></i> Oculto
+								<i class="fa fa-eye-slash"></i> {{ 'Groups.visibility.hidden'|trans }}
 							</span>	
 	            	 	{% endif %}
 						{% if group.Admin.Id == user.Id %}

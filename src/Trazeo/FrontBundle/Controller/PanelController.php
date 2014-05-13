@@ -32,8 +32,8 @@ class PanelController extends Controller
 	   	$groupsMember = $user->getGroups();
 	   	
 	   	$allGroups = $em->getRepository('TrazeoBaseBundle:EGroup')->findAll();
-	   	$groupsUser = array_diff($groupsMember->toArray(),$groupsAdmin->toArray());
-	   	
+	   	$restGroups = array_diff($allGroups,$groupsMember->toArray());
+	   	//ldd($restGroups);
 	   	$groupsRide = array();
 	   	
 	    foreach($groupsMember as $groupMember){
@@ -57,7 +57,7 @@ class PanelController extends Controller
 	   	 			'notifications' => $not,
 	   	 			'groupsRide' => $groupsRide,
 	   				'tutorial' => $tutorial,
-	   				'groupsUser' => $groupsUser,
+	   				'restGroups' => $restGroups,
 	   				'groupsMember' => $groupsMember
 	   	);
 	}

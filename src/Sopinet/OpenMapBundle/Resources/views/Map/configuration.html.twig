@@ -93,14 +93,14 @@
   	
  
     routing = new L.Routing({
-      position: 'topleft'
+      position: 'bottomright'
       ,routing: {
         router: router
       }
       ,icons: {
-      start: new L.Icon({iconUrl:"{{ asset('bundles/sopinetopenmap/css/images') }}"+'/marker-icon-start.png', iconSize: 20})
-      ,end: new L.Icon({iconUrl:"{{ asset('bundles/sopinetopenmap/css/images') }}"+'/marker-icon-start.png', iconSize: 20})
-      ,normal: new L.Icon({iconUrl:"{{ asset('bundles/sopinetopenmap/css/images') }}"+'/marker-icon.png', iconSize: 20})
+      start: new L.Icon({iconUrl:"{{ asset('bundles/sopinetopenmap/css/images') }}"+'/marker-icon-start.png', iconSize: 22})
+      ,end: new L.Icon({iconUrl:"{{ asset('bundles/sopinetopenmap/css/images') }}"+'/marker-icon-start.png', iconSize: 22})
+      ,normal: new L.Icon({iconUrl:"{{ asset('bundles/sopinetopenmap/css/images') }}"+'/marker-icon.png', iconSize: [22,35],  iconAnchor: [10, 35]})
       }
       ,snapping: {
         layers: []
@@ -116,9 +116,9 @@
 	routing._waypointClickHandler= function(e){
 		showPopUpMenu(e);
 	}  
+
     map.addControl(routing);
-		
-		
+
 
    
     
@@ -175,6 +175,7 @@
 
 		$("#enviar").attr("disabled","disabled");
     	$("#enviar").css('opacity','0.7');
+		$("#deshacer").on('click',map.removeLast);
 		$("#comenzar").on('click',map.disableRouting);
 		$("#comenzar").html('<i class="fa fa-flag"></i>Terminar');
 		for(var marker in map._layers)if(map._layers[marker]._icon && map._layers[marker]._icon.className===icon)
@@ -291,15 +292,21 @@
 	L.Map.prototype.changeMarker=function(current,type){
 		current._icon.src=routing.options.icons[type].options.iconUrl;
 		if(type=='start'){
-			current._icon.style.width='33px';
-		   	current._icon.style.height='33px';
+			current._icon.style.width='35px';
+		   	current._icon.style.height='35px';
 		}
 		else{
-			current._icon.style.width='20px';
-		  	current._icon.style.height='33px';
+			current._icon.style.width='22px';
+		  	current._icon.style.height='35px';
 		}
 	}
+	L.Map.prototype.removeLast=function(){
+			routing.removeWaypoint(routing.getLast(),function(){
+				if(routing.getWaypoints.length==0)
+				routing._segments.clearLayers()
 				
+				});
+		}		
 	L.Map.prototype.updateRouteInfo=function(e){
     	var first=routing.getFirst();
     	var last=routing.getLast();
@@ -332,7 +339,9 @@
     	$(".leaflet-marker-icon").on();
     	for(var marker in map._layers)if(map._layers[marker]._icon && map._layers[marker]._icon.className===icon)
         	map._layers[marker].on('contextmenu',showPopUpMenu);
+
     	routing.rerouteAllSegments(function(){});
+    	//routing._segments.clearLayers();
     };
     
 
