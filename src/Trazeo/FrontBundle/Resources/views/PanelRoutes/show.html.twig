@@ -183,7 +183,7 @@
 	   	                         
 	   	                         ,canGoNext: false
 			   	                 ,callback: function(){
-				       	         $('.leaflet-marker-icon').one("click",next.bind(trip))}
+				       	         setTimeout(function(){$('.leaflet-marker-icon').one("click",next.bind(trip))},300)}
 	   	                     },
 	   	                     { 
 	   	                         sel : $('#mapa')
