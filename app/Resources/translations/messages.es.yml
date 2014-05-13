@@ -312,7 +312,7 @@ layout:
 
 preference:
     notification_email:
-        description: 'Configura cuando quieres que Trazeo te envíe notificaciones'
+        description: 'Marca esta casilla si quieres recibir notificaciones por Email'
         name: 'Notificaiones por email'
 
         value:
