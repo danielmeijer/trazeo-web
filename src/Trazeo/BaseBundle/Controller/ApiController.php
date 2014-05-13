@@ -351,9 +351,14 @@ class ApiController extends Controller {
 		$event->setAction("in");
 		$event->setData($id_child."/".$child->getNick());
 		$event->setLocation(new SimplePoint($latitude, $longitude));
+		$em->persist($event);
+		$em->flush();
 		
 		//Registramos al niño dentro del paseo
 		$child->setRide($ride);
+		$child->setSelected(1);
+		$em->persist($child);
+		$em->flush();
 		
 		//Notificamos a sus tutores
 		foreach($userextends as $userextend){
@@ -367,13 +372,11 @@ class ApiController extends Controller {
 			);
 		}
 	
-		$em->persist($child);
-		$em->persist($event);
-		$em->flush();
+		$array['selected'] = $child->getSelected();
 	
 		$view = View::create()
 		->setStatusCode(200)
-		->setData($this->doOK("ok"));
+		->setData($this->doOK($array));
 			
 		return $this->get('fos_rest.view_handler')->handle($view);
 	
@@ -412,9 +415,14 @@ class ApiController extends Controller {
 		$event->setAction("out");
 		$event->setData($id_child."/".$child->getNick());
 		$event->setLocation(new SimplePoint($latitude, $longitude));
+		$em->persist($event);
+		$em->flush();
 		
 		//Eliminamos el niño del paseo
 		$child->setRide(null);
+		$child->setSelected(0);
+		$em->persist($child);
+		$em->flush();
 		
 		$not = $this->container->get('sopinet_user_notification');
 		//Notificamos a sus tutores
@@ -428,13 +436,11 @@ class ApiController extends Controller {
 			);
 		}
 		
-		$em->persist($child);
-		$em->persist($event);
-		$em->flush();
+		$array['selected'] = $child->getSelected();
 	
 		$view = View::create()
 		->setStatusCode(200)
-		->setData($this->doOK("ok"));
+		->setData($this->doOK($array));
 			
 		return $this->get('fos_rest.view_handler')->handle($view);
 	

@@ -67,6 +67,13 @@ class EChild
 	 * @ORM\Column(name="gender", type="string")
 	 */
 	protected $gender;
+	
+	/**
+	 * @var boolean
+	 *
+	 * @ORM\Column(name="selected", type="boolean", nullable=true)
+	 */
+	protected $selected;
     
        
     public function __toString(){
@@ -314,5 +321,29 @@ class EChild
     public function getRide()
     {
         return $this->ride;
+    }
+
+    /**
+     * Set selected
+     *
+     * @param boolean $selected
+     *
+     * @return EChild
+     */
+    public function setSelected($selected)
+    {
+        $this->selected = $selected;
+
+        return $this;
+    }
+
+    /**
+     * Get selected
+     *
+     * @return boolean 
+     */
+    public function getSelected()
+    {
+        return $this->selected;
     }
 }
