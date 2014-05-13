@@ -220,7 +220,7 @@ class ApiController extends Controller {
 							"ride.start",
 							"TrazeoBaseBundle:EGroup",
 							$group->getId(),
-							$this->generateUrl('panel_dashboard'),
+							$this->generateUrl('panel_ride_current', array('id' => $ride->getId())),
 							$userextend->getUser()
 					);
 				}
@@ -367,7 +367,7 @@ class ApiController extends Controller {
 					"child.in",
 					"TrazeoBaseBundle:EChild,TrazeoBaseBundle:EGroup",
 					$child->getId() . "," . $ride->getGroup()->getId(),
-					$this->generateUrl('panel_dashboard'),
+					$this->generateUrl('panel_ride_current', array('id' => $ride->getId())),
 					$userextend->getUser()
 			);
 		}
@@ -431,7 +431,7 @@ class ApiController extends Controller {
 					"child.out",
 					"TrazeoBaseBundle:EChild,TrazeoBaseBundle:EGroup",
 					$child->getId() . "," . $ride->getGroup()->getId(),
-					$this->generateUrl('panel_dashboard'),
+					$this->generateUrl('panel_ride_current', array('id' => $ride->getId())),
 					$userextend->getUser()
 			);
 		}
