@@ -1,0 +1,24 @@
+<div id="login-box" class="login-box visible widget-box no-border">
+	<div class="widget-body">
+		<div class="widget-main">
+			<h4 class="header blue lighter bigger">
+				<i class="icon-coffee green"></i>
+				{{ "Login.request"|trans }}
+			</h4>
+		
+			<div class="space-6"></div>
+			
+			{% if error is defined %}
+			    <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
+			{% endif %}	
+
+			<form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="form-signin fos_user_resetting_reset">
+			    {{ form_widget(form) }}
+			    <div class="clearfix">
+			        <input type="submit" data-theme="b" class="width-35 pull-right btn btn-small btn-primary" value="{{ 'resetting.reset.submit'|trans({}, 'FOSUserBundle') }}" />
+			    </div>
+			</form>
+			
+		</div>
+	</div><!--/widget-body-->
+</div><!--/login-box-->				
