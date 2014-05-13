@@ -79,7 +79,7 @@
 								                {% elseif groupMember.Visibility == 1 %}
 								                <td><i rel="tooltip-top" title='{{ 'ChangeVisibility'|trans }}' class="fa fa-lock btn btn-xs btn-danger"
 								                groupVisibility="1" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': groupMember.id, 'visibility': "replace" }) }}";
-												id="visibility-{{ group.id }}" data-toggle="confirmationChange"></i>&nbsp; {{ 'Groups.visibility.private'|trans }}</td>
+												id="visibility-{{ groupMember.id }}" data-toggle="confirmationChange"></i>&nbsp; {{ 'Groups.visibility.private'|trans }}</td>
 								                {% elseif groupMember.Visibility == 2 %}
 								                <td><i rel="tooltip-top" title='{{ 'ChangeVisibility'|trans }}' class="fa fa-eye-slash btn btn-xs btn-warning"
 								                groupVisibility="2" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': groupMember.id, 'visibility': "replace" }) }}";
@@ -133,7 +133,7 @@
 								                {% elseif restGroup.Visibility == 1 %}
 								                <td><i rel="tooltip-top" title='{{ 'ChangeVisibility'|trans }}' class="fa fa-lock btn btn-xs btn-danger"
 								                groupVisibility="1" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': restGroup.id, 'visibility': "replace" }) }}";
-												id="visibility-{{ group.id }}" data-toggle="confirmationChange"></i>&nbsp; {{ 'Groups.visibility.private'|trans }}</td>
+												id="visibility-{{ restGroup.id }}" data-toggle="confirmationChange"></i>&nbsp; {{ 'Groups.visibility.private'|trans }}</td>
 								                {% elseif restGroup.Visibility == 2 %}
 								                <td><i rel="tooltip-top" title='{{ 'ChangeVisibility'|trans }}' class="fa fa-eye-slash btn btn-xs btn-warning"
 								                groupVisibility="2" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': restGroup.id, 'visibility': "replace" }) }}";
