@@ -107,7 +107,7 @@
 		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Edit.js'
 		'@SopinetOpenMapBundle/Resources/public/js/plugins/Control.Geocoder/Control.Geocoder.js'
 	%}
-	
+	{% if route.admin.id==user.id %}
 	<script type="text/javascript" src="{{ asset_url }}"></script>
 	{% if tutorialmap == 1 %}
 	<!-- Enable Tutorial -->
@@ -134,76 +134,82 @@
 	var tutorialStoped=function(){
 		     running=0;
 			 localStorage.setItem('tutorial','none');
+			 trip.next=function(){};
          };
 
          //global options for tutotials
     var options={
-               		delay : 4000
-	    	    	,skipUndefinedTrip: false
+               		skipUndefinedTrip: false
 	    	    	,tripTheme: 'white'
+	    	   
+	    	    	,delay: -1
 	    	    	,onTripStart: tutorialRunning
 	    	    	,onTripEnd: tutorialStoped
 	    	    	,onTripClose: tutorialStoped
 		    	    ,showCloseBox: true
-		    	    ,showNavigation : false
 		    	    ,expose: true
+		    	    ,showNavigation : false
 		    	    ,prevLabel: "<i class='fa fa-backward fa-2x' style='color:#428bca !important'></i>"
 			    	,nextLabel: "<i class='fa fa-forward fa-2x' style='color:#428bca !important'></i>"
 				    ,finishLabel: "<i class='fa fa-stop fa-2x' style='color:#428bca !important'></i>"
 				    ,closeBoxLabel: "<i class='fa fa-sign-out' style='color:#428bca !important'>saltar</i>"
 						
 	    		};
+    var next=function(){if(running==1)this.next()};
+    
  	if(localStorage.getItem('tutorial')=='map'){
- 		var trip = new Trip([
+ 		trip = new Trip([
 	   	                     { 
 		    	               	 sel : $('b')
 	    	                     ,content : 'Bienvenido al sistema de creación de rutas'
 	        	                 ,position: 'e'
 	  	        	             ,showNavigation: true
-	                	         ,callback: function(){$('#comenzar').one("click",trip.next.bind(trip))} 
+	                	         ,callback: function(){$('#comenzar').one("click",next.bind(trip))} 
 	   	                     },
 	                         { 
 	                            sel : $('#comenzar')
 	   	                        ,content : 'Primero pulsa comenzar para empezar a definir la ruta'
 	   	                        ,position: 'e'
-		   	                    ,canGoNext: true
-		   	                    ,delay: -1
+	   	                        ,canGoNext: false
+		   	                    
 		       	               	,callback: function(){
-				       	          $('#mapa').one("click",trip.next.bind(trip));
+				       	          $('#mapa').one("click",next.bind(trip));
 				       	         }
 		   	                         		   	                         
 	       	                 },
 	   	                     { 
 	   	                         sel : $('#mapa')
 	   	                         ,content : 'Luego haz click en el mapa, para cada punto que quieras añadir a la ruta'
-	   	                         ,position: 'n'
-	   	                         ,delay: -1
-			   	                 ,canGoNext: false
-			   	                 ,canGoPrev: false
+	   	                         ,position: 's'
+	   	                         
+	   	                         ,canGoNext: false
 			   	                 ,callback: function(){
-				       	         setTimeout(function(){$('.leaflet-marker-icon').one("click",trip.next.bind(trip))},300)}
+				       	         $('.leaflet-marker-icon').one("click",next.bind(trip))}
 	   	                     },
 	   	                     { 
 	   	                         sel : $('#mapa')
 	   	                         ,content : 'Haz click en los marcadores que indican los puntos para editar sus opciones'
-	   	                         ,position: 'n'
-		   	                     ,delay: -1	   	                  
+	   	                         ,position: 's'
+		   	                      	 
+		   	                     ,canGoNext: false
 			   	                 ,callback: function(){
-				       	             setTimeout(function(){$('.pop-up-menu >button').one("click",trip.next.bind(trip))},300);
+				       	             $('.pop-up-menu >button').one("click",next.bind(trip))
 				   	             }
 	   	                     },
 	   	                     { 
 	   	                         sel : $('#mapa')
 	   	                         ,content : 'Puedes editar las opciones de los puntos'
-	   	                         ,position: 'n'
-		   	                     ,delay: -1	   	                  
-		   	                     ,callback: function(){$('#comenzar').one("click",trip.next.bind(trip))}
+	   	                         ,position: 's'
+		   	                     
+		   	                  ,canGoNext: false
+		   	                     ,callback: function(){$('#comenzar').one("click",next.bind(trip))}
 	   	                      },
 	   	                         { 
         	                    	 sel : $('#comenzar')
         	                         ,content : 'Haz click en terminar cuando ya tengas la ruta definida'
         	                         ,position: 'e'
-            	                     ,delay: -1
+        	                        	 ,canGoNext: false
+            	                     
 	       	                    }
         	                     ,
         	                     { 
@@ -218,11 +224,11 @@
 				trip.start();
 	 	}
      </script>
+    {% endif %}
 	{% endjavascripts %}
 		{% if route.admin.id==user.id %}
-			{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': route.points,'editable': "true", 'realTime': "true", 'rideEvents': ''} %}
-			#
+			{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': route.points,'editable': "true", 'realTime': "false", 'rideEvents': ''} %}
 		{% else %}
-			{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': route.points,'editable': "false", 'realTime': "true", 'rideEvents': ''} %}
+			{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': route.points,'editable': "false", 'realTime': "false", 'rideEvents': ''} %}
 		{% endif %}
 	{% endblock %}
