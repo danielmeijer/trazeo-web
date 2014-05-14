@@ -131,6 +131,8 @@ Login:
     signin: Entrar
     title: 'Inicio de sesión'
     username: 'Nombre de usuario'
+    forgot: '¿Olvidaste la contraseña?'
+    new: '¿No tienes cuenta?'
 
 Menu:
     children: Niños/as
