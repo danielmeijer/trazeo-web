@@ -226,12 +226,14 @@ Route:
     index:
         description: 'Listado de rutas creadas por los usuarios para definir los caminos al cole'
         title: 'Rutas de paseo'
+        near: 'Estas rutas se encuentran en tu ciudad y podrían interesarte'
 
     name: 'Nombre de la ruta'
 
     new:
         description: 'Asígnale un nombre que de a los demás usuarios una idea de la zona o recorrido'
         title: 'Crear nueva ruta'
+        new: 'Nueva Ruta'
         
     map:
         edit: 'Editar mapa'
