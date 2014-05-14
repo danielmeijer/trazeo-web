@@ -1,18 +1,21 @@
+{% set activeMenu = "group" %}
+{% set pageheader_title = "Timeline.index.title"|trans %}
+{% set pageheader_description = "Timeline.index.description"|trans %}
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
 {% block body_content %}
 
 	<div class="row">
 		<div class="col-lg-8">
-		<h3 class="alert alert-success"><i class="fa fa-comments-o"></i> &nbsp;Chat del grupo <b>{{ group.Name }}</b></h3>
+		<h3 class="alert alert-success"><i class="fa fa-comments-o"></i> &nbsp;{{ 'Timeline.title'|trans }} <b>{{ group.Name }}</b></h3>
 			{% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': group.id} %}
 		</div>
 		<div class="col-lg-offset-1 col-lg-3 alert">
 			<div class="row">
-				<h4 class="alert alert-success"><i class="fa fa-user"></i> Tus niños en este grupo</h4>
+				<h4 class="alert alert-success"><i class="fa fa-user"></i> {{ 'Timeline.child.title'|trans }}</h4>
 				
 				{% if childs|length <= 0 %}
-					<p class="alert alert-warning">Ninguno de tus niños está en este grupo</p>
+					<p class="alert alert-warning btn-xs text-center"><i class="fa fa-warning"></i>&nbsp; {{ 'Timeline.child.empty'|trans }}</p>
 				{% endif %}
 				<ul>
 					{% for child in childs %}
@@ -27,11 +30,14 @@
 						<br />
 					{% endfor %}
 				</ul>
-				<a class="label label-warning" data-toggle="collapse" data-parent="#accordion1" href="#collapseAddChild">Vincular alguno de mis niños con este grupo &nbsp;<i class="fa fa-chevron-down"></i>&nbsp;</a>
+				
+				<p class="alert-warning btn-xs">{{ 'Timeline.child.join'|trans }}
+					<a class="label label-warning btn-xs pull-right" data-toggle="collapse" data-parent="#accordion1" href="#collapseAddChild"><i class="fa fa-chevron-down"></i></a>
+				</p>
 				<div id="collapseAddChild" class="panel-collapse collapse">
 				<br />
 				{% if childsNoGroup|length <= 0 %}
-				<p class="alert alert-warning">Sin resultados <a href="{{ path('panel_child_new') }}" class="btn btn-warning btn-xs pull-right"><i class="fa fa-plus-circle"></i> Registrar niño </a></p>
+				<p class="alert alert-warning btn-xs"><i class="fa fa-warning"></i>&nbsp; {{ 'Timeline.child.empty'|trans }} <a href="{{ path('panel_child_new') }}" class="btn btn-warning btn-xs pull-right"><i class="fa fa-plus-circle"></i> {{ 'Children.new.title'|trans }} </a></p>
 				
 				{% endif %}
 					<ul>
@@ -52,14 +58,17 @@
 			
 			<div class="row">
 			<br />
-				<h4 class="alert alert-success"><i class="fa fa-location-arrow"></i> &nbsp;Ruta del grupo</h4>
+				<h4 class="alert alert-success"><i class="fa fa-location-arrow"></i> &nbsp;{{ 'Timeline.route.title'|trans }}</h4>
 				{% if group.Route %}
 				<ul><li class="alert-warning"><i class="fa fa-map-marker"></i>&nbsp; {{ group.Route.Name }}</li></ul>
 				{% else %}
-				<ul><li class="alert-warning"><i class="fa fa-map-marker"></i>&nbsp; Ninguna ruta asignada </li></ul>
+				<ul><li class="alert-warning"><i class="fa fa-map-marker"></i>&nbsp; {{ 'Timeline.route.empty'|trans }} </li></ul>
 				{% endif %}
 				{% if group.Admin.Id == user.Id %}
-				<a class="label label-warning" data-toggle="collapse" data-parent="#accordion2" href="#collapseRoutes">Cambiar la ruta de este grupo &nbsp;<i class="fa fa-chevron-down"></i>&nbsp;</a>
+				<br />
+				<p class="alert-warning btn-xs">{{ 'Timeline.route.set'|trans }}
+					<a class="label label-warning btn-xs pull-right" data-toggle="collapse" data-parent="#accordion2" href="#collapseRoutes"><i class="fa fa-chevron-down"></i></a>
+				</p>
 				<div id="collapseRoutes" class="panel-collapse collapse">
 					<br />
 					<ul>
@@ -74,12 +83,9 @@
 				</div>
 				{% endif %}
 			</div>
-			
-			
-			
 			<div class="row">
 			<br />
-				<h4 class="alert alert-success"><i class="fa fa-list-ul"></i> &nbsp;Otros padres</h4>
+				<h4 class="alert alert-success"><i class="fa fa-list-ul"></i> &nbsp;{{ 'Timeline.parents'|trans }}</h4>
 				<ul>
 					{% for userextend in group.userextendgroups %}
 						<li class="alert-warning"><i class="fa fa-user"></i> &nbsp;{{ userextend.nick }}</li>
@@ -89,8 +95,8 @@
 			
 			<br />
 			<div class="row">
-				<h4 class="alert alert-success"><i class="fa fa-envelope"></i>&nbsp; Envía un invitación</h4>
-					<p class="alert alert-warning">Envía una notificación a otros padres para que puedan unirse a este grupo.</p>	
+				<h4 class="alert alert-success"><i class="fa fa-envelope"></i>&nbsp; {{ 'Timeline.invite.title'|trans }}</h4>
+					<p class="alert alert-warning">{{ 'Timeline.invite.description'|trans }}</p>	
 					<form class="input-group custom-search-form" action="{{ path('panel_group_invite') }}" method="POST">
 						<input required type="email" name="userEmail" class="form-control" placeholder='{{ "Email"|trans }}'/>
 						<input type="hidden" name="group" value="{{ group.id }}"/>
