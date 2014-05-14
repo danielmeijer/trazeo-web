@@ -24,7 +24,8 @@ Children:
     register: Registrar mis niños/as en Trazeo
     new:
         title: Registar Niño/a
-        description: Aquí puedes registart a tus niños en la plataforma y posteriormente asignarlos a un grupo
+        description: Aquí puedes registrar a tus niños en la plataforma y posteriormente asignarlos a un grupo
+        register: Nuevo registro de Niño/a
     list: Listado de niños/as
     data: 
         name: Nombre
@@ -46,7 +47,8 @@ Children:
         sex: 'Género'
         userextend: 'Tutores del niño'
         visibility: 'Visibilidad'
-
+        disjoin: Dejar de ser tutor del niño
+        edit: Editar información
     index:
         acept: 'Aceptar'
         cancel: 'Cancelar'
@@ -108,6 +110,7 @@ Groups:
         route: 'Asignar una ruta a este grupo'
 
     index:
+        list: Listado de grupos creados en Trazeo
         description: 'Listado completo de todos los grupos existentes y visibles en la plataforma'
         title: 'Sugerencia de grupos'
 
@@ -116,6 +119,7 @@ Groups:
     new:
         description: 'Indica un nombre, define quíen podrá acceder a él y asígnale una ruta'
         title: 'Crear nuevo grupo'
+        new: Nuevo Grupo
 
     visibility:
         hidden: Oculto
