@@ -7,7 +7,7 @@
 	        {% for allChildInvite in allChildsInvite %}
 				{% if user.Id == allChildInvite.Userextend.Id  %}
 				<div>
-	        		<td>Tienes una invitación para ser tutor del niño <b>{{ allChildInvite.Child }}</b>
+	        		<td>{{ "Children.invited"|trans }}<b>{{ allChildInvite.Child }}</b>
 						&nbsp;<a href="{{ path('panel_child_invite_accept', { 'id': allChildInvite.Userextend.Id, 'child':allChildInvite.Child.Id, 'sender':allChildInvite.Sender.Id }) }}" type="button" class="label label-success">
 							<i class="fa fa-check"></i> {{ "Children.index.acept"|trans }}
 						</a>&nbsp;
@@ -83,7 +83,7 @@
 									</tr>
 									<tr>
 										<td><i class="fa fa-calendar-o"></i></td>
-										<td>{{ "Children.help.datebirth"|trans }}</td>
+										<td>{{ "Children.date"|trans }}</td>
 										<td>
 											{{ child.datebirth |date("d M, Y") |trans }} 
 										</td>

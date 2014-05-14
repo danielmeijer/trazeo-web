@@ -37,6 +37,7 @@ Children:
         description: 'Sólo utilizamos estos datos para darte un mejor servicio. Sólo tú podrás verlos, ningún otro padre o madre'
         title: 'Editar datos de niño'
 
+    invited: Tienes una invitación para ser tutor del niño 
     help:
         datebirth: 'Fecha de nacimiento'
         gender: 'Género, Niño/a'
