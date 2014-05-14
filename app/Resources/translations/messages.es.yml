@@ -399,3 +399,21 @@ Ride:
 Options:
     edit: Editar
     delete: Eliminar
+    
+Timeline:
+    index:
+        title: Actividad del grupo
+        description: Gestiona tus niños en este grupo, invita a otros usuarios a unirse o chatea con ellos
+    title: Chat del grupo
+    child:
+        title: Tus niños en este grupo
+        empty: Sin resultados
+        join: Vincular mis niños con este grupo
+    route:
+        title: Ruta del grupo
+        empty: Ninguna ruta asignada
+        set:  Cambiar la ruta de este grupo
+    parents: Otros padres
+    invite:
+        title: Invitar al grupo
+        description: Envía una notificación a otros padres para que puedan unirse a este grupo 

@@ -14,14 +14,14 @@
 	                <td><i class="fa fa-location-arrow"></i></td>
 	                <td>{{ route.name }}</td>
 	                <td><a href="{{ path('panel_route')}}{{ route.Id }}"><button class="btn btn-xs btn-success"><i class="fa fa-map-marker"></i>&nbsp; {{ "Route.map.edit"|trans }}</button></a></td>
-	                <td>
 	                	{% if app.user.id == route.admin.user.id %}
+						<td>
 							<a class="btn btn-xs btn-default" href="{{ path('panel_route_edit', {'id': route.id }) }}"><i class="fa fa-pencil"></i>&nbsp;  {{ 'Options.edit'|trans }}</a>
 							<a class="btn btn-xs btn-default" style="cursor:pointer;" data-href="{{ path('panel_route_delete', {'id': route.id }) }}" data-toggle="confirmation" data-btnCancelLabel='{{ 'Confirmation.no'|trans }}' data-btnOkLabel='{{ 'Confirmation.yes'|trans }}' data-title='{{ 'Confirmation.question'|trans }}'><i class="fa fa-trash-o"></i>&nbsp; {{ 'Options.delete'|trans }}</a>
-						{% else %}
-							{{ "Route.options.noadmin"|trans }}
+						</td>
+	                	{% else %}
+							<td class="btn-xs"><i class="fa fa-ban"></i>&nbsp; {{ 'Admin.no'|trans }}</td>
 	                	{% endif %}							
-	                </td>
 	            </tr>
 	        {% endfor %}
 	        </tbody>
