@@ -9,10 +9,10 @@
 				<div>
 	        		<td>Tienes una invitación para ser tutor del niño <b>{{ allChildInvite.Child }}</b>
 						&nbsp;<a href="{{ path('panel_child_invite_accept', { 'id': allChildInvite.Userextend.Id, 'child':allChildInvite.Child.Id, 'sender':allChildInvite.Sender.Id }) }}" type="button" class="label label-success">
-							<i class="fa fa-check"></i> Aceptar
+							<i class="fa fa-check"></i> {{ "Children.index.acept"|trans }}
 						</a>&nbsp;
 						<a href="{{ path('panel_child_invite_deny', { 'id': allChildInvite.Userextend.Id ,'child': allChildInvite.Child.Id, 'sender':allChildInvite.Sender.Id }) }}" type="button" class="label label-danger">
-							<i class="fa fa-times"></i> Cancelar
+							<i class="fa fa-times"></i> {{ "Children.index.cancel"|trans }}
 						</a>
 	        		 </td>
 	        	</div>
@@ -38,11 +38,11 @@
 	            	
 							<a href="{{ path('panel_child') }}{{ child.id }}/edit" type="button" 
 							class="btn btn-default btn-xs edit" rel="tooltip-top" title="Editar información">
-								<i class="fa fa-pencil"></i> Editar
+								<i class="fa fa-pencil"></i> {{ "Children.index.edit"|trans }}
 							</a>
 							<a href="{{ path('panel_child_disjoin', { 'id': child.id }) }}" type="button" 
 							class="btn btn-default btn-xs disjoin" rel="tooltip-top" title="Dejar de ser tutor del niño">
-								<i class="fa fa-sign-out"></i> Desvincularme
+								<i class="fa fa-sign-out"></i> {{ "Children.index.disjoin"|trans }}
 							</a>
 			        	<span class="label label-success tutores">{{ "Tutores"|trans }} {{ child.userextendchilds|length }}</span>
 	            	 </div>
@@ -54,7 +54,7 @@
 								<tbody>
 									<tr>
 										<td><i class="fa fa-key"></i></td>
-										<td>Tutores</td>
+										<td>{{ "Children.index.tutors"|trans }}</td>
 										<td>
 											{% for childUser in child.userextendchilds %}
 												<span class="text-success">{{ childUser.nick }}</span>
@@ -63,7 +63,7 @@
 									</tr>
 									<tr>
 										<td><i class="fa fa-users"></i></td>
-										<td>Grupos en los que está inscrito</td>
+										<td>{{ "Children.index.asigned"|trans }}</td>
 										<td>
 											{% for childGroup in child.groups %}
 												<span class="label">
@@ -74,7 +74,7 @@
 									</tr>
 									<tr>
 										<td><i class="fa fa-star"></i></td>
-										<td>Género</td>
+										<td>{{ "Children.help.gender"|trans }}</td>
 										{% if child.gender == 'boy' %}
 										<td>{{ 'Children.gender.boy'|trans }}</td>
 										{% else %}
@@ -83,19 +83,19 @@
 									</tr>
 									<tr>
 										<td><i class="fa fa-calendar-o"></i></td>
-										<td>Fecha de nacimiento</td>
+										<td>{{ "Children.help.datebirth"|trans }}</td>
 										<td>
 											{{ child.datebirth |date("d M, Y") |trans }} 
 										</td>
 									</tr>
 									<tr>
 										<td><i class="fa fa-eye"></i></td>
-										<td>Visibilidad</td>
+										<td>{{ "Children.help.visibility"|trans }}</td>
 										<td>
 											{% if child.visibility == 0 %}
-												Privado
+												{{ "Children.visibility.disabled"|trans }}
 											{% elseif child.visibility == 1 %}
-												Público
+												{{ "Children.visibility.enabled"|trans }}
 											{% endif %} 
 										</td>
 									</tr>
@@ -104,7 +104,7 @@
 					<div class="col-md-6 pull-right">	
 						<p class="text-muted">
 						<i class="fa fa-envelope"></i>&nbsp;
-							Envía una invitación a otros usuarios para que sean uno de los tutores de este niño
+							{{ "Children.index.mail.invite"|trans }}
 						</p>
 						<form class="input-group custom-search-form" action="{{ path('panel_child_invite') }}" method="POST">
 							<input required type="email" name="userEmail" class="form-control" placeholder='{{ "Email"|trans }}'/>
@@ -115,9 +115,10 @@
 						</form>
 					</div>
 						<div class="col-md-6 pull-left">
-							<h4 class="alert alert-warning">Código identificador</h4>
-							<p class="col-md-9 pull-left">El siguiente código es único y está asignado a tu niño/a <span class="alert-warning"><b>{{ child.nick }}</b></span>. 
-							Descárgalo haciendo click en él e imprímelo para que el monitor pueda registarlo en los paseos en marcha.</p>
+							<h4 class="alert alert-warning">{{ "Children.index.qr.title"|trans }}
+						</h4>
+							<p class="col-md-9 pull-left">{{ "Children.index.qr.description"|trans }}&nbsp;<span class="alert-warning"><b>{{ child.nick }}</b></span>. 
+							{{ "Children.index.qr.donwload"|trans }}</p>
 							<a download="Código_Identificador_{{ child.nick }}" href={{ qrcode_url(child.id, 'jpg', 110) }}>
 							<img style="margin-top:-20px;" class="pull-right" src="{{ qrcode_url(child.id, 'jpg', 110) }}" />
 							</a>

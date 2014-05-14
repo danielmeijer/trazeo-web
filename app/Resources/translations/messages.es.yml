@@ -42,14 +42,25 @@ Children:
         gender: 'Género, Niño/a'
         groups: 'Asignar a un grupo'
         nick: 'Nombre del niño'
-        sex: Género
+        sex: 'Género'
         userextend: 'Tutores del niño'
-        visibility: Visibilidad
+        visibility: 'Visibilidad'
 
     index:
+        acept: 'Aceptar'
+        cancel: 'Cancelar'
         description: 'En este apartado puedes consultar toda la información referente a tus niños registrados en Trazeo'
-        title: 'Listado de tus niños'
-
+        title: 'Listado de tus niños' 
+        edit: 'Editar'
+        tutors: 'Tutores'
+        disjoin: 'Desvincularme'
+        asigned: 'Grupos en los que está inscrito'
+        qr:
+            title: Código identificador
+            description: El siguiente código es único y está asignado a tu niño/a
+            donwload: Descárgalo haciendo click en él e imprímelo para que el monitor pueda registarlo en los paseos en marcha.
+        mail:
+            invite: Envía una invitación a otros usuarios para que sean uno de los tutores de este niño
     nick: 'Nombre del niño'
 
     gender:
