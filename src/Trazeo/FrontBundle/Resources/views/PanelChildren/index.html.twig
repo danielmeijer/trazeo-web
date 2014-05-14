@@ -37,11 +37,11 @@
 	            	<div class="pull-right" style="margin-top:-20px;">
 	            	
 							<a href="{{ path('panel_child') }}{{ child.id }}/edit" type="button" 
-							class="btn btn-default btn-xs edit" rel="tooltip-top" title="Editar información">
+							class="btn btn-default btn-xs edit" rel="tooltip-top" title={{ "Children.help.edit"|trans }}>
 								<i class="fa fa-pencil"></i> {{ "Children.index.edit"|trans }}
 							</a>
 							<a href="{{ path('panel_child_disjoin', { 'id': child.id }) }}" type="button" 
-							class="btn btn-default btn-xs disjoin" rel="tooltip-top" title="Dejar de ser tutor del niño">
+							class="btn btn-default btn-xs disjoin" rel="tooltip-top" title={{ "Children.help.disjoin"|trans }}>
 								<i class="fa fa-sign-out"></i> {{ "Children.index.disjoin"|trans }}
 							</a>
 			        	<span class="label label-success tutores">{{ "Tutores"|trans }} {{ child.userextendchilds|length }}</span>
