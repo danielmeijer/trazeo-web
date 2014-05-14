@@ -11,14 +11,12 @@
         		<i class="fa fa-5x fa-users"></i>
         	</div>
         	<div class="col-md-10">
-				<h4>{{ "Groups.index.list"|trans }}</h4>
-				<form action="{{ path('panel_group') }}">
+				<h4>{{ 'Groups.index.subtitle'|trans }}</h4>
 					<a class="pull-left" href="{{ path('panel_group_new') }}">
 						<button type="button" class="btn btn-success" id="new_group">
 							 <i class="fa fa-plus-circle"></i>&nbsp; {{ 'Groups.new.title'|trans }}									
 						</button>
 					</a>	
-				</form>	
 			</div>
 		
         </div><!-- END col-lg-12 alert alert-info -->
@@ -28,12 +26,12 @@
 	        {% for allGroupsAccess in allGroupsAccess %}
 				{% if userAdmin.Id == allGroupsAccess.Group.Id  %}
 				<div>
-	        		<td><b>{{ allGroupsAccess.Userextend }}</b> pide acceso para unirse al grupo <b>{{ allGroupsAccess.Group }}</b> del que eres administrador
+	        		<td><b>{{ allGroupsAccess.Userextend }}</b> {{ 'Groups.access.request'|trans }} <b>{{ allGroupsAccess.Group }}</b>
 						&nbsp;<a href="{{ path('panel_group_let_join', { 'id': allGroupsAccess.Userextend.Id, 'group':allGroupsAccess.Group.Id }) }}" type="button" class="label label-success">
-							<i class="fa fa-check"></i> Aceptar
+							<i class="fa fa-check"></i> {{ 'Groups.access.accept'|trans }}
 						</a>&nbsp;
 						<a href="{{ path('panel_group_deny_join', { 'id': allGroupsAccess.Userextend.Id , 'group':allGroupsAccess.Group.Id }) }}" type="button" class="label label-danger">
-							<i class="fa fa-times"></i> Denegar
+							<i class="fa fa-times"></i> {{ 'Groups.access.deny'|trans }}
 						</a>
 	        		 </td>
 				</div>
@@ -44,12 +42,12 @@
 	        {% for allGroupInvite in allGroupsInvite %}
 				{% if user.Id == allGroupInvite.Userextend.Id  %}
 				<div class="alert alert-default">
-	        		<p>Tienes una invitación para unirte al grupo oculto <b>{{ allGroupInvite.Group }}</b>
+	        		<p>{{ 'Groups.invite.request'|trans }} <b>{{ allGroupInvite.Group }}</b>
 						&nbsp;<a href="{{ path('panel_group_invite_accept', { 'id': allGroupInvite.Userextend.Id, 'group':allGroupInvite.Group.Id }) }}" type="button" class="label label-success">
-							<i class="fa fa-check"></i> Aceptar
+							<i class="fa fa-check"></i> {{ 'Groups.invite.accept'|trans }}
 						</a>&nbsp;
 						<a href="{{ path('panel_group_invite_deny', { 'id': allGroupInvite.Userextend.Id ,'group': allGroupInvite.Group.Id }) }}" type="button" class="label label-danger">
-							<i class="fa fa-times"></i> Cancelar
+							<i class="fa fa-times"></i> {{ 'Groups.invite.deny'|trans }}
 						</a>
 	        		 </p>
 	        	</div>
