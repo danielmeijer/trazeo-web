@@ -54,6 +54,7 @@ Children:
         cancel: 'Cancelar'
         description: 'En este apartado puedes consultar toda la información referente a tus niños registrados en Trazeo'
         title: 'Listado de tus niños' 
+        subtitle: Niños/as que has registrado en la plataforma
         edit: 'Editar'
         tutors: 'Tutores'
         disjoin: 'Desvincularme'
@@ -71,8 +72,8 @@ Children:
         girl: Niña
 
     visibility:
-        enabled: Público
-        disabled: Privado
+        public: Público
+        private: Privado
 
 Confirmation:
     no: No
@@ -113,6 +114,7 @@ Groups:
         list: Listado de grupos creados en Trazeo
         description: 'Listado completo de todos los grupos existentes y visibles en la plataforma'
         title: 'Sugerencia de grupos'
+        subtitle: Vincula tu usuario con un grupo y contacta con otros padres desde el chat
 
     name: 'Nombre del grupo'
 
@@ -401,7 +403,7 @@ Ride:
         description: Puedes ver en tiempo real el recorrido de esta ruta y consultar todos sus datos
     yes:
         title: Hay paseos en marcha
-        description: Los siguientes grupos están en marcha y tienes ninos apuntados en ellos
+        description: Los siguientes grupos están en marcha y tienes niños/as apuntados en ellos
     go: Ir al paseo
         
 Options:
