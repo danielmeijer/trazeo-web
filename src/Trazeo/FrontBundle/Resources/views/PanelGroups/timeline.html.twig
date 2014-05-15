@@ -8,7 +8,7 @@
 	<div class="row">
 		<div class="col-lg-8">
 		<h3 class="alert alert-success"><i class="fa fa-comments-o"></i> &nbsp;{{ 'Timeline.title'|trans }} <b>{{ group.Name }}</b></h3>
-			{% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': group.id} %}
+			<div id="fos_comment_thread"></div>
 		</div>
 		<div class="col-lg-offset-1 col-lg-3 alert">
 			<div class="row">
@@ -111,4 +111,9 @@
 		</div>
 	</div>
 
+{% endblock %}
+
+{% block js %}
+	{{ parent() }}
+	{% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': group.id} %}
 {% endblock %}
