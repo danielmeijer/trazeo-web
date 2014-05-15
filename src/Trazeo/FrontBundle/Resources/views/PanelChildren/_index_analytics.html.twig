@@ -3,7 +3,7 @@
 	$(".col-md-6.pull-left >a").on('click.children.index.qr.download',function(event){
 		alert("Esta funcionalidad aún no está disponible")});
 	$(".col-md-6.pull-left >a").click(function (event) {
-	  $(".col-md-6.pull-left >a").trigger("click.children.index.qr.download");
+	  $(event.currentTarget).trigger("click.children.index.qr.download");
 	}); 
 	analytics.track('click.children.index.qr,download');
 </script>
