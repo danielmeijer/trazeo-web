@@ -18,9 +18,10 @@
 	<div id="page-wrapper">
 	
 		{% if pageheader_title is not defined %}
+
 			{% set pageheader_title = '' %}
+  			<img id="panel-logo" class='img-responsive' src='{{ asset('images/trazeo_logo.png') }}' alt='Trazeo' title='Trazeo' />
 			{% set pageheader_description = "" %}
-			<img id="panel-logo" class='img-responsive' src='{{ asset('images/trazeo_logo.png') }}' alt='Trazeo' title='Trazeo' />
 		{% endif %}
 	
 			{% include 'SopinetTemplateSbadmin2Bundle:Base:pageheader.html.twig' with {
@@ -42,6 +43,7 @@
 
 {% block js %}
 	{{ parent() }}
+	{% include "TrazeoFrontBundle:Panel:_zopim.js.twig" %}
 	{% include "SopinetUserNotificationsBundle:Include:mini.js.twig" %}
 	{% include 'SopinetFlashMessagesBundle:Messages:notification.html.twig' %} 	
 {% endblock %}
