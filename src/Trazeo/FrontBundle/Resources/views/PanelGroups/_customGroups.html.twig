@@ -23,7 +23,7 @@
  							                		<i rel="tooltip-top" title='{{ 'Admin'|trans }}' class="fa fa-key"></i>&nbsp;
  							                	{% endif %}
  							                 {{ groupMember.Name }}</td>
- 											<td><a href="{{ path('panel_group_timeline',{'id': groupMember.id}) }}"><i class="fa fa-comments-o"></i>&nbsp; {{ 'Groups.data.chat'|trans }}</a></td>
+ 											<td><a href="{{ path('panel_group_timeline',{'id': groupMember.id}) }}"><button class="btn btn-xs btn-success"><i class="fa fa-comments-o"></i>&nbsp; {{ 'Groups.data.chat'|trans }}</button></a></td>
  											<td>
  												<a href="{{ path('panel_group_disjoin', { 'id': groupMember.id }) }}" type="button" 
  												class="btn btn-default btn-xs group-disjoin">

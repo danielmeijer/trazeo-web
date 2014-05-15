@@ -179,7 +179,7 @@ class ApiController extends Controller {
 	
 			return $this->get('fos_rest.view_handler')->handle($view);
 		}
-	
+		
 		$em = $this->get('doctrine.orm.entity_manager');
 		
 		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
@@ -200,11 +200,46 @@ class ApiController extends Controller {
 				return $this->get('fos_rest.view_handler')->handle($view);
 			}
 			// Sino, se crea un paseo y se asocia al grupo
-			else{ 
+			else{ 				
+				//Cerrar paseo asociado a este grupo, si los hubiera
+				if($group->getRide() != null) {
+					//Sacamos el paseo asociado
+					$ride = $group->getRide();
+					
+					$group->setHasRide(0);
+						
+					$em->persist($group);
+					$em->flush();
+					
+					//Cálculo del tiempo transcurrido en el paseo
+					$inicio = $ride->getCreatedAt();
+					$fin = new \DateTime();
+						
+					$diff = $inicio->diff($fin);
+					$duration = $diff->h." horas, ".$diff->i." minutos y ".$diff->s." segundos";
+						
+					$ride->setDuration($duration);
+					$ride->setGroupid($group->getId());
+					$ride->setGroup(null);
+					$em->persist($ride);
+					$em->flush();
+						
+					$event = new EEvent();
+					$event->setRide($ride);
+					$event->setAction("finish");
+					$event->setData("");
+					
+					$em->persist($event);
+					
+					$em->flush();
+					
+					
+					$group->setRide(null);
+				}
+				
 				$ride = new ERide();
 				//TODO: En la relación Group-Ride, evitar los dos set
-				$ride->setGroup($group);
-				//$ride->setGo(1);
+				$ride->setGroup($group);				
 				$em->persist($ride);
 				$group->setHasRide(1);
 				$group->setRide($ride);

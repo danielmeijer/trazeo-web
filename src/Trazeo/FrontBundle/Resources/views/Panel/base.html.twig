@@ -18,8 +18,9 @@
 	<div id="page-wrapper">
 	
 		{% if pageheader_title is not defined %}
-			{% set pageheader_title = "Trazeo" %}
+			{% set pageheader_title = '' %}
 			{% set pageheader_description = "" %}
+			<img id="panel-logo" class='img-responsive' src='{{ asset('images/trazeo_logo.png') }}' alt='Trazeo' title='Trazeo' />
 		{% endif %}
 	
 			{% include 'SopinetTemplateSbadmin2Bundle:Base:pageheader.html.twig' with {

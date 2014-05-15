@@ -24,7 +24,8 @@ Children:
     register: Registrar mis niños/as en Trazeo
     new:
         title: Registar Niño/a
-        description: Aquí puedes registart a tus niños en la plataforma y posteriormente asignarlos a un grupo
+        description: Aquí puedes registrar a tus niños en la plataforma y posteriormente asignarlos a un grupo
+        register: Nuevo registro de Niño/a
     list: Listado de niños/as
     data: 
         name: Nombre
@@ -37,19 +38,33 @@ Children:
         description: 'Sólo utilizamos estos datos para darte un mejor servicio. Sólo tú podrás verlos, ningún otro padre o madre'
         title: 'Editar datos de niño'
 
+    invited: Tienes una invitación para ser tutor del niño 
     help:
         datebirth: 'Fecha de nacimiento'
         gender: 'Género, Niño/a'
         groups: 'Asignar a un grupo'
         nick: 'Nombre del niño'
-        sex: Género
+        sex: 'Género'
         userextend: 'Tutores del niño'
-        visibility: Visibilidad
-
+        visibility: 'Visibilidad'
+        disjoin: Dejar de ser tutor del niño
+        edit: Editar información
     index:
+        acept: 'Aceptar'
+        cancel: 'Cancelar'
         description: 'En este apartado puedes consultar toda la información referente a tus niños registrados en Trazeo'
-        title: 'Listado de tus niños'
-
+        title: 'Listado de tus niños' 
+        subtitle: Niños/as que has registrado en la plataforma
+        edit: 'Editar'
+        tutors: 'Tutores'
+        disjoin: 'Desvincularme'
+        asigned: 'Grupos en los que está inscrito'
+        qr:
+            title: Código identificador
+            description: El siguiente código es único y está asignado a tu niño/a
+            donwload: Descárgalo haciendo click en él e imprímelo para que el monitor pueda registarlo en los paseos en marcha.
+        mail:
+            invite: Envía una invitación a otros usuarios para que sean uno de los tutores de este niño
     nick: 'Nombre del niño'
 
     gender:
@@ -57,8 +72,8 @@ Children:
         girl: Niña
 
     visibility:
-        enabled: Público
-        disabled: Privado
+        public: Público
+        private: Privado
 
 Confirmation:
     no: No
@@ -96,14 +111,17 @@ Groups:
         route: 'Asignar una ruta a este grupo'
 
     index:
-        description: 'Estos grupos se encuentran en tu ciudad o en la de alguno de tus niños, y podrían interesarte'
+        list: Listado de grupos creados en Trazeo
+        description: 'Listado completo de todos los grupos existentes y visibles en la plataforma'
         title: 'Sugerencia de grupos'
+        subtitle: Vincula tu usuario con un grupo y contacta con otros padres desde el chat
 
     name: 'Nombre del grupo'
 
     new:
         description: 'Indica un nombre, define quíen podrá acceder a él y asígnale una ruta'
         title: 'Crear nuevo grupo'
+        new: Nuevo Grupo
 
     visibility:
         hidden: Oculto
@@ -115,6 +133,8 @@ Login:
     signin: Entrar
     title: 'Inicio de sesión'
     username: 'Nombre de usuario'
+    forgot: '¿Olvidaste la contraseña?'
+    new: '¿No tienes cuenta?'
 
 Menu:
     children: Niños/as
@@ -210,12 +230,17 @@ Route:
     index:
         description: 'Listado de rutas creadas por los usuarios para definir los caminos al cole'
         title: 'Rutas de paseo'
+        near: 'Estas rutas se encuentran en tu ciudad y podrían interesarte'
 
     name: 'Nombre de la ruta'
 
     new:
         description: 'Asígnale un nombre que de a los demás usuarios una idea de la zona o recorrido'
         title: 'Crear nueva ruta'
+        new: 'Nueva Ruta'
+        
+    map:
+        edit: 'Editar mapa'
 
 Settings:
     index:
@@ -378,9 +403,27 @@ Ride:
         description: Puedes ver en tiempo real el recorrido de esta ruta y consultar todos sus datos
     yes:
         title: Hay paseos en marcha
-        description: Los siguientes grupos están en marcha y tienes ninos apuntados en ellos
+        description: Los siguientes grupos están en marcha y tienes niños/as apuntados en ellos
     go: Ir al paseo
         
 Options:
     edit: Editar
     delete: Eliminar
+    
+Timeline:
+    index:
+        title: Actividad del grupo
+        description: Gestiona tus niños en este grupo, invita a otros usuarios a unirse o chatea con ellos
+    title: Chat del grupo
+    child:
+        title: Tus niños en este grupo
+        empty: Sin resultados
+        join: Vincular mis niños con este grupo
+    route:
+        title: Ruta del grupo
+        empty: Ninguna ruta asignada
+        set:  Cambiar la ruta de este grupo
+    parents: Otros padres
+    invite:
+        title: Invitar al grupo
+        description: Envía una notificación a otros padres para que puedan unirse a este grupo 

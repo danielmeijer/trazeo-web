@@ -107,8 +107,8 @@
 		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Edit.js'
 		'@SopinetOpenMapBundle/Resources/public/js/plugins/Control.Geocoder/Control.Geocoder.js'
 	%}
-	{% if route.admin.id==user.id %}
 	<script type="text/javascript" src="{{ asset_url }}"></script>
+	{% if route.admin.id==user.id %}
 	{% if tutorialmap == 1 %}
 	<!-- Enable Tutorial -->
 	<script type="text/javascript">
@@ -183,7 +183,7 @@
 	   	                         
 	   	                         ,canGoNext: false
 			   	                 ,callback: function(){
-				       	         $('.leaflet-marker-icon').one("click",next.bind(trip))}
+				       	         setTimeout(function(){$('.leaflet-marker-icon').one("click",next.bind(trip))},300)}
 	   	                     },
 	   	                     { 
 	   	                         sel : $('#mapa')

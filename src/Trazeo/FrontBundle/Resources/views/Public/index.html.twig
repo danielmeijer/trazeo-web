@@ -13,21 +13,15 @@
 					</div>
 				</div>
 				<div class="col-md-5 col-sm-5">
+				
 					<h2 class="slogan">¿Quieres probarlo?</h2>
-					<p class="col-md-offset-1 col-md-10">Sé el primero en probar <a href="http://trazeo.es">Trazeo</a>, mándanos tu
-						correo electrónico y te añadiremos a la lista de usuarios que
-						podrán probar el sistema en cuanto esté listo.</p>
 					<div class="cform col-md-12" id="contact-form">
-						<form action="{{ path('prev_registro') }}" method="POST"
-							role="form">								
+						<form action="{{ path('fos_user_security_login') }}">								
 							<div class="form-group input-group col-md-10 col-md-offset-1">
-                            	<span class="input-group-addon">@</span>
-								<input type="email" required class="form-control" name="email"
-								id="email" placeholder="Introduce tu correo electrónico" data-rule="email"
-								data-msg="Please enter a valid email">
+								<p class="col-md-offset-1 col-md-10">Puede probar la aplicación y web de <a href="http://trazeo.es">Trazeo</a>, recuerde que estamos en una versión BETA.</p>
+								<button type="submit" class="btn btn-lg btn-success log" style="font-size: 30px">Accede a Trazeo</button>		
 							</div>	
-							<button type="submit" name="submitPrevRegister" class="btn btn-lg btn-success">Enviar</button>
-						</form>
+						</form>						
 					</div>
 				</div>
 			</div>
