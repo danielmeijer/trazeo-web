@@ -1,0 +1,5 @@
+<script type="text/javascript">
+	var analytics_user=analytics.identify('{{ app.user.id }}',{email: '{{ app.user.email }}'});
+	//Analytics Register user link 
+	$(".btn-success").click(function(event){analytics.track("click.child.new.new")});	
+</script>

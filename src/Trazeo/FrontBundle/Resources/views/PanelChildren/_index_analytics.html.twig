@@ -1,9 +1,9 @@
 <script type="text/javascript">
+	var analytics_user=analytics.identify('{{ app.user.id }}',{email: '{{ app.user.email }}'});
 	//Analytics Register user link 
-	$(".col-md-6.pull-left >a").on('click.children.index.qr.download',function(event){
-		alert("Esta funcionalidad aún no está disponible")});
-	$(".col-md-6.pull-left >a").click(function (event) {
-	  $(event.currentTarget).trigger("click.children.index.qr.download");
-	}); 
-	analytics.track('click.children.index.qr,download');
+	$(".col-md-6.pull-left >a").click(function(event){
+		alert("Esta funcionalidad aún no está disponible");
+		return false;
+	});
+	$("#new_child").click(function(event){analytics.track("click.child.prev.new")});
 </script>

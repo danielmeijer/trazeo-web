@@ -12,3 +12,7 @@
     				{{ form(form) }}
             	</div>
 		{% endblock %}
+{% block js %}
+	{{ parent() }} 
+	{% include 'TrazeoFrontBundle:PanelChildren:_new_children_analytics.html.twig' %}
+{% endblock js %}

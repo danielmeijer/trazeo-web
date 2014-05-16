@@ -66,6 +66,7 @@
 {% endblock %}{# END body_content #}
 
 {% block js %} {{ parent() }} 
+	{% include 'TrazeoFrontBundle:PanelGroups:_index_analytics.html.twig' %}
 	<input type="hidden" id="path_home" value="{{ path('panel_dashboard') }}">
 
 	<script type="text/javascript">

@@ -1,0 +1,12 @@
+<script type="text/javascript">
+	var analytics_user=analytics.identify('{{ app.user.id }}',{email: '{{ app.user.email }}'});
+	//Analytics invite group button 	
+	$(".input-group-btn").click(function (event){
+		analytics.track('click.timeline.invite.group',{group: '{{ group.name }}'}) 
+	});
+	//Analytics post timeline button 	
+		$('.fos_comment_submit > input').click(function (event){
+		analytics.track('click.timeline.post',{group: '{{ group.name }}'}) 
+	});
+	
+</script>

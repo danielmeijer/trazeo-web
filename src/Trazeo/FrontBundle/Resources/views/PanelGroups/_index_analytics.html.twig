@@ -1,0 +1,9 @@
+
+<script type="text/javascript">
+	var analytics_user=analytics.identify('{{ app.user.id }}',{email: '{{ app.user.email }}'});
+	//Analytics invite group button 	
+	$(".group-join").click(function (event){
+		var group_id=$(event.currentTarget).attr('group.name');
+		analytics.track('click.groups.join',{group: group_id}); 
+	});	
+</script>
