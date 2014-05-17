@@ -1,10 +1,14 @@
 <script type="text/javascript">
-	var analytics_user=analytics.identify('{{ app.user.id }}',{email: '{{ app.user.email }}'});
-	//Analytics login user button 	
+	var analytics_user=analytics.identify('{{ app.user.id }}',{email: '{{ app.user.email }}', username: '{{ app.user }}'});
+	//Analytics current ride button 	
 	$(".ride-action").click(function (event){
-		analytics.track('click.ride.action',{ride: $(event.currentTarget).attr('ride')}) 
+		analytics.track('click.ride.action',
+				{ride: $(event.currentTarget).attr('ride')
+				 ,group: $(event.currentTarget).attr('group')
+				}
+		) 
 	});
-	//Analytics new child prev
+	//Analytics new child button
 	$("#new_child").click(function (event){
 		analytics.track('click.child.prev.new') 
 	});

@@ -17,7 +17,7 @@
 							<li><i class="fa fa-users"></i>&nbsp; <a href="{{ path('panel_group_timeline',{'id': group.id}) }}">{{ group.Name }}</a></li>
 						</ul>
 						<ul class="col-md-5">
-							<li><i class="fa fa-mail-forward"></i><a ride="{{group.ride.id}}" class="ride-action" href="{{ path('panel_ride_current', {'id': group.ride.id}) }}">&nbsp; {{ 'Ride.go'|trans }}</a></li>
+							<li><i class="fa fa-mail-forward"></i><a group="{{group.name}}" ride="{{group.ride.id}}" class="ride-action" href="{{ path('panel_ride_current', {'id': group.ride.id}) }}">&nbsp; {{ 'Ride.go'|trans }}</a></li>
 						</ul>
 				{% endfor %}
 			</div>

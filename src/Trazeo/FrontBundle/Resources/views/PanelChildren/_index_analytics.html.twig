@@ -1,9 +1,13 @@
 <script type="text/javascript">
-	var analytics_user=analytics.identify('{{ app.user.id }}',{email: '{{ app.user.email }}'});
-	//Analytics Register user link 
+	var analytics_user=analytics.identify('{{ app.user.id }}',{email: '{{ app.user.email }}', username: '{{ app.user }}'});
+	//Analytics qr button
 	$(".col-md-6.pull-left >a").click(function(event){
 		alert("Esta funcionalidad aún no está disponible");
 		return false;
 	});
+	//Analytics edit button
+	var link=$('.edit');
+	analytics.trackLink(link,"click.child.edit");	
+	
 	$("#new_child").click(function(event){analytics.track("click.child.prev.new")});
 </script>
