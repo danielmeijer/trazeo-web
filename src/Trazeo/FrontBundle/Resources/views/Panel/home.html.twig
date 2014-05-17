@@ -116,7 +116,7 @@
 							            {% else %}  
 							               <td><i class="fa fa-female"></i></td>
 							             {% endif %}
-							                <td>{{ child.nick }}</td>
+							                <td><a href="{{ path('panel_child') }}/#collapse{{ child.id }}">{{ child.nick }}</a></td>
 							                {% if  child.Visibility == 1 %}
 							                <td><i class="fa fa-eye btn btn-xs btn-success"></i>&nbsp; {{ 'Children.visibility.public'|trans }}</td>
 							                {% else %}

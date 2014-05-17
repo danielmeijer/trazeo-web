@@ -1,6 +1,6 @@
 	<!-- START resumeGroups -->
 				{% if groupsMember|length > 0 or groupsAdmin|length > 0 %}
-				<div class="col-md-12 resumeGroups alert alert-warning" id="groups">
+				<div class="col-md-12 resumeGroups alert alert-success" id="groups">
 					<div>
 						<h1 class="alert"> <span class="alert alert-warning"><i class="fa fa-users"></i> {{ 'Groups.mine'|trans }}</span> 
 							<span class="pull-right">
@@ -12,6 +12,20 @@
 								</a>
 							</span>
 						</h1>
+					</div>
+					<div style="clear:both"></div>
+				
+						{% for groupMember in groupsMember %}
+							{% include 'TrazeoFrontBundle:PanelGroups:_rowGroup.html.twig' with {'groupMember': groupMember}  %}
+						{% endfor %}
+						
+						{% for restGroup in restGroups %}
+							{% if restGroup.Admin.Id == user.Id %}
+								{% include 'TrazeoFrontBundle:PanelGroups:_rowGroup.html.twig' with {'groupMember': restGroup}  %}
+							{% endif %}
+						{% endfor %}
+				</div>
+						{#
 						<div class="alert alert-warning">
 							<table class="table">
 								<thead>
@@ -140,6 +154,7 @@
 						</div>
 					</div>
 				</div>
+				#}
 				{% else %}
 				<div class="col-md-12 resumeGroups alert alert-warning" id="groups">
 					<div>
