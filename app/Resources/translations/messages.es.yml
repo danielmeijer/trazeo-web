@@ -240,7 +240,7 @@ Route:
         new: 'Nueva Ruta'
         
     map:
-        edit: 'Editar mapa'
+        edit: 'Ir al mapa'
 
 Settings:
     index:
