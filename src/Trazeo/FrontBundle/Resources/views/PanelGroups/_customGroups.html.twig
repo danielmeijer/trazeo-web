@@ -82,7 +82,7 @@
  											<td><i rel="tooltip-top" title='{{ 'Groups.noMember'|trans }}' class="fa fa-warning"></i>&nbsp; {{ 'NoAccess'|trans }}</a></td>
  											<td>
  												<a href="{{ path('panel_group_join', { 'id': restGroup.id }) }}" type="button" 
- 												class="btn btn-default btn-xs group-join">
+ 												class="btn btn-default btn-xs group-join" group.name="{{ restGroup.Name }}">
  													<i class="fa fa-sign-in"></i> {{ 'Join'|trans }}
  												</a> 
  											</td>

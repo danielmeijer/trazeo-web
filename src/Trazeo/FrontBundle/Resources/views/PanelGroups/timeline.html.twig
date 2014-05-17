@@ -37,7 +37,7 @@
 				<div id="collapseAddChild" class="panel-collapse collapse">
 				<br />
 				{% if childsNoGroup|length <= 0 %}
-				<p class="alert alert-warning btn-xs"><i class="fa fa-warning"></i>&nbsp; {{ 'Timeline.child.empty'|trans }} <a href="{{ path('panel_child_new') }}" class="btn btn-warning btn-xs pull-right"><i class="fa fa-plus-circle"></i> {{ 'Children.new.title'|trans }} </a></p>
+				<p class="alert alert-warning btn-xs"><i class="fa fa-warning"></i>&nbsp; {{ 'Timeline.child.empty'|trans }} <a href="{{ path('panel_child_new') }}" class="btn btn-warning btn-xs pull-right new_child"><i class="fa fa-plus-circle"></i> {{ 'Children.new.title'|trans }} </a></p>
 				
 				{% endif %}
 					<ul>
@@ -48,7 +48,7 @@
 							{% elseif child.Gender == "girl" %}
 							<i class="fa fa-female fa-2x"></i>&nbsp;
 							{% endif %}
-							<a href="{{ path('panel_group_joinChild', {'group': group.id, 'child': child.id}) }}">{{ child.nick }}</a>
+							<a href="{{ path('panel_group_joinChild', {'group': group.id, 'child': child.id}) }}" class="join">{{ child.nick }}</a>
 							</li>
 							<br />
 						{% endfor %}
@@ -116,4 +116,5 @@
 {% block js %}
 	{{ parent() }}
 	{% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': group.id} %}
+	{% include 'TrazeoFrontBundle:PanelGroups:_timeline_analytics.html.twig' %}
 {% endblock %}

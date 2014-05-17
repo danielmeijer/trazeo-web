@@ -138,7 +138,7 @@
 
          //global options for tutotials
     var options={
-               		skipUndefinedTrip: false
+               		skipUndefinedTrip: true
 	    	    	,tripTheme: 'white'
 	    	   
 	    	    	,delay: -1
@@ -159,7 +159,7 @@
  	if(localStorage.getItem('tutorial')=='map'){
  		trip = new Trip([
 	   	                     { 
-		    	               	 sel : $('b')
+		    	               	 sel : $('#brand-logo')
 	    	                     ,content : 'Bienvenido al sistema de creación de rutas'
 	        	                 ,position: 'e'
 	  	        	             ,showNavigation: true
