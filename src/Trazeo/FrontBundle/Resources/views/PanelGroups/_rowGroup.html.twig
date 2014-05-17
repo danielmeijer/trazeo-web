@@ -2,7 +2,7 @@
 	<!-- Nombre de Grupo -->
 	<div class="col-md-3">
 		<i class="fa fa-users"></i>
-		{% if groupMember.Admin.Id == user.Id %}
+		{% if groupMember.Admin.Id == app.user.userextend.Id %}
         	<i rel="tooltip-top" title='{{ 'Admin.yes'|trans }}' class="fa fa-key"></i>&nbsp;
         {% endif %}
         {{ groupMember.Name }}
@@ -27,9 +27,9 @@
 	
 	<!-- Opciones de Administración -->
 	<div class="col-md-3">
-		{% if groupMember.Admin.Id == user.Id %}
+		{% if groupMember.Admin.Id == app.user.userextend.Id %}
 			<a class="btn btn-xs btn-default" href="{{ path('panel_group') }}{{ groupMember.id }}/edit"><i class="fa fa-pencil"></i><span class="hidden-xs">&nbsp;  {{ 'Options.edit'|trans }}</span></a>
-			<a class="btn btn-xs btn-default" style="cursor:pointer;" data-href="{{ path('panel_group_delete', {'id': groupMember.id }) }}" data-toggle="confirmation"" data-title='{{ 'Confirmation.question'|trans }}' data-btnCancelLabel='{{ 'Confirmation.no'|trans }}' data-btnOkLabel='{{ 'Confirmation.yes'|trans }}'><i class="fa fa-trash-o"></i><span class="hidden-xs">&nbsp; {{ 'Options.delete'|trans }}</span></a>
+			<a class="btn btn-xs btn-default" style="cursor:pointer;" data-href="{{ path('panel_group_delete', {'id': groupMember.id }) }}" data-toggle="confirmation"" data-title='{{ 'Confirmation.question'|trans }}' data-btnCancelLabel='{{ 'Confirmation.no'|trans }}' data-btnOkLabel='{{ 'Confirmation.yes'|trans }}'><i class="fa fa-trash-o"></i>&nbsp; {{ 'Options.delete'|trans }}</a>
         {% else %}
             <i class="fa fa-ban"></i>&nbsp; {{ 'Admin.no'|trans }}
         {% endif %}

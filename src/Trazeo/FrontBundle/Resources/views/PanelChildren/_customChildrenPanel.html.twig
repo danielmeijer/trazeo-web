@@ -1,0 +1,88 @@
+<!-- START resumeChilds -->
+
+<div class="col-md-12 resumeChilds" id="childs">
+{% if childs|length > 0 %}
+		<div class="row">
+			<div class="pull-left">
+				<h1>
+					<span class="alert"><i class="fa fa-user"></i> {{ 'Children.mine'|trans }}
+					</span>
+				</h1>
+			</div>
+			<div class="pull-right">
+				<a class="btn btn-success" href="{{ path('panel_child_new') }}">
+					<i class="fa fa-plus-circle"></i>&nbsp; {{ 'Children.new.title'|trans }}
+				</a>
+				<a class="btn btn-success" href="{{ path('panel_child') }}">
+					<i class="fa fa-list-ul"></i>&nbsp; {{ 'Children.list'|trans }}
+				</a>
+			</div>
+		</div>
+        {% for child in childs %}
+			{% include "TrazeoFrontBundle:PanelChildren:_rowChild.html.twig" with {'child': child} %}
+        {% endfor %}
+{% else %}
+	<div class="row alert-success">
+		<div class="col-md-6">
+			<i class="fa fa-user fa-5x pull-left"></i>
+			<h3>
+			{{ 'Children.empty'|trans }}
+			&nbsp;&nbsp;
+			</h3>
+		</div>
+		<div class="pull-right"><br/>
+			<a class="btn btn-warning" href="{{ path('panel_child_new') }}" id="new_child">
+				<i class="fa fa-hand-o-right"></i> {{ 'Children.register'|trans }}
+			</a>
+		</div>
+	</div>	
+{% endif %}
+</div>
+{#
+<div class="col-md-12 resumeChilds alert alert-warning" id="childs">
+{% if childs|length <= 0 %}
+	<div>
+		<i class="fa fa-user fa-5x pull-left alert-warning"></i>
+		<h4 class="alert alert-warning">
+		{{ 'Children.empty'|trans }}
+		&nbsp;&nbsp;
+		<a class="btn btn-warning btn-outline" href="{{ path('panel_child_new') }}" id="new_child"><i class="fa fa-hand-o-right"></i> {{ 'Children.register'|trans }}</a>
+		</h4>
+	</div>
+{% elseif childs|length > 0 %}
+	<div>
+		<h1 class="alert"> <span class="alert alert-warning"><i class="fa fa-user"></i> {{ 'Children.mine'|trans }}</span> 
+			<span class="pull-right">
+				<a class="btn btn-xs btn-success" href="{{ path('panel_child_new') }}">
+					<i class="fa fa-plus-circle"></i>&nbsp; {{ 'Children.new.title'|trans }}
+				</a>
+				<a class="btn btn-xs btn-success" href="{{ path('panel_child') }}">
+					<i class="fa fa-list-ul"></i>&nbsp; {{ 'Children.list'|trans }}
+				</a>
+			</span>
+		</h1>
+		<div class="alert alert-warning">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>{{ 'Children.data.name'|trans }}</th>
+						<th>{{ 'Children.data.visibility'|trans }}</th>
+						<th>{{ 'Children.data.age'|trans }}</th>
+						<th>{{ 'Children.data.options'|trans }}</th>
+					</tr>
+				</thead>
+			        <tbody>
+			        {% for child in childs %}
+						{% include "TrazeoFrontBundle:PanelChildren:_rowChild.html.twig" with {'child': child} %}
+			        {% endfor %}
+			        </tbody>
+			</table>
+		</div>
+	</div>
+
+{% endif %}
+
+</div>
+#}
+<!-- END resumeChilds -->

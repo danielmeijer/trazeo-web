@@ -1,0 +1,90 @@
+<div class="col-md-12 resumeGroups" id="groups">
+{% if routes|length > 0 %}
+	<div class="row">
+		<div class="pull-left">
+			<h1>
+				<span class="alert"><i class="fa fa-location-arrow"></i> {{ 'Route.mine'|trans }}</span>
+				</span>
+			</h1>
+		</div>
+		<div class="pull-right"><br/>
+			<a class="btn btn-success" href="{{ path('panel_route_new') }}">
+				<i class="fa fa-plus-circle"></i>&nbsp; {{ 'Route.new.title'|trans }}
+			</a>
+			<a class="btn btn-success" href="{{ path('panel_route') }}">
+				<i class="fa fa-list-ul"></i>&nbsp; {{ 'Route.list'|trans }}
+			</a>
+		</div>
+	</div>
+		
+    {% for route in routes %}
+      	{% include 'TrazeoFrontBundle:PanelRoutes:_rowRoute.html.twig' with {'route':route} %}
+    {% endfor %}
+    
+{% else %}
+	<div class="row alert-success">
+		<div class="col-md-6">
+			<i class="fa fa-location-arrow fa-5x pull-left"></i>
+			<h3>
+			{{ 'Route.empty'|trans }}
+			&nbsp;&nbsp;
+			</h3>
+		</div>
+		<div class="pull-right"><br/>
+			<a class="btn btn-warning" href="{{ path('panel_route_new') }}">
+				<i class="fa fa-hand-o-right"></i> {{ 'Route.new.title'|trans }}
+			</a>&nbsp;
+			<a class="btn btn-warning" href="{{ path('panel_route') }}">
+				<i class="fa fa-list-ul"></i>&nbsp; {{ 'Route.list'|trans }}
+			</a>
+		</div>
+	</div>
+	{#
+		<i class="fa fa-location-arrow fa-5x pull-left alert-warning"></i>
+		<h4 class="alert alert-warning">
+		{{ 'Route.empty'|trans }}
+		&nbsp;&nbsp;
+		<a class="btn btn-warning btn-outline" href="{{ path('panel_route_new') }}"><i class="fa fa-hand-o-right"></i> {{ 'Route.new.title'|trans }}</a>
+			&nbsp;
+		<a class="btn btn-warning btn-outline" href="{{ path('panel_route') }}">
+			<i class="fa fa-list-ul"></i>&nbsp; {{ 'Route.list'|trans }}
+		</a>
+		</h4>
+	#}
+{% endif %}
+</div>
+{#
+<div class="col-md-12 resumeRoutes alert alert-warning" id="routes">
+{% if routes|length <= 0 %}
+	<div>
+		<i class="fa fa-location-arrow fa-5x pull-left alert-warning"></i>
+		<h4 class="alert alert-warning">
+		{{ 'Route.empty'|trans }}
+		&nbsp;&nbsp;
+		<a class="btn btn-warning btn-outline" href="{{ path('panel_route_new') }}"><i class="fa fa-hand-o-right"></i> {{ 'Route.new.title'|trans }}</a>
+			&nbsp;
+		<a class="btn btn-warning btn-outline" href="{{ path('panel_route') }}">
+			<i class="fa fa-list-ul"></i>&nbsp; {{ 'Route.list'|trans }}
+		</a>
+		</h4>
+	</div>
+{% elseif routes|length > 0 %}
+	<div>
+		<h1 class="alert"> <span class="alert alert-warning"><i class="fa fa-location-arrow"></i> {{ 'Route.mine'|trans }}</span> 
+			<span class="pull-right">
+				<a class="btn btn-xs btn-success" href="{{ path('panel_route_new') }}">
+					<i class="fa fa-plus-circle"></i>&nbsp; {{ 'Route.new.title'|trans }}
+				</a>
+				<a class="btn btn-xs btn-success" href="{{ path('panel_route') }}">
+					<i class="fa fa-list-ul"></i>&nbsp; {{ 'Route.list'|trans }}
+				</a>
+			</span>
+		</h1>
+		
+		{% include 'TrazeoFrontBundle:PanelRoutes:_customRoutes.html.twig' with {'routes': routes} %}
+		
+	</div>
+	{% endif %}
+</div>
+#}
+<!-- END resumeRoutes -->	

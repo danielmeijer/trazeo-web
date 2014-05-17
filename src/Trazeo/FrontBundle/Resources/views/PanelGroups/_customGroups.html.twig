@@ -1,6 +1,5 @@
 <!-- START resumeGroups -->
  <div class="resumeGroups alert" id="groups">
- 	<div>
  			{% for groupMember in groupsMember %}
  				{% include 'TrazeoFrontBundle:PanelGroups:_rowGroup.html.twig' with {'groupMember': groupMember}  %}
  			{% endfor %}
@@ -10,5 +9,4 @@
  					{% include 'TrazeoFrontBundle:PanelGroups:_rowGroup.html.twig' with {'groupMember': restGroup}  %}
  				{% endif %}
  			{% endfor %}
- 	</div>
  </div>

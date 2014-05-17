@@ -1,0 +1,33 @@
+<div class="row alert alert-warning">
+	<!-- Child name -->
+	<div class="col-md-3">
+    	{% if  child.Gender == "boy" %}
+        	<i class="fa fa-male"></i>
+        {% else %}  
+            <i class="fa fa-female"></i>
+        {% endif %}
+        {#<a href="{{ path('panel_child') }}/#collapse{{ child.id }}">#}
+        	{{ child.nick }}
+        {#</a>#}	
+	</div>
+	
+	<!-- Visibility -->
+	<div class="col-md-3">
+        {% if  child.Visibility == 1 %}
+        	<td><i class="fa fa-eye btn btn-xs btn-success"></i>&nbsp; {{ 'Children.visibility.public'|trans }}</td>
+        {% else %}
+            <td><i class="fa fa-eye-slash btn btn-xs btn-danger"></i>&nbsp; {{ 'Children.visibility.private'|trans }}</td>
+        {% endif %}	
+	</div>
+	
+	<!-- DateBirth -->
+	<div class="col-md-3">
+		<i class="fa fa-calendar-o"></i>&nbsp; {{ child.datebirth|getTimeAgo}}
+	</div>
+	
+	<!-- Admin options -->
+	<div class="col-md-3">
+		<a class="btn btn-xs btn-default" href="{{ path('panel_child_edit', {'id': child.id}) }}"><i class="fa fa-pencil"></i>&nbsp; {{ 'Options.edit'|trans }}</a>
+		<a class="btn btn-xs btn-default" style="cursor:pointer;" data-btnCancelLabel='{{ 'Confirmation.no'|trans }}' data-btnOkLabel='{{ 'Confirmation.yes'|trans }}' data-href="{{ path('panel_child_delete', {'id': child.id }) }}" data-toggle="confirmation" data-title='{{ 'Confirmation.question'|trans }}'><i class="fa fa-trash-o"></i>&nbsp; {{ 'Options.delete'|trans }}</a>
+	</div>
+</div>

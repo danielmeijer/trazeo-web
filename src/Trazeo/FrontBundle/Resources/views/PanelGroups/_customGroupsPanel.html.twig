@@ -1,30 +1,52 @@
-	<!-- START resumeGroups -->
-				{% if groupsMember|length > 0 or groupsAdmin|length > 0 %}
-				<div class="col-md-12 resumeGroups alert alert-success" id="groups">
-					<div>
-						<h1 class="alert"> <span class="alert alert-warning"><i class="fa fa-users"></i> {{ 'Groups.mine'|trans }}</span> 
-							<span class="pull-right">
-								<a class="btn btn-xs btn-success" href="{{ path('panel_group_new') }}">
-									<i class="fa fa-plus-circle"></i>&nbsp; {{ 'Groups.new.title'|trans }}
-								</a>
-								<a class="btn btn-xs btn-success" href="{{ path('panel_group') }}">
-									<i class="fa fa-list-ul"></i>&nbsp; {{ 'Groups.list'|trans }}
-								</a>
-							</span>
-						</h1>
-					</div>
-					<div style="clear:both"></div>
-				
-						{% for groupMember in groupsMember %}
-							{% include 'TrazeoFrontBundle:PanelGroups:_rowGroup.html.twig' with {'groupMember': groupMember}  %}
-						{% endfor %}
-						
-						{% for restGroup in restGroups %}
-							{% if restGroup.Admin.Id == user.Id %}
-								{% include 'TrazeoFrontBundle:PanelGroups:_rowGroup.html.twig' with {'groupMember': restGroup}  %}
-							{% endif %}
-						{% endfor %}
-				</div>
+<!-- START resumeGroups -->
+<div class="col-md-12 resumeGroups" id="groups">
+{% if groupsMember|length > 0 or groupsAdmin|length > 0 %}
+		<div class="row">
+			<div class="pull-left">
+				<h1>
+					<span class="alert"><i class="fa fa-users"></i> {{ 'Groups.mine'|trans }}
+					</span>
+				</h1>
+			</div>
+			<div class="pull-right">
+				<a class="btn btn-success" href="{{ path('panel_group_new') }}">
+					<i class="fa fa-plus-circle"></i>&nbsp; {{ 'Groups.new.title'|trans }}
+				</a>
+				<a class="btn btn-success" href="{{ path('panel_group') }}">
+					<i class="fa fa-list-ul"></i>&nbsp; {{ 'Groups.list'|trans }}
+				</a>
+			</div>
+		</div>
+		{% for groupMember in groupsMember %}
+			{% include 'TrazeoFrontBundle:PanelGroups:_rowGroup.html.twig' with {'groupMember': groupMember}  %}
+		{% endfor %}
+		
+		{% for restGroup in restGroups %}
+			{% if restGroup.Admin.Id == app.user.userextend.Id %}
+				{% include 'TrazeoFrontBundle:PanelGroups:_rowGroup.html.twig' with {'groupMember': restGroup}  %}
+			{% endif %}
+		{% endfor %}
+		
+{% else %}
+	<div class="row alert-success">
+		<div class="col-md-6">
+			<i class="fa fa-users fa-5x pull-left"></i>
+			<h3>
+			{{ 'Groups.empty'|trans }}
+			&nbsp;&nbsp;
+			</h3>
+		</div>
+		<div class="pull-right"><br/>
+			<a class="btn btn-warning" href="{{ path('panel_group_new') }}">
+				<i class="fa fa-hand-o-right"></i> {{ 'Groups.new.title'|trans }}
+			</a>&nbsp;
+			<a class="btn btn-warning" href="{{ path('panel_group') }}">
+				<i class="fa fa-list-ul"></i>&nbsp; {{ 'Groups.list'|trans }}
+			</a>
+		</div>
+	</div>
+{% endif %}
+</div>
 						{#
 						<div class="alert alert-warning">
 							<table class="table">
@@ -155,19 +177,3 @@
 					</div>
 				</div>
 				#}
-				{% else %}
-				<div class="col-md-12 resumeGroups alert alert-warning" id="groups">
-					<div>
-						<i class="fa fa-users fa-5x pull-left alert-warning"></i>
-						<h4 class="alert alert-warning">
-						{{ 'Groups.empty'|trans }}
-						&nbsp;&nbsp;
-						<a class="btn btn-warning btn-outline" href="{{ path('panel_group_new') }}"><i class="fa fa-hand-o-right"></i> {{ 'Groups.new.title'|trans }}</a>
-							&nbsp;
-						<a class="btn btn-warning btn-outline" href="{{ path('panel_group') }}">
-							<i class="fa fa-list-ul"></i>&nbsp; {{ 'Groups.list'|trans }}
-						</a>
-						</h4>
-					</div>
-				</div>
-				{% endif %}
