@@ -270,7 +270,9 @@ class PanelChildrenController extends Controller
             $em->persist($child);
             $em->flush();
         }
-            return $this->redirect($this->generateUrl('panel_child'));
+        $container = $this->get('sopinet_flashMessages');
+        $notification = $container->addFlashMessages("success","Has registrado a tu niño/a con éxito");
+        return $this->redirect($this->generateUrl('panel_dashboard'));
     }
 
     /**
