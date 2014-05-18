@@ -22,22 +22,22 @@ class EGroup
     protected $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="UserExtend", inversedBy="groups")
+     * @ORM\ManyToMany(targetEntity="UserExtend", inversedBy="groups", cascade={"persist"})
      * @ORM\JoinTable(name="groups_userextend")
      **/
     protected $userextendgroups;
     
-    /** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="adminGroups")
+    /** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="adminGroups", cascade={"persist"})
      */
     protected $admin;
     
     /**
-     * @ORM\ManyToMany(targetEntity="EChild", inversedBy="groups")
+     * @ORM\ManyToMany(targetEntity="EChild", inversedBy="groups", cascade={"persist"})
      * @ORM\JoinTable(name="groups_childs")
      **/
     protected $childs;
 
-    /** @ORM\ManyToOne(targetEntity="ERoute", inversedBy="groups")
+    /** @ORM\ManyToOne(targetEntity="ERoute", inversedBy="groups", cascade={"persist"})
      */
     protected $route;
     
@@ -53,18 +53,18 @@ class EGroup
      */
     protected $access;
     
-    /** @ORM\OneToMany(targetEntity="EGroupInvite",  mappedBy="group")
+    /** @ORM\OneToMany(targetEntity="EGroupInvite",  mappedBy="group", cascade={"persist"})
      * @var unknown
      */
     protected $inviteGroup;
     
-    /** @ORM\OneToMany(targetEntity="EGroupInvite",  mappedBy="group")
+    /** @ORM\OneToMany(targetEntity="EGroupInvite",  mappedBy="group", cascade={"persist"})
      * @var unknown
      */
     protected $inviteGroupAnon;    
     
     /** 
-     * @ORM\OneToOne(targetEntity="ERide", mappedBy="group")
+     * @ORM\OneToOne(targetEntity="ERide", mappedBy="group", cascade={"persist"})
      */
     protected $ride;
     

@@ -21,11 +21,11 @@ class EGroupInvite
      */
     protected $id;
 
-    /** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="inviteGroup")
+    /** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="inviteGroup", cascade={"persist"})
      */
     protected $userextend;
     
-    /** @ORM\ManyToOne(targetEntity="EGroup", inversedBy="inviteGroup")
+    /** @ORM\ManyToOne(targetEntity="EGroup", inversedBy="inviteGroup", cascade={"persist"})
      */
     protected $group;
     

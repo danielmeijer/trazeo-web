@@ -21,7 +21,7 @@ class ERoute
 	 */
 	protected $id;
 	
-	/** @ORM\OneToMany(targetEntity="EGroup", mappedBy="route")
+	/** @ORM\OneToMany(targetEntity="EGroup", mappedBy="route", cascade={"persist"})
 	 */
 	protected $groups;
 	
@@ -29,7 +29,7 @@ class ERoute
 	 */
 	protected $points;
 	
-	/** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="adminRoutes")
+	/** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="adminRoutes", cascade={"persist"})
 	 */
 	protected $admin;
 	
