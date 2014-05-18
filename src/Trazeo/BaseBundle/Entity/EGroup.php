@@ -22,8 +22,8 @@ class EGroup
     protected $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="UserExtend", inversedBy="groups")
-     * @ORM\JoinTable(name="groups_userextend", cascade={"all"})
+     * @ORM\ManyToMany(targetEntity="UserExtend", inversedBy="groups", cascade={"all"})
+     * @ORM\JoinTable(name="groups_userextend")
      **/
     protected $userextendgroups;
     
