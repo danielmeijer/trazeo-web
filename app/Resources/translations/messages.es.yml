@@ -72,6 +72,8 @@ Children:
         girl: Niña
 
     visibility:
+        public: Público
+        private: Privado
         enabled: Público
         disabled: Privado
 

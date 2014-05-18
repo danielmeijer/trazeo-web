@@ -22,22 +22,22 @@ class EGroup
     protected $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="UserExtend", inversedBy="groups", cascade={"persist"})
-     * @ORM\JoinTable(name="groups_userextend")
+     * @ORM\ManyToMany(targetEntity="UserExtend", inversedBy="groups")
+     * @ORM\JoinTable(name="groups_userextend", cascade={"all"})
      **/
     protected $userextendgroups;
     
-    /** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="adminGroups", cascade={"persist"})
+    /** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="adminGroups", cascade={"all"})
      */
     protected $admin;
     
     /**
-     * @ORM\ManyToMany(targetEntity="EChild", inversedBy="groups", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="EChild", inversedBy="groups", cascade={"all"})
      * @ORM\JoinTable(name="groups_childs")
      **/
     protected $childs;
 
-    /** @ORM\ManyToOne(targetEntity="ERoute", inversedBy="groups", cascade={"persist"})
+    /** @ORM\ManyToOne(targetEntity="ERoute", inversedBy="groups", cascade={"all"})
      */
     protected $route;
     
@@ -48,23 +48,23 @@ class EGroup
     protected $visibility;
     
     
-    /** @ORM\OneToMany(targetEntity="EGroupAccess",  mappedBy="group")
+    /** @ORM\OneToMany(targetEntity="EGroupAccess",  mappedBy="group", cascade={"all"})
      * @var unknown
      */
     protected $access;
     
-    /** @ORM\OneToMany(targetEntity="EGroupInvite",  mappedBy="group", cascade={"persist"})
+    /** @ORM\OneToMany(targetEntity="EGroupInvite",  mappedBy="group", cascade={"all"})
      * @var unknown
      */
     protected $inviteGroup;
     
-    /** @ORM\OneToMany(targetEntity="EGroupInvite",  mappedBy="group", cascade={"persist"})
+    /** @ORM\OneToMany(targetEntity="EGroupInvite",  mappedBy="group", cascade={"all"})
      * @var unknown
      */
     protected $inviteGroupAnon;    
     
     /** 
-     * @ORM\OneToOne(targetEntity="ERide", mappedBy="group", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="ERide", mappedBy="group", cascade={"all"})
      */
     protected $ride;
     
