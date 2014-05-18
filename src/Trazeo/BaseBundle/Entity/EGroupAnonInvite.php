@@ -37,7 +37,8 @@ class EGroupAnonInvite
      */
     protected $token;    
     
-    /** @ORM\ManyToOne(targetEntity="EGroup", inversedBy="inviteGroupAnon", cascade={"all"})
+    /** @ORM\ManyToOne(targetEntity="EGroup", inversedBy="inviteGroupAnon")
+     *  @ORM\JoinColumn(name="group_id", referencedColumnName="id")
      */
     protected $group;
     

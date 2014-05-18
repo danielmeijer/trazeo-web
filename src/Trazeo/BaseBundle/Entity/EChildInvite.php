@@ -21,16 +21,22 @@ class EChildInvite
      */
     protected $id;
 
-    /** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="inviteChild")
+    /** 
+     * @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="inviteChild")
+     * @ORM\JoinColumn(name="userextend_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $userextend;
     
-    /** @ORM\ManyToOne(targetEntity="EChild", inversedBy="inviteChild")
-     * @var unknown
+    /** 
+     * @ORM\ManyToOne(targetEntity="EChild", inversedBy="inviteChild")
+     * @ORM\JoinColumn(name="child_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $child;
     
-    /** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="inviteChildSender")
+    /** 
+     * @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="inviteChildSender")
+     * @ORM\JoinColumn(name="sender_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     * @var unknown
      */
     protected $sender;
     

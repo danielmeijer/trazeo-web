@@ -22,22 +22,24 @@ class EGroup
     protected $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="UserExtend", inversedBy="groups", cascade={"all"})
+     * @ORM\ManyToMany(targetEntity="UserExtend", inversedBy="groups")
      * @ORM\JoinTable(name="groups_userextend")
      **/
     protected $userextendgroups;
     
-    /** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="adminGroups", cascade={"all"})
+    /** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="adminGroups")
      */
     protected $admin;
     
     /**
-     * @ORM\ManyToMany(targetEntity="EChild", inversedBy="groups", cascade={"all"})
+     * @ORM\ManyToMany(targetEntity="EChild", inversedBy="groups")
      * @ORM\JoinTable(name="groups_childs")
      **/
     protected $childs;
 
-    /** @ORM\ManyToOne(targetEntity="ERoute", inversedBy="groups", cascade={"all"})
+    /** 
+     * @ORM\ManyToOne(targetEntity="ERoute", inversedBy="groups")
+     * @ORM\JoinColumn(name="route_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $route;
     
@@ -48,23 +50,22 @@ class EGroup
     protected $visibility;
     
     
-    /** @ORM\OneToMany(targetEntity="EGroupAccess",  mappedBy="group", cascade={"all"})
+    /** @ORM\OneToMany(targetEntity="EGroupAccess",  mappedBy="group", cascade={"remove"})
      * @var unknown
      */
     protected $access;
     
-    /** @ORM\OneToMany(targetEntity="EGroupInvite",  mappedBy="group", cascade={"all"})
-     * @var unknown
+    /** @ORM\OneToMany(targetEntity="EGroupInvite",  mappedBy="group", cascade={"remove"})
      */
     protected $inviteGroup;
     
-    /** @ORM\OneToMany(targetEntity="EGroupInvite",  mappedBy="group", cascade={"all"})
+    /** @ORM\OneToMany(targetEntity="EGroupAnonInvite",  mappedBy="group", cascade={"remove"})
      * @var unknown
      */
     protected $inviteGroupAnon;    
     
     /** 
-     * @ORM\OneToOne(targetEntity="ERide", mappedBy="group", cascade={"all"})
+     * @ORM\OneToOne(targetEntity="ERide", mappedBy="group", cascade={"remove"})
      */
     protected $ride;
     

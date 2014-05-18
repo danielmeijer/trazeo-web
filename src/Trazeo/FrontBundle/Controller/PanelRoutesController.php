@@ -328,7 +328,7 @@ class PanelRoutesController extends Controller
         
         if (!$route) {
         	$notification = $container->addFlashMessages("warning","La ruta que intentas eliminar no existe");
-        	return $this->redirect($this->generateUrl('panel_route'));
+        	return $this->redirect($this->generateUrl('panel_dashboard'));
         }
         
         $routeAdmin = $route->getAdmin();
@@ -338,11 +338,11 @@ class PanelRoutesController extends Controller
 			$em->remove($route);
 			$em->flush();
 			$notification = $container->addFlashMessages("success","La ruta ha sido eliminada");
-			return $this->redirect($this->generateUrl('panel_route'));
+			return $this->redirect($this->generateUrl('panel_dashboard'));
 			
 		}else {
 			$notification = $container->addFlashMessages("error","Sólo el administrador puede eliminar una ruta");
-			return $this->redirect($this->generateUrl('panel_route'));	
+			return $this->redirect($this->generateUrl('panel_dashboard'));	
 		}
     }
     /**

@@ -30,7 +30,7 @@ class ERide
 	protected $group;
 	
 	/**
-	 * @ORM\OneToMany(targetEntity="EEvent", mappedBy="ride")
+	 * @ORM\OneToMany(targetEntity="EEvent", mappedBy="ride", cascade={"remove"})
 	 **/
 	protected $events;
 	
@@ -40,7 +40,7 @@ class ERide
 	protected $childs;
 	
 	/**
-	 * @ORM\OneToMany(targetEntity="EReport", mappedBy="ride")
+	 * @ORM\OneToMany(targetEntity="EReport", mappedBy="ride", cascade={"remove"})
 	 **/
 	protected $reports;
 	

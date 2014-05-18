@@ -49,16 +49,16 @@ class UserExtend
     protected $reports;
     
     /**
-     * @ORM\ManyToMany(targetEntity="EChild", mappedBy="userextendchilds")
+     * @ORM\ManyToMany(targetEntity="EChild", mappedBy="userextendchilds", cascade={"remove"})
      * @ORM\JoinTable(name="usersextend_childs")
      **/
     protected $childs;
     
-    /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\City")
+    /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\City", cascade={"remove"})
      */
     protected $city;
     
-    /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\Country")
+    /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\Country", cascade={"remove"})
      */
     protected $country;
     

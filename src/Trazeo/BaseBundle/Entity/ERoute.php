@@ -21,15 +21,16 @@ class ERoute
 	 */
 	protected $id;
 	
-	/** @ORM\OneToMany(targetEntity="EGroup", mappedBy="route", cascade={"all"})
+	/** @ORM\OneToMany(targetEntity="EGroup", mappedBy="route")
 	 */
 	protected $groups;
 	
-	/** @ORM\OneToMany(targetEntity="EPoints", mappedBy="route", cascade={"all"})
+	/** @ORM\OneToMany(targetEntity="EPoints", mappedBy="route", cascade={"remove"})
 	 */
 	protected $points;
 	
-	/** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="adminRoutes", cascade={"all"})
+	/** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="adminRoutes")
+	 *  @ORM\JoinColumn(name="admin_id", referencedColumnName="id")
 	 */
 	protected $admin;
 	

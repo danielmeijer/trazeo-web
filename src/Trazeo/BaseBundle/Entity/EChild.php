@@ -21,7 +21,6 @@ class EChild
     protected $id;
     
     /** @ORM\ManyToMany(targetEntity="UserExtend", inversedBy="childs")
-     * @var unknown
      */
     protected $userextendchilds;
     
@@ -32,7 +31,7 @@ class EChild
     
     /**
      * @ORM\ManyToOne(targetEntity="ERide", inversedBy="childs")
-     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      **/
     protected $ride;
 
