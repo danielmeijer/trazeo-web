@@ -95,82 +95,8 @@
 	#}
 {% endblock %}
 		
-{% block js %} {{ parent() }} 
-
-
-	<input type="hidden" id="path_home" value="{{ path('panel_dashboard') }}">
-
-	<script type="text/javascript">
-		var running=0;
-		 var prevent=function(e){
-			 if(running==1){
-			 e.preventDefault();
-			 e.stopPropagation();
-			 }
-		 }
-		 //styles on tutorial running 
-			 var tutorialRunning=function(){
-			 running=1;
-			 localStorage.setItem('tutorial','none');
-			 $('*').click(prevent);
-			 $('body').on('mousewheel',prevent);
-			 $('#wrapper').css('opacity','0.25');
-		 };
-		 //styles on tutorial stoped 
-		 var tutorialStoped=function(){
-			     running=0;
-    			 $('#wrapper').css('opacity','1');
-    			 //localStorage.setItem('tutorial','none');
-             };
-         //global options for tutotials
-         var options={
-                 		delay : 4000
-                 		,backToTopWhenEnded: true
-		    	    	,skipUndefinedTrip: true
-		    	    	,tripTheme: 'white'
-		    	    	,onTripStart: tutorialRunning
-		    	    	,onTripEnd: tutorialStoped
-		    	    	,onTripClose: tutorialStoped
-			    	    ,showCloseBox: true
-			    	    ,showNavigation : true
-			    	    ,prevLabel: "<i class='fa fa-backward fa-2x' style='color:#428bca !important'></i>"
-				    	,nextLabel: "<i class='fa fa-forward fa-2x' style='color:#428bca !important'></i>"
-					    ,finishLabel: "<i class='fa fa-stop fa-2x' style='color:#428bca !important'></i>"
-					    ,closeBoxLabel: "<i class='fa fa-sign-out' style='color:#428bca !important'>saltar</i>"
-
-		    		};
-	if(localStorage.getItem('tutorial')=='routes'){
-		localStorage.setItem('tutorial','none');
-   		var trip = new Trip([
-   	                         { 
-   	                             sel : $('.panel.panel-warning'),
-   	                             content : 'Aqui aparecera la información de las rutas',
-   	                             position: 'n'
-   	                         },
-   	                         { 
-   	                             sel : $(".edit-route"),
-   	                             content : 'Aqui podra editar la información de una ruta',
-   	                             position: 'n'
-   	                         },
-   	                         { 
-   	                             sel : $(".route-goups-count"),
-   	                             content : 'Aqui aparecera el numero de grupos vinculados a una ruta',
-   	                             position: 'n'
-   	                         },
-   	                         { 
-   	                             sel : $(".route-show"),
-   	                             content : 'Aqui muestra la ruta',
-   	                             position: 'e',
-   	                             callback: function(){
-   	                            	localStorage.setItem('tutorial','last');
-                              	 	var url = $('#path_home').attr('value');    
-                             	 	window.location.replace(url);
-    	   	                     }
-   	                         }
-   	                         
-                      ],options);
-		trip.start();
-	}
-	</script>	
+{% block js %}
+ {{ parent() }} 
+ {% include 'TrazeoFrontBundle:PanelRoutes:_tutorial.html.twig' %}
 
 {% endblock %}
