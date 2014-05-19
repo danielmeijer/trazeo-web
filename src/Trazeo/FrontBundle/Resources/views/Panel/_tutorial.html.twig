@@ -35,17 +35,15 @@
 			 localStorage.setItem('tutorial','none');
 			 $('*').click(prevent);
 			 $('body').on('mousewheel',prevent);
-			 $('#wrapper').css('opacity','0.25');
 		 };
 		 //styles on tutorial stoped 
 		 var tutorialStoped=function(){
 			     running=0;
     			 $('#wrapper').css('opacity','1');
-    			 //localStorage.setItem('tutorial','none');
              };
          //global options for tutotials
          var options={
-                 		delay : 4000
+                 		delay : 6000
                  		,backToTopWhenEnded: true
 		    	    	,skipUndefinedTrip: true
 		    	    	,tripTheme: 'white'
@@ -70,35 +68,41 @@
 					 			 trip = new Trip([
 		    	                     { 
 
-		       	                     	 sel : $('b')
+		       	                     	 sel : $('.navbar-fixed-top')
 		       	                         ,content : 'Bienvenido a Trazeo, a continuación te explicaré las funciones basicas'
-		       	                         ,position: 'e'
+		       	                         ,position: 's'
 		       	                      	 ,callback: function(){$(location).attr('href',loc+"#childs")}
+	       	                      	 	 ,expose: true
 		       	                     },
-		   	                         { 
-		   	                             sel : $('.resumeChilds'),
-		   	                             content : 'En el panel de niños, podras añadir niños a trazeo',
-		   	                             position: 'n',
-		   	                         	 callback: function(){$(location).attr('href',loc+"#groups")}	
 
-		       	                     },
 		   	                         { 
 		   	                             sel : $('.resumeGroups'),
 		   	                             content : 'Aqui podras crear grupos, definir la visibilidad del grupo, chatear con otros tutores y asignar una ruta para el grupo',
 		   	                             position: 'n',
-		   	                          	 callback: function(){$(location).attr('href',loc+"#routes")}					       	                         
+		   	                          	 callback: function(){$(location).attr('href',loc+"#routes")}
+		       	                  		 ,expose: true					       	                         
 		   	                         },
 		   	                         { 
 		   	                             sel : $('.resumeRoutes'),
 		   	                             content : 'Aqui podras crear nuevas rutas o consultar rutas ya existentes',
 		   	                             position: 'n'
+		   	                            ,expose: true
 
 		   	                         },
-		      	                    { 
-	        	                    	 sel : $('b')
+		   	                         { 
+		   	                             sel : $('.resumeChilds'),
+		   	                             content : 'En el panel de niños, podras añadir niños a trazeo',
+		   	                             position: 'n',
+		   	                         	 callback: function(){$(location).attr('href',loc+"#groups")}	
+		       	                  		 ,expose: true
+
+		       	                     },
+		       	                     { 
+		   	                        	 sel : $('.navbar-fixed-top')
 	        	                         ,content : 'Aqui termina nuestro paseo por Trazeo, disfruta de la aplicación'
-	        	                         ,position: 'e'
+	        	                         ,position: 's'
 		        	                     ,canGoNext: false
+		        	                     ,expose: true
 				        	             //,callback: function(){localStorage.setItem('tutorial','child');setTimeout(tutorial(),300);}
 	        	                     }
 		  	            	   	],
@@ -112,26 +116,31 @@
 		       	                    	 sel : $('#new_child'),
 		   	                             content : 'Aqui podemos añadir niños a trazeo',
 		   	                             position: 'n'
+		   	                             ,expose: true
 		   	                         },
 		   	                         { 
 		   	                             sel : $('#new_group'),
 		   	                             content : 'Aqui podemos crear nuevos grupos',
 		   	                             position: 'n'
+		   	                             ,expose: true
 		   	                         },
 		   	                         { 
 		   	                             sel : $('#new_route'),
 		   	                             content : 'Aqui podemos crear una nueva ruta',
 		   	                             position: 'n'
+		   	                             ,expose: true
 		   	                         },
 			                         { 
 		    	                         sel : $('.fa-home.fa-2x'),
 		        	                     content : 'Esta es la pantalla de inicio',
 		            	                 position: 'e'
+		            	                 ,expose: true
 		                	         },
 		                    	     { 
 		                        	     sel : $('.fa-user.fa-2x'),
 		                            	 content : $('#children_desc').val(),
 		                        	     position: 'e'
+		                        	     ,expose: true
 		                         	 },
 		                         	{ 
 		                            	sel : $('.fa-users.fa-2x'),
