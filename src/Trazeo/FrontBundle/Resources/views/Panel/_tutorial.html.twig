@@ -99,12 +99,24 @@
 		       	                     },
 		       	                     { 
 		   	                        	 sel : $('.navbar-fixed-top')
-	        	                         ,content : 'Aqui termina nuestro paseo por Trazeo, disfruta de la aplicación'
+	        	                         ,content : 'Aqui termina nuestro paseo por la pagina principal de Trazeo'
 	        	                         ,position: 's'
 		        	                     ,canGoNext: false
 		        	                     ,expose: true
 				        	             //,callback: function(){localStorage.setItem('tutorial','child');setTimeout(tutorial(),300);}
-	        	                     }
+	        	                     },
+		       	                     { 
+		   	                        	 sel : $('.navbar-fixed-top')
+	        	                         ,content : '¿Cuál es el rol con el que vas a utilizar la aplicación?'
+	        	                         ,position: 's'
+		        	                     ,canGoNext: false
+		        	                     ,expose: true
+	        				    	     ,prevLabel: "<p style='color:#428bca !important'>Monitor</p>"
+          						    	 ,nextLabel: "<p style='color:#428bca !important'>Padre</p>"
+          								 ,finishLabel: "<p style='color:#428bca !important'>Padre</p>"	    
+				        	             ,callback: function(){$(location).attr('href',loc+"child/new");}
+	        	                     },
+	        	                     
 		  	            	   	],
 		  	            	   	options);
 					trip.start();
