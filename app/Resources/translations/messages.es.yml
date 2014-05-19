@@ -404,8 +404,12 @@ Ride:
         title: Paseo en marcha 
         description: Puedes ver en tiempo real el recorrido de esta ruta y consultar todos sus datos
     yes:
-        title: Hay paseos en marcha
-        description: Los siguientes grupos están en marcha y tienes niños/as apuntados en ellos
+        title:
+            plural: Hay paseos en marcha
+            singular: Hay un paseo en marcha
+        description: 
+            plural: Los siguientes grupos están en marcha y tienes niños/as apuntados en ellos
+            singular: El siguiente grupo está en marcha y tienes niños/as apuntados en el
     go: Ir al paseo
         
 Options:

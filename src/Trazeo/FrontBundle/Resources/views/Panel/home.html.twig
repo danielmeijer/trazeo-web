@@ -8,15 +8,25 @@
         		<i class="fa fa-5x fa-clock-o"></i>
         	</div>
         	<div class="col-md-11">
-				<h3>{{ 'Ride.yes.title'|trans }}</h3>
-				<p>{{ 'Ride.yes.description'|trans }}</p>
+        	
+				{% if groupsRide|length > 0 %}
+					{% set ride_description = 'Ride.yes.description.singular'|trans %}
+					{% set ride_yes = 'Ride.yes.title.singular'|trans %}
+				{% else  %}
+					{% set ride_description = 'Ride.yes.description.plural'|trans %}
+					{% set ride_yes = 'Ride.yes.title.plural'|trans %}
+				{% endif %}
+				
+				<h3>{{ ride_yes }}</h3>
+				<p>{{ ride_description }}</p>
+				
 				<br />
 				{% for group in groupsRide %}
 					<ul class="col-md-5">
-						<li><i class="fa fa-users"></i>&nbsp; <a href="{{ path('panel_group_timeline',{'id': group.id}) }}">{{ group.Name }}</a></li>
+						<li><i class="fa fa-2x fa-users"></i>&nbsp; <a href="{{ path('panel_group_timeline',{'id': group.id}) }}">{{ group.Name }}</a></li>
 					</ul>
 					<ul class="col-md-5">
-						<li><i class="fa fa-mail-forward"></i><a group="{{group.name}}" ride="{{group.ride.id}}" class="ride-action" href="{{ path('panel_ride_current', {'id': group.ride.id}) }}">&nbsp; {{ 'Ride.go'|trans }}</a></li>
+						<li><i class="fa fa-2x fa-mail-forward"></i><a group="{{group.name}}" ride="{{group.ride.id}}" class="ride-action" href="{{ path('panel_ride_current', {'id': group.ride.id}) }}">&nbsp; {{ 'Ride.go'|trans }}</a></li>
 					</ul>
 				{% endfor %}
 			</div>
