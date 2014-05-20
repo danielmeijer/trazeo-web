@@ -132,7 +132,6 @@ class PanelGroupsController extends Controller
 	 * @Template()
 	 */
 	public function disJoinGroupAction($id) {
-	
 		$em = $this->getDoctrine()->getManager();
 	
 		$fos_user = $this->container->get('security.context')->getToken()->getUser();
@@ -140,9 +139,16 @@ class PanelGroupsController extends Controller
 		$container = $this->get('sopinet_flashMessages');
 		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
 	
+		// Grupo eliminado
 		if (!$group) {
 			$notification = $container->addFlashMessages("warning","El grupo ha sido eliminado");
 			return $this->redirect($this->generateUrl('panel_group'));
+		}
+		
+		// Solicitud del Administrador
+		if ($group->getAdmin()->getId() == $user->getId()) {
+			$notification = $container->addFlashMessages("warning","Usted es el Administrador del Grupo, no puede desvincularse de él.");
+			return $this->redirect($this->generateUrl('panel_group'));			
 		}
 	
 		$group->removeUserextendgroup($user);

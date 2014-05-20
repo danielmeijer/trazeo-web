@@ -11,23 +11,50 @@
 	<!-- Opciones de Usuario -->
 	<div class="col-md-6">
 		
-		{% if (nois is defined) %}
+		<!-- Visibilidad -->
+		{% if groupMember.Admin.Id == app.user.userextend.Id %}
+        	{% if  groupMember.Visibility == 0 %}
+                <td><i rel="tooltip-top" title='{{ 'Groups.visibility.public'|trans }} - {{ 'ChangeVisibility'|trans }}' class="fa fa-unlock btn btn-xs btn-success"
+                groupVisibility="0" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': groupMember.id, 'visibility': "replace" }) }}";
+				id="visibility-{{ groupMember.id }}" data-toggle="confirmationChange"></i></td>
+            {% elseif groupMember.Visibility == 1 %}
+                <td><i rel="tooltip-top" title='{{ 'Groups.visibility.private'|trans }} - {{ 'ChangeVisibility'|trans }}' class="fa fa-lock btn btn-xs btn-danger"
+                groupVisibility="1" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': groupMember.id, 'visibility': "replace" }) }}";
+				id="visibility-{{ groupMember.id }}" data-toggle="confirmationChange"></i></td>
+            {% elseif groupMember.Visibility == 2 %}
+                <td><i rel="tooltip-top" title='{{ 'Groups.visibility.hidden'|trans }} - {{ 'ChangeVisibility'|trans }}' class="fa fa-eye-slash btn btn-xs btn-warning"
+                groupVisibility="2" changeVisibility="{{ path('panel_group_changeVisibility', { 'id': groupMember.id, 'visibility': "replace" }) }}";
+				id="visibility-{{ groupMember.id }}" data-toggle="confirmationChange"></i></td>
+            {% endif %}
+        {% else %}   
+        	{% if  groupMember.Visibility == 0 %}
+                <td><i class="fa fa-unlock btn btn-xs btn-success" title="{{ 'Groups.visibility.public'|trans }}"></i></td>
+        	{% elseif groupMember.Visibility == 1 %}
+                <td><i class="fa fa-unlock btn btn-xs btn-danger" title="{{ 'Groups.visibility.private'|trans }}"></i></td>
+         	{% elseif groupMember.Visibility == 2 %}
+                <td><i class="fa fa-unlock btn btn-xs btn-warning" title="{{ 'Groups.visibility.hidden'|trans }}"></i></td>
+            {% endif %}
+        {% endif %}			
 		
-			<!-- No Miembro -->
-			{# <i rel="tooltip-top" title='{{ 'Groups.noMember'|trans }}' class="fa fa-warning"></i>&nbsp; {{ 'NoAccess'|trans }} #}		
-			<a href="{{ path('panel_group_join', { 'id': groupMember.id }) }}" type="button" 
-	 		class="btn btn-default btn-xs group-join" group.name="{{ groupMember.Name }}">
-	 			<i class="fa fa-sign-in"></i> {{ 'Join'|trans }}
-	 		</a>
- 		
- 		{% else %}
-			<!-- Miembro -->
-			<a href="{{ path('panel_group_timeline',{'id': groupMember.id}) }}"><button class="btn btn-xs btn-success"><i class="fa fa-comments-o"></i>&nbsp; {{ 'Groups.data.chat'|trans }}</button></a>
-			<a href="{{ path('panel_group_disjoin', { 'id': groupMember.id }) }}" type="button" 
-			class="btn btn-default btn-xs group-disjoin">
-				<i class="fa fa-sign-out"></i> {{ 'DisJoin'|trans }}
-			</a> 		
- 		{% endif %}
+		{% if (groupMember.Admin.Id != app.user.userextend.Id) %}
+			{% if (nois is defined) %}
+			
+				<!-- No Miembro -->
+				{# <i rel="tooltip-top" title='{{ 'Groups.noMember'|trans }}' class="fa fa-warning"></i>&nbsp; {{ 'NoAccess'|trans }} #}		
+				<a href="{{ path('panel_group_join', { 'id': groupMember.id }) }}" type="button" 
+		 		class="btn btn-default btn-xs group-join" group.name="{{ groupMember.Name }}">
+		 			<i class="fa fa-sign-in"></i> {{ 'Join'|trans }}
+		 		</a>
+	 		
+	 		{% else %}
+				<!-- Miembro -->
+				<a href="{{ path('panel_group_timeline',{'id': groupMember.id}) }}"><button class="btn btn-xs btn-success"><i class="fa fa-comments-o"></i>&nbsp; {{ 'Groups.data.chat'|trans }}</button></a>
+				<a href="{{ path('panel_group_disjoin', { 'id': groupMember.id }) }}" type="button" 
+				class="btn btn-default btn-xs group-disjoin">
+					<i class="fa fa-sign-out"></i> {{ 'DisJoin'|trans }}
+				</a> 		
+	 		{% endif %}
+	 	{% endif %}
  		 			
 		<!-- Ruta del Grupo -->
         {% if groupMember.route %}
