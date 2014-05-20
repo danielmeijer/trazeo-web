@@ -729,6 +729,19 @@ class PanelGroupsController extends Controller
     	$fos_user = $this->container->get('security.context')->getToken()->getUser();
     	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
     	
+    	// Comprobación de que el padre pertenece a ese grupo, y, por tanto
+    	// puede entrar en esta pantalla
+    	// Si no tiene acceso lo mandamos al listado de Grupos
+    	$can = false;
+    	foreach($group->getUserextendgroups()->toArray() as $checkuser) {
+    		if ($checkuser->getId() == $user->getId()) $can = true;
+    	}
+    	if (!$can) {
+    		$container = $this->get('sopinet_flashMessages');
+    		$notification = $container->addFlashMessages("error","No tiene acceso a este grupo, por favor, solicítelo antes de poder participar en el Muro");
+    		return $this->redirect($this->generateUrl('panel_group'));
+    	}
+    	
     	//Listado de niños que están en el grupo y pertenecen al usuario logueado 
     	$userchilds = $user->getChilds()->toArray();
     	$groupchilds = $group->getChilds()->toArray();
