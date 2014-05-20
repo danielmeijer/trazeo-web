@@ -671,7 +671,12 @@ class ApiController extends Controller {
 		$id_group = $request->get('id_group');
 		
 		$thread = $em->getRepository('SopinetTimelineBundle:Thread')->findOneById($id_group);
-		$data = $em->getRepository('SopinetTimelineBundle:Comment')->findByThread($thread);
+		$comments = $em->getRepository('SopinetTimelineBundle:Comment')->findByThread($thread);
+		$data = array();
+		foreach($comments as $comment) {
+			$comment->authorName = $comment->getAuthorName();
+			$data[] = $comment;
+		}
 		
 		$view = View::create()
 		->setStatusCode(200)
