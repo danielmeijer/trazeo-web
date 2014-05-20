@@ -1,12 +1,16 @@
 <!-- START resumeGroups -->
  <div class="resumeGroups alert" id="groups">
- 			{% for groupMember in groupsMember %}
- 				{% include 'TrazeoFrontBundle:PanelGroups:_rowGroup.html.twig' with {'groupMember': groupMember}  %}
- 			{% endfor %}
- 			
- 			{% for restGroup in restGroups %}
- 				{% if restGroup.Visibility  != 2 %}
- 					{% include 'TrazeoFrontBundle:PanelGroups:_rowGroup.html.twig' with {'groupMember': restGroup}  %}
- 				{% endif %}
- 			{% endfor %}
+ 	{% if (groupsMember|length > 0) %}
+ 		<h3>Tus grupos</h3>
+ 		{% for groupMember in groupsMember %}
+ 			{% include 'TrazeoFrontBundle:PanelGroups:_rowGroup.html.twig' with {'groupMember': groupMember}  %}
+ 		{% endfor %}
+ 	{% endif %}
+ 	
+ 	<h3>Listado de Grupos Disponibles</h3>	
+ 	{% for restGroup in restGroups %}
+ 		{% if restGroup.Visibility  != 2 %}
+ 			{% include 'TrazeoFrontBundle:PanelGroups:_rowGroup.html.twig' with {'groupMember': restGroup, 'nois': 1}  %}
+ 		{% endif %}
+ 	{% endfor %}
  </div>
