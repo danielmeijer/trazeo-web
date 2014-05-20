@@ -336,9 +336,12 @@
     	    			|| first._routing.nextMarker.pickUpText=='Punto inicio'))
 					map.removePickUpWaypoint(first._routing.nextMarker);
     		first=first.getLatLng();
-    		geocoder.reverse(first, map.options.crs.scale(map.getZoom()), function(results) {
+    		geocoder.reverse(first, map.options.crs.scale(16), function(results) {
 				var r = results[0];
-				$("#start").html(r.name);
+				var aux=r.name.split(',');
+				aux.splice(1,2);
+				aux.splice(3,1);								
+				$("#start").html(aux.toString());
     		});
     	}
     	if(last){
@@ -348,9 +351,12 @@
     	    		|| last._routing.prevMarker.pickUpText=='Punto fin'))
     				map.removePickUpWaypoint(last._routing.prevMarker);
 	  		last=last.getLatLng();
-    		geocoder.reverse(last, map.options.crs.scale(map.getZoom()), function(results) {
+    		geocoder.reverse(last, map.options.crs.scale(16), function(results) {
 				var r = results[0];
-	    		$("#finish").html(r.name);				    		
+				var aux=r.name.split(',');
+				aux.splice(1,2);
+				aux.splice(3,1);
+	    		$("#finish").html(aux.toString());			    		
 	    	});
     	}
     	if(first && last)$("#distance").html(map.getDistance()+" m");
