@@ -699,8 +699,10 @@ class ApiController extends Controller {
 		$id_group = $request->get('id_group');
 		$text = $request->get('text');
 		
+		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneById($id_group);
 		$thread = $em->getRepository('SopinetTimelineBundle:Thread')->findOneById($id_group);
-
+		
+		// Save comment
 		$comment = new Comment();
 		$comment->setThread($thread);
 		$comment->setAuthor($user);
@@ -708,6 +710,20 @@ class ApiController extends Controller {
 		
 		$em->persist($comment);
 		$em->flush();
+		
+		// Send notifications to Users
+		$userextends = $group->getUserextendgroups()->toArray();
+		$not = $this->container->get('sopinet_user_notification');
+		foreach($userextends as $userextend)
+		{
+			$not->addNotification(
+					"timeline.newFromMonitor",
+					"TrazeoBaseBundle:EGroup,SopinetTimelineBundle:Comment",
+					$group->getId().",".$comment->getId(),
+					$this->generateUrl('panel_group_timeline', array('id' => $group->getId())),
+					$userextend->getUser()
+			);
+		}	
 		
 		$view = View::create()
 		->setStatusCode(200)
