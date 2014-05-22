@@ -57,9 +57,20 @@
 	var Sugestion= function(args){
 		this.element=args.element;
 		this.content=args.text;
-		this.delay=args.delay || 4000;
+		this.delay=args.delay || 6000;
 		this.position=args.position || 'n';
 		if(args.next)this.next=args.next;
 	}
 </script>
+{# {% for sug in suggestions %}
+TODO: Por ahora solo se muestra una sugerencía, para más habra que cambiar esta parte, y usar el método showSugestions 
+ #}
+	<script>
+		var suggest={
+			text: "{{ suggestion.text }}"
+			,element: "{{ suggestion.element }}"
+		};
+		_showSugestion(suggest);
+	</script>
+{# {% endfor %} #}
 <!--END Sugestions script-->
