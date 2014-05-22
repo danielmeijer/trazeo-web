@@ -20,6 +20,9 @@ class EPointsAdmin extends Admin
             ->add('pickup')
             ->add('description')
             ->add('location')
+            ->add('route')
+            ->add('createdAt')
+            ->add('updatedAt')
         ;
     }
 
@@ -40,6 +43,9 @@ class EPointsAdmin extends Admin
                     'delete' => array(),
                 )
             ))
+            ->add('route')
+            ->add('createdAt')
+            ->add('updatedAt')
         ;
     }
 

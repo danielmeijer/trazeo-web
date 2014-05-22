@@ -18,10 +18,17 @@ class EChildAdmin extends Admin
         $datagridMapper
             ->add('id')
             ->add('nick')
+            ->add('userextendchilds')
             ->add('dateBirth')
             ->add('visibility')
             ->add('gender')
             ->add('selected')
+            ->add('ride')
+            ->add('groups')
+            ->add('inviteChild')            
+            ->add('createdAt')
+            ->add('updatedAt')
+            
         ;
     }
 
@@ -33,6 +40,7 @@ class EChildAdmin extends Admin
         $listMapper
             ->add('id')
             ->add('nick')
+            ->add('userextendchilds')
             ->add('dateBirth')
             ->add('visibility')
             ->add('gender')
@@ -44,6 +52,11 @@ class EChildAdmin extends Admin
                     'delete' => array(),
                 )
             ))
+            ->add('ride')
+            ->add('groups')
+            ->add('inviteChild')
+            ->add('createdAt')
+            ->add('updatedAt')       
         ;
     }
 

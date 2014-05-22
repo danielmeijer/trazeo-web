@@ -20,6 +20,13 @@ class EGroupAdmin extends Admin
             ->add('visibility')
             ->add('hasRide')
             ->add('name')
+            ->add('admin')
+            ->add('childs')
+            ->add('route')
+            ->add('inviteGroup')
+            ->add('ride')
+            ->add('createdAt')
+            ->add('updatedAt')
         ;
     }
 
@@ -33,6 +40,11 @@ class EGroupAdmin extends Admin
             ->add('visibility')
             ->add('hasRide')
             ->add('name')
+            ->add('admin')
+            ->add('childs')
+            ->add('route')
+            ->add('inviteGroup')
+            ->add('ride')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
@@ -40,6 +52,8 @@ class EGroupAdmin extends Admin
                     'delete' => array(),
                 )
             ))
+            ->add('createdAt')
+            ->add('updatedAt')  
         ;
     }
 

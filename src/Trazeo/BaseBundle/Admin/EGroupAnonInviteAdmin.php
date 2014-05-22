@@ -17,8 +17,10 @@ class EGroupAnonInviteAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
+            ->add('createdAt')
+            ->add('updatedAt')
             ->add('email')
-            ->add('token')
+            ->add('group')
         ;
     }
 
@@ -30,7 +32,6 @@ class EGroupAnonInviteAdmin extends Admin
         $listMapper
             ->add('id')
             ->add('email')
-            ->add('token')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
@@ -38,6 +39,9 @@ class EGroupAnonInviteAdmin extends Admin
                     'delete' => array(),
                 )
             ))
+            ->add('createdAt')
+            ->add('updatedAt')
+            ->add('group')
         ;
     }
 

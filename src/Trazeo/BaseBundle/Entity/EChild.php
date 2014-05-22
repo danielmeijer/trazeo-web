@@ -3,6 +3,7 @@
 namespace Trazeo\BaseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 /**
  * Entity Children
  *
@@ -11,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class EChild
 {
+	use ORMBehaviors\Timestampable\Timestampable;
     /**
      * @var integer
      *

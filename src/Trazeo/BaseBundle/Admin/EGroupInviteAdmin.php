@@ -17,6 +17,10 @@ class EGroupInviteAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
+            ->add('createdAt')
+            ->add('updatedAt')
+            ->add('userextend')
+            ->add('group')
         ;
     }
 
@@ -34,6 +38,11 @@ class EGroupInviteAdmin extends Admin
                     'delete' => array(),
                 )
             ))
+            ->add('createdAt')
+            ->add('updatedAt')
+            ->add('userextend')
+            ->add('group')
+            
         ;
     }
 

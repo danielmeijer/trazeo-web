@@ -22,6 +22,7 @@ class EEventAdmin extends Admin
             ->add('location')
             ->add('createdAt')
             ->add('updatedAt')
+            ->add('ride')
         ;
     }
 
@@ -44,6 +45,8 @@ class EEventAdmin extends Admin
                     'delete' => array(),
                 )
             ))
+            ->add('ride')
+            
         ;
     }
 

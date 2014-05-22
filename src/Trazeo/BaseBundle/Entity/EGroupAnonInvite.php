@@ -4,6 +4,7 @@ namespace Trazeo\BaseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
 /**
  * Entity GroupAnonInvite
@@ -14,6 +15,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
  */
 class EGroupAnonInvite
 {
+	use ORMBehaviors\Timestampable\Timestampable;
     /**
      * @var integer
      *

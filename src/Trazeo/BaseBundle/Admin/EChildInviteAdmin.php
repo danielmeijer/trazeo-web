@@ -17,6 +17,12 @@ class EChildInviteAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
+            ->add('userextend')
+            ->add('child')
+            ->add('sender')
+            ->add('createdAt')
+            ->add('updatedAt')
+            
         ;
     }
 
@@ -34,6 +40,11 @@ class EChildInviteAdmin extends Admin
                     'delete' => array(),
                 )
             ))
+            ->add('userextend')
+            ->add('child')
+            ->add('sender')
+            ->add('createdAt')
+            ->add('updatedAt')
         ;
     }
 

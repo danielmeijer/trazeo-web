@@ -8,6 +8,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
+
 class EGroupAccessAdmin extends Admin
 {
     /**
@@ -17,6 +18,10 @@ class EGroupAccessAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
+            ->add('createdAt')
+            ->add('updatedAt')
+            ->add('userextend')
+            ->add('group')
         ;
     }
 
@@ -34,6 +39,11 @@ class EGroupAccessAdmin extends Admin
                     'delete' => array(),
                 )
             ))
+            ->add('createdAt')
+            ->add('updatedAt')
+            ->add('userextend')
+            ->add('group')
+            
         ;
     }
 

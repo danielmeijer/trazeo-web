@@ -18,6 +18,8 @@ class EReportAdmin extends Admin
         $datagridMapper
             ->add('id')
             ->add('text')
+            ->add('ride')
+            ->add('userextend')
             ->add('createdAt')
             ->add('updatedAt')
         ;
@@ -31,6 +33,8 @@ class EReportAdmin extends Admin
         $listMapper
             ->add('id')
             ->add('text')
+            ->add('ride')        
+            ->add('userextend')    
             ->add('createdAt')
             ->add('updatedAt')
             ->add('_action', 'actions', array(

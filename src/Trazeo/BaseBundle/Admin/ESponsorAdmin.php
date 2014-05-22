@@ -19,6 +19,8 @@ class ESponsorAdmin extends Admin
             ->add('id')
             ->add('nick')
             ->add('image')
+            ->add('createdAt')
+            ->add('updatedAt')
         ;
     }
 
@@ -38,6 +40,9 @@ class ESponsorAdmin extends Admin
                     'delete' => array(),
                 )
             ))
+            ->add('createdAt')
+            ->add('updatedAt')
+            
         ;
     }
 

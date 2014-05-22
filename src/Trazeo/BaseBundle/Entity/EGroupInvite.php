@@ -3,7 +3,7 @@
 namespace Trazeo\BaseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 /**
  * Entity EGroupInvite
  *
@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class EGroupInvite
 {
+	use ORMBehaviors\Timestampable\Timestampable;
     /**
      * @var integer
      *

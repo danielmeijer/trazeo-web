@@ -19,6 +19,9 @@ class ERideAdmin extends Admin
             ->add('id')
             ->add('duration')
             ->add('groupid')
+            ->add('group')
+            ->add('events')
+            ->add('reports')
             ->add('createdAt')
             ->add('updatedAt')
         ;
@@ -33,6 +36,9 @@ class ERideAdmin extends Admin
             ->add('id')
             ->add('duration')
             ->add('groupid')
+            ->add('group')
+            ->add('events')
+            ->add('reports')
             ->add('createdAt')
             ->add('updatedAt')
             ->add('_action', 'actions', array(
