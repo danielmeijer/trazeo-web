@@ -45,7 +45,7 @@
 
 {% block js %}
 	{{ parent() }}
-	{% if suggestion is not empty %}
+	{% if suggestion is defined and suggestion is not empty %}
 		{% include "TrazeoFrontBundle:Panel:_sugestions.js.twig" with {
 			'suggestions': suggestion
 		} %}
