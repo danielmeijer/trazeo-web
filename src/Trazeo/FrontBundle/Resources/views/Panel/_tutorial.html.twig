@@ -20,7 +20,9 @@
 	<input type="hidden" id="child_ref" value="{{ path('panel_child')}}">
 	<input type="hidden" id="route_ref" value="{{ path('panel_route')}}">
 	<input type="hidden" id="group_ref" value="{{ path('panel_group')}}">
-
+	<input type="hidden" id="monitor_ref" value="{{ path('panel_doMonitor')}}">
+	<input type="hidden" id="user_ref" value="{{ path('panel_doUser')}}">
+	
 	<script type="text/javascript">
 	var running=0;
 		 var prevent=function(e){
@@ -41,6 +43,14 @@
 			     running=0;
     			 $('#wrapper').css('opacity','1');
              };
+         ///monitor redirect
+         var monitorRedirect=function(){
+         	$(location).attr('href',$('monitor_ref').val());
+         }
+         //user redirect
+         var userRedirect=function(){
+         	$(location).attr('href',$('user_ref').val());
+         }
          //global options for tutotials
          var options={
                  		delay : 6000
@@ -111,10 +121,11 @@
 	        	                         ,position: 's'
 		        	                     ,canGoNext: false
 		        	                     ,expose: true
-	        				    	     ,prevLabel: "<p style='color:#428bca !important'>Monitor</p>"
-          						    	 ,nextLabel: "<p style='color:#428bca !important'>Padre</p>"
-          								 ,finishLabel: "<p style='color:#428bca !important'>Padre</p>"	    
-				        	             ,callback: function(){$(location).attr('href',loc+"child/new");}
+		        	                     ,delay: -1
+		        	                     ,showCloseBox: false
+	        				    	     ,prevLabel: "<p style='color:#428bca !important' id='monitor'>Monitor</p><script type='text/javascript'>$('#monitor').click(monitorRedirect)</script>"
+          						    	 ,nextLabel: "<p style='color:#428bca !important'id='padre'>Padre</p><script type='text/javascript'>$('#padre').click(userRedirect)</script>"
+          								 ,finishLabel: "<p style='color:#428bca !important' id='padre'>Padre</p><script type='text/javascript'>$('#padre').click(userRedirect)</script>"	    
 	        	                     },
 	        	                     
 		  	            	   	],
