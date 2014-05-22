@@ -62,4 +62,14 @@
 		if(args.next)this.next=args.next;
 	}
 </script>
+{% for suggestions in suggestion  %}
+<script>
+	//TODO: Por ahora solo se muestra una sugerencía para más habra que cambiar y usar el método showSugestions 
+	var suggest{
+		text: {{ suggestion.text }}
+		,element: {{ suggestion.element }}
+	};
+	_showSugestion(suggest);
+</script>
+{%  endfor %}
 <!--END Sugestions script-->
