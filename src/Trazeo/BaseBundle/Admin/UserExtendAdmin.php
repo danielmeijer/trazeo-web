@@ -16,7 +16,7 @@ class UserExtendAdmin extends Admin
     $formMapper
         ->add('user')
         ->add('groups', null, array('required' => false))
-        ->add('adminRoutes', null, array('required' => false))
+        ->add('adminRoutes')
         ->add('children', null, array('required' => false))
         ->add('nick')
     ;
@@ -26,13 +26,19 @@ class UserExtendAdmin extends Admin
   {
     $datagridMapper
     	->add('nick')
+    	->add('groups')
     ;
   }
  
   protected function configureListFields(ListMapper $listMapper)
   {
     $listMapper
-      ->addIdentifier('id')->add('user')->add('groups')->add('adminRoutes')->add('children')->add('nick')
+      ->addIdentifier('id')
+      ->add('user')
+      ->add('groups')
+      ->add('adminRoutes')
+      ->add('children')
+      ->add('nick')
     ;
   }
  
