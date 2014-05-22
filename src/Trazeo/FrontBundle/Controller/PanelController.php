@@ -48,6 +48,29 @@ class PanelController extends Controller
 	    	$em->flush();
 	    	$tutorial = 1;
 	    }
+	    
+	    /**
+	     * Do Suggestion
+	     */
+	    $reSu = $em->getRepository('TrazeoBaseBundle:ESuggestion');
+	    $sugs = $reSu->findBy(
+                 array(), 
+                 array('order' => 'ASC')
+               );
+	    
+	    $already = false;
+	    foreach($sugs as $sug) {
+	    	if (!$already) {
+		    	$okrule = eval($sug->getRule());
+		    	if ($okrule) $already = true;
+	    	}
+	    }
+	    
+	    if ($already) {
+	    	$suggestion = $sug;	
+	    } else {
+	    	$suggestion = null;
+	    }
 	
 	   	return array(
 	    			'user' => $user,
@@ -58,7 +81,8 @@ class PanelController extends Controller
 	   	 			'groupsRide' => $groupsRide,
 	   				'tutorial' => $tutorial,
 	   				'restGroups' => $restGroups,
-	   				'groupsMember' => $groupsMember
+	   				'groupsMember' => $groupsMember,
+	   				'suggestion' => $suggestion
 	   	);
 	}
 
