@@ -45,11 +45,11 @@
              };
          ///monitor redirect
          var monitorRedirect=function(){
-         	$(location).attr('href',$('monitor_ref').val());
+         	$(location).attr('href',$('#monitor_ref').val());
          }
          //user redirect
          var userRedirect=function(){
-         	$(location).attr('href',$('user_ref').val());
+         	$(location).attr('href',$('#user_ref').val());
          }
          //global options for tutotials
          var options={
@@ -113,7 +113,12 @@
 	        	                         ,position: 's'
 		        	                     ,canGoNext: false
 		        	                     ,expose: true
-				        	             //,callback: function(){localStorage.setItem('tutorial','child');setTimeout(tutorial(),300);}
+				        	             ,callback: function(){
+												setTimeout(function(){
+														$('#monitor').click(monitorRedirect);
+														$('#padre').click(userRedirect);
+													},300);
+					        	             }
 	        	                     },
 		       	                     { 
 		   	                        	 sel : $('.navbar-fixed-top')
@@ -123,9 +128,9 @@
 		        	                     ,expose: true
 		        	                     ,delay: -1
 		        	                     ,showCloseBox: false
-	        				    	     ,prevLabel: "<p style='color:#428bca !important' id='monitor'>Monitor</p><script type='text/javascript'>$('#monitor').click(monitorRedirect)</script>"
-          						    	 ,nextLabel: "<p style='color:#428bca !important'id='padre'>Padre</p><script type='text/javascript'>$('#padre').click(userRedirect)</script>"
-          								 ,finishLabel: "<p style='color:#428bca !important' id='padre'>Padre</p><script type='text/javascript'>$('#padre').click(userRedirect)</script>"	    
+	        				    	     ,prevLabel: "<p style='color:#428bca !important' id='monitor'>Monitor</p>"
+          						    	 ,nextLabel: "<p style='color:#428bca !important'id='padre'>Padre</p>"
+          								 ,finishLabel: "<p style='color:#428bca !important' id='padre'>Padre</p>"	    
 	        	                     },
 	        	                     
 	        	                     
