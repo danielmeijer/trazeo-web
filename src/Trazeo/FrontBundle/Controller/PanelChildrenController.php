@@ -267,7 +267,8 @@ class PanelChildrenController extends Controller
             $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
             //$user->addChild($child);
             $child->addUserextendchild($user);        
-            $child->setVisibility(0);    
+            $child->setVisibility(0);   
+             
             $em->persist($child);
             $em->flush();
         }

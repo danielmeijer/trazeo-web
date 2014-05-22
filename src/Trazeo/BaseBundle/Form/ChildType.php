@@ -49,14 +49,14 @@ class ChildType extends AbstractType
     			),
     			'format' => 'dd/MM/yyyy','required' => true))
     			
-            ->add('visibility', 'choice', array(
+           /* ->add('visibility', 'choice', array(
             		'choices'   => array(1 => 'Children.visibility.enabled', 0 => 'Children.visibility.disabled'),
             		'attr' => array(
             				'placeholder' => 'Children.sex',
             				'data-toggle' => 'popover',
             				'data-placement' => 'right',
             				'data-content' => $options['attr']['Children.help.visibility']
-            		)))
+            		)))*/
             		
             ->add('gender', 'choice', array(
             		'choices' => array('boy' => 'Children.gender.boy', 'girl' => 'Children.gender.girl'),
