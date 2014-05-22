@@ -674,7 +674,7 @@ class ApiController extends Controller {
 		$comments = $em->getRepository('SopinetTimelineBundle:Comment')->findByThread($thread);
 		$data = array();
 		foreach($comments as $comment) {
-			$comment->authorName = $comment->getAuthorName();
+			$comment->setAuthorName($comment->getAuthorName());
 			$data[] = $comment;
 		}
 		
