@@ -36,8 +36,12 @@ class PanelRidesController extends FOSRestController
     	$reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
     	 
     	$events = $reEvent->findBy(array('action' => "point", 'ride' => $ride->getId()), array('createdAt' => 'DESC'));
-    	
-    	$groupId = $ride->getGroup()->getId();
+
+    	if ($ride->getGroup() == null) {
+    		$groupId = $ride->getGroupid();
+    	} else {
+    		$groupId = $ride->getGroup()->getId();
+    	}
     	$group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneById($groupId);
     	$children = $group->getChilds();    	
     	if($group->getRoute() == true){
