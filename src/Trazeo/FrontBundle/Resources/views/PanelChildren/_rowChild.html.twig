@@ -1,6 +1,6 @@
 <div class="row alert alert-warning">
 	<!-- Child name -->
-	<div class="col-md-4">
+	<div class="col-md-5">
     	{% if  child.Gender == "boy" %}
         	<i class="fa fa-male"></i>
         {% else %}  
@@ -11,7 +11,7 @@
         {#</a>#}	
 	</div>
 	
-	<!-- Visibility -->
+	<!-- Visibility 
 	<div class="col-md-3">
         {% if  child.Visibility == 1 %}
         	<td><i class="fa fa-eye btn btn-xs btn-success"></i>&nbsp; {{ 'Children.visibility.public'|trans }}</td>
@@ -19,9 +19,10 @@
             <td><i class="fa fa-eye-slash btn btn-xs btn-danger"></i>&nbsp; {{ 'Children.visibility.private'|trans }}</td>
         {% endif %}	
 	</div>
+	-->
 	
 	<!-- DateBirth -->
-	<div class="col-md-3">
+	<div class="col-md-5">
 		<i class="fa fa-calendar-o"></i>&nbsp; {{ child.datebirth|getTimeAgo}}
 	</div>
 	
