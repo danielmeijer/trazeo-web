@@ -20,26 +20,6 @@ services:
         arguments:  ['@service_container', '@router']
         tags:
             - { name: 'monolog.logger', channel: 'security' }  
-    Trazeo.BaseBundle.Admin.ChildAdmin:
-        class: Trazeo\BaseBundle\Admin\ChildAdmin
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Trazeo, label: ChildAdmin.php }
-        arguments: [null, Trazeo\BaseBundle\Entity\EChild, SonataAdminBundle:CRUD]
-    Trazeo.BaseBundle.Admin.GroupAdmin:
-        class: Trazeo\BaseBundle\Admin\GroupAdmin
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Trazeo, label: GroupAdmin.php }
-        arguments: [null, Trazeo\BaseBundle\Entity\EGroup, SonataAdminBundle:CRUD]
-    Trazeo.BaseBundle.Admin.RouteAdmin:
-        class: Trazeo\BaseBundle\Admin\RouteAdmin
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Trazeo, label: RouteAdmin.php }
-        arguments: [null, Trazeo\BaseBundle\Entity\ERoute, SonataAdminBundle:CRUD]
-    Trazeo.BaseBundle.Admin.UserExtendAdmin:
-        class: Trazeo\BaseBundle\Admin\UserExtendAdmin
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Trazeo, label: UserExtendAdmin.php }
-        arguments: [null, Trazeo\BaseBundle\Entity\UserExtend, SonataAdminBundle:CRUD]
 
     trazeo_base.admin.e_child:
         class: Trazeo\BaseBundle\Admin\EChildAdmin
