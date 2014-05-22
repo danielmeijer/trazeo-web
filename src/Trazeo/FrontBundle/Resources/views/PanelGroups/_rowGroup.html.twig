@@ -39,11 +39,17 @@
 		{% if (groupMember.Admin.Id != app.user.userextend.Id and nois is defined) %}
 		
 			<!-- No Miembro -->
-			{# <i rel="tooltip-top" title='{{ 'Groups.noMember'|trans }}' class="fa fa-warning"></i>&nbsp; {{ 'NoAccess'|trans }} #}		
-			<a href="{{ path('panel_group_join', { 'id': groupMember.id }) }}" type="button" 
-	 		class="btn btn-default btn-xs group-join" group.name="{{ groupMember.Name }}">
-	 			<i class="fa fa-sign-in"></i> {{ 'Join'|trans }}
-	 		</a>
+			{% if (groupMember.Visibility == 1) %}
+				<a href="{{ path('panel_group_requestJoin', { 'id': groupMember.id }) }}" type="button" 
+		 		class="btn btn-default btn-xs group-join" group.name="{{ groupMember.Name }}">
+		 			<i class="fa fa-sign-in"></i> {{ 'Join'|trans }}
+		 		</a>			
+			{% else %}		
+				<a href="{{ path('panel_group_join', { 'id': groupMember.id }) }}" type="button" 
+		 		class="btn btn-default btn-xs group-join" group.name="{{ groupMember.Name }}">
+		 			<i class="fa fa-sign-in"></i> {{ 'Join'|trans }}
+		 		</a>
+	 		{% endif %}
  		
  		{% else %}
 			<!-- Miembro -->
