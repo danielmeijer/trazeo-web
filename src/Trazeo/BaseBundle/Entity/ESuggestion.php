@@ -34,6 +34,21 @@ class ESuggestion
 	 * @ORM\Column(name="order", type="integer", length=10)
 	 */
 	protected $order;	
+	
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="element", type="string", length=255)
+	 */	
+	protected $element;
+
+	/**
+	 * @var string
+	 * TODO: TRADUCIR
+	 * @ORM\Column(name="text", type="string", length=500)
+	 */
+	protected $text;
+	
 
     /**
      * Get id
@@ -91,5 +106,53 @@ class ESuggestion
     public function getOrder()
     {
         return $this->order;
+    }
+
+    /**
+     * Set element
+     *
+     * @param string $element
+     *
+     * @return ESuggestion
+     */
+    public function setElement($element)
+    {
+        $this->element = $element;
+
+        return $this;
+    }
+
+    /**
+     * Get element
+     *
+     * @return string 
+     */
+    public function getElement()
+    {
+        return $this->element;
+    }
+
+    /**
+     * Set text
+     *
+     * @param string $text
+     *
+     * @return ESuggestion
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+
+        return $this;
+    }
+
+    /**
+     * Get text
+     *
+     * @return string 
+     */
+    public function getText()
+    {
+        return $this->text;
     }
 }
