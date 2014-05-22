@@ -18,6 +18,7 @@ use Trazeo\BaseBundle\Entity\ERide;
 use Trazeo\BaseBundle\Entity\EEvent;
 use Trazeo\BaseBundle\Entity\EReport;
 use Sopinet\Bundle\SimplePointBundle\ORM\Type\SimplePoint;
+use Sopinet\TimelineBundle\Entity\Comment;
 
 class ApiController extends Controller {
 	
@@ -647,6 +648,92 @@ class ApiController extends Controller {
 		->setData($this->doOK($array));
 			
 		return $this->get('fos_rest.view_handler')->handle($view);
+	}
 	
+	/**
+	 * Lista los mensajes del TimeLine (Muro) del Grupo
+	 * 
+	 * @POST("/api/group/timeline/list")
+	 * @param Request $request
+	 */	
+	public function getTimeLineAction(Request $request) {
+		$user = $this->checkPrivateAccess($request);
+		if( $user == false || $user == null ){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied());
+		
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+		
+		$em = $this->get('doctrine.orm.entity_manager');
+		
+		$id_group = $request->get('id_group');
+		
+		$thread = $em->getRepository('SopinetTimelineBundle:Thread')->findOneById($id_group);
+		$comments = $em->getRepository('SopinetTimelineBundle:Comment')->findByThread($thread);
+		$data = array();
+		foreach($comments as $comment) {
+			$comment->authorName = $comment->getAuthorName();
+			$data[] = $comment;
+		}
+		
+		$view = View::create()
+		->setStatusCode(200)
+		->setData($this->doOK($data));
+			
+		return $this->get('fos_rest.view_handler')->handle($view);
+	}
+	
+	/**
+	 * Crea un nuevo mensaje en el TimeLine (Muro) del Grupo
+	 * 
+	 * @POST("/api/group/timeline/new")
+	 * @param Request $request
+	 */
+	public function newTimeLineAction(Request $request) {
+		$user = $this->checkPrivateAccess($request);
+		if( $user == false || $user == null ){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied());
+		
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+		$em = $this->get('doctrine.orm.entity_manager');
+		$id_group = $request->get('id_group');
+		$text = $request->get('text');
+		
+		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneById($id_group);
+		$thread = $em->getRepository('SopinetTimelineBundle:Thread')->findOneById($id_group);
+		
+		// Save comment
+		$comment = new Comment();
+		$comment->setThread($thread);
+		$comment->setAuthor($user);
+		$comment->setBody($text);
+		
+		$em->persist($comment);
+		$em->flush();
+		
+		// Send notifications to Users
+		$userextends = $group->getUserextendgroups()->toArray();
+		$not = $this->container->get('sopinet_user_notification');
+		foreach($userextends as $userextend)
+		{
+			$not->addNotification(
+					"timeline.newFromMonitor",
+					"TrazeoBaseBundle:EGroup,SopinetTimelineBundle:Comment",
+					$group->getId().",".$comment->getId(),
+					$this->generateUrl('panel_group_timeline', array('id' => $group->getId())),
+					$userextend->getUser()
+			);
+		}	
+		
+		$view = View::create()
+		->setStatusCode(200)
+		->setData($this->doOK($comment));
+			
+		return $this->get('fos_rest.view_handler')->handle($view);		
 	}
 }

@@ -27,7 +27,7 @@ class EGroupInvite
      */
     protected $userextend;
     
-    /** @ORM\ManyToOne(targetEntity="EGroup", inversedBy="inviteGroup", cascade={"remove"})
+    /** @ORM\ManyToOne(targetEntity="EGroup", inversedBy="inviteGroup")
      *  @ORM\JoinColumn(name="group_id", referencedColumnName="id") 
      */
     protected $group;

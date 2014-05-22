@@ -105,7 +105,7 @@ class NotificationHelper {
 			$notifications = $reNotifications->findBy(array(
 					'user' => $userextend,
 					'view' => 0
-					),null,$limit);
+					),array('id' => 'DESC'),$limit);
 		} else {
 			$notifications = $reNotifications->findBy(array(
 					'user' => $userextend,

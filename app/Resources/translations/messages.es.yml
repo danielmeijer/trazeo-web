@@ -184,6 +184,9 @@ Notifications:
         start: 'El paseo para el grupo %0 ha comenzado.'
         finish: 'El paseo para el grupo %0 ha finalizado.' 
         
+    timeline:
+        newFromMonitor: 'El monitor del Grupo %0 ha enviado el siguiente mensaje: %1'
+        
 
 Register:
     email: 'Correo electrónico'
