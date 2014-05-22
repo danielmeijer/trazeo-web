@@ -88,6 +88,12 @@ class UserExtend
      */
     protected $inviteChildSender;
     
+    /**
+     * // Datos: monitor / user
+     * @ORM\Column(name="useLike", type="string", length=50, nullable=true)
+     */    
+    protected $useLike;
+    
     
     /**
      * @var string
@@ -606,5 +612,29 @@ class UserExtend
     public function getTutorialMap()
     {
         return $this->tutorialMap;
+    }
+
+    /**
+     * Set useLike
+     *
+     * @param string $useLike
+     *
+     * @return UserExtend
+     */
+    public function setUseLike($useLike)
+    {
+        $this->useLike = $useLike;
+
+        return $this;
+    }
+
+    /**
+     * Get useLike
+     *
+     * @return string 
+     */
+    public function getUseLike()
+    {
+        return $this->useLike;
     }
 }

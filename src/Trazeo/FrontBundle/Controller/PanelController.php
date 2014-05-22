@@ -62,4 +62,33 @@ class PanelController extends Controller
 	   	);
 	}
 
+	/**
+	* @Route("/doMonitor", name="panel_doMonitor")
+	*/
+	public function doMonitor() {
+		$em = $this->getDoctrine()->getManager();
+		$fos_user = $this->container->get('security.context')->getToken()->getUser();
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+
+		$user->setUseLike("monitor");
+		$em->persist($user);
+		$em->flush();
+		
+		return $this->redirect($this->generateUrl('panel_dashboard'));
+	}
+	
+	/**
+	 * @Route("/doUser", name="panel_doUser")
+	 */
+	public function doUser() {
+		$em = $this->getDoctrine()->getManager();
+		$fos_user = $this->container->get('security.context')->getToken()->getUser();
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+	
+		$user->setUseLike("user");
+		$em->persist($user);
+		$em->flush();
+	
+		return $this->redirect($this->generateUrl('panel_child_new'));
+	}	
 }
