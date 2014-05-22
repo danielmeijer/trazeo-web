@@ -4,7 +4,11 @@
 
 {% block body %}
 
-{% embed 'SopinetTemplateSbadmin2Bundle:Base:navbar.html.twig' %}
+{% embed 'SopinetTemplateSbadmin2Bundle:Base:navbar.html.twig' with {
+		'custom_link_1': "http://help.trazeo.es/manual_padres.html",
+		'custom_text_1': "Manual de Usuario",
+		'custom_icon_1': "fa-question"
+    } %}
 	{% block add_navbar %}
 		{% include 'SopinetUserNotificationsBundle:Include:mini.html.twig' with {
 				'notifications': app.user|getSopinetUserNotifications()
