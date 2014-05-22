@@ -36,25 +36,23 @@
             {% endif %}
         {% endif %}			
 		
-		{% if (groupMember.Admin.Id != app.user.userextend.Id) %}
-			{% if (nois is defined) %}
-			
-				<!-- No Miembro -->
-				{# <i rel="tooltip-top" title='{{ 'Groups.noMember'|trans }}' class="fa fa-warning"></i>&nbsp; {{ 'NoAccess'|trans }} #}		
-				<a href="{{ path('panel_group_join', { 'id': groupMember.id }) }}" type="button" 
-		 		class="btn btn-default btn-xs group-join" group.name="{{ groupMember.Name }}">
-		 			<i class="fa fa-sign-in"></i> {{ 'Join'|trans }}
-		 		</a>
-	 		
-	 		{% else %}
-				<!-- Miembro -->
-				<a href="{{ path('panel_group_timeline',{'id': groupMember.id}) }}"><button class="btn btn-xs btn-success"><i class="fa fa-comments-o"></i>&nbsp; {{ 'Groups.data.chat'|trans }}</button></a>
-				<a href="{{ path('panel_group_disjoin', { 'id': groupMember.id }) }}" type="button" 
-				class="btn btn-default btn-xs group-disjoin">
-					<i class="fa fa-sign-out"></i> {{ 'DisJoin'|trans }}
-				</a> 		
-	 		{% endif %}
-	 	{% endif %}
+		{% if (groupMember.Admin.Id != app.user.userextend.Id and nois is defined) %}
+		
+			<!-- No Miembro -->
+			{# <i rel="tooltip-top" title='{{ 'Groups.noMember'|trans }}' class="fa fa-warning"></i>&nbsp; {{ 'NoAccess'|trans }} #}		
+			<a href="{{ path('panel_group_join', { 'id': groupMember.id }) }}" type="button" 
+	 		class="btn btn-default btn-xs group-join" group.name="{{ groupMember.Name }}">
+	 			<i class="fa fa-sign-in"></i> {{ 'Join'|trans }}
+	 		</a>
+ 		
+ 		{% else %}
+			<!-- Miembro -->
+			<a href="{{ path('panel_group_timeline',{'id': groupMember.id}) }}"><button class="btn btn-xs btn-success"><i class="fa fa-comments-o"></i>&nbsp; {{ 'Groups.data.chat'|trans }}</button></a>
+			<a href="{{ path('panel_group_disjoin', { 'id': groupMember.id }) }}" type="button" 
+			class="btn btn-default btn-xs group-disjoin">
+				<i class="fa fa-sign-out"></i> {{ 'DisJoin'|trans }}
+			</a> 		
+ 		{% endif %}
  		 			
 		<!-- Ruta del Grupo -->
         {% if groupMember.route %}
