@@ -98,3 +98,9 @@ services:
         arguments: [~, Trazeo\BaseBundle\Entity\UserExtend, SonataAdminBundle:CRUD]
         tags:
             - {name: sonata.admin, manager_type: orm, group: admin, label: UserExtend}
+
+    trazeo_base.admin.e_suggestion:
+        class: Trazeo\BaseBundle\Admin\ESuggestionAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\ESuggestion, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: ESuggestion}
