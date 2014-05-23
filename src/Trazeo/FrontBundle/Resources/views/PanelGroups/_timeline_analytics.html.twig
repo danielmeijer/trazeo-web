@@ -1,12 +1,16 @@
 <script type="text/javascript">
 	var analytics_user=analytics.identify('{{ app.user.id }}',{email: '{{ app.user.email }}', username: '{{ app.user }}'});
-	//Analytics invite group button 	
-	$(".input-group-btn").click(function (event){
-		analytics.track('click.timeline.invite.group',{group: '{{ group.name }}'}) 
-	});
+
+	//Analytics Register user form 
+	var form=document.getElementById('submit_invite');
+	analytics.trackForm(form,"send.timeline.invite.group");
 	//Analytics post timeline button 	
-		$('.fos_comment_submit > input').click(function (event){
+		$('.fos_comment_submit > button').click(function (event){
 		analytics.track('click.timeline.post',{group: '{{ group.name }}'}) 
+	});
+	//Analytics reply timeline button 	
+		$('.fos_comment_comment_reply_show_form').click(function (event){
+		analytics.track('click.timeline.reply',{group: '{{ group.name }}'}) 
 	});
 	//Analytics child join group
 	var link=$('.join');

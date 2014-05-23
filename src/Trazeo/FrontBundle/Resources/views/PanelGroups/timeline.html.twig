@@ -97,7 +97,7 @@
 			<div class="row">
 				<h4 class="alert alert-success"><i class="fa fa-envelope"></i>&nbsp; {{ 'Timeline.invite.title'|trans }}</h4>
 					<p class="alert alert-warning">{{ 'Timeline.invite.description'|trans }}</p>	
-					<form class="input-group custom-search-form" action="{{ path('panel_group_invite') }}" method="POST">
+					<form class="input-group custom-search-form" action="{{ path('panel_group_invite') }}" method="POST" id="submit_invite">
 						<input required type="email" name="userEmail" class="form-control" placeholder='{{ "Email"|trans }}'/>
 						<input type="hidden" name="group" value="{{ group.id }}"/>
 						<span class="input-group-btn">
