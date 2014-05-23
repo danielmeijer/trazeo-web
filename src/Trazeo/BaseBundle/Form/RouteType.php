@@ -22,6 +22,12 @@ class RouteType extends AbstractType
         					'data-placement' => 'right',
         					'data-content' => $options['attr']['Route.help.name']
         					),'required' => true))
+        	->add('description', null, array(
+        						'attr' => array(
+        						'placeholder' => 'Route.description',
+        						'data-toggle' => 'popover',
+        						'data-placement' => 'right'
+        					),'required' => false))
             ->add('country', 'entity', array(
             		'class' => 'JJsGeonamesBundle:Country',
             		'attr' => array(

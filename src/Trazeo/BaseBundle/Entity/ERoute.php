@@ -51,6 +51,11 @@ class ERoute
 	protected $distance;
 	
 	/**
+	 * @ORM\Column(name="description", type="string", nullable=true)
+	 */
+	protected $description;
+	
+	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="name", type="string", length=255)
@@ -290,5 +295,29 @@ class ERoute
     public function getDistance()
     {
         return $this->distance;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return ERoute
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }
