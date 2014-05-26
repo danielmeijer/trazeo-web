@@ -106,11 +106,16 @@ class ProfileController extends Controller
 		
 		$em->persist($registration);
 		$em->persist($data_userextend);
+		
+		$city = $request->get('city');
+		$helper = $this->get('trazeo_base_helper');
+		$city_entity = $helper->getCities($city, 1, true);
+		$data_userextend->setCity($city_entity[0]);
+		
 		$em->flush();
 			
 		
 		return $this->redirect($this->generateUrl('panel_profile'));
-	
 	}
 	
 	/**

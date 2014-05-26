@@ -17,7 +17,7 @@ body_content %}
 				{{ form_widget(form_userextend) }}
 				<div class="form-group">
 					<div id="prefetch">
-  						Ingrese su Localidad: <input name="city" class="typeahead form-control" type="text" placeholder="Localidad">
+  						Ingrese su Localidad: <input name="city" class="typeahead form-control" type="text" placeholder="Localidad" value="{{ app.user.userextend.city.nameUtf8 }}">
   					</div>
   				</div>
 			</div>
