@@ -742,20 +742,10 @@ class ApiController extends Controller {
 	 * @GET("/api/geo/city/list")
 	 */
 	public function getGeoCitiesAction() {
-		$em = $this->get('doctrine.orm.entity_manager');
-		$reJJ = $em->getRepository("JJsGeonamesBundle:City");
-		
 		$q = $this->getRequest()->get('q');
 		
-		$query = $reJJ->createQueryBuilder('a');
-		
-		$query->select('a.nameUtf8')
-		->where('a.nameUtf8 LIKE :name')
-		->setParameter('name', '%'.$q.'%')
-		->setMaxResults(10)
-		->addOrderBy('a.id');
-		
-		$cities = $query->getQuery()->getResult();
+		$helper = $this->get('trazeo_base_helper');
+		$cities = $helper->getCities($q);
 		
 		$view = View::create()
 		->setStatusCode(200)

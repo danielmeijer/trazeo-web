@@ -104,3 +104,7 @@ services:
         arguments: [~, Trazeo\BaseBundle\Entity\ESuggestion, SonataAdminBundle:CRUD]
         tags:
             - {name: sonata.admin, manager_type: orm, group: admin, label: ESuggestion}
+
+    trazeo_base_helper:
+       class: Trazeo\BaseBundle\Service\Helper
+       arguments: ["@service_container"]      
