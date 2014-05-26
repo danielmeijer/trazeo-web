@@ -16,11 +16,11 @@ class ESuggestionAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('id')
+        	->add('id')
             ->add('rule')
             ->add('text')
             ->add('element')
-            ->add('order')
+            ->add('forder')
             ->add('useLike')
         ;
     }
@@ -31,11 +31,11 @@ class ESuggestionAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
+        	->add('id')
             ->add('rule')
             ->add('text')
             ->add('element')
-            ->add('order')
+            ->add('forder')
             ->add('useLike')            
             ->add('_action', 'actions', array(
                 'actions' => array(
@@ -56,7 +56,7 @@ class ESuggestionAdmin extends Admin
             ->add('rule')
             ->add('text')
             ->add('element')
-            ->add('order')
+            ->add('forder')
             ->add('useLike')
         ;
     }
@@ -67,11 +67,11 @@ class ESuggestionAdmin extends Admin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('id')
+        	->add('id')
             ->add('rule')
             ->add('text')
             ->add('element')
-            ->add('order')
+            ->add('forder')
             ->add('useLike')            
         ;
     }

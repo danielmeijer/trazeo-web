@@ -51,24 +51,26 @@ class PanelController extends Controller
 	    
 	    /**
 	     * Do Suggestion
-	     */    
+	     */
 	    $reSu = $em->getRepository('TrazeoBaseBundle:ESuggestion');
 	    $sugs = $reSu->findBy(
                  array('useLike' => $user->getUseLike()), 
-                 array('order' => 'ASC')
+                 array('forder' => 'DESC')
                );
 	    
 	    $already = false;
 	    foreach($sugs as $sug) {
 	    	if (!$already) {
 		    	$okrule = eval($sug->getRule());
-		    	if ($okrule) $already = true;
+		    	if ($okrule) {
+		    		$suggestion = $sug;
+		    		$already = true;
+		    	}
 	    	}
 	    }
 	    
 	    if ($already) {
-	    	$suggestion = $sug;
-	    	$suggestion->setText($this->get('translator')->trans('Suggestion.'.$sug->getText()));
+	    	$suggestion->setText($this->get('translator')->trans('Suggestion.'.$suggestion->getText()));
 	    } else {
 	    	$suggestion = null;
 	    }

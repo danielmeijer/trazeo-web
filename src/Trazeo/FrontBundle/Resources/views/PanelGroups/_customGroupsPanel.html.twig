@@ -9,11 +9,11 @@
 				</h1>
 			</div>
 			<div class="pull-right">
+				<a class="btn btn-success" id="group-list-link" href="{{ path('panel_group') }}">
+					<i class="fa fa-list-ul"></i>&nbsp; {{ 'Groups.list'|trans }}
+				</a>		
 				<a class="btn btn-success" href="{{ path('panel_group_new') }}">
 					<i class="fa fa-plus-circle"></i>&nbsp; {{ 'Groups.new.title'|trans }}
-				</a>
-				<a class="btn btn-success" href="{{ path('panel_group') }}">
-					<i class="fa fa-list-ul"></i>&nbsp; {{ 'Groups.list'|trans }}
 				</a>
 			</div>
 		</div>
@@ -37,11 +37,11 @@
 			</h3>
 		</div>
 		<div class="pull-right"><br/>
+			<a class="btn btn-warning" id="group-list-link" href="{{ path('panel_group') }}">
+				<i class="fa fa-list-ul"></i>&nbsp; {{ 'Groups.list'|trans }}
+			</a>&nbsp;		
 			<a class="btn btn-warning" href="{{ path('panel_group_new') }}">
 				<i class="fa fa-hand-o-right"></i> {{ 'Groups.new.title'|trans }}
-			</a>&nbsp;
-			<a class="btn btn-warning" href="{{ path('panel_group') }}">
-				<i class="fa fa-list-ul"></i>&nbsp; {{ 'Groups.list'|trans }}
 			</a>
 		</div>
 	</div>

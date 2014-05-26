@@ -19,6 +19,8 @@ class UserExtendAdmin extends Admin
         ->add('adminRoutes', null, array('required' => false))
         ->add('childs', null, array('required' => false))
         ->add('nick')
+        ->add('tutorial', null, array('required' => false))
+        ->add('tutorialMap', null, array('required' => false))
         ->add('useLike')
     ;
   }
@@ -28,6 +30,8 @@ class UserExtendAdmin extends Admin
     $datagridMapper
     	->add('nick')
     	->add('groups')
+    	->add('tutorial')
+    	->add('tutorialMap')    	
     	->add('useLike')
     ;
   }
@@ -40,7 +44,7 @@ class UserExtendAdmin extends Admin
       ->add('groups')
       ->add('adminRoutes')
       ->add('childs')
-      ->add('nick')
+      ->add('nick')      
       ->add('useLike')
     ;
   }

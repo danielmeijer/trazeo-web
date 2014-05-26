@@ -45,9 +45,9 @@ class ESuggestion
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="order", type="integer", length=10)
+	 * @ORM\Column(name="forder", type="integer", length=10)
 	 */
-	protected $order;
+	protected $forder;
 	
     /**
      * // Datos: monitor / user
@@ -138,30 +138,6 @@ class ESuggestion
     }
 
     /**
-     * Set order
-     *
-     * @param integer $order
-     *
-     * @return ESuggestion
-     */
-    public function setOrder($order)
-    {
-        $this->order = $order;
-
-        return $this;
-    }
-
-    /**
-     * Get order
-     *
-     * @return integer 
-     */
-    public function getOrder()
-    {
-        return $this->order;
-    }
-
-    /**
      * Set useLike
      *
      * @param string $useLike
@@ -183,5 +159,29 @@ class ESuggestion
     public function getUseLike()
     {
         return $this->useLike;
+    }
+
+    /**
+     * Set forder
+     *
+     * @param integer $forder
+     *
+     * @return ESuggestion
+     */
+    public function setForder($forder)
+    {
+        $this->forder = $forder;
+
+        return $this;
+    }
+
+    /**
+     * Get forder
+     *
+     * @return integer 
+     */
+    public function getForder()
+    {
+        return $this->forder;
     }
 }
