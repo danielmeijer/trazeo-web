@@ -32,10 +32,11 @@ class UserExtendType extends AbstractType
              		'empty_value' => 'España', //Valor que aparece por defecto si no tiene un país asignado
              		'empty_data' => $options['attr']['default'],
             		'property' => 'name'))
-           /* ->add('city', 'entity', array(
+            
+             /**->add('city', 'entity', array(
             		'class' => 'JJsGeonamesBundle:City',
             		'attr' => array('class' => 'chosen-select'),
-            		'property' => 'name'))*/
+            		'property' => 'name'))**/
         ;
     }
     

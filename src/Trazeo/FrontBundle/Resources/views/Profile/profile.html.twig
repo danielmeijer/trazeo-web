@@ -15,11 +15,18 @@ body_content %}
 		<div class="tab-content">
 			<div class="tab-pane fade in active" id="location">
 				{{ form_widget(form_userextend) }}
+				<div class="form-group">
+					<div id="prefetch">
+  						Ingrese su Localidad: <input name="city" class="typeahead form-control" type="text" placeholder="Localidad">
+  					</div>
+  				</div>
 			</div>
 			<div class="tab-pane fade" id="profile">
 				{{ form_widget(form_profile) }}
 			</div>
-			<div class="tab-pane fade" id="avatar"><i class="alert alert-warning fa fa-user fa-4x"></i></div>
+			<div class="tab-pane fade" id="avatar">
+				<i class="alert alert-warning fa fa-user fa-4x"></i>
+			</div>
 			{{ form_errors(form_profile) }}
 			{{ form_errors(form_userextend) }}
 		</div>
@@ -47,4 +54,29 @@ body_content %}
 </div>
 
 
+{% endblock %}
+
+{% block js %}
+	{{ parent() }}
+	<script>
+		var countries = new Bloodhound({
+		  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('nameUtf8'),
+		  queryTokenizer: Bloodhound.tokenizers.whitespace,
+		  limit: 10,
+		  remote: '{{ base_url }}api/geo/city/list?q=%QUERY',
+		});
+		 
+		// kicks off the loading/processing of `local` and `prefetch`
+		countries.initialize();
+		 
+		// passing in `null` for the `options` arguments will result in the default
+		// options being used
+		$('#prefetch .typeahead').typeahead(null, {
+		  name: 'cities',
+		  displayKey: 'nameUtf8',
+		  // `ttAdapter` wraps the suggestion engine in an adapter that
+		  // is compatible with the typeahead jQuery plugin
+		  source: countries.ttAdapter()
+		});
+	</script>
 {% endblock %}

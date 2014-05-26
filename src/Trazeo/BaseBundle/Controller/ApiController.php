@@ -11,8 +11,9 @@ use FOS\RestBundle\View\RouteRedirectView;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Get;
-use FOS\RestBundle\Controller\Annotations\Route;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Trazeo\BaseBundle\Entity\ERide;
 use Trazeo\BaseBundle\Entity\EEvent;
@@ -733,6 +734,32 @@ class ApiController extends Controller {
 		$view = View::create()
 		->setStatusCode(200)
 		->setData($this->doOK($comment));
+			
+		return $this->get('fos_rest.view_handler')->handle($view);		
+	}
+	
+	/**
+	 * @GET("/api/geo/city/list")
+	 */
+	public function getGeoCitiesAction() {
+		$em = $this->get('doctrine.orm.entity_manager');
+		$reJJ = $em->getRepository("JJsGeonamesBundle:City");
+		
+		$q = $this->getRequest()->get('q');
+		
+		$query = $reJJ->createQueryBuilder('a');
+		
+		$query->select('a.nameUtf8')
+		->where('a.nameUtf8 LIKE :name')
+		->setParameter('name', '%'.$q.'%')
+		->setMaxResults(10)
+		->addOrderBy('a.id');
+		
+		$cities = $query->getQuery()->getResult();
+		
+		$view = View::create()
+		->setStatusCode(200)
+		->setData($cities);
 			
 		return $this->get('fos_rest.view_handler')->handle($view);		
 	}
