@@ -111,6 +111,12 @@ fos_user:
     group:
           group_class: Trazeo\BaseBundle\Entity\Group
           
+# Sonata User
+sonata_user:
+    admin:
+        user:
+            class:  Trazeo\BaseBundle\Admin\UserAdmin
+
 # Sonata Admin Dashboard
 sonata_admin:
     title:      Trazeo - Dashboard
