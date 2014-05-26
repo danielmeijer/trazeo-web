@@ -48,6 +48,12 @@ class ESuggestion
 	 * @ORM\Column(name="order", type="integer", length=10)
 	 */
 	protected $order;
+	
+    /**
+     * // Datos: monitor / user
+     * @ORM\Column(name="useLike", type="string", length=50, nullable=true)
+     */    
+    protected $useLike;
 
     /**
      * Get id
@@ -153,5 +159,29 @@ class ESuggestion
     public function getOrder()
     {
         return $this->order;
+    }
+
+    /**
+     * Set useLike
+     *
+     * @param string $useLike
+     *
+     * @return ESuggestion
+     */
+    public function setUseLike($useLike)
+    {
+        $this->useLike = $useLike;
+
+        return $this;
+    }
+
+    /**
+     * Get useLike
+     *
+     * @return string 
+     */
+    public function getUseLike()
+    {
+        return $this->useLike;
     }
 }

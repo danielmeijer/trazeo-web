@@ -16,9 +16,10 @@ class UserExtendAdmin extends Admin
     $formMapper
         ->add('user')
         ->add('groups', null, array('required' => false))
-        ->add('adminRoutes')
-        ->add('children', null, array('required' => false))
+        ->add('adminRoutes', null, array('required' => false))
+        ->add('childs', null, array('required' => false))
         ->add('nick')
+        ->add('useLike')
     ;
   }
  
@@ -27,6 +28,7 @@ class UserExtendAdmin extends Admin
     $datagridMapper
     	->add('nick')
     	->add('groups')
+    	->add('useLike')
     ;
   }
  
@@ -37,8 +39,9 @@ class UserExtendAdmin extends Admin
       ->add('user')
       ->add('groups')
       ->add('adminRoutes')
-      ->add('children')
+      ->add('childs')
       ->add('nick')
+      ->add('useLike')
     ;
   }
  
