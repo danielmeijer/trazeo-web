@@ -21,6 +21,7 @@ class ESuggestionAdmin extends Admin
             ->add('text')
             ->add('element')
             ->add('order')
+            ->add('useLike')
         ;
     }
 
@@ -35,6 +36,7 @@ class ESuggestionAdmin extends Admin
             ->add('text')
             ->add('element')
             ->add('order')
+            ->add('useLike')            
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
@@ -51,11 +53,11 @@ class ESuggestionAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('id')
             ->add('rule')
             ->add('text')
             ->add('element')
             ->add('order')
+            ->add('useLike')
         ;
     }
 
@@ -70,6 +72,7 @@ class ESuggestionAdmin extends Admin
             ->add('text')
             ->add('element')
             ->add('order')
+            ->add('useLike')            
         ;
     }
 }

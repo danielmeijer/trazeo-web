@@ -438,3 +438,6 @@ Timeline:
     invite:
         title: Invitar al grupo
         description: Envía una notificación a otros padres para que puedan unirse a este grupo 
+
+Suggestion:
+    new_child: ¡Aún no ha registrado a ningún niño! Haga click aquí para proceder al registro de sus niños en el sistema.
