@@ -1,5 +1,4 @@
 <?php
-
 namespace Trazeo\FrontBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -231,6 +230,15 @@ class PanelRoutesController extends Controller
         return $form;
     }
     
+    
+    /* This is the static comparing function: */
+    static function cmp_obj($a, $b)
+    {
+    	if ($al == $bl) {
+    		return 0;
+    	}
+    	
+    }
     /**
      * Finds and displays a Routes entity.
      *
@@ -241,6 +249,8 @@ class PanelRoutesController extends Controller
 		$id = $request->get('id');
 		$inputPoints = $request->get('inputPoints');
 		$distance = $request->get('distanceInput');
+		$city=$request->get('cityInput');
+		$country=$request->get('countryInput');
 		$points = explode(";", $inputPoints);
 
 		$em = $this->getDoctrine()->getManager();
@@ -267,7 +277,12 @@ class PanelRoutesController extends Controller
 			$punto->setDescription($latlng[3]);
 			$em->persist($punto);
 		}
+		
+		$helper = $this->get('trazeo_base_helper');
+		$city_entity = $helper->getCities($city, 10, true);
 		$route->setDistance($distance);
+		$route->setCity($city_entity[0]);		
+		$route->setCountry($city_entity[0]->getCountry());
 		$em->persist($route);
     	$em->flush();
     
