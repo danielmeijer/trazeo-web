@@ -508,7 +508,7 @@ class PanelGroupsController extends Controller
      * @Method("GET")
      * @Template()
      */
-	public function indexAction()
+	public function indexAction(Request $request)
 	{
 		$em = $this->getDoctrine()->getManager();
 		$fos_user = $this->container->get('security.context')->getToken()->getUser();
@@ -518,6 +518,30 @@ class PanelGroupsController extends Controller
 		$groupsMember = $user->getGroups();
 		$allGroups = $em->getRepository('TrazeoBaseBundle:EGroup')->findAll();
 		$restGroups = array_diff($allGroups,$groupsMember->toArray());
+		
+		// City filter
+		$city = $request->get('city'); // request filter
+		if ($city == null && $user->getCity() != null) $city = $user->getCity()->getId();
+		if ($city == null) $city = "all";
+		$cities = array();
+		$iscity = false;
+		foreach($restGroups as $group) {
+			if ($group->getCity() != null) {
+				if ($city == $group->getCity()->getId()) $iscity = true;
+				$cities[$group->getCity()->getId()] = $group->getCity();
+			}
+		}
+		if (!$iscity) $city = "all"; // if no cities for user
+		if ($city != "all") {
+			$copyGroups = $restGroups;
+			$restGroups = array();
+			foreach($copyGroups as $g) {
+				if ($g->getCity() != null) {
+					if ($g->getCity()->getId() == $city) $restGroups[] = $g;
+				}
+			}
+		}
+		// End City Filter
 	
 		$groupsAdmin = $user->getAdminGroups();
 		$userAdmin = $em->getRepository('TrazeoBaseBundle:EGroup')->findByAdmin($userId);
@@ -532,7 +556,9 @@ class PanelGroupsController extends Controller
 				'allGroupsAccess' => $allGroupsAccess,
 				'allGroupsInvite' => $allGroupsInvite,
 				'restGroups' => $restGroups,
-				'groupsMember' => $groupsMember
+				'groupsMember' => $groupsMember,
+				'cities' => $cities,
+				'city' => $city
 	
 		);
 	}

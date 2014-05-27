@@ -98,7 +98,7 @@ Groups:
         member: Miembro del grupo
         visibility: Visibilidad
         route: Ruta
-        chat: Chat del grupo
+        chat: Muro del grupo
         options: Opciones
     mine: Mis grupos
     list: Listado de grupos
@@ -116,7 +116,7 @@ Groups:
         list: Listado de grupos creados en Trazeo
         description: 'Listado completo de todos los grupos existentes y visibles en la plataforma'
         title: 'Sugerencia de grupos'
-        subtitle: Vincula tu usuario con un grupo y contacta con otros padres desde el chat
+        subtitle: Vincula tu usuario con un grupo y contacta con otros padres desde el muro
 
     name: 'Nombre del grupo'
 
@@ -425,7 +425,7 @@ Timeline:
     index:
         title: Actividad del grupo
         description: Gestiona tus niños en este grupo, invita a otros usuarios a unirse o chatea con ellos
-    title: Chat del grupo
+    title: Muro del grupo
     child:
         title: Tus niños en este grupo
         empty: Sin resultados
@@ -439,6 +439,11 @@ Timeline:
         title: Invitar al grupo
         description: Envía una notificación a otros padres para que puedan unirse a este grupo 
 
+City:
+    all: Mostrar todo
+
 Suggestion:
-    new_child: ¡Aún no ha registrado a ningún niño! Haga click aquí para proceder al registro de sus niños en el sistema.
-    access_groups: ¡Aún no está en ningún grupo! Busque ahora un grupo en su Localidad y únase a él.
+    new_child: ¡Aún no has registrado a ningún/a niño/a! Haz click aquí para proceder al registro de tus niños en el sistema.
+    access_groups: ¡Aún no estás en ningún grupo! Busca ahora un grupo en tu Localidad y únete a él.
+    link_child: Accede al Muro de alguno de tus grupos para vincular a tus niños/as.
+    complete_profile: Acceda a su Perfil y complete el campo de Ciudad.

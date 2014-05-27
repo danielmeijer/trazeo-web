@@ -22,6 +22,7 @@ class ESuggestionAdmin extends Admin
             ->add('element')
             ->add('forder')
             ->add('useLike')
+            ->add('position')
         ;
     }
 
@@ -36,7 +37,8 @@ class ESuggestionAdmin extends Admin
             ->add('text')
             ->add('element')
             ->add('forder')
-            ->add('useLike')            
+            ->add('useLike')    
+            ->add('position')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
@@ -58,6 +60,7 @@ class ESuggestionAdmin extends Admin
             ->add('element')
             ->add('forder')
             ->add('useLike')
+            ->add('position')            
         ;
     }
 
@@ -72,7 +75,8 @@ class ESuggestionAdmin extends Admin
             ->add('text')
             ->add('element')
             ->add('forder')
-            ->add('useLike')            
+            ->add('useLike')
+            ->add('position')
         ;
     }
 }

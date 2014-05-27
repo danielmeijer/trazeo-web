@@ -28,13 +28,41 @@ class PanelRoutesController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+    	$em = $this->getDoctrine()->getManager();
+    	$fos_user = $this->container->get('security.context')->getToken()->getUser();
+    	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
         $routes = $em->getRepository('TrazeoBaseBundle:ERoute')->findAll();
+        
+        // City filter
+        $city = $request->get('city'); // request filter
+        if ($city == null && $user->getCity() != null) $city = $user->getCity()->getId();
+        if ($city == null) $city = "all";
+        $cities = array();
+        $iscity = false;
+        foreach($routes as $route) {
+        	if ($route->getCity() != null) {
+        		if ($city == $route->getCity()->getId()) $iscity = true;
+        		$cities[$route->getCity()->getId()] = $route->getCity();
+        	}
+        }
+        if (!$iscity) $city = "all"; // if no cities for user
+        if ($city != "all") {
+        	$copyRoutes = $routes;
+        	$routes = array();
+        	foreach($copyRoutes as $r) {
+        		if ($r->getCity() != null) {
+        			if ($r->getCity()->getId() == $city) $routes[] = $r;
+        		}
+        	}
+        }
+        // End City Filter        
 
         return array(
             'routes' => $routes,
+        	'cities' => $cities,
+        	'city' => $city
         );
     }
     

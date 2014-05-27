@@ -455,4 +455,14 @@ class EGroup
     {
         return $this->inviteGroupAnon;
     }
+    
+    public function getCity()
+    {
+    	if ($this->getRoute() != null) {
+    		if ($this->getRoute()->getCity() != null) {
+    			return $this->getRoute()->getCity();
+    		}
+    	}
+    	return null;
+    }
 }

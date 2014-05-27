@@ -51,13 +51,12 @@ class PanelController extends Controller
 	    
 	    /**
 	     * Do Suggestion
-	     */
+	     */    
 	    $reSu = $em->getRepository('TrazeoBaseBundle:ESuggestion');
 	    $sugs = $reSu->findBy(
                  array('useLike' => $user->getUseLike()), 
-                 array('forder' => 'DESC')
+                 array('forder' => 'ASC')
                );
-	    
 	    $already = false;
 	    foreach($sugs as $sug) {
 	    	if (!$already) {
@@ -71,6 +70,7 @@ class PanelController extends Controller
 	    
 	    if ($already) {
 	    	$suggestion->setText($this->get('translator')->trans('Suggestion.'.$suggestion->getText()));
+	    	if ($suggestion->getPosition() == null) $suggestion->setPosition('n');
 	    } else {
 	    	$suggestion = null;
 	    }

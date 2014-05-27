@@ -7,7 +7,22 @@
  		{% endfor %}
  	{% endif %}
  	
- 	<h3>Listado de Grupos Disponibles</h3>	
+ 	<h3>
+ 		<div class="pull-left">
+ 			Listado de Grupos Disponibles
+ 		</div>
+ 		<div class="pull-right">
+ 			<form name="filter-city" id="filter-city" action="{{ path('panel_group') }}" method="GET">
+				<select class="form-control change-city" name="city">
+					<option value="all"> - {{ "City.all"|trans }} - </option>
+					{% for c in cities %}
+					<option {% if city == c.id %} selected="selected" {% endif %}value="{{ c.id }}">{{ c.nameUtf8 }}</option>
+					{% endfor %}
+				</select>
+			</form>
+ 		</div>
+ 	</h3>
+ 	<div style="clear:both"></div>	
  	{% for restGroup in restGroups %}
  		{% if restGroup.Visibility  != 2 %}
  			{% include 'TrazeoFrontBundle:PanelGroups:_rowGroup.html.twig' with {'groupMember': restGroup, 'nois': 1}  %}

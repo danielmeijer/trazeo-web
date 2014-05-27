@@ -96,7 +96,11 @@
 {% endblock %}
 		
 {% block js %}
- {{ parent() }} 
- {% include 'TrazeoFrontBundle:PanelRoutes:_tutorial.html.twig' %}
-
+	{{ parent() }} 
+	{% include 'TrazeoFrontBundle:PanelRoutes:_tutorial.html.twig' %}
+	<script>
+		$( ".change-city" ).change(function() {
+			$("#filter-city").submit();
+		});
+	</script>	
 {% endblock %}

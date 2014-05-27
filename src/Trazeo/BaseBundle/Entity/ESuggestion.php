@@ -54,6 +54,11 @@ class ESuggestion
      * @ORM\Column(name="useLike", type="string", length=50, nullable=true)
      */    
     protected $useLike;
+    
+    /**
+     * @ORM\Column(name="position", type="string", length=1, nullable=true)
+     */
+    protected $position;
 
     /**
      * Get id

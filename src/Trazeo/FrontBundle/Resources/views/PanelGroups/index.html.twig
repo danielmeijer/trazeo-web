@@ -68,4 +68,9 @@
 {% block js %} {{ parent() }} 
 	{% include 'TrazeoFrontBundle:PanelGroups:_index_analytics.html.twig' %}
 	{% include 'TrazeoFrontBundle:PanelGroups:_tutorial.html.twig' %}
+	<script>
+		$( ".change-city" ).change(function() {
+			$("#filter-city").submit();
+		});
+	</script>
 {% endblock %}
