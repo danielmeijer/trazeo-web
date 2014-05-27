@@ -56,6 +56,7 @@ class ESuggestion
     protected $useLike;
     
     /**
+     * // Datos de posición: 'n','s','e','w'
      * @ORM\Column(name="position", type="string", length=1, nullable=true)
      */
     protected $position;
@@ -188,5 +189,29 @@ class ESuggestion
     public function getForder()
     {
         return $this->forder;
+    }
+
+    /**
+     * Set position
+     *
+     * @param string $position
+     *
+     * @return ESuggestion
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return string 
+     */
+    public function getPosition()
+    {
+        return $this->position;
     }
 }
