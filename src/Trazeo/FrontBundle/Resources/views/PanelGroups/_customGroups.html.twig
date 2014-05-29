@@ -12,14 +12,12 @@
  			Listado de Grupos Disponibles
  		</div>
  		<div class="pull-right">
- 			<form name="filter-city" id="filter-city" action="{{ path('panel_group') }}" method="GET">
-				<select class="form-control change-city" name="city">
-					<option value="all"> - {{ "City.all"|trans }} - </option>
-					{% for c in cities %}
-					<option {% if city == c.id %} selected="selected" {% endif %}value="{{ c.id }}">{{ c.nameUtf8 }}</option>
-					{% endfor %}
-				</select>
-			</form>
+			<select class="form-control change-city" name="city">
+				<option value="all"> - {{ "City.all"|trans }} - </option>
+				{% for c in cities %}
+				<option {% if city == c.id %} selected="selected" {% endif %}value="{{ c.nameUtf8 }}">{{ c.nameUtf8 }}</option>
+				{% endfor %}
+			</select>
  		</div>
  	</h3>
  	<div style="clear:both"></div>	

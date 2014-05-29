@@ -1,4 +1,9 @@
-<div class="row alert alert-warning">
+<div class="row alert alert-warning" 
+	{# Attributos para el filtrado #}
+	{% if groupMember.Admin.Id != app.user.userextend.Id %}
+	city="{{ groupMember.Route.city.nameUtf8 }}"
+	style="display: none"
+	{% endif %} >
 	<!-- Nombre de Grupo -->
 	<div class="col-md-4">
 		<i class="fa fa-users"></i>

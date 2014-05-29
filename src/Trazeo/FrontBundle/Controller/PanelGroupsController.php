@@ -520,8 +520,8 @@ class PanelGroupsController extends Controller
 		$restGroups = array_diff($allGroups,$groupsMember->toArray());
 		
 		// City filter
-		$city = $request->get('city'); // request filter
-		if ($city == null && $user->getCity() != null) $city = $user->getCity()->getId();
+		$city = null; // request filter
+		if ($user->getCity() != null) $city = $user->getCity()->getId();
 		if ($city == null) $city = "all";
 		$cities = array();
 		$iscity = false;
@@ -532,15 +532,6 @@ class PanelGroupsController extends Controller
 			}
 		}
 		if (!$iscity) $city = "all"; // if no cities for user
-		if ($city != "all") {
-			$copyGroups = $restGroups;
-			$restGroups = array();
-			foreach($copyGroups as $g) {
-				if ($g->getCity() != null) {
-					if ($g->getCity()->getId() == $city) $restGroups[] = $g;
-				}
-			}
-		}
 		// End City Filter
 	
 		$groupsAdmin = $user->getAdminGroups();

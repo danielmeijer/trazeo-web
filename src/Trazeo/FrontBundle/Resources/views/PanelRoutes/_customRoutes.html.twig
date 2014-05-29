@@ -2,15 +2,13 @@
 	<div class="pull-left">
 		Listado de Rutas Disponibles
 	</div>
- 	<div class="pull-right">
- 		<form name="filter-city" id="filter-city" action="{{ path('panel_route') }}" method="GET"> 		
+ 	<div class="pull-right">		
 		<select class="form-control change-city" name="city">
 			<option value="all"> - {{ "City.all"|trans }} - </option>
 			{% for c in cities %}
-			<option {% if city == c.id %} selected="selected" {% endif %}value="{{ c.id }}">{{ c.nameUtf8 }}</option>
+			<option {% if city == c.id %} selected="selected" {% endif %}value="{{ c.nameUtf8 }}">{{ c.nameUtf8 }}</option>
 			{% endfor %}
-			</select>
-		</form>
+		</select>
  	</div>
 </h3>
 <div style="clear:both"></div>	

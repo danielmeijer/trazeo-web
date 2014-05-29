@@ -36,8 +36,8 @@ class PanelRoutesController extends Controller
         $routes = $em->getRepository('TrazeoBaseBundle:ERoute')->findAll();
         
         // City filter
-        $city = $request->get('city'); // request filter
-        if ($city == null && $user->getCity() != null) $city = $user->getCity()->getId();
+        $city = null;
+        if ($user->getCity() != null) $city = $user->getCity()->getId();
         if ($city == null) $city = "all";
         $cities = array();
         $iscity = false;
@@ -48,15 +48,6 @@ class PanelRoutesController extends Controller
         	}
         }
         if (!$iscity) $city = "all"; // if no cities for user
-        if ($city != "all") {
-        	$copyRoutes = $routes;
-        	$routes = array();
-        	foreach($copyRoutes as $r) {
-        		if ($r->getCity() != null) {
-        			if ($r->getCity()->getId() == $city) $routes[] = $r;
-        		}
-        	}
-        }
         // End City Filter        
 
         return array(

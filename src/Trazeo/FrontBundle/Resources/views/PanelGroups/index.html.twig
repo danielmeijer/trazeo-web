@@ -68,9 +68,12 @@
 {% block js %} {{ parent() }} 
 	{% include 'TrazeoFrontBundle:PanelGroups:_index_analytics.html.twig' %}
 	{% include 'TrazeoFrontBundle:PanelGroups:_tutorial.html.twig' %}
+	{% include 'TrazeoFrontBundle:PanelRoutes:_filter.js.twig' %}
 	<script>
+		filterBy('city',$( "select option:selected" ).val());//filtramos con el valor inicial 
 		$( ".change-city" ).change(function() {
-			$("#filter-city").submit();
+			//$("#filter-city").submit();
+			filterBy('city',$( "select option:selected" ).val());
 		});
 	</script>
 {% endblock %}
