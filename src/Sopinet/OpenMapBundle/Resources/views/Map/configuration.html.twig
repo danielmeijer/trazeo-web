@@ -281,11 +281,12 @@
     			var pick=+map._layers[marker].pickUp+','+(map._layers[marker].pickUpText || "");
            		pointList+=map._layers[marker]._latlng.lat+","+map._layers[marker]._latlng.lng+","+pick;
         };       	
-       	//populate input
+       	//populate inputs
+       	$("#cityInput").val($("#start").html().split(',')[1].slice(1));
     	$("#inputPoints").val(pointList);
     	$("#distanceInput").val(map.getDistance()); 
     });
-	
+
 	//methods
 	L.Map.prototype.createPickUpWaypoint=function(marker,text){
 		if(marker._icon){
