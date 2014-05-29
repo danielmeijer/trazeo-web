@@ -17,41 +17,16 @@ class PublicControllerTest extends WebTestCase
         		$crawler->filter('div.videowrapper')->count()
         );
         
-        $buttonCrawlerNode = $crawler->selectButton('submit');
+        $link = $crawler->filter("a:contains('Accede a Trazeo')")->link();
+        $crawler = $client->click($link);
         
-       	//Se ha registrado correctamente
-        $form = $buttonCrawlerNode->form(array(
-        		'email' => 'check@sopinet.es',
-        ));
         
-        $ok = $client->submit($form);
-        
-        $crawler = $client->followRedirect();
-        
-        $this->assertGreaterThan(
-        		0,
-        		$crawler->filter('html:contains("correctamente")')->count()
-        );
-        
-        $form = $buttonCrawlerNode->form(array(
-        		'email' => 'check@sopinet.es'
-        		), 'DELETE');
-        $client->submit($form);
-        
-        //Usuario ya registrado
-        $form = $buttonCrawlerNode->form(array(
-        		'email' => 'lumilo8@gmail.com',
-        ));
-        
-        $client->submit($form);
-        $crawler = $client->followRedirect();
-        
-        $this->assertGreaterThan(
-        		0,
-        		$crawler->filter('html:contains("existe")')->count()
-        );
+        $form = $crawler->selectButton('submitLogin')->form();
+        $client->submit($form, array('_username' => 'trazeo', '_password' => 'trazeo'));
+        $this->assertTrue(
+        		$client->getResponse()->isRedirect('/panel')
+        );        
 
-        
     }
     
     public function testCofinanciadores()

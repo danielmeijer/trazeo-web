@@ -2,6 +2,7 @@
 
 namespace Trazeo\FrontBundle\Tests\Controller;
 
+use Symfony\Component\CssSelector\CssSelector;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class PrevRegistroControllerTest extends WebTestCase
@@ -11,10 +12,8 @@ class PrevRegistroControllerTest extends WebTestCase
     	$client = static::createClient();
     	
     	$crawler = $client->request('GET', '/');
-    	$form = $crawler->selectButton('submitPrevRegister')->form();
-    	$crawler = $client->submit($form, array(
-    			'email' => 'syamuza@sopinet.com',
+    	$link = $crawler->selectLink('Accede a Trazeo')->link();
+    	$crawler = $client->click($link);
     	
-    	));    	
     }    
 }

@@ -16,12 +16,10 @@
 				
 					<h2 class="slogan">¿Quieres probarlo?</h2>
 					<div class="cform col-md-12" id="contact-form">
-						<form action="{{ path('fos_user_security_login') }}">								
 							<div class="form-group input-group col-md-10 col-md-offset-1">
 								<p class="col-md-offset-1 col-md-10">Puede probar la aplicación y web de <a href="http://trazeo.es">Trazeo</a>, recuerde que estamos en una versión BETA.</p>
-								<button type="submit" class="btn btn-lg btn-success log" style="font-size: 30px">Accede a Trazeo</button>		
+								<a href="{{ path('fos_user_security_login') }}" class="btn btn-lg btn-success log" style="font-size: 30px" name="log">Accede a Trazeo</a>		
 							</div>	
-						</form>						
 					</div>
 				</div>
 			</div>
