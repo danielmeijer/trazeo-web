@@ -1,0 +1,12 @@
+<script>
+	var filterBy=function(property,filter){
+		if(filter=='all')$("["+property+"]").show("slow");
+		else{
+			$("["+property+"]["+property+"!="+filter+"]").hide("slow",
+			function(){//se muestran una vez acaben de ocultarse los otros,para no afectar a la animación
+				$("["+property+"="+filter+"]").show("slow");
+			}
+			);
+		}
+	}
+</script>
