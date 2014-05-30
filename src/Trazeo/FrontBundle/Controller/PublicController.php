@@ -41,8 +41,29 @@ class PublicController extends Controller
     	$banners[3]['url'] = "http://static.trazeo.es/banner/100/suspasitos.png";
     	$banners[3]['title'] = "SusPasitos";
     	$banners[3]['desc'] = "Pasito a pasito; por una ciudad limpia de coches y peligros para nuestros hijos.";    	
-    	
-    	/*
+
+    	$banners[4]['url'] = "http://static.trazeo.es/banner/250/Sopinet1.png";
+    	$banners[4]['title'] = "Sopinet";
+    	$banners[4]['desc'] = "Imprescindible, oportuno y necesario Trazeo y sus caminos escolares seguros.";
+    	 
+    	$banners[5]['url'] = "http://static.trazeo.es/banner/250/HelenDoron0.jpg";
+    	$banners[5]['title'] = "Helen Doron";
+   		$banners[5]['desc'] = "Imprescindible, oportuno y necesario Trazeo y sus caminos escolares seguros.";
+    	    	 
+    	$banners[6]['url'] = "http://static.trazeo.es/banner/100/suspasitos.png";
+    	$banners[6]['title'] = "SusPasitos";
+   		$banners[6]['desc'] = "Imprescindible, oportuno y necesario Trazeo y sus caminos escolares seguros.";
+    	    	 
+   		$banners[7]['url'] = "http://static.trazeo.es/banner/250/DCABO.png";
+   		$banners[7]['title'] = "DCABO CONSULTORES";
+   		$banners[7]['desc'] = "Imprescindible, oportuno y necesario Trazeo y sus caminos escolares seguros.";
+
+   		$banners[8]['url'] = "http://static.trazeo.es/banner/250/CentroCordoba.jpg";
+   		$banners[8]['title'] = "Centro Córdoba";
+   		$banners[8]['desc'] = "Imprescindible, oportuno y necesario Trazeo y sus caminos escolares seguros.";
+   		 
+   		
+   		/*
     	$banner[3]['url'] = "http://static.trazeo.es/banner/100/quaip.png";
     	$banner[3]['title'] = "DK Diseño kreativo";
     	$banner[3]['desc'] = "Imprescindible, oportuno y necesario Trazeo y sus caminos escolares seguros.";
