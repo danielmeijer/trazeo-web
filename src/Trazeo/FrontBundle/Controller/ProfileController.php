@@ -109,7 +109,7 @@ class ProfileController extends Controller
 		
 		$city = $request->get('city');
 		$helper = $this->get('trazeo_base_helper');
-		$city_entity = $helper->getCities($city, 1, true);
+		$city_entity = $helper->getCities($city, 10, true);
 		$data_userextend->setCity($city_entity[0]);
 		
 		$em->flush();
