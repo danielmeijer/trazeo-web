@@ -14,12 +14,9 @@ class PanelControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/login');
         $form = $crawler->selectButton('submitLogin')->form();
         $crawler = $client->submit($form, array('_username' => 'trazeo', '_password' => 'trazeo'));
-        $crawler = $client->followRedirect();
-        $crawler = $client->followRedirect();
-        
-        $this->assertGreaterThan(
-        		0, 
-        		$crawler->filter('html:contains("trazeo_niño_1")')->count()
+        // aserting if user was loged sucessfully
+       	$this->assertTrue(
+        		$client->getResponse()->isRedirect('/panel')
         );
     }
 }

@@ -19,7 +19,7 @@ class PublicControllerTest extends WebTestCase
         
         $link = $crawler->filter("a:contains('Accede a Trazeo')")->link();
         $crawler = $client->click($link);
-        
+
         
         $form = $crawler->selectButton('submitLogin')->form();
         $client->submit($form, array('_username' => 'trazeo', '_password' => 'trazeo'));

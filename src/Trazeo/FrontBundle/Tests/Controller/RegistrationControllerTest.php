@@ -11,7 +11,7 @@ class RegistrationControllerTest extends WebTestCase
     	$client = static::createClient();
     	
     	$crawler = $client->request('GET', '/register/');
-    	$form = $crawler->selectButton('submitRegister')->form();
+    	$form = $crawler->selectButton('Registrar')->form();
     	$crawler = $client->submit($form, array(
     			'fos_user_registration_form[email]' => 'syamuza@sopinet.com',
     			'fos_user_registration_form[username]' => 'Sergio',

@@ -13,7 +13,15 @@ class PrevRegistroControllerTest extends WebTestCase
     	
     	$crawler = $client->request('GET', '/');
     	$link = $crawler->selectLink('Accede a Trazeo')->link();
-    	$crawler = $client->click($link);
     	
+    	$crawler=$client->click($link);
+
+    	/*$this->assertTrue(
+    			$client->getResponse()->isRedirect('/login')
+    	);*/
+    	$this->assertGreaterThan(
+    		0,
+    		$crawler->filter("html:contains('Inicio de sesión')")->count()
+    	);
     }    
 }
