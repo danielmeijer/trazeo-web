@@ -13,5 +13,5 @@
 </h3>
 <div style="clear:both"></div>	
 {% for route in routes %}
-    {% include 'TrazeoFrontBundle:PanelRoutes:_rowRoute.html.twig' with {'route':route} %}
+    {% include 'TrazeoFrontBundle:PanelRoutes:_rowRoute.html.twig' with {'route':route, 'filter': 1} %}
 {% endfor %}

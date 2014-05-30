@@ -1,6 +1,6 @@
 <div class="row alert alert-warning" 
 	{# Attributos para el filtrado #}
-	{% if groupMember.Admin.Id != app.user.userextend.Id %}
+	{% if nois is defined  %}
 	city="{{ groupMember.Route.city.nameUtf8 }}"
 	style="display: none"
 	{% endif %} >
