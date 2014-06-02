@@ -300,8 +300,10 @@ class PanelRoutesController extends Controller
 		$helper = $this->get('trazeo_base_helper');
 		$city_entity = $helper->getCities($city, 10, true);
 		$route->setDistance($distance);
-		$route->setCity($city_entity[0]);		
-		$route->setCountry($city_entity[0]->getCountry());
+		if (count($city_entity) > 0) {
+			$route->setCity($city_entity[0]);	
+			$route->setCountry($city_entity[0]->getCountry());
+		}
 		$em->persist($route);
     	$em->flush();
     
