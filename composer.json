@@ -34,6 +34,7 @@
 		"sopinet/flash-messages-bundle" : "dev-master",
 		"jms/serializer": "dev-master",
 		"lunetics/locale-bundle": "2.2.*",
-		"endroid/qrcode-bundle": "dev-master"
+		"endroid/qrcode-bundle": "dev-master",
+		"elao/error-notifier-bundle" : "dev-master"
 	}
 }
