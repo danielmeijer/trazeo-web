@@ -80,7 +80,7 @@
 			} else {
 				$query = $em->createQuery(
 						'SELECT u
-    					FROM SopinetUserBundle:SopinetUserExtend u, SusPasitosBaseBundle:UserValue uv
+    					FROM SopinetUserBundle:SopinetUserExtend u, SopinetUserPreferencesBundle:UserValue uv
     					WHERE uv.setting = :setting AND uv.value = :select AND uv.user = u'
 				)->setParameters(array('setting'=>$usersetting->getId(), 'select'=>$value));
 				$users = $query->getResult();
