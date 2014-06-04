@@ -26,7 +26,7 @@ monolog:
 
 elao_error_notifier:
     from: hola@trazeo.es
-    to: hola@trazeo.es
+    to: fernando@trazeo.es
     handle404: true
     mailer: mailer
     handlePHPErrors: true
