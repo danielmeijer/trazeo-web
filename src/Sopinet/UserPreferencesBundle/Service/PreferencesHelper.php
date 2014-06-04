@@ -32,7 +32,7 @@ class PreferencesHelper {
 		}
 		
 		$reUserValue = $em->getRepository("SopinetUserPreferencesBundle:UserValue");
-			
+		
 		foreach($request->request->all() as $key => $value) {
 			$temp = explode("_",$key);
 			if ($temp[0] == "setting") {
