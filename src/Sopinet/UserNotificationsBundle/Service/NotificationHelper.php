@@ -131,7 +131,7 @@ class NotificationHelper {
 			$notifications = $reNotifications->findBy(array(
 					'user' => $userextend,
 					'view' => -1
-			),array('createdAt' => 'DESC'));
+			),array('id' => 'DESC'));
 		return $notifications;
 		// Devolvemos todas las notificaciones
 	}
