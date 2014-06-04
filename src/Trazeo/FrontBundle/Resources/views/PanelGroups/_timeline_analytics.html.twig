@@ -2,7 +2,7 @@
 	var analytics_user=analytics.identify('{{ app.user.id }}',{email: '{{ app.user.email }}', username: '{{ app.user }}'});
 
 	//Analytics Register user form 
-	var form=$('.fos_comment_submit > input ').click(function (event){
+	$('.fos_comment_submit >input ').click(function (event){
 		analytics.track('click.timeline.post',{group: '{{ group.name }}'}) 
 	});
 	//Analytics reply timeline button 	
