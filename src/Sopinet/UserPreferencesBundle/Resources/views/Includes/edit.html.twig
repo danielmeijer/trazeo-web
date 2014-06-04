@@ -34,12 +34,14 @@
 						<span class="span7">{{ ("preference."~setting.description)|trans }}</span>
 						<span class="span5">
 							{% if setting.type == "Enum" %}
+							{#
 								{% if setting.optionscont == 2 %}
 									<label>
 										<input name="setting_{{ setting.id }}" class="ace ace-switch" type="checkbox" checked="checked"/>
 										<span class="lbl"></span>
 									</label>						
 								{% else %}
+							#}								
 									<div class="control-group">
 										<div class="controls">
 										{% for value in setting.optionsarr %}
@@ -50,7 +52,7 @@
 										{% endfor %}
 										</div>
 									</div>
-								{% endif %}
+							{#	{% endif %} #}
 							{% endif %}
 						</span>
 					</div>
