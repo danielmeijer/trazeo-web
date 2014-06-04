@@ -81,7 +81,7 @@ class ApiController extends Controller {
 	 * Funcion que controla si el usuario está logueado o se comprueba con su email y pass
 	 */
 	private function checkPrivateAccess(Request $request) {
-		$user = $this->get('security.context')->getToken()->getUser();
+		//$user = $this->get('security.context')->getToken()->getUser();
 	
 		/*if ($user != null && $user != "anon.") {
 			return $user;
@@ -92,12 +92,12 @@ class ApiController extends Controller {
 // 			return false;
 // 		}
 	
-		/*$user = $this->checkUser($request->get('email'), $request->get('pass'));
+		$user = $this->checkUser($request->get('email'), $request->get('pass'));
 	
 		//No es necesario
 		if($user == false) {
 			return false;
-		}*/
+		}
 	
 		return $user;
 	}
