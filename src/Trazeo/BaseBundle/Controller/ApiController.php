@@ -237,6 +237,16 @@ class ApiController extends Controller {
 					
 					
 					$group->setRide(null);
+					
+					//desvinculamos a los niños del paseo 
+					$childs = $em->getRepository('TrazeoBaseBundle:EChild')->findByRide($ride);
+					foreach ($childs as $child){
+						$child->setRide(null);
+						$em->persist($child);
+						
+					}
+					$em->flush();
+					
 				}
 				
 				$ride = new ERide();
@@ -565,6 +575,15 @@ class ApiController extends Controller {
 		$ride->setGroupid($group->getId());
 		$ride->setGroup(null);
 		$em->persist($ride);
+		
+		//desvinculamos a los niños del paseo
+		$childs = $em->getRepository('TrazeoBaseBundle:EChild')->findByRide($ride);
+		foreach ($childs as $child){
+			$child->setRide(null);
+			$em->persist($child);
+		
+		}
+		$em->flush();
 		
 		$event = new EEvent();
 		$event->setRide($ride);
