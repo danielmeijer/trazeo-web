@@ -568,6 +568,14 @@ class ApiController extends Controller {
 		$diff = $inicio->diff($fin);
 		$duration = $diff->h." horas, ".$diff->i." minutos y ".$diff->s." segundos";
 		
+		if ($group == null) {
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->doOK("ok"));
+				
+			return $this->get('fos_rest.view_handler')->handle($view);			
+		}
+		
 		$group->setHasRide(0);
 		$em->persist($group);
 		
