@@ -1,6 +1,6 @@
 <div class="row alert alert-warning" 
 	{# Attributos para el filtrado #}
-	{% if nois is defined  %}
+	{% if nois is defined and groupMember.Route.city.nameUtf8 is defined %}
 	city="{{ groupMember.Route.city.nameUtf8 }}"
 	style="display: none"
 	{% endif %} >

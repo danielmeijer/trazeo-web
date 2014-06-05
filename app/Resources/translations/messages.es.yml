@@ -129,6 +129,11 @@ Groups:
         hidden: Oculto
         private: Privado
         public: Público
+        
+    invite:
+        request: 'Forma parte del Grupo de padres/madres de los escolares que participan en la ruta de Pedibus'
+        accept: 'Acepto la invitación'
+        deny: 'Rechazo la invitación'
 
 Login:
     password: Contraseña
