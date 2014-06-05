@@ -14,6 +14,7 @@
 		};
 	var editable= {{ editable }};
 	var realTime= {{ realTime }};
+	var resume= {{ resume }};
 	timeFromLastUpdate=0;
 	
 	lastId="0";
@@ -318,6 +319,7 @@
 		  	current._icon.style.height='35px';
 		}
 	}
+	
 	L.Map.prototype.removeLast=function(){
 		if(routing.getLast())
 			routing.removeWaypoint(routing.getLast(),function(){
@@ -326,6 +328,7 @@
 				
 				});
 		}		
+	
 	L.Map.prototype.updateRouteInfo=function(e){
     	var first=routing.getFirst();
     	var last=routing.getLast();
@@ -369,15 +372,49 @@
     	//routing._segments.clearLayers();
     };
     
-
-
-    
-	L.Map.prototype.getDistance=function(){
+	/*L.Map.prototype.showResumeInfo=function(){
+    	var first=events[1].location;
+    	var last=events[0].location;
     	var distance=0;
-		for(var i=0;map.getWaypoints().length-1>i;i++){
-			var actual=map.getWaypoints()[i];
-			var next=map.getWaypoints()[i+1];
-			distance+=Math.floor(actual.distanceTo(next));
+    	if(first){
+    		geocoder.reverse(first, map.options.crs.scale(16), function(results) {
+				var r = results[0];
+				var aux=r.name.split(',');
+				aux.splice(1,2);
+				aux.splice(3,1);								
+				$("#start_resume").html(aux.toString());
+    		});
+    	}
+    	if(last){
+    		geocoder.reverse(last, map.options.crs.scale(16), function(results) {
+				var r = results[0];
+				var aux=r.name.split(',');
+				aux.splice(1,2);
+				aux.splice(3,1);
+	    		$("#finish_resume").html(aux.toString());			    		
+	    	});
+    	}
+    	if(first && last)$("#distance_resume").html(map.getDistance()+" m");
+
+    	routing.rerouteAllSegments(function(){});
+    	//routing._segments.clearLayers();
+    };*/
+    
+	L.Map.prototype.getDistance=function(points){
+    	var distance=0;
+    	if(points){
+        	for(var i=0;points.length-1>i;i++){
+				var actual=points[i];
+				var next=points[i+1];
+				distance+=Math.floor(actual.distanceTo(next));
+        	}
+        }
+    	else{
+        	for(var i=0;map.getWaypoints().length-1>i;i++){
+				var actual=map.getWaypoints()[i];
+				var next=map.getWaypoints()[i+1];
+				distance+=Math.floor(actual.distanceTo(next));
+        	}
 		}    	
 		return distance;
     };
@@ -724,12 +761,11 @@
 	//Mapa tiempo real 
 	if(realTime){
 	    if(events.length>0)map.loadFromEvents(events);
-		var dbRequest=setInterval(addLast,5000);
+		//var dbRequest=setInterval(addLast,5000);
 	}
 
-
-
-    setInterval(map.updateRouteInfo,1000);
+    if(resume) setTimeout(map.showResumeInfo,1000);
+    else setInterval(map.updateRouteInfo,1000);
     if(points)map.loadFromWaypoints(points);
     map.updateRouteInfo();
     map.disableRouting();
@@ -783,5 +819,5 @@
 	   					fakeRequest(fakeEvents[fakeIndex]);
 	   					fakeIndex++;
    				},
-   				2000);*/
+   				10);*/
 </script>
