@@ -52,7 +52,16 @@ class PanelUserController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
+			
+            // Creamos el correo de bienvenida 
+            $not = $this->container->get('sopinet_user_notification');
+            $el = $not->addNotification(
+            		'user.register',
+            		"TrazeoBaseBundle:UserExtend",
+            		$entity->getId(),
+            		$this->generateUrl('panel_group'), $entity
+            );
+            
             return $this->redirect($this->generateUrl('panel_userextend_show', array('id' => $entity->getId())));
         }
 
