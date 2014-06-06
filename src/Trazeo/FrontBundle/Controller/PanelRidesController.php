@@ -34,7 +34,11 @@ class PanelRidesController extends FOSRestController
     {
     	$em = $this->getDoctrine()->getManager();
     	$reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
-    	 
+
+    	$fos_user = $this->container->get('security.context')->getToken()->getUser();
+    	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+    	$groups=$user->getGroups();
+    	
     	$events = $reEvent->findBy(array('action' => "point", 'ride' => $ride->getId()), array('createdAt' => 'DESC'));
 
     	if ($ride->getGroup() == null) {
@@ -42,7 +46,18 @@ class PanelRidesController extends FOSRestController
     	} else {
     		$groupId = $ride->getGroup()->getId();
     	}
+    	
     	$group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneById($groupId);
+    	
+    	//Check if user belongs to the group 
+    	$groups=$user->getGroups();
+    	$find=false;
+    	foreach ($groups as $userGroup){
+    		if($userGroup->getId()==$groupId)$find=true;
+    	}
+    	if($find==false)die('No perteneces al grupo de este paseo.');
+    	
+    	
     	$children = $group->getChilds();    	
     	if($group->getRoute() == true){
     		
@@ -87,8 +102,8 @@ class PanelRidesController extends FOSRestController
     	
     	$reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
     	$events = $reEvent->findBy(array('ride' => $ride->getId()), array('createdAt' => 'DESC'));
-    
-	   	//group that started the ride
+
+    	//group that started the ride
     	if ($ride->getGroup() == null) {
     		$groupId = $ride->getGroupid();
     	} else {
