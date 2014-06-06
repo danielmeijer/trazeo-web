@@ -242,6 +242,7 @@ class ApiController extends Controller {
 					$childs = $em->getRepository('TrazeoBaseBundle:EChild')->findByRide($ride);
 					foreach ($childs as $child){
 						$child->setRide(null);
+						$child->setSelected(0);
 						$em->persist($child);
 						
 					}
@@ -588,6 +589,7 @@ class ApiController extends Controller {
 		$childs = $em->getRepository('TrazeoBaseBundle:EChild')->findByRide($ride);
 		foreach ($childs as $child){
 			$child->setRide(null);
+			$child->setSelected(0);
 			$em->persist($child);
 		
 		}

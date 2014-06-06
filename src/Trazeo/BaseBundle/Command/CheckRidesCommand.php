@@ -93,6 +93,7 @@ class CheckRidesCommand extends ContainerAwareCommand
 
 	 			foreach ($childs as $child){
 	 				$child->setRide(null);
+	 				$child->setSelected(0);
 	 				$em->persist($child);
 	 			}
 	 			$em->flush();
