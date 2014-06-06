@@ -435,6 +435,7 @@ Timeline:
         title: Tus niños en este grupo
         empty: Sin resultados
         join: Vincular mis niños con este grupo
+        disjoin: Desvincular mis niños de este grupo
     route:
         title: Ruta del grupo
         empty: Ninguna ruta asignada

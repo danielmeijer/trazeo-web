@@ -79,6 +79,27 @@ class PanelGroupsController extends Controller
 	
 		return $this->redirect($this->generateUrl('panel_group_timeline', array('id' => $group->getId())));
 	}
+
+
+	/**
+	 * User disjoin Child to Group.
+	 *
+	 * @Route("/{group}/removechild/{child}", name="panel_group_removeChild")
+	 * @Method("GET")
+	 */
+	public function removeChildAction(EGroup $group, EChild $child) {
+	
+		$em = $this->getDoctrine()->getManager();
+	
+		$fos_user = $this->container->get('security.context')->getToken()->getUser();
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+	
+		$group->removeChild($child);
+		$em->persist($group);
+		$em->flush();
+	
+		return $this->redirect($this->generateUrl('panel_group_timeline', array('id' => $group->getId())));
+	}
 	
 	/**
 	 * User join Group.
@@ -110,6 +131,15 @@ class PanelGroupsController extends Controller
 			$group->addUserextendgroup($user);
 			$em->persist($group);
 			$em->flush();
+			
+			//Children autojoin on parent join to group 
+			$childs=$user->getChilds();
+			foreach($childs as $child){
+				$group->addChild($child);
+			}
+			$em->persist($group);
+			$em->flush();
+			
 			$notification = $container->addFlashMessages("success","Has sido añadido al grupo correctamente");
 			return $this->redirect($this->generateUrl('panel_group'));
 					
