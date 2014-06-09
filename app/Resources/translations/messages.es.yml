@@ -353,7 +353,7 @@ preference:
         name: 'Notificaiones por email'
 
         value:
-            day: 'Todos'
+            now: 'Todos'
             never: 'Ninguno'
             important: 'Solo los importantes'
 
