@@ -387,7 +387,7 @@ class PanelGroupsController extends Controller
 		if($fos_user != true){
 			// Si el usuario no está registrado, habrá que registrarlo
 			$reGAI = $em->getRepository('TrazeoBaseBundle:EGroupAnonInvite');
-			$reGAI->createNew($group, $userEmail, $this);
+			$reGAI->createNew($group, $userEmail, $fos_user_current, $this);
 			
 			// $notification = $container->addFlashMessages("warning","El correo electrónico introducido no corresponde a ningún usuario");
 			$notification = $container->addFlashMessages("success","Se ha enviado un email al usuario invitándolo al sistema Trazeo y a este grupo.");
