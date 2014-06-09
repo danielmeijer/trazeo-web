@@ -54,13 +54,13 @@ class PanelUserController extends Controller
             $em->flush();
 			
             // Creamos el correo de bienvenida 
-            $not = $this->container->get('sopinet_user_notification');
-            $el = $not->addNotification(
-            		'user.register',
-            		"TrazeoBaseBundle:UserExtend",
-            		$entity->getId(),
-            		$this->generateUrl('panel_group'), $entity
-            );
+            $message = \Swift_Message::newInstance()
+            // TODO: Traducir
+            ->setSubject("Bienvenido a Trazeo.")
+            ->setFrom(array("info@trazeo.com" => "Trazeo"))
+            ->setTo($entity->getUser()->getEmail())
+            ->setBody($con->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:newUser.html.twig','text/html'));
+            $ok = $con->get('mailer')->send($message);
             
             return $this->redirect($this->generateUrl('panel_userextend_show', array('id' => $entity->getId())));
         }
