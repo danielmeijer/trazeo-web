@@ -1,0 +1,142 @@
+{% set activeMenu = "route" %}
+{% set pageheader_title = "Ride.resume.title"|trans %}
+{% set pageheader_description = "Ride.resume.description"|trans %}
+
+{% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
+
+	{% block css %}
+		{{ parent() }}
+	   	{% stylesheets
+	    	'@SopinetOpenMapBundle/Resources/public/css/leaflet.css'
+	    	'@SopinetOpenMapBundle/Resources/public/css/plugins/leafletRouting/app.css'
+	    	'@SopinetTemplateSbadmin2Bundle/Resources/public/css/plugins/openmap/openmap.css'
+	    	'@SopinetOpenMapBundle/Resources/public/css/plugins/Control.Geocoder/Control.Geocoder.css'
+	    	output='css/*.css' filter='cssrewrite' %}
+	    	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+		{% endstylesheets %}
+ 	{% endblock %}
+{% block body_content %}
+
+<div class="alert-warning">
+	<table class="table">
+		<tbody>
+			<tr>
+				<td><i class="fa fa-flag-o"></i></td>
+				<td>Empezaron en: </td>
+				<td id="start_resume"></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-flag-checkered"></i></td>
+				<td>Terminaron en: </td>
+				<td id="finish_resume"></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-road"></i></td>
+				<td>Han recorrido: </td>
+				<td id="distance_resume"></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-clock-o"></i></td>
+				<td>Han caminado durante: </td>
+				<td>{{ ride.duration }}</td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-heart"></i></td>
+				<td>Cada niño ha realizado: </td>
+				<td id="sport_resume"></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-truck"></i></td>
+				<td>Cada niño ha evitado consumir: </td>
+				<td id="enviroment_resume"></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-euro"></i></td>
+				<td>Cada niño ha logrado ahorrar: </td>
+				<td id="safe_resume"></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-cloud"></i></td>
+				<td>Logrando reducir las emisiones de C02 en: </td>
+				<td id="pollution_resume"></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-user"></i></td>
+				<td style="font-weigth: bold">Niños que participaron en el paseo: </td>
+				<td>&nbsp</td>
+			</tr>
+			{% for child in children %}
+			<tr>
+			<td colspan="3">{{ child.nick }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+		<h3 class="alert alert-success"><i class="fa fa-map-marker"></i>&nbsp; Mapa del paseo</h3>
+		<div id="mapa" class="col-md-12"></div>
+		{% if route is defined %}
+			{% if sponsors|length() > 0 %}
+				<div class="col-md-12">
+					<h3 class="alert alert-success"><i class="fa fa-shield"></i>&nbsp; {{ 'Sponsors.current'|trans }}</h3>
+					<br />
+					{%  for sponsor in sponsors %}
+					<div class="col-md-3">
+						<p class="alert-warning">{{ sponsor.Nick }}</p>
+						<img class="img-responsive" src='{{ sponsor.Image }}'/>
+					</div>
+					{% endfor %}
+				</div>
+			{% else %}
+			<!-- TODO: NO SE PATROCINAN RUTAS
+			<div class="col-md-12">
+					<h3 class="alert alert-success"><i class="fa fa-shield"></i>&nbsp; Patrocina este paseo</h3>
+					<div class="alert alert-warning">
+						<i class="fa fa-envelope"></i>&nbsp; Escríbenos un email a &nbsp;<a class="btn btn-warning btn-xs btn-outline" href="mailto:hola@trazeo.es">hola@trazeo.es</a>
+					</div>
+			</div>
+			-->
+			 {% endif %}
+		{% endif %}
+		<p>&nbsp;</p>
+
+		
+				
+        <script type="text/javascript">
+        var lastId=0;
+        var lastRoute="{{ path('panel_ride_lasts', {'id': ride.id,'lastid': 0}) }}";
+    	</script>
+{% endblock %}
+		
+	
+{% block js %}	
+	{{ parent() }}
+	{% javascripts 
+		'@SopinetOpenMapBundle/Resources/public/js/leaflet.js'
+		'@SopinetOpenMapBundle/Resources/public/js/leaflet-src.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/utils/LineUtil.Snapping.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/utils/Marker.Snapping.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/utils/Polyline.Snapping.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Storage.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Draw.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Edit.js'
+		'@SopinetOpenMapBundle/Resources/public/js/plugins/Control.Geocoder/Control.Geocoder.js'
+	%}
+	
+	<script type="text/javascript" src="{{ asset_url }}"></script>
+
+	{% endjavascripts %}
+		{% if route is defined %}
+			{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': route.points,'editable': "false", 'realTime': "true", 'rideEvents': events, 'resume': true} %}
+		{% else %}
+			{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'editable': "false", 'realTime': "true", 'rideEvents': events, 'resume': true} %}
+		{% endif %}
+	<script type="text/javascript">
+		var duration='{{ ride.duration}}';
+		duration=duration.match(/[0-9]+/g);
+		$('#sport_resume').html(((duration[0]*60+(duration[1]*1)+duration[2]/60)*0.33).toFixed(2)+"% del ejercicio semanal recomendado");
+
+	</script>
+{% endblock %}
