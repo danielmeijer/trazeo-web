@@ -342,6 +342,7 @@ class ERide
     }
     
     public function __toString() {
-    	return "";
+    	
+    	return "Grupo " . $this->getGroupid() . " /Id " . $this->getId();
     }
 }
