@@ -44,6 +44,7 @@ class PanelUserController extends Controller
      */
     public function createAction(Request $request)
     {
+    	// DEPRECATED: ¿Cuando se ejecuta esto?
         $entity = new UserExtend();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -52,15 +53,6 @@ class PanelUserController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-			
-            // Creamos el correo de bienvenida 
-            $message = \Swift_Message::newInstance()
-            // TODO: Traducir
-            ->setSubject("Bienvenido a Trazeo.")
-            ->setFrom(array("info@trazeo.com" => "Trazeo"))
-            ->setTo($entity->getUser()->getEmail())
-            ->setBody($this->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:newUser.html.twig','text/html'));
-            $ok = $this->get('mailer')->send($message);
             
             return $this->redirect($this->generateUrl('panel_userextend_show', array('id' => $entity->getId())));
         }
