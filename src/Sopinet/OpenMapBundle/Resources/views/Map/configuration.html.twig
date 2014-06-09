@@ -14,7 +14,9 @@
 		};
 	var editable= {{ editable }};
 	var realTime= {{ realTime }};
-	var resume= {{ resume }};
+	{% if resume is defined %}var resume= {{ resume }};
+	{% else %}var resume=false;
+	{% endif %}
 	timeFromLastUpdate=0;
 	
 	lastId="0";
