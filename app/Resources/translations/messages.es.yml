@@ -353,9 +353,9 @@ preference:
         name: 'Notificaiones por email'
 
         value:
-            day: 'Cada día'
-            never: Nunca
-            now: 'Cuando se produzcan'
+            day: 'Todos'
+            never: 'Ninguno'
+            important: 'Solo los importantes'
 
 profile:
     edit:
