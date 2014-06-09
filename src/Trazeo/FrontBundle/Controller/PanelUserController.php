@@ -59,8 +59,8 @@ class PanelUserController extends Controller
             ->setSubject("Bienvenido a Trazeo.")
             ->setFrom(array("info@trazeo.com" => "Trazeo"))
             ->setTo($entity->getUser()->getEmail())
-            ->setBody($con->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:newUser.html.twig','text/html'));
-            $ok = $con->get('mailer')->send($message);
+            ->setBody($this->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:newUser.html.twig','text/html'));
+            $ok = $this->get('mailer')->send($message);
             
             return $this->redirect($this->generateUrl('panel_userextend_show', array('id' => $entity->getId())));
         }
