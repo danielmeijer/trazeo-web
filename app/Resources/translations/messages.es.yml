@@ -254,6 +254,10 @@ Route:
     map:
         edit: 'Ir al mapa'
 
+    resume:
+        title: 'Resumen del paseo'
+        description: 'Datos relevantes sobre el mismo'
+
 Settings:
     index:
         description: 'Personaliza tus avisos de notificaciones en la plataforma de trazeo'
