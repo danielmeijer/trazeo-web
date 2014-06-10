@@ -54,7 +54,7 @@ class PanelController extends Controller
 	    	->setSubject("Bienvenido a Trazeo.")
 	    	->setFrom(array("info@trazeo.com" => "Trazeo"))
 	    	->setTo($fos_user->getEmail())
-	    	->setBody($this->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:newUser.html.twig',array(),'text/html'));
+	    	->setBody($this->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:newUser.html.twig', array()), 'text/html');
 	    	$ok = $this->get('mailer')->send($message);    	
 	    }
 	    
