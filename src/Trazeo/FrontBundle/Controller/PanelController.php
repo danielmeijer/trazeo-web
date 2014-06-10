@@ -47,6 +47,15 @@ class PanelController extends Controller
 	    	$em->persist($user);
 	    	$em->flush();
 	    	$tutorial = 1;
+	    	
+	    	// Creamos el correo de bienvenida
+	    	$message = \Swift_Message::newInstance()
+	    	// TODO: Traducir
+	    	->setSubject("Bienvenido a Trazeo.")
+	    	->setFrom(array("info@trazeo.com" => "Trazeo"))
+	    	->setTo($fos_user->getEmail())
+	    	->setBody($this->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:newUser.html.twig', array()), 'text/html');
+	    	$ok = $this->get('mailer')->send($message);    	
 	    }
 	    
 	    /**

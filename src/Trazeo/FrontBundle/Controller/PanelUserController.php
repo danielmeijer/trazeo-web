@@ -44,6 +44,7 @@ class PanelUserController extends Controller
      */
     public function createAction(Request $request)
     {
+    	// DEPRECATED: ¿Cuando se ejecuta esto?
         $entity = new UserExtend();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -52,7 +53,7 @@ class PanelUserController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
+            
             return $this->redirect($this->generateUrl('panel_userextend_show', array('id' => $entity->getId())));
         }
 

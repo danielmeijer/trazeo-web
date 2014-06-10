@@ -13,6 +13,7 @@ use Symfony\Component\Routing\RequestContext;
 class GenerateEmailsCommand extends ContainerAwareCommand
 {
 	# php app/console trazeo:emails now
+	# php app/console trazeo:emails important
 	# php app/console swiftmailer:spool:send
 	
     protected function configure()
@@ -48,7 +49,9 @@ class GenerateEmailsCommand extends ContainerAwareCommand
     	
     	foreach($users as $user) {
     		$reNOT = $em->getRepository("SopinetUserNotificationsBundle:Notification");
-    		$notifications = $reNOT->findBy(array('user' => $user, 'email' => 0));
+    		
+    		if($time=='important')$notifications = $reNOT->findBy(array('user' => $user, 'email' => 0,'action' => 'ride.finish'));    			
+    		else $notifications = $reNOT->findBy(array('user' => $user, 'email' => 0));
 
     		if (count($notifications) > 0) {
     			$output->writeln('<comment>Poniendo en cola de envío por email '.count($notifications).' notificaciones para el usuario '.$user->getUser()->getEmail().'</comment>');

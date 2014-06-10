@@ -613,7 +613,7 @@ class ApiController extends Controller {
 					"ride.finish",
 					"TrazeoBaseBundle:EGroup",
 					$group->getId(),
-					$this->generateUrl('panel_dashboard'),
+					$this->generateUrl('panel_ride_resume',array('id' => $id_ride)),
 					$userextend->getUser()
 			);
 		}

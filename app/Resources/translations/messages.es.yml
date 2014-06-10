@@ -353,9 +353,9 @@ preference:
         name: 'Notificaiones por email'
 
         value:
-            day: 'Cada día'
-            never: Nunca
-            now: 'Cuando se produzcan'
+            now: 'Todos'
+            never: 'Ninguno'
+            important: 'Solo los importantes'
 
 profile:
     edit:
@@ -435,6 +435,7 @@ Timeline:
         title: Tus niños en este grupo
         empty: Sin resultados
         join: Vincular mis niños con este grupo
+        disjoin: Desvincular mis niños de este grupo
     route:
         title: Ruta del grupo
         empty: Ninguna ruta asignada

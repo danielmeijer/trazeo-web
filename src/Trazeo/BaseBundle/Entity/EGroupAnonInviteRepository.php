@@ -5,7 +5,7 @@
 	 
 	class EGroupAnonInviteRepository extends EntityRepository
 	{
-		public function createNew(EGroup $group, $userEmail, $con) {
+		public function createNew(EGroup $group, $userEmail, $fos_user_current, $con) {
 			$em = $this->getEntityManager();
 			
 			$eGAI = new EGroupAnonInvite();
@@ -26,7 +26,7 @@
 			->setSubject("Ha sido invitado al sistema de Trazeo")
 			->setFrom(array("info@trazeo.com" => "Trazeo"))
 			->setTo($userEmail)
-			->setBody($con->get('templating')->render('TrazeoFrontBundle:PanelGroups:email_invite.html.twig', array('link' => $link)), 'text/html');
+			->setBody($con->get('templating')->render('TrazeoFrontBundle:PanelGroups:email_invite.html.twig', array('link' => $link, 'group' => $group, 'user' => $fos_user_current)), 'text/html');
 			$ok = $con->get('mailer')->send($message);
 
 			return $eGAI;

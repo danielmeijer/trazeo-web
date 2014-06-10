@@ -14,6 +14,9 @@
 		};
 	var editable= {{ editable }};
 	var realTime= {{ realTime }};
+	{% if resume is defined %}var resume= {{ resume }};
+	{% else %}var resume=false;
+	{% endif %}
 	timeFromLastUpdate=0;
 	
 	lastId="0";
@@ -22,7 +25,7 @@
 			$("#deshacer").hide();
 			$("#enviar").hide();								
 		};
-	//if(realTime)lastRoute=lastRoute.replace("0","");
+	// if(realTime)lastRoute=lastRoute.replace("0","");
 </script>
 {% if routePoints is defined %}
 	{% for point in routePoints  %}
@@ -43,7 +46,7 @@
 
 {% for event in rideEvents  %}
 <script>
-	events.push(new POINT({{ event.location.latitude }},{{ event.location.longitude }}));
+	{% if event.location.latitude is defined %} events.push(new POINT({{ event.location.latitude }},{{ event.location.longitude }}));{% endif %}
 </script>
 {%  endfor %}
 
@@ -64,10 +67,10 @@
       attribution: 'tiles &copy; <a target="_blank" href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       styleId: 22677
     });
-    //preload image icon
+    // preload image icon
 	$("#mapa").append("<img id='preload' src="+"{{ asset('bundles/sopinetopenmap/css/images') }}"+"/marker-icon-start.png>");
 	$("#preload").hide();
-    //cloudmade APi Key and info
+    // cloudmade APi Key and info
     var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/8ee2a50541944fb9bcedded5165f09d9/{styleId}/256/{z}/{x}/{y}.png',
     cloudmadeAttribution = 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade';
     var midnight   = L.tileLayer(cloudmadeUrl, {styleId: 999, attribution: cloudmadeAttribution}),
@@ -89,7 +92,7 @@
     });
 
 
-    //Routing Machine plugin info
+    // Routing Machine plugin info
     router = function(m1, m2, cb) {
       var proxy = 'http://www2.turistforeningen.no/routing.php?url=';
       var route = 'http://www.yournavigation.org/api/1.0/gosmore.php&format=geojson&v=foot&fast=1&layer=mapnik';
@@ -126,7 +129,7 @@
     	    }
       }
     });
- 	 //Routing plugin methods overrided 
+ 	 // Routing plugin methods overrided
 	routing._waypointClickHandler= function(e){
 		showPopUpMenu(e);
 	}  
@@ -136,13 +139,16 @@
 
    
     
-    //Map GeoCoder Plugin info
+    // Map GeoCoder Plugin info
     var options = {
     	  
     	  position: 'topright', /* The position of the control */
     	  text: 'Locate', /* The text of the submit button */
     	  bounds: null, /* a L.LatLngBounds object to limit the results to */
-    	  email: null, /* an email string with a contact to provide to Nominatim. Useful if you are doing lots of queries */
+    	  email: null, /*
+						 * an email string with a contact to provide to
+						 * Nominatim. Useful if you are doing lots of queries
+						 */
     	  callback: function (results) {
     	            var bbox = results[0].boundingbox,
     	                first = new L.LatLng(bbox[0], bbox[2]),
@@ -169,7 +175,7 @@
 
 
     
-    //map custom events    
+    // map custom events
     L.Map.prototype.disableRouting=function(){
     	$(".leaflet-marker-icon").css("pointer-events","none");
     	routing.draw(false);
@@ -204,7 +210,7 @@
 
 
 	
-	//data functions
+	// data functions
 	L.Map.prototype.getWaypoints=function(){
 		return routing.getWaypoints();
 	};
@@ -244,7 +250,7 @@
 	};   	
 
 	$("form").submit(function(){
-    	//create input
+    	// create input
     	var pointList="";
     	if(document.getElementById("inputPoints")==null){
         	var lat=document.createElement("INPUT");
@@ -271,7 +277,7 @@
         	routing.getFirst().pickUp=true;
         	routing.getFirst().pickUpText="Punto inicio";
 		}
-    	//getting points info from map
+    	// getting points info from map
     	for(var marker in map._layers)
         	if(map._layers[marker]._icon && map._layers[marker]._icon.className===icon){
     			if(pointList!=""){
@@ -281,13 +287,13 @@
     			var pick=+map._layers[marker].pickUp+','+(map._layers[marker].pickUpText || "");
            		pointList+=map._layers[marker]._latlng.lat+","+map._layers[marker]._latlng.lng+","+pick;
         };       	
-       	//populate inputs
+       	// populate inputs
        	$("#cityInput").val($("#start").html().split(',')[1].slice(1));
     	$("#inputPoints").val(pointList);
     	$("#distanceInput").val(map.getDistance()); 
     });
 
-	//methods
+	// methods
 	L.Map.prototype.createPickUpWaypoint=function(marker,text){
 		if(marker._icon){
 			map.changeMarker(marker,'start');
@@ -318,6 +324,7 @@
 		  	current._icon.style.height='35px';
 		}
 	}
+	
 	L.Map.prototype.removeLast=function(){
 		if(routing.getLast())
 			routing.removeWaypoint(routing.getLast(),function(){
@@ -326,6 +333,7 @@
 				
 				});
 		}		
+	
 	L.Map.prototype.updateRouteInfo=function(e){
     	var first=routing.getFirst();
     	var last=routing.getLast();
@@ -366,24 +374,69 @@
         	map._layers[marker].on('contextmenu',showPopUpMenu);
 
     	routing.rerouteAllSegments(function(){});
-    	//routing._segments.clearLayers();
+    	// routing._segments.clearLayers();
     };
     
+	L.Map.prototype.showResumeInfo=function(){
+    	if(events){
+    		var first=events[0].latLng;
+    		if(events.length!=1)var last=events[events.length-2].latLng;
+    		else last=first;
+    		var distance=0;
+    		if(first){
+    			geocoder.reverse(first, map.options.crs.scale(16), function(results) {
+					var r = results[0];
+					var aux=r.name.split(',');
+					aux.splice(1,2);
+					aux.splice(3,1);								
+					$("#start_resume").html(aux.toString());
+    			});
+    		}
+    		if(last){
+    			geocoder.reverse(last, map.options.crs.scale(16), function(results) {
+					var r = results[0];
+					var aux=r.name.split(',');
+					aux.splice(1,2);
+					aux.splice(3,1);
+	    			$("#finish_resume").html(aux.toString());			    		
+	    		});
+    		}
+    		var aux_distance=new Array();
+    		for(var i=0;i<events.length-1;i++)aux_distance.push(events[i].latLng);
+    		if(first && last){
+    			var distance=map.getDistance(aux_distance);
+    			$("#distance_resume").html(distance+" m");
+    			$("#enviroment_resume").html((distance*0.1).toFixed(2)+" litros de carburante");
+    			$("#safe_resume").html((distance*0.1*1.5).toFixed(2)+" € en carburante");    
+    			$("#pollution_resume").html((distance*0.1*0.4).toFixed(2)+" kg"); 
+    		}
 
-
+    		routing.rerouteAllSegments(function(){});
+    	}
+    	// routing._segments.clearLayers();
+    };
     
-	L.Map.prototype.getDistance=function(){
+	L.Map.prototype.getDistance=function(points){
     	var distance=0;
-		for(var i=0;map.getWaypoints().length-1>i;i++){
-			var actual=map.getWaypoints()[i];
-			var next=map.getWaypoints()[i+1];
-			distance+=Math.floor(actual.distanceTo(next));
+    	if(points){
+        	for(var i=0;points.length-1>i;i++){
+				var actual=points[i];
+				var next=points[i+1];
+				distance+=Math.floor(actual.distanceTo(next));
+        	}
+        }
+    	else{
+        	for(var i=0;map.getWaypoints().length-1>i;i++){
+				var actual=map.getWaypoints()[i];
+				var next=map.getWaypoints()[i+1];
+				distance+=Math.floor(actual.distanceTo(next));
+        	}
 		}    	
 		return distance;
     };
 
 
-    //PopUpMenu Layer and Event
+    // PopUpMenu Layer and Event
     var PopUpMenu = L.Class.extend({
     	
 
@@ -396,7 +449,7 @@
     	removeWaypoint: function(e){
            routing.removeWaypoint(this._marker, function(){routing._draw.disable()});
            if(routing.getWaypoints().length>0)routing.rerouteAllSegments(function(){});
-           //last_events.push(map.removePickUpWaypoint(this).bind(this._marker)); 
+           // last_events.push(map.removePickUpWaypoint(this).bind(this._marker));
            map.removeLayer(menu);
            stop(e);
     	},
@@ -437,14 +490,16 @@
 			recogida.attr('type','button');
 			
 			if(!this._marker.pickUp || this._marker.pickUp==false){ 
-				recogida.html('{{ pickup_button }}');//"Crear punto de recogida"
+				recogida.html('{{ pickup_button }}');// "Crear punto de
+														// recogida"
 				var pickUp=this.pickUpWaypoint.bind(this);
 				recogida.on('click',pickUp);
 				
 			
 			}
 			else{
-				recogida.html('{{ pickup_erase_button }}');//"Eliminar punto de recogida"
+				recogida.html('{{ pickup_erase_button }}');// "Eliminar punto
+															// de recogida"
 				var pickUp=this.removePickUpWaypoint.bind(this);
 				recogida.on('click',pickUp);
 			}	
@@ -471,7 +526,7 @@
 			var borrar=$("#borrar");
 			borrar.attr('type','button');
 			borrar.css('width','100%');
-			borrar.html('{{ erase_button }}');//Borrar punto
+			borrar.html('{{ erase_button }}');// Borrar punto
 	
 
 			var erase=this.removeWaypoint.bind(this);
@@ -483,7 +538,7 @@
 			var cancelar=$("#cancelar");
 			cancelar.attr('type','button');
 			cancelar.css('width','100%');
-			cancelar.html('{{ cancel_button }}');//Cancelar Acción
+			cancelar.html('{{ cancel_button }}');// Cancelar Acción
 
 			var cancel=this.cancelMenu.bind(this);
 			cancelar.on('click',cancel);
@@ -493,7 +548,8 @@
 			borrar.appendTo($(".pop-up-menu"));
 			cancelar.appendTo($(".pop-up-menu"));
 			
-        	// add a viewreset event listener for updating layer's position, do the latter
+        	// add a viewreset event listener for updating layer's position, do
+			// the latter
  	      	map.on('viewreset', this._reset, this);
     	    this._reset();
     	},
@@ -543,8 +599,8 @@
 
 
 	//
-	//param{string/timestamp} a
-	//return number time in secs
+	// param{string/timestamp} a
+	// return number time in secs
 	//
 	var timestampToSecs=function(a){
 		return(a.split(" ")[0]*360+a.split(" ")[1]*60+a.split(" ")[0]*1);
@@ -588,13 +644,13 @@
 
 	}
 
-	//Event Manager(handle events from DB) 				
+	// Event Manager(handle events from DB)
 	L.Map.prototype.eventManager=
 		{
 			addPoint: function(response){
-				//tiempo de respuesta cortado 
+				// tiempo de respuesta cortado
 				if(timeFromLastUpdate>120)this.conexionLostHandler(response);
-				//evento nuevo 
+				// evento nuevo
 				else{
 					var point=new POINT(response.location.latitude,response.location.longitude);
 					if(typeof poly==='undefined'){
@@ -612,7 +668,7 @@
 				var htmlInner='<img class="img-responsive pull-left" width="25" height="25" src="../../../../images/trazeito.png" alt="Trazeo" title="Trazeo" style="position: absolute">';
 				var myIcon = L.divIcon({className: 'trazeo-map-icon',html: htmlInner});
 				var point=new POINT(response.location.latitude,response.location.longitude);
-				//add join child icon to map 
+				// add join child icon to map
 				trazeoMapMarker=L.marker(point.latLng, {icon: myIcon});
 				trazeoMapMarker.addTo(map);	
 			}
@@ -623,39 +679,45 @@
 		}
 			
 		,joinChild:	function(response){
-			//tiempo de respuesta cortado 
+			// tiempo de respuesta cortado
 			if(timeFromLastUpdate>120)this.conexionLostHandler(response);
 
 			var point=new POINT(response.location.latitude,response.location.longitude);
-			//add join child icon to map 
+			// add join child icon to map
 			var myIcon = L.divIcon({className: '',html: "<i class='fa fa-user fa-2x' id='"+response.id+"'></i>"});	
 			L.marker(point.latLng, {icon: myIcon}).addTo(map);
 			$("#"+response.id).css('cssText', 'color: green !important');
-			//function for show name on hover 
-			//var nameChild=function(response){$("#"+this.id).append("<p style='color: green; font-size: 0.5em'>"+this.data.split('/')[1]+"</p>")}.bind(response);
-			//var clearChildName=function(response){$("#"+this.id).html('');}.bind(response);
-			//$("#"+response.id).hover(nameChild,clearChildName);
+			// function for show name on hover
+			// var nameChild=function(response){$("#"+this.id).append("<p
+			// style='color: green; font-size:
+			// 0.5em'>"+this.data.split('/')[1]+"</p>")}.bind(response);
+			// var
+			// clearChildName=function(response){$("#"+this.id).html('');}.bind(response);
+			// $("#"+response.id).hover(nameChild,clearChildName);
 			$("#"+response.id).attr('title',response.data.split('/')[1]);
 		}
 		
 		,disjoinChild:	function(response){
-			//tiempo de respuesta cortado 
+			// tiempo de respuesta cortado
 			if(timeFromLastUpdate>120)this.conexionLostHandler(response);
 			var point=new POINT(response.location.latitude,response.location.longitude);
-			//add join child icon to map 
+			// add join child icon to map
 			var myIcon = L.divIcon({className: '',html: "<i class='fa fa-user fa-2x' id='"+response.id+"'></i>"});	
 			L.marker(point.latLng, {icon: myIcon}).addTo(map);
 			$("#"+response.id).css('cssText', 'color: red !important');
-			//function for show name on hover 
-			//var nameChild=function(response){$("#"+this.id).append("<p style='color: red; font-size: 0.5em'>"+this.data.split('/')[1]+"</p>")}.bind(response);
-			//var clearChildName=function(response){$("#"+this.id).html('');}.bind(response);
-			//$("#"+response.id).hover(nameChild,clearChildName);
+			// function for show name on hover
+			// var nameChild=function(response){$("#"+this.id).append("<p
+			// style='color: red; font-size:
+			// 0.5em'>"+this.data.split('/')[1]+"</p>")}.bind(response);
+			// var
+			// clearChildName=function(response){$("#"+this.id).html('');}.bind(response);
+			// $("#"+response.id).hover(nameChild,clearChildName);
 			$("#"+response.id).attr('title',response.data.split('/')[1]);
 			
 		}
 		
 		,finishRoute:	function(response){
-			//tiempo de respuesta excedido
+			// tiempo de respuesta excedido
 			if(timeFromLastUpdate>120)this.conexionLostHandler(response);
 			
 			var point=new POINT(response.location.latitude,response.location.longitude);
@@ -663,14 +725,17 @@
 			var myIcon = L.divIcon({className: '',html: "<i class='fa fa-flag fa-2x' id='"+response.id+"'></i>"});	
 			L.marker(point.latLng, {icon: myIcon}).addTo(map);
 			$("#"+response.id).css('cssText', 'color: green !important');
-			//var finishHover=function(response){$("#"+this.id).append("<p style='color: green; font-size: 0.5em'>final de ruta</p>")}.bind(response);
-			//var clearFinishHover=function(response){$("#"+this.id).html('');}.bind(response);
-			//$("#"+response.id).hover(nameChild,clearChildName);
+			// var finishHover=function(response){$("#"+this.id).append("<p
+			// style='color: green; font-size: 0.5em'>final de
+			// ruta</p>")}.bind(response);
+			// var
+			// clearFinishHover=function(response){$("#"+this.id).html('');}.bind(response);
+			// $("#"+response.id).hover(nameChild,clearChildName);
 			$("#"+response.id).attr('title','fin de ruta');
 		}
 		
 		,addIssue:	function(response){
-			//tiempo de respuesta excedido 
+			// tiempo de respuesta excedido
 			if(timeFromLastUpdate>120)this.conexionLostHandler(response);
 
 			var point=new POINT(response.location.latitude,response.location.longitude);
@@ -679,57 +744,65 @@
 			L.marker(point.latLng, {icon: myIcon}).addTo(map);
 			$("#"+response.id).css('cssText', 'color: red !important');
 
-			//var finishHover=function(response){$("#"+this.id).append("<p rel='tooltip-up' style='color: red; font-size: 0.5em title='"+this.data.split('/')[1]+"'></p>")}.bind(response);
-			//var clearFinishHover=function(response){$("#"+this.id).html('');}.bind(response);
-			//$("#"+response.id).hover(nameChild,clearChildName);	
+			// var finishHover=function(response){$("#"+this.id).append("<p
+			// rel='tooltip-up' style='color: red; font-size: 0.5em
+			// title='"+this.data.split('/')[1]+"'></p>")}.bind(response);
+			// var
+			// clearFinishHover=function(response){$("#"+this.id).html('');}.bind(response);
+			// $("#"+response.id).hover(nameChild,clearChildName);
 			$("#"+response.id).attr('title',response.data.split('/')[1]);
 		}
 		
-		/* DESACTIVADO POR AHORA*/
+		/* DESACTIVADO POR AHORA */
 		
 		,conexionLostHandler: function(response){
 			
-			/*var point=new POINT(response.location.latitude,response.location.longitude);
-			var lastPreviousPoint=poly.getLatLngs()[poly.getLatLngs().length-1];
-			poly=new L.polyline(point.latLng,{dashArray: "10, 20",color:"green"});
-			poly.addTo(map);
-			timeFromLastUpdate=0;
-
-			//Icons for conexion lost info 
-			
-			var myIcon = L.divIcon({className: '',html: "<i class='fa fa-minus-circle fa-2x' id='"+response.id+"'></i>"});	
-			L.marker(lastPreviousPoint, {icon: myIcon}).addTo(map);
-			$("#"+response.id).css('cssText', 'color: red !important');
-			//function for show alert on hover 
-			//var hover=function(response){$("#"+this.id).append("<p style='color: red; font-size: 0.5em'>En este punto se perdio la conexión</p>")}.bind(response);
-			//var clearHover=function(response){$("#"+this.id).html('');}.bind(response);
-			//$("#"+response.id).hover(hover,clearHover);
-			$("#"+response.id).attr('title',response.data.split('/')[1]);
-			
-
-
-			var myIcon = L.divIcon({className: '',html: "<i class='fa fa-minus-circle fa-2x' id='"+response.id+"_conexion'></i>"});	
-			L.marker(lastPreviousPoint, {icon: myIcon}).addTo(map);
-			$("#"+response.id+'_conexion').css('cssText', 'color: red !important');
-			//function for show name on hover 
-			//var hover=function(response){$("#"+this.id+'_conexion').append("<p style='color: red; font-size: 0.5em'>En este punto se recupero la conexión</p>")}.bind(response);
-			//var clearHover=function(response){$("#"+this.id+'_conexion').html('');}.bind(response);
-			//$("#"+response.id+'_conexion').hover(hover,clearHover);
-			$("#"+response.id).attr('title',response.data.split('/')[1]);
-
-			
-		*/	
+			/*
+			 * var point=new
+			 * POINT(response.location.latitude,response.location.longitude);
+			 * var
+			 * lastPreviousPoint=poly.getLatLngs()[poly.getLatLngs().length-1];
+			 * poly=new L.polyline(point.latLng,{dashArray: "10,
+			 * 20",color:"green"}); poly.addTo(map); timeFromLastUpdate=0;
+			 * 
+			 * //Icons for conexion lost info
+			 * 
+			 * var myIcon = L.divIcon({className: '',html: "<i class='fa
+			 * fa-minus-circle fa-2x' id='"+response.id+"'></i>"});
+			 * L.marker(lastPreviousPoint, {icon: myIcon}).addTo(map);
+			 * $("#"+response.id).css('cssText', 'color: red !important');
+			 * //function for show alert on hover //var
+			 * hover=function(response){$("#"+this.id).append("<p style='color: red; font-size: 0.5em'>En
+			 * este punto se perdio la conexión</p>")}.bind(response); //var
+			 * clearHover=function(response){$("#"+this.id).html('');}.bind(response);
+			 * //$("#"+response.id).hover(hover,clearHover);
+			 * $("#"+response.id).attr('title',response.data.split('/')[1]);
+			 * 
+			 * 
+			 * 
+			 * var myIcon = L.divIcon({className: '',html: "<i class='fa
+			 * fa-minus-circle fa-2x' id='"+response.id+"_conexion'></i>"});
+			 * L.marker(lastPreviousPoint, {icon: myIcon}).addTo(map);
+			 * $("#"+response.id+'_conexion').css('cssText', 'color: red
+			 * !important'); //function for show name on hover //var
+			 * hover=function(response){$("#"+this.id+'_conexion').append("<p style='color: red; font-size: 0.5em'>En
+			 * este punto se recupero la conexión</p>")}.bind(response); //var
+			 * clearHover=function(response){$("#"+this.id+'_conexion').html('');}.bind(response);
+			 * //$("#"+response.id+'_conexion').hover(hover,clearHover);
+			 * $("#"+response.id).attr('title',response.data.split('/')[1]);
+			 * 
+			 * 
+			 */	
 		}
 	};
-	//Mapa tiempo real 
+	// Mapa tiempo real
 	if(realTime){
-	    if(events.length>0)map.loadFromEvents(events);
+	    //if(events.length>0)map.loadFromEvents(events);
 		var dbRequest=setInterval(addLast,5000);
 	}
 
-
-
-    setInterval(map.updateRouteInfo,1000);
+    if(resume) setTimeout(map.showResumeInfo,1000);
+    else setInterval(map.updateRouteInfo,1000);
     if(points)map.loadFromWaypoints(points);
     map.updateRouteInfo();
     map.disableRouting();
@@ -739,49 +812,31 @@
 
 
 
-    /*SIMULATE EVENT SENDER
-    var fakeEvents=[
-                    {"id":2,"action":"point","data":"","location":{"latitude":37.89613041,"longitude":-4.78772315},"created_at":"2014-05-07T12:57:44+0200","updated_at":"2014-05-07T12:57:44+0200"}
-                    ,{"id":3,"action":"point","data":"","location":{"latitude":37.89593041,"longitude":-4.78752310},"created_at":"2014-05-07T12:57:48+0200","updated_at":"2014-05-07T12:57:48+0200"}
-                    ,{"id":4,"action":"point","data":"","location":{"latitude":37.89573041,"longitude":-4.78732306},"created_at":"2014-05-07T12:57:58+0200","updated_at":"2014-05-07T12:57:58+0200"}
-                    ,{"id":5,"action":"point","data":"","location":{"latitude":37.89554544,"longitude":-4.7871335},"created_at":"2014-05-07T12:58:10+0200","updated_at":"2014-05-07T12:58:10+0200"}
-                    ,{"id":6,"action":"point","data":"","location":{"latitude":37.89534610,"longitude":-4.78692795},"created_at":"2014-05-07T12:58:20+0200","updated_at":"2014-05-07T12:58:20+0200"}
-                    ,{"id":7,"action":"point","data":"","location":{"latitude":37.89514747,"longitude":-4.78676005},"created_at":"2014-05-07T12:58:27+0200","updated_at":"2014-05-07T12:58:27+0200"}
-                    ,{"id":8,"action":"point","data":"","location":{"latitude":37.89496104,"longitude":-4.78654327},"created_at":"2014-05-07T12:58:39+0200","updated_at":"2014-05-07T12:58:39+0200"}
-                    ,{"id":10,"action":"in","data":"6/trazeo_niño_1","location":{"latitude":37.89496104,"longitude":-4.78654327},"created_at":"2014-05-07T12:58:39+0200","updated_at":"2014-05-07T12:58:39+0200"}
-                    ,{"id":11,"action":"out","data":"6/trazeo_niño_1","location":{"latitude":37.89496104,"longitude":-4.78654327},"created_at":"2014-05-07T12:58:39+0200","updated_at":"2014-05-07T12:58:39+0200"}
-                    ,{"id":9,"action":"point","data":"","location":{"latitude":37.89476429,"longitude":-4.7863204},"created_at":"2014-05-07T12:58:52+0200","updated_at":"2014-05-07T12:58:52+0200"}
-                    ,{"id":13,"action":"report","data":"6/report_1","location":{"latitude":37.89476429,"longitude":-4.7863204},"created_at":"2014-05-07T12:58:52+0200","updated_at":"2014-05-07T12:58:52+0200"}
-                    
-                    ,{"id":12,"action":"point","data":"","location":{"latitude":37.89306429,"longitude":-4.7852204},"created_at":"2014-05-07T12:58:52+0200","updated_at":"2014-05-07T12:58:52+0200"}]
-    
-	var fakeRequest=function(response){
-		switch(response.action){
-					case 'point':
-						map.eventManager.addPoint(response);
-						break;
-					case 'in':
-						map.eventManager.joinChild(response);
-						break;
-					case 'out':
-						map.eventManager.disjoinChild(response);
-						break;
-					case 'finish':
-						map.eventManager.finishRoute(response);
-						clearInterval(dbRequest);
-						break;
-					case 'report':
-						map.eventManager.addIssue(response);
-						break;
-					}
-		map.eventManager.updateTrazeoIcon(response);
-   };
-   fakeIndex=0;
-   setInterval(function(){
-	   					if(fakeIndex>fakeEvents.length-1)return;
-	   					console.log(fakeEvents[fakeIndex].action);
-	   					fakeRequest(fakeEvents[fakeIndex]);
-	   					fakeIndex++;
-   				},
-   				2000);*/
+    /*
+	 * SIMULATE EVENT SENDER var fakeEvents=[
+	 * {"id":2,"action":"point","data":"","location":{"latitude":37.89613041,"longitude":-4.78772315},"created_at":"2014-05-07T12:57:44+0200","updated_at":"2014-05-07T12:57:44+0200"}
+	 * ,{"id":3,"action":"point","data":"","location":{"latitude":37.89593041,"longitude":-4.78752310},"created_at":"2014-05-07T12:57:48+0200","updated_at":"2014-05-07T12:57:48+0200"}
+	 * ,{"id":4,"action":"point","data":"","location":{"latitude":37.89573041,"longitude":-4.78732306},"created_at":"2014-05-07T12:57:58+0200","updated_at":"2014-05-07T12:57:58+0200"}
+	 * ,{"id":5,"action":"point","data":"","location":{"latitude":37.89554544,"longitude":-4.7871335},"created_at":"2014-05-07T12:58:10+0200","updated_at":"2014-05-07T12:58:10+0200"}
+	 * ,{"id":6,"action":"point","data":"","location":{"latitude":37.89534610,"longitude":-4.78692795},"created_at":"2014-05-07T12:58:20+0200","updated_at":"2014-05-07T12:58:20+0200"}
+	 * ,{"id":7,"action":"point","data":"","location":{"latitude":37.89514747,"longitude":-4.78676005},"created_at":"2014-05-07T12:58:27+0200","updated_at":"2014-05-07T12:58:27+0200"}
+	 * ,{"id":8,"action":"point","data":"","location":{"latitude":37.89496104,"longitude":-4.78654327},"created_at":"2014-05-07T12:58:39+0200","updated_at":"2014-05-07T12:58:39+0200"}
+	 * ,{"id":10,"action":"in","data":"6/trazeo_niño_1","location":{"latitude":37.89496104,"longitude":-4.78654327},"created_at":"2014-05-07T12:58:39+0200","updated_at":"2014-05-07T12:58:39+0200"}
+	 * ,{"id":11,"action":"out","data":"6/trazeo_niño_1","location":{"latitude":37.89496104,"longitude":-4.78654327},"created_at":"2014-05-07T12:58:39+0200","updated_at":"2014-05-07T12:58:39+0200"}
+	 * ,{"id":9,"action":"point","data":"","location":{"latitude":37.89476429,"longitude":-4.7863204},"created_at":"2014-05-07T12:58:52+0200","updated_at":"2014-05-07T12:58:52+0200"}
+	 * ,{"id":13,"action":"report","data":"6/report_1","location":{"latitude":37.89476429,"longitude":-4.7863204},"created_at":"2014-05-07T12:58:52+0200","updated_at":"2014-05-07T12:58:52+0200"}
+	 * 
+	 * ,{"id":12,"action":"point","data":"","location":{"latitude":37.89306429,"longitude":-4.7852204},"created_at":"2014-05-07T12:58:52+0200","updated_at":"2014-05-07T12:58:52+0200"}]
+	 * 
+	 * var fakeRequest=function(response){ switch(response.action){ case
+	 * 'point': map.eventManager.addPoint(response); break; case 'in':
+	 * map.eventManager.joinChild(response); break; case 'out':
+	 * map.eventManager.disjoinChild(response); break; case 'finish':
+	 * map.eventManager.finishRoute(response); clearInterval(dbRequest); break;
+	 * case 'report': map.eventManager.addIssue(response); break; }
+	 * map.eventManager.updateTrazeoIcon(response); }; fakeIndex=0;
+	 * setInterval(function(){ if(fakeIndex>fakeEvents.length-1)return;
+	 * console.log(fakeEvents[fakeIndex].action);
+	 * fakeRequest(fakeEvents[fakeIndex]); fakeIndex++; }, 10);
+	 */
 </script>
