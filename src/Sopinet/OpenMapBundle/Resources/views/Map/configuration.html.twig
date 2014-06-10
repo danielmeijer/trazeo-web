@@ -406,9 +406,9 @@
     		if(first && last){
     			var distance=map.getDistance(aux_distance);
     			$("#distance_resume").html(distance+" m");
-    			$("#enviroment_resume").html((distance*0.1).toFixed(2)+" litros de carburante");
-    			$("#safe_resume").html((distance*0.1*1.5).toFixed(2)+" € en carburante");    
-    			$("#pollution_resume").html((distance*0.1*0.4).toFixed(2)+" kg"); 
+    			$("#enviroment_resume").html((distance*0.0001).toFixed(2)+" litros de carburante");
+    			$("#safe_resume").html((distance*0.0001*1.5).toFixed(2)+" € en carburante");    
+    			$("#pollution_resume").html((distance*0.0001*0.4).toFixed(2)+" kg"); 
     		}
 
     		routing.rerouteAllSegments(function(){});
