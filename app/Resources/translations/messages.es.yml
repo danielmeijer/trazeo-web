@@ -173,7 +173,7 @@ Notifications:
 
         joingroup: 'El niño/a %0 ha entrado en el grupo %1'
         in: 'El niño/a %0 ha sido registrado en el paseo del grupo %1'
-        out: 'El niño/a %0 ha salio del paseo del grupo %1'
+        out: 'El niño/a %0 ha salido del paseo del grupo %1'
 
     group:
         invite:
