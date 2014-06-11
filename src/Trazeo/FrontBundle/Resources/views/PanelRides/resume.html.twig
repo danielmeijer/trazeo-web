@@ -63,13 +63,9 @@
 			<tr>
 				<td><i class="fa fa-user"></i></td>
 				<td style="font-weigth: bold">Niños que participaron en el paseo: </td>
-				<td>&nbsp</td>
+				<td>{{ children|length() }}</td>
 			</tr>
-			{% for child in children %}
-			<tr>
-			<td colspan="3">{{ child.nick }}</td>
-			</tr>
-			{% endfor %}
+
 		</tbody>
 	</table>
 </div>
