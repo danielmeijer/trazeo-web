@@ -41,9 +41,9 @@ class GenerateEmailsCommand extends ContainerAwareCommand
 
     	$output->writeln('<info>Iniciando lectura de notificaciones....</info>');
     	// More info: http://symfony.com/doc/current/components/console/introduction.html
-    	
+
     	$users = $reUserValue->getUsersWith("notification_email", $time);
-    	
+
     	// Usuarios con la configuración requerida
     	$output->writeln('<info>Encontrados '.count($users).' usuarios a tratar</info>');
     	
