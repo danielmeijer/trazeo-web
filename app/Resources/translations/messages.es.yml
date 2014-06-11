@@ -10,7 +10,7 @@ Bad credentials: 'Nombre de usuario o Contraseña inválido'
 
 DeleteAccount:
     title: Eliminar cuenta
-    description: Si deseas eliminar tu perfil ahora, ponte en contacto con nosotros a través del email info@trazeo.es y procesaremos tu petición.
+    description: Si deseas eliminar tu perfil ahora, ponte en contacto con nosotros a través del email hola@trazeo.es y procesaremos tu petición.
 
 Sponsors:
     current: Patrocinadores
