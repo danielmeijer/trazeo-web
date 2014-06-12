@@ -43,13 +43,15 @@
 				{% if user.Id == allGroupInvite.Userextend.Id  %}
 				<div class="alert alert-default">
 	        		<p>{{ 'Groups.invite.request'|trans }} <b>{{ allGroupInvite.Group }}</b>
-						&nbsp;<a href="{{ path('panel_group_invite_accept', { 'id': allGroupInvite.Userextend.Id, 'group':allGroupInvite.Group.Id }) }}" type="button" class="label label-success">
-							<i class="fa fa-check"></i> {{ 'Groups.invite.accept'|trans }}
-						</a>&nbsp;
-						<a href="{{ path('panel_group_invite_deny', { 'id': allGroupInvite.Userextend.Id ,'group': allGroupInvite.Group.Id }) }}" type="button" class="label label-danger">
-							<i class="fa fa-times"></i> {{ 'Groups.invite.deny'|trans }}
-						</a>
-	        		 </p>
+	        			<p>
+							<a href="{{ path('panel_group_invite_accept', { 'id': allGroupInvite.Userextend.Id, 'group':allGroupInvite.Group.Id }) }}" type="button" class="label label-success">
+								<i class="fa fa-check"></i> {{ 'Groups.invite.accept'|trans }}
+							</a>&nbsp;
+							<a href="{{ path('panel_group_invite_deny', { 'id': allGroupInvite.Userextend.Id ,'group': allGroupInvite.Group.Id }) }}" type="button" class="label label-danger">
+								<i class="fa fa-times"></i> {{ 'Groups.invite.deny'|trans }}
+							</a>
+						</p>
+	        		</p>
 	        	</div>
 	        	{% endif %}
 	        {% endfor %}
