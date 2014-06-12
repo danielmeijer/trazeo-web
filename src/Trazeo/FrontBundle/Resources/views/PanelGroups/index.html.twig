@@ -27,12 +27,14 @@
 				{% if userAdmin.Id == allGroupsAccess.Group.Id  %}
 				<div>
 	        		<td><b>{{ allGroupsAccess.Userextend }}</b> {{ 'Groups.access.request'|trans }} <b>{{ allGroupsAccess.Group }}</b>
-						&nbsp;<a href="{{ path('panel_group_let_join', { 'id': allGroupsAccess.Userextend.Id, 'group':allGroupsAccess.Group.Id }) }}" type="button" class="label label-success">
-							<i class="fa fa-check"></i> {{ 'Groups.access.accept'|trans }}
-						</a>&nbsp;
-						<a href="{{ path('panel_group_deny_join', { 'id': allGroupsAccess.Userextend.Id , 'group':allGroupsAccess.Group.Id }) }}" type="button" class="label label-danger">
-							<i class="fa fa-times"></i> {{ 'Groups.access.deny'|trans }}
-						</a>
+	        			<p>
+							<a href="{{ path('panel_group_let_join', { 'id': allGroupsAccess.Userextend.Id, 'group':allGroupsAccess.Group.Id }) }}" type="button" class="label label-success">
+								<i class="fa fa-check"></i> {{ 'Groups.access.accept'|trans }}
+							</a>&nbsp;
+							<a href="{{ path('panel_group_deny_join', { 'id': allGroupsAccess.Userextend.Id , 'group':allGroupsAccess.Group.Id }) }}" type="button" class="label label-danger">
+								<i class="fa fa-times"></i> {{ 'Groups.access.deny'|trans }}
+							</a>
+						</p>
 	        		 </td>
 				</div>
 				<br />
