@@ -50,7 +50,13 @@ class GenerateEmailsCommand extends ContainerAwareCommand
     	foreach($users as $user) {
     		$reNOT = $em->getRepository("SopinetUserNotificationsBundle:Notification");
     		
-    		if($time=='important')$notifications = $reNOT->findBy(array('user' => $user, 'email' => 0,'action' => 'ride.finish'));    			
+    		//Important is now defined as ride.finish and group.invite.user
+    		if($time=='important'){
+    			$notifications = $reNOT->findBy(array('user' => $user, 'email' => 0,'action' => 'ride.finish'));
+    			$notifications2= $reNOT->findBy(array('user' => $user, 'email' => 0,'action' => 'group.invite.user'));
+    			$notifications=array_merge($notifications,$notifications2);			
+    		}
+    		
     		else $notifications = $reNOT->findBy(array('user' => $user, 'email' => 0));
 
     		if (count($notifications) > 0) {
