@@ -108,6 +108,7 @@
 	
 {% block js %}	
 	{{ parent() }}
+	{% include 'TrazeoFrontBundle:PanelRides:_resume_analytics.html.twig' %}
 	{% javascripts 
 		'@SopinetOpenMapBundle/Resources/public/js/leaflet.js'
 		'@SopinetOpenMapBundle/Resources/public/js/leaflet-src.js'
