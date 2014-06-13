@@ -94,7 +94,13 @@ class UserExtend
      */    
     protected $useLike;
     
-    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     */
+    protected $name;
+        
     /**
      * @var string
      *
@@ -636,5 +642,29 @@ class UserExtend
     public function getUseLike()
     {
         return $this->useLike;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return UserExtend
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }

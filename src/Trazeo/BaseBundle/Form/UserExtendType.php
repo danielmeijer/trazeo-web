@@ -15,14 +15,14 @@ class UserExtendType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nick', null, array(
+            ->add('name', null, array(
         			'attr' => array(
-        					'placeholder' => 'Children.nick',
+        					'placeholder' => 'Userextend.help.nick',
         					'data-toggle' => 'popover',
         					'data-placement' => 'right',
         					'data-content' => $options['attr']['Userextend.help.nick']
         					),
-            		'required' => true
+            		'required' => false
         			)
         		)
              ->add('country', 'entity', array(

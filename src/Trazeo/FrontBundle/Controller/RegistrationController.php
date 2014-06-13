@@ -23,7 +23,7 @@ public function registerAction()
                 $route = 'fos_user_registration_check_email';
             } else {
                 $authUser = true;
-                $route = 'panel'; //override route: fos_user_registration_confirmed -> panel
+                $route = 'panel_profile'; //override route: fos_user_registration_confirmed -> panel
             }
 
             $this->setFlash('fos_user_success', $this->container->get('translator')->trans('registration.flash.user_created'));
