@@ -109,9 +109,11 @@ class UserExtend
     protected $nick;
     
     public function __toString(){
-    	if($this->nick == "")
-    		return (string)$this->id;
-    	return $this->nick;
+    	if($this->name != "")
+    		return $this->name;
+    	else if($this->nick!= "")
+    		return $this->nick;
+    	return (string)$this->id;
     }
     
     /**

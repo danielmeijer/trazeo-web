@@ -183,6 +183,15 @@ class PanelGroupsController extends Controller
 	
 		$group->removeUserextendgroup($user);
 		$em->persist($group);
+		
+		//Children autojoin on parent join to group
+		$childs=$user->getChilds();
+		foreach($childs as $child){
+			$group->removeChild($child);
+		}
+		$em->persist($group);
+		$em->flush();
+		
 		$em->flush();
 		$notification = $container->addFlashMessages("warning","Has salido del grupo");
 		return $this->redirect($this->generateUrl('panel_group'));
@@ -246,7 +255,7 @@ class PanelGroupsController extends Controller
 					'group.join.request',
 					"TrazeoBaseBundle:Userextend,TrazeoBaseBundle:EGroup",
 					$userId . "," . $groupId,
-					$this->generateUrl('panel_group'),$fos_user_admin
+					$this->generateUrl('panel_group'),$groupAdminUser
 			);
 			
 			$access = new EGroupAccess();
@@ -303,7 +312,7 @@ class PanelGroupsController extends Controller
 				'group.join.let',
 				"TrazeoBaseBundle:EGroup",
 				$groupId,
-				$this->generateUrl('panel_group'), $fos_user
+				$this->generateUrl('panel_group'), $user
 		);
 		
 		$notification = $container->addFlashMessages("success","El usuario ha sido añadido al grupo");
@@ -341,7 +350,7 @@ class PanelGroupsController extends Controller
 				'group.join.deny',
 				"TrazeoBaseBundle:EGroup",
 				$group,
-				$this->generateUrl('panel_group'), $fos_user
+				$this->generateUrl('panel_group'), $userextend
 		);
 		
 		return $this->redirect($this->generateUrl('panel_group'));
@@ -365,7 +374,7 @@ class PanelGroupsController extends Controller
 		
 		$fos_user_current = $this->container->get('security.context')->getToken()->getUser();
 		$user_current =$um->findUserByEmail($fos_user_current);
-		
+
 		$userEmail = $request->get('userEmail');
 		$groupId = $request->get('group');
 		
@@ -423,15 +432,15 @@ class PanelGroupsController extends Controller
 		}else{
 			// Si no existen los UserExtend y Group anteriormente obtenidos,
 			// directamente se crea la petición
-			
+
 			$not = $this->container->get('sopinet_user_notification');
 			$el = $not->addNotification(
 					'group.invite.user',
-					"TrazeoBaseBundle:EGroup",
-					$groupId,
-					$this->generateUrl('panel_group'), $fos_user
+					"TrazeoBaseBundle:Userextend,TrazeoBaseBundle:EGroup",
+					$user_current->getId() . "," . $groupId ,
+					$this->generateUrl('panel_group'), $user
 			);
-			
+
 			$access = new EGroupInvite();
 			$access->setGroup($group);
 			$access->setUserextend($user);
@@ -478,14 +487,13 @@ class PanelGroupsController extends Controller
 		
 		$groupAdmin = $groupToJoin->getAdmin();
 		$groupAdminUser = $em->getRepository('TrazeoBaseBundle:Userextend')->find($groupAdmin);
-		$groupAdmin_fos_user = $groupAdminUser->getUser();
-		
+
 		$not = $this->container->get('sopinet_user_notification');
 		$el = $not->addNotification(
 				'group.invite.accept',
 				"TrazeoBaseBundle:Userextend,TrazeoBaseBundle:EGroup",
 				$id . "," . $group ,
-				$this->generateUrl('panel_group'), $groupAdmin_fos_user
+				$this->generateUrl('panel_group'), $groupAdminUser
 		);
 
 
@@ -515,15 +523,15 @@ class PanelGroupsController extends Controller
 		$groupAdmin = $groupEntity->getAdmin();
 		$groupAdminUser = $em->getRepository('TrazeoBaseBundle:Userextend')->find($groupAdmin);
 		$groupAdmin_fos_user = $groupAdminUser->getUser();
-		
+
 		$not = $this->container->get('sopinet_user_notification');
 		$el = $not->addNotification(
 				'group.invite.deny',
 				"TrazeoBaseBundle:Userextend,TrazeoBaseBundle:EGroup",
 				$id . "," . $group ,
-				$this->generateUrl('panel_group'), $groupAdmin_fos_user
+				$this->generateUrl('panel_group'), $groupAdminUser
 		);
-		
+
 		$container = $this->get('sopinet_flashMessages');
 		$notification = $container->addFlashMessages("success","Has rechazado la invitación");
 	
@@ -630,6 +638,14 @@ class PanelGroupsController extends Controller
             
             $formData = $form->getData();
             $groupId = $formData->getId();
+            
+            //Children autojoin on parent create group
+            $childs=$user->getChilds();
+            foreach($childs as $child){
+            	$group->addChild($child);
+            }
+            $em->persist($group);
+            $em->flush();
             
             return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
 
