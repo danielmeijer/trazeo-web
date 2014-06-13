@@ -591,8 +591,8 @@ class ApiController extends Controller {
 			$child->setRide(null);
 			$child->setSelected(0);
 			$em->persist($child);
-		
 		}
+		
 		$em->flush();
 		
 		$event = new EEvent();
@@ -609,15 +609,25 @@ class ApiController extends Controller {
 		$not = $this->container->get('sopinet_user_notification');
 		foreach($userextends as $userextend)
 		{
-			$not->addNotification(
-					"ride.finish",
-					"TrazeoBaseBundle:EGroup",
-					$group->getId(),
-					$this->generateUrl('panel_ride_resume',array('id' => $id_ride)),
-					$userextend->getUser()
-			);
+			//Notification just for parents with childrens on ride
+			$find=false;
+			$userChilds=$userextend->getChilds();
+			foreach($childs as $child){
+				foreach ($userChilds as $userChild){
+					if($child->getId()==$userChild->getId())$find=true;
+				}
+			}	
+			if($find){
+				$not->addNotification(
+						"ride.finish",
+						"TrazeoBaseBundle:EGroup",
+						$group->getId(),
+						$this->generateUrl('panel_ride_resume',array('id' => $id_ride)),
+						$userextend->getUser()
+				);
+			}	 
 		}
-			
+
 		$view = View::create()
 		->setStatusCode(200)
 		->setData($this->doOK("ok"));
