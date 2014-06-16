@@ -53,7 +53,7 @@ class Builder extends ContainerAware
         		'route' => 'panel_route'
         ))
         ->setLabel("");
-        $menu['Route']->setAttribute('icon', 'fa-location-arrow fa-2x');
+        $menu['Route']->setAttribute('icon', 'fa-compass fa-2x');
         $menu['Route']->setAttribute('tooltip', 'Menu.tooltip.route');
         if ($options['activeMenu'] == "route") {
         	$menu['Route']->setAttribute('class', 'active');

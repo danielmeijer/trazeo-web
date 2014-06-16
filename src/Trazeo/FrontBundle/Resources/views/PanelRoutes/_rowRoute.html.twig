@@ -1,7 +1,7 @@
 <div class="row alert alert-warning" city="{{ route.city.nameUtf8 | default("")}}" {% if filter is defined %}style="display: none"{% endif %}>
 	<!-- Nombre de la Ruta -->
 	<div class="col-md-4">
-		<i class="fa fa-location-arrow"></i>
+		<i class="fa fa-compass"></i>
 		{{ route.name }}
 	</div>
 	
@@ -27,7 +27,7 @@
 </div>
 
 {#
-<td><i class="fa fa-location-arrow"></i></td>
+<td><i class="fa fa-compass"></i></td>
 <td>{{ route.name }}</td>
 <td><a href="{{ path('panel_route')}}{{ route.Id }}"><button class="btn btn-xs btn-success"><i class="fa fa-map-marker"></i>&nbsp; {{ "Route.map.edit"|trans }}</button></a></td>
 {% if app.user.id == route.admin.user.id %}

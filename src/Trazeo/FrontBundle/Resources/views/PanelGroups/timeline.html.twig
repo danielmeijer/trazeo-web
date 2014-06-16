@@ -59,7 +59,7 @@
 			
 			<div class="row">
 			<br />
-				<h4 class="alert alert-success"><i class="fa fa-location-arrow"></i> &nbsp;{{ 'Timeline.route.title'|trans }}</h4>
+				<h4 class="alert alert-success"><i class="fa fa-compass"></i> &nbsp;{{ 'Timeline.route.title'|trans }}</h4>
 				{% if group.Route %}
 				<ul><li class="alert-warning"><a href="{{ path('panel_route_show',{'id': group.Route.id}) }}"><i class="fa fa-map-marker"></i>&nbsp; {{ group.Route.Name }}</li></a></ul>
 				{% else %}
@@ -75,7 +75,7 @@
 					<ul>
 						{% for route in routes %}
 							<li class="alert-warning">
-							<i class="fa fa-location-arrow"></i>&nbsp;
+							<i class="fa fa-compass"></i>&nbsp;
 							<a href="{{ path('panel_group_setRoute', {'group':group.id, 'route':route.id}) }}">{{ route.name }}</a>
 							</li>
 							<br />
