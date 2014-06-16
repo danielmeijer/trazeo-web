@@ -74,7 +74,7 @@ class GenerateEmailsCommand extends ContainerAwareCommand
     			->setBody($con->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:notifyUser.html.twig', array('user' => $user, 'notifications' => $notifications)), 'text/html');
     			
     			if (count($notifications) == 1) {
-    				$not  = $this->container->get('sopinet_user_notification');
+    				$not  = $con->get('sopinet_user_notification');
     				$string_not = $not->parseNotification($notifications[0], "title");
     				$message->setSubject($string_not);
     			} else {
