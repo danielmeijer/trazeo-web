@@ -210,11 +210,11 @@ Notifications:
                 invite:
                     accept: 'El usuario %0 ha aceptado la invitación para unirse al grupo %1'
                     deny: 'El usuario %0 ha rechazado la invitación para unirse al grupo %1'
-                    user: 'Has recibido una invitación para unirte al grupo %0'
+                    user: 'Has recibido una invitación de %0 para unirte al grupo %1'
 
                 join:
-                    deny: 'Se ha rechazado tu petición para unirte al grupo %0'
-                    let: 'Se ha aceptado tu petición para unirte al grupo %0'
+                    deny: 'Se ha rechazado tu petición a %0 para unirte al grupo %1'
+                    let: 'Se ha aceptado tu petición a %0 para unirte al grupo %1'
                     request: 'El usuario %0 ha solicitado unirse al grupo %1'
             ride:
                 start: 'El paseo para el grupo %0 ha comenzado.'

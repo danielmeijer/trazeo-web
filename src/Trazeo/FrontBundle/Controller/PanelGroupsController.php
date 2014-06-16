@@ -246,16 +246,16 @@ class PanelGroupsController extends Controller
 		// Si no existen los UserExtend y Group anteriormente obtenidos,
 		// directamente se crea la petición			
 			$groupAdmin = $group->getAdmin();
-			$groupAdminUser = $em->getRepository('TrazeoBaseBundle:Userextend')->find($groupAdmin);
+			$groupAdminUser = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($groupAdmin);
 			
 			$fos_user_admin = $groupAdminUser->getUser();
 			//ldd($fos_user_admin);
 			$not = $this->container->get('sopinet_user_notification');
 			$el = $not->addNotification(
 					'group.join.request',
-					"TrazeoBaseBundle:Userextend,TrazeoBaseBundle:EGroup",
+					"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
 					$userId . "," . $groupId,
-					$this->generateUrl('panel_group'),$groupAdminUser
+					$this->generateUrl('panel_group'),$groupAdminUser->getUser()
 			);
 			
 			$access = new EGroupAccess();
@@ -284,7 +284,9 @@ class PanelGroupsController extends Controller
 	
 		$em = $this->getDoctrine()->getManager();
 		$container = $this->get('sopinet_flashMessages');
-		
+		$fos_user_current = $this->container->get('security.context')->getToken()->getUser();
+		$user_current =$em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user_current);
+				
 		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($id);
 		if (!$user) {
 			$notification = $container->addFlashMessages("error","No puedes dar acceso porque el usuario ya no existe");
@@ -308,11 +310,12 @@ class PanelGroupsController extends Controller
 		$em->flush();
 
 		$not = $this->container->get('sopinet_user_notification');
+
 		$el = $not->addNotification(
 				'group.join.let',
-				"TrazeoBaseBundle:EGroup",
-				$groupId,
-				$this->generateUrl('panel_group'), $user
+				"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
+				$user_current->getId() . ',' . $groupId,
+				$this->generateUrl('panel_group'), $fos_user
 		);
 		
 		$notification = $container->addFlashMessages("success","El usuario ha sido añadido al grupo");
@@ -332,7 +335,9 @@ class PanelGroupsController extends Controller
 		
 		$em = $this->getDoctrine()->getManager();
 		$um = $this->container->get('fos_user.user_manager');
-		
+		$fos_user_current = $this->container->get('security.context')->getToken()->getUser();
+		$user_current =$em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user_current);
+				
 		$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findOneByUserextend($id);
 		$groupRequest = $em->getRepository('TrazeoBaseBundle:EGroup')->find($group);
 		$group = $groupRequest->getId();
@@ -342,15 +347,16 @@ class PanelGroupsController extends Controller
 		$em->remove($userRequest);
 		$em->flush();
 		
+		$groupAdmin = $groupRequest->getAdmin();
 		$container = $this->get('sopinet_flashMessages');
 		$notification = $container->addFlashMessages("success","Has rechazado la petición del usuario para unirse al grupo");
 		
 		$not = $this->container->get('sopinet_user_notification');
 		$el = $not->addNotification(
 				'group.join.deny',
-				"TrazeoBaseBundle:EGroup",
-				$group,
-				$this->generateUrl('panel_group'), $userextend
+				"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
+				$user_current->getId() . ',' . $group,
+				$this->generateUrl('panel_group'), $fos_user
 		);
 		
 		return $this->redirect($this->generateUrl('panel_group'));
@@ -432,13 +438,14 @@ class PanelGroupsController extends Controller
 		}else{
 			// Si no existen los UserExtend y Group anteriormente obtenidos,
 			// directamente se crea la petición
+			$user_current = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user_current->getId());
 
 			$not = $this->container->get('sopinet_user_notification');
 			$el = $not->addNotification(
 					'group.invite.user',
-					"TrazeoBaseBundle:Userextend,TrazeoBaseBundle:EGroup",
+					"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
 					$user_current->getId() . "," . $groupId ,
-					$this->generateUrl('panel_group'), $user
+					$this->generateUrl('panel_group'), $fos_user
 			);
 
 			$access = new EGroupInvite();
@@ -466,7 +473,7 @@ class PanelGroupsController extends Controller
 	public function acceptInviteGroupAction($id, $group) {
 	
 		$em = $this->getDoctrine()->getManager();
-	
+		$fos_user_current = $this->container->get('security.context')->getToken()->getUser();
 		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($id);
 		$groupToJoin = $em->getRepository('TrazeoBaseBundle:EGroup')->find($group);
 		$container = $this->get('sopinet_flashMessages');
@@ -486,14 +493,14 @@ class PanelGroupsController extends Controller
 		$em->flush();
 		
 		$groupAdmin = $groupToJoin->getAdmin();
-		$groupAdminUser = $em->getRepository('TrazeoBaseBundle:Userextend')->find($groupAdmin);
-
+		$groupAdminUser = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($groupAdmin);
+		
 		$not = $this->container->get('sopinet_user_notification');
 		$el = $not->addNotification(
 				'group.invite.accept',
-				"TrazeoBaseBundle:Userextend,TrazeoBaseBundle:EGroup",
-				$id . "," . $group ,
-				$this->generateUrl('panel_group'), $groupAdminUser
+				"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
+				$groupAdminUser->getId() . "," . $group ,
+				$this->generateUrl('panel_group'), $groupAdminUser->getUser()
 		);
 
 
@@ -521,15 +528,15 @@ class PanelGroupsController extends Controller
 	
 		$groupEntity = $em->getRepository('TrazeoBaseBundle:EGroup')->find($group);
 		$groupAdmin = $groupEntity->getAdmin();
-		$groupAdminUser = $em->getRepository('TrazeoBaseBundle:Userextend')->find($groupAdmin);
+		$groupAdminUser = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($groupAdmin);
 		$groupAdmin_fos_user = $groupAdminUser->getUser();
 
 		$not = $this->container->get('sopinet_user_notification');
 		$el = $not->addNotification(
 				'group.invite.deny',
-				"TrazeoBaseBundle:Userextend,TrazeoBaseBundle:EGroup",
-				$id . "," . $group ,
-				$this->generateUrl('panel_group'), $groupAdminUser
+				"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
+				$groupAdminUser->getId() . "," . $group ,
+				$this->generateUrl('panel_group'), $groupAdmin_fos_user
 		);
 
 		$container = $this->get('sopinet_flashMessages');
