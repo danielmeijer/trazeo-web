@@ -17,19 +17,11 @@
  	{% endblock %}
 {% block body_content %}
 
+
+
 <div class="alert-warning">
 	<table class="table">
 		<tbody>
-			<tr>
-				<td><i class="fa fa-flag-o"></i></td>
-				<td>Empezaron en: </td>
-				<td id="start_resume"></td>
-			</tr>
-			<tr>
-				<td><i class="fa fa-flag-checkered"></i></td>
-				<td>Terminaron en: </td>
-				<td id="finish_resume"></td>
-			</tr>
 			<tr>
 				<td><i class="fa fa-road"></i></td>
 				<td>Han recorrido: </td>
@@ -38,7 +30,7 @@
 			<tr>
 				<td><i class="fa fa-clock-o"></i></td>
 				<td>Han caminado durante: </td>
-				<td>{{ ride.duration }}</td>
+				<td id="duration_resume">{{ ride.duration }}</td>
 			</tr>
 			<tr>
 				<td><i class="fa fa-heart"></i></td>
@@ -123,17 +115,21 @@
 	%}
 	
 	<script type="text/javascript" src="{{ asset_url }}"></script>
-
+	
 	{% endjavascripts %}
 		{% if route is defined %}
 			{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': route.points,'editable': "false", 'realTime': "true", 'rideEvents': events, 'resume': true} %}
 		{% else %}
 			{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'editable': "false", 'realTime': "true", 'rideEvents': events, 'resume': true} %}
 		{% endif %}
+		
 	<script type="text/javascript">
 		var duration='{{ ride.duration}}';
 		duration=duration.match(/[0-9]+/g);
 		$('#sport_resume').html(((duration[0]*60+(duration[1]*1)+duration[2]/60)*0.33).toFixed(2)+"% del ejercicio semanal recomendado");
-
+		var aux='{{ ride.duration }}'.split(',');
+		if(aux[0].indexOf("0") > -1)$("#duration_resume").html(aux[1]);
+		else $("#duration_resume").html('{{ ride.duration }}');
+						
 	</script>
 {% endblock %}
