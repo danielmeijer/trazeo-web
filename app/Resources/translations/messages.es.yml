@@ -165,32 +165,63 @@ Notifications:
     description: Puedes consultar y revisar todas las notificaciones que te han sido enviadas como usuario de la plataforma
     link: Consultar el historial de notificaciones
     list: Historial de todas las notificaciones que has recibido
-    child:
-        invite:
-            accept: 'El usuario %0 ha aceptado la invitación para ser tutor del niño %1'
-            deny: 'El usuario/a %0 ha rechazado la invitación para ser tutor del niño %1'
-            user: 'Has recibido una invitación para ser tutor del niño %0'
+    action:
+        title:
+            child:
+                invite:
+                    accept: 'Un usuario aceptó tu invitación'
+                    deny: 'Un usuario rechazó tu invitación'
+                    user: 'Recibida invitación para ser tutor'
+                    
+                joingroup: 'Un niño ha entrado en el grupo'
+                in: 'Un niño se ha registrado en el grupo'
+                out: 'Un niño ha salido del grupo'
+                
+            group:
+                invite:
+                    accept: 'Un usuario aceptó tu invitación'
+                    deny: 'Un usuario rechazó tu invitación'
+                    user: 'Has recibido una invitación'
+                    
+                join:
+                    deny: 'Se ha rechazado tu petición'
+                    let: 'Se aceptó tu petición'
+                    request: 'Has recibido una solicitud'
+                        
+            ride:
+                start: 'Un paseo ha comenzado'
+                finish: 'Un paseo ha terminado'
+                    
+            timeline:
+                newFromMonitor: 'Hay un nuevo mensaje'
+                    
+        description:
+            child:
+                invite:
+                    accept: 'El usuario %0 ha aceptado la invitación para ser tutor del niño %1'
+                    deny: 'El usuario/a %0 ha rechazado la invitación para ser tutor del niño %1'
+                    user: 'Has recibido una invitación para ser tutor del niño %0'
 
-        joingroup: 'El niño/a %0 ha entrado en el grupo %1'
-        in: 'El niño/a %0 ha sido registrado en el paseo del grupo %1'
-        out: 'El niño/a %0 ha salido del paseo del grupo %1'
+                joingroup: 'El niño/a %0 ha entrado en el grupo %1'
+                in: 'El niño/a %0 ha sido registrado en el paseo del grupo %1'
+                out: 'El niño/a %0 ha salido del paseo del grupo %1'
 
-    group:
-        invite:
-            accept: 'El usuario %0 ha aceptado la invitación para unirse al grupo %1'
-            deny: 'El usuario %0 ha rechazado la invitación para unirse al grupo %1'
-            user: 'Has recibido una invitación para unirte al grupo %0'
+            group:
+                invite:
+                    accept: 'El usuario %0 ha aceptado la invitación para unirse al grupo %1'
+                    deny: 'El usuario %0 ha rechazado la invitación para unirse al grupo %1'
+                    user: 'Has recibido una invitación para unirte al grupo %0'
 
-        join:
-            deny: 'Se ha rechazado tu petición para unirte al grupo %0'
-            let: 'Se ha aceptado tu petición para unirte al grupo %0'
-            request: 'El usuario %0 ha solicitado unirse al grupo %1'
-    ride:
-        start: 'El paseo para el grupo %0 ha comenzado.'
-        finish: 'El paseo para el grupo %0 ha finalizado.' 
+                join:
+                    deny: 'Se ha rechazado tu petición para unirte al grupo %0'
+                    let: 'Se ha aceptado tu petición para unirte al grupo %0'
+                    request: 'El usuario %0 ha solicitado unirse al grupo %1'
+            ride:
+                start: 'El paseo para el grupo %0 ha comenzado.'
+                finish: 'El paseo para el grupo %0 ha finalizado.' 
         
-    timeline:
-        newFromMonitor: 'El monitor del Grupo %0 ha enviado el siguiente mensaje: %1'
+            timeline:
+                newFromMonitor: 'El monitor del Grupo %0 ha enviado el siguiente mensaje: %1'
         
 
 Register:

@@ -69,13 +69,18 @@ class GenerateEmailsCommand extends ContainerAwareCommand
     			}
 
     			$message = \Swift_Message::newInstance()
-    			// TODO: Traducir
-    			->setSubject("Tiene ".count($notifications)." novedades")
     			->setFrom(array("hola@trazeo.es" => "Trazeo"))
     			->setTo($user->getUser()->getEmail())
-    			//->setCc($setCC)
     			->setBody($con->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:notifyUser.html.twig', array('user' => $user, 'notifications' => $notifications)), 'text/html');
-    			//->setBody("Este es el cuerpo del delito");
+    			
+    			if ($notifications == 1) {
+    				$not  = $this->container->get('sopinet_user_notification');
+    				$string_not = $not->parseNotification($notifications[0], "title");
+    				$message->setSubject($string_not);
+    			} else {
+    				$message->setSubject("Tiene ".count($notifications)." novedades");
+    			}
+    			
     			$ok = $con->get('mailer')->send($message);
 
     			$output->writeln('<info>Hecho</info>');
