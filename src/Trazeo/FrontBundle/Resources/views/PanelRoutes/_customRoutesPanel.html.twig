@@ -3,7 +3,7 @@
 	<div class="row">
 		<div class="pull-left">
 			<h1>
-				<span class="alert"><i class="fa fa-location-arrow"></i> {{ 'Route.mine'|trans }}</span>
+				<span class="alert"><i class="fa fa-compass"></i> {{ 'Route.mine'|trans }}</span>
 				</span>
 			</h1>
 		</div>
@@ -24,7 +24,7 @@
 {% else %}
 	<div class="row alert-success">
 		<div class="col-md-6">
-			<i class="fa fa-location-arrow fa-5x pull-left"></i>
+			<i class="fa fa-compass fa-5x pull-left"></i>
 			<h3>
 			{{ 'Route.empty'|trans }}
 			&nbsp;&nbsp;
@@ -40,7 +40,7 @@
 		</div>
 	</div>
 	{#
-		<i class="fa fa-location-arrow fa-5x pull-left alert-warning"></i>
+		<i class="fa fa-compass fa-5x pull-left alert-warning"></i>
 		<h4 class="alert alert-warning">
 		{{ 'Route.empty'|trans }}
 		&nbsp;&nbsp;
@@ -57,7 +57,7 @@
 <div class="col-md-12 resumeRoutes alert alert-warning" id="routes">
 {% if routes|length <= 0 %}
 	<div>
-		<i class="fa fa-location-arrow fa-5x pull-left alert-warning"></i>
+		<i class="fa fa-compass fa-5x pull-left alert-warning"></i>
 		<h4 class="alert alert-warning">
 		{{ 'Route.empty'|trans }}
 		&nbsp;&nbsp;
@@ -70,7 +70,7 @@
 	</div>
 {% elseif routes|length > 0 %}
 	<div>
-		<h1 class="alert"> <span class="alert alert-warning"><i class="fa fa-location-arrow"></i> {{ 'Route.mine'|trans }}</span> 
+		<h1 class="alert"> <span class="alert alert-warning"><i class="fa fa-compass"></i> {{ 'Route.mine'|trans }}</span> 
 			<span class="pull-right">
 				<a class="btn btn-xs btn-success" href="{{ path('panel_route_new') }}">
 					<i class="fa fa-plus-circle"></i>&nbsp; {{ 'Route.new.title'|trans }}

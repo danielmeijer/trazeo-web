@@ -1,14 +1,12 @@
 {% include 'SopinetTemplateSbadmin2Bundle:Emails:header.html.twig' %}
+	<h3>Trazeo caminos escolares: el camino al cole de tus hijos</h3>
 	<table>
 		<tr style="background-color:#ccc">
 			<td style="padding:6px;color:#333;">
-				Trazeo caminos escolares: el camino al cole de tus hijos
-			</td>
-			<td style="padding:6px;color:#333;">
-				{{ user.email }} te ha invitado a unirte al grupo de pedibus {{ group.name }}
+				<b>{{ user.email }} te ha invitado a unirte al grupo de pedibus {{ group.name }}</b>
 			</td>
 			<td style="text-align:center;" width="20%">
-				<a href="{{ base_url ~ link }}">¡Regístrarme!</a>
+				<a href="{{ base_url ~ link }}">¡Registrarme!</a>
 			</td>
 		</tr>
 	</table>

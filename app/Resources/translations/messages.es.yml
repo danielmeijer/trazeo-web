@@ -174,8 +174,8 @@ Notifications:
                     user: 'Recibida invitación para ser tutor'
                     
                 joingroup: 'Un niño ha entrado en el grupo'
-                in: 'Un niño se ha registrado en el grupo'
-                out: 'Un niño ha salido del grupo'
+                in: 'Tu niño/a se ha incorporado al grupo'
+                out: 'Tu niño/a ha salido sin incidencias'
                 
             group:
                 invite:
@@ -204,7 +204,7 @@ Notifications:
 
                 joingroup: 'El niño/a %0 ha entrado en el grupo %1'
                 in: 'El niño/a %0 ha sido registrado en el paseo del grupo %1'
-                out: 'El niño/a %0 ha salido del paseo del grupo %1'
+                out: 'El niño/a %0 ha salido del paseo del grupo %1 y llegado a su destino sin incidencias'
 
             group:
                 invite:
