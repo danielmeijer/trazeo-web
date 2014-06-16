@@ -379,7 +379,10 @@ class PanelGroupsController extends Controller
 		$container = $this->get('sopinet_flashMessages');
 		
 		$fos_user_current = $this->container->get('security.context')->getToken()->getUser();
-		$user_current =$um->findUserByEmail($fos_user_current);
+		//$user_current = $um->findUserByEmail($fos_user_current);
+		
+		//ldd($fos_user_current);
+		//ldd($user_current);
 
 		$userEmail = $request->get('userEmail');
 		$groupId = $request->get('group');
@@ -438,7 +441,7 @@ class PanelGroupsController extends Controller
 		}else{
 			// Si no existen los UserExtend y Group anteriormente obtenidos,
 			// directamente se crea la petición
-			$user_current = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user_current->getId());
+			$user_current = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user_current->getId());
 
 			$not = $this->container->get('sopinet_user_notification');
 			$el = $not->addNotification(

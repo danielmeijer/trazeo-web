@@ -145,8 +145,8 @@ class PublicController extends Controller
     		$not = $this->container->get('sopinet_user_notification');
     		$el = $not->addNotification(
     				'group.invite.user',
-    				"TrazeoBaseBundle:EGroup",
-    				$groupId,
+    				"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
+    				$inviterow->getUserCreated()->getId() . "," . $groupId,
     				$this->generateUrl('panel_group'), $user
     		);
     			

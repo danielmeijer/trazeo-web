@@ -11,6 +11,7 @@
 			$eGAI = new EGroupAnonInvite();
 			$eGAI->setEmail($userEmail);
 			$eGAI->setGroup($group);
+			$eGAI->setUserCreated($fos_user_current->getUserExtend());
 			
 			$em->persist($eGAI);
 			$em->flush();
