@@ -1,87 +1,97 @@
-Description: La aplicación web / móvil para recuperar el camino al cole a pie
 Admin:
-    yes: Eres administrador de este grupo
-    no: Disponible para el administrador
-Join: Unirme a este grupo
-DisJoin: Desvincularme
-NoAccess: Sin acceso
-ChangeVisibility: Cambiar visibilidad 
-Bad credentials: 'Nombre de usuario o Contraseña inválido'
+    no: 'Disponible para el administrador'
+    yes: 'Eres administrador de este grupo'
 
-DeleteAccount:
-    title: Eliminar cuenta
-    description: Si deseas eliminar tu perfil ahora, ponte en contacto con nosotros a través del email hola@trazeo.es y procesaremos tu petición.
+'Bad credentials': 'Nombre de usuario o Contraseña inválido'
 
-Sponsors:
-    current: Patrocinadores
 Btn:
-    success: Guardar
     back: volver
+    success: Guardar
+
+ChangeVisibility: 'Cambiar visibilidad'
 
 Children:
-    mine: Mis niños
-    empty: Aún no has registrado a ninguno de tus niños
-    register: Registrar mis niños/as en Trazeo
-    new:
-        title: Registar Niño/a
-        description: Aquí puedes registrar a tus niños en la plataforma y posteriormente asignarlos a un grupo
-        register: Nuevo registro de Niño/a
-    list: Listado de niños/as
-    data: 
-        name: Nombre
-        visibility: Visibilidad
+    data:
         age: Edad
+        name: Nombre
         options: Opciones
+        visibility: Visibilidad
+
     date: 'Fecha de nacimiento'
 
     edit:
         description: 'Sólo utilizamos estos datos para darte un mejor servicio. Sólo tú podrás verlos, ningún otro padre o madre'
         title: 'Editar datos de niño'
 
-    invited: Tienes una invitación para ser tutor del niño 
-    help:
-        datebirth: 'Fecha de nacimiento'
-        gender: 'Género, Niño/a'
-        groups: 'Asignar a un grupo'
-        nick: 'Nombre del niño'
-        sex: 'Género'
-        userextend: 'Tutores del niño'
-        visibility: 'Visibilidad'
-        disjoin: Dejar de ser tutor del niño
-        edit: Editar información
-    index:
-        acept: 'Aceptar'
-        cancel: 'Cancelar'
-        description: 'En este apartado puedes consultar toda la información referente a tus niños registrados en Trazeo'
-        title: 'Listado de tus niños' 
-        subtitle: Niños/as que has registrado en la plataforma
-        edit: 'Editar'
-        tutors: 'Tutores'
-        disjoin: 'Desvincularme'
-        asigned: 'Grupos en los que está inscrito'
-        qr:
-            title: Código identificador
-            description: El siguiente código es único y está asignado a tu niño/a
-            donwload: Descárgalo haciendo click en él e imprímelo para que el monitor pueda registarlo en los paseos en marcha.
-        mail:
-            invite: Envía una invitación a otros usuarios para que sean uno de los tutores de este niño
-    nick: 'Nombre del niño'
+    empty: 'Aún no has registrado a ninguno de tus niños'
 
     gender:
         boy: Niño
         girl: Niña
 
+    help:
+        datebirth: 'Fecha de nacimiento'
+        disjoin: 'Dejar de ser tutor del niño'
+        edit: 'Editar información'
+        gender: 'Género, Niño/a'
+        groups: 'Asignar a un grupo'
+        nick: 'Nombre del niño'
+        sex: Género
+        userextend: 'Tutores del niño'
+        visibility: Visibilidad
+
+    index:
+        acept: Aceptar
+        asigned: 'Grupos en los que está inscrito'
+        cancel: Cancelar
+        description: 'En este apartado puedes consultar toda la información referente a tus niños registrados en Trazeo'
+        disjoin: Desvincularme
+        edit: Editar
+
+        mail:
+            invite: 'Envía una invitación a otros usuarios para que sean uno de los tutores de este niño'
+
+        qr:
+            description: 'El siguiente código es único y está asignado a tu niño/a'
+            donwload: 'Descárgalo haciendo click en él e imprímelo para que el monitor pueda registarlo en los paseos en marcha.'
+            title: 'Código identificador'
+
+        subtitle: 'Niños/as que has registrado en la plataforma'
+        title: 'Listado de tus niños'
+        tutors: Tutores
+
+    invited: 'Tienes una invitación para ser tutor del niño'
+    list: 'Listado de niños/as'
+    mine: 'Mis niños'
+
+    new:
+        description: 'Aquí puedes registrar a tus niños en la plataforma y posteriormente asignarlos a un grupo'
+        register: 'Nuevo registro de Niño/a'
+        title: 'Registar Niño/a'
+
+    nick: 'Nombre del niño'
+    register: 'Registrar mis niños/as en Trazeo'
+
     visibility:
-        public: Público
-        private: Privado
-        enabled: Público
         disabled: Privado
+        enabled: Público
+        private: Privado
+        public: Público
+
+City:
+    all: 'Mostrar todo'
 
 Confirmation:
     no: No
     question: '¿Estás seguro?'
     yes: Sí
 
+DeleteAccount:
+    description: 'Si deseas eliminar tu perfil ahora, ponte en contacto con nosotros a través del email hola@trazeo.es y procesaremos tu petición.'
+    title: 'Eliminar cuenta'
+
+Description: 'La aplicación web / móvil para recuperar el camino al cole a pie'
+DisJoin: Desvincularme
 Email: 'Correo electrónico'
 
 Form:
@@ -90,22 +100,20 @@ Form:
         repeatpass: 'Confirmar contraseña'
 
 Groups:
-    noRoute: Ninguna ruta asignada
-    noMember: Debes formar parte del grupo 
     data:
-        name: Nombre
         activity: Actividad
-        member: Miembro del grupo
-        visibility: Visibilidad
-        route: Ruta
-        chat: Muro del grupo
+        chat: 'Muro del grupo'
+        member: 'Miembro del grupo'
+        name: Nombre
         options: Opciones
-    mine: Mis grupos
-    list: Listado de grupos
-    empty: Crea un nuevo grupo de usuarios y asígnale una ruta de paseo
+        route: Ruta
+        visibility: Visibilidad
+
     edit:
         description: 'Indica el tipo de visibilidad y asígnale una ruta'
         title: 'Editar datos de grupo'
+
+    empty: 'Crea un nuevo grupo de usuarios y asígnale una ruta de paseo'
 
     help:
         name: 'Nombre del grupo'
@@ -113,35 +121,42 @@ Groups:
         route: 'Asignar una ruta a este grupo'
 
     index:
-        list: Listado de grupos creados en Trazeo
         description: 'Listado completo de todos los grupos existentes y visibles en la plataforma'
+        list: 'Listado de grupos creados en Trazeo'
+        subtitle: 'Vincula tu usuario con un grupo y contacta con otros padres desde el muro'
         title: 'Sugerencia de grupos'
-        subtitle: Vincula tu usuario con un grupo y contacta con otros padres desde el muro
 
+    invite:
+        accept: 'Acepto la invitación'
+        deny: 'Rechazo la invitación'
+        request: 'Forma parte del Grupo de padres/madres de los escolares que participan en la ruta de Pedibus'
+
+    list: 'Listado de grupos'
+    mine: 'Mis grupos'
     name: 'Nombre del grupo'
 
     new:
         description: 'Indica un nombre, define quíen podrá acceder a él y asígnale una ruta'
+        new: 'Nuevo Grupo'
         title: 'Crear nuevo grupo'
-        new: Nuevo Grupo
+
+    noMember: 'Debes formar parte del grupo'
+    noRoute: 'Ninguna ruta asignada'
 
     visibility:
         hidden: Oculto
         private: Privado
         public: Público
-        
-    invite:
-        request: 'Forma parte del Grupo de padres/madres de los escolares que participan en la ruta de Pedibus'
-        accept: 'Acepto la invitación'
-        deny: 'Rechazo la invitación'
+
+Join: 'Unirme a este grupo'
 
 Login:
+    forgot: '¿Olvidaste la contraseña?'
+    new: '¿No tienes cuenta?'
     password: Contraseña
     signin: Entrar
     title: 'Inicio de sesión'
     username: 'Nombre de usuario'
-    forgot: '¿Olvidaste la contraseña?'
-    new: '¿No tienes cuenta?'
 
 Menu:
     children: Niños/as
@@ -160,50 +175,20 @@ Navbar:
     profile: Perfil
     settings: Configuración
 
+NoAccess: 'Sin acceso'
+
 Notifications:
-    title: Listado de notificaciones
-    description: Puedes consultar y revisar todas las notificaciones que te han sido enviadas como usuario de la plataforma
-    link: Consultar el historial de notificaciones
-    list: Historial de todas las notificaciones que has recibido
     action:
-        title:
-            child:
-                invite:
-                    accept: 'Un usuario aceptó tu invitación'
-                    deny: 'Un usuario rechazó tu invitación'
-                    user: 'Recibida invitación para ser tutor'
-                    
-                joingroup: 'Un niño ha entrado en el grupo'
-                in: 'Un niño se ha registrado en el grupo'
-                out: 'Un niño ha salido del grupo'
-                
-            group:
-                invite:
-                    accept: 'Un usuario aceptó tu invitación'
-                    deny: 'Un usuario rechazó tu invitación'
-                    user: 'Has recibido una invitación'
-                    
-                join:
-                    deny: 'Se ha rechazado tu petición'
-                    let: 'Se aceptó tu petición'
-                    request: 'Has recibido una solicitud'
-                        
-            ride:
-                start: 'Un paseo ha comenzado'
-                finish: 'Un paseo ha terminado'
-                    
-            timeline:
-                newFromMonitor: 'Hay un nuevo mensaje'
-                    
         description:
             child:
+                in: 'El niño/a %0 ha sido registrado en el paseo del grupo %1'
+
                 invite:
                     accept: 'El usuario %0 ha aceptado la invitación para ser tutor del niño %1'
                     deny: 'El usuario/a %0 ha rechazado la invitación para ser tutor del niño %1'
                     user: 'Has recibido una invitación para ser tutor del niño %0'
 
                 joingroup: 'El niño/a %0 ha entrado en el grupo %1'
-                in: 'El niño/a %0 ha sido registrado en el paseo del grupo %1'
                 out: 'El niño/a %0 ha salido del paseo del grupo %1'
 
             group:
@@ -216,13 +201,76 @@ Notifications:
                     deny: 'Se ha rechazado tu petición a %0 para unirte al grupo %1'
                     let: 'Se ha aceptado tu petición a %0 para unirte al grupo %1'
                     request: 'El usuario %0 ha solicitado unirse al grupo %1'
+
             ride:
+                finish: 'El paseo para el grupo %0 ha finalizado.'
                 start: 'El paseo para el grupo %0 ha comenzado.'
-                finish: 'El paseo para el grupo %0 ha finalizado.' 
-        
+
             timeline:
                 newFromMonitor: 'El monitor del Grupo %0 ha enviado el siguiente mensaje: %1'
-        
+
+        title:
+            child:
+                in: 'Un niño se ha registrado en el grupo'
+
+                invite:
+                    accept: 'Un usuario aceptó tu invitación'
+                    deny: 'Un usuario rechazó tu invitación'
+                    user: 'Recibida invitación para ser tutor'
+
+                joingroup: 'Un niño ha entrado en el grupo'
+                out: 'Un niño ha salido del grupo'
+
+            group:
+                invite:
+                    accept: 'Un usuario aceptó tu invitación'
+                    deny: 'Un usuario rechazó tu invitación'
+                    user: 'Has recibido una invitación'
+
+                join:
+                    deny: 'Se ha rechazado tu petición'
+                    let: 'Se aceptó tu petición'
+                    request: 'Has recibido una solicitud'
+
+            ride:
+                finish: 'Un paseo ha terminado'
+                start: 'Un paseo ha comenzado'
+
+            timeline:
+                newFromMonitor: 'Hay un nuevo mensaje'
+
+    description: 'Puedes consultar y revisar todas las notificaciones que te han sido enviadas como usuario de la plataforma'
+    link: 'Consultar el historial de notificaciones'
+    list: 'Historial de todas las notificaciones que has recibido'
+    title: 'Listado de notificaciones'
+
+Options:
+    delete: Eliminar
+    edit: Editar
+
+Random:
+    text_1: 'Un niño que camina es un niño sano'
+    text_10: 'En los 70´s y 80´s el 70% de los niños de 7 y 8 años iban solos a la escuela, hoy el 70% de los escolares nunca ha ido sólo al cole'
+    text_11: 'Hoy día más del 40% de los escolares van en coche al colegio con el ruido, la contaminación y el consumo energético que ello supone'
+    text_12: 'Permitir y facilitar el camino a pie al colegio de tus hijos te permite ahorrar más de 60€/mes'
+    text_13: 'Recordar nuestro camino al colegio, es recordar buenos y divertidos momentos'
+    text_14: 'Participar en el camino escolar evita las típicas molestias derivadas del tráfico y del aparcamiento'
+    text_15: 'El camino escolar es el primer paso para la autonomía infantil'
+    text_16: 'Con sólo hacer los trayectos al colegio a pie, nuestros hijos ya realizan (una media) el 30% del ejercicio diario que necesitan diariamente'
+    text_17: 'Fomentar la autonomía de nuestros hijos es permitirles crecer seguros en sí mismos'
+    text_18: '¿Recuerdas con qué edad empezaste a ir al colegio solo/a?'
+    text_19: 'Nos interesa tu opinión. Comparte tus ideas, impresiones y necesidades con nosotros en hola@trazeo.es'
+    text_2: 'Dejar que los hijos crezcan en autonomía no es desatención, es un acto de amor'
+    text_20: '¿Se te ocurre alguna idea para mejorar el pedibus en el participa tu hijo/a? Compártela en el muro de tu grupo'
+    text_21: 'Si crees que hay cosas que se pueden mejorar a lo largo de la ruta de tu pedibus, comentalo y/o solicita las mejoras a tu Ayuntamiento'
+    text_22: 'Caminar fortalece el corazón'
+    text_3: 'Caminar en compañía es hacer amigos'
+    text_4: 'Los escolares van paseando al colegio alcanzan mayores niveles de concentración y atención en clase'
+    text_5: 'Para muchos expertos, un niño está más expuesto a los contaminantes de un coche cuando se encuentra en el interior de dicho vehículo que cuando se encuentra fuera de él'
+    text_6: 'El aire que se respira en el interior de un coche está más contaminado que el aire del exterior'
+    text_7: 'Andar nos ayuda a mantenernos en forma'
+    text_8: 'Caminar en lugar de coger el coche contribuye a mejorar la calidad de nuestro aire'
+    text_9: 'Al caminar tu hijo aprenderá a conocer su entorno, conocerá su barrio y a sus vecinos'
 
 Register:
     email: 'Correo electrónico'
@@ -230,40 +278,33 @@ Register:
     pass: Contraseña
     repeatpass: 'Repita la contraseña'
 
+Ride:
+    current:
+        description: 'Puedes ver en tiempo real el recorrido de esta ruta y consultar todos sus datos'
+        title: 'Paseo en marcha'
+
+    go: 'Ir al paseo'
+
+    yes:
+        description:
+            plural: 'Los siguientes grupos están en marcha y tienes niños/as apuntados en ellos'
+            singular: 'El siguiente grupo está en marcha y tienes niños/as apuntados en el'
+
+        title:
+            plural: 'Hay paseos en marcha'
+            singular: 'Hay un paseo en marcha'
+
 Route:
-    show:
-        title: Ruta: %name%
-        description: Mapa de paseo y datos referentes a la ruta
-        start: Empieza en
-        end: Termina en
-        distance: Distancía
-        childs: Niños/as
-        signed: apuntados en esta ruta
-        creator: Autor
-        map: Mapa del paseo
-        owndescription: Descripción
-        buttons:
-            start: Comenzar 
-            end: Terminar 
-            erase: Borrar punto 
-            pickup: Crear punto de recogida 
-            pickupErase: Eliminar punto de recogida 
-            cancel: Cancelar Acción 
-            undo: Deshacer 
-            save: Guardar
-        groups: Grupos con esta ruta
-        create: Crear nuevo Grupo
-        unasigned: No ningún grupo con esta ruta asignada
-    mine: Mis Rutas
-    list: Listado de rutas
-    empty: Traza una ruta de paseo segura en tu ciudad para ir al cole
-    data: 
+    data:
+        map: 'Mapa de la ruta'
         name: Nombre
-        map: Mapa de la ruta
         options: Opciones
+
     edit:
         description: 'Establece un nombre e indica a qué país y ciudad pertenece'
         title: 'Editar datos de ruta'
+
+    empty: 'Traza una ruta de paseo segura en tu ciudad para ir al cole'
 
     help:
         country: 'Páis al que pertenece'
@@ -272,27 +313,88 @@ Route:
 
     index:
         description: 'Listado de rutas creadas por los usuarios para definir los caminos al cole'
-        title: 'Rutas de paseo'
         near: 'Estas rutas se encuentran en tu ciudad y podrían interesarte'
+        title: 'Rutas de paseo'
 
+    list: 'Listado de rutas'
+
+    map:
+        edit: 'Ir al mapa'
+
+    mine: 'Mis Rutas'
     name: 'Nombre de la ruta'
 
     new:
         description: 'Asígnale un nombre que de a los demás usuarios una idea de la zona o recorrido'
-        title: 'Crear nueva ruta'
         new: 'Nueva Ruta'
-        
-    map:
-        edit: 'Ir al mapa'
+        title: 'Crear nueva ruta'
 
     resume:
-        title: 'Resumen del paseo'
         description: 'Datos relevantes sobre el mismo'
+        title: 'Resumen del paseo'
+
+    show:
+        buttons:
+            cancel: 'Cancelar Acción'
+            end: Terminar
+            erase: 'Borrar punto'
+            pickup: 'Crear punto de recogida'
+            pickupErase: 'Eliminar punto de recogida'
+            save: Guardar
+            start: Comenzar
+            undo: Deshacer
+
+        childs: Niños/as
+        create: 'Crear nuevo Grupo'
+        creator: Autor
+        description: 'Mapa de paseo y datos referentes a la ruta'
+        distance: Distancía
+        end: 'Termina en'
+        groups: 'Grupos con esta ruta'
+        map: 'Mapa del paseo'
+        owndescription: Descripción
+        signed: 'apuntados en esta ruta'
+        start: 'Empieza en'
+        title: 'Ruta: %name%'
+        unasigned: 'No ningún grupo con esta ruta asignada'
 
 Settings:
     index:
         description: 'Personaliza tus avisos de notificaciones en la plataforma de trazeo'
         title: Notificaciones
+
+Sponsors:
+    current: Patrocinadores
+
+Suggestion:
+    access_groups: '¡Aún no estás en ningún grupo! Busca ahora un grupo en tu Localidad y únete a él.'
+    complete_profile: 'Acceda a su Perfil y complete los campos de Ciudad y Nombre'
+    link_child: 'Accede al Muro de alguno de tus grupos para vincular a tus niños/as.'
+    new_child: '¡Aún no has registrado a ningún/a niño/a! Haz click aquí para proceder al registro de tus niños en el sistema.'
+
+Timeline:
+    child:
+        disjoin: 'Desvincular mis niños de este grupo'
+        empty: 'Sin resultados'
+        join: 'Vincular mis niños con este grupo'
+        title: 'Tus niños en este grupo'
+
+    index:
+        description: 'Gestiona tus niños en este grupo, invita a otros usuarios a unirse o chatea con ellos'
+        title: 'Actividad del grupo'
+
+    invite:
+        description: 'Envía una notificación a otros padres para que puedan unirse a este grupo'
+        title: 'Invitar al grupo'
+
+    parents: 'Otros padres'
+
+    route:
+        empty: 'Ninguna ruta asignada'
+        set: 'Cambiar la ruta de este grupo'
+        title: 'Ruta del grupo'
+
+    title: 'Muro del grupo'
 
 Trans:
     alternative: 'Traducción alternativa'
@@ -339,11 +441,11 @@ Userextend:
         title: 'Perfil de usuario'
 
     profile:
-        edit: 'Editar perfil'
-        title: 'Perfil de usuario'
-        location: Localización
-        profile: Datos de perfil
         avatar: Avatar
+        edit: 'Editar perfil'
+        location: Localización
+        profile: 'Datos de perfil'
+        title: 'Perfil de usuario'
 
 change_password:
     flash:
@@ -388,9 +490,9 @@ preference:
         name: 'Notificaiones por email'
 
         value:
-            now: 'Todos'
-            never: 'Ninguno'
             important: 'Solo los importantes'
+            never: Ninguno
+            now: Todos
 
 profile:
     edit:
@@ -443,72 +545,3 @@ security:
         remember_me: Recordar
         submit: Entrar
         username: 'Nombre de usuario:'
-        
-Ride:
-    current:
-        title: Paseo en marcha 
-        description: Puedes ver en tiempo real el recorrido de esta ruta y consultar todos sus datos
-    yes:
-        title:
-            plural: Hay paseos en marcha
-            singular: Hay un paseo en marcha
-        description: 
-            plural: Los siguientes grupos están en marcha y tienes niños/as apuntados en ellos
-            singular: El siguiente grupo está en marcha y tienes niños/as apuntados en el
-    go: Ir al paseo
-        
-Options:
-    edit: Editar
-    delete: Eliminar
-    
-Timeline:
-    index:
-        title: Actividad del grupo
-        description: Gestiona tus niños en este grupo, invita a otros usuarios a unirse o chatea con ellos
-    title: Muro del grupo
-    child:
-        title: Tus niños en este grupo
-        empty: Sin resultados
-        join: Vincular mis niños con este grupo
-        disjoin: Desvincular mis niños de este grupo
-    route:
-        title: Ruta del grupo
-        empty: Ninguna ruta asignada
-        set:  Cambiar la ruta de este grupo
-    parents: Otros padres
-    invite:
-        title: Invitar al grupo
-        description: Envía una notificación a otros padres para que puedan unirse a este grupo 
-
-City:
-    all: Mostrar todo
-
-Suggestion:
-    new_child: ¡Aún no has registrado a ningún/a niño/a! Haz click aquí para proceder al registro de tus niños en el sistema.
-    access_groups: ¡Aún no estás en ningún grupo! Busca ahora un grupo en tu Localidad y únete a él.
-    link_child: Accede al Muro de alguno de tus grupos para vincular a tus niños/as.
-    complete_profile: Acceda a su Perfil y complete el campo de Ciudad.
-    
-Random:
-    text_1: 'Un niño que camina es un niño sano'
-    text_2: 'Dejar que los hijos crezcan en autonomía no es desatención, es un acto de amor'
-    text_3: 'Caminar en compañía es hacer amigos'
-    text_4: 'Los escolares van paseando al colegio alcanzan mayores niveles de concentración y atención en clase'
-    text_5: 'Para muchos expertos, un niño está más expuesto a los contaminantes de un coche cuando se encuentra en el interior de dicho vehículo que cuando se encuentra fuera de él'
-    text_6: 'El aire que se respira en el interior de un coche está más contaminado que el aire del exterior'
-    text_7: 'Andar nos ayuda a mantenernos en forma'
-    text_8: 'Caminar en lugar de coger el coche contribuye a mejorar la calidad de nuestro aire'
-    text_9: 'Al caminar tu hijo aprenderá a conocer su entorno, conocerá su barrio y a sus vecinos'
-    text_10: 'En los 70´s y 80´s el 70% de los niños de 7 y 8 años iban solos a la escuela, hoy el 70% de los escolares nunca ha ido sólo al cole'
-    text_11: 'Hoy día más del 40% de los escolares van en coche al colegio con el ruido, la contaminación y el consumo energético que ello supone'
-    text_12: 'Permitir y facilitar el camino a pie al colegio de tus hijos te permite ahorrar más de 60€/mes'
-    text_13: 'Recordar nuestro camino al colegio, es recordar buenos y divertidos momentos'
-    text_14: 'Participar en el camino escolar evita las típicas molestias derivadas del tráfico y del aparcamiento'
-    text_15: 'El camino escolar es el primer paso para la autonomía infantil'
-    text_16: 'Con sólo hacer los trayectos al colegio a pie, nuestros hijos ya realizan (una media) el 30% del ejercicio diario que necesitan diariamente'
-    text_17: 'Fomentar la autonomía de nuestros hijos es permitirles crecer seguros en sí mismos'
-    text_18: '¿Recuerdas con qué edad empezaste a ir al colegio solo/a?'
-    text_19: 'Nos interesa tu opinión. Comparte tus ideas, impresiones y necesidades con nosotros en hola@trazeo.es'
-    text_20: '¿Se te ocurre alguna idea para mejorar el pedibus en el participa tu hijo/a? Compártela en el muro de tu grupo'
-    text_21: 'Si crees que hay cosas que se pueden mejorar a lo largo de la ruta de tu pedibus, comentalo y/o solicita las mejoras a tu Ayuntamiento'
-    text_22: 'Caminar fortalece el corazón' 
