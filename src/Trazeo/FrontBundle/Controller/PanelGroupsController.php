@@ -304,6 +304,14 @@ class PanelGroupsController extends Controller
 		$em->persist($groupToJoin);
 		$em->flush();
 		
+		//Children autojoin on parent join to group
+		$childs=$user->getChilds();
+		foreach($childs as $child){
+			$groupToJoin->addChild($child);
+		}
+		$em->persist($groupToJoin);
+		$em->flush();
+		
 		$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findOneByUserextend($id);
 		
 		$em->remove($userRequest);
@@ -490,6 +498,14 @@ class PanelGroupsController extends Controller
 		$em->persist($groupToJoin);
 		$em->flush();
 
+		//Children autojoin on parent join to group
+		$childs=$user->getChilds();
+		foreach($childs as $child){
+			$groupToJoin->addChild($child);
+		}
+		$em->persist($groupToJoin);
+		$em->flush();
+		
 		$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findOneByUserextend($id);
 	
 		$em->remove($userRequest);
