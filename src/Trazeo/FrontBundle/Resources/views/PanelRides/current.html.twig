@@ -52,7 +52,10 @@
 </div>
 		<div class="col-md-12 alert alert-success">
 		<h3 class="col-md-6"><i class="fa fa-map-marker"></i>&nbsp; Mapa del paseo</h3>
+		
+		{% if (ride.Group is not null) %}
 		<h3 class="col-md-6"><i class="fa fa-comments-o"></i><a href="{{ path('panel_group_timeline',{'id': ride.Group.id}) }}">&nbsp; Ir al muro del grupo</a></h3>
+		{% endif %}
 		
 		</div>
 		<div id="mapa" class="col-md-12"></div>
