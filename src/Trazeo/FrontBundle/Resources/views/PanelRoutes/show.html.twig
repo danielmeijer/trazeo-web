@@ -84,8 +84,19 @@
 			        	{% for group in route.groups %}
 							<tr>
 								<td>#</td>
-								<td> {{ group.name }}</td>
+								<td id="group{{ group.id }}"> {{ group.name }}</td>
 							</tr>
+							{% for usergroup in user.groups %}
+								{% if group == usergroup %}
+								<script>
+									var group=document.getElementById("group"+'{{ group.id }}');
+									group.onclick=function(){
+										window.location.href="{{ path('panel_group_timeline',{'id': group.id}) }}";
+									}
+									group.className='btn btn-link';
+								</script>	
+								{% endif %}								
+							{% endfor %}
 						{% endfor %}
 			        	</tbody>
 			        </table>
