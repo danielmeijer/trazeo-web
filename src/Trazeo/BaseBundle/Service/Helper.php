@@ -79,22 +79,22 @@ class Helper {
 	 *
 	 * @param Child $child
 	 * @param Ride $ride
-	 * @return number:Distance in meters
+	 * @return number: Distance in meters
 	 */
 	function getChildDistance($child, $ride) {
 		$em = $this->_container->get("doctrine.orm.entity_manager");
-		$re = $em->getRepository('TrazeoBaseBundle:EEvent');
+		
 		
 		$events = $this->getChildSegments($child,$ride);
 
-		$query = $re->createQueryBuilder('e')
-		->add('select', 'DISTANCE(POINT_STR(:pointF),POINT_STR(:pointL))')
-		->setParameters(array('pointF' => $events[1][0]->getLocation(), 'pointL' => $events[1][40]->getLocation()))
-		->getQuery();
-		$events = $query->getResult();
+		$distance=0;
+		for ($i = 0; $i < count($events); $i++) {
+			for ($j = 0; $j < count($events[$i])-1; $j++) {
+				$distance+=$this->getDistance($events[$i][$j],$events[$i][$j+1]);
+			}
+		}
 		
-		ldd($events);
-		return $events;
+		return $distance;
 		
 	}	
 
@@ -154,5 +154,25 @@ class Helper {
 		$events = $query->getResult();
 		
 		return $events;
+	}
+	/**
+	 * @param ESimplePoint $point1
+	 * @param ESimplePoint $point2
+	 * @retun number:distance between two points(has an error about + o – 3 meters)
+	 */
+	private function getDistance($point1,$point2) {
+		$R = 6371; // km (change this constant to get miles)
+		$lat1=$point1->getLocation()->getLatitude();
+		$lon1=$point1->getLocation()->getLongitude();
+		$lat2=$point2->getLocation()->getLatitude();
+		$lon2=$point2->getLocation()->getLongitude();
+		$dLat = ($lat2-$lat1) * M_PI / 180;
+		$dLon = ($lon2-$lon1) * M_PI / 180;
+		$a = sin($dLat/2) * sin($dLat/2) +
+		cos($lat1 * M_PI / 180 ) * cos($lat2 * M_PI / 180 ) *
+		sin($dLon/2) * sin($dLon/2);
+		$c = 2 * atan2(sqrt($a), sqrt(1-$a));
+		$d = $R * $c;
+		return round($d*1000);
 	}
 }
