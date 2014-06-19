@@ -323,6 +323,7 @@ Route:
 
     mine: 'Mis Rutas'
     name: 'Nombre de la ruta'
+    description: 'Descripción de la ruta'
 
     new:
         description: 'Asígnale un nombre que de a los demás usuarios una idea de la zona o recorrido'
