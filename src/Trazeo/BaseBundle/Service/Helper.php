@@ -73,4 +73,86 @@ class Helper {
 		}
 		return $cities;		
 	}
+	
+	/**
+	 * Get child distance walked on a ride
+	 *
+	 * @param Child $child
+	 * @param Ride $ride
+	 * @return number:Distance in meters
+	 */
+	function getChildDistance($child, $ride) {
+		$em = $this->_container->get("doctrine.orm.entity_manager");
+		$re = $em->getRepository('TrazeoBaseBundle:EEvent');
+		
+		$events = $this->getChildSegments($child,$ride);
+
+		$query = $re->createQueryBuilder('e')
+		->add('select', 'DISTANCE(POINT_STR(:pointF),POINT_STR(:pointL))')
+		->setParameters(array('pointF' => $events[1][0]->getLocation(), 'pointL' => $events[1][40]->getLocation()))
+		->getQuery();
+		$events = $query->getResult();
+		
+		ldd($events);
+		return $events;
+		
+	}	
+
+	/**
+	 * Get points events between two events(in and out)
+	 *
+	 * @param Child $child
+	 * @param Ride $ride
+	 * @return multiple:All points between in and outs of the child
+	 */
+	private function getChildSegments($child,$ride) {
+		$em = $this->_container->get("doctrine.orm.entity_manager");
+		$reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
+
+		$query = $reEvent->createQueryBuilder('e')
+		->where('e.data LIKE :name AND e.ride = :ride AND (e.action = :in OR e.action = :out)')
+		->setParameters(array('name' => "%".$child->getNick()."%", 'ride' => $ride, 'in'=> 'in', 'out'=> 'out'))
+		->orderBy('e.createdAt', 'ASC')
+		->getQuery();
+		
+		$events = $query->getResult();
+		$segments=[];
+	
+		for ($i = 0; $i < count($events); $i+=2) {
+			$in=$events[$i]->getId();
+			
+			if ($i+1==count($events))$out=PHP_INT_MAX;
+			else $out=$events[$i+1]->getId();
+			
+			array_push($segments,$this->getPointsEventsBetween($in,$out,$ride));
+		}
+
+			
+	
+		return $segments;
+	}
+	
+	/**
+	 * Get points events between two events(in and out)
+	 *
+	 * @param Id $in
+	 * @param Id $out
+	 * @param Ride $ride
+	 * @return multiple:Points between events
+	 */
+	private function getPointsEventsBetween($in,$out,$ride) {
+		$em = $this->_container->get("doctrine.orm.entity_manager");
+		$reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
+		 
+		$query = $reEvent->createQueryBuilder('e')
+		->where('e.id > :in AND e.id < :out AND e.ride = :ride AND e.action = :point')
+		->setParameters(array('in' => $in,'out' => $out, 'ride' => $ride, 'point'=>'point'))
+		->orderBy('e.createdAt', 'ASC')
+		->getQuery();
+		 
+		 
+		$events = $query->getResult();
+		
+		return $events;
+	}
 }
