@@ -50,6 +50,11 @@ class ERide
 	protected $duration;
 	
 	/**
+	 * @ORM\Column(name="distance", type="integer", length=255, nullable=true)
+	 */
+	protected $distance;
+	
+	/**
 	 * @ORM\Column(name="groupid", type="string", length=50, nullable=true)
 	 */
 	protected $groupid;
@@ -344,5 +349,29 @@ class ERide
     public function __toString() {
     	
     	return "Grupo " . $this->getGroupid() . " /Id " . $this->getId();
+    }
+
+    /**
+     * Set distance
+     *
+     * @param integer $distance
+     *
+     * @return ERide
+     */
+    public function setDistance($distance)
+    {
+        $this->distance = $distance;
+
+        return $this;
+    }
+
+    /**
+     * Get distance
+     *
+     * @return integer
+     */
+    public function getDistance()
+    {
+        return $this->distance;
     }
 }

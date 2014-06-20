@@ -107,4 +107,8 @@ services:
 
     trazeo_base_helper:
        class: Trazeo\BaseBundle\Service\Helper
-       arguments: ["@service_container"]      
+       arguments: ["@service_container"]
+
+    trazeo_base_distance_measurer:
+       class: Trazeo\BaseBundle\Service\DistanceMeasurer
+       arguments: ["@service_container"]        
