@@ -4,6 +4,7 @@ namespace Trazeo\BaseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use JMS\Serializer\Annotation\Exclude;
 /**
  * Entity Children
  *
@@ -23,11 +24,13 @@ class EChild
     protected $id;
     
     /** @ORM\ManyToMany(targetEntity="UserExtend", inversedBy="childs")
+     *  @Exclude
      */
     protected $userextendchilds;
     
     /**
      *  @ORM\ManyToMany(targetEntity="EGroup", mappedBy="childs")
+     *  @Exclude
      */
     protected $groups;
     
@@ -60,6 +63,7 @@ class EChild
     
     /** @ORM\OneToMany(targetEntity="EChildInvite",  mappedBy="child")
      * @var unknown
+     * @Exclude
      */
     protected $inviteChild;
 
