@@ -357,7 +357,7 @@ Route:
         signed: 'apuntados en esta ruta'
         start: 'Empieza en'
         title: 'Ruta: %name%'
-        unasigned: 'No ningún grupo con esta ruta asignada'
+        unasigned: 'No hay ningún grupo con esta ruta asignada'
 
 Settings:
     index:
