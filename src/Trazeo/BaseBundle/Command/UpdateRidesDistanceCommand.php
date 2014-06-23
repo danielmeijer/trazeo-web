@@ -31,7 +31,7 @@ class UpdateRidesDistanceCommand extends ContainerAwareCommand
     	$con->set('request', new Request(), 'request');
     	$em  = $con->get('doctrine')->getManager();
     	//Sacar paseos cuya distancia sea nula 
-    	$rides = $em->getRepository("TrazeoBaseBundle:ERide")->findByDistance(0);
+    	$rides = $em->getRepository("TrazeoBaseBundle:ERide")->findByDistance(null);
     	$measurer = $con->get('trazeo_base_distance_measurer');
     	
     	//Para cada paseo calculamos la distancía recorrida en total 
