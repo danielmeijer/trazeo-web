@@ -153,7 +153,10 @@ class ApiController extends Controller {
 			$arrayGroups['name'] = $group->getName();
 			$arrayGroups['visibility'] = $group->getVisibility();
 			$arrayGroups['hasride'] = $group->getHasRide();
-			
+			if($group->getHasRide()==1){
+				$ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneByGroup($group);
+				$arrayGroups['ride_id']=$ride->getId();
+			}
 			$array[] = $arrayGroups;
 		}
 		$view = View::create()
