@@ -67,7 +67,7 @@ class CheckRidesCommand extends ContainerAwareCommand
 
 	 		$rideGroup = $ride->getGroup();
 	 		
-	 		if($minutes >= 900 && $rideGroup != null){
+	 		if($minutes >= 1 && $rideGroup != null){
 	 		
 	 			// Detener el paseo del grupo
 	 			$rideGroup->setHasRide(0);
@@ -97,7 +97,7 @@ class CheckRidesCommand extends ContainerAwareCommand
 	 				$em->persist($child);
 	 			}
 	 			$em->flush();
-	 				
+
 	 			$event = new EEvent();
 	 			$event->setRide($ride);
 	 			$event->setAction("finish");
