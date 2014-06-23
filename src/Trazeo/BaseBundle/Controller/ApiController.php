@@ -545,7 +545,7 @@ class ApiController extends Controller {
 		$id_ride = $request->get('id_ride');
 		$latitude = $request->get('latitude');
 		$longitude = $request->get('longitude');
-		$user = $request->get('user');
+
 		$user = $this->checkPrivateAccess($request);
 		if( $user == false || $user == null ){
 			$view = View::create()
@@ -557,7 +557,7 @@ class ApiController extends Controller {
 	
 		$em = $this->get('doctrine.orm.entity_manager');
 	
-		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneById($user);
+		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 		
 		$ride = $em->getRepository('TrazeoBaseBundle:ERide')->find($id_ride);
 		$group = $ride->getGroup();
