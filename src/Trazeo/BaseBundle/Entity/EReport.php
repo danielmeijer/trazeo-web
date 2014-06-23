@@ -40,7 +40,10 @@ class EReport
 	 **/
 	protected $userextend;
 
-
+	public function __toString() {
+		 
+		return "ride " . $this->getRide() . " /Id " . $this->getText();
+	}
     /**
      * Get id
      *

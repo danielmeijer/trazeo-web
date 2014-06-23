@@ -18,6 +18,7 @@ class ERideAdmin extends Admin
         $datagridMapper
             ->add('id')
             ->add('duration')
+            ->add('distance')
             ->add('groupid')
             ->add('group')
             ->add('events')
@@ -35,6 +36,7 @@ class ERideAdmin extends Admin
         $listMapper
             ->add('id')
             ->add('duration')
+            ->add('distance')
             ->add('groupid')
             ->add('group')
             ->add('events')
@@ -59,6 +61,7 @@ class ERideAdmin extends Admin
         $formMapper
             ->add('id')
             ->add('duration')
+            ->add('distance')
             ->add('groupid')
             ->add('createdAt')
             ->add('updatedAt')
@@ -73,6 +76,7 @@ class ERideAdmin extends Admin
         $showMapper
             ->add('id')
             ->add('duration')
+            ->add('distance')
             ->add('groupid')
             ->add('createdAt')
             ->add('updatedAt')

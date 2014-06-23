@@ -43,6 +43,11 @@ class EEvent
 	 **/
 	protected $ride;
 
+	public function __toString() {
+		 
+		return "id " . $this->getid();
+	}
+	
     /**
      * Get id
      *

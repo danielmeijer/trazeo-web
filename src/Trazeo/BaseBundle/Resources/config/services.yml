@@ -27,6 +27,12 @@ services:
         tags:
             - {name: sonata.admin, manager_type: orm, group: admin, label: EChild}
 
+    trazeo_base.admin.e_child_ride:
+        class: Trazeo\BaseBundle\Admin\EChildRideAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\EChildRide, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: EChildRide}
+
     trazeo_base.admin.e_child_invite:
         class: Trazeo\BaseBundle\Admin\EChildInviteAdmin
         arguments: [~, Trazeo\BaseBundle\Entity\EChildInvite, SonataAdminBundle:CRUD]
