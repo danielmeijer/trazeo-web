@@ -237,6 +237,17 @@ class ApiController extends Controller {
 					
 					
 					$group->setRide(null);
+					
+					//desvinculamos a los niños del paseo 
+					$childs = $em->getRepository('TrazeoBaseBundle:EChild')->findByRide($ride);
+					foreach ($childs as $child){
+						$child->setRide(null);
+						$child->setSelected(0);
+						$em->persist($child);
+						
+					}
+					$em->flush();
+					
 				}
 				
 				$ride = new ERide();
@@ -558,6 +569,14 @@ class ApiController extends Controller {
 		$diff = $inicio->diff($fin);
 		$duration = $diff->h." horas, ".$diff->i." minutos y ".$diff->s." segundos";
 		
+		if ($group == null) {
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->doOK("ok"));
+				
+			return $this->get('fos_rest.view_handler')->handle($view);			
+		}
+		
 		$group->setHasRide(0);
 		$em->persist($group);
 		
@@ -565,6 +584,16 @@ class ApiController extends Controller {
 		$ride->setGroupid($group->getId());
 		$ride->setGroup(null);
 		$em->persist($ride);
+		
+		//desvinculamos a los niños del paseo
+		$childs = $em->getRepository('TrazeoBaseBundle:EChild')->findByRide($ride);
+		foreach ($childs as $child){
+			$child->setRide(null);
+			$child->setSelected(0);
+			$em->persist($child);
+		}
+		
+		$em->flush();
 		
 		$event = new EEvent();
 		$event->setRide($ride);
@@ -580,15 +609,25 @@ class ApiController extends Controller {
 		$not = $this->container->get('sopinet_user_notification');
 		foreach($userextends as $userextend)
 		{
-			$not->addNotification(
-					"ride.finish",
-					"TrazeoBaseBundle:EGroup",
-					$group->getId(),
-					$this->generateUrl('panel_dashboard'),
-					$userextend->getUser()
-			);
+			//Notification just for parents with childrens on ride
+			$find=false;
+			$userChilds=$userextend->getChilds();
+			foreach($childs as $child){
+				foreach ($userChilds as $userChild){
+					if($child->getId()==$userChild->getId())$find=true;
+				}
+			}	
+			if($find){
+				$not->addNotification(
+						"ride.finish",
+						"TrazeoBaseBundle:EGroup",
+						$group->getId(),
+						$this->generateUrl('panel_ride_resume',array('id' => $id_ride)),
+						$userextend->getUser()
+				);
+			}	 
 		}
-			
+
 		$view = View::create()
 		->setStatusCode(200)
 		->setData($this->doOK("ok"));

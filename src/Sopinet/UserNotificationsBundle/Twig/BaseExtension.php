@@ -54,9 +54,9 @@ class BaseExtension extends \Twig_Extension implements ContainerAwareInterface
 		return $not->getNotifications($user, $limit);
 	}
 	
-	public function parseSopinetUserNotificationFilter($notification) {
+	public function parseSopinetUserNotificationFilter($notification, $action = "description") {
 		$not  = $this->container->get('sopinet_user_notification');
-		return $not->parseNotification($notification);
+		return $not->parseNotification($notification, $action);
 	}
 	
 	public function getTimeAgoFilter($value, $format = 'Y-m-d H:s') {

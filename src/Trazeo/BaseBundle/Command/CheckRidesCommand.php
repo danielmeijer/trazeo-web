@@ -30,10 +30,9 @@ class CheckRidesCommand extends ContainerAwareCommand
     	$con->enterScope('request');
     	$con->set('request', new Request(), 'request');
     	$em  = $con->get('doctrine')->getManager();
-    	
     	//Sacar grupos en marcha
     	$rides = $em->getRepository("TrazeoBaseBundle:ERide")->findByGroupid(null);
-    	
+
     	foreach($rides as $ride){
     		
     		
@@ -68,7 +67,7 @@ class CheckRidesCommand extends ContainerAwareCommand
 
 	 		$rideGroup = $ride->getGroup();
 	 		
-	 		if($minutes >= 300 && $rideGroup != null){
+	 		if($minutes >= 900 && $rideGroup != null){
 	 		
 	 			// Detener el paseo del grupo
 	 			$rideGroup->setHasRide(0);
@@ -89,6 +88,16 @@ class CheckRidesCommand extends ContainerAwareCommand
 	 			$em->persist($ride);
 	 			$em->flush();
 	 			
+	 			//desvinculamos a los niños del paseo
+	 			$childs = $em->getRepository('TrazeoBaseBundle:EChild')->findByRide($ride);
+
+	 			foreach ($childs as $child){
+	 				$child->setRide(null);
+	 				$child->setSelected(0);
+	 				$em->persist($child);
+	 			}
+	 			$em->flush();
+	 				
 	 			$event = new EEvent();
 	 			$event->setRide($ride);
 	 			$event->setAction("finish");

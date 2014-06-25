@@ -1,0 +1,4 @@
+<script type="text/javascript">
+	var analytics_user=analytics.identify('{{ app.user.id }}',{email: '{{ app.user.email }}', username: '{{ app.user }}'});
+	analytics.track('enter.ride.resume'); 
+</script>

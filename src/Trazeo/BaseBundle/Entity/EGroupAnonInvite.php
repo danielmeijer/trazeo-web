@@ -44,6 +44,11 @@ class EGroupAnonInvite
      */
     protected $group;
     
+    /** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="inviteAnonGroup")
+     *  @ORM\JoinColumn(name="userextend_id", referencedColumnName="id")
+     */
+    protected $userCreated;
+    
     private function rand_string( $length ) {
     	$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     	$str = "";
@@ -142,5 +147,29 @@ class EGroupAnonInvite
     public function getGroup()
     {
         return $this->group;
+    }
+
+    /**
+     * Set userCreated
+     *
+     * @param \Trazeo\BaseBundle\Entity\UserExtend $userCreated
+     *
+     * @return EGroupAnonInvite
+     */
+    public function setUserCreated(\Trazeo\BaseBundle\Entity\UserExtend $userCreated = null)
+    {
+        $this->userCreated = $userCreated;
+
+        return $this;
+    }
+
+    /**
+     * Get userCreated
+     *
+     * @return \Trazeo\BaseBundle\Entity\UserExtend
+     */
+    public function getUserCreated()
+    {
+        return $this->userCreated;
     }
 }

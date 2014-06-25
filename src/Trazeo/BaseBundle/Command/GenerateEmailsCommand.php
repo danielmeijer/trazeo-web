@@ -13,6 +13,7 @@ use Symfony\Component\Routing\RequestContext;
 class GenerateEmailsCommand extends ContainerAwareCommand
 {
 	# php app/console trazeo:emails now
+	# php app/console trazeo:emails important
 	# php app/console swiftmailer:spool:send
 	
     protected function configure()
@@ -48,7 +49,15 @@ class GenerateEmailsCommand extends ContainerAwareCommand
     	
     	foreach($users as $user) {
     		$reNOT = $em->getRepository("SopinetUserNotificationsBundle:Notification");
-    		$notifications = $reNOT->findBy(array('user' => $user, 'email' => 0));
+    		
+    		//Important is now defined as ride.finish and group.invite.user
+    		if($time=='important'){
+    			$notifications = $reNOT->findBy(array('user' => $user, 'email' => 0,'action' => 'ride.finish'));
+    			$notifications2= $reNOT->findBy(array('user' => $user, 'email' => 0,'action' => 'group.invite.user'));
+    			$notifications=array_merge($notifications,$notifications2);			
+    		}
+    		
+    		else $notifications = $reNOT->findBy(array('user' => $user, 'email' => 0));
 
     		if (count($notifications) > 0) {
     			$output->writeln('<comment>Poniendo en cola de envío por email '.count($notifications).' notificaciones para el usuario '.$user->getUser()->getEmail().'</comment>');
@@ -60,13 +69,18 @@ class GenerateEmailsCommand extends ContainerAwareCommand
     			}
 
     			$message = \Swift_Message::newInstance()
-    			// TODO: Traducir
-    			->setSubject("Tiene ".count($notifications)." novedades")
-    			->setFrom(array("info@trazeo.com" => "Trazeo"))
+    			->setFrom(array("hola@trazeo.es" => "Trazeo"))
     			->setTo($user->getUser()->getEmail())
-    			//->setCc($setCC)
     			->setBody($con->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:notifyUser.html.twig', array('user' => $user, 'notifications' => $notifications)), 'text/html');
-    			//->setBody("Este es el cuerpo del delito");
+    			
+    			if (count($notifications) == 1) {
+    				$not  = $con->get('sopinet_user_notification');
+    				$string_not = $not->parseNotification($notifications[0], "title");
+    				$message->setSubject($string_not);
+    			} else {
+    				$message->setSubject("Tiene ".count($notifications)." novedades");
+    			}
+    			
     			$ok = $con->get('mailer')->send($message);
 
     			$output->writeln('<info>Hecho</info>');

@@ -34,7 +34,11 @@ class PanelRidesController extends FOSRestController
     {
     	$em = $this->getDoctrine()->getManager();
     	$reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
-    	 
+
+    	$fos_user = $this->container->get('security.context')->getToken()->getUser();
+    	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+    	$groups=$user->getGroups();
+    	
     	$events = $reEvent->findBy(array('action' => "point", 'ride' => $ride->getId()), array('createdAt' => 'DESC'));
 
     	if ($ride->getGroup() == null) {
@@ -42,7 +46,18 @@ class PanelRidesController extends FOSRestController
     	} else {
     		$groupId = $ride->getGroup()->getId();
     	}
+    	
     	$group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneById($groupId);
+    	
+    	//Check if user belongs to the group 
+    	$groups=$user->getGroups();
+    	$find=false;
+    	foreach ($groups as $userGroup){
+    		if($userGroup->getId()==$groupId)$find=true;
+    	}
+    	if($find==false)die('No perteneces al grupo de este paseo.');
+    	
+    	
     	$children = $group->getChilds();    	
     	if($group->getRoute() == true){
     		
@@ -73,7 +88,69 @@ class PanelRidesController extends FOSRestController
     		
     	}	
     }
+
+    /**
+     * Get a resume of a closed ride
+     *
+     * @Route("/{id}/resume", name="panel_ride_resume")
+     * @Method("GET")
+     * @Template()
+     */
+    public function resumeAction(ERide $ride)
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	
+    	$reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
+    	$events = $reEvent->findBy(array('ride' => $ride->getId()), array('createdAt' => 'DESC'));
+
+    	//group that started the ride
+    	if ($ride->getGroup() == null) {
+    		$groupId = $ride->getGroupid();
+    	} else {
+    		$groupId = $ride->getGroup()->getId();
+    	}
+    	$group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneById($groupId);
+    	
+    	
+		//List of childrens joined to the ride 
+    	$childrens = [];
+    	foreach ($events as $event){
+    		if($event->getAction() == "in"){
+    			$child=$em->getRepository('TrazeoBaseBundle:EChild')->findOneById(explode("/",$event->getData())[0]);
+    			if($child != null && array_search($child,$childrens) == false )array_push($childrens,$child);
+    		}
+    	}
+
+    	if($group->getRoute() == true){
     
+    		$routeId = $group->getRoute()->getId();
+    
+    		$route = $em->getRepository('TrazeoBaseBundle:ERoute')->findOneById($routeId);
+    		 
+    		if ($route->getCity() != null) {
+    			$city = $route->getCity()->getId();
+    			$sponsors = $em->getRepository('TrazeoBaseBundle:ESponsor')->findByCity($city);
+    		} else {
+    			$sponsors = null;
+    		}
+    		 
+    		return array(
+    				'route' => $route,
+    				'ride' => $ride,
+    				'events' => $events,
+    				'sponsors' => $sponsors,
+    				'children' => $childrens
+    		);
+    
+    	}else{
+    		return array(
+    				'ride' => $ride,
+    				'events' => $events
+    		);
+    
+    	}
+    }
+        
     /**
      * Get Last Point.
      *

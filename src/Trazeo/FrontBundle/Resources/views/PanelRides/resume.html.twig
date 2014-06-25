@@ -1,6 +1,6 @@
 {% set activeMenu = "route" %}
-{% set pageheader_title = "Ride.current.title"|trans %}
-{% set pageheader_description = "Ride.current.description"|trans %}
+{% set pageheader_title = "Route.resume.title"|trans %}
+{% set pageheader_description = "Route.resume.description"|trans %}
 
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
 
@@ -17,47 +17,52 @@
  	{% endblock %}
 {% block body_content %}
 
+
+
 <div class="alert-warning">
 	<table class="table">
 		<tbody>
 			<tr>
-				<td><i class="fa fa-flag-o"></i></td>
-				<td>Empieza en </td>
-				<td id="start"></td>
-			</tr>
-			<tr>
-				<td><i class="fa fa-flag-checkered"></i></td>
-				<td>Termina en </td>
-				<td id="finish"></td>
-			</tr>
-			<tr>
 				<td><i class="fa fa-road"></i></td>
-				<td>Distancia </td>
-				<td id="distance"></td>
+				<td>Han recorrido: </td>
+				<td id="distance_resume"></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-clock-o"></i></td>
+				<td>Han caminado durante: </td>
+				<td id="duration_resume">{{ ride.duration }}</td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-heart"></i></td>
+				<td>Cada niño ha realizado: </td>
+				<td id="sport_resume"></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-truck"></i></td>
+				<td>Cada niño ha evitado consumir: </td>
+				<td id="enviroment_resume"></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-euro"></i></td>
+				<td>Cada niño ha logrado ahorrar: </td>
+				<td id="safe_resume"></td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-cloud"></i></td>
+				<td>Logrando reducir las emisiones de C02 en: </td>
+				<td id="pollution_resume"></td>
 			</tr>
 			<tr>
 				<td><i class="fa fa-user"></i></td>
-				<td>Niños en esta ruta</td>
-				<td>{{ children.count }}</td>
+				<td style="font-weigth: bold">Niños que participaron en el paseo: </td>
+				<td>{{ children|length() }}</td>
 			</tr>
-			{% if route is defined %}	
-			<tr>
-				<td><i class="fa fa-key"></i></td>
-				<td>Autor</td>
-				<td>{{ route.admin }}</td>
-			</tr>
-			{% endif %}
+
 		</tbody>
 	</table>
 </div>
-		<div class="col-md-12 alert alert-success">
-		<h3 class="col-md-6"><i class="fa fa-map-marker"></i>&nbsp; Mapa del paseo</h3>
-		
-		{% if (ride.Group is not null) %}
-		<h3 class="col-md-6"><i class="fa fa-comments-o"></i><a href="{{ path('panel_group_timeline',{'id': ride.Group.id}) }}">&nbsp; Ir al muro del grupo</a></h3>
-		{% endif %}
-		
-		</div>
+
+		<h3 class="alert alert-success"><i class="fa fa-map-marker"></i>&nbsp; Mapa del paseo</h3>
 		<div id="mapa" class="col-md-12"></div>
 		{% if route is defined %}
 			{% if sponsors|length() > 0 %}
@@ -95,6 +100,7 @@
 	
 {% block js %}	
 	{{ parent() }}
+	{% include 'TrazeoFrontBundle:PanelRides:_resume_analytics.html.twig' %}
 	{% javascripts 
 		'@SopinetOpenMapBundle/Resources/public/js/leaflet.js'
 		'@SopinetOpenMapBundle/Resources/public/js/leaflet-src.js'
@@ -109,10 +115,21 @@
 	%}
 	
 	<script type="text/javascript" src="{{ asset_url }}"></script>
+	
 	{% endjavascripts %}
 		{% if route is defined %}
-			{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': route.points,'editable': "false", 'realTime': "true", 'rideEvents': ''} %}
+			{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': route.points,'editable': "false", 'realTime': "true", 'rideEvents': events, 'resume': true} %}
 		{% else %}
-			{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'editable': "false", 'realTime': "true", 'rideEvents': ''} %}
+			{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'editable': "false", 'realTime': "true", 'rideEvents': events, 'resume': true} %}
 		{% endif %}
+		
+	<script type="text/javascript">
+		var duration='{{ ride.duration}}';
+		duration=duration.match(/[0-9]+/g);
+		$('#sport_resume').html(((duration[0]*60+(duration[1]*1)+duration[2]/60)*0.33).toFixed(2)+"% del ejercicio semanal recomendado");
+		var aux='{{ ride.duration }}'.split(',');
+		if(aux[0].indexOf("0") > -1)$("#duration_resume").html(aux[1]);
+		else $("#duration_resume").html('{{ ride.duration }}');
+						
+	</script>
 {% endblock %}

@@ -57,22 +57,29 @@
 				$qb=$em->createQueryBuilder();
 				
 				$query = $em->createQuery(
-						'SELECT u
+						'SELECT u.id
     					FROM SopinetUserBundle:SopinetUserExtend u, SopinetUserPreferencesBundle:UserValue uv
     					WHERE uv.setting = :setting AND uv.value <> :default AND uv.user = u'
 				)->setParameters(array('setting'=>$usersetting->getId(), 'default'=>$usersetting->getDefaultoption()));
 			
 				$nots = $query->getResult();
-			
+
 				if (count($nots) == 0) {
 					$users = $qb->select('u')
 					->from('SopinetUserBundle:SopinetUserExtend', 'u')
 					->getQuery()
 					->getResult();
 				} else {
+					// Array to String
+					$nots_string = "";
+					foreach($nots as $nk) {
+						if ($nots_string != "") $nots_string .= ",";
+						$nots_string .= $nk['id'];
+					}
+					
 					$users = $qb->select('u')
 					->from('SopinetUserBundle:SopinetUserExtend', 'u')
-					->where($qb->expr()->notIn('u', $nots))
+					->where($qb->expr()->notIn('u', $nots_string))
 					->getQuery()
 					->getResult();
 				}
@@ -80,7 +87,7 @@
 			} else {
 				$query = $em->createQuery(
 						'SELECT u
-    					FROM SopinetUserBundle:SopinetUserExtend u, SusPasitosBaseBundle:UserValue uv
+    					FROM SopinetUserBundle:SopinetUserExtend u, SopinetUserPreferencesBundle:UserValue uv
     					WHERE uv.setting = :setting AND uv.value = :select AND uv.user = u'
 				)->setParameters(array('setting'=>$usersetting->getId(), 'select'=>$value));
 				$users = $query->getResult();

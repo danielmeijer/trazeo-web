@@ -104,18 +104,23 @@ class ProfileController extends Controller
 		
 		$registration->setPassword($password);
 		
-		$em->persist($registration);
-		$em->persist($data_userextend);
-		
 		$city = $request->get('city');
 		$helper = $this->get('trazeo_base_helper');
 		$city_entity = $helper->getCities($city, 10, true);
-		$data_userextend->setCity($city_entity[0]);
+		if (count($city_entity) > 0) {
+			$data_userextend->setCity($city_entity[0]);
+		}
+		
+		$em->persist($registration);
+		$em->persist($data_userextend);		
 		
 		$em->flush();
 			
+		$container = $this->get('sopinet_flashMessages');
+		// TODO: Traducir mensaje de Guardadas Preferencias de Usuario
+		$notification = $container->addFlashMessages("success","Guardado perfil de usuario");
 		
-		return $this->redirect($this->generateUrl('panel_profile'));
+		return $this->redirect($this->generateUrl('panel_dashboard'));
 	}
 	
 	/**

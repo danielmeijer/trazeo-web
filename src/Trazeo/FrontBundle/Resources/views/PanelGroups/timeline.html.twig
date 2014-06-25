@@ -17,6 +17,7 @@
 				{% if childs|length <= 0 %}
 					<p class="alert alert-warning btn-xs text-center"><i class="fa fa-warning"></i>&nbsp; {{ 'Timeline.child.empty'|trans }}</p>
 				{% endif %}
+				<p class="alert-warning btn-xs">{{ 'Timeline.child.disjoin'|trans }}</p>
 				<ul>
 					{% for child in childs %}
 						<li class="alert-warning">
@@ -25,7 +26,7 @@
 							{% elseif child.Gender == "girl" %}
 							<i class="fa fa-female fa-2x"></i>&nbsp;
 							{% endif %}
-							{{ child.Nick }}
+							<a href="{{ path('panel_group_removeChild', {'group': group.id, 'child': child.id}) }}" class="disjoin">{{ child.nick }}</a>
 						</li>
 						<br />
 					{% endfor %}
@@ -58,9 +59,9 @@
 			
 			<div class="row">
 			<br />
-				<h4 class="alert alert-success"><i class="fa fa-location-arrow"></i> &nbsp;{{ 'Timeline.route.title'|trans }}</h4>
+				<h4 class="alert alert-success"><i class="fa fa-compass"></i> &nbsp;{{ 'Timeline.route.title'|trans }}</h4>
 				{% if group.Route %}
-				<ul><li class="alert-warning"><i class="fa fa-map-marker"></i>&nbsp; {{ group.Route.Name }}</li></ul>
+				<ul><li class="alert-warning"><a href="{{ path('panel_route_show',{'id': group.Route.id}) }}"><i class="fa fa-map-marker"></i>&nbsp; {{ group.Route.Name }}</li></a></ul>
 				{% else %}
 				<ul><li class="alert-warning"><i class="fa fa-map-marker"></i>&nbsp; {{ 'Timeline.route.empty'|trans }} </li></ul>
 				{% endif %}
@@ -74,7 +75,7 @@
 					<ul>
 						{% for route in routes %}
 							<li class="alert-warning">
-							<i class="fa fa-location-arrow"></i>&nbsp;
+							<i class="fa fa-compass"></i>&nbsp;
 							<a href="{{ path('panel_group_setRoute', {'group':group.id, 'route':route.id}) }}">{{ route.name }}</a>
 							</li>
 							<br />

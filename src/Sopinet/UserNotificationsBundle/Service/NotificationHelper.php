@@ -75,7 +75,7 @@ class NotificationHelper {
 	 * 
 	 * @param Notification $notification
 	 */
-	function parseNotification(Notification $notification) {
+	function parseNotification(Notification $notification, $action = "description") {
 		//ldd($notification);
 		$em = $this->_container->get("doctrine.orm.entity_manager");
 		$objects = explode(",", $notification->getObjects());
@@ -86,7 +86,7 @@ class NotificationHelper {
 			$elements['%'.$i] = $re->findOneById($objects_id[$i]);
 			$i++;
 		}
-		return $this->_container->get('translator')->trans('Notifications.'.$notification->getAction(), $elements);
+		return $this->_container->get('translator')->trans('Notifications.action.'.$action.".".$notification->getAction(), $elements);
 	}
 	
 	/**
@@ -131,7 +131,7 @@ class NotificationHelper {
 			$notifications = $reNotifications->findBy(array(
 					'user' => $userextend,
 					'view' => -1
-			),array('createdAt' => 'DESC'));
+			),array('id' => 'DESC'));
 		return $notifications;
 		// Devolvemos todas las notificaciones
 	}
