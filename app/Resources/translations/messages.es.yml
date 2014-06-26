@@ -113,7 +113,7 @@ Groups:
         description: 'Indica el tipo de visibilidad y asígnale una ruta'
         title: 'Editar datos de grupo'
 
-    empty: 'Crea un nuevo grupo de usuarios y asígnale una ruta de paseo'
+    empty: 'Únete a uno de los grupo de usuarios disponibles o crea uno nuevo'
 
     help:
         name: 'Nombre del grupo de pedibús'
@@ -181,7 +181,7 @@ Notifications:
     action:
         description:
             child:
-                in: 'El niño/a %0 ha sido registrado en el paseo del grupo %1'
+                in: 'El niño/a %0 ha sido incorporado al paseo del grupo %1'
 
                 invite:
                     accept: 'El usuario %0 ha aceptado la invitación para ser tutor/a del niño %1'

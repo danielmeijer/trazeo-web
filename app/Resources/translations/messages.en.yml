@@ -2,13 +2,13 @@ Admin:
     no: 'Disponible para el administrador'
     yes: 'Eres administrador de este grupo'
 
-'Bad credentials': 'Nombre de usuario o Contraseña inválido'
+'Bad credentials': 'Username or password incorrect.'
 
 Btn:
     back: volver
     success: Guardar
 
-ChangeVisibility: 'Cambiar visibilidad'
+ChangeVisibility: 'Change visibility.'
 
 Children:
     data:
@@ -90,9 +90,9 @@ DeleteAccount:
     description: 'Si deseas eliminar tu perfil ahora, ponte en contacto con nosotros a través del email hola@trazeo.es y procesaremos tu petición.'
     title: 'Eliminar cuenta'
 
-Description: 'La aplicación web / móvil para recuperar el camino al cole a pie'
+Description: 'The web / mobile application for recovering the traditional walk to school'
 DisJoin: Desvincularme
-Email: 'Correo electrónico'
+Email: Email
 
 Form:
     profile:
@@ -148,7 +148,7 @@ Groups:
         private: Privado
         public: Público
 
-Join: 'Unirme a este grupo'
+Join: 'Join this pedibus group.'
 
 Login:
     forgot: '¿Olvidaste la contraseña?'
