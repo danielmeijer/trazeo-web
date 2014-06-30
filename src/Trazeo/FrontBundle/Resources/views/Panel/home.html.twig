@@ -1,4 +1,8 @@
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
+{% set ride_description = 'Ride.yes.description.singular'|trans %}
+{% set ride_yes = 'Ride.yes.title.singular'|trans %}
+{% set ride_description_plural = 'Ride.yes.description.plural'|trans %}
+{% set ride_yes_plural = 'Ride.yes.title.plural'|trans %}
 {% block body_content %}
     <!-- START rideGroups -->
 	{% if groupsRide %}
@@ -7,22 +11,18 @@
         	<div class="col-md-1">
         		<i class="fa fa-5x fa-clock-o"></i>
         	</div>
-        	<div class="col-md-11">
-        	
+        	<div class="col-md-11">        	
 				{% if groupsRide|length > 0 %}
-					{% set ride_description = 'Ride.yes.description.singular'|trans %}
-					{% set ride_yes = 'Ride.yes.title.singular'|trans %}
+					<h3>{{ ride_yes_plural }}</h3>
+					<p>{{ ride_description_plural }}</p>
 				{% else  %}
-					{% set ride_description = 'Ride.yes.description.plural'|trans %}
-					{% set ride_yes = 'Ride.yes.title.plural'|trans %}
+					<h3>{{ ride_yes }}</h3>
+					<p>{{ ride_description }}</p>
 				{% endif %}
-				
-				<h3>{{ ride_yes }}</h3>
-				<p>{{ ride_description }}</p>
-				
+		
 				<br />
 				{% for group in groupsRide %}
-				<div class="row">
+				<div class="row currentRide" id="{{group.id}}">
 					<ul class="col-md-6">
 						<li><i class="fa fa-2x fa-users"></i>&nbsp; <a href="{{ path('panel_group_timeline',{'id': group.id}) }}">{{ group.Name }}</a></li>
 					</ul>
@@ -73,6 +73,12 @@
 {{ parent() }} 
 	{% include 'TrazeoFrontBundle:Panel:_tutorial.html.twig' %}
 	{% include 'TrazeoFrontBundle:Panel:_home_analytics.html.twig' %}
-	
+	{% include 'TrazeoFrontBundle:Panel:_ajax_rides.html.twig'
+		 with { 'ride_yes': ride_yes,
+		 		'ride_description_plural':ride_description_plural,
+		 		'ride_yes_plural': ride_yes_plural,
+		 		'ride_description': ride_description
+		 }
+	%}
 {% endblock %}
 
