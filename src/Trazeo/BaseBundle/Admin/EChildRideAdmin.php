@@ -8,7 +8,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-class ERideAdmin extends Admin
+class EChildRideAdmin extends Admin
 {
     /**
      * @param DatagridMapper $datagridMapper
@@ -17,14 +17,12 @@ class ERideAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
-            ->add('duration')
+            ->add('ride')
+            ->add('child')
             ->add('distance')
-            ->add('groupid')
-            ->add('group')
-            ->add('events')
-            ->add('reports')
             ->add('createdAt')
             ->add('updatedAt')
+            
         ;
     }
 
@@ -35,14 +33,6 @@ class ERideAdmin extends Admin
     {
         $listMapper
             ->add('id')
-            ->add('duration')
-            ->add('distance')
-            ->add('groupid')
-            ->add('group')
-            ->add('events')
-            ->add('reports')
-            ->add('createdAt')
-            ->add('updatedAt')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
@@ -50,6 +40,11 @@ class ERideAdmin extends Admin
                     'delete' => array(),
                 )
             ))
+            ->add('ride')
+            ->add('child')
+            ->add('distance')
+            ->add('createdAt')
+            ->add('updatedAt')
         ;
     }
 
@@ -60,11 +55,6 @@ class ERideAdmin extends Admin
     {
         $formMapper
             ->add('id')
-            ->add('duration')
-            ->add('distance')
-            ->add('groupid')
-            ->add('createdAt')
-            ->add('updatedAt')
         ;
     }
 
@@ -75,11 +65,6 @@ class ERideAdmin extends Admin
     {
         $showMapper
             ->add('id')
-            ->add('duration')
-            ->add('distance')
-            ->add('groupid')
-            ->add('createdAt')
-            ->add('updatedAt')
         ;
     }
 }

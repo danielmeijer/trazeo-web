@@ -133,7 +133,7 @@ class PanelRidesController extends FOSRestController
     		} else {
     			$sponsors = null;
     		}
-    		 
+
     		return array(
     				'route' => $route,
     				'ride' => $ride,

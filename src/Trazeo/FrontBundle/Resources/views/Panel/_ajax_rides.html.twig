@@ -1,0 +1,80 @@
+<script>
+	var ridesManager={
+		//var that indicates the time in milisecodns bettewn requests
+		'interval': 2000,
+		/*
+		* AJAX call for get all current groups with rides
+		*/
+		'check_rides':  function(){
+			$.ajax({
+				url: window.location+"getRides"
+				,success: function(response){
+					if(response.length>0){
+						if($(".currentGroups").length==0)ridesManager.createRidesContainer();
+						ridesManager.manageRides(response);
+						ridesManager.updateRidesContainer(response.length>1);
+					}
+					else{
+						$(".currentRide").remove();
+						$(".currentGroups").remove();	
+					} 
+				}
+			});
+		},
+		/*
+		* Add a ride to the panel
+		*
+		* @param {EGroup} group group that actually had a ride
+		*/
+		'addRide': function(group){
+			var container=$(".currentGroups > ,col-md-11")[1];
+			$(container).append(
+				'<div class="row currentRide" id="'+group.ride.id+'"><ul class="col-md-6"><li><i class="fa fa-2x fa-users"></i>&nbsp; <a href="/trazeo-web/web/app_dev.php/panel/group/'+group.id+'/timeline">'+group.name+'</a></li></ul><ul class="col-md-6"><li><i class="fa fa-2x fa-mail-forward"></i><a group="'+group.name+'" ride="'+group.ride.id+'" class="ride-action" href="/trazeo-web/web/app_dev.php/panel/ride/'+group.ride.id+'/current">&nbsp; Ir al paseo</a></li></ul></div>'
+			);
+				
+		},
+		/*
+		* Remove or add rides to the panel
+		*
+		* @param {JSONResponse} groups list of groups that actually had a ride
+		*/
+		'manageRides': function(groups){
+			//si esta cerrado y existe se borra
+			var to_remove=$(".currentRide").filter(
+				function(index){
+					for (var i = 0; i < groups.length; i++)
+						if($(".currentRide")[index].id!=groups[i].id)return true;
+					return false;
+			})
+			to_remove.remove();
+			//si esta abierto pero no existe se añade
+			for (var i = groups.length - 1; i >= 0; i--) {
+				this.addRide(groups[i]);
+			};
+		},
+		/*
+		* Update the container of actual rides
+		*
+		* @param {Boolean} plural boolean wich inicates if the number of rides if bigger than 1
+		*/
+		'updateRidesContainer': function(plural){
+			if(plural){
+				$(".currentGroups").html($(".currentGroups").html().replace("{{ ride_yes }}","{{ ride_yes_plural}}"));
+				$(".currentGroups").html($(".currentGroups").html().replace("{{ ride_description }}","{{ ride_description_plural}}"));					
+			}
+			else{
+				$(".currentGroups").html($(".currentGroups").html().replace("{{ ride_yes_plural}}","{{ ride_yes }}"));
+				$(".currentGroups").html($(".currentGroups").html().replace("{{ ride_description_plural}}","{{ ride_description }}"));									
+			}
+		},
+		/*
+		* Creates the container for actual rides
+		*/
+		'createRidesContainer': function(){
+			var first=$(".row")[0];
+			$(first).after('<div class="row"><div class="col-lg-12 currentGroups alert alert-success"><div class="col-md-1"><i class="fa fa-5x fa-clock-o"></i></div><div class="col-md-11"><h3>{{ ride_yes }}</h3><p>{{ ride_description }}</p><br /></div></div></div>');
+		}
+	};
+
+	setInterval(ridesManager.check_rides,ridesManager.interval);
+</script>

@@ -26,7 +26,8 @@ class RouteType extends AbstractType
         						'attr' => array(
         						'placeholder' => 'Route.description',
         						'data-toggle' => 'popover',
-        						'data-placement' => 'right'
+        						'data-placement' => 'right',
+        						'data-content' => $options['attr']['Route.help.description']
         					),'required' => false))
             ->add('country', 'entity', array(
             		'class' => 'JJsGeonamesBundle:Country',
@@ -59,5 +60,13 @@ class RouteType extends AbstractType
     public function getName()
     {
         return 'trazeo_basebundle_route';
+    }
+    
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+    	return 'trazeo_basebundle_route';
     }
 }

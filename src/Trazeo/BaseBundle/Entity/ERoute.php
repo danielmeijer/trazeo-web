@@ -4,6 +4,7 @@ namespace Trazeo\BaseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use JMS\Serializer\Annotation\Exclude;
 /**
  * Entity Route
  *
@@ -23,6 +24,7 @@ class ERoute
 	protected $id;
 	
 	/** @ORM\OneToMany(targetEntity="EGroup", mappedBy="route")
+     *  @Exclude
 	 */
 	protected $groups;
 	
@@ -32,6 +34,7 @@ class ERoute
 	
 	/** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="adminRoutes")
 	 *  @ORM\JoinColumn(name="admin_id", referencedColumnName="id")
+     *  @Exclude
 	 */
 	protected $admin;
 	

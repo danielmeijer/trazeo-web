@@ -111,6 +111,7 @@ class PanelRoutesController extends Controller
             'method' => 'POST',
         	'attr' => array(
         				'Route.help.name' => $this->get('translator')->trans('Route.help.name'),
+        				'Route.help.description' => $this->get('translator')->trans('Route.help.description'),
         				'Route.help.country' => $this->get('translator')->trans('Route.help.country'),
         				'default' => $spainCodeId
         		)
@@ -239,6 +240,7 @@ class PanelRoutesController extends Controller
             'method' => 'PUT',
         	'attr' => array(
         				'Route.help.name' => $this->get('translator')->trans('Route.help.name'),
+        				'Route.help.description' => $this->get('translator')->trans('Route.help.description'),
         				'Route.help.country' => $this->get('translator')->trans('Route.help.country'),
         				'default' => $spainCodeId
         		)

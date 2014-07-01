@@ -97,7 +97,7 @@ class CheckRidesCommand extends ContainerAwareCommand
 	 				$em->persist($child);
 	 			}
 	 			$em->flush();
-	 				
+
 	 			$event = new EEvent();
 	 			$event->setRide($ride);
 	 			$event->setAction("finish");

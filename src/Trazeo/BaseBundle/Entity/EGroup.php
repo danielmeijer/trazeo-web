@@ -4,6 +4,7 @@ namespace Trazeo\BaseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use JMS\Serializer\Annotation\Exclude;
 /**
  * Entity Group
  *
@@ -25,10 +26,12 @@ class EGroup
     /**
      * @ORM\ManyToMany(targetEntity="UserExtend", inversedBy="groups")
      * @ORM\JoinTable(name="groups_userextend")
+     * @Exclude
      **/
     protected $userextendgroups;
     
     /** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="adminGroups")
+     *  @Exclude
      */
     protected $admin;
     
@@ -57,11 +60,13 @@ class EGroup
     protected $access;
     
     /** @ORM\OneToMany(targetEntity="EGroupInvite",  mappedBy="group", cascade={"remove"})
+     *  @Exclude
      */
     protected $inviteGroup;
     
     /** @ORM\OneToMany(targetEntity="EGroupAnonInvite",  mappedBy="group", cascade={"remove"})
      * @var unknown
+     * @Exclude
      */
     protected $inviteGroupAnon;    
     

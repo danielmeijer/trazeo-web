@@ -27,6 +27,12 @@ services:
         tags:
             - {name: sonata.admin, manager_type: orm, group: admin, label: EChild}
 
+    trazeo_base.admin.e_child_ride:
+        class: Trazeo\BaseBundle\Admin\EChildRideAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\EChildRide, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: EChildRide}
+
     trazeo_base.admin.e_child_invite:
         class: Trazeo\BaseBundle\Admin\EChildInviteAdmin
         arguments: [~, Trazeo\BaseBundle\Entity\EChildInvite, SonataAdminBundle:CRUD]
@@ -107,4 +113,8 @@ services:
 
     trazeo_base_helper:
        class: Trazeo\BaseBundle\Service\Helper
-       arguments: ["@service_container"]      
+       arguments: ["@service_container"]
+
+    trazeo_base_distance_measurer:
+       class: Trazeo\BaseBundle\Service\DistanceMeasurer
+       arguments: ["@service_container"]        

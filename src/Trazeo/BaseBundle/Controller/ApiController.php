@@ -153,7 +153,10 @@ class ApiController extends Controller {
 			$arrayGroups['name'] = $group->getName();
 			$arrayGroups['visibility'] = $group->getVisibility();
 			$arrayGroups['hasride'] = $group->getHasRide();
-			
+			if($group->getHasRide()==1){
+				$ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneByGroup($group);
+				$arrayGroups['ride_id']=$ride->getId();
+			}
 			$array[] = $arrayGroups;
 		}
 		$view = View::create()
@@ -545,7 +548,7 @@ class ApiController extends Controller {
 		$id_ride = $request->get('id_ride');
 		$latitude = $request->get('latitude');
 		$longitude = $request->get('longitude');
-	
+
 		$user = $this->checkPrivateAccess($request);
 		if( $user == false || $user == null ){
 			$view = View::create()
@@ -586,6 +589,7 @@ class ApiController extends Controller {
 		$em->persist($ride);
 		
 		//desvinculamos a los niños del paseo
+		
 		$childs = $em->getRepository('TrazeoBaseBundle:EChild')->findByRide($ride);
 		foreach ($childs as $child){
 			$child->setRide(null);
@@ -604,33 +608,47 @@ class ApiController extends Controller {
 
 		$em->flush();
 		
-		$userextends = $group->getUserextendgroups();
-		
-		$not = $this->container->get('sopinet_user_notification');
-		foreach($userextends as $userextend)
-		{
-			//Notification just for parents with childrens on ride
+
+		//add notifications for parents
+	 	$userextends = $group->getUserextendgroups();
+	 			
+	 	$not = $this->container->get('sopinet_user_notification');
+	 	$reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
+
+	 	foreach($userextends as $userextend)
+	 	{
 			$find=false;
-			$userChilds=$userextend->getChilds();
-			foreach($childs as $child){
-				foreach ($userChilds as $userChild){
-					if($child->getId()==$userChild->getId())$find=true;
-				}
-			}	
-			if($find){
-				$not->addNotification(
-						"ride.finish",
-						"TrazeoBaseBundle:EGroup",
-						$group->getId(),
-						$this->generateUrl('panel_ride_resume',array('id' => $id_ride)),
-						$userextend->getUser()
-				);
-			}	 
-		}
+				
+	 		//Notification just for parents with childrens on ride
+	 		$userChilds=$userextend->getChilds();
+	 		foreach ($userChilds as $child){
+	 			$data=$child->getId().'/'.$child->getNick();
+	 				
+	 			$query = $reEvent->createQueryBuilder('e')
+	 			->where('e.data LIKE :name AND e.ride = :ride AND e.action = :in')
+	 			->setParameters(array('name' => '%'.$child->getNick()."%", 'ride' => $ride, 'in'=> 'in'))
+	 			->orderBy('e.createdAt', 'ASC')
+	 			->getQuery();
+	 				
+	 			$child=$query->getResult();
+	 				
+	 			if(count($child)>0){
+	 				$not->addNotification(
+	 						"ride.finish",
+	 						"TrazeoBaseBundle:EGroup",
+	 						$group->getId(),
+	 						$this->generateUrl('panel_ride_resume',array('id' => $ride->getId())),
+	 						$userextend->getUser());
+	 				break 1;
+	 			}
+	 					
+	 		}
+	 	}
+	 		
 
 		$view = View::create()
 		->setStatusCode(200)
-		->setData($this->doOK("ok"));
+		->setData($this->doOK('ok'));
 			
 		return $this->get('fos_rest.view_handler')->handle($view);
 		
