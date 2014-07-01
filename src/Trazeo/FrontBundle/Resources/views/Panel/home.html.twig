@@ -38,7 +38,6 @@
 		<!-- No mostramos nada -->
     {% endif %}
     <!-- END rideGropus -->
-
     <!-- START Resume -->
 	<div class="row">				
 		{% include 'TrazeoFrontBundle:PanelGroups:_customGroupsPanel.html.twig' with {
@@ -49,7 +48,15 @@
 	</div>
 	<hr/>
 	<!-- END resumeGroups -->
-	
+	 <!-- START User Points -->
+ 	<div class="row">
+    {% include 'TrazeoFrontBundle:PanelPoints:_customPointsPanel.html.twig' with{
+    		'user': user,
+    		'childs': childs
+	} %}
+	</div>
+	<hr/>
+    <!-- END User Points -->
 	<!-- START resumeRoutes -->
 	<div class="row">
 		{% include 'TrazeoFrontBundle:PanelRoutes:_customRoutesPanel.html.twig' with {
