@@ -47,7 +47,7 @@ class Builder extends ContainerAware
         if ($options['activeMenu'] == "group") {
         	$menu['Group']->setAttribute('class', 'active');
         }
-        
+ 
         // Routes
         $menu->addChild('Route', array(
         		'route' => 'panel_route'
@@ -58,8 +58,17 @@ class Builder extends ContainerAware
         if ($options['activeMenu'] == "route") {
         	$menu['Route']->setAttribute('class', 'active');
         }
-        
-        
+
+        // Points
+        $menu->addChild('Point', array(
+                'route' => 'panel_point'
+        ))
+        ->setLabel("");
+        $menu['Point']->setAttribute('icon', 'fa-trophy fa-2x');
+        $menu['Point']->setAttribute('tooltip', 'Menu.tooltip.point');
+        if ($options['activeMenu'] == "point") {
+            $menu['Point']->setAttribute('class', 'active');
+        }              
 
         return $menu;
     }

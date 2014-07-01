@@ -1,0 +1,28 @@
+{% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
+
+{% block body_content %}
+<!-- START pointsResume -->
+		<div class="col-lg-12">
+			<span class="btn btn-warning howto" data-toggle="modal" data-target="#howToModal">
+				<i class="fa fa-info "></i>&nbsp;{{"Points.index.howto"|trans}}
+			</span>&nbsp;	
+		</div>
+		</br>
+        <div class="col-lg-12 alert alert-success">
+        	<div class="col-md-4">
+        		<i class="fa fa-5x fa-trophy"></i>
+        	</div>
+
+			<div class="col-md-4">
+				<h4>{{ user.spendedPoints-user.points }} {{"Points.name"|trans}} {{ "Points.index.remains"|trans }}</h4>
+				<h4>{{ user.points }} {{"Points.name"|trans}} {{ "Points.index.total"|trans }} </h4>
+			</div>
+			<div class="col-md-4"><br/>
+				<a class="btn-xs btn-warning" href="{{ path('panel_point',{"user":user}) }}">
+					<i class="fa fa-bar-chart-o "></i>&nbsp;{{ 'Points.index.historical'|trans }}
+				</a>&nbsp;		
+			</div>
+		</div>
+		{% include 'TrazeoFrontBundle:PanelPoint:_howto_modal.html.twig' %}
+	<!-- END pointsResume -->
+{% endblock %}{# END body_content #}

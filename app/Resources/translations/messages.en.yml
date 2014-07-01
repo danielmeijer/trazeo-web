@@ -169,6 +169,7 @@ Menu:
         group: Grupos
         home: Inicio
         route: Rutas
+        point: Puntos
 
 Navbar:
     logout: 'Cerrar sesión'
@@ -545,3 +546,16 @@ security:
         remember_me: Recordar
         submit: Entrar
         username: 'Nombre de usuario:'
+
+Points:
+    mine: 'Mis puntos'
+    explanation: 'Gana puntos en Trazeo participando en el pedibus y animando a que otros lo hagan'
+    name: 'puntos'
+    total: 'en total'   
+    got: 'tienes'
+    exchange: '¿Quieres canjear tus puntos?'
+    index:
+        howto: '¿Cómo funciona?'
+        remains: 'aún por canjear'
+        total: 'totales conseguidos'
+        historical: 'Histórico de puntos'

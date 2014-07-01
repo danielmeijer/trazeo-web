@@ -21,6 +21,10 @@ children:
 groups:
     resource: "@TrazeoFrontBundle/Controller/PanelGroupsController.php"
     type:     annotation  
+
+point:
+    resource: "@TrazeoFrontBundle/Controller/PanelPointController.php"
+    type:     annotation
     
 routes:
     resource: "@TrazeoFrontBundle/Controller/PanelRoutesController.php"

@@ -1,0 +1,36 @@
+<!-- START pointsResume -->
+<div class="col-md-12 resumePoints" id="points">
+	{#{% if user.points > 0 %}#}
+	<div class="row">
+		<div class="pull-left">
+			<h1>
+				<span class="alert"><i class="fa fa-trophy"></i> {{ 'Points.mine'|trans }}</span>
+				</span>
+			</h1>
+		</div>
+	</div>
+	{% set alert_type = 'alert-warning' %}
+	{#{% else %}
+	{% set alert_type = 'alert-success' %}
+	{% endif %}#}
+	<div class="row {{alert_type}}">
+		<div class="col-md-4">
+			<h4>
+			{{ 'Points.explanation'|trans }}
+			&nbsp;&nbsp;
+			</h4>
+		</div>
+		<div class="col-md-4">
+			<h4>{{ "Points.got"|trans }} {{ user.points }} {{"Points.name"|trans}} {{ "Points.total"|trans }}
+			&nbsp;&nbsp;
+			</h4>
+		</div>
+		<div class="pull-right"><br/>
+			<a class="btn btn-warning" href="{{ path('panel_point',{"user":user}) }}">
+				<i class="fa fa-trophy "></i>&nbsp;{{ 'Points.exchange'|trans }}
+			</a>&nbsp;		
+		</div>
+	</div>
+</div>
+
+<!-- END pointsResume -->

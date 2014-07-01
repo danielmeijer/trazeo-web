@@ -1,0 +1,13 @@
+<h3>
+	<div class="pull-left">
+		{{"Points.historical.description"|trans}}
+	</div>
+</h3>
+<div style="clear:both"></div>	
+{% for childTotal in childTotals %}
+    {% include 'TrazeoFrontBundle:PanelRoutes:_rowHistorical.html.twig' with {
+    'userChilds' =>userChilds,
+    'distances' => distances,
+    'points' => points}
+     %}
+{% endfor %}
