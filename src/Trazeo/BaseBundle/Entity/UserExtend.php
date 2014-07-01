@@ -107,7 +107,22 @@ class UserExtend
      * @ORM\Column(name="nick", type="string", length=255)
      */
     protected $nick;
-    
+ 
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="points", type="integer")
+     */
+    protected $points=0;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="spendedPoints", type="integer")
+     */
+    protected $spendedPoints=0;
+
     public function __toString(){
     	if($this->name != "")
     		return $this->name;
@@ -668,5 +683,53 @@ class UserExtend
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set points
+     *
+     * @param integer $points
+     *
+     * @return UserExtend
+     */
+    public function setPoints($points)
+    {
+        $this->points = $points;
+
+        return $this;
+    }
+
+    /**
+     * Get points
+     *
+     * @return integer
+     */
+    public function getPoints()
+    {
+        return $this->points;
+    }
+
+    /**
+     * Set spendedPoints
+     *
+     * @param integer $spendedPoints
+     *
+     * @return UserExtend
+     */
+    public function setSpendedPoints($spendedPoints)
+    {
+        $this->spendedPoints = $spendedPoints;
+
+        return $this;
+    }
+
+    /**
+     * Get spendedPoints
+     *
+     * @return integer
+     */
+    public function getSpendedPoints()
+    {
+        return $this->spendedPoints;
     }
 }

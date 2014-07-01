@@ -41,7 +41,10 @@ class UpdateRidesDistanceCommand extends ContainerAwareCommand
     		//obtenemos todos los niños que pueden haber participado en un paseo 
     		if($ride->getGroupid()!=null){
     			$group = $em->getRepository("TrazeoBaseBundle:EGroup")->findOneById($ride->getGroupid());
-    			if($group!=null)$childs=$group->getChilds();	
+    			if($group!=null){
+                    $childs=$group->getChilds();
+                    $users=$group->getUserextendgroups();
+                }	
     		}
     		//si el paseo no ha terminado no actualizamos su distancia
     		else $distance=null;
@@ -56,11 +59,23 @@ class UpdateRidesDistanceCommand extends ContainerAwareCommand
 					$childride->setChild($child);
 					$childride->setDistance($auxdistance);	
 					$em->persist($childride);
-					$em->flush();
+					$em->flush();                  
 				}
 				$distance+=$auxdistance;
     		}
-			
+            //Actualizamos los puntos del usuario
+			foreach ($users as $user) {
+                $userChilds=$user->getChilds();
+                $distance=0;
+                foreach ($userChilds as $userChild) {
+                    $childrides = $em->getRepository("TrazeoBaseBundle:EChildRide")->findByChild($userChild);
+                    foreach ($childrides as $childride){
+                        $distance+=$childride->getDistance();
+                    }
+                }
+                $user->setPoints(floor($distance/1000));
+            }
+
     		//finalmente actualizamos la distancia recorrida en el paseo
 			$ride->setDistance($distance);
 			$em->persist($ride);
