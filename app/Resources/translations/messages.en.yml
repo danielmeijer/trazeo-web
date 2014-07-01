@@ -67,7 +67,7 @@ Children:
     new:
         description: 'Aquí puedes registrar a tus niños en la plataforma y posteriormente asignarlos a un grupo'
         register: 'Nuevo registro de Niño/a'
-        title: 'Registar Niño/a'
+        title: 'Registrar Niño/a'
 
     nick: 'Nombre del niño'
     register: 'Registrar mis niños/as en Trazeo'
