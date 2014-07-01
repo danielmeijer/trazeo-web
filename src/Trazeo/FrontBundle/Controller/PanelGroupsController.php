@@ -518,7 +518,8 @@ class PanelGroupsController extends Controller
 		$el = $not->addNotification(
 				'group.invite.accept',
 				"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
-				$groupAdminUser->getId() . "," . $group ,
+				// FIX ERROR (#4416): $groupAdminUser->getId() . "," . $group ,
+				$user->getId() . "," . $group ,
 				$this->generateUrl('panel_group'), $groupAdminUser->getUser()
 		);
 
