@@ -462,7 +462,7 @@ class PanelGroupsController extends Controller
 			$access = new EGroupInvite();
 			$access->setGroup($group);
 			$access->setUserextend($user);
-			$access->setUserrequest($user_current);
+			$access->setSender($user_current);
 				
 			$em->persist($access);
 			$em->flush();
@@ -509,7 +509,9 @@ class PanelGroupsController extends Controller
 		
 
 		$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findOneByUserextend($id);
-	
+		$sender=$userRequest->getSender();
+		$userSender = $em->getRepository('TrazeoBaseBundle:Userextend')->findOneById($sender);
+    	$fos_userSender = $userSender->getUser();
 
 		$groupAdmin = $groupToJoin->getAdmin();
 		$groupAdminUser = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($groupAdmin);
@@ -520,7 +522,7 @@ class PanelGroupsController extends Controller
 				"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
 				// FIX: #4416 $groupAdminUser->getId() . "," . $group ,
                 $user->getId() . "," . $group ,
-				$this->generateUrl('panel_group'), $userRequest->getUserrequest()
+				$this->generateUrl('panel_group'), $fos_userSender
 		);
 
 	
@@ -552,11 +554,15 @@ class PanelGroupsController extends Controller
 		$groupAdminUser = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($groupAdmin);
 		$groupAdmin_fos_user = $groupAdminUser->getUser();
 
+		$sender=$userRequest->getSender();
+		$userSender = $em->getRepository('TrazeoBaseBundle:Userextend')->findOneById($sender);
+    	$fos_userSender = $userSender->getUser();
+
 		$not = $this->container->get('sopinet_user_notification');
 		$el = $not->addNotification(
 				'group.invite.deny',
                 $user->getId() . "," . $group ,
-				$this->generateUrl('panel_group'), $userRequest->getUserrequest()
+				$this->generateUrl('panel_group'), $fos_userSender
 		);
 
 		$em->remove($userRequest);
