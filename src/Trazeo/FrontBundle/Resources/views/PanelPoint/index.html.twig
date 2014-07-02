@@ -14,12 +14,12 @@
         	</div>
 
 			<div class="col-md-4">
-				<h4>{{ user.spendedPoints-user.points }} {{"Points.name"|trans}} {{ "Points.index.remains"|trans }}</h4>
+				<h4>{{ user.points-user.spendedPoints }} {{"Points.name"|trans}} {{ "Points.index.remains"|trans }}</h4>
 				<h4>{{ user.points }} {{"Points.name"|trans}} {{ "Points.index.total"|trans }} </h4>
 			</div>
 			<div class="col-md-4"><br/>
-				<a class="btn-xs btn-warning" href="{{ path('panel_point',{"user":user}) }}">
-					<i class="fa fa-bar-chart-o "></i>&nbsp;{{ 'Points.index.historical'|trans }}
+				<a class="btn-xs btn-warning" href="{{ path('panel_point_historical') }}">
+					<i class="fa fa-bar-chart-o "></i>&nbsp;{{ 'Points.historical.button'|trans }}
 				</a>&nbsp;		
 			</div>
 		</div>

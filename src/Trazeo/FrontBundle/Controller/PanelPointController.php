@@ -46,7 +46,7 @@ class PanelPointController extends Controller
         /**
      * Show user point.
      *
-     * @Route("/", name="panel_point_historical")
+     * @Route("/historical", name="panel_point_historical")
      * @Method("GET")
      * @Template()
      */
@@ -66,7 +66,7 @@ class PanelPointController extends Controller
             }
             $points[$userChild->getId()]=floor($distances[$userChild->getId()]/1000);
         }
-
+        
         return array(
         'userChilds' => $userChilds,
         'distances' => $distances,

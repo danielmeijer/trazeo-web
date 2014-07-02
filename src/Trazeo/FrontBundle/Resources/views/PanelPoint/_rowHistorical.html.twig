@@ -1,24 +1,26 @@
+{% if distance/1000>0 %}
 <div class="row alert alert-warning">
 	<!-- Child name -->
-	<div class="col-md-5">
-    	{% if  childRide.child.Gender == "boy" %}
+	<div class="col-md-4">
+    	{% if  userChild.Gender == "boy" %}
         	<i class="fa fa-male"></i>
         {% else %}  
             <i class="fa fa-female"></i>
         {% endif %}
         
         {#<a href="{{ path('panel_child') }}/#collapse{{ child.id }}">#}
-        	{{ childTotal.child.nick }}
+        	{{ userChild.nick }} {{ 'Points.historical.walk'|trans }}
         {#</a>#}	
 	</div>
 	
 	<!-- Child meters -->
 	<div class="col-md-5">
-		<h4>&nbsp; {{ childTotal.meters}}</h4>
+		<h4>&nbsp; {{ distance/1000 }} {{ 'Points.historical.distance'|trans }} </h4>
 	</div>
 	
 	<!-- Child points -->
-	<div class="col-md-2">
-		<h4>&nbsp; {{ childTotal.points}}</h4>
+	<div class="col-md-3">
+		<h4>&nbsp; {{ point }} {{ 'Points.name'|trans }} {{ 'Points.historical.exchange'|trans }}</h4>
 	</div>
 </div>
+{% endif %}

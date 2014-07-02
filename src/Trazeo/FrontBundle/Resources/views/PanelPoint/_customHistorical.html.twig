@@ -4,10 +4,10 @@
 	</div>
 </h3>
 <div style="clear:both"></div>	
-{% for childTotal in childTotals %}
-    {% include 'TrazeoFrontBundle:PanelRoutes:_rowHistorical.html.twig' with {
-    'userChilds' =>userChilds,
-    'distances' => distances,
-    'points' => points}
+{% for userChild in userChilds %}
+    {% include 'TrazeoFrontBundle:PanelPoint:_rowHistorical.html.twig' with {
+    'userChild' : userChild,
+    'distance' : distances[userChild.id],
+    'point' : points[userChild.id]}
      %}
 {% endfor %}

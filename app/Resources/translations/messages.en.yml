@@ -558,4 +558,13 @@ Points:
         howto: '¿Cómo funciona?'
         remains: 'aún por canjear'
         total: 'totales conseguidos'
-        historical: 'Histórico de puntos'
+    historical: 
+        button: 'Histórico de puntos'
+        explanation: 'Estos son los puntos que has conseguido hasta el momento'
+        walk: 'ha caminado'
+        distance: 'kilómetros con Trazeo, que se convierten en'
+        exchange: 'canjeables'
+        description: 'Listado de las acciones que te han reportado puntos'
+        title: 'Histórico de puntos'
+    modal:
+        close: 'Cerrar'

@@ -1,0 +1,47 @@
+<?php 
+namespace Trazeo\BaseBundle\Command;
+
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Application\Sonata\UserBundle\Entity\User;
+use Trazeo\BaseBundle\Entity\EChildRide;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\RequestContext;
+use Sopinet\Bundle\SimplePointBundle\ORM\Type\SimplePoint;
+
+class UpdatePointsFirst extends ContainerAwareCommand
+{
+	# php app/console trazeo:points
+	
+    protected function configure()
+    {
+        $this
+            ->setName('trazeo:points')
+            ->setDescription('Calculate points for Users')
+        ;
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $con = $this->getContainer();
+        $con->enterScope('request');
+        $con->set('request', new Request(), 'request');
+        $em  = $con->get('doctrine')->getManager();
+        $users = $em->getRepository("TrazeoBaseBundle:UserExtend")->findAll();
+        $measurer = $con->get('trazeo_base_distance_measurer');
+        //Actualizamos los puntos del usuario
+        foreach ($users as $user) {
+            $userChilds=$user->getChilds();
+            $distance=0;
+            foreach ($userChilds as $userChild) {
+            $childrides = $em->getRepository("TrazeoBaseBundle:EChildRide")->findByChild($userChild);
+                foreach ($childrides as $childride){
+                    $distance+=$childride->getDistance();
+                }
+            }
+            $user->setPoints(floor($distance/1000));
+        }
+}
