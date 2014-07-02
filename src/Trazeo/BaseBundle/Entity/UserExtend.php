@@ -123,6 +123,14 @@ class UserExtend
      */
     protected $spendedPoints=0;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="mobile", type="integer", nullable=true)
+     */
+    protected $mobile=null;
+
+
     public function __toString(){
     	if($this->name != "")
     		return $this->name;
@@ -731,5 +739,29 @@ class UserExtend
     public function getSpendedPoints()
     {
         return $this->spendedPoints;
+    }
+
+    /**
+     * Set mobile
+     *
+     * @param integer $mobile
+     *
+     * @return UserExtend
+     */
+    public function setMobile($mobile)
+    {
+        $this->mobile = $mobile;
+
+        return $this;
+    }
+
+    /**
+     * Get mobile
+     *
+     * @return integer
+     */
+    public function getMobile()
+    {
+        return $this->mobile;
     }
 }

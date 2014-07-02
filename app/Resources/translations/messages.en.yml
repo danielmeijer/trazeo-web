@@ -39,6 +39,7 @@ Children:
         sex: Género
         userextend: 'Tutores del niño'
         visibility: Visibilidad
+        scholl: 'Centro educativo'
 
     index:
         acept: Aceptar
@@ -70,6 +71,7 @@ Children:
         title: 'Registrar Niño/a'
 
     nick: 'Nombre del niño'
+    scholl: 'Centro educativo'
     register: 'Registrar mis niños/as en Trazeo'
 
     visibility:
@@ -436,6 +438,7 @@ Userextend:
     help:
         groups: 'Grupos de los que quieres formar parte'
         nick: 'Nombre de  usuario'
+        mobile: 'Nº de movil, el monitor dispondrá de él para llamar en caso de necesidad'
 
     index:
         description: 'Administra tu datos de usuario en Trazeo'

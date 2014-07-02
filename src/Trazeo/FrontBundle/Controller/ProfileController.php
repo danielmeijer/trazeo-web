@@ -36,6 +36,7 @@ class ProfileController extends Controller
             'method' => 'POST',
         	'attr' => array(
         				'Userextend.help.nick' => $this->get('translator')->trans('Userextend.help.nick'),
+        				'Userextend.help.mobile' => $this->get('translator')->trans('Userextend.help.mobile'),
         				'default' => $spainCodeId
         		)
         	));
@@ -83,6 +84,7 @@ class ProfileController extends Controller
             'method' => 'POST',
         	'attr' => array(
         				'Userextend.help.nick' => $this->get('translator')->trans('Userextend.help.nick'),
+        				'Userextend.help.mobile' => $this->get('translator')->trans('Userextend.help.mobile'),
         				'default' => $spainCodeId,
         		)
         	));

@@ -79,7 +79,13 @@ class EChild
 	 * @ORM\Column(name="selected", type="boolean", nullable=true)
 	 */
 	protected $selected;
-    
+
+
+    /**
+     * @ORM\Column(name="scholl", type="string", nullable=true)
+     */
+    protected $scholl;
+        
        
     public function __toString(){
     	if($this->nick == "")
@@ -350,5 +356,53 @@ class EChild
     public function getSelected()
     {
         return $this->selected;
+    }
+
+    /**
+     * Set school
+     *
+     * @param string $school
+     *
+     * @return EChild
+     */
+    public function setSchool($school)
+    {
+        $this->school = $school;
+
+        return $this;
+    }
+
+    /**
+     * Get school
+     *
+     * @return string
+     */
+    public function getSchool()
+    {
+        return $this->school;
+    }
+
+    /**
+     * Set scholl
+     *
+     * @param string $scholl
+     *
+     * @return EChild
+     */
+    public function setScholl($scholl)
+    {
+        $this->scholl = $scholl;
+
+        return $this;
+    }
+
+    /**
+     * Get scholl
+     *
+     * @return string
+     */
+    public function getScholl()
+    {
+        return $this->scholl;
     }
 }

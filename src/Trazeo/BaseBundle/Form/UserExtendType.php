@@ -25,6 +25,16 @@ class UserExtendType extends AbstractType
             		'required' => false
         			)
         		)
+            ->add('mobile', 'number', array(
+                    'attr' => array(
+                            'placeholder' => 'Userextend.help.mobile',
+                            'data-toggle' => 'popover',
+                            'data-placement' => 'right',
+                            'data-content' => $options['attr']['Userextend.help.mobile']
+                            ),
+                    'required' => false
+                    )
+                )
              ->add('country', 'entity', array(
             		'class' => 'JJsGeonamesBundle:Country',
             		'attr' => array('class' => 'chosen-select'),

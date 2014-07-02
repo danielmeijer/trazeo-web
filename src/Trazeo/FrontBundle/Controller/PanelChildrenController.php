@@ -294,6 +294,7 @@ class PanelChildrenController extends Controller
         				'Children.help.datebirth' => $this->get('translator')->trans('Children.help.datebirth'),
         				'Children.help.visibility' => $this->get('translator')->trans('Children.help.visibility'),
         				'Children.help.gender' => $this->get('translator')->trans('Children.help.gender'),
+                        'Children.help.scholl' => $this->get('translator')->trans('Children.help.scholl'),
         		)
         ));
 
@@ -406,6 +407,7 @@ class PanelChildrenController extends Controller
         				'Children.help.datebirth' => $this->get('translator')->trans('Children.help.datebirth'),
         				'Children.help.visibility' => $this->get('translator')->trans('Children.help.visibility'),
         				'Children.help.gender' => $this->get('translator')->trans('Children.help.gender'),
+                        'Children.help.scholl' => $this->get('translator')->trans('Children.help.scholl'),
         		)
         ));
 
