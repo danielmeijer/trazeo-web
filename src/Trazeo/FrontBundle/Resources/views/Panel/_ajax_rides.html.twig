@@ -29,7 +29,7 @@
 		'addRide': function(group){
 			var container=$(".currentGroups > ,col-md-11")[1];
 			$(container).append(
-				'<div class="row currentRide" id="'+group.ride.id+'"><ul class="col-md-6"><li><i class="fa fa-2x fa-users"></i>&nbsp; <a href="'+'{{base_url}}'+'panel/group/'+group.id+'/timeline">'+group.name+'</a></li></ul><ul class="col-md-6"><li><i class="fa fa-2x fa-mail-forward"></i><a group="'+group.name+'" ride="'+group.ride.id+'" class="ride-action" href="'+'{{base_url}}'+'panel/ride/'+group.ride.id+'/current">&nbsp; Ir al paseo</a></li></ul></div>'
+				'<div class="row currentRide" id="'+group.ride.id+'"><ul class="col-md-6"><li><i class="fa fa-2x fa-users"></i>&nbsp; <a href="'+'{{base_url}}'+'/panel/group/'+group.id+'/timeline">'+group.name+'</a></li></ul><ul class="col-md-6"><li><i class="fa fa-2x fa-mail-forward"></i><a group="'+group.name+'" ride="'+group.ride.id+'" class="ride-action" href="'+'{{base_url}}'+'/panel/ride/'+group.ride.id+'/current">&nbsp; Ir al paseo</a></li></ul></div>'
 			);
 				
 		},
