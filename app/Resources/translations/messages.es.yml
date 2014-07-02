@@ -545,3 +545,25 @@ security:
         remember_me: Recordar
         submit: Entrar
         username: 'Nombre de usuario:'
+
+Points:
+    mine: 'Mis puntos'
+    explanation: 'Gana puntos en Trazeo participando en el pedibus y animando a que otros lo hagan'
+    name: 'puntos'
+    total: 'en total'   
+    got: 'tienes'
+    exchange: '¿Quieres canjear tus puntos?'
+    index:
+        howto: '¿Cómo funciona?'
+        remains: 'aún por canjear'
+        total: 'totales conseguidos'
+    historical: 
+        button: 'Histórico de puntos'
+        explanation: 'Estos son los puntos que has conseguido hasta el momento'
+        walk: 'ha caminado'
+        distance: 'kilómetros con Trazeo, que se convierten en'
+        exchange: 'canjeables'
+        description: 'Listado de las acciones que te han reportado puntos'
+        title: 'Histórico de puntos'
+    modal:
+        close: 'Cerrar'
