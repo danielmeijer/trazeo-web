@@ -1,5 +1,5 @@
 <?php
-namespace Sopinet\UserNotificationsBundle\Util;
+namespace Sopinet\Bundle\UserNotificationsBundle\Util;
 
 class TimeAgoHelper {
  

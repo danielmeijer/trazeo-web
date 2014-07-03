@@ -1,12 +1,12 @@
 <?php
 
-namespace Sopinet\UserNotificationsBundle\Service;
+namespace Sopinet\Bundle\UserNotificationsBundle\Service;
 
-use Sopinet\UserNotificationsBundle\SopinetUserNotificationsBundle;
+use Sopinet\Bundle\UserNotificationsBundle\SopinetUserNotificationsBundle;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Sopinet\UserNotificationsBundle\Entity\Notification;
+use Sopinet\Bundle\UserNotificationsBundle\Entity\Notification;
 
 class NotificationHelper {
 	private $_container;

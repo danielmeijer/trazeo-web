@@ -1,6 +1,6 @@
 <?php
 
-namespace Sopinet\UserNotificationsBundle\Controller;
+namespace Sopinet\Bundle\UserNotificationsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

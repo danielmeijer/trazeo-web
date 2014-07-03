@@ -1,6 +1,6 @@
 <?php
 
-namespace Sopinet\UserNotificationsBundle\Tests\Controller;
+namespace Sopinet\Bundle\UserNotificationsBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

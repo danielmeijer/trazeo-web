@@ -1,5 +1,5 @@
 <?php 
-namespace Sopinet\UserNotificationsBundle\Entity;
+namespace Sopinet\Bundle\UserNotificationsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;

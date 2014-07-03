@@ -1,11 +1,11 @@
 <?php
 
-namespace Sopinet\UserNotificationsBundle\Twig;
+namespace Sopinet\Bundle\UserNotificationsBundle\Twig;
 
 use Symfony\Component\Locale\Locale;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Sopinet\UserNotificationsBundle\Util\TimeAgoHelper;
+use Sopinet\Bundle\UserNotificationsBundle\Util\TimeAgoHelper;
 use Symfony\Component\Form\Extension\Core\DataTransformer\DateTimeToStringTransformer;
 
 /**

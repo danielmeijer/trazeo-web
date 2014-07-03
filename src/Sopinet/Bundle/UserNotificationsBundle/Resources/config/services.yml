@@ -1,5 +1,5 @@
 parameters:
-#    sopinet_user_notifications.example.class: Sopinet\UserNotificationsBundle\Example
+#    sopinet_user_notifications.example.class: Sopinet\Bundle\UserNotificationsBundle\Example
 
 services:
 #    sopinet_user_notifications.example:
@@ -8,11 +8,11 @@ services:
 
 services:
     sopinetusernotifications.twig.base_extension:
-        class: Sopinet\UserNotificationsBundle\Twig\BaseExtension
+        class: Sopinet\Bundle\UserNotificationsBundle\Twig\BaseExtension
         arguments: ['@service_container']
         tags:
             - { name: twig.extension }
             
     sopinet_user_notification:
-       class: Sopinet\UserNotificationsBundle\Service\NotificationHelper
+       class: Sopinet\Bundle\UserNotificationsBundle\Service\NotificationHelper
        arguments: ["@service_container"]

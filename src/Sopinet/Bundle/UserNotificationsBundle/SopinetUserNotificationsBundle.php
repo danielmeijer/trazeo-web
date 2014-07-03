@@ -1,6 +1,6 @@
 <?php
 
-namespace Sopinet\UserNotificationsBundle;
+namespace Sopinet\Bundle\UserNotificationsBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

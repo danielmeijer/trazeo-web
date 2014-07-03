@@ -1,6 +1,6 @@
 <?php
 
-namespace Sopinet\UserNotificationsBundle\DependencyInjection;
+namespace Sopinet\Bundle\UserNotificationsBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
