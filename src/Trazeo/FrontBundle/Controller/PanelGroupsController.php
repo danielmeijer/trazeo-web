@@ -561,6 +561,7 @@ class PanelGroupsController extends Controller
 		$not = $this->container->get('sopinet_user_notification');
 		$el = $not->addNotification(
 				'group.invite.deny',
+				"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
                 $user->getId() . "," . $group ,
 				$this->generateUrl('panel_group'), $fos_userSender
 		);
