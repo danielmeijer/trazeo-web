@@ -13,7 +13,7 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
  */
 class Notification
 {
-	use ORMBehaviors\Timestampable\Timestampable;
+    use ORMBehaviors\Timestampable\Timestampable;
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -58,10 +58,16 @@ class Notification
     protected $user;
     
     /**
-	 * @ORM\Column(name="link", type="string", length=255, nullable=true)
+     * @ORM\Column(name="link", type="string", length=255, nullable=true)
      */
     protected $link;
+
     
+    /**
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     */
+    protected $image;
+
     /**
      * Get id
      *
@@ -126,9 +132,9 @@ class Notification
      */
     public function setObjectsId($objects_id)
     {
-    	$this->objects_id = $objects_id;
+        $this->objects_id = $objects_id;
     
-    	return $this;
+        return $this;
     }
     
     /**
@@ -138,7 +144,7 @@ class Notification
      */
     public function getObjectsId()
     {
-    	return $this->objects_id;
+        return $this->objects_id;
     }    
 
     /**
@@ -212,11 +218,59 @@ class Notification
     
     public function getLink()
     {
-    	return $this->link;
+        return $this->link;
     }
     
     public function setLink($link)
     {
-    	$this->link = $link;
+        $this->link = $link;
+    }
+
+    /**
+     * Set view_complete
+     *
+     * @param boolean $viewComplete
+     *
+     * @return Notification
+     */
+    public function setViewComplete($viewComplete)
+    {
+        $this->view_complete = $viewComplete;
+
+        return $this;
+    }
+
+    /**
+     * Get view_complete
+     *
+     * @return boolean
+     */
+    public function getViewComplete()
+    {
+        return $this->view_complete;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     *
+     * @return Notification
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }
