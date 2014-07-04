@@ -656,6 +656,29 @@ class ApiController extends Controller {
 	}
 	
 	/**
+	 * Mandar la fecha del servior
+	 * @POST("/api/timeStamp")
+	 */
+	public function getTimeStampAction(Request $request) {
+		$user = $this->checkPrivateAccess($request);
+		if( $user == false || $user == null ){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied());
+	
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+		$now = new DateTime();
+	 
+		$view = View::create()
+		->setStatusCode(200)
+		->setData($this->doOK($now->getTimestamp()));
+			
+		return $this->get('fos_rest.view_handler')->handle($view);
+	
+	}	
+
+	/**
 	 * Guarda en el servidor la nueva posición del Grupo
 	 * @POST("/api/ride/report")
 	 */
