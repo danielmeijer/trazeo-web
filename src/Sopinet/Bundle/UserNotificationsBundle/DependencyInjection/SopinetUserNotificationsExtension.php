@@ -21,6 +21,9 @@ class SopinetUserNotificationsExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
+        $container->setParameter('sopinet_user_notifications.types', $config['types']);
+        $container->setParameter('sopinet_user_notifications.default_live', $config['default_live']);
+        $container->setParameter('sopinet_user_notifications.default_email', $config['default_email']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
