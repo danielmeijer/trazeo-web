@@ -668,11 +668,11 @@ class ApiController extends Controller {
 	
 			return $this->get('fos_rest.view_handler')->handle($view);
 		}
-		$now = new DateTime();
-	 
+        $now=new \Datetime();
+ 	 
 		$view = View::create()
 		->setStatusCode(200)
-		->setData($this->doOK($now->getTimestamp()));
+		->setData($this->doOK($now->format('Y-m-d H:i:s')));
 			
 		return $this->get('fos_rest.view_handler')->handle($view);
 	
