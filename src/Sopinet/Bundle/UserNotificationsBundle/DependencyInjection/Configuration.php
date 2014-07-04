@@ -25,10 +25,17 @@ class Configuration implements ConfigurationInterface
         // more information on that topic.
         $rootNode
             ->children()
-            ->arrayNode('types')
+                ->arrayNode('types')
+                ->defaultValue(array(array('icon' => null,'type' => 'important')))
                 ->prototype('array')
-                ->children()
-                            ->scalarNode('name')->end()
+                    ->children()
+                        ->scalarNode('type')->cannotBeEmpty()->end()
+                        ->scalarNode('icon')->end()
+                        ->arrayNode('actions')
+                            ->requiresAtLeastOneElement()
+                            ->prototype('scalar')->end()
+                        ->end()
+                    ->end()
                 ->end()
             ->end();
         return $treeBuilder;
