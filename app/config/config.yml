@@ -210,6 +210,9 @@ lunetics_locale:
        - browser
     cookie:
        set_on_change: true
-       
-       
-         
+sopinet_user_notifications:
+   default_email: ['important']
+   default_live: ['important']
+   types:
+       - {type: important , icon: null , actions: ['none']}
+       - {type: now , icon : null, actions: ['all']}      

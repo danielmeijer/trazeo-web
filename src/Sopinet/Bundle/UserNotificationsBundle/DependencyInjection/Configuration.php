@@ -25,6 +25,14 @@ class Configuration implements ConfigurationInterface
         // more information on that topic.
         $rootNode
             ->children()
+                ->arrayNode('default_email')
+                    ->requiresAtLeastOneElement()
+                    ->prototype('scalar')->end()
+                ->end()
+                ->arrayNode('default_live')
+                    ->requiresAtLeastOneElement()
+                    ->prototype('scalar')->end()
+                ->end()
                 ->arrayNode('types')
                 ->defaultValue(array(array('icon' => null,'type' => 'important')))
                 ->prototype('array')
