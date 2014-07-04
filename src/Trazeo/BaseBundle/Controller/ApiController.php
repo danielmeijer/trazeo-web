@@ -57,6 +57,7 @@ class ApiController extends Controller {
 		return $ret;
 	}
 	
+	
 	/**
 	 * Funcion que controla el usuario que envia datos a la API, sin estar logueado, con parámetros email y pass
 	 */
