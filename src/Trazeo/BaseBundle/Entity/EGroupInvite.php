@@ -28,6 +28,14 @@ class EGroupInvite
      */
     protected $userextend;
     
+    /** 
+     * @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="inviteGroupSender")
+     * @ORM\JoinColumn(name="sender_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     * @var unknown
+     */
+    protected $sender;
+
+
     /** @ORM\ManyToOne(targetEntity="EGroup", inversedBy="inviteGroup")
      *  @ORM\JoinColumn(name="group_id", referencedColumnName="id") 
      */
@@ -90,5 +98,29 @@ class EGroupInvite
     public function getGroup()
     {
         return $this->group;
+    }
+
+    /**
+     * Set sender
+     *
+     * @param \Trazeo\BaseBundle\Entity\UserExtend $sender
+     *
+     * @return EGroupInvite
+     */
+    public function setSender(\Trazeo\BaseBundle\Entity\UserExtend $sender = null)
+    {
+        $this->sender = $sender;
+
+        return $this;
+    }
+
+    /**
+     * Get sender
+     *
+     * @return \Trazeo\BaseBundle\Entity\UserExtend
+     */
+    public function getSender()
+    {
+        return $this->sender;
     }
 }

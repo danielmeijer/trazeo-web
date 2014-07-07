@@ -57,6 +57,7 @@ class ApiController extends Controller {
 		return $ret;
 	}
 	
+	
 	/**
 	 * Funcion que controla el usuario que envia datos a la API, sin estar logueado, con parámetros email y pass
 	 */
@@ -175,7 +176,7 @@ class ApiController extends Controller {
 		$id_group = $request->get('id_group');
 		$latitude = $request->get('latitude');
 		$longitude = $request->get('longitude');
-		
+
 		$user = $this->checkPrivateAccess($request);
 		if( $user == false || $user == null ){
 			$view = View::create()
@@ -186,7 +187,16 @@ class ApiController extends Controller {
 		}
 		
 		$em = $this->get('doctrine.orm.entity_manager');
-		
+		/*if($latitude==0.0 && $longitude==0.0){
+			$reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
+    	
+    		$events = $reEvent->findBy(array('action' => "point", 'ride' => $id_ride), array('createdAt' => 'DESC'));
+    		$lastEvent = $events[0];
+    		if($lastEvent){
+				$latitude=$lastEvent->getLocation()->getLatitude();
+				$longitude=$lastEvent->getLocation()->getLongitude();
+    		}
+		}*/		
 		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 		
 		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneBy(array("id" => $id_group));
@@ -335,7 +345,8 @@ class ApiController extends Controller {
 		$id_ride = $request->get('id_ride');
 		$latitude = $request->get('latitude');
 		$longitude = $request->get('longitude');
-	
+		$createdat = $request->get('createdat');
+
 		$user = $this->checkPrivateAccess($request);
 		if( $user == false || $user == null ){
 			$view = View::create()
@@ -346,7 +357,16 @@ class ApiController extends Controller {
 		}
 	
 		$em = $this->get('doctrine.orm.entity_manager');
-		
+		if($latitude==0.0 && $longitude==0.0){
+			$reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
+    	
+    		$events = $reEvent->findBy(array('action' => "point", 'ride' => $id_ride), array('createdAt' => 'DESC'));
+    		$lastEvent = $events[0];
+    		if($lastEvent!=null){
+				$latitude=$lastEvent->getLocation()->getLatitude();
+				$longitude=$lastEvent->getLocation()->getLongitude();
+    		}
+		}	
 		//$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 	
 		$ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
@@ -355,6 +375,7 @@ class ApiController extends Controller {
 		$event->setRide($ride);
 		$event->setAction("point");
 		$event->setLocation(new SimplePoint($latitude, $longitude));
+		$event->setCreatedAt(new\DateTime($createdat));
 		$event->setData("");
 		
 		$em->persist($event);
@@ -378,6 +399,7 @@ class ApiController extends Controller {
 		$id_child = $request->get('id_child');
 		$latitude = $request->get('latitude');
 		$longitude = $request->get('longitude');
+		$createdat = $request->get('createdat');
 	
 		$user = $this->checkPrivateAccess($request);
 		if( $user == false || $user == null ){
@@ -389,7 +411,16 @@ class ApiController extends Controller {
 		}
 	
 		$em = $this->get('doctrine.orm.entity_manager');
-	
+		if($latitude==0.0 && $longitude==0.0){
+			$reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
+    	
+    		$events = $reEvent->findBy(array('action' => "point", 'ride' => $id_ride), array('createdAt' => 'DESC'));
+    		$lastEvent = $events[0];
+    		if($lastEvent !=null){
+				$latitude=$lastEvent->getLocation()->getLatitude();
+				$longitude=$lastEvent->getLocation()->getLongitude();
+    		}
+		}		
 		//$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 	
 		$ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
@@ -402,6 +433,7 @@ class ApiController extends Controller {
 		$event->setAction("in");
 		$event->setData($id_child."/".$child->getNick());
 		$event->setLocation(new SimplePoint($latitude, $longitude));
+		$event->setCreatedAt(new\DateTime($createdat));
 		$em->persist($event);
 		$em->flush();
 		
@@ -443,7 +475,8 @@ class ApiController extends Controller {
 		$id_child = $request->get('id_child');
 		$latitude = $request->get('latitude');
 		$longitude = $request->get('longitude');
-	
+		$createdat = $request->get('createdat');
+
 		$user = $this->checkPrivateAccess($request);
 		if( $user == false || $user == null ){
 			$view = View::create()
@@ -454,7 +487,16 @@ class ApiController extends Controller {
 		}
 	
 		$em = $this->get('doctrine.orm.entity_manager');
-	
+		if($latitude==0.0 && $longitude==0.0){
+			$reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
+    	
+    		$events = $reEvent->findBy(array('action' => "point", 'ride' => $id_ride), array('createdAt' => 'DESC'));
+    		$lastEvent = $events[0];
+    		if($lastEvent !=null){
+				$latitude=$lastEvent->getLocation()->getLatitude();
+				$longitude=$lastEvent->getLocation()->getLongitude();
+    		}
+		}			
 		//$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 	
 		$ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
@@ -466,6 +508,7 @@ class ApiController extends Controller {
 		$event->setAction("out");
 		$event->setData($id_child."/".$child->getNick());
 		$event->setLocation(new SimplePoint($latitude, $longitude));
+		$event->setCreatedAt(new\DateTime($createdat));
 		$em->persist($event);
 		$em->flush();
 		
@@ -506,7 +549,7 @@ class ApiController extends Controller {
 		$id_ride = $request->get('id_ride');
 		$latitude = $request->get('latitude');
 		$longitude = $request->get('longitude');
-	
+
 		$user = $this->checkPrivateAccess($request);
 		if( $user == false || $user == null ){
 			$view = View::create()
@@ -548,6 +591,7 @@ class ApiController extends Controller {
 		$id_ride = $request->get('id_ride');
 		$latitude = $request->get('latitude');
 		$longitude = $request->get('longitude');
+		$createdat = $request->get('createdat');
 
 		$user = $this->checkPrivateAccess($request);
 		if( $user == false || $user == null ){
@@ -559,7 +603,16 @@ class ApiController extends Controller {
 		}
 	
 		$em = $this->get('doctrine.orm.entity_manager');
-	
+		if($latitude==0.0 && $longitude==0.0){
+			$reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
+    	
+    		$events = $reEvent->findBy(array('action' => "point", 'ride' => $id_ride), array('createdAt' => 'DESC'));
+    		$lastEvent = $events[0];
+    		if($lastEvent !=null){
+				$latitude=$lastEvent->getLocation()->getLatitude();
+				$longitude=$lastEvent->getLocation()->getLongitude();
+    		}
+		}	
 		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 		
 		$ride = $em->getRepository('TrazeoBaseBundle:ERide')->find($id_ride);
@@ -604,6 +657,7 @@ class ApiController extends Controller {
 		$event->setAction("finish");
 		$event->setData("");
 		$event->setLocation(new SimplePoint($latitude, $longitude));
+		$event->setCreatedAt(new\DateTime($createdat));
 		$em->persist($event);
 
 		$em->flush();
@@ -656,6 +710,29 @@ class ApiController extends Controller {
 	}
 	
 	/**
+	 * Mandar la fecha del servior
+	 * @POST("/api/timeStamp")
+	 */
+	public function getTimeStampAction(Request $request) {
+		$user = $this->checkPrivateAccess($request);
+		if( $user == false || $user == null ){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied());
+	
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+        $now=new \Datetime();
+ 	 
+		$view = View::create()
+		->setStatusCode(200)
+		->setData($this->doOK($now->format('Y-m-d H:i:s')));
+			
+		return $this->get('fos_rest.view_handler')->handle($view);
+	
+	}	
+
+	/**
 	 * Guarda en el servidor la nueva posición del Grupo
 	 * @POST("/api/ride/report")
 	 */
@@ -677,7 +754,17 @@ class ApiController extends Controller {
 		}
 	
 		$em = $this->get('doctrine.orm.entity_manager');
-	
+		if($latitude==0.0 && $longitude==0.0){
+			$reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
+    	
+    		$events = $reEvent->findBy(array('action' => "point", 'ride' => $id_ride), array('createdAt' => 'DESC'));
+    		$lastEvent = $events[0];
+    		if($lastEvent !=null){
+				$latitude=$lastEvent->getLocation()->getLatitude();
+				$longitude=$lastEvent->getLocation()->getLongitude();
+    		}
+		}	
+
 		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 	
 		$ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);

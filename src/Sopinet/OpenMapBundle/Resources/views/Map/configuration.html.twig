@@ -610,7 +610,7 @@
 		$.ajax({
 			url: lastRoute+lastId
 			,success: function(response){
-				if(response.length==0)timeFromLastUpdate+=30;
+				if(response.length==0)timeFromLastUpdate+=0;
 				else{
 					for(var i=0;i<response.length;i++){
 					lastId=response[i].id;

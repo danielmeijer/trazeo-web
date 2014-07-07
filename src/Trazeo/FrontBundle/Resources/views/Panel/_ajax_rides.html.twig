@@ -29,7 +29,7 @@
 		'addRide': function(group){
 			var container=$(".currentGroups > ,col-md-11")[1];
 			$(container).append(
-				'<div class="row currentRide" id="'+group.ride.id+'"><ul class="col-md-6"><li><i class="fa fa-2x fa-users"></i>&nbsp; <a href="/trazeo-web/web/app_dev.php/panel/group/'+group.id+'/timeline">'+group.name+'</a></li></ul><ul class="col-md-6"><li><i class="fa fa-2x fa-mail-forward"></i><a group="'+group.name+'" ride="'+group.ride.id+'" class="ride-action" href="/trazeo-web/web/app_dev.php/panel/ride/'+group.ride.id+'/current">&nbsp; Ir al paseo</a></li></ul></div>'
+				'<div class="row currentRide" id="'+group.ride.id+'"><ul class="col-md-6"><li><i class="fa fa-2x fa-users"></i>&nbsp; <a href="'+'{{base_url}}'+'/panel/group/'+group.id+'/timeline">'+group.name+'</a></li></ul><ul class="col-md-6"><li><i class="fa fa-2x fa-mail-forward"></i><a group="'+group.name+'" ride="'+group.ride.id+'" class="ride-action" href="'+'{{base_url}}'+'/panel/ride/'+group.ride.id+'/current">&nbsp; Ir al paseo</a></li></ul></div>'
 			);
 				
 		},
@@ -40,15 +40,10 @@
 		*/
 		'manageRides': function(groups){
 			//si esta cerrado y existe se borra
-			var to_remove=$(".currentRide").filter(
-				function(index){
-					for (var i = 0; i < groups.length; i++)
-						if($(".currentRide")[index].id!=groups[i].id)return true;
-					return false;
-			})
+			var to_remove=$(".currentRide");
 			to_remove.remove();
 			//si esta abierto pero no existe se añade
-			for (var i = groups.length - 1; i >= 0; i--) {
+			for (var i =  0; i < groups.length; i++) {
 				this.addRide(groups[i]);
 			};
 		},

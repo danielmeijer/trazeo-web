@@ -79,7 +79,11 @@ class UserExtend
     /** @ORM\OneToMany(targetEntity="EGroupInvite", mappedBy="userextend")
      */
     protected $inviteGroup;
-    
+
+    /** @ORM\OneToMany(targetEntity="EGroupInvite", mappedBy="sender")
+     */
+    protected $inviteGroupSender;
+
     /** @ORM\OneToMany(targetEntity="EChildInvite", mappedBy="userextend")
      */
     protected $inviteChild;
@@ -703,6 +707,17 @@ class UserExtend
     public function setPoints($points)
     {
         $this->points = $points;
+    }
+    /*
+     * Add inviteGroupSender
+     *
+     * @param \Trazeo\BaseBundle\Entity\EGroupInvite $inviteGroupSender
+     *
+     * @return UserExtend
+     */
+    public function addInviteGroupSender(\Trazeo\BaseBundle\Entity\EGroupInvite $inviteGroupSender)
+    {
+        $this->inviteGroupSender[] = $inviteGroupSender;
 
         return $this;
     }
@@ -763,5 +778,24 @@ class UserExtend
     public function getMobile()
     {
         return $this->mobile;
+    }
+    /*
+     * Remove inviteGroupSender
+     *
+     * @param \Trazeo\BaseBundle\Entity\EGroupInvite $inviteGroupSender
+     */
+    public function removeInviteGroupSender(\Trazeo\BaseBundle\Entity\EGroupInvite $inviteGroupSender)
+    {
+        $this->inviteGroupSender->removeElement($inviteGroupSender);
+    }
+
+    /**
+     * Get inviteGroupSender
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getInviteGroupSender()
+    {
+        return $this->inviteGroupSender;
     }
 }
