@@ -9,7 +9,7 @@
 			$.ajax({
 				url: window.location+"getRides"
 				,success: function(response){
-					if(response.length>0 && group.ride){
+					if(response.length>0 && response[0].ride){
 						if($(".currentGroups").length==0)ridesManager.createRidesContainer();
 						ridesManager.manageRides(response);
 						ridesManager.updateRidesContainer(response.length>1);
