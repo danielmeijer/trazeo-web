@@ -345,6 +345,7 @@ class ApiController extends Controller {
 		$id_ride = $request->get('id_ride');
 		$latitude = $request->get('latitude');
 		$longitude = $request->get('longitude');
+		$createdat = $request->get('createdat');
 
 		$user = $this->checkPrivateAccess($request);
 		if( $user == false || $user == null ){
@@ -374,6 +375,7 @@ class ApiController extends Controller {
 		$event->setRide($ride);
 		$event->setAction("point");
 		$event->setLocation(new SimplePoint($latitude, $longitude));
+		$event->setCreatedAt(new\DateTime($createdat));
 		$event->setData("");
 		
 		$em->persist($event);
@@ -397,6 +399,7 @@ class ApiController extends Controller {
 		$id_child = $request->get('id_child');
 		$latitude = $request->get('latitude');
 		$longitude = $request->get('longitude');
+		$createdat = $request->get('createdat');
 	
 		$user = $this->checkPrivateAccess($request);
 		if( $user == false || $user == null ){
@@ -430,6 +433,7 @@ class ApiController extends Controller {
 		$event->setAction("in");
 		$event->setData($id_child."/".$child->getNick());
 		$event->setLocation(new SimplePoint($latitude, $longitude));
+		$event->setCreatedAt(new\DateTime($createdat));
 		$em->persist($event);
 		$em->flush();
 		
@@ -471,6 +475,7 @@ class ApiController extends Controller {
 		$id_child = $request->get('id_child');
 		$latitude = $request->get('latitude');
 		$longitude = $request->get('longitude');
+		$createdat = $request->get('createdat');
 
 		$user = $this->checkPrivateAccess($request);
 		if( $user == false || $user == null ){
@@ -503,6 +508,7 @@ class ApiController extends Controller {
 		$event->setAction("out");
 		$event->setData($id_child."/".$child->getNick());
 		$event->setLocation(new SimplePoint($latitude, $longitude));
+		$event->setCreatedAt(new\DateTime($createdat));
 		$em->persist($event);
 		$em->flush();
 		
@@ -585,7 +591,8 @@ class ApiController extends Controller {
 		$id_ride = $request->get('id_ride');
 		$latitude = $request->get('latitude');
 		$longitude = $request->get('longitude');
-	
+		$createdat = $request->get('createdat');
+
 		$user = $this->checkPrivateAccess($request);
 		if( $user == false || $user == null ){
 			$view = View::create()
@@ -650,6 +657,7 @@ class ApiController extends Controller {
 		$event->setAction("finish");
 		$event->setData("");
 		$event->setLocation(new SimplePoint($latitude, $longitude));
+		$event->setCreatedAt(new\DateTime($createdat));
 		$em->persist($event);
 
 		$em->flush();

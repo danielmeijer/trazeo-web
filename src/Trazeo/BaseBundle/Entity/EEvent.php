@@ -129,4 +129,13 @@ class EEvent
     {
         return $this->ride;
     }
+    
+    /**
+     * Set created at
+     *
+     * @return \Trazeo\BaseBundle\Entity\ERide 
+     */    
+    public function setCreatedAt(\DateTime $createdAt) { 
+        $this->createdAt = $createdAt; 
+    } 
 }
