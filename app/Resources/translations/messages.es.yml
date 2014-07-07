@@ -171,6 +171,7 @@ Menu:
         group: Grupos
         home: Inicio
         route: Rutas
+        puntos: Puntos
 
 Navbar:
     logout: 'Cerrar sesión'
