@@ -102,9 +102,23 @@ class NotificationHelper {
 	function getNotifications($user = null, $limit = 5) {
 		$em = $this->_container->get("doctrine.orm.entity_manager");
 		$reNotifications = $em->getRepository("SopinetUserNotificationsBundle:Notification");
-		
 		$userextend = $this->_getSopinetUserExtend($user);
-		if ($limit > 0) {
+		$reUserLive = $em->getRepository("SopinetUserNotificationsBundle:UserLive");
+		$userlive=$reUserLive->getValue($userextend);
+		$notifications=[];
+
+		$auxnotifications = $reNotifications->findBy(array(
+					'user' => $userextend,
+					'view' => 0
+				));
+		foreach ($auxnotifications as $notification) {
+			if($limit>0 && count($notifications)>=limit)return $notifications;
+			else if (in_array($notification->getAction(), $userlive)) {
+				array_push($notifications, $notification);
+			}
+		}
+
+		/*if ($limit > 0) {
 			$notifications = $reNotifications->findBy(array(
 					'user' => $userextend,
 					'view' => 0
@@ -114,7 +128,7 @@ class NotificationHelper {
 					'user' => $userextend,
 					'view' => 0
 				));
-		}
+		}*/
 		return $notifications;
 		// Devolvemos las notificaciones
 	}
@@ -157,5 +171,44 @@ class NotificationHelper {
 			$em->flush();
 		}
 		return $count;
+	}
+
+	/*
+	 *Get all live settings defined on configuration
+	 *
+	 *
+	 * @return Array Live settings
+	*/
+	function getAllLiveSettings() {
+		$settings = $con->parameters['sopinet_user_notifications.types'];
+		return $settings;		
+	}
+
+	/*
+	 *Set all live options selected by user
+	 *
+	 * @param request
+	 * @return Array Live settings
+	*/	
+	function setAllLiveSettings(Request $request) {
+		$em = $this->_container->get("doctrine.orm.entity_manager");
+		$user = $this->_container->get('security.context')->getToken()->getUser();
+		$userextend = $user->getSopinetUserExtend();
+		
+		if ($userextend == null) {
+			$userextend = new \Sopinet\UserBundle\Entity\SopinetUserExtend();
+			$userextend->setUser($user);
+			$em->persist($userextend);
+			$em->flush();
+		}
+		
+		$reUserLive = $em->getRepository("SopinetNotificationsBundle:UserLive");
+		
+		foreach($request->request->all() as $key => $value) {
+			$temp = explode("_",$key);
+			if ($temp[0] == "live") {
+				$reUserLive>setValue($userextend, $value);
+			}
+		}	
 	}
 }

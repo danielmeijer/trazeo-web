@@ -40,6 +40,7 @@ class BaseExtension extends \Twig_Extension implements ContainerAwareInterface
         	'getSopinetUserNotifications' => new \Twig_Filter_Method($this, 'getSopinetUserNotificationsFilter'),
         	'parseSopinetUserNotification' => new \Twig_Filter_Method($this, 'parseSopinetUserNotificationFilter'),
         	'getTimeAgo'  => new \Twig_Filter_Method($this, 'getTimeAgoFilter'),
+            'getUserLiveValueFilter'  => new \Twig_Filter_Method($this, 'getUserValueFilter'),
         );
     }
 	
@@ -67,7 +68,19 @@ class BaseExtension extends \Twig_Extension implements ContainerAwareInterface
 		}
 		return new TimeAgoHelper($value, null, $this->container);
 	}	
-    
+  
+
+    /**
+     * Devuelve el valor de configuración para un usuario
+     * @param User <Entity> $user
+     * @return String value
+     */
+    public function getUserLiveValueFilter($user, $usersetting) {
+        $em = $this->container->get('doctrine')->getEntityManager();
+        $reUserLive = $em->getRepository("SopinetUserNotificationsBundle:UserLive");
+        return $reUserLive->getValue($user);
+    }
+
     public function getName()
     {
         return 'SopinetUserNotifications_extension';

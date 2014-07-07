@@ -7,11 +7,11 @@ use Doctrine\ORM\Event\OnFlushEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
  
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Sopinet\Bundle\UserNotificationsBundle\Entity\UserLiveRepository")
  * @ORM\Table(name="user_live")
  * @DoctrineAssert\UniqueEntity("id")
  */
-class UserValue
+class UserLive
 {
     /**
      * @ORM\Id
@@ -54,4 +54,38 @@ class UserValue
     }  
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Sopinet\UserBundle\Entity\SopinetUserExtend $user
+     *
+     * @return UserLive
+     */
+    public function setUser(\Sopinet\UserBundle\Entity\SopinetUserExtend $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Sopinet\UserBundle\Entity\SopinetUserExtend
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 }
