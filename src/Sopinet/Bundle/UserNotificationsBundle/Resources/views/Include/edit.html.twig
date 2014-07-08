@@ -24,24 +24,24 @@
 			<div class="tab-content">
 				<div id="live_tab" class="fade tab-pane in active">
 					<div class="row-fluid">
-						<span class="span7">{{ ("preference."~setting)|trans }}</span>
+						<span class="span7"></span>
 						<span class="span5">
 								<div class="control-group">
 									<div class="controls">
-										{% for setting in settings %}
+										{% for setting in live_settings %}
 										<label>
-											<input type="checkbox" value="option1" id="inlineCheckbox1">
-											<input {% if (app.user.sopinetuserextend|getUserLiveValueFilter()) == setting %}checked="checked" {% endif %}name="setting_{{ setting }}" type="checkbox" class="ace" value="{{ setting }}"/>
-												<span class="lbl">{{ ("preference."~setting)|trans }}</span>
+											<input
+											 {% for user_value in (app.user|getUserLiveValueFilter()) %}
+											 	{% if user_value== setting.type %}checked="checked" {% endif %}
+											 {% endfor %}
+											name="setting_{{ setting.type }}" type="checkbox" class="ace" value="{{ setting.type }}"/>
+												<span class="lbl">{{ ("preference."~setting.type)|trans }}</span>
 										</label>
 										{% endfor %}
 										</div>
 									</div>
 						</span>
 					</div>
-				</div>
-				{% set i = i + 1 %}
-				{% endfor %}
 			</div>
 	
 		<br />
@@ -53,4 +53,5 @@
 		</div>
 	
 	</form>
+{% for user_value in (app.user|getUserLiveValueFilter()) %} {{user_value}} {% endfor %} 
 </div>

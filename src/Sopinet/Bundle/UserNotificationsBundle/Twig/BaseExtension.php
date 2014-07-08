@@ -40,7 +40,7 @@ class BaseExtension extends \Twig_Extension implements ContainerAwareInterface
         	'getSopinetUserNotifications' => new \Twig_Filter_Method($this, 'getSopinetUserNotificationsFilter'),
         	'parseSopinetUserNotification' => new \Twig_Filter_Method($this, 'parseSopinetUserNotificationFilter'),
         	'getTimeAgo'  => new \Twig_Filter_Method($this, 'getTimeAgoFilter'),
-            'getUserLiveValueFilter'  => new \Twig_Filter_Method($this, 'getUserValueFilter'),
+            'getUserLiveValueFilter'  => new \Twig_Filter_Method($this, 'getUserLiveValueFilter'),
         );
     }
 	
@@ -75,10 +75,18 @@ class BaseExtension extends \Twig_Extension implements ContainerAwareInterface
      * @param User <Entity> $user
      * @return String value
      */
-    public function getUserLiveValueFilter($user, $usersetting) {
+    public function getUserLiveValueFilter($user) {
         $em = $this->container->get('doctrine')->getEntityManager();
         $reUserLive = $em->getRepository("SopinetUserNotificationsBundle:UserLive");
-        return $reUserLive->getValue($user);
+        $findUL = $reUserLive->findOneByUser($user);
+            if ($findUL == null) {
+                $userlive=$this->container->parameters['sopinet_user_notifications.default_live'];
+            }
+            else{
+                $userlive=$findUL->getValue();
+            }
+
+        return $userlive;
     }
 
     public function getName()

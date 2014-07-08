@@ -38,11 +38,7 @@ class UserLive
     * @return string Value
     */
     public function getValue() {
-        if ($this->value == null) {
-            return $this->getContainer()->parameters['sopinet_user_notifications.default_live'];
-        } else {
-            return explode(',', $this->value);
-        }
+      return explode(',', $this->value);
     }  
    /**
     * Establece el valor para la configuración del usuario

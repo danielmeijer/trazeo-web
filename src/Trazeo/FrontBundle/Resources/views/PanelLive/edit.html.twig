@@ -1,0 +1,8 @@
+{% set activeMenu = "home" %}
+{% set pageheader_title = "Settings.index.title"|trans %}
+{% set pageheader_description = "Settings.index.description"|trans %}
+{% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
+
+{% block body_content %}
+	{% include 'SopinetUserNotificationsBundle:Include:edit.html.twig' %}
+{% endblock %}

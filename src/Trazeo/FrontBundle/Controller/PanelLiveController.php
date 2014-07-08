@@ -26,9 +26,9 @@ class PanelLiveController extends Controller
 	 */
 	public function editAction()
 	{
-		$sup = $this->container->get('sopinet_user_notifications');
+		$sup = $this->container->get('sopinet_user_notification');
 		$settings = $sup->getAllLiveSettings();
-		return array('settings' => $settings);
+		return array('live_settings' => $settings);
 	}
 
 	
@@ -40,9 +40,8 @@ class PanelLiveController extends Controller
 	 */	
 	public function saveAction(Request $request)
 	{
-		$sup = $this->container->get('sopinet_user_notifications');
+		$sup = $this->container->get('sopinet_user_notification');
 		$sup->setAllLiveSettings($request);
-		ldd($sup);
 		
 		$container = $this->get('sopinet_flashMessages');
 		// TODO: Traducir mensaje de Guardadas Preferencias de Usuario

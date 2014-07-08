@@ -7,6 +7,7 @@ use Sopinet\Bundle\UserNotificationsBundle\SopinetUserNotificationsBundle;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Sopinet\Bundle\UserNotificationsBundle\Entity\Notification;
+use Sopinet\Bundle\UserNotificationsBundle\Entity\UserLive;
 
 class NotificationHelper {
 	private $_container;
@@ -104,31 +105,43 @@ class NotificationHelper {
 		$reNotifications = $em->getRepository("SopinetUserNotificationsBundle:Notification");
 		$userextend = $this->_getSopinetUserExtend($user);
 		$reUserLive = $em->getRepository("SopinetUserNotificationsBundle:UserLive");
-		$userlive=$reUserLive->getValue($userextend);
+
+		$findUL = $reUserLive->findOneByUser($userextend);
+			if ($findUL == null) {
+				$userlive=$this->_container->parameters['sopinet_user_notifications.default_live'];
+			}
+			else{
+				$userlive=$findUL->getValue();
+			}
+
 		$notifications=[];
+		$actions=[];
+		$types=$this->_container->parameters['sopinet_user_notifications.types'];
+		foreach ($types as $type) {
+			if($userlive[0]=='all'){
+				$actions=array_merge($actions,$type['actions']);
+			}
+			elseif($userlive[0]=='none'){
+				break;
+			}
+			elseif(in_array($type['type'],$userlive)){
+				$actions=array_merge($actions,$type['actions']);
+			}
+		}
 
 		$auxnotifications = $reNotifications->findBy(array(
 					'user' => $userextend,
 					'view' => 0
 				));
+
 		foreach ($auxnotifications as $notification) {
-			if($limit>0 && count($notifications)>=limit)return $notifications;
-			else if (in_array($notification->getAction(), $userlive)) {
+			if($limit>0 && count($notifications)>=$limit)return $notifications;
+			else if($actions[0]=='all')array_push($notifications, $notification);
+			else if (in_array($notification->getAction(), $actions)) {
 				array_push($notifications, $notification);
 			}
 		}
 
-		/*if ($limit > 0) {
-			$notifications = $reNotifications->findBy(array(
-					'user' => $userextend,
-					'view' => 0
-					),array('id' => 'DESC'),$limit);
-		} else {
-			$notifications = $reNotifications->findBy(array(
-					'user' => $userextend,
-					'view' => 0
-				));
-		}*/
 		return $notifications;
 		// Devolvemos las notificaciones
 	}
@@ -180,6 +193,7 @@ class NotificationHelper {
 	 * @return Array Live settings
 	*/
 	function getAllLiveSettings() {
+		$con=$this->_container;
 		$settings = $con->parameters['sopinet_user_notifications.types'];
 		return $settings;		
 	}
@@ -202,13 +216,13 @@ class NotificationHelper {
 			$em->flush();
 		}
 		
-		$reUserLive = $em->getRepository("SopinetNotificationsBundle:UserLive");
-		
+		$reUserLive = $em->getRepository("SopinetUserNotificationsBundle:UserLive");
+		$userlive="";
 		foreach($request->request->all() as $key => $value) {
 			$temp = explode("_",$key);
-			if ($temp[0] == "live") {
-				$reUserLive>setValue($userextend, $value);
-			}
+			$userlive=$userlive.$temp[1].',';
 		}	
+		
+		$reUserLive->setValue($userextend, $userlive);
 	}
 }

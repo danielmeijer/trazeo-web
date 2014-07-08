@@ -41,7 +41,11 @@ userextend:
 settings:
     resource: "@TrazeoFrontBundle/Controller/PanelSettingsController.php"
     type:     annotation
-    
+
+live:
+    resource: "@TrazeoFrontBundle/Controller/PanelLiveController.php"
+    type:     annotation
+
 api:
     resource: "@TrazeoFrontBundle/Controller/ApiCheckController.php"
     type:     annotation
