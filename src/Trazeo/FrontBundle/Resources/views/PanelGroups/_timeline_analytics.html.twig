@@ -14,5 +14,8 @@
 	analytics.trackLink(link,"click.timeline.join",{group: '{{ group.name }}'});	
 	//Analytics new child button
 	var link=$('.new_child');
-	analytics.trackLink(link,'click.child.prev.new');	
+	analytics.trackLink(link,'click.child.prev.new');
+	//Analytics chil disjoin group
+	var link=$('.disjoin');
+	analytics.trackLink(link,"click.timeline.disjoin",{group: '{{ group.name }}'});		
 </script>

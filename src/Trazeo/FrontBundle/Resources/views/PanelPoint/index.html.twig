@@ -18,7 +18,7 @@
 				<h4>{{ user.points }} {{"Points.name"|trans}} {{ "Points.index.total"|trans }} </h4>
 			</div>
 			<div class="col-md-4"><br/>
-				<a class="btn-xs btn-warning" href="{{ path('panel_point_historical') }}">
+				<a class="btn-xs btn-warning historical" href="{{ path('panel_point_historical') }}">
 					<i class="fa fa-bar-chart-o "></i>&nbsp;{{ 'Points.historical.button'|trans }}
 				</a>&nbsp;		
 			</div>
@@ -26,3 +26,7 @@
 		{% include 'TrazeoFrontBundle:PanelPoint:_howto_modal.html.twig' %}
 	<!-- END pointsResume -->
 {% endblock %}{# END body_content #}
+{% block js %}
+	{{parent()}}
+	{% include 'TrazeoFrontBundle:PanelPoint:_index_analytics.html.twig' %}
+{% endblock %}

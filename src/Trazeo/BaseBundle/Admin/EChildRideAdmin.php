@@ -55,6 +55,9 @@ class EChildRideAdmin extends Admin
     {
         $formMapper
             ->add('id')
+            ->add('ride')
+            ->add('child')
+            ->add('distance')
         ;
     }
 
@@ -65,6 +68,9 @@ class EChildRideAdmin extends Admin
     {
         $showMapper
             ->add('id')
+            ->add('ride')
+            ->add('child')
+            ->add('distance')
         ;
     }
 }
