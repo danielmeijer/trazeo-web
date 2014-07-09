@@ -31,8 +31,8 @@
 										{% for setting in live_settings %}
 										<label>
 											<input
-											 {% for user_value in (app.user|getUserLiveValueFilter()) %}
-											 	{% if user_value== setting.type %}checked="checked" {% endif %}
+											 {% for user_value in (app.user.sopinetuserextend|getUserLiveValueFilter()) %}
+											 	{% if user_value == setting.type %}checked="checked" {% endif %}
 											 {% endfor %}
 											name="setting_{{ setting.type }}" type="checkbox" class="ace" value="{{ setting.type }}"/>
 												<span class="lbl">{{ ("preference."~setting.type)|trans }}</span>
@@ -53,5 +53,4 @@
 		</div>
 	
 	</form>
-{% for user_value in (app.user|getUserLiveValueFilter()) %} {{user_value}} {% endfor %} 
 </div>
