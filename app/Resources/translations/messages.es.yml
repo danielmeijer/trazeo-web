@@ -551,6 +551,8 @@ security:
         username: 'Nombre de usuario:'
 
 Points:
+    title: 'Total de puntos'
+    description: 'En este apartado puedes consultar toda la información referente a los puntos que has obtenido en Trazeo'
     mine: 'Mis puntos'
     explanation: 'Gana puntos en Trazeo participando en el pedibus y animando a que otros lo hagan'
     name: 'puntos'
