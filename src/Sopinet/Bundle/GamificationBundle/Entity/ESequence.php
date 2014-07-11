@@ -1,10 +1,11 @@
 <?php
  namespace Sopinet\Bundle\GamificationBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+ use Doctrine\ORM\Mapping as ORM;
+ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+
  /**
- * Entity Sequence
+ * Entity ESequence
  *
  * @ORM\Table("e_sequence")
  * @ORM\Entity
@@ -15,7 +16,7 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="id",type="integer")
+	 * @ORM\Column(name="id", type="integer")
 	 * @ORM\Id
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
@@ -24,21 +25,30 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 	/**
 	 * @var boolean
 	 *
-	 * @ORM\Column(name="unique",type="boolean")
+	 * @ORM\Column(name="unique", type="boolean")
 	 */
 	 protected $unique=false;
 
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="points",type="integer")
+	 * @ORM\Column(name="points", type="integer")
 	 */
 	 protected $points;
 
 	/**
-	 * @ORM\ManyToMany(targetEntity="Action")
+	 * @var string
+	 *
+	 * @ORM\Column(name="name", type="string")
+	 */
+	 protected $name;
+
+	/**
+	 * @ORM\ManyToMany(targetEntity="EAction")
 	 */
 	 protected $actions;
+
+
     /**
      * Constructor
      */
@@ -106,13 +116,37 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
     }
 
     /**
-     * Add actions
+     * Set name
      *
-     * @param \Sopinet\Bundle\GamificationBundle\Entity\Action $actions
+     * @param string $name
      *
      * @return ESequence
      */
-    public function addAction(\Sopinet\Bundle\GamificationBundle\Entity\Action $actions)
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Add actions
+     *
+     * @param \Sopinet\Bundle\GamificationBundle\Entity\EAction $actions
+     *
+     * @return ESequence
+     */
+    public function addAction(\Sopinet\Bundle\GamificationBundle\Entity\EAction $actions)
     {
         $this->actions[] = $actions;
 
@@ -122,9 +156,9 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
     /**
      * Remove actions
      *
-     * @param \Sopinet\Bundle\GamificationBundle\Entity\Action $actions
+     * @param \Sopinet\Bundle\GamificationBundle\Entity\EAction $actions
      */
-    public function removeAction(\Sopinet\Bundle\GamificationBundle\Entity\Action $actions)
+    public function removeAction(\Sopinet\Bundle\GamificationBundle\Entity\EAction $actions)
     {
         $this->actions->removeElement($actions);
     }

@@ -1,10 +1,11 @@
 <?php
  namespace Sopinet\Bundle\GamificationBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+ use Doctrine\ORM\Mapping as ORM;
+ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+
  /**
- * Entity Action
+ * Entity EAction
  *
  * @ORM\Table("e_action")
  * @ORM\Entity
@@ -15,7 +16,7 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="id",type="integer")
+	 * @ORM\Column(name="id", type="integer")
 	 * @ORM\Id
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
@@ -24,31 +25,44 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 	/**
 	 * @var boolean
 	 *
-	 * @ORM\Column(name="unique",type="boolean")
+	 * @ORM\Column(name="unique", type="boolean")
 	 */
 	 protected $unique=false;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="name",type="string")
-	 */
-	 protected $name;
-
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="time_restriction",type="string")
+	 * @ORM\Column(name="time_restriction", type="string")
 	 */
 	 protected $time_restriction;
 
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="points",type="integer")
+	 * @ORM\Column(name="points", type="integer")
 	 */
 	 protected $points;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="points_restriction", type="string")
+	 */
+	 protected $points_restriction;
+
+	/**
+	 * @var boolean
+	 *
+	 * @ORM\Column(name="acumulative", type="boolean")
+	 */
+	 protected $acumulative=false;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="name", type="string")
+	 */
+	 protected $name;
 
 
 
@@ -134,6 +148,54 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
     public function getPoints()
     {
         return $this->points;
+    }
+
+    /**
+     * Set points_restriction
+     *
+     * @param string $pointsRestriction
+     *
+     * @return EAction
+     */
+    public function setPointsRestriction($pointsRestriction)
+    {
+        $this->points_restriction = $pointsRestriction;
+
+        return $this;
+    }
+
+    /**
+     * Get points_restriction
+     *
+     * @return string
+     */
+    public function getPointsRestriction()
+    {
+        return $this->points_restriction;
+    }
+
+    /**
+     * Set acumulative
+     *
+     * @param boolean $acumulative
+     *
+     * @return EAction
+     */
+    public function setAcumulative($acumulative)
+    {
+        $this->acumulative = $acumulative;
+
+        return $this;
+    }
+
+    /**
+     * Get acumulative
+     *
+     * @return boolean
+     */
+    public function getAcumulative()
+    {
+        return $this->acumulative;
     }
 
     /**

@@ -1,48 +1,112 @@
 <?php
  namespace Sopinet\Bundle\GamificationBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+ use Doctrine\ORM\Mapping as ORM;
+ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+
  /**
- * Entity UserAction
+ * Entity EUserAction
  *
  * @ORM\Table("e_useraction")
  * @ORM\Entity
  */
  class EUserAction
  {
+    use ORMBehaviors\Timestampable\Timestampable;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+     protected $id;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="entities_involved", type="string")
+	 */
+	 protected $entities_involved;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="ids", type="string")
+	 */
+	 protected $ids;
+
 	/**
 	 * @var integer
 	 *
-	 * @ORM\Column(name="id",type="integer")
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="AUTO")
+	 * @ORM\Column(name="acumulated", type="integer", nullable=true)
 	 */
-	 protected $id;
+	 protected $acumulated=1;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Action")
-	 * @ORM\JoinColumn(name="action_id", referencedColumnName="id", nullable=true)
+	 * @ORM\ManyToOne(targetEntity="EAction")
+     * @ORM\JoinColumn(name="action_id", referencedColumnName="id", nullable=true)
 	 */
-	 protected $action;
-
-	/**
-	 * @ORM\ManyToOne(targetEntity="Sequence")
-	 * @ORM\JoinColumn(name="sequence_id", referencedColumnName="id", nullable=true)
-	 */
-	 protected $sequence;
+	 protected $actions;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="\Sopinet\UserBundle\Entity\SopinetUserExtend")
+     * @ORM\JoinColumn(name="sopinetuserextend_id", referencedColumnName="id", nullable=true)
 	 */
 	 protected $sopinetuserextends;
 
+	/**
+	 * @ORM\ManyToOne(targetEntity="ESequence")
+	 */
+	 protected $sequences;
+
+
     /**
-     * Constructor
+     * Set entities_involved
+     *
+     * @param string $entitiesInvolved
+     *
+     * @return EUserAction
      */
-    public function __construct()
+    public function setEntitiesInvolved($entitiesInvolved)
     {
-        $this->sopinetuserextends = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->entities_involved = $entitiesInvolved;
+
+        return $this;
+    }
+
+    /**
+     * Get entities_involved
+     *
+     * @return string
+     */
+    public function getEntitiesInvolved()
+    {
+        return $this->entities_involved;
+    }
+
+    /**
+     * Set ids
+     *
+     * @param string $ids
+     *
+     * @return EUserAction
+     */
+    public function setIds($ids)
+    {
+        $this->ids = $ids;
+
+        return $this;
+    }
+
+    /**
+     * Get ids
+     *
+     * @return string
+     */
+    public function getIds()
+    {
+        return $this->ids;
     }
 
     /**
@@ -56,37 +120,51 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
     }
 
     /**
-     * Add sopinetuserextends
+     * Set acumulated
      *
-     * @param \Sopinet\UserBundle\Entity\SopinetUserExtend $sopinetuserextends
+     * @param integer $acumulated
      *
      * @return EUserAction
      */
-    public function addSopinetuserextend(\Sopinet\UserBundle\Entity\SopinetUserExtend $sopinetuserextends)
+    public function setAcumulated($acumulated)
     {
-        $this->sopinetuserextends[] = $sopinetuserextends;
+        $this->acumulated = $acumulated;
 
         return $this;
     }
 
     /**
-     * Remove sopinetuserextends
+     * Get acumulated
      *
-     * @param \Sopinet\UserBundle\Entity\SopinetUserExtend $sopinetuserextends
+     * @return integer
      */
-    public function removeSopinetuserextend(\Sopinet\UserBundle\Entity\SopinetUserExtend $sopinetuserextends)
+    public function getAcumulated()
     {
-        $this->sopinetuserextends->removeElement($sopinetuserextends);
+        return $this->acumulated;
     }
 
     /**
-     * Get sopinetuserextends
+     * Set actions
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @param \Sopinet\Bundle\GamificationBundle\Entity\EAction $actions
+     *
+     * @return EUserAction
      */
-    public function getSopinetuserextends()
+    public function setActions(\Sopinet\Bundle\GamificationBundle\Entity\EAction $actions = null)
     {
-        return $this->sopinetuserextends;
+        $this->actions = $actions;
+
+        return $this;
+    }
+
+    /**
+     * Get actions
+     *
+     * @return \Sopinet\Bundle\GamificationBundle\Entity\EAction
+     */
+    public function getActions()
+    {
+        return $this->actions;
     }
 
     /**
@@ -104,50 +182,36 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
     }
 
     /**
-     * Set action
+     * Get sopinetuserextends
      *
-     * @param \Sopinet\Bundle\GamificationBundle\Entity\Action $action
+     * @return \Sopinet\UserBundle\Entity\SopinetUserExtend
+     */
+    public function getSopinetuserextends()
+    {
+        return $this->sopinetuserextends;
+    }
+
+    /**
+     * Set sequences
+     *
+     * @param \Sopinet\Bundle\GamificationBundle\Entity\ESequence $sequences
      *
      * @return EUserAction
      */
-    public function setAction(\Sopinet\Bundle\GamificationBundle\Entity\Action $action = null)
+    public function setSequences(\Sopinet\Bundle\GamificationBundle\Entity\ESequence $sequences = null)
     {
-        $this->action = $action;
+        $this->sequences = $sequences;
 
         return $this;
     }
 
     /**
-     * Get action
+     * Get sequences
      *
-     * @return \Sopinet\Bundle\GamificationBundle\Entity\Action
+     * @return \Sopinet\Bundle\GamificationBundle\Entity\ESequence
      */
-    public function getAction()
+    public function getSequences()
     {
-        return $this->action;
-    }
-
-    /**
-     * Set sequence
-     *
-     * @param \Sopinet\Bundle\GamificationBundle\Entity\Sequence $sequence
-     *
-     * @return EUserAction
-     */
-    public function setSequence(\Sopinet\Bundle\GamificationBundle\Entity\Sequence $sequence = null)
-    {
-        $this->sequence = $sequence;
-
-        return $this;
-    }
-
-    /**
-     * Get sequence
-     *
-     * @return \Sopinet\Bundle\GamificationBundle\Entity\Sequence
-     */
-    public function getSequence()
-    {
-        return $this->sequence;
+        return $this->sequences;
     }
 }
