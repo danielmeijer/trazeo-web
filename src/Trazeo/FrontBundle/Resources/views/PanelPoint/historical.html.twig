@@ -16,9 +16,8 @@
         </div><!-- END col-lg-12 alert alert-info -->
         <p>&nbsp;</p>
         {% include 'TrazeoFrontBundle:PanelPoint:_customHistorical.html.twig' with{
-    		'userChilds' : userChilds,
-    		'distances' : distances,
-    		'points' : points}
+    		'actions' : actions,
+        }
     	%}
 
 {% endblock %}

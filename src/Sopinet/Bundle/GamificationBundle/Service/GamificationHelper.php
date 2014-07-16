@@ -26,6 +26,9 @@ class GamificationHelper {
 		if ($user == null) {
 			$user = $this->_container->get('security.context')->getToken()->getUser();
 		}
+		else{
+			$user=$user->getUser();
+		}
 		$userextend = $user->getSopinetUserExtend();
 		if ($userextend == null) {
 			$userextend = new \Sopinet\UserBundle\Entity\SopinetUserExtend();
@@ -34,6 +37,16 @@ class GamificationHelper {
 			$em->flush();
 		}
 		return $userextend;
+	}
+	
+	/**
+	 * Get difference with a expecific format
+	 * @param DateInterval $difference
+	 * @param string $format
+	 */
+	private function _getDifferenceFormated($difference, $format) {
+		$df='$val=$difference->'.$format.'; return $val;';
+        return eval($df);
 	}
 
 	/**
@@ -65,10 +78,10 @@ class GamificationHelper {
 
 		$addflag=($lastAction==null);	
 		if(!$addflag && $action->getAcumulative()){
-			$this->_acumulateAction($lastAction,$action,$value);
+			$this->_acumulateAction($lastAction,$action,$value,$target_entities,$ids,$user);
 			return $lastAction;
 		}	
-		elseif(!$addflag) $addflag=(!$addflag && $this->_checkUniqueAction($action,$target_entities,$ids,$userextend) && $this->_timeRestrictionCheck($action,$lastAction));
+		elseif(!$addflag) $addflag=(!$this->_checkUniqueAction($action,$target_entities,$ids,$userextend) && $this->_timeRestrictionCheck($action,$lastAction));
 
 		if($addflag){
 			$useraction = new EUserAction();
@@ -149,13 +162,28 @@ class GamificationHelper {
 
 		$points=0;
 		foreach ($userActions as $userAction) {
-			if($userAction->getActions()!=null)$points+=$userAction->getActions()->getPoints()*$userAction->getAcumulated();
+			if($userAction->getActions()!=null){
+				$points+=ceil($userAction->getActions()->getPoints()*$userAction->getAcumulated());
+			}
 			elseif($userAction->getSequence()!=null)$points+=$userAction->getSequence()->getPoints();
 		}
 		return $points;
 	}
 
-		
+
+	/**
+	 * Get User Actions
+	 */
+	function getUserActions($user =null) {
+		$em = $this->_container->get("doctrine.orm.entity_manager");		
+		$userextend = $this->_getSopinetUserExtend($user);
+
+		$reUserActions = $em->getRepository("SopinetGamificationBundle:EUserAction");
+		$userActions=$reUserActions->findBy(array('sopinetuserextends' => $userextend));
+
+		return array('actions' => $userActions);
+	}
+
 	/**
 	 * Increase an acumulative action
 	 *
@@ -164,20 +192,25 @@ class GamificationHelper {
 	 * @param Integer $value value to acumulate
 	 * @return Action
 	 */
-	private function _acumulateAction($lastAction,$action,$value){
+	private function _acumulateAction($lastAction,$action,$value,$target_entities,$ids,$user){
 		$em = $this->_container->get("doctrine.orm.entity_manager");
-		$difference = $lastAction->getUpdatedAt()->diff($lastAction->getCreatedAt());
-		$diffFormated=$difference->format(explode(",", $action->getTimeRestriction())[0]);
-		$acumulated=$lastAction->getAcumulated();
+		$now=new \DateTime();
+		$difference =  $now->diff($lastAction->getCreatedAt());
+		$format=explode(",", $action->getTimeRestriction())[0];
+		$diffFormated=$this->_getDifferenceFormated($difference,$format);
 
+		$acumulated=$lastAction->getAcumulated();
+		$user=$this->_getSopinetUserExtend($user);
 		//si ya se ha excedido el tiempo de acumulación estipulado se crea una nueva accion
-		if($diffFormated>explode(",", $action->getTimeRestriction())[1]){
+		if($diffFormated>=explode(",", $action->getTimeRestriction())[1]){
 			$useraction = new EUserAction();
-			$useraction->setAction($action);
-			$useraction->setSopinetUserExtends($userextend);
+			$useraction->setActions($action);
+			$useraction->setSopinetUserExtends($user);
 			//se comprubeba si con el incremento seria mayor que el limite
 			if($value*$action->getPoints()<$action->getPointsRestriction())$useraction->setAcumulated($value);
 			else $useraction->setAcumulated($action->getPointsRestriction());
+			$useraction->setEntitiesInvolved($target_entities);
+			$useraction->setIds($ids);
 			$em->persist($useraction);
 			$em->flush();	
 			return $useraction;
@@ -207,9 +240,10 @@ class GamificationHelper {
 	 * @return Action
 	 */	
 	private function _timeRestrictionCheck($action,$lastAction){
-		$difference = $lastAction->getUpdatedAt()->diff(new \DateTime('now'));
-		$diffFormated=$difference->format(explode(",", $action->getTimeRestriction())[0]);
-		return($diffFormated>explode(",", $action->getTimeRestriction())[1]);
+		$difference = $lastAction->getCreatedAt()->diff(new \DateTime('now'));
+		$format=explode(",", $action->getTimeRestriction())[0];
+		$diffFormated=$this->_getDifferenceFormated($difference,$format);
+		return($diffFormated>=explode(",", $action->getTimeRestriction())[1]);
 	}
 		
 	/**
@@ -283,7 +317,7 @@ class GamificationHelper {
 		$em = $this->_container->get("doctrine.orm.entity_manager");
 		$reUserActions = $em->getRepository("SopinetGamificationBundle:EUserAction");		
 		$existAction=$reUserActions->findBy(array('sopinetuserextends' => $userextend, 'ids' => $ids));		
-		return $existAction==null;
+		return ($existAction==null);
 	}
 
 }

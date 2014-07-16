@@ -37,9 +37,9 @@
 	 protected $time_restriction;
 
 	/**
-	 * @var integer
+	 * @var decimal
 	 *
-	 * @ORM\Column(name="points", type="integer")
+	 * @ORM\Column(name="points", type="decimal", scale=4)
 	 */
 	 protected $points;
 
@@ -129,7 +129,7 @@
     /**
      * Set points
      *
-     * @param integer $points
+     * @param decimal $points
      *
      * @return EAction
      */
@@ -143,7 +143,7 @@
     /**
      * Get points
      *
-     * @return integer
+     * @return decimal
      */
     public function getPoints()
     {

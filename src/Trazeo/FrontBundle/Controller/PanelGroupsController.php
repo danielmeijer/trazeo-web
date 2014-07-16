@@ -682,7 +682,13 @@ class PanelGroupsController extends Controller
             }
             $em->persist($group);
             $em->flush();
-            
+            $container = $this->get('sopinet_gamification');
+        	$container->addUserAction(
+        		"Create Group",
+        		"TrazeoBaseBundle:EGroup",
+        		$group->getId()
+        		);
+
             return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
 
             return $this->redirect($this->generateUrl('panel_group'));

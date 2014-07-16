@@ -4,10 +4,8 @@
 	</div>
 </h3>
 <div style="clear:both"></div>	
-{% for userChild in userChilds %}
+{% for action in actions %}
     {% include 'TrazeoFrontBundle:PanelPoint:_rowHistorical.html.twig' with {
-    'userChild' : userChild,
-    'distance' : distances[userChild.id],
-    'point' : points[userChild.id]}
+    'action' : action}
      %}
 {% endfor %}

@@ -60,6 +60,11 @@ class ERide
 	protected $groupid;
 
     /**
+     * @ORM\OneToOne(targetEntity="UserExtend")
+     **/
+    protected $userextend;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -373,5 +378,29 @@ class ERide
     public function getDistance()
     {
         return $this->distance;
+    }
+
+    /**
+     * Set userextend
+     *
+     * @param \Trazeo\BaseBundle\Entity\UserExtend $userextend
+     *
+     * @return ERide
+     */
+    public function setUserextend(\Trazeo\BaseBundle\Entity\UserExtend $userextend = null)
+    {
+        $this->userextend = $userextend;
+
+        return $this;
+    }
+
+    /**
+     * Get userextend
+     *
+     * @return \Trazeo\BaseBundle\Entity\UserExtend
+     */
+    public function getUserextend()
+    {
+        return $this->userextend;
     }
 }

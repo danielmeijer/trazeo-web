@@ -53,7 +53,10 @@ class PanelController extends Controller
 	    	$em->persist($user);
 	    	$em->flush();
 	    	$tutorial = 1;
-	    	
+	    	//Añadimos los puntos por crear el usuario
+            $container = $this->get('sopinet_gamification');
+        	$container->addUserAction(
+        		"Create User");	    	
 	    	// Creamos el correo de bienvenida
 	    	$message = \Swift_Message::newInstance()
 	    	// TODO: Traducir

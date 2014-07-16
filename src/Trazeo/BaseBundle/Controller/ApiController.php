@@ -265,7 +265,8 @@ class ApiController extends Controller {
 				
 				$ride = new ERide();
 				//TODO: En la relación Group-Ride, evitar los dos set
-				$ride->setGroup($group);				
+				$ride->setGroup($group);		
+				$ride->setUserextend($userextend);		
 				$em->persist($ride);
 				$group->setHasRide(1);
 				$group->setRide($ride);
