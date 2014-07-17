@@ -110,7 +110,11 @@ fos_user:
     user_class: Application\Sonata\UserBundle\Entity\User
     group:
           group_class: Trazeo\BaseBundle\Entity\Group
-          
+    registration:
+        form:
+            type: trazeo_user_registration
+            name: trazeo_user_registration_form
+            validation_groups:  [Registration, Default]      
 # Sonata User
 sonata_user:
     admin:

@@ -117,4 +117,9 @@ services:
 
     trazeo_base_distance_measurer:
        class: Trazeo\BaseBundle\Service\DistanceMeasurer
-       arguments: ["@service_container"]        
+       arguments: ["@service_container"]  
+    Trazeo_user.form.handler.registration:
+        class: Trazeo\BaseBundle\Form\RegistrationFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name:form.type, alias:trazeo_user_registration }
