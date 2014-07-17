@@ -40,7 +40,12 @@ class EGroupInvite
      *  @ORM\JoinColumn(name="group_id", referencedColumnName="id") 
      */
     protected $group;
-    
+ 
+
+     public function __toString(){
+            return (string)$this->id;
+    }
+
     /**
      * Get id
      *

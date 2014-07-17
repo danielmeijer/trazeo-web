@@ -574,6 +574,10 @@ Points:
         howto: 'Conseguir puntos en Trazeo'
         header: 'En Trazeo queremos premiar tu compromiso con los hábitos saludables y la sostenibilidad permitiéndote sumar puntos en tu cuenta personal y canjearlos posteriormente por premios y descuentos que ofrecen nuestras empresas y organismos colaboradores.'
         explain:
-            first: '¿Cómo puedes sumar puntos en Trazeo? Por cada kilómetro que uno de tus hijos camine con Trazeo, recibirás un punto en tu cuenta (con un máximo de 100 puntos al mes). Pronto podrás sumar puntos realizando otras acciones, como invitar a más personas a que se unan a tu pedibus.'
-            second: '¿Cómo puedes canjear tus puntos en Trazeo? Próximamente tendrás a tu disposición en Trazeo un listado de premios y descuentos donde podrás canjear los puntos conseguidos, así como instrucciones para hacerlo.'
-            third: 'Si necesitas más información, o si eres una empresa u organismo y quieres ofrecer premios y descuentos en Trazeo, puedes ponerte en contacto con nosotros en hola@trazeo.es '
+            first: 'Por cada kilómetro que uno de tus hijos camine con Trazeo, recibirás un punto en tu cuenta (con un máximo de 100 puntos al mes). Pronto podrás sumar puntos realizando otras acciones, como invitar a más personas a que se unan a tu pedibus.'
+            second: 'Próximamente tendrás a tu disposición en Trazeo un listado de premios y descuentos donde podrás canjear los puntos conseguidos, así como instrucciones para hacerlo.'
+            third: 'Si necesitas más información, o si eres una empresa u organismo y quieres ofrecer premios y descuentos en Trazeo, puedes ponerte en contacto con nosotros en '
+        question:
+            first: '¿Cómo puedes sumar puntos en Trazeo?'
+            second: '¿Cómo puedes canjear tus puntos en Trazeo?'       
+        mail: hola@trazeo.es    
