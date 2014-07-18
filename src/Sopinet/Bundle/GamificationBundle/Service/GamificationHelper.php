@@ -67,7 +67,7 @@ class GamificationHelper {
 		if($action==null)return null;
 
 		$reUserActions = $em->getRepository("SopinetGamificationBundle:EUserAction");
-		$userActions= $reUserActions->findBy(array('sopinetuserextends' => $userextend,'actions' => $action),Array('createdAt' => 'DESC'));
+		$userActions= $reUserActions->findBy(array('sopinetuserextends' => $userextend,'actions' => $action,'ids'=>$ids),Array('createdAt' => 'DESC'));
 
 		if (count($userActions) > 0) {
 			$lastAction = $userActions[0];

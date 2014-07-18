@@ -60,7 +60,7 @@ class ERide
 	protected $groupid;
 
     /**
-     * @ORM\OneToOne(targetEntity="UserExtend")
+     * @ORM\ManyToOne(targetEntity="UserExtend")
      **/
     protected $userextend;
 

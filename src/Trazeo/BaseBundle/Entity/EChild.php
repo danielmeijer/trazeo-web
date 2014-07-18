@@ -359,30 +359,6 @@ class EChild
     }
 
     /**
-     * Set school
-     *
-     * @param string $school
-     *
-     * @return EChild
-     */
-    public function setSchool($school)
-    {
-        $this->school = $school;
-
-        return $this;
-    }
-
-    /**
-     * Get school
-     *
-     * @return string
-     */
-    public function getSchool()
-    {
-        return $this->school;
-    }
-
-    /**
      * Set scholl
      *
      * @param string $scholl

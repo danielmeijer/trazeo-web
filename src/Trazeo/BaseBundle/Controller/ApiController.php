@@ -64,7 +64,7 @@ class ApiController extends Controller {
 	private function checkUser($email, $password){
 	
 		$user = $this->getDoctrine()->getRepository('\Application\Sonata\UserBundle\Entity\User')->findOneBy(array ("email"=>$email, "password"=>$password));
-				
+		//$user= $this->getDoctrine()->getRepository('\Application\Sonata\UserBundle\Entity\User')->findOneBy(array ("username"=>$email));		
 		if ($user == null){
 			$user = $this->getDoctrine()->getRepository('\Application\Sonata\UserBundle\Entity\User')->findOneBy(array ("username"=>$email, "password"=>$password));
 			if ($user == null){
@@ -896,6 +896,41 @@ class ApiController extends Controller {
 		->setStatusCode(200)
 		->setData($cities);
 			
+		return $this->get('fos_rest.view_handler')->handle($view);		
+	}
+
+	/**
+	 * @POST("/api/exchange/code")
+	 */
+	public function exchangeCodeAction() {
+		$user = $this->_container->get('security.context')->getToken()->getUser();
+		$q = $this->getRequest()->get('code');
+		$em = $this->get('doctrine.orm.entity_manager');
+		if($q=="3TTCTE1T"){
+
+	    	//Añadimos los puntos por crear el usuario
+            $container = $this->get('sopinet_gamification');
+        	if($container->addUserAction(
+        		"Create_User",
+        		"TrazeoBaseBundle:UserExtend",
+        		$user->getId(),
+        		$user
+        	)!=null){
+        		$view = View::create()
+				->setStatusCode(200)
+				->setData("ok");
+        	}
+        	else{
+				$view = View::create()
+				->setStatusCode(200)
+				->setData("false");
+        	}
+		}
+		else{
+			$view = View::create()
+			->setStatusCode(200)
+			->setData("false");
+		}
 		return $this->get('fos_rest.view_handler')->handle($view);		
 	}
 }

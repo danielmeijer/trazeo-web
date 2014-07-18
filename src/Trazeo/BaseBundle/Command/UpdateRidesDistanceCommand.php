@@ -62,6 +62,7 @@ class UpdateRidesDistanceCommand extends ContainerAwareCommand
     		//Calculamos la distancía recorrida por cada niño 
     		foreach ($childs as $child){
 				$auxdistance=$measurer->getChildDistance($child,$ride);
+                $output->writeln('<info>Niño detectado'. $child . ' distancía '.$auxdistance.'</info>');
 				//Si ha recorrido alguna distancía se guarda
 				if($auxdistance!=0){
 					$childride =new EChildRide();
@@ -86,16 +87,17 @@ class UpdateRidesDistanceCommand extends ContainerAwareCommand
                     $childrides = $em->getRepository("TrazeoBaseBundle:EChildRide")->findBy(array('updated' => false, 'child' => $userChild));
                     foreach ($childrides as $childride){
                         $distance+=$childride->getDistance();
+                        $output->writeln('<info>Niño detectado'. $userChild . '</info>');
                         //Añadimos los puntos obtenidos por que el niño participe en el paseo
                         $sg->addUserAction(
-                        "Child On Ride",
+                        "Child_On_Ride",
                         "TrazeoBaseBundle:EChild",
                         $childride->getChild()->getId(),
                         $user      
                         );
                         //Añadimos los puntos obtenidos por la distancía recorrida por el niño  
                         $sg->addUserAction(
-                        "Distance Points",
+                        "Distance_Points",
                         "TrazeoBaseBundle:EChild",
                         $childride->getChild()->getId(),
                         $user,

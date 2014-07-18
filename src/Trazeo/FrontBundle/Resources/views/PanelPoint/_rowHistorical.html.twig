@@ -1,16 +1,18 @@
 <div class="row alert alert-warning">
 	<!-- Child name -->
 	<div class="col-md-4">
-            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i> {{action.createdAt|date("m/d/Y")}}
 	</div>
 	
 	<!-- Child meters -->
 	<div class="col-md-5">
-		<h4>&nbsp; {{ action.actions.name }}</h4>
+		<h4>&nbsp; {{ ('Points.action.'~action.actions.name)|trans }}</h4>
 	</div>
 	
 	<!-- Child points -->
 	<div class="col-md-3">
-		<h4>&nbsp; {{ (action.acumulated * action.actions.points)|round(0,'ceil')}} {{ 'Points.name'|trans }} {{ 'Points.historical.exchange'|trans }}</h4>
+		<h4>&nbsp; {{ (action.acumulated * action.actions.points)|round(0,'ceil')}}
+		{% if (action.acumulated * action.actions.points)|round(0,'ceil') >1  %} {{ 'Points.name_plural'|trans }} {{ 'Points.historical.exchange_plural'|trans }}</h4>
+		{% else %} {{ 'Points.name'|trans }} {{ 'Points.historical.exchange'|trans }}{% endif %}
 	</div>
 </div>

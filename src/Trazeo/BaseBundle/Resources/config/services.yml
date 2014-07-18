@@ -111,6 +111,12 @@ services:
         tags:
             - {name: sonata.admin, manager_type: orm, group: admin, label: ESuggestion}
 
+    trazeo_base.admin.e_useraction:
+        class: Trazeo\BaseBundle\Admin\EUserActionAdmin
+        arguments: [~, Sopinet\Bundle\GamificationBundle\Entity\EUserAction, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: EUserAction}
+
     trazeo_base_helper:
        class: Trazeo\BaseBundle\Service\Helper
        arguments: ["@service_container"]

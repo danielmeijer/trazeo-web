@@ -9,7 +9,7 @@
 			$.ajax({
 				url: window.location+"getRides"
 				,success: function(response){
-					if(response.length>0 && response[0].ride){
+					if(response[0]!=undefined && response[0].ride){
 						if($(".currentGroups").length==0)ridesManager.createRidesContainer();
 						ridesManager.manageRides(response);
 						ridesManager.updateRidesContainer(response.length>1);
@@ -46,6 +46,7 @@
 			for (var i =  0; i < groups.length; i++) {
 				this.addRide(groups[i]);
 			};
+			if(groups.length==undefined)this.addRide(groups[0]);
 		},
 		/*
 		* Update the container of actual rides

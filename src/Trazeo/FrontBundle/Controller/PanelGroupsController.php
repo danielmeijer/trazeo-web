@@ -684,7 +684,7 @@ class PanelGroupsController extends Controller
             $em->flush();
             $container = $this->get('sopinet_gamification');
         	$container->addUserAction(
-        		"Create Group",
+        		"Create_Group",
         		"TrazeoBaseBundle:EGroup",
         		$group->getId()
         		);

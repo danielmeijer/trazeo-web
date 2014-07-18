@@ -45,7 +45,7 @@ class PanelPointController extends Controller
         );
     }
 
-        /**
+    /**
      * Show user point.
      *
      * @Route("/historical", name="panel_point_historical")
@@ -53,6 +53,25 @@ class PanelPointController extends Controller
      * @Template()
      */
     public function historicalAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $fos_user = $this->container->get('security.context')->getToken()->getUser();   
+        $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+        $gamification = $this->container->get('sopinet_gamification');
+        $actions=$gamification->getUserActions($user);
+                
+        return $actions;
+    }
+
+
+    /**
+     * Show user point.
+     *
+     * @Route("/exchange", name="panel_point_exchange")
+     * @Method("GET")
+     * @Template()
+     */
+    public function exchangeAction()
     {
         $em = $this->getDoctrine()->getManager();
         $fos_user = $this->container->get('security.context')->getToken()->getUser();   

@@ -1,0 +1,30 @@
+{% set activeMenu = "exchange" %}
+{% set pageheader_title = "Exchange.title"|trans %}
+{% set pageheader_description = "Exchange.description"|trans %}
+{% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
+
+{% block body_content %}
+	<div class="col-lg-12">
+		<span class="pull-left">
+			<button type="button" class="btn btn-warning exchange-code">
+				 <i class="fa fa-plus-circle"></i>&nbsp; {{ "Exchange.button.code"|trans}}
+			</button>
+			<input type="text" id="exchangecode"  name="_exchangecode" placeholder='{{ "Exchange.help.code"|trans}}'/>
+		</span>	
+	</div>
+
+	<div class="col-lg-12">
+		{% for i in 0..3 %}
+			<span class="col-md-5 col-md-offset-1" margin-top="30px">
+				<img class="img-responsive pull-left" width="300" height="100" src="/trazeo-web/web/images/trazeito.png" alt="Trazeo" title="Trazeo">
+				<button type="button" class="btn btn-success exchange col-md-offset-3">
+				 	<i class="fa fa-plus-circle"></i>&nbsp; {{ "Exchange.button.exchange"|trans}}
+				</button>	
+		    </span>
+		{% endfor %}
+	</div>
+{% endblock %}{# END body_content #}
+{% block js %}
+	{{parent()}}
+	{% include 'TrazeoFrontBundle:PanelPoint:_ajax_exchange.html.twig' %}
+{% endblock %}
