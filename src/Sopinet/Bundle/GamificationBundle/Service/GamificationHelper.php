@@ -320,4 +320,22 @@ class GamificationHelper {
 		return ($existAction==null);
 	}
 
+	/**
+	 * Obtains target entities's action _tostring
+	 *
+	 * @param UserAction
+	 * @return Array strings with the _tostring of the target entities
+	 */
+	public function actionToString($action){
+		$em = $this->_container->get("doctrine.orm.entity_manager");
+		$reEntities=explode(",", $action->getEntitiesInvolved());
+		$ids=explode(",", $action->getIds());
+		$objects=[];
+		for ($i=0; $i < count($ids); $i++) { 
+			$re=$em->getRepository($reEntities[$i]);
+			$name=$re->findOneById($ids[$i]);
+			array_push($objects, $name);
+		}	
+		return $objects;
+	}
 }

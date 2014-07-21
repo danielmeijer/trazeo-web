@@ -587,11 +587,11 @@ Points:
             second: '¿Cómo puedes canjear tus puntos en Trazeo?'
         mail: hola@trazeo.es
     action:
-        Create_Group: 'Por crear un grupo'
-        Create_User: 'Por crear un usuario'
-        Child_On_Ride: 'Por que tu hijo participo en un paseo'
-        Distance_Points: 'Por que tu hijo ha recorrido'
-        Manage_Ride:  'Por que hicistes de acompañante en un paseo'
+        Create_Group: 'Por crear el grupo 0'
+        Create_User: 'Por crear el usuario 0'
+        Child_On_Ride: 'Por que tu hijo 0 participo en un paseo'
+        Distance_Points: 'Por que tu hijo 0 ha recorrido'
+        Manage_Ride:  '0 por que hicistes de acompañante en el paseo '
     button:
         exchange: 'Canjear puntos'
 Exchange:
