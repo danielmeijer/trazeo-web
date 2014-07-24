@@ -15,9 +15,13 @@
 		
         </div><!-- END col-lg-12 alert alert-info -->
         <p>&nbsp;</p>
-        {% include 'TrazeoFrontBundle:PanelPoint:_customHistorical.html.twig' with{
-    		'actions' : actions,
+        {#{% include 'TrazeoFrontBundle:PanelPoint:_customHistorical.html.twig' with{
+    		'actions' : actions, 'acumulative_actions' : acumulative_actions
         }
-    	%}
+    	%}#}
+        {% include 'TrazeoFrontBundle:PanelPoint:_customHistorical.html.twig' with{
+            'actions' : actions,
+        }
+        %}
 
 {% endblock %}

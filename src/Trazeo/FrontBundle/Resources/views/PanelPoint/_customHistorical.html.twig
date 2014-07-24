@@ -3,9 +3,9 @@
 		{{"Points.historical.description"|trans}}
 	</div>
 </h3>
-<div style="clear:both"></div>	
+<div style="clear:both"></div>
 {% for action in actions %}
-    {% include 'TrazeoFrontBundle:PanelPoint:_rowHistorical.html.twig' with {
+    	{% include 'TrazeoFrontBundle:PanelPoint:_rowHistorical.html.twig' with {
     'action' : action}
      %}
 {% endfor %}

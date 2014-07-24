@@ -27,7 +27,7 @@ class RegistrationFormType extends AbstractType
                 'options' => array('translation_domain' => 'FOSUserBundle'),
                 'first_options' => array('label' => 'form.email'),
                 'second_options' => array('label' => 'form.email_confirmation'),
-                'invalid_message' => 'fos_user.email.invalid'
+                'invalid_message' => 'Please enter the same email twice',
             ))
             ->add('plainPassword', 'repeated', array(
                 'type' => 'password',

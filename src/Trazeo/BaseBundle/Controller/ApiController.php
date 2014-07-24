@@ -903,18 +903,19 @@ class ApiController extends Controller {
 	 * @POST("/api/exchange/code")
 	 */
 	public function exchangeCodeAction() {
-		$user = $this->_container->get('security.context')->getToken()->getUser();
+		$user = $this->get('security.context')->getToken()->getUser();
 		$q = $this->getRequest()->get('code');
 		$em = $this->get('doctrine.orm.entity_manager');
-		if($q=="3TTCTE1T"){
-
+		$code=$this->container->getParameter('exchange_code');
+		if($q==$code){
+			$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 	    	//Añadimos los puntos por crear el usuario
             $container = $this->get('sopinet_gamification');
         	if($container->addUserAction(
         		"Create_User",
         		"TrazeoBaseBundle:UserExtend",
-        		$user->getId(),
-        		$user
+        		$userextend->getId(),
+        		$userextend
         	)!=null){
         		$view = View::create()
 				->setStatusCode(200)

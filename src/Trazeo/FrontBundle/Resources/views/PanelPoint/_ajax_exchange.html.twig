@@ -6,7 +6,16 @@
   			type: "POST",
   			data: { code : $("#exchangecode").val()}
 		}).done(function(textResponse){
-			if(textResponse=='ok')alert(":D");
+			if(textResponse=='ok')var text="código canjeado correctamente";					
+			else var text="código erroneo";
+			trip = new Trip([
+					{
+						sel : $('.exchange-code'),
+						content : text,
+						position: 'n'
+	           		}
+		        ]);
+			trip.start();
 			$("#exchangecode").val("");
 		});
 	});

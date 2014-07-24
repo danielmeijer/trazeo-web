@@ -58,9 +58,9 @@ class PanelPointController extends Controller
         $fos_user = $this->container->get('security.context')->getToken()->getUser();   
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
         $gamification = $this->container->get('sopinet_gamification');
-        $actions=$gamification->getUserActions($user);
-                
-        return $actions;
+        $all_actions=$gamification->getUserActions($user);
+
+        return $all_actions;
     }
 
 
@@ -74,12 +74,16 @@ class PanelPointController extends Controller
     public function exchangeAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $fos_user = $this->container->get('security.context')->getToken()->getUser();   
+        $fos_user = $this->container->get('security.context')->getToken()->getUser(); 
+        $container = $this->get('sopinet_flashMessages');  
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
-        $gamification = $this->container->get('sopinet_gamification');
-        $actions=$gamification->getUserActions($user);
-                
-        return $actions;
-    }
+        $message = \Swift_Message::newInstance()
+        ->setFrom(array("hola@trazeo.es" => "Trazeo"))
+        ->setTo("info@trazeo.es")
+        ->setBody('<p>solicitud de canjeo del usuario'.$user->getNick().'</p>', 'text/html');
+        $ok = $this->container->get('mailer')->send($message);
 
+        $notification = $container->addFlashMessages("success","Tu solicitud ha sido enviada y se está procesando");
+        return $this->redirect($this->generateUrl('panel_point'));
+    }
 }

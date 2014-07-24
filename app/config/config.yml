@@ -215,5 +215,6 @@ lunetics_locale:
     cookie:
        set_on_change: true
        
-       
-         
+sopinet_gamification:
+    class: 'TrazeoBaseBundle:UserExtend'      
+    api: 'CiviClub'         

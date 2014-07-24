@@ -40,6 +40,16 @@ class GamificationHelper {
 	}
 	
 	/**
+	 * 
+	 */
+	function getUserRepository() {
+		$em = $this->_container->get("doctrine.orm.entity_manager");
+		$con = $this->_container;
+		$class=$con->parameters['sopinet_gamification.class'];
+		return $em->getRepository($class);
+	}
+
+	/**
 	 * Get difference with a expecific format
 	 * @param DateInterval $difference
 	 * @param string $format
@@ -79,6 +89,7 @@ class GamificationHelper {
 		$addflag=($lastAction==null);	
 		if(!$addflag && $action->getAcumulative()){
 			$this->_acumulateAction($lastAction,$action,$value,$target_entities,$ids,$user);
+			$this->_updateUserPoints($user,$action->getPoints()*$value);
 			return $lastAction;
 		}	
 		elseif(!$addflag) $addflag=(!$this->_checkUniqueAction($action,$target_entities,$ids,$userextend) && $this->_timeRestrictionCheck($action,$lastAction));
@@ -91,6 +102,7 @@ class GamificationHelper {
 			$useraction->setIds($ids);		
 			$em->persist($useraction);
 			$em->flush();
+			$this->_updateUserPoints($userextend,$action->getPoints()*$value);
 			return $useraction;
 		}
 
@@ -148,6 +160,23 @@ class GamificationHelper {
 				if($added!=null)array_push($newSequences, $added);
 		}
 		return $newSequences;
+	}
+
+	/**
+	 * Update User Points
+	 */
+	private function _updateUserPoints($user =null, $points=0) {
+		$em = $this->_container->get("doctrine.orm.entity_manager");	
+		$userextend = $this->_getSopinetUserExtend($user);
+		$reUserActions = $this->getUserRepository();
+		$sopinetuserextend=$reUserActions->findOneBy(array('user' => $userextend));
+		$sopinetuserextend->setPoints((integer)$this->getUserPoints($user));
+		$em->persist($sopinetuserextend);
+		$em->flush();
+		
+		$con = $this->_container;
+		$api = $con->parameters['sopinet_gamification.api'];
+		$this->_callApi($api,$user->getUser(),$points);
 	}
 
 	/**
@@ -337,5 +366,24 @@ class GamificationHelper {
 			array_push($objects, $name);
 		}	
 		return $objects;
+	}
+
+	/**
+	 * Call Api
+	 * @param String api to call
+	 */
+	private function _callApi($api =null,$user,$points) {
+
+		switch ($api) {
+			case 'CiviClub':
+				$con=$this->_container;
+				$con = $con->get('sopinet_gamification_civiclub');
+				$con->civiclubCall($user,$points);
+				break;
+			
+			default:
+				break;
+		}
+
 	}
 }

@@ -137,10 +137,13 @@ class UserExtend
 
     public function __toString(){
     	if($this->name != "")
-    		return $this->name;
+    		$string= $this->name;
     	else if($this->nick!= "")
-    		return $this->nick;
-    	return (string)$this->id;
+    		$string= $this->nick;
+    	else $string= (string)$this->id;
+        $patrón = '/@[\d|\D]*$/';
+        $sustitución = '';
+        return preg_replace($patrón, $sustitución, $string);
     }
     
     /**

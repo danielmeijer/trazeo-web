@@ -40,13 +40,11 @@
 				<td>Niños en esta ruta</td>
 				<td>{{ children.count }}</td>
 			</tr>
-			{% if route is defined %}	
 			<tr>
 				<td><i class="fa fa-key"></i></td>
-				<td>Autor</td>
-				<td>{{ route.admin }}</td>
+				<td>Monitor</td>
+				<td>{{ ride.userextend }}</td>
 			</tr>
-			{% endif %}
 		</tbody>
 	</table>
 </div>

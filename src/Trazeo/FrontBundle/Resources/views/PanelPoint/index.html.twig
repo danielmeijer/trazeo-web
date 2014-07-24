@@ -5,44 +5,59 @@
 
 {% block body_content %}
 <!-- START pointsResume -->
-		<div class="howto" data-toggle="modal" data-target="#howToModal">
+	<div class="col-lg-12" >
+		<div class="howto col-md-4" data-toggle="modal" data-target="#howToModal">
 			<button type="button" class="btn btn-warning">
 				 <i class="fa fa-info"></i>&nbsp; {{ 'Points.exchange'|trans }}	
 			</button>
 		</div>	
-	</br>
-        <div class="col-lg-12 alert alert-success">
-        	<div class="col-md-4">
-        		<i class="fa fa-5x fa-trophy"></i>
-        	</div>
-
-			<div class="col-md-4">
-				{% if (points-user.spendedPoints)>1%}
-				<h4>{{ points-user.spendedPoints }} {{"Points.name_plural"|trans}} {{ "Points.index.remains"|trans }}</h4>
-				{% else %}
-				<h4>{{ points-user.spendedPoints }} {{"Points.name"|trans}} {{ "Points.index.remains"|trans }}</h4>
-				{% endif %}
-				{% if (points)>1%}				
-				<h4>{{ points }} {{"Points.name_plural"|trans}} {{ "Points.index.total"|trans }} </h4>
-				{% else %}
-				<h4>{{ points }} {{"Points.name"|trans}} {{ "Points.index.total"|trans }} </h4>
-				{% endif %}
-			</div>
-			<div class="col-md-4"><br/>
-				<a class="btn-xs btn-warning historical" href="{{ path('panel_point_historical') }}">
-					<i class="fa fa-bar-chart-o "></i>&nbsp;{{ 'Points.historical.button'|trans }}
-				</a>&nbsp;		
-			</div>
-		</div>
-		<a class="pull-left" href="{{ path('panel_point_exchange') }}">
-			<button type="button" class="btn btn-success exchange">
-				 <i class="fa fa-plus-circle"></i>&nbsp; {{ 'Points.button.exchange'|trans }}	
+		<div class="civi col-md-4" data-toggle="modal" data-target="#civiModal">
+			<button type="button" class="btn btn-warning">
+				 <i class="fa fa-info"></i>&nbsp; {{ 'Points.modal.civi.button'|trans }}	
 			</button>
-		</a>	
-		{% include 'TrazeoFrontBundle:PanelPoint:_howto_modal.html.twig' %}
+		</div>	
+		<div class="code col-md-4">
+			<button type="button" class="btn btn-warning exchange-code">
+				 <i class="fa fa-plus-circle"></i>&nbsp; {{ "Exchange.button.code"|trans}}
+			</button>
+			<input type="text" id="exchangecode"  name="_exchangecode" placeholder='{{ "Exchange.help.code"|trans}}'/>
+		</div>	
+	</div>
+	</br>
+	</br>
+	<div class="col-lg-12 alert alert-success">
+       	<div class="col-md-4">
+       		<i class="fa fa-5x fa-trophy"></i>
+       	</div>
+		<div class="col-md-4">
+			{% if (points-user.spendedPoints)>1%}
+			<h4>{{ points-user.spendedPoints }} {{"Points.name_plural"|trans}} {{ "Points.index.remains"|trans }}</h4>
+			{% else %}
+			<h4>{{ points-user.spendedPoints }} {{"Points.name"|trans}} {{ "Points.index.remains"|trans }}</h4>
+			{% endif %}
+			{% if (points)>1%}				
+			<h4>{{ points }} {{"Points.name_plural"|trans}} {{ "Points.index.total"|trans }} </h4>
+			{% else %}
+			<h4>{{ points }} {{"Points.name"|trans}} {{ "Points.index.total"|trans }} </h4>
+			{% endif %}
+		</div>
+		<div class="col-md-4"><br/>
+			<a class="btn-xs btn-warning historical" href="{{ path('panel_point_historical') }}">
+				<i class="fa fa-bar-chart-o "></i>&nbsp;{{ 'Points.historical.button'|trans }}
+			</a>&nbsp;		
+		</div>
+	</div>
+	{% include 'TrazeoFrontBundle:PanelPoint:_howto_modal.html.twig' %}
+	{% include 'TrazeoFrontBundle:PanelPoint:_civi_modal.html.twig' %}
+	{% include 'TrazeoFrontBundle:PanelPoint:exchange.html.twig' %}
 	<!-- END pointsResume -->
 {% endblock %}{# END body_content #}
 {% block js %}
 	{{parent()}}
 	{% include 'TrazeoFrontBundle:PanelPoint:_index_analytics.html.twig' %}
+	<script type="text/javascript">
+		$('.modalchange').click(function(){$('#howToModal').modal('hide')});
+	</script>
+	{% include 'TrazeoFrontBundle:PanelPoint:_ajax_exchange.html.twig' %}
+
 {% endblock %}
