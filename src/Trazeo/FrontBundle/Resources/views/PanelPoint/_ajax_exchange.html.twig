@@ -2,7 +2,7 @@
 	$(".exchange-code").click(function()
 	{
 		$.ajax({
- 			url: "http://localhost/trazeo-web/web/app_dev.php/api/exchange/code",
+ 			url: "{{base_url}}"+"/api/exchange/code",
   			type: "POST",
   			data: { code : $("#exchangecode").val()}
 		}).done(function(textResponse){
