@@ -39,7 +39,7 @@
 	/**
 	 * @var decimal
 	 *
-	 * @ORM\Column(name="points", type="decimal", scale=4)
+	 * @ORM\Column(name="points",type="decimal", precision=6)
 	 */
 	 protected $points;
 

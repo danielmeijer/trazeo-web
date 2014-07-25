@@ -41,10 +41,11 @@ class UpdateRidesDistanceCommand extends ContainerAwareCommand
             $manager=null;
             if($ride->getUserExtend()!=null)$id= $ride->getUserExtend()->getId();
             //añadimos los puntos al monitor por acompañar el paseo
+            $output->writeln('<info>Monitor'. $ride->getUserExtend() .'</info>');
             $sg = $this->getContainer()->get('sopinet_gamification');
             $sg->addUserAction(
-                "Manage Ride",
-                "SopinetUserBundle:SopinetUserExtend",
+                "Manage_Ride",
+                "TrazeoBaseBundle:UserExtend",
                 $ride->getUserExtend()->getId(),
                 $ride->getUserExtend()      
             );
@@ -87,7 +88,7 @@ class UpdateRidesDistanceCommand extends ContainerAwareCommand
                     $childrides = $em->getRepository("TrazeoBaseBundle:EChildRide")->findBy(array('updated' => false, 'child' => $userChild));
                     foreach ($childrides as $childride){
                         $distance+=$childride->getDistance();
-                        $output->writeln('<info>Niño detectado'. $userChild . '</info>');
+                        $output->writeln('<info>Niño participa en el paseo'. $userChild . '</info>');
                         //Añadimos los puntos obtenidos por que el niño participe en el paseo
                         $sg->addUserAction(
                         "Child_On_Ride",
@@ -96,14 +97,17 @@ class UpdateRidesDistanceCommand extends ContainerAwareCommand
                         $user      
                         );
                         //Añadimos los puntos obtenidos por la distancía recorrida por el niño  
+                        $output->writeln('<info>Niño participa en el paseo '. $userChild . ' con puntos '. $distance.'</info>');
                         $sg->addUserAction(
                         "Distance_Points",
                         "TrazeoBaseBundle:EChild",
                         $childride->getChild()->getId(),
                         $user,
-                        $distance    
-                        );            
-                        $childride->setUpdated(true);
+                        $distance
+                        );           
+                        $childride->setUpdated(1);
+                        $em->persist($childride);
+                        $em->flush();
                     }
                 }
             }

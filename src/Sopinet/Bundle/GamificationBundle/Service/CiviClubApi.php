@@ -52,10 +52,10 @@ class CiviClubApi {
 		$container=$this->_container;
 		$gh = $container->get('sopinet_gamification');
 		$reUE = $gh->getUserRepository();
-		//$userextend=$reUE->findOneById($user->getId());
-		ldd($user->getEmail());
+		$userextend=$reUE->findOneById($user->getId());
+
 		$security= urlencode($container->getParameter('sopinet_user_civiclub_security'));
-		$email=urlencode($userextend->getNick());
+		$email=urlencode($user->getEmail());
 		$emitter_id=urlencode($container->getParameter('sopinet_user_civiclub_emitter_id'));
 		$emitter_center_id=urlencode($container->getParameter('sopinet_user_civiclub_emitter_center_id'));
 		$service_id=urlencode($container->getParameter('sopinet_user_civiclub_service_id'));
@@ -63,12 +63,7 @@ class CiviClubApi {
 
 		$str= "security=".$security."&email=".$email."&emitter_id=".$emitter_id."&emitter_center_id=".$emitter_center_id."&service_id=".$service_id."&number_uses=".$number_uses;
 
-		if($userextend==null){
-			$view = View::create()
-			->setStatusCode(200)
-			->setData($this->msgDenied());
-		} 
-		else{
+		if($userextend!=null){
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, 'https://www.civiclub.org/api/external/point/assign');
 			//requesting JSON
@@ -79,11 +74,6 @@ class CiviClubApi {
  			// If using JSON...
  			$data = json_decode($response);
  			curl_close($ch);
- 			$view = View::create()
-			->setStatusCode(200)
-			->setData($data);
 		}
-
-		return $this->get('fos_rest.view_handler')->handle($view);		
 	}	
 }

@@ -67,11 +67,11 @@ class PanelPointController extends Controller
     /**
      * Show user point.
      *
-     * @Route("/exchange", name="panel_point_exchange")
+     * @Route("/{discount}/exchange", name="panel_point_exchange")
      * @Method("GET")
      * @Template()
      */
-    public function exchangeAction()
+    public function exchangeAction($discount)
     {
         $em = $this->getDoctrine()->getManager();
         $fos_user = $this->container->get('security.context')->getToken()->getUser(); 
@@ -79,8 +79,9 @@ class PanelPointController extends Controller
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
         $message = \Swift_Message::newInstance()
         ->setFrom(array("hola@trazeo.es" => "Trazeo"))
-        ->setTo("info@trazeo.es")
-        ->setBody('<p>solicitud de canjeo del usuario'.$user->getNick().'</p>', 'text/html');
+        ->setTo("hola@trazeo.es")
+        ->setSubject('Solicitud de canjeo de usuario')
+        ->setBody('<p>Solicitud de canjeo del usuario '.$user->getNick().' para la oferta '.$discount. '</p>', 'text/html');
         $ok = $this->container->get('mailer')->send($message);
 
         $notification = $container->addFlashMessages("success","Tu solicitud ha sido enviada y se está procesando");

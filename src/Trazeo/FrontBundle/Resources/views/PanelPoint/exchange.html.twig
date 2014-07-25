@@ -1,10 +1,52 @@
 <div class="col-lg-12">
-	{% for i in 0..5 %}
-		<span class="col-md-3 col-md-offset-1" margin-top="30px">
-			<img class="img-responsive pull-left" width="300" height="100" src="/trazeo-web/web/images/trazeito.png" alt="Trazeo" title="Trazeo">
-			<a class="btn btn-success exchange col-md-offset-3" href="{{ path('panel_point_exchange') }}">
+		<span class="col-md-4" margin-top="30px">
+			<img class="img-responsive pull-left" width="300" height="100" src="/trazeo-web/web/images/OfertaCentroCordoba.png" alt="Trazeo" title="Trazeo">
+			<a class="btn btn-success exchange col-md-offset-3" margin-top="10px" href="{{ path('panel_point_exchange', { 'discount': 'Centro Córdoba'}) }}" >
 			 	<i class="fa fa-plus-circle"></i>&nbsp; {{ "Exchange.button.exchange"|trans}}
 			</a>	
 		</span>
-	{% endfor %}
+		<span class="col-md-4" margin-top="30px">
+			<img class="img-responsive pull-left" width="300" height="100" src="/trazeo-web/web/images/Oferta_Helen_Doron.png" alt="Trazeo" title="Trazeo">
+			<a class="btn btn-success exchange col-md-offset-3" margin-top="10px" href="{{ path('panel_point_exchange', { 'discount': 'Helen Doron'}) }}">
+			 	<i class="fa fa-plus-circle"></i>&nbsp; {{ "Exchange.button.exchange"|trans}}
+			</a>	
+		</span>
+		<span class="col-md-4" margin-top="30px">
+			<img class="img-responsive pull-left" width="300" height="100" src="/trazeo-web/web/images/Oferta_La_Casa_de_Tomasa.png" alt="Trazeo" title="Trazeo">
+			<a class="btn btn-success exchange col-md-offset-3" margin-top="10px" href="{{ path('panel_point_exchange', { 'discount': 'La Casa de Tomasa'}) }}">
+			 	<i class="fa fa-plus-circle"></i>&nbsp; {{ "Exchange.button.exchange"|trans}}
+			</a>	
+		</span>
+</div>
+<div class="col-lg-12">
+		<span class="col-md-4" margin-top="30px">
+			<img class="img-responsive pull-left" width="300" height="100" src="/trazeo-web/web/images/Oferta_Sus_Pasitos.png" alt="Trazeo" title="Trazeo">
+			</br>
+		</br>
+			<a class="btn btn-success exchange col-md-offset-3" margin-top="10px" href="{{ path('panel_point_exchange', { 'discount': 'Sus Pasitos descuento 50%'}) }}">
+			 	<i class="fa fa-plus-circle"></i>&nbsp; {{ "Exchange.button.exchange"|trans}}
+			</a>	
+		</span>
+		<span class="col-md-4" margin-top="30px">
+			<img class="img-responsive pull-left" width="300" height="100" src="/trazeo-web/web/images/Oferta_Sus_Pasitos 2.png" alt="Trazeo" title="Trazeo">
+			<a class="btn btn-success exchange col-md-offset-3" margin-top="10px" href="{{ path('panel_point_exchange', { 'discount': 'Sus Pasitos descuento 3€'}) }}">
+				<i class="fa fa-plus-circle"></i>&nbsp; {{ "Exchange.button.exchange"|trans}}
+			</a>	
+		</span>
+		<span class="col-md-4" margin-top="30px">
+			<img class="img-responsive pull-left" width="300" height="100" src="/trazeo-web/web/images/Oferta_CiviClub.png" alt="Trazeo" title="Trazeo">
+			<a class="btn btn-success exchange col-md-offset-3" margin-top="10px" href="https://www.civiclub.org">
+			 	<i class="fa fa-plus-circle"></i>&nbsp; {{ "Exchange.button.exchange"|trans}}
+			</a>	
+		</span>
+</div>
+<div class="col-lg-12">
+		<span class="col-md-4" margin-top="30px">
+			<img class="img-responsive pull-left" width="300" height="100" src="/trazeo-web/web/images/Oferta_Proximamente_Trazeo.png" alt="Trazeo" title="Trazeo">
+			</br>
+		</br>
+			<a class="btn btn-success exchange col-md-offset-3" margin-top="10px">
+			 	<i class="fa fa-plus-circle"></i>&nbsp; {{ "Exchange.button.exchange"|trans}}
+			</a>	
+		</span>
 </div>

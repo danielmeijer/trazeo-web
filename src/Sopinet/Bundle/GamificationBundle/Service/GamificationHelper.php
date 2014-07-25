@@ -100,6 +100,7 @@ class GamificationHelper {
 			$useraction->setActions($action);
 			$useraction->setEntitiesInvolved($target_entities);
 			$useraction->setIds($ids);		
+			$useraction->setAcumulated($value);	
 			$em->persist($useraction);
 			$em->flush();
 			$this->_updateUserPoints($userextend,$action->getPoints()*$value);
