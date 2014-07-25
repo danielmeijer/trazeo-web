@@ -552,8 +552,8 @@ security:
         username: 'Nombre de usuario:'
 
 Points:
-    title: ''
-    description: ''
+    title: 'Mis puntos'
+    description: 'Estos son tus puntos que puedes canjear por ofertas.'
     mine: 'Mis puntos'
     explanation: 'Gana puntos en Trazeo participando en el pedibus y animando a que otros lo hagan'
     name: 'puntos'
@@ -593,11 +593,11 @@ Points:
             third: 'Si necesitas más información, o si eres una empresa u organismo y quieres ofrecer premios y descuentos en Trazeo, puedes ponerte en contacto con nosotros en'
         question:
             first: '¿Cómo puedes sumar puntos en Trazeo?</br>'
-            second: '¿Cómo puedes canjear tus puntos en Trazeo?</br>'
+            second: '¿Cómo puedes canjear tus puntos en Trazeo?</br></br>'
         mail: hola@trazeo.es
     action:
         Create_Group: 'Por crear tu primer grupo'
-        Create_User: 'Por crear el usuario 0'
+        Create_User: 'Por canjear el código de bienvenida 0'
         Child_On_Ride: 'Porque tu hijo 0 participo en un paseo'
         Distance_Points: 'Porque tu hijo 0 ha recorrido 1m'
         Manage_Ride:  'Por hacer de acompañante en 1 paseo/s'
