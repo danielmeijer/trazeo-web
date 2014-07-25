@@ -919,7 +919,7 @@ class ApiController extends Controller {
         	)!=null){
         		$view = View::create()
 				->setStatusCode(200)
-				->setData("ok");
+				->setData($userextend->getPoints());
         	}
         	else{
 				$view = View::create()

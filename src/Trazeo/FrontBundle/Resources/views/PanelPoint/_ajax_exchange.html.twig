@@ -6,7 +6,10 @@
   			type: "POST",
   			data: { code : $("#exchangecode").val()}
 		}).done(function(textResponse){
-			if(textResponse=='ok')var text="código canjeado correctamente";					
+			if(textResponse!='false'){
+				var text="código canjeado correctamente";
+				$(".points").html(textResponse);
+			}					
 			else var text="código erroneo";
 			trip = new Trip([
 					{

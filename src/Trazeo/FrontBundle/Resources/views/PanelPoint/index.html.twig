@@ -30,15 +30,15 @@
        		<i class="fa fa-5x fa-trophy"></i>
        	</div>
 		<div class="col-md-4">
-			{% if (points-user.spendedPoints)>1%}
-			<h4>{{ points-user.spendedPoints }} {{"Points.name_plural"|trans}} {{ "Points.index.remains"|trans }}</h4>
+			{% if (user.points-user.spendedPoints)>1%}
+			<h4><span class="points">{{ user.points-user.spendedPoints }}</span> {{"Points.name_plural"|trans}} {{ "Points.index.remains"|trans }}</h4>
 			{% else %}
-			<h4>{{ points-user.spendedPoints }} {{"Points.name"|trans}} {{ "Points.index.remains"|trans }}</h4>
+			<h4><span class="points">{{ user.points-user.spendedPoints }}</span> {{"Points.name"|trans}} {{ "Points.index.remains"|trans }}</h4>
 			{% endif %}
-			{% if (points)>1%}				
-			<h4>{{ points }} {{"Points.name_plural"|trans}} {{ "Points.index.total"|trans }} </h4>
+			{% if (user.points)>1%}				
+			<h4><span class="points">{{ user.points }}</span> {{"Points.name_plural"|trans}} {{ "Points.index.total"|trans }} </h4>
 			{% else %}
-			<h4>{{ points }} {{"Points.name"|trans}} {{ "Points.index.total"|trans }} </h4>
+			<h4><span class="points">{{ user.points }}</span> {{"Points.name"|trans}} {{ "Points.index.total"|trans }} </h4>
 			{% endif %}
 		</div>
 		<div class="col-md-4"><br/>

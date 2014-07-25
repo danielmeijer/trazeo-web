@@ -170,11 +170,10 @@ class GamificationHelper {
 		$em = $this->_container->get("doctrine.orm.entity_manager");	
 		$userextend = $this->_getSopinetUserExtend($user);
 		$reUserActions = $this->getUserRepository();
-		$sopinetuserextend=$reUserActions->findOneBy(array('user' => $userextend));
+		$sopinetuserextend=$user->getUser()->getUserExtend();
 		$sopinetuserextend->setPoints((integer)$this->getUserPoints($user));
 		$em->persist($sopinetuserextend);
-		$em->flush();
-		
+		$em->flush();	
 		$con = $this->_container;
 		$api = $con->parameters['sopinet_gamification.api'];
 		$this->_callApi($api,$user->getUser(),$points);
