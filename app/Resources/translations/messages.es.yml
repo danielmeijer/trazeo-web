@@ -599,8 +599,8 @@ Points:
         Create_Group: 'Por crear tu primer grupo'
         Create_User: 'Por crear el usuario 0'
         Child_On_Ride: 'Porque tu hijo 0 participo en un paseo'
-        Distance_Points: 'Porque tu hijo 0 ha recorrido'
-        Manage_Ride:  'Por hacer de acompañante en un paseo'
+        Distance_Points: 'Porque tu hijo 0 ha recorrido 1m'
+        Manage_Ride:  'Por hacer de acompañante en 1 paseo/s'
     button:
         exchange: 'Canjear puntos'
 Exchange:

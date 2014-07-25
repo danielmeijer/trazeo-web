@@ -366,6 +366,7 @@ class GamificationHelper {
 			$name=$re->findOneById($ids[$i]);
 			array_push($objects, $name);
 		}	
+		array_push($objects, $action->getAcumulated());
 		return $objects;
 	}
 
