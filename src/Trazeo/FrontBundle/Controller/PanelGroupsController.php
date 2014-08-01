@@ -663,7 +663,10 @@ class PanelGroupsController extends Controller
         
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            
+            //Obtener usuarios que tengan marcada la opcion de conexion con civiclub
+	        $reUserValue = $em->getRepository("SopinetUserPreferencesBundle:UserValue");
+	        $civiclub_setting = $em->getRepository("SopinetUserPreferencesBundle:UserSetting")->findOneByName("civiclub_conexion");
+
             $fos_user = $this->container->get('security.context')->getToken()->getUser();
             $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);            
             $group->setAdmin($user);
@@ -682,7 +685,17 @@ class PanelGroupsController extends Controller
             }
             $em->persist($group);
             $em->flush();
-            
+            $sopinetuserextend=$em->getRepository("SopinetUserBundle:SopinetUserExtend")->findOneByUser($user->getUser());
+            $container = $this->get('sopinet_gamification');
+        	$container->addUserAction(
+        		"Create_Group",
+        		"TrazeoBaseBundle:UserExtend",
+        		$user->getId(),
+        		$user,
+        		1,
+        		$sopinetuserextend
+        		);
+
             return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
 
             return $this->redirect($this->generateUrl('panel_group'));

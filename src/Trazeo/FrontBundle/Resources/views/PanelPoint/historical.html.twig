@@ -1,4 +1,4 @@
-{% set activeMenu = "route" %}
+{% set activeMenu = "historical" %}
 {% set pageheader_title = "Points.historical.title"|trans %}
 {% set pageheader_description = "Points.historical.description"|trans %}
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
@@ -15,10 +15,13 @@
 		
         </div><!-- END col-lg-12 alert alert-info -->
         <p>&nbsp;</p>
+        {#{% include 'TrazeoFrontBundle:PanelPoint:_customHistorical.html.twig' with{
+    		'actions' : actions, 'acumulative_actions' : acumulative_actions
+        }
+    	%}#}
         {% include 'TrazeoFrontBundle:PanelPoint:_customHistorical.html.twig' with{
-    		'userChilds' : userChilds,
-    		'distances' : distances,
-    		'points' : points}
-    	%}
+            'actions' : actions,
+        }
+        %}
 
 {% endblock %}

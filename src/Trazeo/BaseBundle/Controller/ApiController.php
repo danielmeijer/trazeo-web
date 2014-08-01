@@ -64,7 +64,7 @@ class ApiController extends Controller {
 	private function checkUser($email, $password){
 	
 		$user = $this->getDoctrine()->getRepository('\Application\Sonata\UserBundle\Entity\User')->findOneBy(array ("email"=>$email, "password"=>$password));
-				
+		//$user= $this->getDoctrine()->getRepository('\Application\Sonata\UserBundle\Entity\User')->findOneBy(array ("username"=>$email));		
 		if ($user == null){
 			$user = $this->getDoctrine()->getRepository('\Application\Sonata\UserBundle\Entity\User')->findOneBy(array ("username"=>$email, "password"=>$password));
 			if ($user == null){
@@ -265,7 +265,8 @@ class ApiController extends Controller {
 				
 				$ride = new ERide();
 				//TODO: En la relación Group-Ride, evitar los dos set
-				$ride->setGroup($group);				
+				$ride->setGroup($group);		
+				$ride->setUserextend($userextend);		
 				$em->persist($ride);
 				$group->setHasRide(1);
 				$group->setRide($ride);
@@ -442,6 +443,10 @@ class ApiController extends Controller {
 		$child->setSelected(1);
 		$em->persist($child);
 		$em->flush();
+
+		//Obtenemos el id del grupo
+		if($ride->getGroup()!=null)$group=$ride->getGroup()->getId();
+		else $group=$em->getRepository("TrazeoBaseBundle:EGroup")->findOneById($ride->getGroupid());
 		
 		//Notificamos a sus tutores
 		foreach($userextends as $userextend){
@@ -449,7 +454,7 @@ class ApiController extends Controller {
 			$not->addNotification(
 					"child.in",
 					"TrazeoBaseBundle:EChild,TrazeoBaseBundle:EGroup",
-					$child->getId() . "," . $ride->getGroup()->getId(),
+					$child->getId() . "," . $group,
 					$this->generateUrl('panel_ride_current', array('id' => $ride->getId())),
 					$userextend->getUser()
 			);
@@ -517,14 +522,18 @@ class ApiController extends Controller {
 		$child->setSelected(0);
 		$em->persist($child);
 		$em->flush();
-		
+
+		//Obtenemos el id del grupo
+		if($ride->getGroup()!=null)$group=$ride->getGroup()->getId();
+		else $group=$em->getRepository("TrazeoBaseBundle:EGroup")->findOneById($ride->getGroupid());
+
 		$not = $this->container->get('sopinet_user_notification');
 		//Notificamos a sus tutores
 		foreach($userextends as $userextend){
 			$not->addNotification(
 					"child.out",
 					"TrazeoBaseBundle:EChild,TrazeoBaseBundle:EGroup",
-					$child->getId() . "," . $ride->getGroup()->getId(),
+					$child->getId() . "," . $group,
 					$this->generateUrl('panel_ride_current', array('id' => $ride->getId())),
 					$userextend->getUser()
 			);
@@ -895,6 +904,48 @@ class ApiController extends Controller {
 		->setStatusCode(200)
 		->setData($cities);
 			
+		return $this->get('fos_rest.view_handler')->handle($view);		
+	}
+
+	/**
+	 * @POST("/api/exchange/code")
+	 */
+	public function exchangeCodeAction() {
+		$user = $this->get('security.context')->getToken()->getUser();
+		$q = $this->getRequest()->get('code');
+		$em = $this->get('doctrine.orm.entity_manager');
+		$code=$this->container->getParameter('exchange_code');
+	    //Obtener usuarios que tengan marcada la opcion de conexion con civiclub
+        $reUserValue = $em->getRepository("SopinetUserPreferencesBundle:UserValue");
+        $civiclub_setting = $em->getRepository("SopinetUserPreferencesBundle:UserSetting")->findOneByName("civiclub_conexion");
+		if($q==$code){
+			$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+			$sopinetuserextend=$em->getRepository("SopinetUserBundle:SopinetUserExtend")->findOneByUser($userextend->getUser());
+	    	//Añadimos los puntos por crear el usuario
+            $container = $this->get('sopinet_gamification');
+        	if($container->addUserAction(
+        		"Create_User",
+        		"TrazeoBaseBundle:UserExtend",
+        		$userextend->getId(),
+        		$userextend,
+        		1,
+        		$reUserValue->getValue($sopinetuserextend, $civiclub_setting)=='yes'  
+        	)!=null){
+        		$view = View::create()
+				->setStatusCode(200)
+				->setData($userextend->getPoints());
+        	}
+        	else{
+				$view = View::create()
+				->setStatusCode(200)
+				->setData("false");
+        	}
+		}
+		else{
+			$view = View::create()
+			->setStatusCode(200)
+			->setData("false");
+		}
 		return $this->get('fos_rest.view_handler')->handle($view);		
 	}
 }

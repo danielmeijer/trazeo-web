@@ -111,10 +111,21 @@ services:
         tags:
             - {name: sonata.admin, manager_type: orm, group: admin, label: ESuggestion}
 
+    trazeo_base.admin.e_useraction:
+        class: Trazeo\BaseBundle\Admin\EUserActionAdmin
+        arguments: [~, Sopinet\Bundle\GamificationBundle\Entity\EUserAction, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: EUserAction}
+
     trazeo_base_helper:
        class: Trazeo\BaseBundle\Service\Helper
        arguments: ["@service_container"]
 
     trazeo_base_distance_measurer:
        class: Trazeo\BaseBundle\Service\DistanceMeasurer
-       arguments: ["@service_container"]        
+       arguments: ["@service_container"]  
+    Trazeo_user.form.handler.registration:
+        class: Trazeo\BaseBundle\Form\RegistrationFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name:form.type, alias:trazeo_user_registration }

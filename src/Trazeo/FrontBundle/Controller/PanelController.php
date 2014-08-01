@@ -53,7 +53,6 @@ class PanelController extends Controller
 	    	$em->persist($user);
 	    	$em->flush();
 	    	$tutorial = 1;
-	    	
 	    	// Creamos el correo de bienvenida
 	    	$message = \Swift_Message::newInstance()
 	    	// TODO: Traducir

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RequestContext;
 use Sopinet\Bundle\SimplePointBundle\ORM\Type\SimplePoint;
 
-class UpdatePointsFirst extends ContainerAwareCommand
+class UpdatePointsFirstCommand extends ContainerAwareCommand
 {
 	# php app/console trazeo:points
 	
@@ -30,18 +30,11 @@ class UpdatePointsFirst extends ContainerAwareCommand
         $con->enterScope('request');
         $con->set('request', new Request(), 'request');
         $em  = $con->get('doctrine')->getManager();
+        $con= $this->get('sopinet_gamification');
         $users = $em->getRepository("TrazeoBaseBundle:UserExtend")->findAll();
-        $measurer = $con->get('trazeo_base_distance_measurer');
         //Actualizamos los puntos del usuario
         foreach ($users as $user) {
-            $userChilds=$user->getChilds();
-            $distance=0;
-            foreach ($userChilds as $userChild) {
-            $childrides = $em->getRepository("TrazeoBaseBundle:EChildRide")->findByChild($userChild);
-                foreach ($childrides as $childride){
-                    $distance+=$childride->getDistance();
-                }
-            }
-            $user->setPoints(floor($distance/1000));
+            $user->setPoints($con->getUserPoints($user));
         }
+    }
 }

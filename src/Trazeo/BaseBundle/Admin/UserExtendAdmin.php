@@ -21,6 +21,8 @@ class UserExtendAdmin extends Admin
         ->add('nick')
         ->add('tutorial', null, array('required' => false))
         ->add('tutorialMap', null, array('required' => false))
+        ->add('points')
+        ->add('spendedPoints')
         ->add('useLike')
     ;
   }
@@ -32,6 +34,8 @@ class UserExtendAdmin extends Admin
     	->add('groups')
     	->add('tutorial')
     	->add('tutorialMap')    	
+      ->add('points')
+      ->add('spendedPoints')
     	->add('useLike')
     ;
   }
@@ -46,6 +50,8 @@ class UserExtendAdmin extends Admin
       ->add('childs')
       ->add('nick')      
       ->add('useLike')
+      ->add('points')
+      ->add('spendedPoints')
     ;
   }
  

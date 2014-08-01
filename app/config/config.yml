@@ -41,6 +41,7 @@ twig:
     globals:
         fos_csrf_provider: "@form.csrf_provider"
         base_url: %base_url%
+        exchange_code: %exchange_code%
     form:
         resources:
             - 'SopinetTemplateSbadmin2Bundle:Form:bootstrap.html.twig'  
@@ -110,7 +111,11 @@ fos_user:
     user_class: Application\Sonata\UserBundle\Entity\User
     group:
           group_class: Trazeo\BaseBundle\Entity\Group
-          
+    registration:
+        form:
+            type: trazeo_user_registration
+            name: trazeo_user_registration_form
+            validation_groups:  [Registration, Default]      
 # Sonata User
 sonata_user:
     admin:
@@ -211,5 +216,6 @@ lunetics_locale:
     cookie:
        set_on_change: true
        
-       
-         
+sopinet_gamification:
+    class: 'TrazeoBaseBundle:UserExtend'      
+    api: 'CiviClub'         
