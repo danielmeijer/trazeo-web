@@ -492,7 +492,7 @@ layout:
 preference:
     notification_email:
         description: 'Marca esta casilla si quieres recibir notificaciones por Email'
-        name: 'Notificaiones por email'
+        name: 'Notificaciones por email'
 
         value:
             important: 'Solo los importantes'

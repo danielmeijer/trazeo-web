@@ -68,7 +68,7 @@ class GamificationHelper {
 	 * @param String target_entities rute of the entities involved on the action
 	 * @param String ids ids of the entities
 	 */
-	function addUserAction($name,$target_entities = "",$ids = "" ,$user = null, $value = 1) {
+	function addUserAction($name,$target_entities = "",$ids = "" ,$user = null, $value = 1,$call_api = false) {
 		$em = $this->_container->get("doctrine.orm.entity_manager");
 		$userextend = $this->_getSopinetUserExtend($user);
 
@@ -89,7 +89,7 @@ class GamificationHelper {
 		$addflag=($lastAction==null);	
 		if(!$addflag && $action->getAcumulative()){
 			$this->_acumulateAction($lastAction,$action,$value,$target_entities,$ids,$user);
-			$this->_updateUserPoints($user,$action->getPoints()*$value);
+			$this->_updateUserPoints($user,$action->getPoints()*$value,$call_api);
 			return $lastAction;
 		}	
 		elseif(!$addflag) $addflag=(!$this->_checkUniqueAction($action,$target_entities,$ids,$userextend) && $this->_timeRestrictionCheck($action,$lastAction));
@@ -103,7 +103,7 @@ class GamificationHelper {
 			$useraction->setAcumulated($value);	
 			$em->persist($useraction);
 			$em->flush();
-			$this->_updateUserPoints($userextend,$action->getPoints()*$value);
+			$this->_updateUserPoints($userextend,$action->getPoints()*$value,$call_api);
 			return $useraction;
 		}
 
@@ -166,7 +166,7 @@ class GamificationHelper {
 	/**
 	 * Update User Points
 	 */
-	private function _updateUserPoints($user =null, $points=0) {
+	private function _updateUserPoints($user =null, $points=0, $call_api) {
 		$em = $this->_container->get("doctrine.orm.entity_manager");	
 		$userextend = $this->_getSopinetUserExtend($user);
 		$reUserActions = $this->getUserRepository();
@@ -176,7 +176,7 @@ class GamificationHelper {
 		$em->flush();	
 		$con = $this->_container;
 		$api = $con->parameters['sopinet_gamification.api'];
-		$this->_callApi($api,$user->getUser(),$points);
+		if($call_api)$this->_callApi($api,$user->getUser(),$points);
 	}
 
 	/**
@@ -374,7 +374,6 @@ class GamificationHelper {
 	 * @param String api to call
 	 */
 	private function _callApi($api =null,$user,$points) {
-
 		switch ($api) {
 			case 'CiviClub':
 				$con=$this->_container;

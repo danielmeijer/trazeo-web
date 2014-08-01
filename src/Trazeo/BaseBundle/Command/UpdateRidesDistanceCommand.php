@@ -33,6 +33,9 @@ class UpdateRidesDistanceCommand extends ContainerAwareCommand
     	//Sacar paseos cuya distancia sea nula 
     	$rides = $em->getRepository("TrazeoBaseBundle:ERide")->findByDistance(null);
     	$measurer = $con->get('trazeo_base_distance_measurer');
+        //Obtener usuarios que tengan marcada la opcion de conexion con civiclub
+        $reUserValue = $em->getRepository("SopinetUserPreferencesBundle:UserValue");
+        $civiclub_setting = $em->getRepository("SopinetUserPreferencesBundle:UserSetting")->findOneByName("civiclub_conexion");
     	//Para cada paseo calculamos la distancía recorrida en total 
     	foreach($rides as $ride){
     		$distance=0;
@@ -41,13 +44,16 @@ class UpdateRidesDistanceCommand extends ContainerAwareCommand
             $manager=null;
             if($ride->getUserExtend()!=null)$id= $ride->getUserExtend()->getId();
             //añadimos los puntos al monitor por acompañar el paseo
+            $sopinetuserextend=$em->getRepository("SopinetUserBundle:SopinetUserExtend")->findOneByUser($ride->getUserExtend()->getUser());
             $output->writeln('<info>Monitor'. $ride->getUserExtend() .'</info>');
             $sg = $this->getContainer()->get('sopinet_gamification');
             $sg->addUserAction(
                 "Manage_Ride",
                 "TrazeoBaseBundle:UserExtend",
                 $ride->getUserExtend()->getId(),
-                $ride->getUserExtend()      
+                $ride->getUserExtend(),
+                1,
+                $reUserValue->getValue($sopinetuserextend, $civiclub_setting)=='yes'     
             );
     		//obtenemos todos los niños que pueden haber participado en un paseo 
     		if($ride->getGroupid()!=null){
@@ -83,18 +89,21 @@ class UpdateRidesDistanceCommand extends ContainerAwareCommand
             //Actualizamos los puntos del usuario
 			foreach ($users as $user) {
                 $userChilds=$user->getChilds();
-                $distance=0;
+                $distance=0; 
                 foreach ($userChilds as $userChild) {
                     $childrides = $em->getRepository("TrazeoBaseBundle:EChildRide")->findBy(array('updated' => false, 'child' => $userChild));
                     foreach ($childrides as $childride){
                         $distance=$childride->getDistance();
                         $output->writeln('<info>Niño participa en el paseo'. $userChild . '</info>');
                         //Añadimos los puntos obtenidos por que el niño participe en el paseo
+                        $sopinetuserextend=$em->getRepository("SopinetUserBundle:SopinetUserExtend")->findOneByUser($user->getUser());
                         $sg->addUserAction(
                         "Child_On_Ride",
                         "TrazeoBaseBundle:EChild",
                         $childride->getChild()->getId(),
-                        $user      
+                        $user,
+                        1,
+                        $reUserValue->getValue($sopinetuserextend, $civiclub_setting)=='yes' 
                         );
                         //Añadimos los puntos obtenidos por la distancía recorrida por el niño  
                         $output->writeln('<info>Niño participa en el paseo '. $userChild . ' con puntos '. $distance.'</info>');
@@ -103,7 +112,8 @@ class UpdateRidesDistanceCommand extends ContainerAwareCommand
                         "TrazeoBaseBundle:EChild",
                         $childride->getChild()->getId(),
                         $user,
-                        $distance
+                        $distance,
+                        $reUserValue->getValue($sopinetuserextend, $civiclub_setting)=='yes'
                         );           
                         $childride->setUpdated(1);
                         $em->persist($childride);
