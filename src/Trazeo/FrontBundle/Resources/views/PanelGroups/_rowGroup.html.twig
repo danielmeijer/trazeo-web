@@ -67,9 +67,12 @@
  		 			
 		<!-- Ruta del Grupo -->
         {% if groupMember.route %}
-        	<a href="{{ path('panel_route')}}{{ groupMember.Route.Id }}">{{ groupMember.Route.Name }}</a>
-        {% else %}
-         	<span class="hidden-xs">{{ 'Groups.noRoute'|trans }}</span>
+        	<a href="{{ path('panel_route')}}{{ groupMember.Route.Id }}" type="button" 
+			class="btn btn-default btn-xs"><i class="fa fa-compass"></i> {{ 'Groups.route'|trans }}</a>
+        {% elseif groupMember.Admin.Id == app.user.userextend.Id %}
+			<a href="{{ path('panel_route_new', {'id': groupMember.id }) }}" type="button" class="btn btn-default btn-xs">
+				<i class="fa fa-plus"></i>&nbsp; {{ 'Route.new.title'|trans }}				
+			</a>
         {% endif %}
 	</div>
 	
