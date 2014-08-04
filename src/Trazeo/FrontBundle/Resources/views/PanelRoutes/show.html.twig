@@ -78,25 +78,23 @@
 					<i class="fa fa-plus-circle"></i>&nbsp; {{"Route.show.create"|trans}}
 				</a>
 			</h3>
-			{% if route.groups | length > 0 %}	
+			{% if route.group is defined and route.group is not null %}	
 			        <table class="table alert-warning col-md-12">
 			        	<tbody>
-			        	{% for group in route.groups %}
 							<tr>
 								<td>#</td>
-								<td id="group{{ group.id }}"> {{ group.name }}</td>
+								<td id="route.group{{ route.group.id }}"> {{ route.group.name }}</td>
 							</tr>
 							{% for usergroup in user.groups %}
-								{% if group == usergroup %}
+								{% if route.group == usergroup %}
 								<script>
-									var group=document.getElementById("group"+'{{ group.id }}');
+									var group=document.getElementById("route.group"+'{{ route.group.id }}');
 									group.onclick=function(){
-										window.location.href="{{ path('panel_group_timeline',{'id': group.id}) }}";
+										window.location.href="{{ path('panel_group_timeline',{'id': route.group.id}) }}";
 									}
 									group.className='btn btn-link';
 								</script>	
 								{% endif %}								
-							{% endfor %}
 						{% endfor %}
 			        	</tbody>
 			        </table>

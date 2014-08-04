@@ -42,7 +42,7 @@ class EGroup
     protected $childs;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="ERoute", inversedBy="groups")
+     * @ORM\OneToOne(targetEntity="ERoute", inversedBy="group")
      * @ORM\JoinColumn(name="route_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $route;

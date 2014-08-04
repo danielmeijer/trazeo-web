@@ -671,7 +671,8 @@ class PanelGroupsController extends Controller
             $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);            
             $group->setAdmin($user);
             $group->addUserextendgroup($user);            
-            
+        	$now=$group->getHasRide();
+			$group->setHasRide(0);            
             $em->persist($group);
             $em->flush();
             
@@ -695,10 +696,8 @@ class PanelGroupsController extends Controller
         		1,
         		$sopinetuserextend
         		);
-
-            return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
-
-            return $this->redirect($this->generateUrl('panel_group'));
+            if(!$now)return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
+			else return $this->redirect($this->generateUrl('panel_route_new',array('id'=>$group->getId())));
         }
 
         return array(
@@ -725,7 +724,7 @@ class PanelGroupsController extends Controller
         				'Groups.help.route' => $this->get('translator')->trans('Groups.help.route')
         		)
         ));
-
+ 		$form->add('hasRide', 'hidden', array('data' => 0));
         $form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;

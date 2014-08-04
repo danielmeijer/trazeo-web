@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Trazeo\BaseBundle\Entity\ERoute;
+use Trazeo\BaseBundle\Entity\EGroup;
 use Trazeo\BaseBundle\Entity\EPoints;
 use Trazeo\BaseBundle\Form\RouteType;
 use Sopinet\Bundle\SimplePointBundle\ORM\Type\SimplePoint;
@@ -73,7 +74,9 @@ class PanelRoutesController extends Controller
     	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
     	
         $route = new ERoute();
-        $form = $this->createCreateForm($route);
+        $req=$request->request->all();
+        $group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneById($req['trazeo_basebundle_route']['group']);
+        $form = $this->createCreateForm($route, $group);
         $form->handleRequest($request);
 	
         if ($form->isValid())
@@ -81,7 +84,9 @@ class PanelRoutesController extends Controller
             $route->setAdmin($user);
             $em->persist($route);
             $em->flush();
-
+            $group->setRoute($route);
+            $em->persist($group);
+            $em->flush();          
             $formData = $form->getData();
             $routeId = $formData->getId();
 
@@ -100,7 +105,7 @@ class PanelRoutesController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(ERoute $route)
+    private function createCreateForm(ERoute $route,EGroup $group)
     {
     	$em = $this->getDoctrine()->getManager();
     	$spainCode = $em->getRepository('JJs\Bundle\GeonamesBundle\Entity\Country')->findOneByCode("ES");
@@ -116,7 +121,7 @@ class PanelRoutesController extends Controller
         				'default' => $spainCodeId
         		)
         ));
-
+        $form->add('group',null,array('data'=>$group, 'attr'=>array('style'=>'display:none;')));
         $form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
@@ -125,16 +130,17 @@ class PanelRoutesController extends Controller
     /**
      * Displays a form to create a new Routes entity.
      *
-     * @Route("/new", name="panel_route_new")
+     * @Route("/{id}/new", name="panel_route_new")
      * @Method("GET")
      * @Template()
      */
-    public function newAction()
+    public function newAction($id)
     {
+        $em = $this->getDoctrine()->getManager();
         $route = new ERoute();
+        $group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneById($id);
+        $form = $this->createCreateForm($route,$group);
 
-        $form = $this->createCreateForm($route);
-        
         return array(
             'route' => $route,
             'form'   => $form->createView(),

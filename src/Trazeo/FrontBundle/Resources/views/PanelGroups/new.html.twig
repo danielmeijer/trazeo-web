@@ -11,24 +11,7 @@
                 <div class="col-lg-12 alert alert-warning">
     				{{ form(form) }}
             	</div>
-            <div class="modal fade" id="newRouteModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content panel-warning">
-                        <div class="modal-header panel-heading">
-                         <h4 style="color: black" class="modal-title" id="myModalLabel">{{"Groups.newRouteModal.title"|trans}}</h4>
-                        </div>
-                        <div class="modal-body">
-                            <h3>{{"Groups.newRouteModal.title"|trans}}</h3>
-                        </div>
-                        <div class="modal-footer">
-                            <button id="now" type="button" class="btn btn-success" data-dismiss="modal">{{"Groups.newRouteModal.now"|trans}}
-                            </button>
-                            <button id="later" type="button" class="btn btn-default" data-dismiss="modal">{{"Group.cantModal.later"|trans}}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                {% include 'TrazeoFrontBundle:PanelGroups:_modal_newGroup.html.twig'%}
 		{% endblock %}
         {% block js %} {{ parent() }} 
             <script> 
@@ -45,6 +28,6 @@
                     $("#trazeo_basebundle_group_hasRide").val(0);
                     $( "form").unbind();
                     $( "form" ).submit();
-                });            
+                });                  
             </script>
         {% endblock %}

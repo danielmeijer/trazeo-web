@@ -32,16 +32,7 @@ class GroupType extends AbstractType
         						'data-toggle' => 'popover',
         						'data-placement' => 'right',
         						'data-content' => $options['attr']['Groups.help.name2']
-        				)))
-        
-        ->add('route', null, array(
-        		'attr' => array(
-        				'placeholder' => 'Groups.name',
-        				'data-toggle' => 'popover',
-        				'data-placement' => 'right',
-        				'data-content' => $options['attr']['Groups.help.route']
-        		)),
-        		array('empty_value' => 'Trans.select.option'));
+        				)));
     }
     
     /**
