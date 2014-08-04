@@ -70,7 +70,7 @@
         	<a href="{{ path('panel_route')}}{{ groupMember.Route.Id }}" type="button" 
 			class="btn btn-default btn-xs"><i class="fa fa-compass"></i> {{ 'Groups.route'|trans }}</a>
         {% elseif groupMember.Admin.Id == app.user.userextend.Id %}
-			<a href="{{ path('panel_route_new', {'id': groupMember.id }) }}" type="button" class="btn btn-default btn-xs">
+			<a href="{{ path('panel_route_new', {'id': groupMember.id }) }}" type="button" class="btn btn-default btn-xs create-route">
 				<i class="fa fa-plus"></i>&nbsp; {{ 'Route.new.title'|trans }}				
 			</a>
         {% endif %}

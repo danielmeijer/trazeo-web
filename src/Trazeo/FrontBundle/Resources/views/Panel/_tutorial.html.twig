@@ -94,13 +94,6 @@
 		       	                  		 ,expose: true					       	                         
 		   	                         },
 		   	                         { 
-		   	                             sel : $('.resumeRoutes'),
-		   	                             content : 'Aqui podras crear nuevas rutas o consultar rutas ya existentes',
-		   	                             position: 'n'
-		   	                            ,expose: true
-
-		   	                         },
-		   	                         { 
 		   	                             sel : $('.resumeChilds'),
 		   	                             content : 'En el panel de niños, podras añadir niños a trazeo',
 		   	                             position: 'n',
@@ -151,12 +144,6 @@
 		   	                         { 
 		   	                             sel : $('#new_group'),
 		   	                             content : 'Aqui podemos crear nuevos grupos',
-		   	                             position: 'n'
-		   	                             ,expose: true
-		   	                         },
-		   	                         { 
-		   	                             sel : $('#new_route'),
-		   	                             content : 'Aqui podemos crear una nueva ruta',
 		   	                             position: 'n'
 		   	                             ,expose: true
 		   	                         },
@@ -214,23 +201,6 @@
 	   	                      	 options);
 	   				trip.start();
 	   				break;
-		 case 'routes':
-	  		  trip = new Trip([
-	  	                         { 
-	  	                             sel : $('.fa-compass.fa-2x'),
-	  	                             content : 'Echemos un vistazo a la pantalla de rutas',
-	  	                             position: 'e',
-	  	                             callback: function(){ 
-	  	                            		localStorage.setItem('tutorial','routes');
-	  	                            	 	var url = $('#route_ref').val();    
-	  	                            	 	//console.log(url);
-	  	                            	 	window.location.replace(url);
-	  	                                 }
-	  	                         }
-	  	                      	],
-	  	                      	options);
-	  				trip.start();
-	  				break;
 		 case 'last':
 	   		  trip = new Trip([
 	      	                     { 

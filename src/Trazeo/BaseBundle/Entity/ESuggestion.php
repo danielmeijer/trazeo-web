@@ -61,6 +61,13 @@ class ESuggestion
      */
     protected $position;
 
+    
+    /**
+     * // Tiempo durante el que se muestra la sugerencía en ms (-1 para mostrar hasta que el usuario la cierre)
+     * @ORM\Column(name="delay", type="integer", nullable=true)
+     */
+    protected $delay;
+
     /**
      * Get id
      *
@@ -213,5 +220,29 @@ class ESuggestion
     public function getPosition()
     {
         return $this->position;
+    }
+
+    /**
+     * Set delay
+     *
+     * @param integer $delay
+     *
+     * @return ESuggestion
+     */
+    public function setDelay($delay)
+    {
+        $this->delay = $delay;
+
+        return $this;
+    }
+
+    /**
+     * Get delay
+     *
+     * @return integer
+     */
+    public function getDelay()
+    {
+        return $this->delay;
     }
 }
