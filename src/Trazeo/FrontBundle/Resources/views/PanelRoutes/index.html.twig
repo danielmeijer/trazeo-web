@@ -14,7 +14,7 @@
 				<form action="{{ path('panel_route') }}">
 						
 					<div class="input-group custom-search-form col-md-4">
-						<a href="{{ path('panel_route_new') }}">
+						<a href="{{ path('panel_route_new',{ 'id': route.id }) }}">
 							<button type="button" class="btn btn-success" id="new_group">
 								 <i class="fa fa-plus"></i>&nbsp; {{ 'Route.new.title'|trans }}									
 							</button>

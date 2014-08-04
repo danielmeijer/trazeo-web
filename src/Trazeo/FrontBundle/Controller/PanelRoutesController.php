@@ -212,12 +212,12 @@ class PanelRoutesController extends Controller
         if($routeAdmin != $user ){
         
         	$notification = $container->addFlashMessages("error","No tienes autorización para editar esta ruta");
-        	return $this->redirect($this->generateUrl('panel_route'));
+        	return $this->redirect($this->generateUrl('panel_groups'));
         }
         if (!$route) {
         	
         	$notification = $container->addFlashMessages("warning","No existe la ruta o ha sido eliminada");
-        	return $this->redirect($this->generateUrl('panel_route'));
+        	return $this->redirect($this->generateUrl('panel_groups'));
         }
 
         $editForm = $this->createEditForm($route);
@@ -314,7 +314,7 @@ class PanelRoutesController extends Controller
 		}
 		$em->persist($route);
     	$em->flush();
-    
+
     	return $this->redirect($this->generateUrl('panel_route_show', array('id' => $id)));
     }
     
@@ -343,7 +343,7 @@ class PanelRoutesController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('panel_route_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('panel_route_show', array('id' => $id)));
         }
 
         return array(
