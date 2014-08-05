@@ -948,4 +948,42 @@ class ApiController extends Controller {
 		}
 		return $this->get('fos_rest.view_handler')->handle($view);		
 	}
+
+	/**
+	 * @POST("/api/register")
+	 */
+	public function postUserAction(Request $request)
+    {
+    	$username = $request->get('username');
+		$password = $request->get('password');
+
+    	$em = $this->get('doctrine.orm.entity_manager');
+		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByNick($username);
+
+		if($userextend!=null){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied("User exists"));
+		
+			return $this->get('fos_rest.view_handler')->handle($view);		
+		}
+
+
+		$userManager = $this->container->get('fos_user.user_manager');
+      	$newUser = $userManager->createUser();
+      	$newUser->setUsername($username);
+      	$newUser->setUsernameCanonical($username);
+		$encoder = $this->container->get('security.encoder_factory')->getEncoder($newUser);
+        $password = $encoder->encodePassword($password, $newUser->getSalt());
+      	$newUser->setPassword($password);
+      	$newUser->setEmail($username);
+      	$newUser->setEnabled(true);
+      	$em->persist($newUser);
+      	$em->flush();
+      	$array['id'] = $newUser->getId();
+        $view = View::create()
+			->setStatusCode(201)
+			->setData($this->doOK($array));
+        return $this->get('fos_rest.view_handler')->handle($view);
+    }
 }
