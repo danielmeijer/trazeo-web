@@ -39,9 +39,9 @@
 	/**
 	 * @var decimal
 	 *
-	 * @ORM\Column(name="points",type="decimal", precision=6)
+	 * @ORM\Column(name="points",type="decimal", precision=10, scale=4)
 	 */
-	 protected $points;
+	 protected $point;
 
 	/**
 	 * @var string
