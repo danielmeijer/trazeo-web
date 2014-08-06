@@ -499,6 +499,12 @@ preference:
             important: 'Solo los importantes'
             never: Ninguno
             now: Todos
+    civiclub_conexion:
+        name: 'Connect with CiviClub'
+        description: 'You want to send your points to CiviClub?'
+        value:
+            yes: 'yes'
+            no: 'no'
 
 profile:
     edit:

@@ -495,11 +495,16 @@ preference:
     notification_email:
         description: 'Marca esta casilla si quieres recibir notificaciones por Email'
         name: 'Notificaciones por email'
-
         value:
             important: 'Solo los importantes'
             never: Ninguno
             now: Todos
+    civiclub_conexion:
+        name: 'Conexión con CiviClub'
+        description: '¿Quieres que tus puntos se envíen a CiviClub?'
+        value:
+            yes: 'si'
+            no: 'no'
 
 profile:
     edit:
