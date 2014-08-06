@@ -989,8 +989,14 @@ class ApiController extends Controller {
       	$newUser->setEnabled(true);
       	$em->persist($newUser);
       	$em->flush();
-      	//enviamos el correo de bienvenida
-      	$this->container->get('session')->set('fos_user_send_confirmation_email/email', $newUser->getEmail());
+      	// Creamos el correo de bienvenida
+	    $message = \Swift_Message::newInstance()
+	    // TODO: Traducir
+	    ->setSubject("Bienvenido a Trazeo.")
+	    ->setFrom(array("hola@trazeo.es" => "Trazeo"))
+	    ->setTo($newUser->getEmail())
+	    ->setBody($this->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:newUser.html.twig', array()), 'text/html');
+	    $ok = $this->get('mailer')->send($message);   
       	//se devuelve el id del usuario
       	$array['id'] = $newUser->getId();
         $view = View::create()
