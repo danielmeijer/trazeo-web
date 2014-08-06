@@ -886,7 +886,7 @@ class PanelGroupsController extends Controller
 	 * @Template()
 	 */
     
-	public function seRouteAction($group,$route) {
+	public function setRouteAction($group,$route) {
 
 		$em = $this->getDoctrine()->getManager();
 

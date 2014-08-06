@@ -16,8 +16,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Trazeo\BaseBundle\Entity\ERide;
+use Trazeo\BaseBundle\Entity\EChild;
 use Trazeo\BaseBundle\Entity\EEvent;
 use Trazeo\BaseBundle\Entity\EReport;
+use Trazeo\BaseBundle\Entity\EGroup;
 use Sopinet\Bundle\SimplePointBundle\ORM\Type\SimplePoint;
 use Sopinet\TimelineBundle\Entity\Comment;
 
@@ -26,9 +28,10 @@ class ApiController extends Controller {
 	/**
 	 * Funcion para representar un acceso denegado a la API
 	 */
-	private function msgDenied() {
+	private function msgDenied($msg=null) {
 		$array['state'] = -1;
-		$array['msg'] = "Access Denied";
+		if($msg!=null)$array['msg'] = $msg;
+		else $array['msg'] = "Access Denied";
 		return $array;
 	}
 	
@@ -132,6 +135,7 @@ class ApiController extends Controller {
 	
 	/**
 	 * @POST("/api/groups")
+	 * @param Request request
 	 */
 	public function getGroupsAction(Request $request) {
 		
@@ -146,7 +150,12 @@ class ApiController extends Controller {
 		
 		$em = $this->get('doctrine.orm.entity_manager');
 		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
-		$groups = $userextend->getGroups();
+		//Se escogen los grupos del usuario, si la llamada se hizo con el parametro admin
+		// solo se devolveran aquellos en los que es admin 
+		$admin = $request->get('admin');
+		if(!$admin)$groups = $userextend->getGroups();
+		else $groups=$em->getRepository('TrazeoBaseBundle:EGroup')->findByAdmin($userextend);
+
 		$array = array();
 		foreach($groups as $group){
 			$arrayGroups = array();
@@ -951,24 +960,24 @@ class ApiController extends Controller {
 
 	/**
 	 * @POST("/api/register")
+	 * @param Request request
 	 */
-	public function postUserAction(Request $request)
+	public function postRegisterAction(Request $request)
     {
+    	//recabamos los datos de la peticion
     	$username = $request->get('username');
 		$password = $request->get('password');
-
+		//se comprueba si el usuario existe
     	$em = $this->get('doctrine.orm.entity_manager');
 		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByNick($username);
-
 		if($userextend!=null){
 			$view = View::create()
 			->setStatusCode(200)
-			->setData($this->msgDenied("User exists"));
+			->setData($this->msgDenied("Email is already in use"));
 		
 			return $this->get('fos_rest.view_handler')->handle($view);		
 		}
-
-
+		//se crea el usuario
 		$userManager = $this->container->get('fos_user.user_manager');
       	$newUser = $userManager->createUser();
       	$newUser->setUsername($username);
@@ -980,10 +989,154 @@ class ApiController extends Controller {
       	$newUser->setEnabled(true);
       	$em->persist($newUser);
       	$em->flush();
+      	//enviamos el correo de bienvenida
+      	$this->container->get('session')->set('fos_user_send_confirmation_email/email', $newUser->getEmail());
+      	//se devuelve el id del usuario
       	$array['id'] = $newUser->getId();
         $view = View::create()
 			->setStatusCode(201)
 			->setData($this->doOK($array));
         return $this->get('fos_rest.view_handler')->handle($view);
     }
+
+	/**
+	 * Petición para crear un grupo en la bbdd
+	 * @POST("/api/manageGroup")
+	 */
+	public function manageGroupAction(Request $request) {
+	
+		$name = $request->get('name');
+		$visibility = $request->get('visibility');
+		$id_group= $request->get('id_group');
+
+		$user = $this->checkPrivateAccess($request);
+		if( $user == false || $user == null ){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied());
+	
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+	
+		$em = $this->get('doctrine.orm.entity_manager');
+		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+
+		//Se comprueba si el nombre del grupo ya existe 		
+		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneBy($name);
+		if( $group!=null ){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied("Name is already in use"));
+	
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+
+		//Si el grupo existe se modifica si no se crea uno nuevo
+		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneBy(array('id'=>$id_group,'admin'=>$userextend));
+
+		//Si el usuario no es el admin del grupo y lo intenta modificar se deniega el ascesso
+		if($id_group!=null && $group==null){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied("User is not the admin"));
+	
+			return $this->get('fos_rest.view_handler')->handle($view);			
+		}
+
+		//Si el grupo no existe se crea
+		else if($group==null){
+			$group= new EGroup();
+	        $group->addUserextendgroup($userextend);            
+	        $group->setAdmin($userextend);
+	        //Children autojoin on parent create group
+	        $childs=$userextend->getChilds();
+  	      	foreach($childs as $child){
+   	        	$group->addChild($child);
+	        }
+	      	//Add points for create frist group
+        	$sopinetuserextend=$em->getRepository("SopinetUserBundle:SopinetUserExtend")->findOneByUser($userextend);
+        	$container = $this->get('sopinet_gamification');
+        	$container->addUserAction(
+        	"Create_Group",
+        	"TrazeoBaseBundle:UserExtend",
+        	$userextend->getId(),
+        	$userextend,
+        	1,
+        	$sopinetuserextend
+        	);
+		}
+        $group->setName($name);
+        $group->setVisibility($visibility);
+        $em->persist($group);
+        $em->flush();
+
+        //Se devuelve el id del grupo
+        $data['id'] = $group->getId();
+		$view = View::create()
+		->setStatusCode(200)
+		->setData($this->doOK($data));
+			
+		return $this->get('fos_rest.view_handler')->handle($view);
+	
+	}
+
+	/**
+	 * @POST("/api/manageChild")
+	 * @param Request request
+	 */
+	public function manageChildrenAction(Request $request) {
+
+		$id_child= $request->get('id_child');	
+		$name = $request->get('name');
+		$school = $request->get('school');
+		$date = $request->get('date');
+		$gender= $request->get('gender');//boy girl
+
+		$user = $this->checkPrivateAccess($request);
+		if( $user == false || $user == null ){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied());
+	
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+		$em = $this->get('doctrine.orm.entity_manager');
+		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+		//Si el niño existe se modifica si no se crea uno nuevo
+		$child = $em->getRepository('TrazeoBaseBundle:EChild')->findOneById($id_child);
+		$tutor= in_array($child, $userextend->getChilds()->toArray());	
+
+		$new=false;//flag que indica si el niño se va a crear como nuevo
+		//Si el usuario no es el tutor del niño y lo intenta modificar se deniega el ascesso
+		if($id_child!=null && $tutor==false){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied("User is not the tutor"));
+	
+			return $this->get('fos_rest.view_handler')->handle($view);			
+		}
+		//Si el niño no existe se crea
+		else if($child==null){
+			new EChild();
+			$new=true;
+		}
+        $child->setNick($name);
+		$child->setDateBirth(new \DateTime($date));
+		$child->setGender($gender);
+		$child->setScholl($school);
+        $em->persist($child);
+        $em->flush();
+        if($new){
+        	$userextend->addChild($child);
+   	        $em->persist($userextend);
+	        $em->flush();
+        }
+        //Se devuelve el id del niño
+        $data['id'] = $child->getId();
+		$view = View::create()
+		->setStatusCode(200)
+		->setData($this->doOK($data));
+		return $this->get('fos_rest.view_handler')->handle($view);
+	}
+
 }
