@@ -41,7 +41,7 @@
 	 *
 	 * @ORM\Column(name="points",type="decimal", precision=10, scale=4)
 	 */
-	 protected $point;
+	 protected $points;
 
 	/**
 	 * @var string

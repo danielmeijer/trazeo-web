@@ -26,7 +26,7 @@ use Sopinet\TimelineBundle\Entity\Comment;
 class ApiController extends Controller {
 	
 	/**
-	 * Funcion para representar un acceso denegado a la API
+	 * Funcion para representar un uso erroneo de la API
 	 */
 	private function msgDenied($msg=null) {
 		$array['state'] = -1;
@@ -982,8 +982,6 @@ class ApiController extends Controller {
       	$newUser = $userManager->createUser();
       	$newUser->setUsername($username);
       	$newUser->setUsernameCanonical($username);
-		$encoder = $this->container->get('security.encoder_factory')->getEncoder($newUser);
-        $password = $encoder->encodePassword($password, $newUser->getSalt());
       	$newUser->setPassword($password);
       	$newUser->setEmail($username);
       	$newUser->setEnabled(true);
