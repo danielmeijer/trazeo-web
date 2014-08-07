@@ -49,6 +49,12 @@ class UserSetting
      * @ORM\Column(name="defaultoption", type="string", length=255)
      */
     protected $defaultoption;    
+
+    /**
+     * @ORM\Column(name="multiple", type="boolean")
+     */
+    protected $multiple=false;  
+
     /**
      * Constructor
      */
@@ -226,5 +232,30 @@ class UserSetting
     public function getDefaultoption()
     {
         return $this->defaultoption;
+    }
+
+
+    /**
+     * Set multiple
+     *
+     * @param boolean $multiple
+     *
+     * @return UserSetting
+     */
+    public function setMultiple($multiple)
+    {
+        $this->multiple = $multiple;
+
+        return $this;
+    }
+
+    /**
+     * Get multiple
+     *
+     * @return boolean
+     */
+    public function getMultiple()
+    {
+        return $this->multiple;
     }
 }

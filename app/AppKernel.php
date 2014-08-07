@@ -54,7 +54,7 @@ class AppKernel extends Kernel
             new Sopinet\TimelineBundle\SopinetTimelineBundle(),
             new Sopinet\OpenMapBundle\SopinetOpenMapBundle(),
             new Sopinet\UserPreferencesBundle\SopinetUserPreferencesBundle(),
-            new Sopinet\UserNotificationsBundle\SopinetUserNotificationsBundle(),
+            new Sopinet\Bundle\UserNotificationsBundle\SopinetUserNotificationsBundle(),
         	new Sopinet\FlashMessagesBundle\SopinetFlashMessagesBundle(),
         	new Lunetics\LocaleBundle\LuneticsLocaleBundle(),
         	new Endroid\Bundle\QrCodeBundle\EndroidQrCodeBundle(),

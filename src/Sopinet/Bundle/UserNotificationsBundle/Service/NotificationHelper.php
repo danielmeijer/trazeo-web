@@ -104,34 +104,32 @@ class NotificationHelper {
 		$em = $this->_container->get("doctrine.orm.entity_manager");
 		$reNotifications = $em->getRepository("SopinetUserNotificationsBundle:Notification");
 		$userextend = $this->_getSopinetUserExtend($user);
-		$reUserLive = $em->getRepository("SopinetUserNotificationsBundle:UserLive");
-
-		$findUL = $reUserLive->findOneByUser($userextend);
-			if ($findUL == null) {
-				$userlive=$this->_container->parameters['sopinet_user_notifications.default_live'];
-			}
-			else{
-				$userlive=$findUL->getValue();
-			}
+        $reUserSettings=$em->getRepository("SopinetUserPreferencesBundle:UserSetting");
+        $setting=$reUserSettings->findOneByName('notification_live');
+        $userValues=$em->getRepository("SopinetUserPreferencesBundle:UserValue")->getValue($userextend, $setting);
 
 		$notifications=[];
 		$actions=[];
 		$types=$this->_container->parameters['sopinet_user_notifications.types'];
 		foreach ($types as $type) {
-			if($userlive[0]=='all'){
-				$actions=array_merge($actions,$type['actions']);
-			}
-			elseif($userlive[0]=='none'){
-				break;
-			}
-			elseif(in_array($type['type'],$userlive)){
-				$actions=array_merge($actions,$type['actions']);
+			if(in_array($type['type'],$userValues)){
+				switch ($type['actions'][0]) {
+					case 'all':
+						$actions=['all'];
+						break 2;
+					case 'none':
+						$actions=[];
+						break 2;
+					default:
+						$actions=array_merge($actions,$type['actions']);
+						break;
+				}
 			}
 		}
 
 		$auxnotifications = $reNotifications->findBy(array(
 					'user' => $userextend,
-					'view' => 0
+					//'view' => 0
 				));
 
 		foreach ($auxnotifications as $notification) {
@@ -220,7 +218,8 @@ class NotificationHelper {
 		$userlive="";
 		foreach($request->request->all() as $key => $value) {
 			$temp = explode("_",$key);
-			$userlive=$userlive.$temp[1].',';
+			if($userlive!="")$userlive=$userlive.','.$temp[1];
+			else $userlive=$userlive.$temp[1];
 		}	
 		
 		$reUserLive->setValue($userextend, $userlive);

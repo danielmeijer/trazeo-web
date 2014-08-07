@@ -13,7 +13,6 @@ use Symfony\Component\Routing\RequestContext;
 class GenerateEmailsCommand extends ContainerAwareCommand
 {
 	# php app/console usernotifications:emails
-	# php app/console swiftmailer:spool:send
 	
     protected function configure()
     {

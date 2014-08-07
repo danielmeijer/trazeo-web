@@ -16,12 +16,14 @@
 			$em = $this->getEntityManager();
 			$reUserValue = $em->getRepository("SopinetUserPreferencesBundle:UserValue");
 			$findUV = $reUserValue->findOneBy(array('user' => $sopinetuserextend, 'setting' => $usersetting));
-			ld($usersetting);
 			if ($findUV == null) {
-				return $usersetting->getDefaultoption();
+				$value=$usersetting->getDefaultoption();
 			} else {
-				return $findUV->getValue();
+				$value=$findUV->getValue();
 			}
+			if($usersetting->getMultiple())$value=explode(',', $value);
+
+			return $value;
 		}
 		
 		/**

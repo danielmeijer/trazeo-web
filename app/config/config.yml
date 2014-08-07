@@ -211,8 +211,7 @@ lunetics_locale:
     cookie:
        set_on_change: true
 sopinet_user_notifications:
-   default_email: ['important']
-   default_live: ['important']
-   types:
-       - {type: important , icon: null , actions: ['none']}
-       - {type: now , icon : null, actions: ['all']}      
+    types:
+       - {type: important , icon: null , actions: ['ride.start']}
+       - {type: groups , icon: null , actions: ['group.invite.user','group.invite.accept']}
+       - {type: now , icon : null, actions: ['all']}    

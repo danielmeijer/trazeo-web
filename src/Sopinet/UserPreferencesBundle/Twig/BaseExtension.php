@@ -50,7 +50,7 @@ class BaseExtension extends \Twig_Extension implements ContainerAwareInterface
 		$reUserValue = $em->getRepository("SopinetUserPreferencesBundle:UserValue");
 		return $reUserValue->getValue($user, $usersetting);
 	}
-    
+
     public function getName()
     {
         return 'SopinetUserPreferences_extension';

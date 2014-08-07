@@ -1,0 +1,15 @@
+<div class="control-group">
+	<div class="controls">
+		{% for value in setting.optionsarr %}
+			<label>
+				<input
+					{% for user_value in (app.user.sopinetuserextend|getUserValue(setting)) %}
+						{% if user_value == value %}checked="checked" {% endif %}
+					{% endfor %}
+					name="multisetting_{{ setting.id }}_{{value}}" type="checkbox" class="ace" value="{{value}}"
+				/>
+				<span class="lbl">{{ ("preference."~setting.name~".value."~value)|trans }}</span>
+			</label>
+		{% endfor %}
+	</div>
+</div>

@@ -1,0 +1,10 @@
+<div class="control-group">
+	<div class="controls">
+		{% for value in setting.optionsarr %}
+			<label>
+				<input {% if (app.user.sopinetuserextend|getUserValue(setting)) == value %}checked="checked" {% endif %}name="setting_{{ setting.id }}" type="radio" class="ace" value="{{ value }}"/>
+				<span class="lbl">{{ ("preference."~setting.name~".value."~value)|trans }}</span>
+			</label>
+		{% endfor %}
+	</div>
+</div>
