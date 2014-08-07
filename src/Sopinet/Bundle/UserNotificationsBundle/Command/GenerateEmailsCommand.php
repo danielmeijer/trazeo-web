@@ -13,6 +13,7 @@ use Symfony\Component\Routing\RequestContext;
 class GenerateEmailsCommand extends ContainerAwareCommand
 {
 	# php app/console usernotifications:emails
+    # php app/console swiftmailer:spool:send
 	
     protected function configure()
     {
@@ -31,34 +32,44 @@ class GenerateEmailsCommand extends ContainerAwareCommand
     	$em  = $con->get('doctrine')->getManager();
     	$reUserExtend = $em->getRepository("SopinetUserBundle:SopinetUserExtend");
         $reUserSettings=$em->getRepository("SopinetUserPreferencesBundle:UserSetting");
-        $setting=$reUserSettings->findByName('notification_email');
+        $setting=$reUserSettings->findOneByName('notification_email');
     	$output->writeln('<info>Iniciando lectura de notificaciones....</info>');
     	// More info: http://symfony.com/doc/current/components/console/introduction.html
     	
     	$users = $reUserExtend->findAll();
 
         $options=$con->parameters['sopinet_user_notifications.types'];
-        $options_type=[];
-    	foreach ($options as $option)array_push($options_type, $option['type']);
+        $options=array_merge($options,$con->parameters['sopinet_user_notifications.types_email']);
 
     	// Usuarios con la configuración requerida
     	//$output->writeln('<info>Encontrados '.count($users).' usuarios a tratar</info>');
     	$reUserValue=$em->getRepository("SopinetUserPreferencesBundle:UserValue");
     	foreach($users as $user) {
-            $uservalue=$reUserValue->getValue($user,$setting[0]);
+            $userValues=$reUserValue->getValue($user,$setting);
+            $actions=[];
             //search for user types
-
-            $key=array_search($uservalue, $options_type);
-            if($key==false)$option=$con->parameters['sopinet_user_notifications.default_email'];
-            $option=$options[$key]['actions'];
-            $option=explode(',',$option[0]);
+            foreach ($options as $type) {
+                if(in_array($type['type'],$userValues)){
+                    switch ($type['actions'][0]) {
+                        case 'all':
+                        $actions[0]='all';
+                        break ;
+                    case 'none':
+                        $actions=[""];
+                        break 2;
+                    default:
+                        $actions=array_merge($actions,$type['actions']);
+                        break;
+                    }
+                }
+            }
 
             $reNOT = $em->getRepository("SopinetUserNotificationsBundle:Notification");
 
             $notifications_aux=$reNOT->findBy(array('user' => $user, 'email' => 0));
             $notifications=[];
             foreach($notifications_aux as $not) {
-                if(in_array($not->getAction(),$option)){
+                if($actions[0]=='all'||in_array($not->getAction(),$actions)){
                     array_push($notifications, $not);
                 }
             }

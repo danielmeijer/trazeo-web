@@ -213,5 +213,9 @@ lunetics_locale:
 sopinet_user_notifications:
     types:
        - {type: important , icon: null , actions: ['ride.start']}
+    types_live:
        - {type: groups , icon: null , actions: ['group.invite.user','group.invite.accept']}
-       - {type: now , icon : null, actions: ['all']}    
+       - {type: now , icon: null , actions: ['all']}
+    types_email:
+       - {type: now , icon: null , actions: ['all']}
+       - {type: never , icon : null, actions: ['none']}

@@ -92,7 +92,7 @@ class NotificationHelper {
 		}
 		return $this->_container->get('translator')->trans('Notifications.action.'.$action.".".$notification->getAction(), $elements);
 	}
-	
+
 	/**
 	 * Get Notifications from user
 	 * 
@@ -111,14 +111,15 @@ class NotificationHelper {
 		$notifications=[];
 		$actions=[];
 		$types=$this->_container->parameters['sopinet_user_notifications.types'];
+		$types=array_merge_recursive($types,$this->_container->parameters['sopinet_user_notifications.types_live']);
 		foreach ($types as $type) {
 			if(in_array($type['type'],$userValues)){
 				switch ($type['actions'][0]) {
 					case 'all':
-						$actions=['all'];
-						break 2;
+						$actions[0]='all';
+						break ;
 					case 'none':
-						$actions=[];
+						$actions=[""];
 						break 2;
 					default:
 						$actions=array_merge($actions,$type['actions']);
@@ -129,7 +130,7 @@ class NotificationHelper {
 
 		$auxnotifications = $reNotifications->findBy(array(
 					'user' => $userextend,
-					//'view' => 0
+					'view' => 0
 				));
 
 		foreach ($auxnotifications as $notification) {
@@ -143,8 +144,7 @@ class NotificationHelper {
 		return $notifications;
 		// Devolvemos las notificaciones
 	}
-	
-	
+
 	/**
 	 * Get All Notifications from user
 	 *
