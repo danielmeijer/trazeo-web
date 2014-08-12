@@ -152,9 +152,8 @@ class ApiController extends Controller {
 		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 		//Se escogen los grupos del usuario, si la llamada se hizo con el parametro admin
 		// solo se devolveran aquellos en los que es admin 
-		$admin = $request->get('admin');
-		if(!$admin)$groups = $userextend->getGroups();
-		else $groups=$em->getRepository('TrazeoBaseBundle:EGroup')->findByAdmin($userextend);
+		$groups = $userextend->getGroups();
+		$admingroups=$em->getRepository('TrazeoBaseBundle:EGroup')->findByAdmin($userextend);
 
 		$array = array();
 		foreach($groups as $group){
@@ -163,6 +162,8 @@ class ApiController extends Controller {
 			$arrayGroups['name'] = $group->getName();
 			$arrayGroups['visibility'] = $group->getVisibility();
 			$arrayGroups['hasride'] = $group->getHasRide();
+			if(in_array($group, $admingroups))$arrayGroups['admin']=true;
+			else $arrayGroups['admin']=false;
 			if($group->getHasRide()==1){
 				$ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneByGroup($group);
 				$arrayGroups['ride_id']=$ride->getId();
@@ -1026,7 +1027,7 @@ class ApiController extends Controller {
 		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 
 		//Se comprueba si el nombre del grupo ya existe 		
-		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneBy($name);
+		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneByName($name);
 		if( $group!=null ){
 			$view = View::create()
 			->setStatusCode(200)
@@ -1143,4 +1144,28 @@ class ApiController extends Controller {
 		return $this->get('fos_rest.view_handler')->handle($view);
 	}
 
+	/**
+	 * @GET("/api/groupsCity")
+	 */
+	public function getGroupsByCityAction(Request $request) {
+		$city = $this->getRequest()->get('city');
+		$em = $this->get('doctrine.orm.entity_manager');
+		
+		$helper = $this->get('trazeo_base_helper');
+		$cities = $helper->getCities($city);
+
+		$groups=[];
+		$names=[];
+		$routes = $em->getRepository('TrazeoBaseBundle:ERoute')->findByCity($cities[0]);
+		foreach ($routes as $route) {
+					$group=$em->getRepository('TrazeoBaseBundle:EGroup')->findOneByRoute($route);
+					if($group!=null)$names[]=$group->getName();
+		}
+
+		$response = json_encode($names);
+
+		return new Response($response, 200, array(
+            'Content-Type' => 'application/json'
+        ));
+	}
 }
