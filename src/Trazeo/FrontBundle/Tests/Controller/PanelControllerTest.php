@@ -13,7 +13,7 @@ class PanelControllerTest extends WebTestCase
         // Login - Demo
         $crawler = $client->request('GET', '/login');
         $form = $crawler->selectButton('submitLogin')->form();
-        $crawler = $client->submit($form, array('_username' => 'trazeo', '_password' => 'trazeo'));
+        $crawler = $client->submit($form, array('_username' => 'aarrabal@sopinet.com', '_password' => 'ee'));
         // aserting if user was loged sucessfully
        	$this->assertTrue(
         		$client->getResponse()->isRedirect('/panel')

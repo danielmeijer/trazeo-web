@@ -1,7 +1,7 @@
 <?php
 require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
 
-class PanelGroupsControllerText extends PHPUnit_Extensions_SeleniumTestCase
+class PanelGroupsControllerTest extends PHPUnit_Extensions_SeleniumTestCase
 {
   protected function setUp()
   {
@@ -14,7 +14,6 @@ class PanelGroupsControllerText extends PHPUnit_Extensions_SeleniumTestCase
     $this->type("id=password", "ee");
     $this->click("name=submitLogin");
     $this->waitForPageToLoad("30000"); 
-    $this->db->exec("BEGIN"); 
   }
 
   public function testCityFilter()
@@ -59,15 +58,11 @@ class PanelGroupsControllerText extends PHPUnit_Extensions_SeleniumTestCase
 
   public function testDeleteGroup()
   {
-    $this->open("http://localhost/trazeo-web/web/app_dev.php/panel/");
+    $this->open("/trazeo-web/web/app_dev.php/panel/");
     $this->click("xpath=(//a[contains(text(),'Eliminar')])[7]");
     $this->click("link=Sí");
     $this->waitForPageToLoad("30000");
     $this->assertFalse($this->isTextPresent("Test_Case_Group"));
   }  
-  function tearDown() {
-     $this->db->exec("ROLLBACK");
-     parent::tearDown();
-   }
 }
 ?>
