@@ -376,6 +376,7 @@ Suggestion:
     link_child: 'Accede al Muro de alguno de tus grupos para vincular a tus niños/as.'
     new_child: '¡Aún no has registrado a ningún/a niño/a! Haz click aquí para proceder al registro de tus niños en el sistema.'
     create_route: 'Este grupo no tiene ruta definida aun, haz click aquí para crear la ruta.'
+    no_school: 'en el perfil de tu hijo/a puede rellenar el “Centro Educativo” al que pertenece'
 
 Timeline:
     child:
