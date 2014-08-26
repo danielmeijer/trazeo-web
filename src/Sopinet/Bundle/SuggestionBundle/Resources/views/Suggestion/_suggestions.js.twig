@@ -1,4 +1,3 @@
-
 <!--START Sugestions script-->
 <script type="text/javascript">
 	/*
@@ -22,7 +21,7 @@
 			return false;
 		}
 		var currentSugestion=new Sugestion(sugestion);
-	
+
 		trip = new Trip(	[
 		                	 { 
 		                		 sel : currentSugestion.element
@@ -35,10 +34,12 @@
 								closeBoxLabel: "<i class='fa fa-times' style='color:#DDD !important'></i>"
 								,showCloseBox : true
 								,skipUndefinedTrip: true
+								,tripTheme: currentSugestion.style
 								,onTripEnd: function(){
 									if(this.next)_showSugestion(this.next);
 								}.bind(currentSugestion)
 		                	 }	
+
 		);
 		trip.start();
 	}
@@ -59,20 +60,22 @@
 		this.content=args.text;
 		this.delay=args.delay || 6000;
 		this.position=args.position || 'n';
+		this.style=args.style || 'black';
 		if(args.next)this.next=args.next;
 	}
 </script>
 {# {% for sug in suggestions %}
 TODO: Por ahora solo se muestra una sugerencía, para más habra que cambiar esta parte, y usar el método showSugestions 
  #}
-	<script>
-		var suggest={
-			text: "{{ suggestion.text }}"
-			,element: "{{ suggestion.element }}"
-			,position: "{{ suggestion.position }}"
-			,delay: "{{ suggestion.delay }}"
-		};
-		_showSugestion(suggest);
-	</script>
+<script>
+	var suggest={
+		text: "{{ suggestion.text }}"
+		,element: "{{ suggestion.element }}"
+		,position: "{{ suggestion.position }}"
+		,delay: "{{ suggestion.delay }}"
+		,style: "{{suggestion.style}}"
+	};
+	_showSugestion(suggest);
+</script>
 {# {% endfor %} #}
 <!--END Sugestions script-->

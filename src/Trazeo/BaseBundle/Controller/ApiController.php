@@ -20,6 +20,7 @@ use Trazeo\BaseBundle\Entity\EChild;
 use Trazeo\BaseBundle\Entity\EEvent;
 use Trazeo\BaseBundle\Entity\EReport;
 use Trazeo\BaseBundle\Entity\EGroup;
+use Trazeo\BaseBundle\Entity\EGroupAccess;
 use Sopinet\Bundle\SimplePointBundle\ORM\Type\SimplePoint;
 use Sopinet\TimelineBundle\Entity\Comment;
 
@@ -939,7 +940,7 @@ class ApiController extends Controller {
         		$userextend->getId(),
         		$userextend,
         		1,
-        		$reUserValue->getValue($sopinetuserextend, $civiclub_setting)=='yes'  
+        		false
         	)!=null){
         		$view = View::create()
 				->setStatusCode(200)
@@ -1067,7 +1068,8 @@ class ApiController extends Controller {
         	$userextend->getId(),
         	$userextend,
         	1,
-        	$sopinetuserextend
+        	$sopinetuserextend,
+        	false
         	);
 		}
         $group->setName($name);
@@ -1122,15 +1124,22 @@ class ApiController extends Controller {
 		}
 		//Si el niño no existe se crea
 		else if($child==null){
-			new EChild();
+			$child=new EChild();
 			$new=true;
 		}
-        $child->setNick($name);
-		$child->setDateBirth(new \DateTime($date));
+
+		if($date)$child->setDateBirth(new \DateTime($date));
+		else $child->setDateBirth(new \DateTime());
+		if($school)$child->setScholl($school);
+		if($new)$child->addUserextendchild($userextend); 
+
 		$child->setGender($gender);
-		$child->setScholl($school);
+        $child->setNick($name);		
+		$child->setVisibility(true);
+
         $em->persist($child);
         $em->flush();
+
         if($new){
         	$userextend->addChild($child);
    	        $em->persist($userextend);
@@ -1149,17 +1158,70 @@ class ApiController extends Controller {
 	 */
 	public function getGroupsByCityAction(Request $request) {
 		$city = $this->getRequest()->get('city');
+		$object=$this->getRequest()->get('object');
 		$em = $this->get('doctrine.orm.entity_manager');
-		
+		$user = $this->checkPrivateAccess($request);
+		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+
 		$helper = $this->get('trazeo_base_helper');
 		$cities = $helper->getCities($city);
 
-		$groups=[];
+		$admingroups=$em->getRepository('TrazeoBaseBundle:EGroup')->findByAdmin($userextend);
+
 		$names=[];
+		//Para todas las ciudades
+		if($city=='all'){
+			$groups=$em->getRepository('TrazeoBaseBundle:EGroup')->findAll();
+			foreach ($groups as $group) {
+				if(!$object)$names[]=$group->getName();
+				else{
+					$arrayGroups = array();
+					$arrayGroups['id'] = $group->getId();
+					$arrayGroups['name'] = $group->getName();
+					if($group->getRoute()!=null){
+						$arrayGroups['route']['name']=$group->getRoute()->getName();
+						$arrayGroups['route']['admin_name']=$group->getAdmin()->__toString();
+					}
+					$arrayGroups['visibility'] = $group->getVisibility();
+					$arrayGroups['hasride'] = $group->getHasRide();
+					if(in_array($group, $admingroups))$arrayGroups['admin']=true;
+					else $arrayGroups['admin']=false;
+					if($group->getHasRide()==1){
+						$ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneByGroup($group);
+						$arrayGroups['ride_id']=$ride->getId();
+					}
+					$names['data'][] = $arrayGroups;
+				}
+			}
+			$response = json_encode($names);
+
+			return new Response($response, 200, array(
+    	        'Content-Type' => 'application/json'
+        	));
+		}
+		//solo para la ciudad indicada
 		$routes = $em->getRepository('TrazeoBaseBundle:ERoute')->findByCity($cities[0]);
 		foreach ($routes as $route) {
 					$group=$em->getRepository('TrazeoBaseBundle:EGroup')->findOneByRoute($route);
-					if($group!=null)$names[]=$group->getName();
+					if($group!=null && !$object)$names[]=$group->getName();
+					else if($group!=null){
+						$arrayGroups = array();
+						$arrayGroups['id'] = $group->getId();
+						$arrayGroups['name'] = $group->getName();
+						if($group->getRoute()!=null){
+							$arrayGroups['route']['name']=$group->getRoute()->getName();
+							$arrayGroups['route']['admin_name']=$group->getAdmin()->__toString();
+						}
+						$arrayGroups['visibility'] = $group->getVisibility();
+						$arrayGroups['hasride'] = $group->getHasRide();
+						if(in_array($group, $admingroups))$arrayGroups['admin']=true;
+						else $arrayGroups['admin']=false;
+						if($group->getHasRide()==1){
+						$ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneByGroup($group);
+						$arrayGroups['ride_id']=$ride->getId();
+						}
+						$names['data'][] = $arrayGroups;
+					}
 		}
 
 		$response = json_encode($names);
@@ -1167,5 +1229,221 @@ class ApiController extends Controller {
 		return new Response($response, 200, array(
             'Content-Type' => 'application/json'
         ));
+	}
+
+	/**
+	 * @GET("/api/cities")
+	 */
+	public function getCitiesAction(Request $request) {
+		$user = $this->checkPrivateAccess($request);
+		$em = $this->get('doctrine.orm.entity_manager');
+		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+
+		$reJJ = $em->getRepository("JJsGeonamesBundle:City");
+		$routes = $em->getRepository('TrazeoBaseBundle:ERoute')->findAll();
+		
+		$cities=[];
+		if($userextend)$userCity=$userextend->getCity();
+		else $userCity=null;
+		$userCity=$reJJ->findOneById($userCity);
+		if($userCity!=null)$userCity=$userCity->getNameUtf8();
+		$info=[];
+		foreach ($routes as $route) {
+					$city=$reJJ->findOneById($route->getCity());
+					if($city!=null && !in_array($city->getNameUtf8(),$cities))$cities[]=$city->getNameUtf8();
+		}
+		$info['cities']=$cities;
+		$info['userCity']=$userCity;
+		$response = json_encode($info);
+
+		return new Response($response, 200, array(
+            'Content-Type' => 'application/json'
+        ));
+	}
+	/**
+	 * @POST("/api/joinGroup")
+	 */
+	public function joinGroupAction(Request $request) {
+		$user = $this->checkPrivateAccess($request);
+		if( $user == false || $user == null ){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied());
+	
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+		$id_group= $request->get('id_group');
+
+		$em = $this->getDoctrine()->getManager();
+		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id_group);
+
+		if( !$group){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied("Group doesn't exist"));
+	
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}		
+
+		$userextends=$group->getUserextendgroups()->toArray();
+
+		if (in_array($userextend, $userextends)) {
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied("User it's already on group"));
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+		$groupAdmin = $group->getAdmin();
+		$groupVisibility = $group->getVisibility();
+		$info=array();
+		if($groupAdmin == $user || $groupVisibility == 0){
+				
+			$group->addUserextendgroup($userextend);
+			$em->persist($group);
+			$em->flush();
+			
+			//Children autojoin on parent join to group 
+			$childs=$userextend->getChilds();
+			foreach($childs as $child){
+				$group->addChild($child);
+			}
+			$em->persist($group);
+			$em->flush();
+			
+			$info['joined']='true';
+			$response = json_encode($info);
+			return new Response($response, 200, array(
+   	        	'Content-Type' => 'application/json'
+       		));					
+		}
+		$view = View::create()
+		->setStatusCode(200)
+		->setData($this->msgDenied("The group is not public"));
+	
+		return $this->get('fos_rest.view_handler')->handle($view);	
+	}
+
+	/**
+	 * @POST("/api/requestJoinGroup")
+	 */
+	public function requestJoinGroupAction(Request $request) {
+		$user = $this->checkPrivateAccess($request);
+		if( $user == false || $user == null ){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied());
+	
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+		$id= $request->get('id_group');	
+		$em = $this->getDoctrine()->getManager();
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+
+		$userId = $user->getId();
+
+		// Obtener grupo al que se quiere unir a través del param $id
+		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
+		if( !$group){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied("Group doesn't exist"));
+	
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}		
+		$groupId = $group->getId();
+		
+		$groupVisibility = $group->getVisibility();
+		// Buscar si existe alguna petición con ese UserExtend y ese Group
+		$requestUser = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findOneByUserextend($user);
+		$requestGroup = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findOneByGroup($group);
+		$container = $this->get('sopinet_flashMessages');
+		if ($groupVisibility == 2 ){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied("The group is hidden"));
+			return $this->get('fos_rest.view_handler')->handle($view);				
+		}
+		else if($groupVisibility == 0){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied("The group is public"));
+			return $this->get('fos_rest.view_handler')->handle($view);				
+		}
+		// Comprobar que existen
+		if($requestUser && $requestGroup == true){
+			
+			// Si existen, obtener el id de su registro en la base de datos
+			$requestUserId = $requestUser->getId();
+			$requestGroupId = $requestGroup->getId();
+			// Comprobar que no tienen el mismo id de registro (petición duplicada)
+			if($requestUserId = $requestGroupId) {
+				// Excepción y redirección
+				$view = View::create()
+				->setStatusCode(200)
+				->setData($this->msgDenied("Join to group request has been did before"));
+				return $this->get('fos_rest.view_handler')->handle($view);				
+			}
+			
+		}
+		else{
+		// Si no existen los UserExtend y Group anteriormente obtenidos,
+		// directamente se crea la petición			
+			$groupAdmin = $group->getAdmin();
+			$groupAdminUser = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($groupAdmin);
+			
+			$fos_user_admin = $groupAdminUser->getUser();
+			//ldd($fos_user_admin);
+			$not = $this->container->get('sopinet_user_notification');
+			$el = $not->addNotification(
+					'group.join.request',
+					"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
+					$userId . "," . $groupId,
+					$this->generateUrl('panel_group'),$groupAdminUser->getUser()
+			);
+			
+			$access = new EGroupAccess();
+			$access->setGroup($group);
+			$access->setUserextend($user);
+				
+			$em->persist($access);
+			$em->flush();
+			$info['request']='true';
+			$response = json_encode($info);
+			return new Response($response, 200, array(
+   	        	'Content-Type' => 'application/json'
+       		));						
+
+			
+		}
+
+	}
+
+	/**
+	 * @POST("/api/user/childs")
+	 */
+	public function getUserChildrensAction(Request $request) {
+	
+		$user = $this->checkPrivateAccess($request);
+		if( $user == false || $user == null ){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied());
+	
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+	
+		$em = $this->get('doctrine.orm.entity_manager');
+	
+		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+		
+		$childs = $userextend->getChilds();
+		
+		$view = View::create()
+		->setStatusCode(200)
+		->setData($this->doOK($childs));
+			
+		return $this->get('fos_rest.view_handler')->handle($view);
+	
 	}
 }

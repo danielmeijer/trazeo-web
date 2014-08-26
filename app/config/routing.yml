@@ -1,3 +1,7 @@
+sopinet_suggestion:
+    resource: "@SopinetSuggestionBundle/Resources/config/routing.yml"
+    prefix:   /
+
 sopinet_gamification:
     resource: "@SopinetGamificationBundle/Resources/config/routing.yml"
     prefix:   /

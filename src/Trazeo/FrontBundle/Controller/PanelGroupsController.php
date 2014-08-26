@@ -694,7 +694,8 @@ class PanelGroupsController extends Controller
         		$user->getId(),
         		$user,
         		1,
-        		$sopinetuserextend
+        		$sopinetuserextend,
+        		false
         		);
             if(!$now)return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
 			else return $this->redirect($this->generateUrl('panel_route_new',array('id'=>$group->getId())));

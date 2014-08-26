@@ -59,6 +59,7 @@ class AppKernel extends Kernel
         	new Lunetics\LocaleBundle\LuneticsLocaleBundle(),
         	new Endroid\Bundle\QrCodeBundle\EndroidQrCodeBundle(),
             new Sopinet\Bundle\GamificationBundle\SopinetGamificationBundle(),
+            new Sopinet\Bundle\SuggestionBundle\SopinetSuggestionBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

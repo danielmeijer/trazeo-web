@@ -156,11 +156,28 @@ class PanelChildrenController extends Controller
         $allChildsInvite = $em->getRepository('TrazeoBaseBundle:EChildInvite')->findAll();
         
         $childs = $user->getChilds();
+        /**
+         * Do Suggestion
+         */    
+        $reSu = $em->getRepository('SopinetSuggestionBundle:ESuggestion');
+        $sugs = $reSu->getSuggestionsFor($user->getUseLike(), 'child');
+        $suggestion=null;
+
+        foreach($sugs as $sug) {
+            if (eval($sug->getRule())) {
+                $suggestion = $sug;
+                break;
+            }
+        }
+
+        if($suggestion!=null)$suggestion->setText($this->get('translator')->trans('Suggestion.'.$suggestion->getText()));
+        /** END SUGGESTION **/
 
         return array(
             'childs' => $childs,
         	'allChildsInvite' => $allChildsInvite,
-        	'user' => $user,
+            'suggestion' => $suggestion,
+        	'user' => $user
         );
     }
     

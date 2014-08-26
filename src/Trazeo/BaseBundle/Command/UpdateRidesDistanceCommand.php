@@ -53,7 +53,7 @@ class UpdateRidesDistanceCommand extends ContainerAwareCommand
                 $ride->getUserExtend()->getId(),
                 $ride->getUserExtend(),
                 1,
-                $reUserValue->getValue($sopinetuserextend, $civiclub_setting)=='yes'     
+                false     
             );
     		//obtenemos todos los niños que pueden haber participado en un paseo 
     		if($ride->getGroupid()!=null){
@@ -103,7 +103,7 @@ class UpdateRidesDistanceCommand extends ContainerAwareCommand
                         $childride->getChild()->getId(),
                         $user,
                         1,
-                        $reUserValue->getValue($sopinetuserextend, $civiclub_setting)=='yes' 
+                        false
                         );
                         //Añadimos los puntos obtenidos por la distancía recorrida por el niño  
                         $output->writeln('<info>Niño participa en el paseo '. $userChild . ' con puntos '. $distance.'</info>');
@@ -113,7 +113,7 @@ class UpdateRidesDistanceCommand extends ContainerAwareCommand
                         $childride->getChild()->getId(),
                         $user,
                         $distance,
-                        $reUserValue->getValue($sopinetuserextend, $civiclub_setting)=='yes'
+                        false
                         );           
                         $childride->setUpdated(1);
                         $em->persist($childride);

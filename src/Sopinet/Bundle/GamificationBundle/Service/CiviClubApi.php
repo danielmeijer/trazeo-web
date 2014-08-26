@@ -48,21 +48,22 @@ class CiviClubApi {
 	 * @return msg: message to api acces
 	 */
 	function civiclubCall($user, $points) {
+
 		$em = $this->_container->get("doctrine.orm.entity_manager");
 		$container=$this->_container;
 		$gh = $container->get('sopinet_gamification');
 		$reUE = $gh->getUserRepository();
-		$userextend=$reUE->findOneById($user->getId());
 
 		$security= urlencode($container->getParameter('sopinet_user_civiclub_security'));
-		$email=urlencode($user->getEmail());
+		$email=urlencode($user->getUser()->getEmail());
 		$emitter_id=urlencode($container->getParameter('sopinet_user_civiclub_emitter_id'));
 		$emitter_center_id=urlencode($container->getParameter('sopinet_user_civiclub_emitter_center_id'));
 		$service_id=urlencode($container->getParameter('sopinet_user_civiclub_service_id'));
 		$number_uses=urlencode($points);
 
 		$str= "security=".$security."&email=".$email."&emitter_id=".$emitter_id."&emitter_center_id=".$emitter_center_id."&service_id=".$service_id."&number_uses=".$number_uses;
-
+		ldd($str);
+		return true;
 		if($userextend!=null){
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, 'https://www.civiclub.org/api/external/point/assign');

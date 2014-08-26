@@ -60,6 +60,19 @@
 	 */
 	 protected $sequences;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="updated", type="boolean", nullable=true)
+     */
+     protected $updated=false;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="lastupdate", type="integer", nullable=true)
+     */
+     protected $lastupdate=0;
 
     /**
      * Set entities_involved
@@ -213,5 +226,53 @@
     public function getSequences()
     {
         return $this->sequences;
+    }
+
+    /**
+     * Set updated.
+     *
+     * @param boolean $updated
+     *
+     * @return EUserAction
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * Get updated.
+     *
+     * @return boolean
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * Set lastupdate.
+     *
+     * @param integer $lastupdate
+     *
+     * @return EUserAction
+     */
+    public function setLastupdate($lastupdate)
+    {
+        $this->lastupdate = $lastupdate;
+
+        return $this;
+    }
+
+    /**
+     * Get lastupdate.
+     *
+     * @return integer
+     */
+    public function getLastupdate()
+    {
+        return $this->lastupdate;
     }
 }

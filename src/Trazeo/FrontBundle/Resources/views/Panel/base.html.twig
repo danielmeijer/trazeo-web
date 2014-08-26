@@ -47,8 +47,8 @@
 {% block js %}
 	{{ parent() }}
 	{% if suggestion is defined and suggestion is not empty %}
-		{% include "TrazeoFrontBundle:Panel:_sugestions.js.twig" with {
-			'suggestions': suggestion
+		{% include "SopinetSuggestionBundle:Suggestion:_suggestions.js.twig" with {
+			'suggestions': suggestion,
 		} %}
 	{% endif %}
 	{% include "TrazeoFrontBundle:Panel:_zopim.js.twig" %}

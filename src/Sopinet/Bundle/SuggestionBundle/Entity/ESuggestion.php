@@ -1,14 +1,16 @@
 <?php
 
-namespace Trazeo\BaseBundle\Entity;
+namespace Sopinet\Bundle\SuggestionBundle\Entity;
+
 
 use Doctrine\ORM\Mapping as ORM;
-use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
+use Doctrine\ORM\Event\OnFlushEventArgs;
+ 
 /**
- * Entity ESuggestion
- *
- * @ORM\Table("e_suggestion")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Sopinet\Bundle\SuggestionBundle\Entity\ESuggestionRepository")
+ * @ORM\Table(name="e_suggestion")
+ * @DoctrineAssert\UniqueEntity("id")
  */
 class ESuggestion
 {
@@ -34,7 +36,15 @@ class ESuggestion
 	 * @ORM\Column(name="text", type="string", length=255)
 	 */
 	protected $text;
-	
+
+    
+    /**
+     * @var panel
+     *
+     * @ORM\Column(name="panel", type="string", length=255)
+     */
+    protected $panel;
+
 	/**
 	 * @var string
 	 *
@@ -50,10 +60,9 @@ class ESuggestion
 	protected $forder;
 	
     /**
-     * // Datos: monitor / user
-     * @ORM\Column(name="useLike", type="string", length=50, nullable=true)
+     * @ORM\Column(name="role", type="string", length=50, nullable=true)
      */    
-    protected $useLike;
+    protected $role;
     
     /**
      * // Datos de posición: 'n','s','e','w'
@@ -67,6 +76,11 @@ class ESuggestion
      * @ORM\Column(name="delay", type="integer", nullable=true)
      */
     protected $delay;
+
+    /**
+     * @ORM\Column(name="style", type="string", length=50, nullable=true)
+     */
+    protected $style;
 
     /**
      * Get id
@@ -213,12 +227,12 @@ class ESuggestion
     }
 
     /**
-     * Get position
-     *
-     * @return string 
-     */
-    public function getPosition()
-    {
+    * Devuelve la posición de una sugerencía
+    * 
+    * @return String
+    */
+    public function getPosition() {
+        if ($this->position == null) return 'n';
         return $this->position;
     }
 
@@ -244,5 +258,77 @@ class ESuggestion
     public function getDelay()
     {
         return $this->delay;
+    }
+
+    /**
+     * Set role
+     *
+     * @param string $role
+     *
+     * @return ESuggestion
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * Set panel
+     *
+     * @param string $panel
+     *
+     * @return ESuggestion
+     */
+    public function setPanel($panel)
+    {
+        $this->panel = $panel;
+
+        return $this;
+    }
+
+    /**
+     * Get panel
+     *
+     * @return string
+     */
+    public function getPanel()
+    {
+        return $this->panel;
+    }
+
+    /**
+     * Set style
+     *
+     * @param string $style
+     *
+     * @return ESuggestion
+     */
+    public function setStyle($style)
+    {
+        $this->style = $style;
+
+        return $this;
+    }
+
+    /**
+     * Get style
+     *
+     * @return string
+     */
+    public function getStyle()
+    {
+        return $this->style;
     }
 }

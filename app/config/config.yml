@@ -50,7 +50,7 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ FOSCommentBundle, SopinetTemplateSbadmin2Bundle, TrazeoFrontBundle, SopinetTemplateLandingBundle,SopinetTemplateAmoebaBundle, JMSTranslationBundle, FOSUserBundle, SopinetFlashMessagesBundle, SopinetTimelineBundle ]
+    bundles:        [ FOSCommentBundle, SopinetTemplateSbadmin2Bundle, TrazeoFrontBundle, SopinetTemplateLandingBundle,SopinetTemplateAmoebaBundle, JMSTranslationBundle, FOSUserBundle, SopinetFlashMessagesBundle, SopinetTimelineBundle, SopinetSuggestionBundle]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -218,4 +218,5 @@ lunetics_locale:
        
 sopinet_gamification:
     class: 'TrazeoBaseBundle:UserExtend'      
-    api: 'CiviClub'         
+    api: 'CiviClub'
+sopinet_suggestion: ~   
