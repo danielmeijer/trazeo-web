@@ -142,6 +142,14 @@ Groups:
         new: 'Nuevo Grupo'
         title: 'Crear nuevo grupo'
 
+    newRouteModal:
+        title: 'Publicar ruta del grupo'
+        body1: 'Publicar la ruta que sigue habitualmente este grupo no es obligatorio. Sin embargo, si el grupo es público, ayudará a que otros usuarios cercanos se sientan interesados a unirse a él.'
+        body2: 'Puedes crear y publicar tu ruta ahora, o hacerlo en cualquier momento desde la pantalla “Mis grupos”.'
+        body3: 'Y no olvides que cuánto más explícito sea el nombre del grupo, más fácil será que otros usuarios de la zona que quieran organizarse contigo se unan. Por ejemplo, puedes usar el nombre del colegio y el punto de partida.'
+        now: Publicar ruta ahora
+        later: Lo haré en otro momento
+
     noMember: 'Debes formar parte del grupo'
     noRoute: 'Ninguna ruta asignada'
 
