@@ -102,6 +102,7 @@ Form:
         repeatpass: 'Confirmar contraseña'
 
 Groups:
+    route: Ruta
     data:
         activity: Actividad
         chat: 'Muro del grupo de pedibús'
@@ -149,7 +150,7 @@ Groups:
         body3: 'Y no olvides que cuánto más explícito sea el nombre del grupo, más fácil será que otros usuarios de la zona que quieran organizarse contigo se unan. Por ejemplo, puedes usar el nombre del colegio y el punto de partida.'
         now: Publicar ruta ahora
         later: Lo haré en otro momento
-        
+
     noMember: 'Debes formar parte del grupo'
     noRoute: 'Ninguna ruta asignada'
 

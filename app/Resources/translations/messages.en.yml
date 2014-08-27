@@ -102,6 +102,7 @@ Form:
         repeatpass: 'Confirmar contraseña'
 
 Groups:
+    route: Ruta
     data:
         activity: Actividad
         chat: 'Muro del grupo'
