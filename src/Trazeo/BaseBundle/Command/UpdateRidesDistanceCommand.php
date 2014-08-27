@@ -42,19 +42,20 @@ class UpdateRidesDistanceCommand extends ContainerAwareCommand
     		$childs=[];
             $users=[];
             $manager=null;
-            if($ride->getUserExtend()!=null)$id= $ride->getUserExtend()->getId();
-            //añadimos los puntos al monitor por acompañar el paseo
-            $sopinetuserextend=$em->getRepository("SopinetUserBundle:SopinetUserExtend")->findOneByUser($ride->getUserExtend()->getUser());
-            $output->writeln('<info>Monitor'. $ride->getUserExtend() .'</info>');
-            $sg = $this->getContainer()->get('sopinet_gamification');
-            $sg->addUserAction(
-                "Manage_Ride",
-                "TrazeoBaseBundle:UserExtend",
-                $ride->getUserExtend()->getId(),
-                $ride->getUserExtend(),
-                1,
-                false     
-            );
+            if($ride->getUserExtend()!=null){
+                //añadimos los puntos al monitor por acompañar el paseo
+                $sopinetuserextend=$em->getRepository("SopinetUserBundle:SopinetUserExtend")->findOneByUser($ride->getUserExtend());
+                $output->writeln('<info>Monitor'. $ride->getUserExtend() .'</info>');
+                $sg = $this->getContainer()->get('sopinet_gamification');
+                $sg->addUserAction(
+                    "Manage_Ride",
+                    "TrazeoBaseBundle:UserExtend",
+                    $ride->getUserExtend()->getId(),
+                    $ride->getUserExtend(),
+                    1,
+                    false     
+                );
+            }
     		//obtenemos todos los niños que pueden haber participado en un paseo 
     		if($ride->getGroupid()!=null){
     			$group = $em->getRepository("TrazeoBaseBundle:EGroup")->findOneById($ride->getGroupid());

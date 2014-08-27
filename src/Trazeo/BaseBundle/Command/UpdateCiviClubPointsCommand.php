@@ -72,7 +72,6 @@ class UpdateCiviClubPointsCommand extends ContainerAwareCommand
                 }
 
                 $value=$reUserValue->getValue($user, $civiclub_setting);
-                //if($points!=0)$output->writeln('<info>Usuario: '. $user->getUser().' Puntos: ' .$points.' Envio: '.$value.'</info>');
                 if($value=='yes'){
                     $civiclub->civiclubCall($user,$points);             
                 }
