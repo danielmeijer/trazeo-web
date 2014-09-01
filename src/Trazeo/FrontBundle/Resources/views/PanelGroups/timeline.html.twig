@@ -62,26 +62,10 @@
 				<h4 class="alert alert-success"><i class="fa fa-compass"></i> &nbsp;{{ 'Timeline.route.title'|trans }}</h4>
 				{% if group.Route %}
 				<ul><li class="alert-warning"><a href="{{ path('panel_route_show',{'id': group.Route.id}) }}"><i class="fa fa-map-marker"></i>&nbsp; {{ group.Route.Name }}</li></a></ul>
+				{% elseif group.Admin.Id == user.Id %}
+				<ul><li class="alert-warning"><a href="{{ path('panel_route_new', {'id': group.id }) }}"><i class="fa fa-map-marker"></i>&nbsp; {{ 'Route.new.title'|trans }} </li></a></ul>
 				{% else %}
 				<ul><li class="alert-warning"><i class="fa fa-map-marker"></i>&nbsp; {{ 'Timeline.route.empty'|trans }} </li></ul>
-				{% endif %}
-				{% if group.Admin.Id == user.Id %}
-				<br />
-				<p class="alert-warning btn-xs">{{ 'Timeline.route.set'|trans }}
-					<a class="label label-warning btn-xs pull-right" data-toggle="collapse" data-parent="#accordion2" href="#collapseRoutes"><i class="fa fa-chevron-down"></i></a>
-				</p>
-				<div id="collapseRoutes" class="panel-collapse collapse">
-					<br />
-					<ul>
-						{% for route in routes %}
-							<li class="alert-warning">
-							<i class="fa fa-compass"></i>&nbsp;
-							<a href="{{ path('panel_group_setRoute', {'group':group.id, 'route':route.id}) }}">{{ route.name }}</a>
-							</li>
-							<br />
-						{% endfor %}
-					</ul>
-				</div>
 				{% endif %}
 			</div>
 			<div class="row">
