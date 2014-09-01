@@ -34,6 +34,8 @@ class GamificationHelper {
 			$userextend = new \Sopinet\UserBundle\Entity\SopinetUserExtend();
 			$userextend->setUser($user);
 			$em->persist($userextend);
+			$user->setSopinetUserExtend($userextend);
+			$em->persist($user);			
 			$em->flush();
 		}
 		return $userextend;
@@ -166,7 +168,7 @@ class GamificationHelper {
 	/**
 	 * Update User Points
 	 */
-	private function _updateUserPoints($user =null, $points=0, $call_api) {
+	private function _updateUserPoints($user =null, $points=0, $call_api=false) {
 		$em = $this->_container->get("doctrine.orm.entity_manager");	
 		$userextend = $this->_getSopinetUserExtend($user);
 		$reUserActions = $this->getUserRepository();
@@ -208,7 +210,7 @@ class GamificationHelper {
 		$userextend = $this->_getSopinetUserExtend($user);
 
 		$reUserActions = $em->getRepository("SopinetGamificationBundle:EUserAction");
-		$userActions=$reUserActions->findBy(array('sopinetuserextends' => $userextend));
+		$userActions= $reUserActions->findBy(array('sopinetuserextends' => $userextend),Array('createdAt' => 'DESC'));
 
 		return array('actions' => $userActions);
 	}

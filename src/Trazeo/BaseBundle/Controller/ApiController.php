@@ -1068,7 +1068,6 @@ class ApiController extends Controller {
         	$userextend->getId(),
         	$userextend,
         	1,
-        	$sopinetuserextend,
         	false
         	);
 		}
