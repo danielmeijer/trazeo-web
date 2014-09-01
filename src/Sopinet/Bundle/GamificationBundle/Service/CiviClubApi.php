@@ -62,7 +62,7 @@ class CiviClubApi {
 		$number_uses=urlencode($points);
 
 		$str= "security=".$security."&email=".$email."&emitter_id=".$emitter_id."&emitter_center_id=".$emitter_center_id."&service_id=".$service_id."&number_uses=".$number_uses;
-		if($userextend!=null){
+		if($user->getUser()!=null){
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, 'https://www.civiclub.org/api/external/point/assign');
 			//requesting JSON

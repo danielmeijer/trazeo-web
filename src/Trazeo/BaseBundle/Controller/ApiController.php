@@ -1132,7 +1132,7 @@ class ApiController extends Controller {
 		else $child->setDateBirth(new \DateTime());
 		if($school)$child->setScholl($school);
 		if($new)$child->addUserextendchild($userextend); 
-
+		$child->setSelected(false);
 		$child->setGender($gender);
         $child->setNick($name);		
 		$child->setVisibility(true);
