@@ -1173,8 +1173,8 @@ class ApiController extends Controller {
 			$groups=$em->getRepository('TrazeoBaseBundle:EGroup')->findAll();
 			foreach ($groups as $group) {
 				if(!$object){
-					$names['groups'][]=$group->getName();
-					$names['ids'][]=$group->getId();
+					$names['data']['groups'][]=$group->getName();
+					$names['data']['ids'][]=$group->getId();
 				}
 				else{
 					$arrayGroups = array();
@@ -1206,8 +1206,8 @@ class ApiController extends Controller {
 		foreach ($routes as $route) {
 					$group=$em->getRepository('TrazeoBaseBundle:EGroup')->findOneByRoute($route);
 					if($group!=null && !$object){
-					$names['groups'][]=$group->getName();
-					$names['ids'][]=$group->getId();
+					$names['data']['groups'][]=$group->getName();
+					$names['data']['ids'][]=$group->getId();
 					}
 					else if($group!=null){
 						$arrayGroups = array();
