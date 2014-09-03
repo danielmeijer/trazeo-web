@@ -1172,7 +1172,10 @@ class ApiController extends Controller {
 		if($city=='all'){
 			$groups=$em->getRepository('TrazeoBaseBundle:EGroup')->findAll();
 			foreach ($groups as $group) {
-				if(!$object)$names[]=$group->getName();
+				if(!$object){
+					$names['groups'][]=$group->getName();
+					$names['ids'][]=$group->getId();
+				}
 				else{
 					$arrayGroups = array();
 					$arrayGroups['id'] = $group->getId();
@@ -1202,7 +1205,10 @@ class ApiController extends Controller {
 		$routes = $em->getRepository('TrazeoBaseBundle:ERoute')->findByCity($cities[0]);
 		foreach ($routes as $route) {
 					$group=$em->getRepository('TrazeoBaseBundle:EGroup')->findOneByRoute($route);
-					if($group!=null && !$object)$names[]=$group->getName();
+					if($group!=null && !$object){
+					$names['groups'][]=$group->getName();
+					$names['ids'][]=$group->getId();
+					}
 					else if($group!=null){
 						$arrayGroups = array();
 						$arrayGroups['id'] = $group->getId();
