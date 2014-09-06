@@ -380,7 +380,7 @@ class PanelGroupsController extends Controller
 	 * @Template()
 	 */
 	public function inviteGroupAction(Request $request) {
-	
+		// TODO: Pasar a una función en un Servicio porque también se usa en ApiController
 		$em = $this->getDoctrine()->getManager();
 		$um = $this->container->get('fos_user.user_manager');
 		
