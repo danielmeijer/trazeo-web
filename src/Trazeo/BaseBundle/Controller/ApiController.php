@@ -948,4 +948,109 @@ class ApiController extends Controller {
 		}
 		return $this->get('fos_rest.view_handler')->handle($view);		
 	}
+	
+	/**
+	 * @POST("/api/group/invite")
+	 */	
+	public function groupInviteAction(Request $request) {
+		// TODO: PASAR FUNCION A UN SERVICIO; Se está usando en ApiController y PanelGroupsController
+		$user = $this->checkPrivateAccess($request);
+		if( $user == false || $user == null ){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied());
+	
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+		
+		
+		$em = $this->get('doctrine.orm.entity_manager');
+		
+		$um = $this->container->get('fos_user.user_manager');
+		
+		$container = $this->get('sopinet_flashMessages');
+		
+		$fos_user_current = $user;
+		
+		$userEmail = $request->get('email_invite');
+		$groupId = $request->get('id_group');
+		
+		$fos_user = $um->findUserByEmail($userEmail);
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+		
+		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($groupId);
+		$groupUsers = $group->getUserextendgroups();
+		
+		foreach($groupUsers as $groupUser){
+			if($user == $groupUser){
+		
+				$notification = $container->addFlashMessages("warning","El usuario ya forma parte del grupo");
+				return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
+			}
+		}
+		
+		
+		if($fos_user != true){
+			// Si el usuario no está registrado, habrá que registrarlo
+			$reGAI = $em->getRepository('TrazeoBaseBundle:EGroupAnonInvite');
+			$reGAI->createNew($group, $userEmail, $fos_user_current, $this);
+				
+			// $notification = $container->addFlashMessages("warning","El correo electrónico introducido no corresponde a ningún usuario");
+			$notification = $container->addFlashMessages("success","Se ha enviado un email al usuario invitándolo al sistema Trazeo y a este grupo.");
+			return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
+		}
+		
+		if($fos_user == $fos_user_current ){
+			$notification = $container->addFlashMessages("warning","No necesitas invitación para unirte a un grupo del que eres administrador");
+			return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
+		}
+		
+		// Obtener grupo al que se va a unir a través del param $id
+		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($groupId);
+		
+		// Buscar si existe alguna petición con ese UserExtend y ese Group
+		$requestUser = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findOneByUserextend($user);
+		$requestGroup = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findOneByGroup($group);
+		
+		// Comprobar que existen
+		if($requestUser && $requestGroup == true){
+		
+			// Si existen, obtener el id de su registro en la base de datos
+			$requestUserId = $requestUser->getId();
+			$requestGroupId = $requestGroup->getId();
+			// Comprobar que no tienen el mismo id de registro (petición duplicada)
+			if($requestUserId = $requestGroupId) {
+				// Excepción y redirección
+				$notification = $container->addFlashMessages("warning","Ya has invitado a este usuario anteriormente");
+				return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
+					
+			}
+		
+		}else{
+			// Si no existen los UserExtend y Group anteriormente obtenidos,
+			// directamente se crea la petición
+			$user_current = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user_current->getId());
+		
+			$not = $this->container->get('sopinet_user_notification');
+			$el = $not->addNotification(
+					'group.invite.user',
+					"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
+					$user_current->getId() . "," . $groupId ,
+					$this->generateUrl('panel_group'), $fos_user
+			);
+		
+			$access = new EGroupInvite();
+			$access->setGroup($group);
+			$access->setUserextend($user);
+			$access->setSender($user_current);
+		
+			$em->persist($access);
+			$em->flush();
+		
+			$container = $this->get('sopinet_flashMessages');
+			$notification = $container->addFlashMessages("success","El usuario ha recibido tu invitación para unirse al grupo");
+			return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
+		
+		}
+	}	
 }
