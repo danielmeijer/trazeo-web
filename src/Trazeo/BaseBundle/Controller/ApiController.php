@@ -1457,6 +1457,7 @@ class ApiController extends Controller {
 	 */
 	public function groupInviteAction(Request $request) {
 		// TODO: PASAR FUNCION A UN SERVICIO; Se está usando en ApiController y PanelGroupsController
+		// TODO: Hay que arreglar esta función, no devuelve un JSON correctamente..
 		$user = $this->checkPrivateAccess($request);
 		if( $user == false || $user == null ){
 			$view = View::create()
