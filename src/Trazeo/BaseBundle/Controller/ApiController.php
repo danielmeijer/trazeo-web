@@ -181,8 +181,7 @@ class ApiController extends Controller {
 	/**
 	 * @POST("/api/ride/createNew")
 	 */
-	public function getCreateNewRideAction(Request $request) {
-	
+	public function getCreateNewRideAction(Request $request) {	
 		//Comprobar si el ride asociado al grupo está creado(hasRide=1)
 		$id_group = $request->get('id_group');
 		$latitude = $request->get('latitude');
@@ -226,7 +225,44 @@ class ApiController extends Controller {
 				return $this->get('fos_rest.view_handler')->handle($view);
 			}
 			// Sino, se crea un paseo y se asocia al grupo
-			else{ 				
+			else{
+				// Comprobar si hay permisos para Crear el Paseo
+				$groupsIds = array();
+				$groupsIds[] = 63;
+				$groupsIds[] = 21;
+				$groupsIds[] = 20;
+				$groupsIds[] = 19;
+				$groupsIds[] = 18;
+				$groupsIds[] = 37;
+
+				$emailsToFilter = array();
+				$emailsToFilter[] = "prudennl92@gmail.com";
+				$emailsToFilter[] = "fermincabal94@gmail.com";
+				$emailsToFilter[] = "victornogpan@gmail.com";
+				$emailsToFilter[] = "clsouton@gmail.com";
+				$emailsToFilter[] = "laura.alberquilla@gmail.com";
+				$emailsToFilter[] = "lrodrigosanchez@gmail.com";
+				$emailsToFilter[] = "gemi87.jg@gmail.com";
+				$emailsToFilter[] = "elenacarrie@gmail.com";
+				
+				$canInitRide = true;
+				if (in_array($id_group, $groupsIds)) {
+					$canInitRide = false;
+					if (in_array($user->getEmail(), $emailsToFilter)) {
+						$canInitRide = true;
+					}
+				}
+				if (!$canInitRide) {
+					$array['id_ride'] = "-1"; // No tiene permisos para iniciar el paseo
+					
+					$view = View::create()
+					->setStatusCode(200)
+					->setData($this->doOK($array));
+					
+					return $this->get('fos_rest.view_handler')->handle($view);					
+				}
+				
+				
 				//Cerrar paseo asociado a este grupo, si los hubiera
 				if($group->getRide() != null) {
 					//Sacamos el paseo asociado
