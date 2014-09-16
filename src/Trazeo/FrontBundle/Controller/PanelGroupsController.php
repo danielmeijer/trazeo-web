@@ -494,6 +494,11 @@ class PanelGroupsController extends Controller
 			$notification = $container->addFlashMessages("success","No puedes unirte al grupo porque ha sido eliminado");
 			return $this->redirect($this->generateUrl('panel_group'));
 		}
+
+		if(in_array($user,$groupToJoin->getUserextendgroups()->toArray())){
+			$notification = $container->addFlashMessages("success","Ya eres miembro de este grupo");
+			return $this->redirect($this->generateUrl('panel_group'));			
+		}	
 	
 		$groupToJoin->addUserextendgroup($user);
 		$em->persist($groupToJoin);
@@ -507,12 +512,10 @@ class PanelGroupsController extends Controller
 		$em->persist($groupToJoin);
 		$em->flush();
 		
-
 		$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findOneByUserextend($id);
 		$sender=$userRequest->getSender();
 		$userSender = $em->getRepository('TrazeoBaseBundle:Userextend')->findOneById($sender);
     	$fos_userSender = $userSender->getUser();
-
 		$groupAdmin = $groupToJoin->getAdmin();
 		$groupAdminUser = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($groupAdmin);
 		
