@@ -886,7 +886,39 @@ class ApiController extends Controller {
 			
 		return $this->get('fos_rest.view_handler')->handle($view);
 	}
-	
+
+	/**
+	 * Crea un nuevo mensaje en el TimeLine (Muro) del Grupo
+	 * 
+	 * @POST("/api/group/timeline/notification")
+	 * @param Request $request
+	 */
+	public function addNotificationAction(Request $request) {
+	   	$em = $this->getDoctrine()->getManager();
+	   	$fos_user = $this->container->get('security.context')->getToken()->getUser();	
+	   	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+	   	if($user!=null){
+			$id_group = $request->get('id_group');
+			$group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneById($id_group);
+	   		$userextends = $group->getUserextendgroups()->toArray();
+			$not = $this->container->get('sopinet_user_notification');
+			foreach($userextends as $userextend)
+			{
+				$not->addNotification(
+					"timeline.newFromMonitor",
+					"TrazeoBaseBundle:EGroup",
+					$group->getId(),
+					$this->generateUrl('panel_group_timeline', array('id' => $group->getId())),
+					$userextend->getUser()
+				);
+			}	
+	   	}
+		$view = View::create()
+		->setStatusCode(200)
+		->setData($this->doOK("ok"));
+			
+		return $this->get('fos_rest.view_handler')->handle($view);	
+	}
 	/**
 	 * Crea un nuevo mensaje en el TimeLine (Muro) del Grupo
 	 * 

@@ -3,7 +3,7 @@
 	{% if nois is defined and groupMember.Route.city.nameUtf8 is defined %}
 	city="{{ groupMember.Route.city.nameUtf8 }}"
 	style="display: none"
-	{% else %}
+	{% elseif nois is defined  %}
 	city="empty"
 	style="display: none"
 	{% endif %} >

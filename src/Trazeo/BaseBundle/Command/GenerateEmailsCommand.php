@@ -54,9 +54,10 @@ class GenerateEmailsCommand extends ContainerAwareCommand
     		if($time=='important'){
     			$notifications = $reNOT->findBy(array('user' => $user, 'email' => 0,'action' => 'ride.finish'));
     			$notifications2= $reNOT->findBy(array('user' => $user, 'email' => 0,'action' => 'group.invite.user'));
-    			$notifications=array_merge($notifications,$notifications2);			
+                $notifications3= $reNOT->findBy(array('user' => $user, 'email' => 0,'action' => 'timeline.newFromMonitor'));
+    			$notifications=array_merge($notifications,$notifications2,$notifications3);			
     		}
-    		
+            
     		else $notifications = $reNOT->findBy(array('user' => $user, 'email' => 0));
 
     		if (count($notifications) > 0) {
