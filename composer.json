@@ -36,6 +36,7 @@
 		"lunetics/locale-bundle": "2.2.*",
 		"endroid/qrcode-bundle": "dev-master",
 		"elao/error-notifier-bundle" : "dev-master",
-		"phpunit/phpunit-selenium": ">=1.2"
+		"phpunit/phpunit-selenium": ">=1.2",
+		"sopinet/autologin-bundle": "dev-master"
 	}
 }

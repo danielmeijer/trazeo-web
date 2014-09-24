@@ -60,6 +60,7 @@ class AppKernel extends Kernel
         	new Endroid\Bundle\QrCodeBundle\EndroidQrCodeBundle(),
             new Sopinet\Bundle\GamificationBundle\SopinetGamificationBundle(),
             new Sopinet\Bundle\SuggestionBundle\SopinetSuggestionBundle(),
+            new Sopinet\AutologinBundle\SopinetAutologinBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

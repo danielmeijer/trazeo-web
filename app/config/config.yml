@@ -219,4 +219,6 @@ lunetics_locale:
 sopinet_gamification:
     class: 'TrazeoBaseBundle:UserExtend'      
     api: 'CiviClub'
-sopinet_suggestion: ~   
+sopinet_suggestion: ~  
+sopinet_autologin:
+    domain: http://localhost/trazeo-web/web/app_dev.php/

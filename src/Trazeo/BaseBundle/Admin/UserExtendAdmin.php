@@ -23,6 +23,8 @@ class UserExtendAdmin extends Admin
         ->add('tutorialMap', null, array('required' => false))
         ->add('points')
         ->add('spendedPoints')
+        ->add('mobile')
+        ->add('city.nameUtf8')
         ->add('useLike')
     ;
   }
@@ -36,6 +38,8 @@ class UserExtendAdmin extends Admin
     	->add('tutorialMap')    	
       ->add('points')
       ->add('spendedPoints')
+      ->add('mobile')
+      ->add('city.nameUtf8')
     	->add('useLike')
     ;
   }
@@ -52,9 +56,30 @@ class UserExtendAdmin extends Admin
       ->add('useLike')
       ->add('points')
       ->add('spendedPoints')
+      ->add('mobile')
+      ->add('city.nameUtf8')
     ;
   }
  
+/*     protected function configureShowFields(ShowMapper $showMapper)
+    {
+        // Here we set the fields of the ShowMapper variable, $showMapper (but this can be called anything)
+        $showMapper
+      ->addIdentifier('id')
+      ->add('user')
+      ->add('groups')
+      ->add('adminRoutes')
+      ->add('childs')
+      ->add('nick')      
+      ->add('useLike')
+      ->add('points')
+      ->add('spendedPoints')
+      ->add('mobile')
+      ->add('city.nameUtf8')
+      ;
+
+    }*/
+
   public function validate(ErrorElement $errorElement, $object)
   {
     /*$errorElement
