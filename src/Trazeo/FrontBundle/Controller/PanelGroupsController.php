@@ -251,11 +251,15 @@ class PanelGroupsController extends Controller
 			$fos_user_admin = $groupAdminUser->getUser();
 			//ldd($fos_user_admin);
 			$not = $this->container->get('sopinet_user_notification');
+			$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($groupAdminUser->getUser(),'panel_group');
 			$el = $not->addNotification(
 					'group.join.request',
 					"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
 					$userId . "," . $groupId,
-					$this->generateUrl('panel_group'),$groupAdminUser->getUser()
+					$url,
+					$groupAdminUser->getUser(),
+					null,
+					$this->generateUrl('panel_group')
 			);
 			
 			$access = new EGroupAccess();
@@ -318,12 +322,15 @@ class PanelGroupsController extends Controller
 		$em->flush();
 
 		$not = $this->container->get('sopinet_user_notification');
-
+		$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($fos_user,'panel_group');
 		$el = $not->addNotification(
 				'group.join.let',
 				"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
 				$user_current->getId() . ',' . $groupId,
-				$this->generateUrl('panel_group'), $fos_user
+				$url,
+				$fos_user,
+				null,
+				$this->generateUrl('panel_group')
 		);
 		
 		$notification = $container->addFlashMessages("success","El usuario ha sido añadido al grupo");
@@ -360,11 +367,15 @@ class PanelGroupsController extends Controller
 		$notification = $container->addFlashMessages("success","Has rechazado la petición del usuario para unirse al grupo");
 		
 		$not = $this->container->get('sopinet_user_notification');
+		$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($fos_user,'panel_group');
 		$el = $not->addNotification(
 				'group.join.deny',
 				"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
 				$user_current->getId() . ',' . $group,
-				$this->generateUrl('panel_group'), $fos_user
+				$url,
+				$fos_user,
+				null,
+				$this->generateUrl('panel_group')
 		);
 		
 		return $this->redirect($this->generateUrl('panel_group'));
@@ -450,13 +461,16 @@ class PanelGroupsController extends Controller
 			// Si no existen los UserExtend y Group anteriormente obtenidos,
 			// directamente se crea la petición
 			$user_current = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user_current->getId());
-
+			$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($fos_user,'panel_group');
 			$not = $this->container->get('sopinet_user_notification');
 			$el = $not->addNotification(
 					'group.invite.user',
 					"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
 					$user_current->getId() . "," . $groupId ,
-					$this->generateUrl('panel_group'), $fos_user
+					$url,
+					$fos_user,
+					null,
+					$this->generateUrl('panel_group')
 			);
 
 			$access = new EGroupInvite();
@@ -520,12 +534,16 @@ class PanelGroupsController extends Controller
 		$groupAdminUser = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($groupAdmin);
 		
 		$not = $this->container->get('sopinet_user_notification');
+		$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($fos_userSender,'panel_group');
 		$el = $not->addNotification(
 				'group.invite.accept',
 				"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
 				// FIX: #4416 $groupAdminUser->getId() . "," . $group ,
                 $user->getId() . "," . $group ,
-				$this->generateUrl('panel_group'), $fos_userSender
+				$url,
+				$fos_userSender,
+				null,
+				$this->generateUrl('panel_group')
 		);
 
 	
@@ -562,11 +580,15 @@ class PanelGroupsController extends Controller
     	$fos_userSender = $userSender->getUser();
 
 		$not = $this->container->get('sopinet_user_notification');
+		$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($fos_userSender,'panel_group');
 		$el = $not->addNotification(
 				'group.invite.deny',
 				"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
                 $user->getId() . "," . $group ,
-				$this->generateUrl('panel_group'), $fos_userSender
+				$url,
+				$fos_userSender,
+				null,
+				$this->generateUrl('panel_group')
 		);
 
 		$em->remove($userRequest);

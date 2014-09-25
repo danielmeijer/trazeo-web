@@ -21,6 +21,7 @@ class EUserActionAdmin extends Admin
             ->add('sopinetuserextend')
             ->add('ids')
             ->add('acumulated')
+            ->add('mobile')
             ->add('createdAt')
             ->add('updatedAt')
         ;

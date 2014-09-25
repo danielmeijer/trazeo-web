@@ -64,6 +64,11 @@ class Notification
 
     
     /**
+     * @ORM\Column(name="internal_link", type="string", length=255, nullable=true)
+     */
+    protected $internal_link;
+
+    /**
      * @ORM\Column(name="image", type="string", length=255, nullable=true)
      */
     protected $image;
@@ -272,5 +277,29 @@ class Notification
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Set internalLink
+     *
+     * @param string $internalLink
+     *
+     * @return Notification
+     */
+    public function setInternalLink($internalLink)
+    {
+        $this->internal_link = $internalLink;
+
+        return $this;
+    }
+
+    /**
+     * Get internalLink
+     *
+     * @return string
+     */
+    public function getInternalLink()
+    {
+        return $this->internal_link;
     }
 }

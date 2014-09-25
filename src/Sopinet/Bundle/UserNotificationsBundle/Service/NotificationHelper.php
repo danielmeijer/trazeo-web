@@ -43,7 +43,7 @@ class NotificationHelper {
 	 * @param String $link (optional)
 	 * @param User $user (optional)
 	 */
-	function addNotification($action, $objects = null, $objects_id = null, $link = null, $user = null, $image = null) {
+	function addNotification($action, $objects = null, $objects_id = null, $link = null, $user = null, $image = null, $internal_link=null) {
 		$em = $this->_container->get("doctrine.orm.entity_manager");
 		
 		$userextend = $this->_getSopinetUserExtend($user);
@@ -62,6 +62,9 @@ class NotificationHelper {
 		}
 		if ($image != null) {
 			$notification->setImage($image);
+		}
+		if ($internal_link != null) {
+			$notification->setInternalLink($link);
 		}
 		$notification->setUser($userextend);
 		$notification->setEmail(0);

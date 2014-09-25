@@ -20,6 +20,7 @@ use Trazeo\BaseBundle\Entity\EChild;
 use Trazeo\BaseBundle\Entity\EEvent;
 use Trazeo\BaseBundle\Entity\EReport;
 use Trazeo\BaseBundle\Entity\EGroup;
+use Trazeo\BaseBundle\Entity\EGroupInvite;
 use Trazeo\BaseBundle\Entity\EGroupAccess;
 use Sopinet\Bundle\SimplePointBundle\ORM\Type\SimplePoint;
 use Sopinet\TimelineBundle\Entity\Comment;
@@ -322,7 +323,7 @@ class ApiController extends Controller {
 				$em->flush();
 				
 				$userextends = $group->getUserextendgroups()->toArray();
-				
+				$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($user,'panel_ride_current', array('id' => $ride->getId()));	
 				$not = $this->container->get('sopinet_user_notification');
 				foreach($userextends as $userextend)
 				{
@@ -330,8 +331,11 @@ class ApiController extends Controller {
 							"ride.start",
 							"TrazeoBaseBundle:EGroup",
 							$group->getId(),
-							$this->generateUrl('panel_ride_current', array('id' => $ride->getId())),
-							$userextend->getUser()
+							$url,
+							$userextend->getUser(),
+							null,
+							$this->generateUrl('panel_ride_current', array('id' => $ride->getId()))
+
 					);
 				}
 				
@@ -495,16 +499,20 @@ class ApiController extends Controller {
 		//Obtenemos el id del grupo
 		if($ride->getGroup()!=null)$group=$ride->getGroup()->getId();
 		else $group=$em->getRepository("TrazeoBaseBundle:EGroup")->findOneById($ride->getGroupid());
+
 		
 		//Notificamos a sus tutores
 		foreach($userextends as $userextend){
+			$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($userextend->getUser(),'panel_ride_current', array('id' => $ride->getId()));	
 			$not = $this->container->get('sopinet_user_notification');
 			$not->addNotification(
 					"child.in",
 					"TrazeoBaseBundle:EChild,TrazeoBaseBundle:EGroup",
 					$child->getId() . "," . $group,
-					$this->generateUrl('panel_ride_current', array('id' => $ride->getId())),
-					$userextend->getUser()
+					$url,
+					$userextend->getUser(),
+					null,
+					$this->generateUrl('panel_ride_current', array('id' => $ride->getId()))
 			);
 		}
 	
@@ -578,12 +586,15 @@ class ApiController extends Controller {
 		$not = $this->container->get('sopinet_user_notification');
 		//Notificamos a sus tutores
 		foreach($userextends as $userextend){
+			$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($userextend->getUser(),'panel_ride_current', array('id' => $ride->getId()));	
 			$not->addNotification(
 					"child.out",
 					"TrazeoBaseBundle:EChild,TrazeoBaseBundle:EGroup",
 					$child->getId() . "," . $group,
-					$this->generateUrl('panel_ride_current', array('id' => $ride->getId())),
-					$userextend->getUser()
+					$url,
+					$userextend->getUser(),
+					null,
+					$this->generateUrl('panel_ride_current', array('id' => $ride->getId()))
 			);
 		}
 		
@@ -744,12 +755,16 @@ class ApiController extends Controller {
 	 			$child=$query->getResult();
 	 				
 	 			if(count($child)>0){
+					$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($userextend->getUser(),'panel_ride_resume', array('id' => $ride->getId()));	
 	 				$not->addNotification(
 	 						"ride.finish",
 	 						"TrazeoBaseBundle:EGroup",
 	 						$group->getId(),
-	 						$this->generateUrl('panel_ride_resume',array('id' => $ride->getId())),
-	 						$userextend->getUser());
+	 						$url,
+	 						$userextend->getUser(),
+	 						null,
+	 						$this->generateUrl('panel_ride_current', array('id' => $ride->getId()))
+	 					);
 	 				break 1;
 	 			}
 	 					
@@ -910,7 +925,9 @@ class ApiController extends Controller {
 					"TrazeoBaseBundle:EGroup",
 					$group->getId(),
 					$url,
-					$userextend->getUser()
+					$userextend->getUser(),
+					null,
+					$this->generateUrl('panel_group_timeline', array('id' => $group->getId()))
 				);
 			}	
 	   	}
@@ -956,12 +973,15 @@ class ApiController extends Controller {
 		$not = $this->container->get('sopinet_user_notification');
 		foreach($userextends as $userextend)
 		{
+			$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($user,'panel_group_timeline', array('id' => $group->getId()));	
 			$not->addNotification(
 					"timeline.newFromMonitor",
 					"TrazeoBaseBundle:EGroup,SopinetTimelineBundle:Comment",
 					$group->getId().",".$comment->getId(),
-					$this->generateUrl('panel_group_timeline', array('id' => $group->getId())),
-					$userextend->getUser()
+					$url,
+					$userextend->getUser(),
+					null,
+					$this->generateUrl('panel_group_timeline', array('id' => $group->getId()))
 			);
 		}	
 		
@@ -1469,12 +1489,16 @@ class ApiController extends Controller {
 			
 			$fos_user_admin = $groupAdminUser->getUser();
 			//ldd($fos_user_admin);
+			$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($groupAdminUser->getUser(),'panel_group');	
 			$not = $this->container->get('sopinet_user_notification');
 			$el = $not->addNotification(
 					'group.join.request',
 					"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
 					$userId . "," . $groupId,
-					$this->generateUrl('panel_group'),$groupAdminUser->getUser()
+					$url,
+					$groupAdminUser->getUser(),
+					null,
+					$this->generateUrl('panel_group')
 			);
 			
 			$access = new EGroupAccess();
@@ -1558,8 +1582,11 @@ class ApiController extends Controller {
 		foreach($groupUsers as $groupUser){
 			if($user == $groupUser){
 	
-				$notification = $container->addFlashMessages("warning","El usuario ya forma parte del grupo");
-				return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
+				$view = View::create()
+				->setStatusCode(200)
+				->setData($this->msgDenied("The user is already part of the group"));
+	
+				return $this->get('fos_rest.view_handler')->handle($view);
 			}
 		}
 	
@@ -1569,14 +1596,19 @@ class ApiController extends Controller {
 			$reGAI = $em->getRepository('TrazeoBaseBundle:EGroupAnonInvite');
 			$reGAI->createNew($group, $userEmail, $fos_user_current, $this);
 	
-			// $notification = $container->addFlashMessages("warning","El correo electrónico introducido no corresponde a ningún usuario");
-			$notification = $container->addFlashMessages("success","Se ha enviado un email al usuario invitándolo al sistema Trazeo y a este grupo.");
-			return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->doOK());
+			
+			return $this->get('fos_rest.view_handler')->handle($view);
 		}
 	
 		if($fos_user == $fos_user_current ){
-			$notification = $container->addFlashMessages("warning","No necesitas invitación para unirte a un grupo del que eres administrador");
-			return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied("User is the admin of the group"));
+			
+			return $this->get('fos_rest.view_handler')->handle($view);
 		}
 	
 		// Obtener grupo al que se va a unir a través del param $id
@@ -1595,36 +1627,40 @@ class ApiController extends Controller {
 			// Comprobar que no tienen el mismo id de registro (petición duplicada)
 			if($requestUserId = $requestGroupId) {
 				// Excepción y redirección
-				$notification = $container->addFlashMessages("warning","Ya has invitado a este usuario anteriormente");
-				return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
-					
+				$view = View::create()
+				->setStatusCode(200)
+				->setData($this->msgDenied("Duplicate request"));
+			
+				return $this->get('fos_rest.view_handler')->handle($view);				
 			}
-	
-		}else{
-			// Si no existen los UserExtend y Group anteriormente obtenidos,
-			// directamente se crea la petición
-			$user_current = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user_current->getId());
-	
-			$not = $this->container->get('sopinet_user_notification');
-			$el = $not->addNotification(
-					'group.invite.user',
-					"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
-					$user_current->getId() . "," . $groupId ,
-					$this->generateUrl('panel_group'), $fos_user
+		}
+		// Si no existen los UserExtend y Group anteriormente obtenidos,
+		// directamente se crea la petición
+		$user_current = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user_current->getId());
+		$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($fos_user,'panel_group');			
+		$not = $this->container->get('sopinet_user_notification');
+		$el = $not->addNotification(
+			'group.invite.user',
+			"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
+			$user_current->getId() . "," . $groupId ,
+			$url,
+			$fos_user,
+			null,
+			$this->generateUrl('panel_group')
 			);
 	
-			$access = new EGroupInvite();
-			$access->setGroup($group);
-			$access->setUserextend($user);
-			$access->setSender($user_current);
+		$access = new EGroupInvite();
+		$access->setGroup($group);
+		$access->setUserextend($user);
+		$access->setSender($user_current);
 	
-			$em->persist($access);
-			$em->flush();
+		$em->persist($access);
+		$em->flush();
 	
-			$container = $this->get('sopinet_flashMessages');
-			$notification = $container->addFlashMessages("success","El usuario ha recibido tu invitación para unirse al grupo");
-			return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
-	
-		}
+		$view = View::create()
+		->setStatusCode(200)
+		->setData($this->doOK());
+			
+		return $this->get('fos_rest.view_handler')->handle($view);	
 	}	
 }

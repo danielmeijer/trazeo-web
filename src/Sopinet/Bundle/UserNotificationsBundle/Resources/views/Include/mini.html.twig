@@ -5,7 +5,7 @@
     <ul class="dropdown-menu dropdown-alerts">
         {% for notification in notifications %}
         <li>
-            <a href="{{ notification.link }}">
+            <a href="{{ notification.internalLink }}">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     {% if notification.image is not null %}
                         <img src="{{ notification.image }}" style="vertical-align:middle;" class="image-responsive col-xs-4 col-sm-4 col-md-4">

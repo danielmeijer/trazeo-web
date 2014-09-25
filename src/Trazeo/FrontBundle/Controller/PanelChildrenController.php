@@ -85,13 +85,16 @@ class PanelChildrenController extends Controller
 		}else{
 			// Si no existen los UserExtend y Group anteriormente obtenidos,
 			// directamente se crea la petición
-
+            $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($fos_user,'panel_child');
 			$not = $this->container->get('sopinet_user_notification');
 			$el = $not->addNotification(
 					'child.invite.user',
 					"TrazeoBaseBundle:EChild",
 					$childId,
-					$this->generateUrl('panel_child'), $fos_user
+					$url,
+                    $fos_user,
+                    null,
+                    $this->generateUrl('panel_child')
 			);
 
 			$access = new EChildInvite();
@@ -217,11 +220,15 @@ class PanelChildrenController extends Controller
     	$em->flush();
     
     	$not = $this->container->get('sopinet_user_notification');
+        $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($fos_userSender,'panel_child');
     	$el = $not->addNotification(
     			'child.invite.accept',
     			"TrazeoBaseBundle:Userextend,TrazeoBaseBundle:EChild",
     			$id . "," . $child,
-    			$this->generateUrl('panel_child'), $fos_userSender
+    			$url,
+                $fos_userSender,
+                null,
+                $this->generateUrl('panel_child')
     	);
     
     
@@ -250,11 +257,15 @@ class PanelChildrenController extends Controller
     	$userSender = $em->getRepository('TrazeoBaseBundle:Userextend')->findOneById($sender);
     	$fos_userSender = $userSender->getUser();
     	$not = $this->container->get('sopinet_user_notification');
+        $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($fos_userSender,'panel_child');
     	$el = $not->addNotification(
     			'child.invite.deny',
     			"TrazeoBaseBundle:Userextend,TrazeoBaseBundle:EChild",
     			$id . "," . $child,
-    			$this->generateUrl('panel_child'), $fos_userSender
+    			$url,
+                $fos_userSender,
+                null,
+                $this->generateUrl('panel_child')
     	);
     
     	$container = $this->get('sopinet_flashMessages');

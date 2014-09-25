@@ -77,8 +77,9 @@ class Helper {
 	 *
 	 *
 	 */
-	function getAutoLoginUrl($user,$name,$args) {
-		$path=$this->_container->get('router')->generate($name, $args);
+	function getAutoLoginUrl($user,$name,$args=null) {
+		if($args!=null)$path=$this->_container->get('router')->generate($name, $args);
+		else $path=$this->_container->get('router')->generate($name);
 		$pos=strpos($path,'panel/');
 		$path = substr($path, $pos);
 		$path =$this->_container->get('urlhelper')->generateUrl($path,$user);

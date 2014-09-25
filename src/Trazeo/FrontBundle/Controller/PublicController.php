@@ -143,11 +143,15 @@ class PublicController extends Controller
 
     		// Creamos la invitación
     		$not = $this->container->get('sopinet_user_notification');
+            $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($user,'panel_group');
     		$el = $not->addNotification(
     				'group.invite.user',
     				"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
     				$inviterow->getUserCreated()->getId() . "," . $groupId,
-    				$this->generateUrl('panel_group'), $user
+    				$url,
+                    $user,
+                    null,
+                    $this->generateUrl('panel_group')
     		);
     			
 			$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
