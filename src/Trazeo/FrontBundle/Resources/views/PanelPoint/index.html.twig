@@ -48,6 +48,7 @@
 		</div>
 	</div>
 	{% include 'TrazeoFrontBundle:PanelPoint:_howto_modal.html.twig' %}
+	{% include 'TrazeoFrontBundle:PanelPoint:_exchange_modal.html.twig'%}
 	{% include 'TrazeoFrontBundle:PanelPoint:_civi_modal.html.twig' %}
 	{% include 'TrazeoFrontBundle:PanelPoint:exchange.html.twig' %}
 	<!-- END pointsResume -->
@@ -56,7 +57,12 @@
 	{{parent()}}
 	{% include 'TrazeoFrontBundle:PanelPoint:_index_analytics.html.twig' %}
 	<script type="text/javascript">
+		if(sessionStorage.exchange=='true'){
+			$('#exchangeModal').modal();
+			sessionStorage.exchange=false;
+		}
 		$('.modalchange').click(function(){$('#howToModal').modal('hide')});
+		$('.exchange').click(function(){sessionStorage.exchange=true});
 	</script>
 	{% include 'TrazeoFrontBundle:PanelPoint:_ajax_exchange.html.twig' %}
 

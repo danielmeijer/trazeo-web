@@ -611,6 +611,9 @@ Points:
             first: '¿Cómo puedes sumar puntos en Trazeo?</br>'
             second: '¿Cómo puedes canjear tus puntos en Trazeo?</br></br>'
         mail: hola@trazeo.es
+        exchange:
+            title: 'Tramitando canjeo'
+            body: 'Tu oferta se esta canjeando, recibirás más información por email'
     action:
         Create_Group: 'Por crear tu primer grupo'
         Create_User: 'Por canjear el código de bienvenida 0'
