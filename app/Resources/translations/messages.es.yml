@@ -102,6 +102,10 @@ Form:
         repeatpass: 'Confirmar contraseña'
 
 Groups:
+    access:
+        request: 'ha solicitado unirse a tu grupo '
+        accept: 'Aceptar su incorporación'
+        deny: 'Denegar su incorporación'
     data:
         activity: Actividad
         chat: 'Muro del grupo de pedibús'
@@ -181,6 +185,10 @@ Navbar:
 NoAccess: 'Sin acceso'
 
 Notifications:
+    modal:
+        title: 'Tienes una notificación importante:'
+        dismiss: 'Ir a la notificación'
+        accept: 'Ir a la notificación'
     action:
         description:
             child:
