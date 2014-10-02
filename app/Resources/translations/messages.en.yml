@@ -288,7 +288,7 @@ Random:
 Register:
     email: 'Correo electrónico'
     emailconfirmation: 'Repita el correo'
-    name: 'Nombre de usuario'
+    name: 'Correo electrónico'
     pass: Contraseña
     repeatpass: 'Repita la contraseña'
 

@@ -630,7 +630,7 @@ class PanelGroupsController extends Controller
 		$fos_user = $this->container->get('security.context')->getToken()->getUser();
 		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
 		$userId = $user->getId();
-		 
+
 		$groupsMember = $user->getGroups();
 		$allGroups = $em->getRepository('TrazeoBaseBundle:EGroup')->findAll();
 		$restGroups = array_diff($allGroups,$groupsMember->toArray());
@@ -654,7 +654,7 @@ class PanelGroupsController extends Controller
 		
 		$allGroupsAccess = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findAll();
 		$allGroupsInvite = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findAll();
-	
+
 		return array(
 				'user' => $user,
 				'userAdmin' => $userAdmin,

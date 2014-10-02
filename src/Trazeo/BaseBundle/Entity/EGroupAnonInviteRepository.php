@@ -22,7 +22,7 @@
 			
 			//echo $link;
 			//exit();
-	        $dispatcher = $this->get('hip_mandrill.dispatcher');
+	        $dispatcher = $con->get('hip_mandrill.dispatcher');
 
     	    $message = new Message();
 
