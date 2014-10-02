@@ -61,6 +61,7 @@ class AppKernel extends Kernel
             new Sopinet\Bundle\GamificationBundle\SopinetGamificationBundle(),
             new Sopinet\Bundle\SuggestionBundle\SopinetSuggestionBundle(),
             new Sopinet\AutologinBundle\SopinetAutologinBundle(),
+            new Hip\MandrillBundle\HipMandrillBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

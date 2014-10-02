@@ -37,6 +37,7 @@
 		"endroid/qrcode-bundle": "dev-master",
 		"elao/error-notifier-bundle" : "dev-master",
 		"phpunit/phpunit-selenium": ">=1.2",
+		"hipaway-travel/mandrill-bundle": "dev-master",
 		"sopinet/autologin-bundle": "dev-master"
 	}
 }

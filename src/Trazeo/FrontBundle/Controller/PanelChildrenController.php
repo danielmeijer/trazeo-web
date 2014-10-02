@@ -96,6 +96,9 @@ class PanelChildrenController extends Controller
                     null,
                     $this->generateUrl('panel_child')
 			);
+            $el->setImportant(1);
+            $em->persist($el);
+            $em->flush();
 
 			$access = new EChildInvite();
 			$access->setChild($child);
@@ -230,7 +233,9 @@ class PanelChildrenController extends Controller
                 null,
                 $this->generateUrl('panel_child')
     	);
-    
+        $el->setImportant(1);
+        $em->persist($el);
+        $em->flush();    
     
     	$notification = $container->addFlashMessages("success","Has aceptado la invitación para ser tutor");
     	return $this->redirect($this->generateUrl('panel_child'));
@@ -267,6 +272,9 @@ class PanelChildrenController extends Controller
                 null,
                 $this->generateUrl('panel_child')
     	);
+        $el->setImportant(1);
+        $em->persist($el);
+        $em->flush();
     
     	$container = $this->get('sopinet_flashMessages');
     	$notification = $container->addFlashMessages("success","Has rechazado la invitación");

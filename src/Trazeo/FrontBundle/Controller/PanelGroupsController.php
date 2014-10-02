@@ -261,6 +261,9 @@ class PanelGroupsController extends Controller
 					null,
 					$this->generateUrl('panel_group')
 			);
+			$el->setImportant(1);
+			$em->persist($el);
+			$em->flush();
 			
 			$access = new EGroupAccess();
 			$access->setGroup($group);
@@ -332,6 +335,9 @@ class PanelGroupsController extends Controller
 				null,
 				$this->generateUrl('panel_group')
 		);
+		$el->setImportant(1);
+		$em->persist($el);
+		$em->flush();
 		
 		$notification = $container->addFlashMessages("success","El usuario ha sido añadido al grupo");
 	
@@ -377,7 +383,10 @@ class PanelGroupsController extends Controller
 				null,
 				$this->generateUrl('panel_group')
 		);
-		
+		$el->setImportant(1);
+		$em->persist($el);
+		$em->flush();
+
 		return $this->redirect($this->generateUrl('panel_group'));
 		
 	}
@@ -472,7 +481,10 @@ class PanelGroupsController extends Controller
 					null,
 					$this->generateUrl('panel_group')
 			);
-
+			$el->setImportant(1);
+			$em->persist($el);
+			$em->flush();
+			
 			$access = new EGroupInvite();
 			$access->setGroup($group);
 			$access->setUserextend($user);
@@ -545,7 +557,9 @@ class PanelGroupsController extends Controller
 				null,
 				$this->generateUrl('panel_group')
 		);
-
+		$el->setImportant(1);
+		$em->persist($el);
+		$em->flush();
 	
 		$em->remove($userRequest);
 		$em->flush();
@@ -590,6 +604,9 @@ class PanelGroupsController extends Controller
 				null,
 				$this->generateUrl('panel_group')
 		);
+		$el->setImportant(1);
+		$em->persist($el);
+		$em->flush();
 
 		$em->remove($userRequest);
 		$em->flush();
@@ -632,7 +649,6 @@ class PanelGroupsController extends Controller
 		}
 		if (!$iscity) $city = "all"; // if no cities for user
 		// End City Filter
-	
 		$groupsAdmin = $user->getAdminGroups();
 		$userAdmin = $em->getRepository('TrazeoBaseBundle:EGroup')->findByAdmin($userId);
 		
@@ -692,6 +708,12 @@ class PanelGroupsController extends Controller
 	        $reUserValue = $em->getRepository("SopinetUserPreferencesBundle:UserValue");
 	        $civiclub_setting = $em->getRepository("SopinetUserPreferencesBundle:UserSetting")->findOneByName("civiclub_conexion");
 
+			$city = $request->get('city');
+			$helper = $this->get('trazeo_base_helper');
+			$city_entity = $helper->getCities($city, 10, true);
+			if (count($city_entity) > 0) {
+				$group->setCity($city_entity[0]);
+			}
             $fos_user = $this->container->get('security.context')->getToken()->getUser();
             $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);            
             $group->setAdmin($user);
@@ -719,7 +741,6 @@ class PanelGroupsController extends Controller
         		$user->getId(),
         		$user,
         		1,
-        		$sopinetuserextend,
         		false
         		);
             if(!$now)return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
@@ -741,13 +762,23 @@ class PanelGroupsController extends Controller
      */
     private function createCreateForm(EGroup $group)
     {
+    	$em = $this->getDoctrine()->getManager();
+    	$fos_user = $this->container->get('security.context')->getToken()->getUser();
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+    	if($user->getCountry()!=null){
+    		$cityCode = $em->getRepository('JJs\Bundle\GeonamesBundle\Entity\Country')->find($user->getCountry()->getId());
+    		$cityCodeId = $cityCode->getId();
+    	}
+    	else $cityCodeId =1;
         $form = $this->createForm(new GroupType(), $group, array(
             'action' => $this->generateUrl('panel_group_create'),
             'method' => 'POST',
         	'attr' => array(
         				'Groups.help.name' => $this->get('translator')->trans('Groups.help.name'),
         				'Groups.help.name2' => $this->get('translator')->trans('Groups.help.name2'),
-        				'Groups.help.route' => $this->get('translator')->trans('Groups.help.route')
+        				'Groups.help.route' => $this->get('translator')->trans('Groups.help.route'),
+        				'Groups.help.city' => $this->get('translator')->trans('Groups.help.city'),
+	       				'default' => $cityCodeId
         		)
         ));
  		$form->add('hasRide', 'hidden', array('data' => 0));
@@ -847,16 +878,26 @@ class PanelGroupsController extends Controller
     */
     private function createEditForm(EGroup $group)
     {
+    	$em = $this->getDoctrine()->getManager();
+    	$fos_user = $this->container->get('security.context')->getToken()->getUser();
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+    	if($user->getCountry()!=null){
+    		$cityCode = $em->getRepository('JJs\Bundle\GeonamesBundle\Entity\Country')->find($user->getCountry()->getId());
+    		$cityCodeId = $cityCode->getId();
+    	}
+    	else $cityCodeId =1;
         $form = $this->createForm(new GroupType(), $group, array(
-            'action' => $this->generateUrl('panel_group_update', array('id' => $group->getId())),
-            'method' => 'PUT',
+            'action' => $this->generateUrl('panel_group_update',array('id' => $group->getId())),
+            'method' => 'POST',
         	'attr' => array(
         				'Groups.help.name' => $this->get('translator')->trans('Groups.help.name'),
         				'Groups.help.name2' => $this->get('translator')->trans('Groups.help.name2'),
-        				'Groups.help.route' => $this->get('translator')->trans('Groups.help.route')
+        				'Groups.help.route' => $this->get('translator')->trans('Groups.help.route'),
+        				'Groups.help.city' => $this->get('translator')->trans('Groups.help.city'),
+	       				'default' => $cityCodeId
         		)
         ));
-
+        //$form->add('city',null,array('data'=>$cityCodeId, 'attr'=>array('style'=>'display:none;')));       
         $form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
@@ -933,11 +974,12 @@ class PanelGroupsController extends Controller
      * Edits an existing Groups entity.
      *
      * @Route("/{id}", name="panel_group_update")
-     * @Method("PUT")
-     * @Template("TrazeoBaseBundle:Groups:edit.html.twig")
+     * @Method("POST")
+     * @Template("TrazeoFrontBundle:PanelGroups:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
+ 
         $em = $this->getDoctrine()->getManager();
 
         $group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
@@ -951,6 +993,14 @@ class PanelGroupsController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+			$city = $request->get('city');
+			$helper = $this->get('trazeo_base_helper');
+			$city_entity = $helper->getCities($city, 10, true);
+			if (count($city_entity) > 0) {
+				$group->setCity($city_entity[0]);
+			}
+
+			$em->persist($group);       	
             $em->flush();
 
             return $this->redirect($this->generateUrl('panel_group_edit', array('id' => $id)));
@@ -958,7 +1008,7 @@ class PanelGroupsController extends Controller
 
         return array(
             'group'      => $group,
-            'edit_form'   => $editForm->createView(),
+            'edit_form'   => $editForm->createView()
             //'delete_form' => $deleteForm->createView(),
         );
     }

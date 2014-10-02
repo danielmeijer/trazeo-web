@@ -42,6 +42,8 @@ class NotificationHelper {
 	 * @param Integer $objects_id (optional)
 	 * @param String $link (optional)
 	 * @param User $user (optional)
+	 * @param Path $img (optional)
+	 * @param Path $internal_path (optional)
 	 */
 	function addNotification($action, $objects = null, $objects_id = null, $link = null, $user = null, $image = null, $internal_link=null) {
 		$em = $this->_container->get("doctrine.orm.entity_manager");
@@ -64,7 +66,7 @@ class NotificationHelper {
 			$notification->setImage($image);
 		}
 		if ($internal_link != null) {
-			$notification->setInternalLink($link);
+			$notification->setInternalLink($internal_link);
 		}
 		$notification->setUser($userextend);
 		$notification->setEmail(0);
@@ -160,5 +162,16 @@ class NotificationHelper {
 			$em->flush();
 		}
 		return $count;
+	}
+
+	function clearNotification($user = null, $not) {
+		$em = $this->_container->get("doctrine.orm.entity_manager");
+		$reNotifications = $em->getRepository("SopinetUserNotificationsBundle:Notification");
+		$notification=$reNotifications->find($not);
+		$userextend = $this->_getSopinetUserExtend($user);
+		$notification->setView(1);
+		$em->persist($notification);			
+		$em->flush();
+		return 1;
 	}
 }

@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandler;
 use FOS\RestBundle\Controller\FOSRestController;
+use Hip\MandrillBundle\Message;
+use Hip\MandrillBundle\Dispatcher;
 
 /**
 * @Route("/panel")
@@ -54,13 +56,18 @@ class PanelController extends Controller
 	    	$em->flush();
 	    	$tutorial = 1;
 	    	// Creamos el correo de bienvenida
-	    	$message = \Swift_Message::newInstance()
-	    	// TODO: Traducir
-	    	->setSubject("Bienvenido a Trazeo.")
-	    	->setFrom(array("hola@trazeo.es" => "Trazeo"))
-	    	->setTo($fos_user->getEmail())
-	    	->setBody($this->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:newUser.html.twig', array()), 'text/html');
-	    	$ok = $this->get('mailer')->send($message);    	
+	        $dispatcher = $this->get('hip_mandrill.dispatcher');
+
+    	    $message = new Message();
+
+        	$message
+            	->setFromEmail('hola@trazeo.es')
+            	->setFromName('Trazeo')
+            	->addTo($fos_user->getEmail())
+            	->setSubject("Bienvenido a Trazeo.")
+            	->setHtml($this->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:newUser.html.twig', array()));
+ 			$result = $dispatcher->send($message);
+	    	
 	    }
 	    /**
 	     * Do Suggestion

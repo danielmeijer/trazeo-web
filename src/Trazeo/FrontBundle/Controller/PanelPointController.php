@@ -77,6 +77,7 @@ class PanelPointController extends Controller
         $fos_user = $this->container->get('security.context')->getToken()->getUser(); 
         $container = $this->get('sopinet_flashMessages');  
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+
         $message = \Swift_Message::newInstance()
         ->setFrom(array("hola@trazeo.es" => "Trazeo"))
         ->setTo("hola@trazeo.es")

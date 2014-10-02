@@ -53,7 +53,7 @@ class CiviClubApi {
 		$container=$this->_container;
 		$gh = $container->get('sopinet_gamification');
 		$reUE = $gh->getUserRepository();
-
+		ldd($user);
 		$security= urlencode($container->getParameter('sopinet_user_civiclub_security'));
 		$email=urlencode($user->getUser()->getEmail());
 		$emitter_id=urlencode($container->getParameter('sopinet_user_civiclub_emitter_id'));

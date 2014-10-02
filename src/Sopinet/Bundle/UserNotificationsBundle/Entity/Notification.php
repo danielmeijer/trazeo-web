@@ -73,6 +73,12 @@ class Notification
      */
     protected $image;
 
+
+    /**
+     * @ORM\Column(name="important", type="boolean")
+     */
+    protected $important=0;
+
     /**
      * Get id
      *
@@ -301,5 +307,29 @@ class Notification
     public function getInternalLink()
     {
         return $this->internal_link;
+    }
+
+    /**
+     * Set important
+     *
+     * @param boolean $important
+     *
+     * @return Notification
+     */
+    public function setImportant($important)
+    {
+        $this->important = $important;
+
+        return $this;
+    }
+
+    /**
+     * Get important
+     *
+     * @return boolean
+     */
+    public function getImportant()
+    {
+        return $this->important;
     }
 }

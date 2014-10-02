@@ -122,6 +122,7 @@ Groups:
         name: 'Nombre del grupo de pedibús'
         name2: 'Visibilidad / Accesibilidad al grupo de pedibús'
         route: 'Asignar una ruta a este grupo'
+        city: 'Ciudad del grupo'
 
     index:
         description: 'Listado completo de todos los grupos de pedibús existentes y visibles en la plataforma'

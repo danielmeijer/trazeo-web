@@ -35,7 +35,7 @@ class UserExtendType extends AbstractType
                     'required' => false
                     )
                 )
-             ->add('country', 'entity', array(
+             ->add('country', 'hidden', array(
             		'class' => 'JJsGeonamesBundle:Country',
             		'attr' => array('class' => 'chosen-select'),
              		'required' => false, //Para permitir hacer submit con una opción 'vacía'

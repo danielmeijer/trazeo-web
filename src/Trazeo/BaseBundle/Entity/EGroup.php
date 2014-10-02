@@ -79,7 +79,15 @@ class EGroup
      * @ORM\Column(name="hasRide", type="boolean", nullable=true)
      */
     protected $hasRide;
+
+    /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\City")
+     */
+    protected $city;
     
+    /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\Country")
+     */
+    protected $country;
+        
     /**
      * @var string
      *
@@ -463,11 +471,61 @@ class EGroup
     
     public function getCity()
     {
-    	if ($this->getRoute() != null) {
-    		if ($this->getRoute()->getCity() != null) {
-    			return $this->getRoute()->getCity();
-    		}
-    	}
+
+        if ($this->city!=null) {
+            return $this->city;
+        }
+        elseif ($this->route != null) {
+            if ($this->route->getCity() != null) {
+                return $this->getRoute()->getCity();
+            }
+        }
     	return null;
+    }
+
+    /**
+     * Set city
+     *
+     * @param \JJs\Bundle\GeonamesBundle\Entity\City $city
+     *
+     * @return EGroup
+     */
+    public function setCity(\JJs\Bundle\GeonamesBundle\Entity\City $city = null)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Set country
+     *
+     * @param \JJs\Bundle\GeonamesBundle\Entity\Country $country
+     *
+     * @return EGroup
+     */
+    public function setCountry(\JJs\Bundle\GeonamesBundle\Entity\Country $country = null)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return \JJs\Bundle\GeonamesBundle\Entity\Country
+     */
+    public function getCountry()
+    {
+        if ($this->getRoute() != null) {
+            if ($this->getRoute()->getCountry() != null) {
+                return $this->getRoute()->getCountry();
+            }
+        }
+        elseif ($this->country!=null) {
+            return $this->country;
+        }
+        return null;
     }
 }

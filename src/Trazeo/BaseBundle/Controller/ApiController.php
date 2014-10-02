@@ -24,6 +24,8 @@ use Trazeo\BaseBundle\Entity\EGroupInvite;
 use Trazeo\BaseBundle\Entity\EGroupAccess;
 use Sopinet\Bundle\SimplePointBundle\ORM\Type\SimplePoint;
 use Sopinet\TimelineBundle\Entity\Comment;
+use Hip\MandrillBundle\Message;
+use Hip\MandrillBundle\Dispatcher;
 
 class ApiController extends Controller {
 	
@@ -1079,14 +1081,20 @@ class ApiController extends Controller {
       	$newUser->setEnabled(true);
       	$em->persist($newUser);
       	$em->flush();
-      	// Creamos el correo de bienvenida
-	    $message = \Swift_Message::newInstance()
-	    // TODO: Traducir
-	    ->setSubject("Bienvenido a Trazeo.")
-	    ->setFrom(array("hola@trazeo.es" => "Trazeo"))
-	    ->setTo($newUser->getEmail())
-	    ->setBody($this->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:newUser.html.twig', array()), 'text/html');
-	    $ok = $this->get('mailer')->send($message);   
+  
+        $dispatcher = $this->get('hip_mandrill.dispatcher');
+
+        $message = new Message();
+
+        $message
+            ->setFromEmail('hola@trazeo.es')
+            ->setFromName('Trazeo')
+            ->addTo($newUser->getEmail())
+            ->setSubject("Bienvenido a Trazeo.")
+            ->setHtml($con->get('templating')->$this->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:newUser.html.twig', array()));
+
+
+        $result = $dispatcher->send($message);
       	//se devuelve el id del usuario
       	$array['id'] = $newUser->getId();
         $view = View::create()
@@ -1160,6 +1168,14 @@ class ApiController extends Controller {
         	1,
         	false
         	);
+		}
+		if($request->get('city')){
+			$city = $request->get('city');
+			$helper = $this->get('trazeo_base_helper');
+			$city_entity = $helper->getCities($city, 10, true);
+			if (count($city_entity) > 0) {
+				$group->setCity($city_entity[0]);
+			}
 		}
         $group->setName($name);
         $group->setVisibility($visibility);
@@ -1501,6 +1517,10 @@ class ApiController extends Controller {
 					$this->generateUrl('panel_group')
 			);
 			
+			$el->setImportant(1);
+			$em->persist($el);
+			$em->flush();
+
 			$access = new EGroupAccess();
 			$access->setGroup($group);
 			$access->setUserextend($user);
@@ -1648,7 +1668,10 @@ class ApiController extends Controller {
 			null,
 			$this->generateUrl('panel_group')
 			);
-	
+		$el->setImportant(1);
+		$em->persist($el);
+		$em->flush();	
+		
 		$access = new EGroupInvite();
 		$access->setGroup($group);
 		$access->setUserextend($user);

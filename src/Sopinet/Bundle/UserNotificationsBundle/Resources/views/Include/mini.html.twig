@@ -5,7 +5,7 @@
     <ul class="dropdown-menu dropdown-alerts">
         {% for notification in notifications %}
         <li>
-            <a href="{{ notification.internalLink }}">
+            <a href="{{ notification.internallink }}">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     {% if notification.image is not null %}
                         <img src="{{ notification.image }}" style="vertical-align:middle;" class="image-responsive col-xs-4 col-sm-4 col-md-4">
@@ -30,3 +30,13 @@
     <i class="fa fa-clipboard"></i>&nbsp; {{ 'Notifications.link'|trans }}</a>
     </ul>
 </li>
+{% for notification in notifications %}
+    {# Modal #}
+    {% set found= 0 %}
+    {% if notification.important == 1 and found == 0 %}
+        {% include 'SopinetUserNotificationsBundle:Modal:notificationModal.html.twig' with {
+               'notification': notification
+            } %}
+        {%set found=1 %}
+    {%endif%}
+{% endfor %}

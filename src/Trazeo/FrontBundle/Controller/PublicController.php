@@ -153,7 +153,10 @@ class PublicController extends Controller
                     null,
                     $this->generateUrl('panel_group')
     		);
-    			
+            $el->setImportant(1);
+            $em->persist($el);
+            $em->flush();
+               			
 			$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 
     		$access = new EGroupInvite();

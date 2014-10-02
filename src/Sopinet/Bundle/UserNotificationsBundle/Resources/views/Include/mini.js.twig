@@ -1,9 +1,24 @@
 	<script>
+
 		$(".clearNotifications").click(function() {
 			$.ajax({
 			  url: "{{ path('sopinetusernotifications_clear') }}",
 			  }).done(function(content) {
 				  $(".clearNotifications > .badge").fadeOut();
 			});
+		});
+		$(window).load(
+			function()
+				{
+					$(".notificationModal").detach().appendTo('#page-wrapper')
+					$(".notificationModal").modal();
+				}
+			);
+		$(".dismissModal").click(function()
+		{
+			$.ajax({
+ 				url: "{{base_url}}sopinetusernotifications\x2F"+$(".dismissModal").data('notid')+"\x2Fview",
+  				type: "GET",
+			}).done(function(textResponse){console.log(textResponse);});
 		});
 	</script>

@@ -122,6 +122,7 @@ Groups:
         name: 'Nombre del grupo'
         name2: 'Visibilidad / Accesibilidad al grupo'
         route: 'Asignar una ruta a este grupo'
+        city: 'Ciudad del grupo'
 
     index:
         description: 'Listado completo de todos los grupos existentes y visibles en la plataforma'
