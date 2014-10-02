@@ -350,16 +350,18 @@ Route:
         childs: Niños/as
         create: 'Crear nuevo Grupo'
         creator: Autor
-        description: 'Mapa de paseo y datos referentes a la ruta'
-        distance: Distancía
+        description: 'Mapa y datos referentes a la ruta'
+        distance: Distancia
         end: 'Termina en'
         groups: 'Grupos con esta ruta'
-        map: 'Mapa del paseo'
+        map: 'Mapa de la ruta'
         owndescription: Descripción
         signed: 'apuntados en esta ruta'
         start: 'Empieza en'
         title: 'Ruta: %name%'
         unasigned: 'No ningún grupo con esta ruta asignada'
+        group: 'Grupo'
+        edit: 'Editar ruta'
 
 Settings:
     index:
