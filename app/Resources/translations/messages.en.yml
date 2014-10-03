@@ -191,6 +191,10 @@ Navbar:
 NoAccess: 'Sin acceso'
 
 Notifications:
+    modal:
+        title: 'Tienes una notificación importante:'
+        dismiss: 'Ir a la notificación'
+        accept: 'Ir a la notificación'
     action:
         description:
             child:
@@ -220,7 +224,7 @@ Notifications:
                 start: 'El paseo para el grupo %0 ha comenzado.'
 
             timeline:
-                newFromMonitor: 'El monitor del Grupo %0 ha enviado el siguiente mensaje: %1'
+                newFromMonitor: "%0 ha escrito el siguiente mensaje en el muro del grupo %2: %1"
 
         title:
             child:

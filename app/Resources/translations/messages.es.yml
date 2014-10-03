@@ -129,7 +129,10 @@ Groups:
         list: 'Listado de grupos de pedibús creados en Trazeo'
         subtitle: 'Vincula tu usuario con un grupo de pedibús y contacta con otros padres desde el muro'
         title: 'Sugerencia de grupos de pedibús'
-
+    access:
+        request: 'ha solicitado unirse a tu grupo '
+        accept: 'Aceptar su incorporación'
+        deny: 'Denegar su incorporación'
     invite:
         accept: 'Acepto la invitación'
         deny: 'Rechazo la invitación'
@@ -191,6 +194,10 @@ Navbar:
 NoAccess: 'Sin acceso'
 
 Notifications:
+    modal:
+        title: 'Tienes una notificación importante:'
+        dismiss: 'Ir a la notificación'
+        accept: 'Ir a la notificación'
     action:
         description:
             child:
@@ -220,7 +227,7 @@ Notifications:
                 start: 'El paseo para el grupo %0 ha comenzado.'
 
             timeline:
-                newFromMonitor: 'El monitor del Grupo %0 ha enviado el siguiente mensaje: %1'
+                newFromMonitor: "%0 ha escrito el siguiente mensaje en el muro del grupo %2: %1"
 
         title:
             child:
@@ -361,16 +368,18 @@ Route:
         childs: Niños/as
         create: 'Crear nuevo Grupo'
         creator: Autor
-        description: 'Mapa de paseo y datos referentes a la ruta'
-        distance: Distancía
+        description: 'Mapa y datos referentes a la ruta'
+        distance: Distancia
         end: 'Termina en'
         groups: 'Grupos con esta ruta'
-        map: 'Mapa del paseo'
+        map: 'Mapa de la ruta'
         owndescription: Descripción
         signed: 'apuntados en esta ruta'
         start: 'Empieza en'
         title: 'Ruta: %name%'
         unasigned: 'No ningún grupo con esta ruta asignada'
+        group: 'Grupo'
+        edit: 'Editar ruta'
 
 Settings:
     index:
@@ -607,7 +616,7 @@ Points:
         explain:
             first: '<p>Cada una de las acciones que realizas en Trazeo te permite sumar puntos en tu cuenta:</p><ul><li type="circle">- Cada día que uno de tus hijos camine con Trazeo, sumarás 1 punto. ¡Anímate a que lo hagan a diario!</li><li type="circle">- Además, por cada kilómetro que uno de tus hijos camine con Trazeo, recibirás 1 punto más (con un máximo de 25 puntos por semana).</li><li type="circle">- Y si eres el acompañante o el monitor de un grupo, cada vez que guíes el paseo con la aplicación móvil recibirás 1 punto (con un máximo de 50 puntos al mes).</li></ul><p>Además, cuando lleves a cabo algunas acciones o cuando colabores con Trazeo, te enviaremos un código que te permitirá sumar puntos directamente. Sólo tienes que introducirlo en el espacio “Canjear Cupón” que hay en la pantalla de “Mis puntos” y pulsar el botón.</p> <p>Y recuerda, que cada una de estas acciones también te dan CIVIS en nuestra web amiga Civiclub.org, el club de las personas cívicas (mira las condiciones <a class="modalchange" data-toggle="modal" data-target="#civiModal">aquí</a>)</p>'
             second: 'En el catálogo de esta misma página tienes a tu disposición un listado con los premios y descuentos que puedes canjear en Trazeo por los puntos conseguidos. Elige el que más te guste a ti o a tus hijos y pulsa sobre el botón “Canjear”. Te mandaremos información sobre cómo recibir tu premio. Y recuerda, esta lista seguirá creciendo.'
-            third: 'Si necesitas más información, o si eres una empresa u organismo y quieres ofrecer premios y descuentos en Trazeo, puedes ponerte en contacto con nosotros en'
+            third: 'Si necesitas más información, o si eres una empresa u organismo y quieres ofrecer premios y descuentos en Trazeo, puedes ponerte en contacto con nosotros en hola@trazeo.es '
         question:
             first: '¿Cómo puedes sumar puntos en Trazeo?</br>'
             second: '¿Cómo puedes canjear tus puntos en Trazeo?</br></br>'

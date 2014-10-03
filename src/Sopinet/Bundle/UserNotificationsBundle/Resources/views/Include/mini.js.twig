@@ -17,7 +17,7 @@
 		$(".dismissModal").click(function()
 		{
 			$.ajax({
- 				url: "{{base_url}}sopinetusernotifications\x2F"+$(".dismissModal").data('notid')+"\x2Fview",
+ 				url: "{{base_url}}\x2Fsopinetusernotifications\x2F"+$(".dismissModal").data('notid')+"\x2Fview",
   				type: "GET",
 			}).done(function(textResponse){console.log(textResponse);});
 		});
