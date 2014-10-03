@@ -17,8 +17,15 @@
 		$(".dismissModal").click(function()
 		{
 			$.ajax({
- 				url: "{{base_url}}\x2Fsopinetusernotifications\x2F"+$(".dismissModal").data('notid')+"\x2Fview",
+ 				url: "{{base_url}}\x2Fsopinetusernotifications\x2F"+$(".goOut").data('notid')+"\x2Fview",
   				type: "GET",
-			}).done(function(textResponse){console.log(textResponse);});
+			});
+		});
+		$(".goOut").click(function()
+		{
+			$.ajax({
+ 				url: "{{base_url}}\x2Fsopinetusernotifications\x2F"+$(".goOut").data('notid')+"\x2Fview",
+  				type: "GET",
+			}).done(function(){location.assign("http://"+location.hostname+$(".goOut").data("notpanel"));});
 		});
 	</script>

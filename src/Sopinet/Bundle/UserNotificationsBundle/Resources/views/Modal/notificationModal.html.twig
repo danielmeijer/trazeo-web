@@ -3,14 +3,14 @@
 	<div class="modal-dialog">
     	<div class="modal-content">
         	<div class="modal-header">
-          	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">{{"Notifications.modal.close"|trans |raw}}</span></button>
+          	<button type="button" class="close dismissModal" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">{{"Notifications.modal.close"|trans |raw}}</span></button>
 	          <h4 class="modal-title" id="myModalLabel">{{"Notifications.modal.title"|trans |raw}}</h4>
    			</div>
  			<div class="modal-body">
 				{{ notification|parseSopinetUserNotification() }}
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default dismissModal" data-dismiss="modal" data-notId="{{ notification.id}}">{{"Notifications.modal.dismiss"|trans |raw}}</button>
+				<button type="button" class="btn btn-default goOut" data-dismiss="modal" data-notPanel="{{notification.internalLink}}" data-notId="{{ notification.id}}">{{"Notifications.modal.dismiss"|trans |raw}}</button>
 			</div>
 
 		</div><!-- /.modal-content -->
