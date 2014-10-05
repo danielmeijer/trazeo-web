@@ -914,7 +914,7 @@ class ApiController extends Controller {
 	   	$em = $this->getDoctrine()->getManager();
 	   	$fos_user = $this->container->get('security.context')->getToken()->getUser();	
 	   	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
-	   	$comment = $em->getRepository('SopinetTimelineBundle:Comment')->findAll();
+	   	$comment = $em->getRepository('SopinetTimelineBundle:Comment')->findOneBy( array(), array('id' => 'DESC') );
 	   	if($user!=null){
 			$id_group = $request->get('id_group');
 			$group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneById($id_group);
@@ -926,7 +926,7 @@ class ApiController extends Controller {
 				$not->addNotification(
 					"timeline.newFromMonitor",
 					"TrazeoBaseBundle:Userextend,SopinetTimelineBundle:Comment,TrazeoBaseBundle:EGroup",
-					$userextend->getId().",".(count($comment)).",".$group->getId(),
+					$userextend->getId().",".(($comment->getId())+1).",".$group->getId(),
 					$url,
 					$userextend->getUser(),
 					null,
