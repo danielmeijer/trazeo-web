@@ -926,7 +926,7 @@ class ApiController extends Controller {
 				$not->addNotification(
 					"timeline.newFromMonitor",
 					"TrazeoBaseBundle:Userextend,SopinetTimelineBundle:Comment,TrazeoBaseBundle:EGroup",
-					$userextend->getId().",".(($comment->getId())+1).",".$group->getId(),
+					$user->getId().",".(($comment->getId())+1).",".$group->getId(),
 					$url,
 					$userextend->getUser(),
 					null,
