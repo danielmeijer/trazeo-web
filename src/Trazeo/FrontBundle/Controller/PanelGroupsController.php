@@ -538,15 +538,9 @@ class PanelGroupsController extends Controller
 		$em->persist($groupToJoin);
 		$em->flush();
 		
-		if($userRequest==null){
-			$email=$user->getUser()->getEmail();
-			$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupAnonInvite')->findOneByEmail($email);
-			$userSender=$userRequest->getUserCreated();
-		}
-		else{
-			$sender=$userRequest->getSender();
-			$userSender = $em->getRepository('TrazeoBaseBundle:Userextend')->findOneById($sender);
-		}
+		$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findOneByUserextend($id);
+		$sender=$userRequest->getSender();
+		$userSender = $em->getRepository('TrazeoBaseBundle:Userextend')->findOneById($sender);
     	$fos_userSender = $userSender->getUser();
 		$groupAdmin = $groupToJoin->getAdmin();
 		$groupAdminUser = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($groupAdmin);
@@ -593,20 +587,9 @@ class PanelGroupsController extends Controller
 		$groupAdmin = $groupEntity->getAdmin();
 		$groupAdminUser = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($groupAdmin);
 		$groupAdmin_fos_user = $groupAdminUser->getUser();
-		if($userRequest==null){
-			$email=$user->getUser()->getEmail();
-			$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupAnonInvite')->findOneByEmail($email);
-			$userSender=$userRequest->getUserCreated();
-			$userSender=$em->getRepository('TrazeoBaseBundle:UserExtend')->findOneById($userSender);
-			ld("here");
-		}
-		else{
-			ld($userRequest);
-			$sender=$userRequest->getSender();
-			$userSender = $em->getRepository('TrazeoBaseBundle:Userextend')->findOneById($sender);
-			ld("or here");
-		}
-		ld($userSender);
+		$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findOneByUserextend($id);
+		$sender=$userRequest->getSender();
+		$userSender = $em->getRepository('TrazeoBaseBundle:Userextend')->findOneById($sender);
     	$fos_userSender = $userSender->getUser();
 
 		$not = $this->container->get('sopinet_user_notification');

@@ -1,0 +1,222 @@
+<?php
+
+namespace Trazeo\FrontBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Trazeo\BaseBundle\Entity\ECatalogItem;
+use Trazeo\BaseBundle\Form\CatalogItemType;
+/**
+* @Route("/panel/catalogitem")
+*/
+class PanelCatalogItemController extends Controller
+{
+	/**
+	 * @Route("/delete/{id}", name="panel_catalogitem_delete")
+	 * @ParamConverter("item", class="TrazeoBaseBundle:ECatalogItem")
+	 */
+	public function deleteItemAction(ECatalogItem $item, Request $request) {
+		$user = $this->get('security.context')->getToken()->getUser();
+		$em = $this->get('doctrine.orm.entity_manager');
+		$reCatalog = $em->getRepository('TrazeoBaseBundle:ECatalogItem');
+		$em->remove($item);
+		$em->flush();
+		
+		return $this->redirect($this->generateUrl('panel_catalogitems_list'));		
+	}
+
+	
+	private function showEditView(ECatalogItem $item) {
+		$em = $this->get('doctrine.orm.entity_manager');
+		$user = $this->get('security.context')->getToken()->getUser();
+
+        $form_item = $this->createForm(new CatalogItemType(), $item, array(
+            'action' => $this->generateUrl('panel_catalogitems_save', array('id' => $item->getId())),
+            'method' => 'PUT',
+        	'attr' => array(
+        				'CatalogItem.help.points' => $this->get('translator')->trans('Children.help.nick'),
+        				'CatalogItem.help.company' => $this->get('translator')->trans('Children.help.datebirth'),
+        				'CatalogItem.help.title' => $this->get('translator')->trans('Children.help.visibility'),
+        				'CatalogItem.help.description' => $this->get('translator')->trans('Children.help.gender'),
+                        'CatalogItem.help.link' => $this->get('translator')->trans('Children.help.scholl'),
+        		)
+        ));
+
+        $form_item->add('submit', 'submit', array('label' => 'Update'));									
+		
+		// Sacamos los ficheros
+		$file= $item->getFile();
+
+	
+		return $this->render(
+				'TrazeoFrontBundle:PanelCatalogItem:new.html.twig',
+				array(
+						'form_item' => $form_item->createView(),
+						'file' => $file,
+						'item' => $item
+				)
+		);		
+	}
+	
+	/**
+	 * @Route("/edit/{id}", name="panel_catalogitems_edit"))
+	 * @ParamConverter("item", class="TrazeoBaseBundle:ECatalogItem")
+	 */
+	public function itemseditAction(ECatalogItem $item, Request $request)
+	{
+		return $this->showEditView($item);
+	}
+		
+
+	
+	/**
+	 * @Route("/save/", name="panel_catalogitems_save"))
+	 */
+	public function itemssaveAction(Request $request) {
+		 
+		$em = $this->get('doctrine.orm.entity_manager');
+		$repositoryItem = $em->getRepository("TrazeoBaseBundle:ECatalogItem");
+		$repositoryFile = $em->getRepository("TrazeoBaseBundle:File");
+		 
+		//Sacamos el item
+		$item = $repositoryItem->findOneById($request->get('item_id'));
+		 
+		//Sacamos los fichero que anteriormente hemos asociado
+		$files = $repositoryFile->findByCatalogitems($item);
+		 
+		//Guardamos los parametros mandados del formulario
+		$form = $this->createForm(new CatalogItemType(), $item, array(
+            'action' => $this->generateUrl('panel_catalogitems_save', array('id' => $item->getId())),
+            'method' => 'PUT',
+        	'attr' => array(
+        				'CatalogItem.help.points' => $this->get('translator')->trans('Children.help.nick'),
+        				'CatalogItem.help.company' => $this->get('translator')->trans('Children.help.datebirth'),
+        				'CatalogItem.help.title' => $this->get('translator')->trans('Children.help.visibility'),
+        				'CatalogItem.help.description' => $this->get('translator')->trans('Children.help.gender'),
+                        'CatalogItem.help.link' => $this->get('translator')->trans('Children.help.scholl'),
+        		)
+        ));
+		$form->bind($request);
+		 
+		foreach($files as $file)
+			$item->addFile($file);
+		 
+	
+		if ($form->isValid()) {
+			$em = $this->getDoctrine()->getManager();
+			$city = $request->get('city');
+			$helper = $this->get('trazeo_base_helper');
+			$city_entity = $helper->getCities($city, 10, true);
+			if (count($city_entity) > 0) {
+				$item->setCitys($city_entity[0]);
+			}
+			$em->persist($item);
+			$em->flush();
+			return $this->redirect($this->generateUrl('panel_catalogitems_list'));
+		}
+	}
+	
+	/**
+	 * @Route("/list", name="panel_catalogitems_list"))
+	 * @Template
+	 */
+	public function itemslistAction()
+	{
+		$em    = $this->get('doctrine.orm.entity_manager');
+		 
+		$user = $this->get('security.context')->getToken()->getUser();
+		$reItem = $em->getRepository("TrazeoBaseBundle:ECatalogItem");
+		$item=$reItem->findAll();		 
+		 
+		return array(
+				'items' => $items,
+		);
+	}	
+
+    /**
+     * Creates a form to create a CatalogItem entity.
+     *
+     * @param CatalogItem $item The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createCreateForm(ECatalogItem $item)
+    {
+        $form = $this->createForm(new CatalogItemType(), $item, array(
+            'action' => $this->generateUrl('panel_itemscatalog_create',array('id' => $item->getId())),
+            'method' => 'POST',
+        	'attr' => array(
+        				'CatalogItem.help.points' => $this->get('translator')->trans('Children.help.nick'),
+        				'CatalogItem.help.company' => $this->get('translator')->trans('Children.help.datebirth'),
+        				'CatalogItem.help.title' => $this->get('translator')->trans('Children.help.visibility'),
+        				'CatalogItem.help.description' => $this->get('translator')->trans('Children.help.gender'),
+                        'CatalogItem.help.link' => $this->get('translator')->trans('Children.help.scholl'),
+        		)
+        ));
+
+        $form->add('submit', 'submit', array('label' => 'Create'));
+
+        return $form;
+    }
+
+    /**
+     * Displays a form to create a new CatalogItem entity.
+     *
+     * @Route("/new", name="panel_itemscatalog_new")
+     * @Method("GET")
+     * @Template()
+     */
+    public function newAction()
+    {
+        $item = new ECatalogItem();
+  		$em = $this->getDoctrine()->getManager();
+		$em->persist($item);
+		$em->flush();      
+        $form   = $this->createCreateForm($item);
+		$file= $item->getFile();
+        return array(
+            'item' => $item,
+            'form_item'   => $form->createView(),
+            'file' => $file
+        );
+    }
+
+    
+    /**
+     * Creates a new Childs entity.
+     *
+     * @Route("/", name="panel_itemscatalog_create")
+     * @Method("POST")
+     */
+    public function createAction(Request $request)
+    {
+	    $em = $this->getDoctrine()->getManager();
+		$repositoryItem = $em->getRepository("TrazeoBaseBundle:ECatalogItem");
+		 
+		//Sacamos el item
+		$item = $repositoryItem->findOneById($request->get('id'));
+        $form = $this->createCreateForm($item);
+        $form->handleRequest($request);
+       
+
+        if ($form) {   
+        	$item->setComplete(1); 
+			$city = $request->get('city');
+			$helper = $this->get('trazeo_base_helper');
+			$city_entity = $helper->getCities($city, 10, true);
+			if (count($city_entity) > 0) {
+				$item->setCitys($city_entity[0]);
+			}
+            $em->persist($item);
+            $em->flush();
+        }
+        $container = $this->get('sopinet_flashMessages');
+        $notification = $container->addFlashMessages("success","Has creado la oferta con exito");
+        return $this->redirect($this->generateUrl('panel_dashboard'));
+    }
+}
