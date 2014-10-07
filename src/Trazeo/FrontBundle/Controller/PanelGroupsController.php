@@ -585,7 +585,7 @@ class PanelGroupsController extends Controller
 	 */
 	
 	public function denyInviteGroupAction($id,$group) {
-	
+		
 		$em = $this->getDoctrine()->getManager();
 		$fos_user_current = $this->container->get('security.context')->getToken()->getUser();
 		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($id);
@@ -598,7 +598,6 @@ class PanelGroupsController extends Controller
 			$email=$user->getUser()->getEmail();
 			$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupAnonInvite')->findOneByEmail($email);
 			$userSender=$userRequest->getUserCreated();
-			$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findOneByUserextend($id);
 		}
 		else{
 			$sender=$userRequest->getSender();
