@@ -1309,9 +1309,18 @@ class ApiController extends Controller {
         	));
 		}
 		//solo para la ciudad indicada
+			//compatibilidad con grupos sin ciudad
 		$routes = $em->getRepository('TrazeoBaseBundle:ERoute')->findByCity($cities[0]);
+		$aux=array();
 		foreach ($routes as $route) {
-					$group=$em->getRepository('TrazeoBaseBundle:EGroup')->findOneByRoute($route);
+				$group=$em->getRepository('TrazeoBaseBundle:EGroup')->findOneByRoute($route);
+				if($group!=null)$aux[]=$group;
+				}
+		$groups = $em->getRepository('TrazeoBaseBundle:EGroup')->findByCity($cities[0]);
+		$groups=array_merge($groups,$aux);
+		$groups=array_unique($groups);
+
+		foreach ($groups as $group) {
 					if($group!=null && !$object){
 					$names['data']['groups'][]=$group->getName();
 					$names['data']['ids'][]=$group->getId();
