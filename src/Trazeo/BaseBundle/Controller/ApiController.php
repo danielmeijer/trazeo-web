@@ -248,6 +248,7 @@ class ApiController extends Controller {
 				$emailsToFilter[] = "gemi87.jg@gmail.com";
 				$emailsToFilter[] = "elenacarrie@gmail.com";
 				$emailsToFilter[] = "hidabe@gmail.com";
+				$emailsToFilter[] = "susana_sgr_86@hotmail.com";
 				
 				$canInitRide = true;
 				if (in_array($id_group, $groupsIds)) {
