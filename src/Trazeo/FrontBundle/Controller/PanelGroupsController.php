@@ -539,7 +539,7 @@ class PanelGroupsController extends Controller
 		$em->flush();
 		
 		if($userRequest==null){
-			$email=$user->getEmail();
+			$email=$user->getUser()->getEmail();
 			$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupAnonInvite')->findOneByEmail($email);
 			$userSender=$userRequest->getUserCreated();
 		}
@@ -594,7 +594,7 @@ class PanelGroupsController extends Controller
 		$groupAdminUser = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($groupAdmin);
 		$groupAdmin_fos_user = $groupAdminUser->getUser();
 		if($userRequest==null){
-			$email=$user->getEmail();
+			$email=$user->->getUser()->getEmail();
 			$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupAnonInvite')->findOneByEmail($email);
 			$userSender=$userRequest->getUserCreated();
 		}
