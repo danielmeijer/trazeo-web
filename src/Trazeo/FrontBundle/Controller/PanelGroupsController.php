@@ -542,7 +542,6 @@ class PanelGroupsController extends Controller
 			$email=$user->getUser()->getEmail();
 			$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupAnonInvite')->findOneByEmail($email);
 			$userSender=$userRequest->getUserCreated();
-			$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findOneByUserextend($id);
 		}
 		else{
 			$sender=$userRequest->getSender();
@@ -598,11 +597,16 @@ class PanelGroupsController extends Controller
 			$email=$user->getUser()->getEmail();
 			$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupAnonInvite')->findOneByEmail($email);
 			$userSender=$userRequest->getUserCreated();
+			$userSender=$em->getRepository('TrazeoBaseBundle:UserExtend')->findOneById($userSender);
+			ld("here");
 		}
 		else{
+			ld($userRequest);
 			$sender=$userRequest->getSender();
 			$userSender = $em->getRepository('TrazeoBaseBundle:Userextend')->findOneById($sender);
+			ld("or here");
 		}
+		ld($userSender);
     	$fos_userSender = $userSender->getUser();
 
 		$not = $this->container->get('sopinet_user_notification');

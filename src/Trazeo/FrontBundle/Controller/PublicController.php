@@ -162,6 +162,7 @@ class PublicController extends Controller
     		$access = new EGroupInvite();
     		$access->setGroup($inviterow->getGroup());
     		$access->setUserextend($userextend);
+            $access->setSender($inviterow->getUserCreated());
     		
     		$em->persist($access);
     		$em->flush();
