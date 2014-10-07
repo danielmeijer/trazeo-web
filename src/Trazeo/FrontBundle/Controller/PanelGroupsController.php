@@ -538,9 +538,15 @@ class PanelGroupsController extends Controller
 		$em->persist($groupToJoin);
 		$em->flush();
 		
-		$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findOneByUserextend($id);
-		$sender=$userRequest->getSender();
-		$userSender = $em->getRepository('TrazeoBaseBundle:Userextend')->findOneById($sender);
+		if($userRequest==null){
+			$email=$user->getEmail();
+			$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupAnonInvite')->findOneByEmail($email);
+			$userSender=$userRequest->getUserCreated();
+		}
+		else{
+			$sender=$userRequest->getSender();
+			$userSender = $em->getRepository('TrazeoBaseBundle:Userextend')->findOneById($sender);
+		}
     	$fos_userSender = $userSender->getUser();
 		$groupAdmin = $groupToJoin->getAdmin();
 		$groupAdminUser = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($groupAdmin);
@@ -583,14 +589,19 @@ class PanelGroupsController extends Controller
 		$fos_user_current = $this->container->get('security.context')->getToken()->getUser();
 		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($id);
 		$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findOneByUserextend($id);
-	
 		$groupEntity = $em->getRepository('TrazeoBaseBundle:EGroup')->find($group);
 		$groupAdmin = $groupEntity->getAdmin();
 		$groupAdminUser = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($groupAdmin);
 		$groupAdmin_fos_user = $groupAdminUser->getUser();
-
-		$sender=$userRequest->getSender();
-		$userSender = $em->getRepository('TrazeoBaseBundle:Userextend')->findOneById($sender);
+		if($userRequest==null){
+			$email=$user->getEmail();
+			$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupAnonInvite')->findOneByEmail($email);
+			$userSender=$userRequest->getUserCreated();
+		}
+		else{
+			$sender=$userRequest->getSender();
+			$userSender = $em->getRepository('TrazeoBaseBundle:Userextend')->findOneById($sender);
+		}
     	$fos_userSender = $userSender->getUser();
 
 		$not = $this->container->get('sopinet_user_notification');
@@ -674,7 +685,7 @@ class PanelGroupsController extends Controller
      *
      * @Route("/", name="panel_group_create")
      * @Method("POST")
-     * @Template("TrazeoBaseBundle:Groups:new.html.twig")
+     * @Template("TrazeoFrontBundle:PanelGroups:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -748,7 +759,7 @@ class PanelGroupsController extends Controller
         }
 
         return array(
-            'entity' => $entity,
+            'entity' => $group,
             'form'   => $form->createView(),
         );
     }
