@@ -1492,6 +1492,13 @@ class ApiController extends Controller {
 			->setData($this->msgDenied("The group is public"));
 			return $this->get('fos_rest.view_handler')->handle($view);				
 		}
+		//comprobar que el user no este vinculado ya al grupo
+		else if(in_array($group,$user->getGroups()->toArray())){
+			$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied("User it's already on group"));
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
 		// Comprobar que existen
 		if($requestUser && $requestGroup == true){
 			
