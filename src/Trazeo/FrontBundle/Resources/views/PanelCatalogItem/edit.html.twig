@@ -3,13 +3,6 @@
 
 {% block body_content %}
 <div class="row">
-        <div class="row">
-            <div class="pull-right">
-                <a class="btn btn-success" href="{{ path('panel_itemscatalog_new') }}">
-                    <i class="fa fa-plus-circle"></i>&nbsp; {{ 'Catalog.button.back'|trans }}
-                </a>
-            </div>
-        </div>    
     <div class="col-md-12 col-xs-12">
 			{{ form(form_item) }}
 		</br>
@@ -21,7 +14,7 @@
 								  	with {
 								  		'name': 'image',
 								  		'type': 'gallery',
-								  		'id': 0, 
+								  		'id': file.id, 
 								  		'entity': 'Trazeo_BaseBundle_File',
 								  		'param1': 'title',
                 						'value1': 'Titulo',

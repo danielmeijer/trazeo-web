@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Trazeo\BaseBundle\Entity\ECatalogItem;
 use Trazeo\BaseBundle\Form\CatalogItemType;
 /**
-* @Route("/panel/catalogitem")
+* @Route("/admin/catalogitem")
 */
 class PanelCatalogItemController extends Controller
 {
@@ -20,10 +20,11 @@ class PanelCatalogItemController extends Controller
 	 * @Route("/delete/{id}", name="panel_catalogitem_delete")
 	 * @ParamConverter("item", class="TrazeoBaseBundle:ECatalogItem")
 	 */
-	public function deleteItemAction(ECatalogItem $item, Request $request) {
+	public function deleteItemAction($id, Request $request) {
 		$user = $this->get('security.context')->getToken()->getUser();
 		$em = $this->get('doctrine.orm.entity_manager');
 		$reCatalog = $em->getRepository('TrazeoBaseBundle:ECatalogItem');
+		$item = $reCatalog->findOneById($id);
 		$em->remove($item);
 		$em->flush();
 		
@@ -50,11 +51,11 @@ class PanelCatalogItemController extends Controller
         $form_item->add('submit', 'submit', array('label' => 'Update'));									
 		
 		// Sacamos los ficheros
-		$file= $item->getFile();
+		$file= $item->getFile()->toArray()[0];
 
 	
 		return $this->render(
-				'TrazeoFrontBundle:PanelCatalogItem:new.html.twig',
+				'TrazeoFrontBundle:PanelCatalogItem:edit.html.twig',
 				array(
 						'form_item' => $form_item->createView(),
 						'file' => $file,
@@ -67,24 +68,29 @@ class PanelCatalogItemController extends Controller
 	 * @Route("/edit/{id}", name="panel_catalogitems_edit"))
 	 * @ParamConverter("item", class="TrazeoBaseBundle:ECatalogItem")
 	 */
-	public function itemseditAction(ECatalogItem $item, Request $request)
+	public function itemseditAction(ECatalogItem $id, Request $request)
 	{
+		$em = $this->get('doctrine.orm.entity_manager');
+		$repositoryItem = $em->getRepository("TrazeoBaseBundle:ECatalogItem");
+		 
+		//Sacamos el item
+		$item = $repositoryItem->findOneById($id);
 		return $this->showEditView($item);
 	}
 		
 
 	
 	/**
-	 * @Route("/save/", name="panel_catalogitems_save"))
+	 * @Route("/save/{id}", name="panel_catalogitems_save"))
 	 */
-	public function itemssaveAction(Request $request) {
+	public function itemssaveAction(Request $request,$id) {
 		 
 		$em = $this->get('doctrine.orm.entity_manager');
 		$repositoryItem = $em->getRepository("TrazeoBaseBundle:ECatalogItem");
 		$repositoryFile = $em->getRepository("TrazeoBaseBundle:File");
 		 
 		//Sacamos el item
-		$item = $repositoryItem->findOneById($request->get('item_id'));
+		$item = $repositoryItem->findOneById($id);
 		 
 		//Sacamos los fichero que anteriormente hemos asociado
 		$files = $repositoryFile->findByCatalogitems($item);
@@ -131,10 +137,10 @@ class PanelCatalogItemController extends Controller
 		 
 		$user = $this->get('security.context')->getToken()->getUser();
 		$reItem = $em->getRepository("TrazeoBaseBundle:ECatalogItem");
-		$item=$reItem->findAll();		 
+		$items=$reItem->findAll();		 
 		 
 		return array(
-				'items' => $items,
+				'items' => $items
 		);
 	}	
 

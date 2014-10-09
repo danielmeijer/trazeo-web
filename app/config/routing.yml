@@ -113,3 +113,9 @@ EndroidQrCodeBundle:
 sopinet_autologin:
     resource: "@SopinetAutologinBundle/Resources/config/routing.yml"
     prefix:   /
+upload:
+    resource: "@SopinetUploadMagicBundle/Controller/UploadController.php"
+    type:     annotation
+oneup_uploader:
+    resource: .
+    type: uploader

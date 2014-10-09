@@ -45,3 +45,7 @@ settings:
 api:
     resource: "@TrazeoFrontBundle/Controller/ApiCheckController.php"
     type:     annotation
+
+catalogitem:
+    resource: "@TrazeoFrontBundle/Controller/PanelCatalogItemController.php"
+    type:     annotation

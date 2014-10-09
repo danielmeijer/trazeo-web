@@ -116,6 +116,11 @@ services:
         arguments: [~, Sopinet\Bundle\GamificationBundle\Entity\EUserAction, SonataAdminBundle:CRUD]
         tags:
             - {name: sonata.admin, manager_type: orm, group: admin, label: EUserAction}
+    trazeo_base.admin.e_catalogitem:
+        class: Trazeo\BaseBundle\Admin\ECatalogItemAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\ECatalogItem, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: ECatalogItem}
 
     trazeo_base_helper:
        class: Trazeo\BaseBundle\Service\Helper

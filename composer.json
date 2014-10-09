@@ -32,6 +32,7 @@
 		"sopinet/timeline-bundle" : "dev-master",
 		"sopinet/simple-point-bundle": "dev-master",
 		"sopinet/flash-messages-bundle" : "dev-master",
+		"sopinet/upload-magic-bundle" : "dev-master",
 		"jms/serializer": "dev-master",
 		"lunetics/locale-bundle": "2.2.*",
 		"endroid/qrcode-bundle": "dev-master",
