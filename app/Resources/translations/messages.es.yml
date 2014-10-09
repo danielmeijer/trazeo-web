@@ -632,6 +632,7 @@ Points:
         Manage_Ride:  'Por hacer de acompañante en 1 paseo/s'
     button:
         exchange: 'Canjear puntos'
+        moreinfo: 'Más información'
 Exchange:
     title: 'Canjea tus puntos'
     description: 'Canjea tu puntos por premios'

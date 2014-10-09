@@ -634,5 +634,6 @@ Exchange:
     button:
         exchange: 'Canjear oferta'
         code: 'Canjea tu código'
+        moreinfo: 'Más información'
     help:
         code: 'Introduce tu código'
