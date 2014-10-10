@@ -4,7 +4,7 @@ var OnSubtreeModified=function(){
 	$('.fos_comment_comment_new_form>.fos_comment_submit>.btn-success').click(
 		function(){
 			var texto=$(this).parent().parent().children('textarea').val();
-			if(texto!=''&&texto.length<2){
+			if(texto!=''&&texto.length>2){
 				$.ajax({
  					url: '{{base_url}}'+"api/group/timeline/notification",
   					type: "POST",

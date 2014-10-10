@@ -935,6 +935,7 @@ class ApiController extends Controller {
 					$this->generateUrl('panel_group_timeline', array('id' => $group->getId()))
 				);
 			}	
+			
 	   	}
 		$view = View::create()
 		->setStatusCode(200)
