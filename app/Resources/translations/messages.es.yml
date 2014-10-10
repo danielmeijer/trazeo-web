@@ -171,7 +171,8 @@ Login:
     password: Contraseña
     signin: Entrar
     title: 'Inicio de sesión'
-    username: 'Nombre de usuario'
+    username: 'Correo electrónico'
+    email: 'Correo electrónico'
 
 Menu:
     children: Niños/as
