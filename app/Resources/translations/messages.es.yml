@@ -521,7 +521,7 @@ preference:
             now: Todos
     civiclub_conexion:
         name: 'Conexión con CiviClub'
-        description: '¿Quieres que tus puntos se envíen a CiviClub?</br></br><span style="font-size:0.75em;">CiviClub.org es un club de personas cívicas donde los socios ganan puntos por tener un estilo de vida que fomente la solidaridad, los hábitos saludables y la sostenibilidad.</br> Si todavía no eres socio de CiviClub y quieres que los trayectos con Trazeo también sumen puntos Civis, deberás darte de alta con el mismo email que lo hiciste en Trazeo y seleccionar Si en este botón.</span></br></br>'
+        description: '¿Quieres que tus puntos se envíen a CiviClub?</br></br><span style="font-size:0.75em;">CiviClub.org es un club de personas cívicas donde los socios ganan puntos por tener un estilo de vida que fomente la solidaridad, los hábitos saludables y la sostenibilidad.</br> Si ya eres socio de CiviClub y quieres que los puntos que sumas con Trazeo también se conviertan en Civis, selecciona Si en la opción de abajo y enviaremos todos tus puntos acumulados en la semana a CiviClub todos los lunes.</br> Y si aún no eres usuario de CiviClub, selecciona la opción Si y date de alta en este link con el mismo correo con el que te hayas registrado en Trazeo: <a href="https://www.civiclub.org/es/register/?utm_source=trazeo&utm_campaign=activacion">Regístrate en CiviClub.org</a>?</span></br></br>'
         value:
             yes: 'si'
             no: 'no'
