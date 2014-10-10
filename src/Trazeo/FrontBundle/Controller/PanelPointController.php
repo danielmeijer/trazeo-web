@@ -120,11 +120,11 @@ class PanelPointController extends Controller
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
         $ofert = $em->getRepository('TrazeoBaseBundle:ECatalogItem')->find($id);
 
-        if($user->getPoints()<$ofert->getPoints()){
+        if(($user->getPoints()-$user->getSpendedPoints())<$ofert->getPoints()){
          $notification = $container->addFlashMessages("success","Tu solicitud no ha sido enviada ya que no tienes los puntos necesarios");
          return $this->redirect($this->generateUrl('panel_point', array('exchange' => 2)));           
         }
-        $user->setPoints($user->getPoints()-$ofert->getPoints());
+        $user->setSpendedPoints($user->getSpendedPoints()+$ofert->getPoints());
         $em->persist($user);
         $em->flush();
 
@@ -132,7 +132,7 @@ class PanelPointController extends Controller
         ->setFrom(array("hola@trazeo.es" => "Trazeo"))
         ->setTo("hola@trazeo.es")
         ->setSubject('Solicitud de canjeo de usuario')
-        ->setBody('<p>Solicitud de canjeo del usuario '.$user->getNick().' para la oferta '.$ofert->getTitle(). '</p>', 'text/html');
+        ->setBody('<p>Solicitud de canjeo del usuario '.$user->getNick().' para la oferta '.$ofert->getTitle().' de la empresa '.$ofert->getCompany(). '</p>', 'text/html');
         $ok = $this->container->get('mailer')->send($message);
 
         $notification = $container->addFlashMessages("success","Tu solicitud ha sido enviada y se está procesando");
