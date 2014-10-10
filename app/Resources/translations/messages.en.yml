@@ -2,13 +2,13 @@ Admin:
     no: 'Disponible para el administrador'
     yes: 'Eres administrador de este grupo'
 
-'Bad credentials': 'Username or password incorrect.'
+'Bad credentials': 'Nombre de usuario o Contraseña inválido'
 
 Btn:
     back: volver
     success: Guardar
 
-ChangeVisibility: 'Change visibility.'
+ChangeVisibility: 'Cambiar visibilidad'
 
 Children:
     data:
@@ -21,9 +21,9 @@ Children:
 
     edit:
         description: 'Sólo utilizamos estos datos para darte un mejor servicio. Sólo tú podrás verlos, ningún otro padre o madre'
-        title: 'Editar datos de niño'
+        title: 'Editar datos de niño/a'
 
-    empty: 'Aún no has registrado a ninguno de tus niños'
+    empty: 'Aún no has registrado a ninguno de tus niños/as'
 
     gender:
         boy: Niño
@@ -31,26 +31,26 @@ Children:
 
     help:
         datebirth: 'Fecha de nacimiento'
-        disjoin: 'Dejar de ser tutor del niño'
+        disjoin: 'Dejar de ser tutor/ra del niño/a'
         edit: 'Editar información'
         gender: 'Género, Niño/a'
-        groups: 'Asignar a un grupo'
-        nick: 'Nombre del niño'
+        groups: 'Asignar a un grupo de pedibús'
+        nick: 'Nombre del niño/a'
         sex: Género
-        userextend: 'Tutores del niño'
+        userextend: 'Tutores/as del niño/a'
         visibility: Visibilidad
         scholl: 'Centro educativo'
-
+        
     index:
         acept: Aceptar
         asigned: 'Grupos en los que está inscrito'
         cancel: Cancelar
-        description: 'En este apartado puedes consultar toda la información referente a tus niños registrados en Trazeo'
+        description: 'En este apartado puedes consultar toda la información referente a tus niños/as registrados/as en Trazeo'
         disjoin: Desvincularme
         edit: Editar
 
         mail:
-            invite: 'Envía una invitación a otros usuarios para que sean uno de los tutores de este niño'
+            invite: 'Envía una invitación a otros usuarios para que sean uno de los tutores de este/a niño/a'
 
         qr:
             description: 'El siguiente código es único y está asignado a tu niño/a'
@@ -58,19 +58,19 @@ Children:
             title: 'Código identificador'
 
         subtitle: 'Niños/as que has registrado en la plataforma'
-        title: 'Listado de tus niños'
+        title: 'Listado de tus niños/as'
         tutors: Tutores
 
-    invited: 'Tienes una invitación para ser tutor del niño'
+    invited: 'Tienes una invitación para ser tutor/a del niño/a'
     list: 'Listado de niños/as'
-    mine: 'Mis niños'
+    mine: 'Mis niños/as'
 
     new:
-        description: 'Aquí puedes registrar a tus niños en la plataforma y posteriormente asignarlos a un grupo'
+        description: 'Aquí puedes registrar a tus niños/as en la plataforma y posteriormente asignarlos a un grupo de pedibús'
         register: 'Nuevo registro de Niño/a'
         title: 'Registrar Niño/a'
 
-    nick: 'Nombre del niño'
+    nick: 'Nombre del niño/a'
     scholl: 'Centro educativo'
     register: 'Registrar mis niños/as en Trazeo'
 
@@ -92,9 +92,9 @@ DeleteAccount:
     description: 'Si deseas eliminar tu perfil ahora, ponte en contacto con nosotros a través del email hola@trazeo.es y procesaremos tu petición.'
     title: 'Eliminar cuenta'
 
-Description: 'The web / mobile application for recovering the traditional walk to school'
+Description: 'La aplicación web / móvil para recuperar el camino al cole a pie'
 DisJoin: Desvincularme
-Email: Email
+Email: 'Correo electrónico'
 
 Form:
     profile:
@@ -105,7 +105,7 @@ Groups:
     route: Ruta
     data:
         activity: Actividad
-        chat: 'Muro del grupo'
+        chat: 'Muro del grupo de pedibús'
         member: 'Miembro del grupo'
         name: Nombre
         options: Opciones
@@ -116,33 +116,36 @@ Groups:
         description: 'Indica el tipo de visibilidad y asígnale una ruta'
         title: 'Editar datos de grupo'
 
-    empty: 'Crea un nuevo grupo de usuarios y asígnale una ruta de paseo'
+    empty: 'Únete a uno de los grupo de usuarios disponibles o crea uno nuevo'
 
     help:
-        name: 'Nombre del grupo'
-        name2: 'Visibilidad / Accesibilidad al grupo'
+        name: 'Nombre del grupo de pedibús'
+        name2: 'Visibilidad / Accesibilidad al grupo de pedibús'
         route: 'Asignar una ruta a este grupo'
         city: 'Ciudad del grupo'
 
     index:
-        description: 'Listado completo de todos los grupos existentes y visibles en la plataforma'
-        list: 'Listado de grupos creados en Trazeo'
-        subtitle: 'Vincula tu usuario con un grupo y contacta con otros padres desde el muro'
-        title: 'Sugerencia de grupos'
-
+        description: 'Listado completo de todos los grupos de pedibús existentes y visibles en la plataforma'
+        list: 'Listado de grupos de pedibús creados en Trazeo'
+        subtitle: 'Vincula tu usuario con un grupo de pedibús y contacta con otros padres desde el muro'
+        title: 'Sugerencia de grupos de pedibús'
+    access:
+        request: 'ha solicitado unirse a tu grupo '
+        accept: 'Aceptar su incorporación'
+        deny: 'Denegar su incorporación'
     invite:
         accept: 'Acepto la invitación'
         deny: 'Rechazo la invitación'
-        request: 'Forma parte del Grupo de padres/madres de los escolares que participan en la ruta de Pedibus'
+        request: 'Forma parte del Grupo de padres/madres de los escolares que participan en la ruta de Pedibús'
 
-    list: 'Listado de grupos'
-    mine: 'Mis grupos'
-    name: 'Nombre del grupo'
+    list: 'Listado de grupos de pedibús'
+    mine: 'Mis grupos de pedibús'
+    name: 'Nombre del grupo de pedibús'
 
     new:
         description: 'Indica un nombre, define quíen podrá acceder a él y asígnale una ruta'
-        new: 'Nuevo Grupo'
-        title: 'Crear nuevo grupo'
+        new: 'Nuevo Grupo de pedibús'
+        title: 'Crear nuevo grupo de pedibús'
 
     newRouteModal:
         title: 'Publicar ruta del grupo'
@@ -160,7 +163,7 @@ Groups:
         private: Privado
         public: Público
 
-Join: 'Join this pedibus group.'
+Join: 'Unirme a este grupo de pedibús'
 
 Login:
     forgot: '¿Olvidaste la contraseña?'
@@ -168,7 +171,8 @@ Login:
     password: Contraseña
     signin: Entrar
     title: 'Inicio de sesión'
-    username: 'Nombre de usuario'
+    username: 'Correo electrónico'
+    email: 'Correo electrónico'
 
 Menu:
     children: Niños/as
@@ -198,15 +202,15 @@ Notifications:
     action:
         description:
             child:
-                in: 'El niño/a %0 ha sido registrado en el paseo del grupo %1'
+                in: 'El niño/a %0 ha sido incorporado al paseo del grupo %1'
 
                 invite:
-                    accept: 'El usuario %0 ha aceptado la invitación para ser tutor del niño %1'
-                    deny: 'El usuario/a %0 ha rechazado la invitación para ser tutor del niño %1'
-                    user: 'Has recibido una invitación para ser tutor del niño %0'
+                    accept: 'El usuario %0 ha aceptado la invitación para ser tutor/a del niño %1'
+                    deny: 'El usuario/a %0 ha rechazado la invitación para ser tutor/a del niño/a %1'
+                    user: 'Has recibido una invitación para ser tutor/a del niño/a %0'
 
                 joingroup: 'El niño/a %0 ha entrado en el grupo %1'
-                out: 'El niño/a %0 ha salido del paseo del grupo %1'
+                out: 'El niño/a %0 ha salido del paseo del grupo %1 y llegado a su destino sin incidencias'
 
             group:
                 invite:
@@ -228,15 +232,15 @@ Notifications:
 
         title:
             child:
-                in: 'Un niño se ha registrado en el grupo'
+                in: 'Tu niño/a se ha incorporado al grupo'
 
                 invite:
                     accept: 'Un usuario aceptó tu invitación'
                     deny: 'Un usuario rechazó tu invitación'
                     user: 'Recibida invitación para ser tutor'
 
-                joingroup: 'Un niño ha entrado en el grupo'
-                out: 'Un niño ha salido del grupo'
+                joingroup: 'Un niño/a ha entrado en el grupo'
+                out: 'Tu niño/a ha salido sin incidencias'
 
             group:
                 invite:
@@ -266,8 +270,8 @@ Options:
     edit: Editar
 
 Random:
-    text_1: 'Un niño que camina es un niño sano'
-    text_10: 'En los 70´s y 80´s el 70% de los niños de 7 y 8 años iban solos a la escuela, hoy el 70% de los escolares nunca ha ido sólo al cole'
+    text_1: "Un niño que camina es un niño sano\nUna niña que camina es una niña sana"
+    text_10: 'En los 70´s y 80´s el 70% de los niños y niñas de 7 y 8 años iban solos a la escuela, hoy el 70% de los escolares nunca ha ido sólo al cole'
     text_11: 'Hoy día más del 40% de los escolares van en coche al colegio con el ruido, la contaminación y el consumo energético que ello supone'
     text_12: 'Permitir y facilitar el camino a pie al colegio de tus hijos te permite ahorrar más de 60€/mes'
     text_13: 'Recordar nuestro camino al colegio, es recordar buenos y divertidos momentos'
@@ -277,13 +281,13 @@ Random:
     text_17: 'Fomentar la autonomía de nuestros hijos es permitirles crecer seguros en sí mismos'
     text_18: '¿Recuerdas con qué edad empezaste a ir al colegio solo/a?'
     text_19: 'Nos interesa tu opinión. Comparte tus ideas, impresiones y necesidades con nosotros en hola@trazeo.es'
-    text_2: 'Dejar que los hijos crezcan en autonomía no es desatención, es un acto de amor'
+    text_2: 'Dejar que los/as hijos/as crezcan en autonomía no es desatención, es un acto de amor'
     text_20: '¿Se te ocurre alguna idea para mejorar el pedibus en el participa tu hijo/a? Compártela en el muro de tu grupo'
     text_21: 'Si crees que hay cosas que se pueden mejorar a lo largo de la ruta de tu pedibus, comentalo y/o solicita las mejoras a tu Ayuntamiento'
     text_22: 'Caminar fortalece el corazón'
-    text_3: 'Caminar en compañía es hacer amigos'
+    text_3: 'Caminar en compañía es hacer amistad'
     text_4: 'Los escolares van paseando al colegio alcanzan mayores niveles de concentración y atención en clase'
-    text_5: 'Para muchos expertos, un niño está más expuesto a los contaminantes de un coche cuando se encuentra en el interior de dicho vehículo que cuando se encuentra fuera de él'
+    text_5: 'Para muchos expertos, un/a niño/a está más expuesto/a a los contaminantes de un coche cuando se encuentra en el interior de dicho vehículo que cuando se encuentra fuera de él'
     text_6: 'El aire que se respira en el interior de un coche está más contaminado que el aire del exterior'
     text_7: 'Andar nos ayuda a mantenernos en forma'
     text_8: 'Caminar en lugar de coger el coche contribuye a mejorar la calidad de nuestro aire'
@@ -292,7 +296,7 @@ Random:
 Register:
     email: 'Correo electrónico'
     emailconfirmation: 'Repita el correo'
-    name: 'Correo electrónico'
+    name: 'Nombre de usuario'
     pass: Contraseña
     repeatpass: 'Repita la contraseña'
 
@@ -365,16 +369,18 @@ Route:
         childs: Niños/as
         create: 'Crear nuevo Grupo'
         creator: Autor
-        description: 'Mapa de paseo y datos referentes a la ruta'
-        distance: Distancía
+        description: 'Mapa y datos referentes a la ruta'
+        distance: Distancia
         end: 'Termina en'
         groups: 'Grupos con esta ruta'
-        map: 'Mapa del paseo'
+        map: 'Mapa de la ruta'
         owndescription: Descripción
         signed: 'apuntados en esta ruta'
         start: 'Empieza en'
         title: 'Ruta: %name%'
         unasigned: 'No ningún grupo con esta ruta asignada'
+        group: 'Grupo'
+        edit: 'Editar ruta'
 
 Settings:
     index:
@@ -386,7 +392,7 @@ Sponsors:
 
 Suggestion:
     access_groups: '¡Aún no estás en ningún grupo! Busca ahora un grupo en tu Localidad y únete a él.'
-    complete_profile: 'Acceda a su Perfil y complete los campos de Ciudad y Nombre'
+    complete_profile: 'Accede a tu Perfil y completa los campos de Ciudad y Nombre'
     link_child: 'Accede al Muro de alguno de tus grupos para vincular a tus niños/as.'
     new_child: '¡Aún no has registrado a ningún/a niño/a! Haz click aquí para proceder al registro de tus niños en el sistema.'
     create_route: 'Este grupo no tiene ruta definida aun, haz click aquí para crear la ruta.'
@@ -394,13 +400,13 @@ Suggestion:
 
 Timeline:
     child:
-        disjoin: 'Desvincular mis niños de este grupo'
+        disjoin: 'Desvincular mis niños/as de este grupo'
         empty: 'Sin resultados'
-        join: 'Vincular mis niños con este grupo'
-        title: 'Tus niños en este grupo'
+        join: 'Vincular mis niños/as con este grupo'
+        title: 'Tus niños/as en este grupo'
 
     index:
-        description: 'Gestiona tus niños en este grupo, invita a otros usuarios a unirse o chatea con ellos'
+        description: 'Gestiona tus niños/as en este grupo, invita a otros usuarios a unirse o chatea con ellos'
         title: 'Actividad del grupo'
 
     invite:
@@ -428,7 +434,7 @@ Trans:
         wrong: 'ERROR. No se ha guardado la traducción'
 
     search:
-        children: 'Buscar Niños'
+        children: 'Buscar Niños/as'
         group: 'Buscar Grupos'
         routes: 'Buscar Rutas'
 
@@ -495,7 +501,7 @@ group:
 
     new:
         submit: 'Crear grupo'
-
+        locality: 'Nueva localidad'
     show:
         name: 'Nombre de grupo'
 
@@ -509,16 +515,15 @@ preference:
     notification_email:
         description: 'Marca esta casilla si quieres recibir notificaciones por Email'
         name: 'Notificaciones por email'
-
         value:
             important: 'Solo los importantes'
             never: Ninguno
             now: Todos
     civiclub_conexion:
-        name: 'Connect with CiviClub'
-        description: 'You want to send your points to CiviClub?</br></br><span style="font-size:0.75em;">CiviClub.org es un club de personas cívicas donde los socios ganan puntos por tener un estilo de vida que fomente la solidaridad, los hábitos saludables y la sostenibilidad.</br> Si todavía no eres socio de CiviClub y quieres que los trayectos con Trazeo también sumen puntos Civis, deberás darte de alta con el mismo email que lo hiciste en Trazeo y seleccionar Si en este botón.</span></br></br>'
+        name: 'Conexión con CiviClub'
+        description: '¿Quieres que tus puntos se envíen a CiviClub?</br></br><span style="font-size:0.75em;">CiviClub.org es un club de personas cívicas donde los socios ganan puntos por tener un estilo de vida que fomente la solidaridad, los hábitos saludables y la sostenibilidad.</br> Si ya eres socio de CiviClub y quieres que los puntos que sumas con Trazeo también se conviertan en Civis, selecciona Si en la opción de abajo y enviaremos todos tus puntos acumulados en la semana a CiviClub todos los lunes.</br> Y si aún no eres usuario de CiviClub, selecciona la opción Si y date de alta en este link con el mismo correo con el que te hayas registrado en Trazeo: <a href="https://www.civiclub.org/es/register/?utm_source=trazeo&utm_campaign=activacion">Regístrate en CiviClub.org</a>?</span></br></br>'
         value:
-            yes: 'yes'
+            yes: 'si'
             no: 'no'
 
 profile:
@@ -578,7 +583,7 @@ Points:
     description: 'En este apartado puedes consultar toda la información referente a los puntos que has obtenido en Trazeo'
     mine: 'Mis puntos'
     explanation: 'Gana puntos en Trazeo participando en el pedibus y animando a que otros lo hagan'
-    name: 'punto'
+    name: 'puntos'
     name_plural: 'puntos'
     total: 'en total'   
     got: 'tienes'
@@ -592,7 +597,7 @@ Points:
         explanation: 'Estos son los puntos que has conseguido hasta el momento'
         walk: 'ha caminado'
         distance: 'kilómetros con Trazeo, que se convierten en'
-        exchange: 'canjeable'
+        exchange: 'canjeables'
         exchange_plural: 'canjeables'
         description: 'Listado de las acciones que te han reportado puntos'
         title: 'Histórico de puntos'
@@ -612,7 +617,7 @@ Points:
         explain:
             first: '<p>Cada una de las acciones que realizas en Trazeo te permite sumar puntos en tu cuenta:</p><ul><li type="circle">- Cada día que uno de tus hijos camine con Trazeo, sumarás 1 punto. ¡Anímate a que lo hagan a diario!</li><li type="circle">- Además, por cada kilómetro que uno de tus hijos camine con Trazeo, recibirás 1 punto más (con un máximo de 25 puntos por semana).</li><li type="circle">- Y si eres el acompañante o el monitor de un grupo, cada vez que guíes el paseo con la aplicación móvil recibirás 1 punto (con un máximo de 50 puntos al mes).</li></ul><p>Además, cuando lleves a cabo algunas acciones o cuando colabores con Trazeo, te enviaremos un código que te permitirá sumar puntos directamente. Sólo tienes que introducirlo en el espacio “Canjear Cupón” que hay en la pantalla de “Mis puntos” y pulsar el botón.</p> <p>Y recuerda, que cada una de estas acciones también te dan CIVIS en nuestra web amiga Civiclub.org, el club de las personas cívicas (mira las condiciones <a class="modalchange" data-toggle="modal" data-target="#civiModal">aquí</a>)</p>'
             second: 'En el catálogo de esta misma página tienes a tu disposición un listado con los premios y descuentos que puedes canjear en Trazeo por los puntos conseguidos. Elige el que más te guste a ti o a tus hijos y pulsa sobre el botón “Canjear”. Te mandaremos información sobre cómo recibir tu premio. Y recuerda, esta lista seguirá creciendo.'
-            third: 'Si necesitas más información, o si eres una empresa u organismo y quieres ofrecer premios y descuentos en Trazeo, puedes ponerte en contacto con nosotros en'
+            third: 'Si necesitas más información, o si eres una empresa u organismo y quieres ofrecer premios y descuentos en Trazeo, puedes ponerte en contacto con nosotros en hola@trazeo.es '
         question:
             first: '¿Cómo puedes sumar puntos en Trazeo?</br>'
             second: '¿Cómo puedes canjear tus puntos en Trazeo?</br></br>'
@@ -625,12 +630,13 @@ Points:
             body: "Vaya, aún te faltan algunos puntos para poder canjear este premio. Si tus hijos caminan unos días más, podrás hacerlo pronto."
     action:
         Create_Group: 'Por crear tu primer grupo'
-        Create_User: 'Por canjear tu código de bienvenida'
+        Create_User: 'Por canjear el código de bienvenida 0'
         Child_On_Ride: 'Porque tu hijo 0 participo en un paseo'
         Distance_Points: 'Porque tu hijo 0 ha recorrido 1m'
         Manage_Ride:  'Por hacer de acompañante en 1 paseo/s'
     button:
         exchange: 'Canjear puntos'
+        moreinfo: 'Más información'
 Exchange:
     title: 'Canjea tus puntos'
     description: 'Canjea tu puntos por premios'
@@ -640,3 +646,15 @@ Exchange:
         moreinfo: 'Más información'
     help:
         code: 'Introduce tu código'
+Catalog:
+    index:
+        title: 'Panel de administración del catálogo'
+        description: 'Panel de administración del catálogo. Aquí se pueden editar todos los premios.'
+CatalogItem:
+    help:
+        points: 'Puntos necesarios para canjear el premio'
+        position: 'Posición en que aparece al visualizar en el catálogo'
+        company: 'Empresa u organismo que ofrece el premio'
+        title: 'Línea de título del premio'
+        description: 'Texto de descripción del premio'
+        link: 'Enlace a la ficha de la empresa y la oferta'
