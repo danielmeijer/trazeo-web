@@ -6,9 +6,9 @@
     background-image: url({{asset(file_path)}}),-o-linear-gradient(top, #ffffff, #ffffff 60%, #cedcab 40%, #cedcab);  
     background-image: url({{asset(file_path)}}),linear-gradient(top, #ffffff, #ffffff 60%, #cedcab 40%, #cedcab);">
 			<div class="circle col-md-3  col-xs-3  col-sm-3  col-lg-3 col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">
-				<span><b class="catalog-item-points catalog-item-points2">{{ofert.points}}</b></span>
+				<span class="catalog-item-points2">{{ofert.points}}</span>
 			</br>
-				<span><p class="catalog-item-points">puntos</p></span>
+				<span><p class="catalog-item-points ">Puntos</p></span>
 			</div>
 			<div class="catalog-item-title col-md-10 ">
 				{{ofert.title}}
@@ -17,7 +17,10 @@
 				{{ofert.description}}
 			</div>
 		</div>
-		<a class="btn btn-success col-md-offset-3" margin-top="10px" href="{{ofert.link}}" data-offert="{{ofert.title}}">
+		<a class="btn btn-success exchange" style="margin-top:5px;margin-left:5%" href="{{ path('panel_point_exchange', { 'discount': 'ofert.title'}) }}" data-offert='tiitle.ofert'>
+			<i class="fa fa-plus-circle"></i>&nbsp; {{ "Exchange.button.exchange"|trans}}
+		</a>	
+		<a class="btn btn-success" style="margin-top:5px" href="{{ofert.link}}" data-offert="{{ofert.title}}">
 			<i class="fa fa-plus-circle"></i>&nbsp; {{ "Exchange.button.moreinfo"|trans}}
 		</a>	
 	</span>

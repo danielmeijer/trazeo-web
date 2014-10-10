@@ -31,6 +31,13 @@ namespace Trazeo\BaseBundle\Entity;
 	 */
 	 protected $points=0;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="position", type="integer")
+     */
+     protected $position=0;
+     
 	/**
 	 * @var string
 	 *
@@ -75,6 +82,9 @@ namespace Trazeo\BaseBundle\Entity;
 	 * @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\City", inversedBy="catalogitem")
 	 */
 	 protected $citys;
+
+
+     
     /**
      * Constructor
      */
@@ -293,5 +303,53 @@ namespace Trazeo\BaseBundle\Entity;
     public function getComplete()
     {
         return $this->complete;
+    }
+
+    /**
+     * Set order
+     *
+     * @param integer $order
+     *
+     * @return ECatalogItem
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+
+        return $this;
+    }
+
+    /**
+     * Get order
+     *
+     * @return integer
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * Set position
+     *
+     * @param integer $position
+     *
+     * @return ECatalogItem
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return integer
+     */
+    public function getPosition()
+    {
+        return $this->position;
     }
 }

@@ -40,12 +40,12 @@ class PanelCatalogItemController extends Controller
             'action' => $this->generateUrl('panel_catalogitems_save', array('id' => $item->getId())),
             'method' => 'PUT',
         	'attr' => array(
-        				'CatalogItem.help.points' => $this->get('translator')->trans('Children.help.nick'),
-        				'CatalogItem.help.company' => $this->get('translator')->trans('Children.help.datebirth'),
-        				'CatalogItem.help.title' => $this->get('translator')->trans('Children.help.visibility'),
-        				'CatalogItem.help.description' => $this->get('translator')->trans('Children.help.gender'),
-                        'CatalogItem.help.link' => $this->get('translator')->trans('Children.help.scholl'),
-        		)
+  				'CatalogItem.help.points' => $this->get('translator')->trans('CatalogItem.help.points'),
+        		'CatalogItem.help.position' => $this->get('translator')->trans('CatalogItem.help.position'),
+        		'CatalogItem.help.company' => $this->get('translator')->trans('CatalogItem.help.company'),
+        		'CatalogItem.help.title' => $this->get('translator')->trans('CatalogItem.help.title'),
+        		'CatalogItem.help.description' => $this->get('translator')->trans('CatalogItem.help.description'),
+                'CatalogItem.help.link' => $this->get('translator')->trans('CatalogItem.help.link'),        		)
         ));
 
         $form_item->add('submit', 'submit', array('label' => 'Update'));									
@@ -100,11 +100,12 @@ class PanelCatalogItemController extends Controller
             'action' => $this->generateUrl('panel_catalogitems_save', array('id' => $item->getId())),
             'method' => 'PUT',
         	'attr' => array(
-        				'CatalogItem.help.points' => $this->get('translator')->trans('Children.help.nick'),
-        				'CatalogItem.help.company' => $this->get('translator')->trans('Children.help.datebirth'),
-        				'CatalogItem.help.title' => $this->get('translator')->trans('Children.help.visibility'),
-        				'CatalogItem.help.description' => $this->get('translator')->trans('Children.help.gender'),
-                        'CatalogItem.help.link' => $this->get('translator')->trans('Children.help.scholl'),
+  				'CatalogItem.help.points' => $this->get('translator')->trans('CatalogItem.help.points'),
+        		'CatalogItem.help.position' => $this->get('translator')->trans('CatalogItem.help.position'),
+        		'CatalogItem.help.company' => $this->get('translator')->trans('CatalogItem.help.company'),
+        		'CatalogItem.help.title' => $this->get('translator')->trans('CatalogItem.help.title'),
+        		'CatalogItem.help.description' => $this->get('translator')->trans('CatalogItem.help.description'),
+                'CatalogItem.help.link' => $this->get('translator')->trans('CatalogItem.help.link'),
         		)
         ));
 		$form->bind($request);
@@ -157,11 +158,12 @@ class PanelCatalogItemController extends Controller
             'action' => $this->generateUrl('panel_itemscatalog_create',array('id' => $item->getId())),
             'method' => 'POST',
         	'attr' => array(
-        				'CatalogItem.help.points' => $this->get('translator')->trans('Children.help.nick'),
-        				'CatalogItem.help.company' => $this->get('translator')->trans('Children.help.datebirth'),
-        				'CatalogItem.help.title' => $this->get('translator')->trans('Children.help.visibility'),
-        				'CatalogItem.help.description' => $this->get('translator')->trans('Children.help.gender'),
-                        'CatalogItem.help.link' => $this->get('translator')->trans('Children.help.scholl'),
+        				'CatalogItem.help.points' => $this->get('translator')->trans('CatalogItem.help.points'),
+        				'CatalogItem.help.position' => $this->get('translator')->trans('CatalogItem.help.position'),
+        				'CatalogItem.help.company' => $this->get('translator')->trans('CatalogItem.help.company'),
+        				'CatalogItem.help.title' => $this->get('translator')->trans('CatalogItem.help.title'),
+        				'CatalogItem.help.description' => $this->get('translator')->trans('CatalogItem.help.description'),
+                        'CatalogItem.help.link' => $this->get('translator')->trans('CatalogItem.help.link'),
         		)
         ));
 

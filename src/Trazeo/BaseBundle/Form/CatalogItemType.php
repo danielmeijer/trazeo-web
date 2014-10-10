@@ -24,6 +24,15 @@ class CatalogItemType extends AbstractType
         					),'required' => true
         			)
         		)
+            ->add('position', null, array(
+                    'attr' => array(
+                            'placeholder' => 'CatalogItem.position',
+                            'data-toggle' => 'popover',
+                            'data-placement' => 'right',
+                            'data-content' => $options['attr']['CatalogItem.help.position']
+                            ),'required' => true
+                    )
+                )
             ->add('company', null, array(
         			'attr' => array(
         					'placeholder' => 'CatalogItemcompany',

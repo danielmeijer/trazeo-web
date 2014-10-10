@@ -1,77 +1,13 @@
-{#<div class="col-lg-12" style="margin-top:30px">
-		<span class="col-md-4" margin-top="30px">
-			<img class="img-responsive pull-left" width="300" height="100" src="{{ asset('images/Oferta_Ecofamily.png') }}" alt="Trazeo" title="Trazeo">
-			</br>
-		</br>
-			<a class="btn btn-success exchange col-md-offset-3" margin-top="10px" href="{{ path('panel_point_exchange', { 'discount': 'Eco family'}) }}" data-offert="Eco family">
-			 	<i class="fa fa-plus-circle"></i>&nbsp; {{ "Exchange.button.exchange"|trans}}
-			</a>	
-		</span>
-		<span class="col-md-4" margin-top="30px">
-			<img class="img-responsive pull-left" width="300" height="100" src="{{ asset('images/Oferta_Helen_Doron.png') }}" alt="Trazeo" title="Trazeo">
-			<a class="btn btn-success exchange col-md-offset-3" margin-top="10px" href="{{ path('panel_point_exchange', { 'discount': 'Helen Doron'}) }}" data-offert="Helen Doron">
-			 	<i class="fa fa-plus-circle"></i>&nbsp; {{ "Exchange.button.exchange"|trans}}
-			</a>	
-		</span>
-		<span class="col-md-4" margin-top="30px">
-			<img class="img-responsive pull-left" width="300" height="100" src="{{ asset('images/Oferta_La_Casa_de_Tomasa.png') }}" alt="Trazeo" title="Trazeo">
-			<a class="btn btn-success exchange col-md-offset-3" margin-top="10px" href="{{ path('panel_point_exchange', { 'discount': 'La Casa de Tomasa'}) }}" data-offert='La Casa de Tomasa'>
-			 	<i class="fa fa-plus-circle"></i>&nbsp; {{ "Exchange.button.exchange"|trans}}
-			</a>	
-		</span>
-</div>#}
 {%set i =0%}
 	{%set j =0%}
 {%for ofert in oferts %}
 	{%if ofert.complete==1 %}
-		{%if j==0%}<div class="row col-md-12 col-xs-12 col-sm-12 col-lg-12">{%endif%}
+		{%if j==0%}<div class="row col-md-12 col-xs-12 col-sm-12 col-lg-12" style="margin-top:10px">{%endif%}
 		{% include 'TrazeoFrontBundle:PanelPoint:_row_catalogItem.html.twig' with {
 		'ofert': ofert, 'file': files[i]
 		} %}
-		{%set j =j+1%}
-		{%if j==2%}</div>{%set j=0%}{%endif%}
 		{%set j=j+1%}
+		{%if j==3%}</div>{%set j=0%}{%endif%}
 	{%endif%}
 	{%set i =i+1%}
 {%endfor%}
-{#<div class="col-lg-12" style="margin-top:30px">
-		<span class="col-md-4" margin-top="30px">
-			<img class="img-responsive pull-left" width="300" height="100" src="{{ asset('images/Oferta_Sus_Pasitos.png') }}" alt="Trazeo" title="Trazeo">
-			</br>
-		</br>
-			<a class="btn btn-success exchange col-md-offset-3" margin-top="10px" href="{{ path('panel_point_exchange', { 'discount': 'SusPasitos descuento 50%'}) }}" data-offert='SusPasitos descuento 50%'>
-			 	<i class="fa fa-plus-circle"></i>&nbsp; {{ "Exchange.button.exchange"|trans}}
-			</a>	
-		</span>
-		<span class="col-md-4" margin-top="30px">
-			<img class="img-responsive pull-left" width="300" height="100" src="{{ asset('images/Oferta_Sus_Pasitos 2.png') }}" alt="Trazeo" title="Trazeo">
-			<a class="btn btn-success exchange col-md-offset-3" margin-top="10px" href="{{ path('panel_point_exchange', { 'discount': 'SusPasitos descuento 3€'}) }}" data-offert='SusPasitos descuento 3€'>
-				<i class="fa fa-plus-circle"></i>&nbsp; {{ "Exchange.button.exchange"|trans}}
-			</a>	
-		</span>
-		<span class="col-md-4" margin-top="30px">
-			<img class="img-responsive pull-left" width="300" height="100" src="{{ asset('images/Oferta_CiviClub.png') }}" alt="Trazeo" title="Trazeo">
-			<a class="btn btn-success exchange col-md-offset-3" margin-top="10px" href="https://www.civiclub.org">
-			 	<i class="fa fa-plus-circle"></i>&nbsp; {{ "Exchange.button.exchange"|trans}}
-			</a>	
-		</span>
-</div>
-</br>
-<div class="col-lg-12" style="margin-top:30px">
-		<span class="col-md-4" margin-top="30px">
-			<img class="img-responsive pull-left" width="300" height="100" src="{{ asset('images/Oferta_teQala.png') }}" alt="Trazeo" title="Trazeo">
-			</br>
-		</br>
-			<a class="btn btn-success exchange col-md-offset-3" margin-top="10px" href="{{ path('panel_point_exchange', { 'discount': 'te Qala'}) }}" data-offert='te Qala'>
-			 	<i class="fa fa-plus-circle"></i>&nbsp; {{ "Exchange.button.exchange"|trans}}
-			</a>	
-		</span>
-		<span class="col-md-4" margin-top="30px">
-			<img class="img-responsive pull-left" width="300" height="100" src="{{ asset('images/Oferta_Proximamente_Trazeo.png') }}" alt="Trazeo" title="Trazeo">
-			</br>
-		</br>
-			<a class="btn btn-success exchange col-md-offset-3" margin-top="10px">
-			 	<i class="fa fa-plus-circle"></i>&nbsp; {{ "Exchange.button.exchange"|trans}}
-			</a>	
-		</span>
-</div>#}

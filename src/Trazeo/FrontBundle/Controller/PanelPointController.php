@@ -37,7 +37,10 @@ class PanelPointController extends Controller
         $em = $this->getDoctrine()->getManager();
         $fos_user = $this->container->get('security.context')->getToken()->getUser();   
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
-        $oferts = $em->getRepository('TrazeoBaseBundle:ECatalogItem')->findByComplete(1);
+        $oferts = $em->getRepository('TrazeoBaseBundle:ECatalogItem')->findBy(
+             array('complete'=> '1'), 
+             array('position' => 'ASC')
+           );
         $gamification = $this->container->get('sopinet_gamification');
         $points=$gamification->getUserPoints();
         foreach ($oferts as $ofert) {
