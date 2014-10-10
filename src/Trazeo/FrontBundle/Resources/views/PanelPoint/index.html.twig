@@ -49,6 +49,7 @@
 	</div>
 	{% include 'TrazeoFrontBundle:PanelPoint:_howto_modal.html.twig' %}
 	{% include 'TrazeoFrontBundle:PanelPoint:_exchange_modal.html.twig'%}
+	{% include 'TrazeoFrontBundle:PanelPoint:_exchangeFail_modal.html.twig'%}
 	{% include 'TrazeoFrontBundle:PanelPoint:_civi_modal.html.twig' %}
 	{% include 'TrazeoFrontBundle:PanelPoint:exchange.html.twig' %}
 	<!-- END pointsResume -->
@@ -56,11 +57,18 @@
 {% block js %}
 	{{parent()}}
 	{% include 'TrazeoFrontBundle:PanelPoint:_index_analytics.html.twig' %}
+	{%if exchange is defined%}
+		{% if exchange==1 %}
+			<script type="text/javascript">
+				$('#exchangeModal').modal();
+			</script>
+		{%elseif exchange==2 %}
+			<script type="text/javascript">
+				$('#exchangeFailModal').modal();
+			</script>
+		{%endif %}
+	{%endif%}
 	<script type="text/javascript">
-		if(sessionStorage.exchange=='true'){
-			$('#exchangeModal').modal();
-			sessionStorage.exchange=false;
-		}
 		$('.modalchange').click(function(){$('#howToModal').modal('hide')});
 		$('.exchange').click(function(){sessionStorage.exchange=true});
 	</script>

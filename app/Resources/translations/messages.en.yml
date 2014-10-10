@@ -620,6 +620,9 @@ Points:
         exchange:
             title: 'Tramitando canjeo'
             body: 'Tu oferta se esta canjeando, recibirás más información por email'
+        exchangeFail:
+            title:  "No tienes suficientes puntos para este premio."
+            body: "Vaya, aún te faltan algunos puntos para poder canjear este premio. Si tus hijos caminan unos días más, podrás hacerlo pronto."
     action:
         Create_Group: 'Por crear tu primer grupo'
         Create_User: 'Por canjear tu código de bienvenida'

@@ -13,14 +13,16 @@
 			<div class="catalog-item-title col-md-10 ">
 				{{ofert.title}}
 			</div>
-			<div class="catalog-item-description col-md-10 hidden-xs">
+			<div class="catalog-item-description col-md-10 hidden-xs hidden-sm">
 				{{ofert.description}}
 			</div>
 		</div>
-		<a class="btn btn-success exchange" style="margin-top:5px;margin-left:5%" href="{{ path('panel_point_exchange', { 'discount': 'ofert.title'}) }}" data-offert='tiitle.ofert'>
+		{%if ofert.points!=0%}
+		<a class="btn btn-success exchange" style="margin-top:5px;margin-left:5%" href="{{ path('panel_point_exchange', { 'id': ofert.id}) }}" data-offert='tiitle.ofert'>
 			<i class="fa fa-plus-circle"></i>&nbsp; {{ "Exchange.button.exchange"|trans}}
 		</a>	
-		<a class="btn btn-success" style="margin-top:5px" href="{{ofert.link}}" data-offert="{{ofert.title}}">
+		{%endif %}
+		<a {%if ofert.points==0%}class="btn btn-success exchange col-md-offset-3" {%else%}class="btn btn-success"{%endif%} style="margin-top:5px" href="{{ofert.link}}" data-offert="{{ofert.title}}">
 			<i class="fa fa-plus-circle"></i>&nbsp; {{ "Exchange.button.moreinfo"|trans}}
 		</a>	
 	</span>
