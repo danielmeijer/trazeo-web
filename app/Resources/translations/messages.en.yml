@@ -618,8 +618,8 @@ Points:
             second: '¿Cómo puedes canjear tus puntos en Trazeo?</br></br>'
         mail: hola@trazeo.es
         exchange:
-            title: 'Tramitando canjeo'
-            body: 'Tu oferta se esta canjeando, recibirás más información por email'
+            title: 'Has solicitado canjear un premio'
+            body: 'Ya hemos recibido tu solicitud para canjear tus puntos en Trazeo por este premio. Te mandaremos en las próximas horas un email con instrucciones detalladas para que lo disfrutes. ¡Gracias por hacer que tus hijos caminen con Trazeo!'
         exchangeFail:
             title:  "No tienes suficientes puntos para este premio."
             body: "Vaya, aún te faltan algunos puntos para poder canjear este premio. Si tus hijos caminan unos días más, podrás hacerlo pronto."
