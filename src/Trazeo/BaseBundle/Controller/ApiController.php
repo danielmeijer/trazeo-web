@@ -920,10 +920,11 @@ class ApiController extends Controller {
 			$id_group = $request->get('id_group');
 			$group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneById($id_group);
 	   		$userextends = $group->getUserextendgroups()->toArray();
-	   		$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($fos_user,'panel_group_timeline', array('id' => $group->getId()));	
 			$not = $this->container->get('sopinet_user_notification');
 			foreach($userextends as $userextend)
 			{
+				$fos_reciver=$userextend->getUser();
+	   			$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($fos_reciver,'panel_group_timeline', array('id' => $group->getId()));	
 				$not->addNotification(
 					"timeline.newFromMonitor",
 					"TrazeoBaseBundle:Userextend,SopinetTimelineBundle:Comment,TrazeoBaseBundle:EGroup",
