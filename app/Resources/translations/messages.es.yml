@@ -500,7 +500,7 @@ group:
 
     new:
         submit: 'Crear grupo'
-
+        locality: 'Nueva localidad'
     show:
         name: 'Nombre de grupo'
 
@@ -642,3 +642,16 @@ Exchange:
         moreinfo: 'Más información'
     help:
         code: 'Introduce tu código'
+Catalog:
+    index:
+        title: 'Panel de administración del catálogo'
+        description: 'Panel de administración del catálogo. Aquí se pueden editar todos los premios'.
+CatalogItem:
+    help:
+        points: 'Puntos necesarios para canjear el premio'
+        position: 'Posición en que aparece al visualizar en el catálogo'
+        company: 'Empresa u organismo que ofrece el premio'
+        title: 'Línea de título del premio'
+        description: 'Texto de descripción del premio'
+        link: 'Enlace a la ficha de la empresa y la oferta'
+        
