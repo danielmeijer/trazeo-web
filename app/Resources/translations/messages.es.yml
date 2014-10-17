@@ -501,7 +501,7 @@ group:
 
     new:
         submit: 'Crear grupo'
-        locality: 'Nueva localidad'
+        locality: 'Localidad'
     show:
         name: 'Nombre de grupo'
 
