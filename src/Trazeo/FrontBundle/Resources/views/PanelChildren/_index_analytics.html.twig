@@ -7,7 +7,7 @@
 	});
 	//Analytics edit button
 	var link=$('.edit');
-	analytics.trackLink(link,"click.child.edit");	
+	analytics.trackLink(link,"click.child.edit",{device: isMobile.any()});	
 	
-	$("#new_child").click(function(event){analytics.track("click.child.prev.new")});
+	$("#new_child").click(function(event){analytics.track("click.child.prev.new",{device: isMobile.any()})});
 </script>

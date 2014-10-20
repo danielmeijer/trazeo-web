@@ -1,5 +1,4 @@
 <script type="text/javascript">
-
 var isMobile = {
     Android: function() {
         return navigator.userAgent.match(/Android/i);
@@ -24,11 +23,9 @@ var isMobile = {
 
 var analytics_user=analytics.identify('{{ app.user.id }}',{email: '{{ app.user.email }}', username: '{{ app.user }}'});
 	//Analytics invite group button 	
-	$(".howto").click(function (event){
-		analytics.track('click.points.howto',{device: isMobile.any()}); 
-	});	
+	$(".howto").click(function(){analytics.track('click.points.howto',{device: isMobile.any()});} );
 	$(".historical").click(function (event){
-		analytics.track('click.points.historical'); 
+		analytics.track('click.points.historical',{device: isMobile.any()}); 
 	});	
-	analytics.track('page.points');
+	analytics.track('page.points',{device: isMobile.any()});
 </script>

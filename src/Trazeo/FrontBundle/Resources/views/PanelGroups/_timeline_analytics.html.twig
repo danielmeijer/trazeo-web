@@ -1,21 +1,24 @@
 <script type="text/javascript">
-	var analytics_user=analytics.identify('{{ app.user.id }}',{email: '{{ app.user.email }}', username: '{{ app.user }}'});
+setTimeout(
+	function(){
+		var analytics_user=analytics.identify('{{ app.user.id }}',{email: '{{ app.user.email }}', username: '{{ app.user }}'});
 
-	//Analytics Register user form 
-	$('.fos_comment_submit >input ').click(function (event){
-		analytics.track('click.timeline.post',{group: '{{ group.name }}'}) 
-	});
-	//Analytics reply timeline button 	
+		//Analytics Register user form 
+		$('.fos_comment_submit >input ').click(function (event){
+			analytics.track('click.timeline.post',{group: '{{ group.name }}',device: isMobile.any()}) 
+		});
+		//Analytics reply timeline button 	
 		$('.fos_comment_comment_reply_show_form').click(function (event){
-		analytics.track('click.timeline.reply',{group: '{{ group.name }}'}) 
-	});
-	//Analytics child join group
-	var link=$('.join');
-	analytics.trackLink(link,"click.timeline.join",{group: '{{ group.name }}'});	
-	//Analytics new child button
-	var link=$('.new_child');
-	analytics.trackLink(link,'click.child.prev.new');
-	//Analytics chil disjoin group
-	var link=$('.disjoin');
-	analytics.trackLink(link,"click.timeline.disjoin",{group: '{{ group.name }}'});		
+			analytics.track('click.timeline.reply',{group: '{{ group.name }}',device: isMobile.any()}) 
+		});
+		//Analytics child join group
+		var link=$('.join');
+		analytics.trackLink(link,"click.timeline.join",{group: '{{ group.name }}',device: isMobile.any()});	
+		//Analytics new child button
+		var link=$('.new_child');
+		analytics.trackLink(link,'click.child.prev.new',{device: isMobile.any()});
+		//Analytics chil disjoin group
+		var link=$('.disjoin');
+		analytics.trackLink(link,"click.timeline.disjoin",{group: '{{ group.name }}',device: isMobile.any()});	
+	},3000);
 </script>
