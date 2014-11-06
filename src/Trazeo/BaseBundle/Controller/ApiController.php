@@ -1003,16 +1003,40 @@ class ApiController extends Controller {
 	 */
 	public function getGeoCitiesAction() {
 		$q = $this->getRequest()->get('q');
-		
+
 		$helper = $this->get('trazeo_base_helper');
 		$cities = $helper->getCities($q);
-		
-		$view = View::create()
-		->setStatusCode(200)
-		->setData($cities);
-			
+
+        if($this->getRequest()->get('app')!=null&&$this->getRequest()->get('app')==true){
+            $view = View::create()
+                ->setStatusCode(200)
+                ->setData($this->doOK($cities));
+        }
+        else{
+            $view = View::create()
+                ->setStatusCode(200)
+                ->setData($cities);
+        }
 		return $this->get('fos_rest.view_handler')->handle($view);		
 	}
+
+    /**
+     * @GET("/api/geo/countries/list")
+     */
+    public function getGeoCountriesAction() {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $reCountries = $em->getRepository('JJsGeonamesBundle:Country');
+        $query=$reCountries->createQueryBuilder('a');
+        $query->select('a.name');
+
+        $countries = $query->getQuery()->getArrayResult();
+
+        $view = View::create()
+            ->setStatusCode(200)
+            ->setData($this->doOK($countries));
+
+        return $this->get('fos_rest.view_handler')->handle($view);
+    }
 
 	/**
 	 * @POST("/api/exchange/code")
@@ -1116,7 +1140,9 @@ class ApiController extends Controller {
 		$name = $request->get('name');
 		$visibility = $request->get('visibility');
 		$id_group= $request->get('id_group');
-
+        $school1 = $request->get('school1');
+        $country = $request->get('country');
+        
 		$user = $this->checkPrivateAccess($request);
 		if( $user == false || $user == null ){
 			$view = View::create()
@@ -1181,8 +1207,11 @@ class ApiController extends Controller {
 				$group->setCity($city_entity[0]);
 			}
 		}
+        $reGroup = $em->getRepository('TrazeoBaseBundle:EGroup')->setCountry($id_group,$country);
+
         $group->setName($name);
         $group->setVisibility($visibility);
+        $group->setSchool1($school1);
         $em->persist($group);
         $em->flush();
 
@@ -1577,12 +1606,7 @@ class ApiController extends Controller {
 		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 		
 		$childs = $userextend->getChilds();
-		
-		$view = View::create()
-		->setStatusCode(200)
-		->setData($this->doOK($childs));
-			
-		return $this->get('fos_rest.view_handler')->handle($view);
+
 	
 	}
 	
@@ -1705,5 +1729,59 @@ class ApiController extends Controller {
 		->setData($this->doOK());
 			
 		return $this->get('fos_rest.view_handler')->handle($view);	
-	}	
+	}
+    /**
+     * @POST("/api/group/disjoin")
+     */
+    public function disjoinGroupAction(Request $request){
+        $em = $this->getDoctrine()->getEntityManager();
+        $user = $this->checkPrivateAccess($request);
+        if( $user == false || $user == null ){
+            $view = View::create()
+                ->setStatusCode(200)
+                ->setData($this->msgDenied());
+
+            return $this->get('fos_rest.view_handler')->handle($view);
+        }
+        $userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+        $id_group = $request->get('id_group');
+        $reGroup = $em->getRepository('TrazeoBaseBundle:EGroup');
+
+        $reGroup->disjoinGroup($id_group,$userextend);
+
+        $view = View::create()
+            ->setStatusCode(200)
+            ->setData($this->doOK('ok'));
+
+        return $this->get('fos_rest.view_handler')->handle($view);
+    }
+    /**
+     * @POST("/api/group/setChild")
+     */
+    public function joinChildGroupAction(Request $request){
+        $em = $this->getDoctrine()->getEntityManager();
+        $user = $this->checkPrivateAccess($request);
+        if( $user == false || $user == null ){
+            $view = View::create()
+                ->setStatusCode(200)
+                ->setData($this->msgDenied());
+
+            return $this->get('fos_rest.view_handler')->handle($view);
+        }
+
+        $userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+        $id_group = $request->get('id_group');
+        $id_child = $request->get('id_child');
+        $add = $request->get('$add');
+
+        $reGroup = $em->getRepository('TrazeoBaseBundle:EGroup');
+        $reGroup->setChildOnGroup($id_group,$id_child,$userextend,true);
+
+        $view = View::create()
+            ->setStatusCode(200)
+            ->setData($this->doOK('ok'));
+
+        return $this->get('fos_rest.view_handler')->handle($view);
+    }
+
 }

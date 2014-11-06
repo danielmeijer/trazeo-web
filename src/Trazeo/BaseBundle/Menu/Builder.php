@@ -22,6 +22,7 @@ class Builder extends ContainerAware
         ->setLabel("");
         $menu['Home']->setAttribute('icon', 'fa-home fa-2x');
         $menu['Home']->setAttribute('tooltip', 'Menu.tooltip.home');
+        $menu['Home']->setAttribute('id', 'home');
         if ($options['activeMenu'] == "home") {
         	$menu['Home']->setAttribute('class', 'active');
         }

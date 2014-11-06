@@ -65,6 +65,15 @@
 	</div>
 	<hr/>
 	<!-- END resumeChilds -->
+    {% include 'SopinetTemplateSbadmin2Bundle:Elements/Basics:modal.html.twig' with{
+        modal: {
+        name: 'basic',
+        title: 'basic',
+        close: 'basic',
+        body: 'basic'.
+        linked: ''
+    }
+    } %}
 {% endblock %}
 
 {% block js %}

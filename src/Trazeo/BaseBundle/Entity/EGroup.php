@@ -9,7 +9,7 @@ use JMS\Serializer\Annotation\Exclude;
  * Entity Group
  *
  * @ORM\Table(name="e_group")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="EGroupRepository")
  */
 class EGroup
 {
@@ -87,7 +87,15 @@ class EGroup
     /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\Country")
      */
     protected $country;
-        
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="school1", type="string")
+     *
+     */
+    protected $school1;
+
     /**
      * @var string
      *
@@ -527,5 +535,29 @@ class EGroup
             return $this->country;
         }
         return null;
+    }
+
+    /**
+     * Set school1
+     *
+     * @param string $school1
+     *
+     * @return EGroup
+     */
+    public function setSchool1($school1)
+    {
+        $this->school1 = $school1;
+
+        return $this;
+    }
+
+    /**
+     * Get school1
+     *
+     * @return string
+     */
+    public function getSchool1()
+    {
+        return $this->school1;
     }
 }

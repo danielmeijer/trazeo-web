@@ -134,3 +134,8 @@ services:
         arguments: [%fos_user.model.user.class%]
         tags:
             - { name:form.type, alias:trazeo_user_registration }
+    kernel.listener.yourlisener:
+        class: Trazeo\BaseBundle\Listener\ExceptionListener
+        arguments: ['@service_container', '@session']
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }

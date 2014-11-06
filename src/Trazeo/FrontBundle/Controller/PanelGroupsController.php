@@ -167,32 +167,10 @@ class PanelGroupsController extends Controller
 		$fos_user = $this->container->get('security.context')->getToken()->getUser();
 		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
 		$container = $this->get('sopinet_flashMessages');
-		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
-	
-		// Grupo eliminado
-		if (!$group) {
-			$notification = $container->addFlashMessages("warning","El grupo ha sido eliminado");
-			return $this->redirect($this->generateUrl('panel_group'));
-		}
-		
-		// Solicitud del Administrador
-		if ($group->getAdmin()->getId() == $user->getId()) {
-			$notification = $container->addFlashMessages("warning","Usted es el Administrador del Grupo, no puede desvincularse de él.");
-			return $this->redirect($this->generateUrl('panel_group'));			
-		}
-	
-		$group->removeUserextendgroup($user);
-		$em->persist($group);
-		
-		//Children autojoin on parent join to group
-		$childs=$user->getChilds();
-		foreach($childs as $child){
-			$group->removeChild($child);
-		}
-		$em->persist($group);
-		$em->flush();
-		
-		$em->flush();
+		$reGroup = $em->getRepository('TrazeoBaseBundle:EGroup');
+
+        $reGroup->disjoinGroup($id,$user);
+
 		$notification = $container->addFlashMessages("warning","Has salido del grupo");
 		return $this->redirect($this->generateUrl('panel_group'));
 	}
