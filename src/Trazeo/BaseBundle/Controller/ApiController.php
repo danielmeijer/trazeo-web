@@ -1612,7 +1612,11 @@ class ApiController extends Controller {
 		
 		$childs = $userextend->getChilds();
 
-	
+        $view = View::create()
+            ->setStatusCode(200)
+            ->setData($this->doOK($childs));
+
+        return $this->get('fos_rest.view_handler')->handle($view);
 	}
 	
 	/**
