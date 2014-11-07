@@ -91,7 +91,7 @@ class EGroup
     /**
      * @var string
      *
-     * @ORM\Column(name="school1", type="string")
+     * @ORM\Column(name="school1", type="string", nullable=true)
      *
      */
     protected $school1;

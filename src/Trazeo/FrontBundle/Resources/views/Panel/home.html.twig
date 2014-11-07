@@ -65,15 +65,18 @@
 	</div>
 	<hr/>
 	<!-- END resumeChilds -->
-    {% include 'SopinetTemplateSbadmin2Bundle:Elements/Basics:modal.html.twig' with{
+    <a id="new_button" class="btn btn-success">Hello</a>
+    {%include 'SopinetTemplateSbadmin2Bundle:Elements/Basics:modal.html.twig' with{
         modal: {
         name: 'basic',
         title: 'basic',
         close: 'basic',
-        body: 'basic'.
-        linked: ''
+        body: 'basic',
+        linked: 'new_button',
+        popup: 300
     }
     } %}
+
 {% endblock %}
 
 {% block js %}

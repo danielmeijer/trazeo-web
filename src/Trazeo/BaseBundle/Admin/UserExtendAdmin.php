@@ -6,6 +6,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
  
 class UserExtendAdmin extends Admin
 {
@@ -14,18 +15,10 @@ class UserExtendAdmin extends Admin
   protected function configureFormFields(FormMapper $formMapper)
   {
     $formMapper
-        ->add('user')
-        ->add('groups', null, array('required' => false))
-        ->add('adminRoutes', null, array('required' => false))
-        ->add('childs', null, array('required' => false))
         ->add('nick')
-        ->add('tutorial', null, array('required' => false))
-        ->add('tutorialMap', null, array('required' => false))
         ->add('points')
         ->add('spendedPoints')
         ->add('mobile')
-        ->add('city.nameUtf8')
-        ->add('useLike')
     ;
   }
  
@@ -48,37 +41,32 @@ class UserExtendAdmin extends Admin
   {
     $listMapper
       ->addIdentifier('id')
-      ->add('user')
-      ->add('groups')
-      ->add('adminRoutes')
-      ->add('childs')
-      ->add('nick')      
-      ->add('useLike')
+      ->add('nick')
       ->add('points')
       ->add('spendedPoints')
       ->add('mobile')
       ->add('city.nameUtf8')
+        ->add('_action', 'actions', array(
+            'actions' => array(
+                'show' => array(),
+                'edit' => array(),
+                'delete' => array(),
+            )
+        ))
     ;
   }
- 
-/*     protected function configureShowFields(ShowMapper $showMapper)
+
+    protected function configureShowFields(ShowMapper $showMapper)
     {
         // Here we set the fields of the ShowMapper variable, $showMapper (but this can be called anything)
         $showMapper
-      ->addIdentifier('id')
-      ->add('user')
-      ->add('groups')
-      ->add('adminRoutes')
-      ->add('childs')
-      ->add('nick')      
-      ->add('useLike')
+      ->add('nick')
       ->add('points')
       ->add('spendedPoints')
       ->add('mobile')
-      ->add('city.nameUtf8')
       ;
 
-    }*/
+    }
 
   public function validate(ErrorElement $errorElement, $object)
   {

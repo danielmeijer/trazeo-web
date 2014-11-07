@@ -1198,6 +1198,11 @@ class ApiController extends Controller {
         	1,
         	false
         	);
+            $group->setName($name);
+            $group->setVisibility($visibility);
+            $group->setSchool1($school1);
+            $em->persist($group);
+            $em->flush();
 		}
 		if($request->get('city')){
 			$city = $request->get('city');
@@ -1207,7 +1212,7 @@ class ApiController extends Controller {
 				$group->setCity($city_entity[0]);
 			}
 		}
-        $reGroup = $em->getRepository('TrazeoBaseBundle:EGroup')->setCountry($id_group,$country);
+        $reGroup = $em->getRepository('TrazeoBaseBundle:EGroup')->setCountry($group->getId(),$country);
 
         $group->setName($name);
         $group->setVisibility($visibility);
