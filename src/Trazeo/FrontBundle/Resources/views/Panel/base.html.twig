@@ -50,7 +50,9 @@
 		{% include "SopinetSuggestionBundle:Suggestion:_suggestions.js.twig" with {
 			'suggestions': suggestion,
 		} %}
-	{% endif %}
+    {% else %}
+        {% include "SopinetSuggestionBundle:Suggestion:_suggestions.js.twig" %}
+    {% endif %}
 	{% include "TrazeoFrontBundle:Panel:_zopim.js.twig" %}
 	{% include "SopinetUserNotificationsBundle:Include:mini.js.twig" %}
 	{% include 'SopinetFlashMessagesBundle:Messages:notification.html.twig' %} 	

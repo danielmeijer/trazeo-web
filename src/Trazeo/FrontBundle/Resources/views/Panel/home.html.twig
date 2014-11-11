@@ -65,18 +65,20 @@
 	</div>
 	<hr/>
 	<!-- END resumeChilds -->
-    <a id="new_button" class="btn btn-success">Hello</a>
-    {%include 'SopinetTemplateSbadmin2Bundle:Elements/Basics:modal.html.twig' with{
-        modal: {
-        name: 'basic',
-        title: 'basic',
-        close: 'basic',
-        body: 'basic',
-        linked: 'new_button',
-        popup: 300
-    }
+    {% if tutorial == 1 %}
+        {%include 'SopinetTemplateSbadmin2Bundle:Elements/Basics:modal.html.twig' with{
+            modal: {
+            name: 'app',
+            title: "Home.modal.app.title"|trans,
+            close: "Home.modal.app.close"|trans,
+            body_template:'TrazeoFrontBundle:Panel:_app_body.html.twig',
+            body_parameters: {
+                link: "https://play.google.com/store/apps/details?id=com.sopinet.trazeo.app"
+            },
+            popup: 300
+        }
     } %}
-
+    {% endif %}
 {% endblock %}
 
 {% block js %}

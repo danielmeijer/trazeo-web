@@ -26,9 +26,12 @@
 	</br>
 	</br>
 	<div class="col-lg-12 alert alert-success">
-       	<div class="col-md-4">
+       	<div class="col-md-2">
        		<i class="fa fa-5x fa-trophy"></i>
        	</div>
+        <div class="col-md-2">
+            {% include 'SopinetTemplateSbadmin2Bundle:Elements/Basics:helper.html.twig' with{id:'point',help_text: "Help.button.pointsList"|trans, size:5}%}
+        </div>
 		<div class="col-md-4">
 			{% if (user.points-user.spendedPoints)>1%}
 			<h4><span class="points">{{ user.points-user.spendedPoints }}</span> {{"Points.name_plural"|trans}} {{ "Points.index.remains"|trans }}</h4>

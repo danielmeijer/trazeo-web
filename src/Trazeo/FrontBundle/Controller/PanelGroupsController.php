@@ -755,6 +755,7 @@ class PanelGroupsController extends Controller
         				'Groups.help.name2' => $this->get('translator')->trans('Groups.help.name2'),
         				'Groups.help.route' => $this->get('translator')->trans('Groups.help.route'),
         				'Groups.help.city' => $this->get('translator')->trans('Groups.help.city'),
+                        'Groups.help.school' => $this->get('translator')->trans('Groups.help.shool'),
 	       				'default' => $cityCodeId
         		)
         ));
@@ -871,7 +872,8 @@ class PanelGroupsController extends Controller
         				'Groups.help.name2' => $this->get('translator')->trans('Groups.help.name2'),
         				'Groups.help.route' => $this->get('translator')->trans('Groups.help.route'),
         				'Groups.help.city' => $this->get('translator')->trans('Groups.help.city'),
-	       				'default' => $cityCodeId
+                        'Groups.help.school' => $this->get('translator')->trans('Groups.help.shool'),
+                       'default' => $cityCodeId
         		)
         ));
         //$form->add('city',null,array('data'=>$cityCodeId, 'attr'=>array('style'=>'display:none;')));       

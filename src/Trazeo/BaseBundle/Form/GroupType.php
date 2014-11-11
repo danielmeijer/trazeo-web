@@ -44,6 +44,7 @@ class GroupType extends AbstractType
             'empty_value' => 'España', //Valor que aparece por defecto si no tiene un país asignado
             'property' => 'city')
         )*/
+
         ->add('visibility', 'choice', array(
             	'choices'   => array(0 => 'Groups.visibility.public', 1 => 'Groups.visibility.private',2 => 'Groups.visibility.hidden'),
         		'attr' => array(
@@ -51,6 +52,13 @@ class GroupType extends AbstractType
         		'data-toggle' => 'popover',
         		'data-placement' => 'right',
         		'data-content' => $options['attr']['Groups.help.name2']
+        )))
+        ->add('school1', null, array(
+                'attr' => array(
+                    'placeholder' => 'Group.school',
+                    'data-toggle' => 'popover',
+                    'data-placement' => 'right',
+                    'data-content' => $options['attr']['Groups.help.school']
         )));
     }
     

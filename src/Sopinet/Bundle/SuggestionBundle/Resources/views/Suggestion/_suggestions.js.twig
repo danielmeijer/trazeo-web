@@ -32,7 +32,7 @@
 		                	 ],
 		                	 {//options
 								closeBoxLabel: "<i class='fa fa-times' style='color:#DDD !important'></i>"
-								,showCloseBox : true
+								,showCloseBox : currentSugestion.close
 								,skipUndefinedTrip: true
 								,tripTheme: currentSugestion.style
 								,onTripEnd: function(){
@@ -61,12 +61,14 @@
 		this.delay=args.delay || 6000;
 		this.position=args.position || 'n';
 		this.style=args.style || 'black';
+        this.close=args.close!=false;
 		if(args.next)this.next=args.next;
 	}
 </script>
 {# {% for sug in suggestions %}
 TODO: Por ahora solo se muestra una sugerencía, para más habra que cambiar esta parte, y usar el método showSugestions 
  #}
+{% if suggestion is defined and suggestion is not empty %}
 <script>
 	var suggest={
 		text: "{{ suggestion.text }}"
@@ -77,5 +79,17 @@ TODO: Por ahora solo se muestra una sugerencía, para más habra que cambiar est
 	};
 	_showSugestion(suggest);
 </script>
+{% endif %}
 {# {% endfor %} #}
+<script>
+    $(".ui-suggestion").hover(
+        function(){
+            var suggestion=({element:'#'+this.id,text:$(this).data('suggestion'),position:$(this).data('placement'),style:$(this).data('theme'),close:false,delay:-1});
+            _showSugestion(suggestion);
+        },
+        function(){
+            trip.stop();
+        }
+    );
+</script>
 <!--END Sugestions script-->
