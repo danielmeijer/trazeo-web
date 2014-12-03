@@ -21,6 +21,7 @@ class CiviClubApi {
 				
 	function __construct(ContainerInterface $container) {
 		$this->_container = $container;
+        $this->logger=$logger;
 	}
 
 	/**

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Trazeo\BaseBundle\Entity\ECatalogItem;
 use Trazeo\BaseBundle\Form\CatalogItemType;
 /**
-* @Route("/admin/catalogitem")
+* @Route("admin/catalogitem")
 */
 class PanelCatalogItemController extends Controller
 {
@@ -112,18 +112,21 @@ class PanelCatalogItemController extends Controller
 		 
 		foreach($files as $file)
 			$item->addFile($file);
-		 
-	
+
+
 		if ($form->isValid()) {
-			$em = $this->getDoctrine()->getManager();
-			$city = $request->get('city');
-			$helper = $this->get('trazeo_base_helper');
-			$city_entity = $helper->getCities($city, 10, true);
-			if (count($city_entity) > 0) {
-				$item->setCitys($city_entity[0]);
-			}
-			$em->persist($item);
-			$em->flush();
+            $item->setComplete(1);
+            $city = $request->get('city');
+            $helper = $this->get('trazeo_base_helper');
+            $city_entity = $helper->getCities($city, 10, true);
+            if ($city!='' && count($city_entity) > 0) {
+                $item->setCitys($city_entity[0]);
+            }
+            else{
+                $item->setCitys(null);
+            }
+            $em->persist($item);
+            $em->flush();
 			return $this->redirect($this->generateUrl('panel_catalogitems_list'));
 		}
 	}
@@ -210,16 +213,20 @@ class PanelCatalogItemController extends Controller
 		$item = $repositoryItem->findOneById($request->get('id'));
         $form = $this->createCreateForm($item);
         $form->handleRequest($request);
-       
 
-        if ($form) {   
+
+        if ($form->isValid()) {
         	$item->setComplete(1); 
 			$city = $request->get('city');
+            ldd($city);
 			$helper = $this->get('trazeo_base_helper');
 			$city_entity = $helper->getCities($city, 10, true);
-			if (count($city_entity) > 0) {
+			if ($city!='' && count($city_entity) > 0) {
 				$item->setCitys($city_entity[0]);
 			}
+            else{
+                $item->setCitys(null);
+            }
             $em->persist($item);
             $em->flush();
         }

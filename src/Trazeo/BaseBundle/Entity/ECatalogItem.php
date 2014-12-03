@@ -80,6 +80,7 @@ namespace Trazeo\BaseBundle\Entity;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\City", inversedBy="catalogitem")
+     * @ORM\JoinColumn(name="citys_id", referencedColumnName="id", nullable=true)
 	 */
 	 protected $citys;
 

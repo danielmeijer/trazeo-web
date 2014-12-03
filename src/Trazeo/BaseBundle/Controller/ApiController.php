@@ -324,12 +324,13 @@ class ApiController extends Controller {
 				$group->setRide($ride);
 				$em->persist($group);
 				$em->flush();
-				
-				$userextends = $group->getUserextendgroups()->toArray();
-				$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($user,'panel_ride_current', array('id' => $ride->getId()));	
+				//Añadimos las notificaciones por correo
+   				$userextends = $group->getUserextendgroups()->toArray();
 				$not = $this->container->get('sopinet_user_notification');
 				foreach($userextends as $userextend)
 				{
+
+                    $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($userextend,'panel_ride_current', array('id' => $ride->getId()));
 					$not->addNotification(
 							"ride.start",
 							"TrazeoBaseBundle:EGroup",
@@ -738,40 +739,22 @@ class ApiController extends Controller {
 	 	$userextends = $group->getUserextendgroups();
 	 			
 	 	$not = $this->container->get('sopinet_user_notification');
-	 	$reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
+	 	$repositoryUserExtend = $em->getRepository('TrazeoBaseBundle:UserExtend');
 
 	 	foreach($userextends as $userextend)
 	 	{
-			$find=false;
-				
-	 		//Notification just for parents with childrens on ride
-	 		$userChilds=$userextend->getChilds();
-	 		foreach ($userChilds as $child){
-	 			$data=$child->getId().'/'.$child->getNick();
-	 				
-	 			$query = $reEvent->createQueryBuilder('e')
-	 			->where('e.data LIKE :name AND e.ride = :ride AND e.action = :in')
-	 			->setParameters(array('name' => '%'.$child->getNick()."%", 'ride' => $ride, 'in'=> 'in'))
-	 			->orderBy('e.createdAt', 'ASC')
-	 			->getQuery();
-	 				
-	 			$child=$query->getResult();
-	 				
-	 			if(count($child)>0){
-					$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($userextend->getUser(),'panel_ride_resume', array('id' => $ride->getId()));	
-	 				$not->addNotification(
-	 						"ride.finish",
-	 						"TrazeoBaseBundle:EGroup",
-	 						$group->getId(),
-	 						$url,
-	 						$userextend->getUser(),
-	 						null,
-	 						$this->generateUrl('panel_ride_current', array('id' => $ride->getId()))
-	 					);
-	 				break 1;
-	 			}
-	 					
-	 		}
+            if($repositoryUserExtend->hasChildOnRide($userextend,$ride)){
+                $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($userextend->getUser(),'panel_ride_resume', array('id' => $ride->getId()));
+                $not->addNotification(
+                    "ride.finish",
+                    "TrazeoBaseBundle:EGroup",
+                    $group->getId(),
+                    $url,
+                    $userextend->getUser(),
+                    null,
+                    $this->generateUrl('panel_ride_current', array('id' => $ride->getId()))
+                );
+            }
 	 	}
 	 		
 
@@ -905,11 +888,13 @@ class ApiController extends Controller {
 		return $this->get('fos_rest.view_handler')->handle($view);
 	}
 
-	/**
+
+    /**
 	 * Crea un nuevo mensaje en el TimeLine (Muro) del Grupo
 	 * 
 	 * @POST("/api/group/timeline/notification")
 	 * @param Request $request
+     * Deprecated
 	 */
 	public function addNotificationAction(Request $request) {
 	   	$em = $this->getDoctrine()->getManager();
@@ -1793,4 +1778,27 @@ class ApiController extends Controller {
         return $this->get('fos_rest.view_handler')->handle($view);
     }
 
+    /**
+     * Método que devuelve una url de autologin a la ruta indicada
+     * @POST("/api/auto/url")
+     */
+    public function getAutoUrlAction(Request $request){
+        $em = $this->getDoctrine()->getEntityManager();
+        $user = $this->checkPrivateAccess($request);
+        if( $user == false || $user == null ){
+            $view = View::create()
+                ->setStatusCode(200)
+                ->setData($this->msgDenied());
+
+            return $this->get('fos_rest.view_handler')->handle($view);
+        }
+        $route=$request->get('route');
+        $parameters=$request->get('parameters');
+        $url=$this->container->getParameter('base_url').$this->get('trazeo_base_helper')->getAutoLoginUrl($user,$route,$parameters);
+
+        $view = View::create()
+            ->setStatusCode(200)
+            ->setData($this->doOK($url));
+        return $this->get('fos_rest.view_handler')->handle($view);
+    }
 }

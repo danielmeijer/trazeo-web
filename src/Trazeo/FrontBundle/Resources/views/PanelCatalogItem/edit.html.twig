@@ -8,7 +8,7 @@
 		</br>
 
             <div id="prefetch">
-                {{"Group.new.locality"|trans}}: <input name="city" class="typeahead form-control" type="text" placeholder="Localidad" value="{% if app.user.userextend.city.nameUtf8 is defined %}{{ app.user.userextend.city.nameUtf8 }}{% endif %}">
+                {{"Group.new.locality"|trans}}: <input name="city" class="typeahead form-control" type="text" placeholder="Localidad" value="{% if item.citys.nameUtf8 is defined %}{{ item.citys.nameUtf8 }}{% endif %}">
             </div>
 			{% include 'SopinetUploadMagicBundle:Upload:simple.html.twig'
 								  	with {
@@ -37,7 +37,7 @@
 	{{ parent() }}
 	{% include 'SopinetUploadMagicBundle:Upload:simple_js.html.twig' %}
 	{% include 'SopinetUploadMagicBundle:Upload:simple_blockjs.html.twig' 
-		with {'name': 'image', 'type': 'gallery', 'files': file, 'limit': 1, 'entity': 'Trazeo_BaseBundle_File'} 
+		with {'name': 'image', 'type': 'gallery', 'files': file, 'limit': 1, 'entity': 'Trazeo_BaseBundle_File', 'preview': true}
 	%}
     <script> 
     		

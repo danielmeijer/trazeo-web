@@ -47,9 +47,17 @@
 		<div class="col-md-4"><br/>
 			<a class="btn-xs btn-warning historical" href="{{ path('panel_point_historical') }}">
 				<i class="fa fa-bar-chart-o "></i>&nbsp;{{ 'Points.historical.button'|trans }}
-			</a>&nbsp;		
+			</a>&nbsp;
 		</div>
 	</div>
+    <div class="row col-md-12">
+        <select class="form-control change-city col-md-3 pull-left" name="city">
+            <option value="all"> - {{ "City.all"|trans }} - </option>
+            {% for c in cities %}
+                <option {% if city is not null and city.id == c.id %} selected="selected" {% endif %}value="{{ c.nameUtf8 }}">{{ c.nameUtf8 }}</option>
+            {% endfor %}
+        </select>
+    </div>
 	{% include 'TrazeoFrontBundle:PanelPoint:_howto_modal.html.twig' %}
 	{% include 'TrazeoFrontBundle:PanelPoint:_exchange_modal.html.twig'%}
 	{% include 'TrazeoFrontBundle:PanelPoint:_exchangeFail_modal.html.twig'%}
@@ -76,5 +84,12 @@
 		$('.exchange').click(function(){sessionStorage.exchange=true});
 	</script>
 	{% include 'TrazeoFrontBundle:PanelPoint:_ajax_exchange.html.twig' %}
-
+    {% include '@TrazeoFront/PanelRoutes/_filter.js.twig' %}
+    <script>
+        filterBy('data-city',$( "select option:selected" ).val());//filtramos con el valor inicial
+        $( ".change-city" ).change(function() {
+            //$("#filter-city").submit();
+            filterBy('data-city',$( "select option:selected" ).val());
+        });
+    </script>
 {% endblock %}

@@ -44,15 +44,20 @@ class PanelPointController extends Controller
            );
         $gamification = $this->container->get('sopinet_gamification');
         $points=$gamification->getUserPoints();
+        $citys=[];
         foreach ($oferts as $ofert) {
             $files[]=$ofert->getFile()->getValues()[0];
+            if($ofert->getCitys()!=null && !in_array($ofert->getCitys(),$citys))$citys[]=$ofert->getCitys();
+
         }
         return array(
             'user' => $user,
+            'city' => $user->getCity(),
             'points' => $points,
             'oferts' => $oferts,
             'files' => $files,
-            'exchange'=> $exchange
+            'exchange'=> $exchange,
+            'cities'=>$citys
         );
     }
 
@@ -72,6 +77,11 @@ class PanelPointController extends Controller
              array('complete'=> '1'), 
              array('position' => 'ASC')
            );
+        $citys=[];
+        foreach($oferts as $ofert){
+            if(!in_array($ofert->getCitys(),$citys))$citys[]=$ofert->getCitys();
+        }
+
         $gamification = $this->container->get('sopinet_gamification');
         $points=$gamification->getUserPoints();
         foreach ($oferts as $ofert) {
@@ -79,10 +89,12 @@ class PanelPointController extends Controller
         }
         return array(
             'user' => $user,
+            'city' => $user->getCity(),
             'points' => $points,
             'oferts' => $oferts,
             'files' => $files,
-            'exchange'=> $exchange
+            'exchange'=> $exchange,
+            'cities'=> $citys
         );
     }
     /**
