@@ -17,7 +17,7 @@ class DistanceMeasurer {
 	 *
 	 * @param Child $child
 	 * @param Ride $ride
-	 * @return number: Distance in meters
+	 * return number: Distance in meters
 	 */
 	function getChildDistance($child, $ride) {
 		$em = $this->_container->get("doctrine.orm.entity_manager");
@@ -41,7 +41,7 @@ class DistanceMeasurer {
 	 *
 	 * @param Child $child
 	 * @param Ride $ride
-	 * @return multiple:All points between in and outs of the child
+	 * return multiple:All points between in and outs of the child
 	 */
 	private function getChildSegments($child,$ride) {
 		$em = $this->_container->get("doctrine.orm.entity_manager");
@@ -76,7 +76,7 @@ class DistanceMeasurer {
 	 * @param Id $in
 	 * @param Id $out
 	 * @param Ride $ride
-	 * @return multiple:Points between events
+	 * return multiple:Points between events
 	 */
 	private function getPointsEventsBetween($in,$out,$ride) {
 		$em = $this->_container->get("doctrine.orm.entity_manager");
@@ -96,7 +96,7 @@ class DistanceMeasurer {
 	/**
 	 * @param ESimplePoint $point1
 	 * @param ESimplePoint $point2
-	 * @retun number:distance between two points(has an error about + o – 3 meters)
+	 * return number:distance between two points(has an error about + o – 3 meters)
 	 */
 	private function getDistance($point1,$point2) {
 		$R = 6371; // km (change this constant to get miles)

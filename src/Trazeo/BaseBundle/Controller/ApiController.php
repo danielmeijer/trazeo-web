@@ -1104,7 +1104,7 @@ class ApiController extends Controller {
             ->setFromName('Trazeo')
             ->addTo($newUser->getEmail())
             ->setSubject("Bienvenido a Trazeo.")
-            ->setHtml($this->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:newUser.html.twig', array()));
+            ->setHtml($this->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:newUserApp.html.twig', array()));
 
 
         $result = $dispatcher->send($message);

@@ -6,8 +6,37 @@ Admin:
 
 Btn:
     back: volver
+    edit: editar
     success: Guardar
 
+Catalog:
+    button:
+        back: volver
+
+    index:
+        description: 'Panel de administración del catálogo. Aquí se pueden editar todos los premios.'
+        title: 'Panel de administración del catálogo'
+
+    new:
+        title: 'Introducir un nuevo item en el catálogo'
+
+CatalogItem:
+    description: 'Catálogo de items'
+
+    help:
+        company: 'Empresa u organismo que ofrece el premio'
+        description: 'Texto de descripción del premio'
+        link: 'Enlace a la ficha de la empresa y la oferta'
+        points: 'Puntos necesarios para canjear el premio'
+        position: 'Posición en que aparece al visualizar en el catálogo'
+        title: 'Línea de título del premio'
+
+    link: Link
+    points: puntos
+    position: posición
+    title: Titulo
+
+CatalogItemcompany: Compañia
 ChangeVisibility: 'Cambiar visibilidad'
 
 Children:
@@ -24,10 +53,9 @@ Children:
         title: 'Editar datos de niño/a'
 
     empty: 'Aún no has registrado a ninguno de tus niños/as'
-
-    gender:
-        boy: Niño
-        girl: Niña
+    gender: Genero
+    gender.boy: Niño
+    gender.girl: Niña
 
     help:
         datebirth: 'Fecha de nacimiento'
@@ -36,11 +64,11 @@ Children:
         gender: 'Género, Niño/a'
         groups: 'Asignar a un grupo de pedibús'
         nick: 'Nombre del niño/a'
+        scholl: 'Centro educativo'
         sex: Género
         userextend: 'Tutores/as del niño/a'
         visibility: Visibilidad
-        scholl: 'Centro educativo'
-        
+
     index:
         acept: Aceptar
         asigned: 'Grupos en los que está inscrito'
@@ -71,8 +99,12 @@ Children:
         title: 'Registrar Niño/a'
 
     nick: 'Nombre del niño/a'
-    scholl: 'Centro educativo'
     register: 'Registrar mis niños/as en Trazeo'
+    scholl: 'Centro educativo'
+
+    show:
+        description: 'Datos del niño'
+        title: 'Datos del niño'
 
     visibility:
         disabled: Privado
@@ -88,6 +120,9 @@ Confirmation:
     question: '¿Estás seguro?'
     yes: Sí
 
+Create: Crear
+Delete: Borrar
+
 DeleteAccount:
     description: 'Si deseas eliminar tu perfil ahora, ponte en contacto con nosotros a través del email hola@trazeo.es y procesaremos tu petición.'
     title: 'Eliminar cuenta'
@@ -95,14 +130,38 @@ DeleteAccount:
 Description: 'La aplicación web / móvil para recuperar el camino al cole a pie'
 DisJoin: Desvincularme
 Email: 'Correo electrónico'
+España: España
+
+Exchange:
+    button:
+        code: 'Canjea tu código'
+        exchange: 'Canjear oferta'
+        moreinfo: 'Más información'
+
+    description: 'Canjea tu puntos por premios'
+
+    help:
+        code: 'Introduce tu código'
+
+    title: 'Canjea tus puntos'
 
 Form:
     profile:
         pass: Contraseña
         repeatpass: 'Confirmar contraseña'
 
+Group:
+    new:
+        locality: Localidad
+
+    school: 'Centro educativo'
+
 Groups:
-    route: Ruta
+    access:
+        accept: 'Aceptar su incorporación'
+        deny: 'Denegar su incorporación'
+        request: 'ha solicitado unirse a tu grupo '
+
     data:
         activity: Actividad
         chat: 'Muro del grupo de pedibús'
@@ -119,20 +178,19 @@ Groups:
     empty: 'Únete a uno de los grupo de usuarios disponibles o crea uno nuevo'
 
     help:
+        city: 'Ciudad del grupo'
         name: 'Rellena aquí el nombre del grupo que aparecerá en los listados. Trata de poner un nombre significativo, para que sea fácil de encontrar por las personas que lo busquen. Poner el nombre del colegio destino y el punto de salida puede ser buena idea'
         name2: '“Privado” las personas que quieran unirse te enviarán una solicitud para unirse que tendrás que aprobar. Recomendable para la mayoría de los grupos. "Público" cualquiera puede unirse de forma sencilla. "Oculto", no aparecerá en los listados. Sólo lo verás tú y las personas a las que invites'
         route: 'Asignar una ruta a este grupo'
-        city: 'Ciudad del grupo'
         school: 'Centro educativo'
+        shool: 'Centro educativo'
+
     index:
         description: 'Listado completo de todos los grupos de pedibús existentes y visibles en la plataforma'
         list: 'Listado de grupos de pedibús creados en Trazeo'
         subtitle: 'Vincula tu usuario con un grupo de pedibús y contacta con otros padres desde el muro'
         title: 'Sugerencia de grupos de pedibús'
-    access:
-        request: 'ha solicitado unirse a tu grupo '
-        accept: 'Aceptar su incorporación'
-        deny: 'Denegar su incorporación'
+
     invite:
         accept: 'Acepto la invitación'
         deny: 'Rechazo la invitación'
@@ -148,31 +206,60 @@ Groups:
         title: 'Crear nuevo grupo de pedibús'
 
     newRouteModal:
-        title: 'Publicar ruta del grupo'
         body1: 'Publicar la ruta que sigue habitualmente este grupo no es obligatorio. Sin embargo, si el grupo es público, ayudará a que otros usuarios cercanos se sientan interesados a unirse a él.'
         body2: 'Puedes crear y publicar tu ruta ahora, o hacerlo en cualquier momento desde la pantalla “Mis grupos”.'
         body3: 'Y no olvides que cuánto más explícito sea el nombre del grupo, más fácil será que otros usuarios de la zona que quieran organizarse contigo se unan. Por ejemplo, puedes usar el nombre del colegio y el punto de partida.'
-        now: Publicar ruta ahora
-        later: Lo haré en otro momento
+        later: 'Lo haré en otro momento'
+        now: 'Publicar ruta ahora'
+        title: 'Publicar ruta del grupo'
 
     noMember: 'Debes formar parte del grupo'
     noRoute: 'Ninguna ruta asignada'
+    route: Ruta
 
-    visibility:
-        hidden: Oculto
-        private: Privado
-        public: Público
+    show:
+        description: 'Datos del grupo'
+        title: 'Datos relevantes sobre el grupo de pedibus'
+
+    visibility: Visibilidad
+    visibility.hidden: Oculto
+    visibility.private: Privado
+    visibility.public: Público
+
+Help:
+    button:
+        createChild: 'Los niños que tienes registrados en Trazeo.  En el botón “Registrar niño/a” podrás dar de alta a uno, y en el botón “Listado de niños/as” podrás ver sus datos. Recuerda que tienen que estar vinculados a tu grupo para que aparezcan en el listado de la aplicación móvil del adulto que acompaña al pedibus. Si ya están registrados cuando te unas, se vincularán automáticamente. Si los registras después de unirte a un grupo, tendrás que vincularlos manualmente en el muro de éste'
+        createGroup: Help.button.createGroup
+        editChild: 'En esta pantalla tienes que registrar a tus hijos para vincularlos a tu usuario. Sus datos son privados. Sólo podrás verlos tú, y el adulto que acompañe al grupo cada día cuando acceda al listado de niños que participan (Sólo verá el nombre). Recuerda que para que tus hijos aparezcan en este listado, además de registrarlos aquí, tendrás que vincularlos a un grupo al que tú pertenezcas. Desde ese momento, cada vez que participeis, empezais a ganar puntos por caminar'
+        editGroup: 'Rellena todos los campos para que tu grupo sea fácil de encontrar por el resto de participantes: Sólo tú como administrador puedes modificar estos datos del grupo. Rellenar el país, municipio y centro educativo permitirá filtrar por estos datos en el listado de grupos'
+        group: 'Los grupos de pedibus a los que estáis vinculados tus hijos y tú aparecen aquí. En los grupos en los que estás vinculado, puedes comunicarte con el resto de familias participantes a través del muro, invitar a otros a unirse, y ganar puntos cada vez que participais en el pedibus. Cuando tus hijos están vinculados a un grupo, aparecen en el listado de niños participantes que le aparece en la aplicación móvil al adulto que acompaña al grupo. Si aún no estás vinculado a ningún grupo, busca en el listado de grupos disponibles y únete pulsando el botón “Unirme al grupo de pedibus", o bien crea tu propio grupo'
+        groupList: 'Busca grupos activos de pedibus en tu ciudad y en tu centro educativo, y únete a uno de ellos. En los grupos públicos (candado verde) tus hijos y tú os incorporaréis automáticamente al pulsar sobre “Unirme a este grupo”. En los grupos privados (candado rojo), al pulsar el botón le enviarás una solicitud al administrador del grupo para que apruebe vuestra incorporación'
+        historical: 'Aquí puedes ver las acciones por las que has recibido puntos'
+        newChild: 'En esta pantalla tienes que registrar a tus hijos para vincularlos a tu usuario. Sus datos son privados. Sólo podrás verlos tú, y el adulto que acompañe al grupo cada día cuando acceda al listado de niños que participan (Sólo verá el nombre). Recuerda que para que tus hijos aparezcan en este listado, además de registrarlos aquí, tendrás que vincularlos a un grupo al que tú pertenezcas. Desde ese momento, cada vez que participeis, empezais a ganar puntos por caminar'
+        newGroup: 'Rellena todos los campos para que tu grupo sea fácil de encontrar por el resto de participantes: Sólo tú como administrador puedes modificar estos datos del grupo. Rellenar el país, municipio y centro educativo permitirá filtrar por estos datos en el listado de grupos'
+        points: 'Trazeo premia a las familias que caminan. Cada vez que tus hijos participan en el pedibus o que tú acompañas al grupo consigues puntos que se acumulan en tu cuenta y que puedes cambiar entrando en nuestro catálogo a través del botón “¿Quieres canjear tus puntos?”. Si aún no hay premios disponibles en tu ciudad, también puedes traspasar tus puntos semanalmente a CiviClub, el club de las personas cívicas, y canjearlos en su catálogo'
+        pointsList: 'Pulsando “¿Quieres canjear tus puntos?” puedes ver cómo conseguir puntos y cómo canjearlos en nuestro catálogo. Pulsando en “Consigue CIVIS” puedes ver cómo traspasar los puntos de Trazeo a CiviClub para canjearlos en su catálogo. Si te hemos proporcionado un código con puntos desde Trazeo, intróducelo junto al botón “Canjea tu código” y pulsa el botón para que se sumen los puntos a tu cuenta. Si quieres saber las acciones que te han hecho ganar puntos, pulsa en “Histórico de puntos”'
+        timeline: 'Este es el muro del grupo de pedibus. Los mensajes que publiques le llegarán al resto de participantes si así lo han configurado. Utilízalo con sentido común, es el espacio para organizar el funcionamiento regular del grupo y para comunicaros entre los participantes. En este espacio puedes ver los niños que tienes vinculados a este grupo y añadirlos si no están dados de alta aún. También puedes ver la ruta que hace el pedibus y los nicks del resto de familias participantes, y puedes invitar a nuevas familias a unirse enviándoles un correo electrónico'
+
+Home:
+    modal:
+        app:
+            close: Continuar
+            explain1: 'Bienvenido a Trazeo Caminos Escolares.</br> La herramienta se compone de una web y una aplicación móvil (disponible para Android).</br> La aplicación móvil sólo es necesario que la instales si vas a ser algún día el acompañante adulto de un grupo de pedibus.</br> Puedes descargarla en este enlace'
+            explain2: '</br>o en cualquier otro momento desde <a href="www.trazeo.es">www.trazeo.es</a>.</br>Pulsa en Continuar para seguir con el tutorial de bienvenida de la web.</br> Recibirás un correo con instrucciones para sumar tus primeros 50 puntos.</br> Pregúntanos si tienes alguna duda, y a caminar!'
+            link: 'Descargar ya'
+            title: 'Descarga la app de trazeo'
 
 Join: 'Unirme a este grupo de pedibús'
 
 Login:
+    email: 'Correo electrónico'
     forgot: '¿Olvidaste la contraseña?'
     new: '¿No tienes cuenta?'
     password: Contraseña
     signin: Entrar
     title: 'Inicio de sesión'
     username: 'Correo electrónico'
-    email: 'Correo electrónico'
 
 Menu:
     children: Niños/as
@@ -184,21 +271,20 @@ Menu:
         child: Niños/as
         group: Grupos
         home: Inicio
-        route: Rutas
         point: Puntos
+        route: Rutas
 
 Navbar:
     logout: 'Cerrar sesión'
     profile: Perfil
     settings: Configuración
 
+Niña: Niña
+Niño: Niño
+No: No
 NoAccess: 'Sin acceso'
 
 Notifications:
-    modal:
-        title: 'Tienes una notificación importante:'
-        dismiss: 'Ir a la notificación'
-        accept: 'Ir a la notificación'
     action:
         description:
             child:
@@ -228,7 +314,7 @@ Notifications:
                 start: 'El paseo para el grupo %0 ha comenzado.'
 
             timeline:
-                newFromMonitor: "%0 ha escrito el siguiente mensaje en el muro del grupo %2: %1"
+                newFromMonitor: '%0 ha escrito el siguiente mensaje en el muro del grupo %2: %1'
 
         title:
             child:
@@ -263,11 +349,103 @@ Notifications:
     description: 'Puedes consultar y revisar todas las notificaciones que te han sido enviadas como usuario de la plataforma'
     link: 'Consultar el historial de notificaciones'
     list: 'Historial de todas las notificaciones que has recibido'
+
+    modal:
+        accept: 'Ir a la notificación'
+        close: 'Cerrar'
+        dismiss: 'Ir a la notificación'
+        title: 'Tienes una notificación importante:'
+
     title: 'Listado de notificaciones'
 
 Options:
     delete: Eliminar
     edit: Editar
+
+Panel:
+    title: 'Panel principal'
+
+Points:
+    action:
+        Child_On_Ride: 'Porque tu hijo 0 participo en un paseo'
+        Create_Group: 'Por crear tu primer grupo'
+        Create_User: 'Por canjear el código de bienvenida 0'
+        Distance_Points: 'Porque tu hijo 0 ha recorrido 1m'
+        Manage_Ride: 'Por hacer de acompañante en 1 paseo/s'
+
+    button:
+        exchange: 'Canjear puntos'
+        moreinfo: 'Más información'
+
+    description: 'En este apartado puedes consultar toda la información referente a los puntos que has obtenido en Trazeo'
+    exchange: '¿Quieres canjear tus puntos?'
+    explanation: 'Gana puntos en Trazeo participando en el pedibus y animando a que otros lo hagan'
+    got: tienes
+
+    historical:
+        button: 'Histórico de puntos'
+        description: 'Listado de las acciones que te han reportado puntos'
+        distance: 'kilómetros con Trazeo, que se convierten en'
+        exchange: canjeables
+        exchange_plural: canjeables
+        explanation: 'Estos son los puntos que has conseguido hasta el momento'
+        title: 'Histórico de puntos'
+        walk: 'ha caminado'
+
+    index:
+        howto: '¿Cómo funciona?'
+        remains: 'aún por canjear'
+        total: 'totales conseguidos'
+
+    internet:
+        offerts: 'Catálogo de internet'
+
+    local:
+        offerts: 'Catálogo de ofertas locales'
+
+    mine: 'Mis puntos'
+
+    modal:
+        civi:
+            button: 'Consigue CIVIS'
+
+            explain:
+                first: '<p>Si eres socio de CiviClub, los puntos que acumulas en tu cuenta de Trazeo, se cargan también de forma automática en tu cuenta de CiviClub cada lunes. Para ello es muy <b>importante que la dirección de correo con la que te has registrado en Trazeo sea la misma que la que usaste para el registro en CiviClub.</b></p><p> Ten en cuenta que los puntos que canjees en CiviClub no se restan en Trazeo. Las dos webs los sumamos independientemente para que tengas el doble de oportunidades de ver recompensado tu compromiso con el caminar.</p>'
+
+            header: '<p>En CiviClub.org, el club de las personas cívicas, quieren que cada vez más gente adopte actitudes que impacten positivamente en nuestro entorno. Y por ello, si eres socio, cuando hagas algo bueno podrás ganar Civis para cambiar por ofertas y regalos de ocio y cultura en su catálogo.</p> <p>Contribuir a que más niños y niñas caminen cada día por nuestras calles es una acción que tiene un impacto positivo en la salud de los más pequeños y en el medio ambiente de tu ciudad, por lo que los puntos que acumules haciendo uso de Trazeo también se te cargarán en tu cuenta en Civiclub.org. Así tienes el doble de oportunidades de canjearlos.</p>'
+            howto: 'Consigue CIVIS'
+
+            question:
+                first: '¿Cómo funciona? </br>'
+                second: '¿Quiéres conocer más sobre <a href="http://www.civiclub.org">CiviClub.org</a>?'
+
+        close: Cerrar
+
+        exchange:
+            body: 'Ya hemos recibido tu solicitud para canjear tus puntos en Trazeo por este premio. Te mandaremos en las próximas horas un email con instrucciones detalladas para que lo disfrutes. ¡Gracias por hacer que tus hijos caminen con Trazeo!'
+            title: 'Has solicitado canjear un premio'
+
+        exchangeFail:
+            body: 'Vaya, aún te faltan algunos puntos para poder canjear este premio. Si tus hijos caminan unos días más, podrás hacerlo pronto.'
+            title: 'No tienes suficientes puntos para este premio.'
+
+        explain:
+            first: '<p>Cada una de las acciones que realizas en Trazeo te permite sumar puntos en tu cuenta:</p><ul><li type="circle">- Cada día que uno de tus hijos camine con Trazeo, sumarás 1 punto. ¡Anímate a que lo hagan a diario!</li><li type="circle">- Además, por cada kilómetro que uno de tus hijos camine con Trazeo, recibirás 1 punto más (con un máximo de 25 puntos por semana).</li><li type="circle">- Y si eres el acompañante o el monitor de un grupo, cada vez que guíes el paseo con la aplicación móvil recibirás 1 punto (con un máximo de 50 puntos al mes).</li></ul><p>Además, cuando lleves a cabo algunas acciones o cuando colabores con Trazeo, te enviaremos un código que te permitirá sumar puntos directamente. Sólo tienes que introducirlo en el espacio “Canjear Cupón” que hay en la pantalla de “Mis puntos” y pulsar el botón.</p> <p>Y recuerda, que cada una de estas acciones también te dan CIVIS en nuestra web amiga Civiclub.org, el club de las personas cívicas (mira las condiciones <a class="modalchange" data-toggle="modal" data-target="#civiModal">aquí</a>)</p>'
+            second: 'En el catálogo de esta misma página tienes a tu disposición un listado con los premios y descuentos que puedes canjear en Trazeo por los puntos conseguidos. Elige el que más te guste a ti o a tus hijos y pulsa sobre el botón “Canjear”. Te mandaremos información sobre cómo recibir tu premio. Y recuerda, esta lista seguirá creciendo.'
+            third: 'Si necesitas más información, o si eres una empresa u organismo y quieres ofrecer premios y descuentos en Trazeo, puedes ponerte en contacto con nosotros en hola@trazeo.es '
+
+        header: 'En Trazeo queremos premiar tu compromiso con los hábitos saludables y la sostenibilidad permitiéndote sumar puntos en tu cuenta personal y canjearlos posteriormente por premios y descuentos que ofrecen nuestras empresas y organismos colaboradores.'
+        howto: 'Conseguir puntos en Trazeo'
+        mail: hola@trazeo.es
+
+        question:
+            first: '¿Cómo puedes sumar puntos en Trazeo?</br>'
+            second: '¿Cómo puedes canjear tus puntos en Trazeo?</br></br>'
+
+    name: puntos
+    name_plural: puntos
+    title: 'Mis puntos'
+    total: 'en total'
 
 Random:
     text_1: "Un niño que camina es un niño sano\nUna niña que camina es una niña sana"
@@ -322,6 +500,8 @@ Route:
         name: Nombre
         options: Opciones
 
+    description: 'Datos relevantes de la ruta'
+
     edit:
         description: 'Establece un nombre e indica a qué país y ciudad pertenece'
         title: 'Editar datos de ruta'
@@ -371,7 +551,9 @@ Route:
         creator: Autor
         description: 'Mapa y datos referentes a la ruta'
         distance: Distancia
+        edit: 'Editar ruta'
         end: 'Termina en'
+        group: Grupo
         groups: 'Grupos con esta ruta'
         map: 'Mapa de la ruta'
         owndescription: Descripción
@@ -379,13 +561,13 @@ Route:
         start: 'Empieza en'
         title: 'Ruta: %name%'
         unasigned: 'No ningún grupo con esta ruta asignada'
-        group: 'Grupo'
-        edit: 'Editar ruta'
 
 Settings:
     index:
         description: 'Personaliza tus avisos de notificaciones en la plataforma de trazeo'
         title: Notificaciones
+
+Si: Si
 
 Sponsors:
     current: Patrocinadores
@@ -393,9 +575,9 @@ Sponsors:
 Suggestion:
     access_groups: '¡Aún no estás en ningún grupo! Busca ahora un grupo en tu Localidad y únete a él.'
     complete_profile: 'Accede a tu Perfil y completa los campos de Ciudad y Nombre'
+    create_route: 'Este grupo no tiene ruta definida aun, haz click aquí para crear la ruta.'
     link_child: 'Accede al Muro de alguno de tus grupos para vincular a tus niños/as.'
     new_child: '¡Aún no has registrado a ningún/a niño/a! Haz click aquí para proceder al registro de tus niños en el sistema.'
-    create_route: 'Este grupo no tiene ruta definida aun, haz click aquí para crear la ruta.'
     no_school: 'en el perfil de tu hijo/a puede rellenar el “Centro Educativo” al que pertenece'
 
 Timeline:
@@ -454,14 +636,19 @@ Trans:
 
     title: 'Mensajes disponibles para ser traducidos (es-ES , Spanish - Spain)'
 
+Update: Actualizar
+
 'User account is disabled':
     '': 'Cuenta de usuario desactivada'
+
+User:
+    points: Puntos
 
 Userextend:
     help:
         groups: 'Grupos de los que quieres formar parte'
-        nick: 'Nombre de  usuario'
         mobile: 'Nº de movil, el monitor dispondrá de él para llamar en caso de necesidad'
+        nick: 'Nombre de  usuario'
 
     index:
         description: 'Administra tu datos de usuario en Trazeo'
@@ -483,7 +670,9 @@ change_password:
 form:
     current_password: 'Contraseña actual:'
     email: 'Email:'
+    email_confirmation: 'Confirmar email'
     group_name: 'Nombre de grupo:'
+    label_roles: 'Roles'
     new_password: 'Nueva contraseña:'
     new_password_confirmation: 'Repita la contraseña:'
     password: 'Contraseña:'
@@ -500,8 +689,9 @@ group:
         updated: 'El grupo ha sido actualizado'
 
     new:
+        locality: Localidad
         submit: 'Crear grupo'
-        locality: 'Localidad'
+
     show:
         name: 'Nombre de grupo'
 
@@ -512,19 +702,22 @@ layout:
     register: Registrar
 
 preference:
+    civiclub_conexion:
+        description: '¿Quieres que tus puntos se envíen a CiviClub?</br></br><span style="font-size:0.75em;">CiviClub.org es un club de personas cívicas donde los socios ganan puntos por tener un estilo de vida que fomente la solidaridad, los hábitos saludables y la sostenibilidad.</br> Si ya eres socio de CiviClub y quieres que los puntos que sumas con Trazeo también se conviertan en Civis, selecciona Si en la opción de abajo y enviaremos todos tus puntos acumulados en la semana a CiviClub todos los lunes.</br> Y si aún no eres usuario de CiviClub, selecciona la opción Si y date de alta en este link con el mismo correo con el que te hayas registrado en Trazeo: <a href="https://www.civiclub.org/es/register/?utm_source=trazeo&utm_campaign=activacion">Regístrate en CiviClub.org</a>?</span></br></br>'
+        name: 'Conexión con CiviClub'
+
+        value:
+            no: no
+            yes: si
+
     notification_email:
         description: 'Marca esta casilla si quieres recibir notificaciones por Email'
         name: 'Notificaciones por email'
+
         value:
             important: 'Solo los importantes'
             never: Ninguno
             now: Todos
-    civiclub_conexion:
-        name: 'Conexión con CiviClub'
-        description: '¿Quieres que tus puntos se envíen a CiviClub?</br></br><span style="font-size:0.75em;">CiviClub.org es un club de personas cívicas donde los socios ganan puntos por tener un estilo de vida que fomente la solidaridad, los hábitos saludables y la sostenibilidad.</br> Si ya eres socio de CiviClub y quieres que los puntos que sumas con Trazeo también se conviertan en Civis, selecciona Si en la opción de abajo y enviaremos todos tus puntos acumulados en la semana a CiviClub todos los lunes.</br> Y si aún no eres usuario de CiviClub, selecciona la opción Si y date de alta en este link con el mismo correo con el que te hayas registrado en Trazeo: <a href="https://www.civiclub.org/es/register/?utm_source=trazeo&utm_campaign=activacion">Regístrate en CiviClub.org</a>?</span></br></br>'
-        value:
-            yes: 'si'
-            no: 'no'
 
 profile:
     edit:
@@ -577,106 +770,3 @@ security:
         remember_me: Recordar
         submit: Entrar
         username: 'Nombre de usuario:'
-
-Points:
-    title: 'Mis puntos'
-    description: 'En este apartado puedes consultar toda la información referente a los puntos que has obtenido en Trazeo'
-    mine: 'Mis puntos'
-    explanation: 'Gana puntos en Trazeo participando en el pedibus y animando a que otros lo hagan'
-    name: 'puntos'
-    name_plural: 'puntos'
-    total: 'en total'   
-    got: 'tienes'
-    exchange: '¿Quieres canjear tus puntos?'
-    index:
-        howto: '¿Cómo funciona?'
-        remains: 'aún por canjear'
-        total: 'totales conseguidos'
-    historical: 
-        button: 'Histórico de puntos'
-        explanation: 'Estos son los puntos que has conseguido hasta el momento'
-        walk: 'ha caminado'
-        distance: 'kilómetros con Trazeo, que se convierten en'
-        exchange: 'canjeables'
-        exchange_plural: 'canjeables'
-        description: 'Listado de las acciones que te han reportado puntos'
-        title: 'Histórico de puntos'
-    modal:
-        close: 'Cerrar'
-        howto: 'Conseguir puntos en Trazeo'
-        civi:
-            howto: 'Consigue CIVIS'
-            button: 'Consigue CIVIS'
-            header: '<p>En CiviClub.org, el club de las personas cívicas, quieren que cada vez más gente adopte actitudes que impacten positivamente en nuestro entorno. Y por ello, si eres socio, cuando hagas algo bueno podrás ganar Civis para cambiar por ofertas y regalos de ocio y cultura en su catálogo.</p> <p>Contribuir a que más niños y niñas caminen cada día por nuestras calles es una acción que tiene un impacto positivo en la salud de los más pequeños y en el medio ambiente de tu ciudad, por lo que los puntos que acumules haciendo uso de Trazeo también se te cargarán en tu cuenta en Civiclub.org. Así tienes el doble de oportunidades de canjearlos.</p>'
-            explain:
-                first: '<p>Si eres socio de CiviClub, los puntos que acumulas en tu cuenta de Trazeo, se cargan también de forma automática en tu cuenta de CiviClub cada lunes. Para ello es muy <b>importante que la dirección de correo con la que te has registrado en Trazeo sea la misma que la que usaste para el registro en CiviClub.</b></p><p> Ten en cuenta que los puntos que canjees en CiviClub no se restan en Trazeo. Las dos webs los sumamos independientemente para que tengas el doble de oportunidades de ver recompensado tu compromiso con el caminar.</p>'
-            question:
-                first: '¿Cómo funciona? </br>'
-                second: '¿Quiéres conocer más sobre <a href="http://www.civiclub.org">CiviClub.org</a>?'
-        header: 'En Trazeo queremos premiar tu compromiso con los hábitos saludables y la sostenibilidad permitiéndote sumar puntos en tu cuenta personal y canjearlos posteriormente por premios y descuentos que ofrecen nuestras empresas y organismos colaboradores.'
-        explain:
-            first: '<p>Cada una de las acciones que realizas en Trazeo te permite sumar puntos en tu cuenta:</p><ul><li type="circle">- Cada día que uno de tus hijos camine con Trazeo, sumarás 1 punto. ¡Anímate a que lo hagan a diario!</li><li type="circle">- Además, por cada kilómetro que uno de tus hijos camine con Trazeo, recibirás 1 punto más (con un máximo de 25 puntos por semana).</li><li type="circle">- Y si eres el acompañante o el monitor de un grupo, cada vez que guíes el paseo con la aplicación móvil recibirás 1 punto (con un máximo de 50 puntos al mes).</li></ul><p>Además, cuando lleves a cabo algunas acciones o cuando colabores con Trazeo, te enviaremos un código que te permitirá sumar puntos directamente. Sólo tienes que introducirlo en el espacio “Canjear Cupón” que hay en la pantalla de “Mis puntos” y pulsar el botón.</p> <p>Y recuerda, que cada una de estas acciones también te dan CIVIS en nuestra web amiga Civiclub.org, el club de las personas cívicas (mira las condiciones <a class="modalchange" data-toggle="modal" data-target="#civiModal">aquí</a>)</p>'
-            second: 'En el catálogo de esta misma página tienes a tu disposición un listado con los premios y descuentos que puedes canjear en Trazeo por los puntos conseguidos. Elige el que más te guste a ti o a tus hijos y pulsa sobre el botón “Canjear”. Te mandaremos información sobre cómo recibir tu premio. Y recuerda, esta lista seguirá creciendo.'
-            third: 'Si necesitas más información, o si eres una empresa u organismo y quieres ofrecer premios y descuentos en Trazeo, puedes ponerte en contacto con nosotros en hola@trazeo.es '
-        question:
-            first: '¿Cómo puedes sumar puntos en Trazeo?</br>'
-            second: '¿Cómo puedes canjear tus puntos en Trazeo?</br></br>'
-        mail: hola@trazeo.es
-        exchange:
-            title: 'Has solicitado canjear un premio'
-            body: 'Ya hemos recibido tu solicitud para canjear tus puntos en Trazeo por este premio. Te mandaremos en las próximas horas un email con instrucciones detalladas para que lo disfrutes. ¡Gracias por hacer que tus hijos caminen con Trazeo!'
-        exchangeFail:
-            title:  "No tienes suficientes puntos para este premio."
-            body: "Vaya, aún te faltan algunos puntos para poder canjear este premio. Si tus hijos caminan unos días más, podrás hacerlo pronto."
-    action:
-        Create_Group: 'Por crear tu primer grupo'
-        Create_User: 'Por canjear el código de bienvenida 0'
-        Child_On_Ride: 'Porque tu hijo 0 participo en un paseo'
-        Distance_Points: 'Porque tu hijo 0 ha recorrido 1m'
-        Manage_Ride:  'Por hacer de acompañante en 1 paseo/s'
-    button:
-        exchange: 'Canjear puntos'
-        moreinfo: 'Más información'
-Exchange:
-    title: 'Canjea tus puntos'
-    description: 'Canjea tu puntos por premios'
-    button:
-        exchange: 'Canjear oferta'
-        code: 'Canjea tu código'
-        moreinfo: 'Más información'
-    help:
-        code: 'Introduce tu código'
-Catalog:
-    index:
-        title: 'Panel de administración del catálogo'
-        description: 'Panel de administración del catálogo. Aquí se pueden editar todos los premios.'
-CatalogItem:
-    help:
-        points: 'Puntos necesarios para canjear el premio'
-        position: 'Posición en que aparece al visualizar en el catálogo'
-        company: 'Empresa u organismo que ofrece el premio'
-        title: 'Línea de título del premio'
-        description: 'Texto de descripción del premio'
-        link: 'Enlace a la ficha de la empresa y la oferta'
-Help:
-    button:
-        editChild: 'En esta pantalla tienes que registrar a tus hijos para vincularlos a tu usuario. Sus datos son privados. Sólo podrás verlos tú, y el adulto que acompañe al grupo cada día cuando acceda al listado de niños que participan (Sólo verá el nombre). Recuerda que para que tus hijos aparezcan en este listado, además de registrarlos aquí, tendrás que vincularlos a un grupo al que tú pertenezcas. Desde ese momento, cada vez que participeis, empezais a ganar puntos por caminar'
-        newChild: 'En esta pantalla tienes que registrar a tus hijos para vincularlos a tu usuario. Sus datos son privados. Sólo podrás verlos tú, y el adulto que acompañe al grupo cada día cuando acceda al listado de niños que participan (Sólo verá el nombre). Recuerda que para que tus hijos aparezcan en este listado, además de registrarlos aquí, tendrás que vincularlos a un grupo al que tú pertenezcas. Desde ese momento, cada vez que participeis, empezais a ganar puntos por caminar'
-        createChild: 'Los niños que tienes registrados en Trazeo.  En el botón “Registrar niño/a” podrás dar de alta a uno, y en el botón “Listado de niños/as” podrás ver sus datos. Recuerda que tienen que estar vinculados a tu grupo para que aparezcan en el listado de la aplicación móvil del adulto que acompaña al pedibus. Si ya están registrados cuando te unas, se vincularán automáticamente. Si los registras después de unirte a un grupo, tendrás que vincularlos manualmente en el muro de éste'
-        createGroup: 'Help.button.createGroup'
-        group: 'Los grupos de pedibus a los que estáis vinculados tus hijos y tú aparecen aquí. En los grupos en los que estás vinculado, puedes comunicarte con el resto de familias participantes a través del muro, invitar a otros a unirse, y ganar puntos cada vez que participais en el pedibus. Cuando tus hijos están vinculados a un grupo, aparecen en el listado de niños participantes que le aparece en la aplicación móvil al adulto que acompaña al grupo. Si aún no estás vinculado a ningún grupo, busca en el listado de grupos disponibles y únete pulsando el botón “Unirme al grupo de pedibus", o bien crea tu propio grupo'
-        groupList: 'Busca grupos activos de pedibus en tu ciudad y en tu centro educativo, y únete a uno de ellos. En los grupos públicos (candado verde) tus hijos y tú os incorporaréis automáticamente al pulsar sobre “Unirme a este grupo”. En los grupos privados (candado rojo), al pulsar el botón le enviarás una solicitud al administrador del grupo para que apruebe vuestra incorporación'
-        editGroup: 'Rellena todos los campos para que tu grupo sea fácil de encontrar por el resto de participantes: Sólo tú como administrador puedes modificar estos datos del grupo. Rellenar el país, municipio y centro educativo permitirá filtrar por estos datos en el listado de grupos'
-        newGroup: 'Rellena todos los campos para que tu grupo sea fácil de encontrar por el resto de participantes: Sólo tú como administrador puedes modificar estos datos del grupo. Rellenar el país, municipio y centro educativo permitirá filtrar por estos datos en el listado de grupos'
-        timeline: 'Este es el muro del grupo de pedibus. Los mensajes que publiques le llegarán al resto de participantes si así lo han configurado. Utilízalo con sentido común, es el espacio para organizar el funcionamiento regular del grupo y para comunicaros entre los participantes. En este espacio puedes ver los niños que tienes vinculados a este grupo y añadirlos si no están dados de alta aún. También puedes ver la ruta que hace el pedibus y los nicks del resto de familias participantes, y puedes invitar a nuevas familias a unirse enviándoles un correo electrónico'
-        points: 'Trazeo premia a las familias que caminan. Cada vez que tus hijos participan en el pedibus o que tú acompañas al grupo consigues puntos que se acumulan en tu cuenta y que puedes cambiar entrando en nuestro catálogo a través del botón “¿Quieres canjear tus puntos?”. Si aún no hay premios disponibles en tu ciudad, también puedes traspasar tus puntos semanalmente a CiviClub, el club de las personas cívicas, y canjearlos en su catálogo'
-        pointsList: 'Pulsando “¿Quieres canjear tus puntos?” puedes ver cómo conseguir puntos y cómo canjearlos en nuestro catálogo. Pulsando en “Consigue CIVIS” puedes ver cómo traspasar los puntos de Trazeo a CiviClub para canjearlos en su catálogo. Si te hemos proporcionado un código con puntos desde Trazeo, intróducelo junto al botón “Canjea tu código” y pulsa el botón para que se sumen los puntos a tu cuenta. Si quieres saber las acciones que te han hecho ganar puntos, pulsa en “Histórico de puntos”'
-        historical: 'Aquí puedes ver las acciones por las que has recibido puntos'
-Home:
-    modal:
-        app:
-            explain1: 'Bienvenido a Trazeo Caminos Escolares.</br> La herramienta se compone de una web y una aplicación móvil (disponible para Android).</br> La aplicación móvil sólo es necesario que la instales si vas a ser algún día el acompañante adulto de un grupo de pedibus.</br> Puedes descargarla en este enlace'
-            explain2: '</br>o en cualquier otro momento desde <a href="www.trazeo.es">www.trazeo.es</a>.</br>Pulsa en Continuar para seguir con el tutorial de bienvenida de la web.</br> Recibirás un correo con instrucciones para sumar tus primeros 50 puntos.</br> Pregúntanos si tienes alguna duda, y a caminar!'
-            link: 'Descargar ya'
-            title: 'Descarga la app de trazeo'
-            close: 'Continuar'
