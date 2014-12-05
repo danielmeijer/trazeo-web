@@ -218,7 +218,6 @@ class PanelCatalogItemController extends Controller
         if ($form->isValid()) {
         	$item->setComplete(1); 
 			$city = $request->get('city');
-            ldd($city);
 			$helper = $this->get('trazeo_base_helper');
 			$city_entity = $helper->getCities($city, 10, true);
 			if ($city!='' && count($city_entity) > 0) {
