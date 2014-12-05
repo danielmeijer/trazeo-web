@@ -330,7 +330,7 @@ class ApiController extends Controller {
 				foreach($userextends as $userextend)
 				{
 
-                    $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($userextend,'panel_ride_current', array('id' => $ride->getId()));
+                    $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($userextend->getUser(),'panel_ride_current', array('id' => $ride->getId()));
 					$not->addNotification(
 							"ride.start",
 							"TrazeoBaseBundle:EGroup",
@@ -507,7 +507,7 @@ class ApiController extends Controller {
 		
 		//Notificamos a sus tutores
 		foreach($userextends as $userextend){
-			$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($userextend->getUser(),'panel_ride_current', array('id' => $ride->getId()));	
+			$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($userextend->getUser(),'panel_ride_current', array('id' => $ride->getId()));
 			$not = $this->container->get('sopinet_user_notification');
 			$not->addNotification(
 					"child.in",

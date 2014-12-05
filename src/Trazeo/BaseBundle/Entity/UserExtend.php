@@ -9,8 +9,8 @@ use JMS\Serializer\Annotation\ExclusionPolicy;
 
 /**
  * @ORM\Table("userextend")
- * @ORM\Entity
- * 
+ * @ORM\Entity(repositoryClass="UserExtendRepository")
+ *
  * @ExclusionPolicy("all")
  */
 class UserExtend

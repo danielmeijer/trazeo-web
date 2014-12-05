@@ -1,5 +1,5 @@
 <?php
-namespace Trazeo\BaseBunle\Entity;
+namespace Trazeo\BaseBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Trazeo\BaseBundle\Entity\ERide;

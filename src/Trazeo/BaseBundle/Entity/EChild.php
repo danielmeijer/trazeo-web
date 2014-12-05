@@ -9,7 +9,7 @@ use JMS\Serializer\Annotation\Exclude;
  * Entity Children
  *
  * @ORM\Table("e_child")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="EChildRepository")
  */
 class EChild
 {
