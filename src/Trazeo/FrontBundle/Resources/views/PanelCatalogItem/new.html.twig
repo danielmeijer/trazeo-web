@@ -44,7 +44,7 @@
 	{{ parent() }}
 	{% include 'SopinetUploadMagicBundle:Upload:simple_js.html.twig' %}
 	{% include 'SopinetUploadMagicBundle:Upload:simple_blockjs.html.twig' 
-		with {'name': 'image', 'type': 'gallery', 'files': file, 'limit': 1, 'entity': 'Trazeo_BaseBundle_File'} 
+		with {'name': 'image', 'type': 'gallery', 'files': file, 'limit': 1, 'entity': 'Trazeo_BaseBundle_File','icon': 'fa fa-file', 'preview': true}
 	%}
     <script> 
     		

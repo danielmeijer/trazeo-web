@@ -1783,7 +1783,6 @@ class ApiController extends Controller {
      * @POST("/api/auto/url")
      */
     public function getAutoUrlAction(Request $request){
-        $em = $this->getDoctrine()->getEntityManager();
         $user = $this->checkPrivateAccess($request);
         if( $user == false || $user == null ){
             $view = View::create()
