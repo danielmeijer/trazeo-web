@@ -58,6 +58,7 @@ class AppKernel extends Kernel
         	new Sopinet\FlashMessagesBundle\SopinetFlashMessagesBundle(),
         	new Lunetics\LocaleBundle\LuneticsLocaleBundle(),
         	new Endroid\Bundle\QrCodeBundle\EndroidQrCodeBundle(),
+            new Trazeo\MyPageBundle\TrazeoMyPageBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
