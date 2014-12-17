@@ -35,6 +35,7 @@ class UserExtendAdmin extends Admin
         ->add('spendedPoints')
         ->add('mobile')
     ;
+
   }
  
   protected function configureDatagridFilters(DatagridMapper $datagridMapper)
