@@ -46,7 +46,6 @@ class UserExtendAdmin extends Admin
         ->add('adminRoutes')
         ->add('reports')
         ->add('childs')
-        ->add('city')
         ->add('tutorial')
         ->add('tutorialMap')
         ->add('access')
