@@ -90,6 +90,6 @@ class EGroupAccess
     }
 
     public function __toString() {
-        return $this->getId();
+        return "egroupaccess";
     }
 }
