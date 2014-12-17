@@ -137,5 +137,5 @@ class EEvent
      */    
     public function setCreatedAt(\DateTime $createdAt) { 
         $this->createdAt = $createdAt; 
-    } 
+    }
 }

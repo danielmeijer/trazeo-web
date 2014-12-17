@@ -38,7 +38,7 @@ class EChildAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
+            ->addIdentifier('id')
             ->add('nick')
             ->add('userextendchilds')
             ->add('dateBirth')
@@ -66,12 +66,13 @@ class EChildAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('id')
             ->add('nick')
             ->add('dateBirth')
             ->add('visibility')
             ->add('gender')
             ->add('selected')
+            ->add('ride')
+            ->add('inviteChild')
         ;
     }
 
