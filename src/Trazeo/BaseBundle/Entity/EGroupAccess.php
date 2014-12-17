@@ -88,4 +88,8 @@ class EGroupAccess
     {
         return $this->group;
     }
+
+    public function __toString() {
+        return $this->getId();
+    }
 }
