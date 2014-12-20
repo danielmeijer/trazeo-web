@@ -1,0 +1,22 @@
+{% set title = page.title %}
+
+{% extends "TrazeoMyPageBundle:Template/SimpleClean:base.html.twig" %}
+    {% block menu %}
+        {% for menu in page.menus %}
+            <li>
+                <a href="#{{ menu.link }}">{{ menu.title }}</a>
+            </li>
+        {% endfor %}
+    {% endblock %}
+
+    {% block content %}
+        {% for menu in page.menus %}
+            <header id="{{ menu.link }}" class="{{ menu.getClassCSS() }}">
+            {% for module in menu.modules %}
+                <div class="{{ module.class.getClassCSS()|raw }}" style="{{ module.class.getStyle(module) }}">
+                    {{ module.class.renderFront(container, module)|raw }}
+                </div>
+            {% endfor %}
+            </header>
+        {% endfor %}
+    {% endblock %}

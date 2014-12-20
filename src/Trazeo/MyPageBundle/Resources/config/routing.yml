@@ -1,3 +1,3 @@
-trazeo_my_page_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: TrazeoMyPageBundle:Default:index }
+trazeo_my_page_front:
+    resource: "@TrazeoMyPageBundle/Controller/FrontController.php"
+    type:     annotation

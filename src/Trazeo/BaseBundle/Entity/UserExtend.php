@@ -91,6 +91,10 @@ class UserExtend
     /** @ORM\OneToMany(targetEntity="EChildInvite", mappedBy="sender")
      */
     protected $inviteChildSender;
+
+    /** @ORM\OneToMany(targetEntity="\Trazeo\MyPageBundle\Entity\Page", mappedBy="userextend")
+     */
+    protected $pageFront;
     
     /**
      * // Datos: monitor / user
@@ -797,5 +801,38 @@ class UserExtend
     public function getInviteGroupSender()
     {
         return $this->inviteGroupSender;
+    }
+
+    /**
+     * Add pageFront
+     *
+     * @param \Trazeo\MyPageBundle\Entity\Page $pageFront
+     * @return UserExtend
+     */
+    public function addPageFront(\Trazeo\MyPageBundle\Entity\Page $pageFront)
+    {
+        $this->pageFront[] = $pageFront;
+
+        return $this;
+    }
+
+    /**
+     * Remove pageFront
+     *
+     * @param \Trazeo\MyPageBundle\Entity\Page $pageFront
+     */
+    public function removePageFront(\Trazeo\MyPageBundle\Entity\Page $pageFront)
+    {
+        $this->pageFront->removeElement($pageFront);
+    }
+
+    /**
+     * Get pageFront
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPageFront()
+    {
+        return $this->pageFront;
     }
 }
