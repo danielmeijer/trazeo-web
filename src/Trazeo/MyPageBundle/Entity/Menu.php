@@ -46,7 +46,7 @@ class Menu
 
     /**
      * @ORM\OneToMany(targetEntity="Module", mappedBy="menu")
-     * @ORM\OrderBy({"position" = "DESC"})
+     * @ORM\OrderBy({"position" = "ASC"})
      */
     protected $modules;
 
@@ -55,6 +55,21 @@ class Menu
      * @var integer
      */
     protected $position;
+
+    /**
+     * @ORM\Column(name="color_back", type="string", length=6)
+     *
+     * @var string $color_back
+     */
+    protected $color_back;
+
+    /**
+     * @ORM\Column(name="color_front", type="string", length=6)
+     *
+     * @var string $color_front
+     */
+    protected $color_front;
+
     /**
      * Constructor
      */
@@ -204,5 +219,51 @@ class Menu
 
     public function getClassCSS() {
         return "menu-" . $this->getLink();
+    }
+
+    /**
+     * Set color_back
+     *
+     * @param string $colorBack
+     * @return Menu
+     */
+    public function setColorBack($colorBack)
+    {
+        $this->color_back = $colorBack;
+
+        return $this;
+    }
+
+    /**
+     * Get color_back
+     *
+     * @return string 
+     */
+    public function getColorBack()
+    {
+        return $this->color_back;
+    }
+
+    /**
+     * Set color_front
+     *
+     * @param string $colorFront
+     * @return Menu
+     */
+    public function setColorFront($colorFront)
+    {
+        $this->color_front = $colorFront;
+
+        return $this;
+    }
+
+    /**
+     * Get color_front
+     *
+     * @return string 
+     */
+    public function getColorFront()
+    {
+        return $this->color_front;
     }
 }

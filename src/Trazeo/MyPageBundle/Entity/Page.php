@@ -45,7 +45,7 @@ class Page
     protected $userextend;
 
     /** @ORM\OneToMany(targetEntity="Menu", mappedBy="page")
-     * @ORM\OrderBy({"position" = "DESC"})
+     * @ORM\OrderBy({"position" = "ASC"})
      */
     protected $menus;
 

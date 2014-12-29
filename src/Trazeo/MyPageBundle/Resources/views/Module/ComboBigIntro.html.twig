@@ -1,6 +1,6 @@
 <div class="text-vertical-center">
-    <h1>MilkYourSelf</h1>
-    <h3>...a new awakening...</h3>
+    <h1>{{ module.class.getContentByPart(module,1) }}</h1>
+    <h3>{{ module.class.getContentByPart(module,2) }}</h3>
     <br>
-    <a href="#about" class="btn btn-dark btn-lg">Yes, i want </a>
+    <a href="{{ module.class.getContentByPart(module,4) }}" class="btn btn-dark btn-lg">{{ module.class.getContentByPart(module,3) }}</a>
 </div>

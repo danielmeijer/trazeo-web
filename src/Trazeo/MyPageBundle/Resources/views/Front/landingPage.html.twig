@@ -10,13 +10,26 @@
     {% endblock %}
 
     {% block content %}
+        {% set i = 0 %}
         {% for menu in page.menus %}
-            <header id="{{ menu.link }}" class="{{ menu.getClassCSS() }}">
+            {% if i == 0 %}
+                <header id="{{ menu.link }}" class="{{ menu.getClassCSS() }}">
+            {% else %}
+                <section id="{{ menu.link }}" class="{{ menu.getClassCSS() }}" style="background-color: #{{ menu.colorback }}; color: #{{ menu.colorfront }}">
+            {% endif %}
+
             {% for module in menu.modules %}
                 <div class="{{ module.class.getClassCSS()|raw }}" style="{{ module.class.getStyle(module) }}">
                     {{ module.class.renderFront(container, module)|raw }}
                 </div>
             {% endfor %}
-            </header>
+
+            {% if i == 0 %}
+                </header>
+            {% else %}
+                </section>
+            {% endif %}
+
+            {% set i = i + 1 %}
         {% endfor %}
     {% endblock %}

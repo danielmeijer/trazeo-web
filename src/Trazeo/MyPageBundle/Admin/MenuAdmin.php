@@ -19,6 +19,8 @@ class MenuAdmin extends Admin
         ->add('modules')
         ->add('position')
         ->add('link')
+        ->add('color_back')
+        ->add('color_front')
     ;
   }
  
