@@ -1,0 +1,26 @@
+{% extends "SopinetTemplateSbadmin2Bundle:Login:layout.html.twig" %}
+
+{% block title %}
+    Acceso a {{ group.route.name }}
+{% endblock %}
+
+{% block header %}
+    Acceso a {{ group.route.name }}
+{% endblock %}
+
+{% block fos_user_content %}
+    <p>Rellene sus datos y los de su hijo/a.</p>
+    <form method="POST" action="{{ path('saveInGroup', {'group_id': group.id}) }}">
+        {% form_theme form_user 'TrazeoMyPageBundle:Form:bootstrap.12.html.twig' %}
+        {{ form_widget(form_user) }}
+        {% form_theme form_children 'TrazeoMyPageBundle:Form:bootstrap.12.html.twig' %}
+        {{ form_widget(form_children) }}
+        <button class="btn btn-lg btn-success btn-block" type="submit">Acceder</button>
+    </form>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    {% include 'SopinetTemplateSbadmin2Bundle:Login:_register_analytics.html.twig' %}
+    {% include 'SopinetTemplateSbadmin2Bundle:Login:_user_same.html.twig' %}
+{% endblock %}
