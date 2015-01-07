@@ -596,7 +596,7 @@ Timeline:
         description: 'Envía una notificación a otros padres para que puedan unirse a este grupo'
         title: 'Invitar al grupo'
 
-    parents: 'Otros padres'
+    parents: 'otros miembros'
 
     route:
         empty: 'Ninguna ruta asignada'
