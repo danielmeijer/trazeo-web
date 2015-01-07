@@ -179,7 +179,7 @@ Groups:
 
     help:
         city: 'Ciudad del grupo'
-        name: 'Rellena aquí el nombre del grupo que aparecerá en los listados. Trata de poner un nombre significativo, para que sea fácil de encontrar por las personas que lo busquen. Poner el nombre del colegio destino y el punto de salida puede ser buena idea'
+        name: 'Rellena aquí el nombre del grupo que aparecerá en los listados. Trata de poner un nombre fácil de encontrar para las personas que lo busquen.'
         name2: '“Privado” las personas que quieran unirse te enviarán una solicitud para unirse que tendrás que aprobar. Recomendable para la mayoría de los grupos. "Público" cualquiera puede unirse de forma sencilla. "Oculto", no aparecerá en los listados. Sólo lo verás tú y las personas a las que invites'
         route: 'Asignar una ruta a este grupo'
         school: 'Centro educativo'
@@ -196,7 +196,7 @@ Groups:
         deny: 'Rechazo la invitación'
         request: 'Forma parte del Grupo de padres/madres de los escolares que participan en la ruta de Pedibús'
 
-    list: 'Listado de grupos de pedibús'
+    list: 'Busca un grupo'
     mine: 'Mis grupos de pedibús'
     name: 'Nombre del grupo de pedibús'
 
@@ -228,18 +228,18 @@ Groups:
 
 Help:
     button:
-        createChild: 'Los niños que tienes registrados en Trazeo.  En el botón “Registrar niño/a” podrás dar de alta a uno, y en el botón “Listado de niños/as” podrás ver sus datos. Recuerda que tienen que estar vinculados a tu grupo para que aparezcan en el listado de la aplicación móvil del adulto que acompaña al pedibus. Si ya están registrados cuando te unas, se vincularán automáticamente. Si los registras después de unirte a un grupo, tendrás que vincularlos manualmente en el muro de éste'
+        createChild: 'Registra a tus hijos o edita sus datos. Recuerda que tienen que estar vinculados a un grupo para que aparezcan en el listado de la aplicación móvil del adulto que acompaña al pedibus. Si los registras después de unirte a un grupo, tendrás que vincularlos manualmente en el muro de éste.'
         createGroup: Help.button.createGroup
-        editChild: 'En esta pantalla tienes que registrar a tus hijos para vincularlos a tu usuario. Sus datos son privados. Sólo podrás verlos tú, y el adulto que acompañe al grupo cada día cuando acceda al listado de niños que participan (Sólo verá el nombre). Recuerda que para que tus hijos aparezcan en este listado, además de registrarlos aquí, tendrás que vincularlos a un grupo al que tú pertenezcas. Desde ese momento, cada vez que participeis, empezais a ganar puntos por caminar'
-        editGroup: 'Rellena todos los campos para que tu grupo sea fácil de encontrar por el resto de participantes: Sólo tú como administrador puedes modificar estos datos del grupo. Rellenar el país, municipio y centro educativo permitirá filtrar por estos datos en el listado de grupos'
-        group: 'Los grupos de pedibus a los que estáis vinculados tus hijos y tú aparecen aquí. En los grupos en los que estás vinculado, puedes comunicarte con el resto de familias participantes a través del muro, invitar a otros a unirse, y ganar puntos cada vez que participais en el pedibus. Cuando tus hijos están vinculados a un grupo, aparecen en el listado de niños participantes que le aparece en la aplicación móvil al adulto que acompaña al grupo. Si aún no estás vinculado a ningún grupo, busca en el listado de grupos disponibles y únete pulsando el botón “Unirme al grupo de pedibus", o bien crea tu propio grupo'
-        groupList: 'Busca grupos activos de pedibus en tu ciudad y en tu centro educativo, y únete a uno de ellos. En los grupos públicos (candado verde) tus hijos y tú os incorporaréis automáticamente al pulsar sobre “Unirme a este grupo”. En los grupos privados (candado rojo), al pulsar el botón le enviarás una solicitud al administrador del grupo para que apruebe vuestra incorporación'
+        editChild: 'Los datos serán privados. Sólo podrás verlos tú. Sólo el adulto que acompañe al grupo cada día podrá ver el nombre cuando acceda al listado de niños que participan.'
+        editGroup: 'Rellena todos los campos para que tu grupo sea fácil de encontrar por el resto de participantes. Sólo tú como administrador puedes modificar estos datos del grupo.'
+        group: 'Si perteneces a un grupo de pedibus puedes comunicarte con el resto de familias participantes a través del muro, invitar a otros a unirse, y ganar puntos por participar. Cuando vincules a tus hijos, el adulto acompañante podrá verlos en el listado de niños y enviarte notificaciones.'
+        groupList: 'Busca grupos activos de pedibus en tu ciudad y en tu centro educativo, y únete a uno de ellos. En los grupos públicos (verde) tus hijos y tú os incorporaréis directamente. En los privados (rojo), le enviarás una solicitud al administrador del grupo para que apruebe vuestra incorporación.'
         historical: 'Aquí puedes ver las acciones por las que has recibido puntos'
         newChild: 'En esta pantalla tienes que registrar a tus hijos para vincularlos a tu usuario. Sus datos son privados. Sólo podrás verlos tú, y el adulto que acompañe al grupo cada día cuando acceda al listado de niños que participan (Sólo verá el nombre). Recuerda que para que tus hijos aparezcan en este listado, además de registrarlos aquí, tendrás que vincularlos a un grupo al que tú pertenezcas. Desde ese momento, cada vez que participeis, empezais a ganar puntos por caminar'
         newGroup: 'Rellena todos los campos para que tu grupo sea fácil de encontrar por el resto de participantes: Sólo tú como administrador puedes modificar estos datos del grupo. Rellenar el país, municipio y centro educativo permitirá filtrar por estos datos en el listado de grupos'
-        points: 'Trazeo premia a las familias que caminan. Cada vez que tus hijos participan en el pedibus o que tú acompañas al grupo consigues puntos que se acumulan en tu cuenta y que puedes cambiar entrando en nuestro catálogo a través del botón “¿Quieres canjear tus puntos?”. Si aún no hay premios disponibles en tu ciudad, también puedes traspasar tus puntos semanalmente a CiviClub, el club de las personas cívicas, y canjearlos en su catálogo'
-        pointsList: 'Pulsando “¿Quieres canjear tus puntos?” puedes ver cómo conseguir puntos y cómo canjearlos en nuestro catálogo. Pulsando en “Consigue CIVIS” puedes ver cómo traspasar los puntos de Trazeo a CiviClub para canjearlos en su catálogo. Si te hemos proporcionado un código con puntos desde Trazeo, intróducelo junto al botón “Canjea tu código” y pulsa el botón para que se sumen los puntos a tu cuenta. Si quieres saber las acciones que te han hecho ganar puntos, pulsa en “Histórico de puntos”'
-        timeline: 'Este es el muro del grupo de pedibus. Los mensajes que publiques le llegarán al resto de participantes si así lo han configurado. Utilízalo con sentido común, es el espacio para organizar el funcionamiento regular del grupo y para comunicaros entre los participantes. En este espacio puedes ver los niños que tienes vinculados a este grupo y añadirlos si no están dados de alta aún. También puedes ver la ruta que hace el pedibus y los nicks del resto de familias participantes, y puedes invitar a nuevas familias a unirse enviándoles un correo electrónico'
+        points: 'Trazeo premia a las familias que caminan. Cada vez que tus hijos participan en el pedibus o que tú acompañas al grupo consigues puntos que se acumulan en tu cuenta y que puedes canjear en nuestro catálogo o en el de Civiclub.'
+        pointsList: 'Desde esta pantalla puedes ver cómo conseguir puntos y cómo canjearlos en nuestro catálogo y en el de Civiclub, saber las acciones por las que los has sumado y canjear códigos para sumar puntos directamente.'
+        timeline: 'Los mensajes que publiques le llegarán al resto de miembros del grupo si así lo han configurado. Utilízalo con sentido común, es el espacio para organizar el funcionamiento regular del grupo y para comunicaros entre los participantes. También puedes acceder aquí a la ruta, vincular a tus niños si no lo están, e invitar a nuevos miembros.'
 
 Home:
     modal:
@@ -579,6 +579,7 @@ Suggestion:
     link_child: 'Accede al Muro de alguno de tus grupos para vincular a tus niños/as.'
     new_child: '¡Aún no has registrado a ningún/a niño/a! Haz click aquí para proceder al registro de tus niños en el sistema.'
     no_school: 'en el perfil de tu hijo/a puede rellenar el “Centro Educativo” al que pertenece'
+    suggestion: ''
 
 Timeline:
     child:
@@ -595,7 +596,7 @@ Timeline:
         description: 'Envía una notificación a otros padres para que puedan unirse a este grupo'
         title: 'Invitar al grupo'
 
-    parents: 'Otros padres'
+    parents: 'otros miembros'
 
     route:
         empty: 'Ninguna ruta asignada'
