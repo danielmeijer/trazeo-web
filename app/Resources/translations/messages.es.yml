@@ -561,31 +561,83 @@ security:
         username: 'Nombre de usuario:'
 
 Points:
-    title: 'Total de puntos'
+    action:
+        Child_On_Ride: 'Porque tu hijo 0 participo en un paseo'
+        Create_Group: 'Por crear tu primer grupo'
+        Create_User: 'Por canjear el código de bienvenida 0'
+        Distance_Points: 'Porque tu hijo 0 ha recorrido 1m'
+        Manage_Ride: 'Por hacer de acompañante en 1 paseo/s'
+
+    button:
+        exchange: 'Canjear puntos'
+        moreinfo: 'Más información'
+
     description: 'En este apartado puedes consultar toda la información referente a los puntos que has obtenido en Trazeo'
-    mine: 'Mis puntos'
-    explanation: 'Gana puntos en Trazeo participando en el pedibus y animando a que otros lo hagan'
-    name: 'puntos'
-    total: 'en total'   
-    got: 'tienes'
     exchange: '¿Quieres canjear tus puntos?'
+    explanation: 'Gana puntos en Trazeo participando en el pedibus y animando a que otros lo hagan'
+    got: tienes
+
+    historical:
+        button: 'Histórico de puntos'
+        description: 'Listado de las acciones que te han reportado puntos'
+        distance: 'kilómetros con Trazeo, que se convierten en'
+        exchange: canjeables
+        exchange_plural: canjeables
+        explanation: 'Estos son los puntos que has conseguido hasta el momento'
+        title: 'Histórico de puntos'
+        walk: 'ha caminado'
+
     index:
         howto: '¿Cómo funciona?'
         remains: 'aún por canjear'
         total: 'totales conseguidos'
-    historical: 
-        button: 'Histórico de puntos'
-        explanation: 'Estos son los puntos que has conseguido hasta el momento'
-        walk: 'ha caminado'
-        distance: 'kilómetros con Trazeo, que se convierten en'
-        exchange: 'canjeables'
-        description: 'Listado de las acciones que te han reportado puntos'
-        title: 'Histórico de puntos'
+
+    internet:
+        offerts: 'Catálogo de internet'
+
+    local:
+        offerts: 'Catálogo de ofertas locales'
+
+    mine: 'Mis puntos'
+
     modal:
-        close: 'Cerrar'
-        howto: 'Conseguir puntos en Trazeo'
-        header: 'En Trazeo queremos premiar tu compromiso con los hábitos saludables y la sostenibilidad permitiéndote sumar puntos en tu cuenta personal y canjearlos posteriormente por premios y descuentos que ofrecen nuestras empresas y organismos colaboradores.'
+        civi:
+            button: 'Consigue CIVIS'
+
+            explain:
+                first: '<p>Si eres socio de CiviClub, los puntos que acumulas en tu cuenta de Trazeo, se cargan también de forma automática en tu cuenta de CiviClub cada lunes. Para ello es muy <b>importante que la dirección de correo con la que te has registrado en Trazeo sea la misma que la que usaste para el registro en CiviClub.</b></p><p> Ten en cuenta que los puntos que canjees en CiviClub no se restan en Trazeo. Las dos webs los sumamos independientemente para que tengas el doble de oportunidades de ver recompensado tu compromiso con el caminar.</p>'
+
+            header: '<p>En CiviClub.org, el club de las personas cívicas, quieren que cada vez más gente adopte actitudes que impacten positivamente en nuestro entorno. Y por ello, si eres socio, cuando hagas algo bueno podrás ganar Civis para cambiar por ofertas y regalos de ocio y cultura en su catálogo.</p> <p>Contribuir a que más niños y niñas caminen cada día por nuestras calles es una acción que tiene un impacto positivo en la salud de los más pequeños y en el medio ambiente de tu ciudad, por lo que los puntos que acumules haciendo uso de Trazeo también se te cargarán en tu cuenta en Civiclub.org. Así tienes el doble de oportunidades de canjearlos.</p>'
+            howto: 'Consigue CIVIS'
+
+            question:
+                first: '¿Cómo funciona? </br>'
+                second: '¿Quiéres conocer más sobre <a href="http://www.civiclub.org">CiviClub.org</a>?'
+
+        close: Cerrar
+
+        exchange:
+            body: 'Ya hemos recibido tu solicitud para canjear tus puntos en Trazeo por este premio. Te mandaremos en las próximas horas un email con instrucciones detalladas para que lo disfrutes. ¡Gracias por hacer que tus hijos caminen con Trazeo!'
+            title: 'Has solicitado canjear un premio'
+
+        exchangeFail:
+            body: 'Vaya, aún te faltan algunos puntos para poder canjear este premio. Si tus hijos caminan unos días más, podrás hacerlo pronto.'
+            title: 'No tienes suficientes puntos para este premio.'
+
         explain:
-            first: '¿Cómo puedes sumar puntos en Trazeo? Por cada kilómetro que uno de tus hijos camine con Trazeo, recibirás un punto en tu cuenta (con un máximo de 100 puntos al mes). Pronto podrás sumar puntos realizando otras acciones, como invitar a más personas a que se unan a tu pedibus.'
-            second: '¿Cómo puedes canjear tus puntos en Trazeo? Próximamente tendrás a tu disposición en Trazeo un listado de premios y descuentos donde podrás canjear los puntos conseguidos, así como instrucciones para hacerlo.'
+            first: '<p>Cada una de las acciones que realizas en Trazeo te permite sumar puntos en tu cuenta:</p><ul><li type="circle">- Cada día que uno de tus hijos camine con Trazeo, sumarás 1 punto. ¡Anímate a que lo hagan a diario!</li><li type="circle">- Además, por cada kilómetro que uno de tus hijos camine con Trazeo, recibirás 1 punto más (con un máximo de 25 puntos por semana).</li><li type="circle">- Y si eres el acompañante o el monitor de un grupo, cada vez que guíes el paseo con la aplicación móvil recibirás 1 punto (con un máximo de 50 puntos al mes).</li></ul><p>Además, cuando lleves a cabo algunas acciones o cuando colabores con Trazeo, te enviaremos un código que te permitirá sumar puntos directamente. Sólo tienes que introducirlo en el espacio “Canjear Cupón” que hay en la pantalla de “Mis puntos” y pulsar el botón.</p> <p>Y recuerda, que cada una de estas acciones también te dan CIVIS en nuestra web amiga Civiclub.org, el club de las personas cívicas (mira las condiciones <a class="modalchange" data-toggle="modal" data-target="#civiModal">aquí</a>)</p>'
+            second: 'En el catálogo de esta misma página tienes a tu disposición un listado con los premios y descuentos que puedes canjear en Trazeo por los puntos conseguidos. Elige el que más te guste a ti o a tus hijos y pulsa sobre el botón “Canjear”. Te mandaremos información sobre cómo recibir tu premio. Y recuerda, esta lista seguirá creciendo.'
             third: 'Si necesitas más información, o si eres una empresa u organismo y quieres ofrecer premios y descuentos en Trazeo, puedes ponerte en contacto con nosotros en hola@trazeo.es '
+
+        header: 'En Trazeo queremos premiar tu compromiso con los hábitos saludables y la sostenibilidad permitiéndote sumar puntos en tu cuenta personal y canjearlos posteriormente por premios y descuentos que ofrecen nuestras empresas y organismos colaboradores.'
+        howto: 'Conseguir puntos en Trazeo'
+        mail: hola@trazeo.es
+
+        question:
+            first: '¿Cómo puedes sumar puntos en Trazeo?</br>'
+            second: '¿Cómo puedes canjear tus puntos en Trazeo?</br></br>'
+
+    name: puntos
+    name_plural: puntos
+    title: 'Mis puntos'
+    total: 'en total'
