@@ -162,10 +162,13 @@ class ApiController extends Controller {
 		$array = array();
 		foreach($groups as $group){
 			$arrayGroups = array();
+			/** @var EGroup $group */
 			$arrayGroups['id'] = $group->getId();
 			$arrayGroups['name'] = $group->getName();
 			$arrayGroups['visibility'] = $group->getVisibility();
 			$arrayGroups['hasride'] = $group->getHasRide();
+			$arrayGroups['city']=$group->getCity()->getNameUtf8();
+			$arrayGroups['school']=$group->getSchool1();
 			if(in_array($group, $admingroups))$arrayGroups['admin']=true;
 			else $arrayGroups['admin']=false;
 			if($group->getHasRide()==1){
@@ -1140,9 +1143,9 @@ class ApiController extends Controller {
 		$em = $this->get('doctrine.orm.entity_manager');
 		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 
-		//Se comprueba si el nombre del grupo ya existe 		
+		//Se comprueba si ya existe otro grupo con el mismo nombre
 		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneByName($name);
-		if( $group!=null ){
+		if( $group!=null && $group!= $em->getRepository('TrazeoBaseBundle:EGroup')->find($id_group)){
 			$view = View::create()
 			->setStatusCode(200)
 			->setData($this->msgDenied("Name is already in use"));
@@ -1383,7 +1386,7 @@ class ApiController extends Controller {
 		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 
 		$reJJ = $em->getRepository("JJsGeonamesBundle:City");
-		$routes = $em->getRepository('TrazeoBaseBundle:ERoute')->findAll();
+		$groups = $em->getRepository('TrazeoBaseBundle:EGroup')->findAll();
 		
 		$cities=[];
 		if($userextend)$userCity=$userextend->getCity();
@@ -1391,8 +1394,8 @@ class ApiController extends Controller {
 		$userCity=$reJJ->findOneById($userCity);
 		if($userCity!=null)$userCity=$userCity->getNameUtf8();
 		$info=[];
-		foreach ($routes as $route) {
-					$city=$reJJ->findOneById($route->getCity());
+		foreach ($groups as $group) {
+					$city=$reJJ->findOneById($group->getCity());
 					if($city!=null && !in_array($city->getNameUtf8(),$cities))$cities[]=$city->getNameUtf8();
 		}
 		$info['cities']=$cities;
