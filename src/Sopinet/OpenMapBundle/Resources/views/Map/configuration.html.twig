@@ -4,6 +4,10 @@
 {% set pickup_button = "Route.show.buttons.pickup"|trans %}
 {% set pickup_erase_button = "Route.show.buttons.pickupErase"|trans %}
 {% set cancel_button = "Route.show.buttons.cancel"|trans %}
+{% if id_map is not defined %}
+    {% set id_map =  "mapa" %}
+{% endif %}
+
 <script type="text/javascript">
 	var points=new Array;
 	var events=new Array;
@@ -68,7 +72,7 @@
       styleId: 22677
     });
     // preload image icon
-	$("#mapa").append("<img id='preload' src="+"{{ asset('bundles/sopinetopenmap/css/images') }}"+"/marker-icon-start.png>");
+	$("#{{ id_map }}").append("<img id='preload' src="+"{{ asset('bundles/sopinetopenmap/css/images') }}"+"/marker-icon-start.png>");
 	$("#preload").hide();
     // cloudmade APi Key and info
     var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/8ee2a50541944fb9bcedded5165f09d9/{styleId}/256/{z}/{x}/{y}.png',
@@ -84,7 +88,7 @@
     });
 	if(points.length>1)var center=points[0].latLng;
 	else center=new L.LatLng(37.8938548, -4.788015299999984)
-    map = new L.Map('mapa', {
+    map = new L.Map('{{ id_map }}', {
       layers: [osm]
       ,center: center
       ,zoom: 16
@@ -484,9 +488,9 @@
             // ... initialize other DOM elements, add listeners, etc.
 
             var r=document.createElement("button");
-			r.id="recogida";
-			document.getElementById("mapa").appendChild(r);
-			var recogida=$("#recogida");
+			r.id="{{ id_map }}_recogida";
+			document.getElementById("{{ id_map }}").appendChild(r);
+			var recogida=$("#{{ id_map }}_recogida");
 			recogida.attr('type','button');
 			
 			if(!this._marker.pickUp || this._marker.pickUp==false){ 
@@ -506,9 +510,9 @@
 
 			if(!this._marker.pickUp || this._marker.pickUp==false){ 
 				var t=document.createElement("input");
-				t.id="textRecogida";
-				document.getElementById("mapa").appendChild(t);
-				var text=$("#textRecogida");
+				t.id="{{ id_map }}_textRecogida";
+				document.getElementById("{{ id_map }}").appendChild(t);
+				var text=$("#{{ id_map }}_textRecogida");
 				text.attr('type','input');
 				if(this._marker.pickUpText)	text.val(this._marker.pickUpText);
 				else{
@@ -521,9 +525,9 @@
 			}
 			
 			var b=document.createElement("button");	
-			b.id="borrar";
-			document.getElementById("mapa").appendChild(b);  	
-			var borrar=$("#borrar");
+			b.id="{{ id_map }}_borrar";
+			document.getElementById("{{ id_map }}").appendChild(b);
+			var borrar=$("#{{ id_map }}_borrar");
 			borrar.attr('type','button');
 			borrar.css('width','100%');
 			borrar.html('{{ erase_button }}');// Borrar punto
@@ -533,9 +537,9 @@
 			borrar.on('click',erase);
 
 			var c=document.createElement("button");	
-			c.id="cancelar";
-			document.getElementById("mapa").appendChild(c);  	
-			var cancelar=$("#cancelar");
+			c.id="{{ id_map }}_cancelar";
+			document.getElementById("{{ id_map }}").appendChild(c);
+			var cancelar=$("#{{ id_map }}_cancelar");
 			cancelar.attr('type','button');
 			cancelar.css('width','100%');
 			cancelar.html('{{ cancel_button }}');// Cancelar Acción
