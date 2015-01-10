@@ -17,6 +17,9 @@ use Trazeo\BaseBundle\Form\ChildType;
 use Trazeo\BaseBundle\Form\UserType;
 use Trazeo\MyPageBundle\Classes\Module\TrazeoGroups;
 use Application\Sonata\UserBundle\Entity\User;
+use Trazeo\MyPageBundle\Entity\Menu;
+use Trazeo\MyPageBundle\Entity\Module;
+use Trazeo\MyPageBundle\Entity\Page;
 use Trazeo\MyPageBundle\Form\UserDirectType;
 
 /**
@@ -33,10 +36,22 @@ class FrontController extends Controller
 	   	$em = $this->getDoctrine()->getEntityManager();
 
        $repositoryPage = $em->getRepository("TrazeoMyPageBundle:Page");
+       /** @var Page $page */
        $page = $repositoryPage->findOneBySubdomain($subdomain);
-       
+
+       /** @var Menu $menu */
+       foreach($page->getMenus() as $menu) {
+           /** @var Module $module */
+           foreach($menu->getModules() as $module) {
+               if ($module->getClass()->getClassName() == "TrazeoRoutes") {
+                   $routes = $module->getClass()->prepareFront($this, $module);
+               }
+           }
+       }
+
 	   	return array(
             'container' => $this,
+            'routes' => $routes,
             'page' => $page
 	   	);
 	}

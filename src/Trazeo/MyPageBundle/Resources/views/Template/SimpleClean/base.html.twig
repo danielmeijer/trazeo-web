@@ -11,12 +11,14 @@
 
     <title>{{ title }}</title>
 
-    {% stylesheets
-            '@TrazeoMyPageBundle/Resources/views/Template/SimpleClean/css/bootstrap.min.css'
-            '@TrazeoMyPageBundle/Resources/views/Template/SimpleClean/css/stylish-portfolio.css'
-        filter='cssrewrite' %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
+    {% block css %}
+        {% stylesheets
+                '@TrazeoMyPageBundle/Resources/views/Template/SimpleClean/css/bootstrap.min.css'
+                '@TrazeoMyPageBundle/Resources/views/Template/SimpleClean/css/stylish-portfolio.css'
+            filter='cssrewrite' %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    {% endblock %}
 
     <link href="{{ asset('bundles/trazeomypage/css/font-awesome-4.2.0/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
 
@@ -81,44 +83,45 @@
         </div>
     </footer>
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    {% block js %}
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
-    <!-- Custom Theme JavaScript -->
-    <script>
-    // Closes the sidebar menu
-    $("#menu-close").click(function(e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-    });
-
-    // Opens the sidebar menu
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-    });
-
-    // Scrolls to the selected menu item on the page
-    $(function() {
-        $('a[href*=#]:not([href=#])').click(function() {
-            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
-
-                var target = $(this.hash);
-                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-                if (target.length) {
-                    $('html,body').animate({
-                        scrollTop: target.offset().top
-                    }, 1000);
-                    return false;
-                }
-            }
+        <!-- Custom Theme JavaScript -->
+        <script>
+        // Closes the sidebar menu
+        $("#menu-close").click(function(e) {
+            e.preventDefault();
+            $("#sidebar-wrapper").toggleClass("active");
         });
-    });
-    </script>
 
+        // Opens the sidebar menu
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#sidebar-wrapper").toggleClass("active");
+        });
+
+        // Scrolls to the selected menu item on the page
+        $(function() {
+            $('a[href*=#]:not([href=#])').click(function() {
+                if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
+
+                    var target = $(this.hash);
+                    target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                    if (target.length) {
+                        $('html,body').animate({
+                            scrollTop: target.offset().top
+                        }, 1000);
+                        return false;
+                    }
+                }
+            });
+        });
+        </script>
+    {% endblock %}
 </body>
 
 </html>

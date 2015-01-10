@@ -1,6 +1,28 @@
 {% set title = page.title %}
 
 {% extends "TrazeoMyPageBundle:Template/SimpleClean:base.html.twig" %}
+    {# TODO: PASAR A LOS BLOQUES COMO FICHEROS EXTERNOS #}
+    {% block css %}
+        {{ parent() }}
+        <link href="{{ asset('bundles/trazeomypage/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('bundles/trazeomypage/css/bootstrap-modal.css') }}" rel="stylesheet" type="text/css">
+
+        <style>
+            .map-popup {
+                height: 400px;
+            }
+        </style>
+
+        {% stylesheets
+        '@SopinetOpenMapBundle/Resources/public/css/leaflet.css'
+        '@SopinetOpenMapBundle/Resources/public/css/plugins/leafletRouting/app.css'
+        '@SopinetOpenMapBundle/Resources/public/css/plugins/Control.Geocoder/Control.Geocoder.css'
+        '@SopinetTemplateSbadmin2Bundle/Resources/public/css/plugins/openmap/openmap.css'
+        output='css/*.css' filter='cssrewrite' %}
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    {% endblock %}
+
     {% block menu %}
         {% for menu in page.menus %}
             <li>
@@ -10,6 +32,7 @@
     {% endblock %}
 
     {% block content %}
+        {% set routes = "adios" %}
         {% set i = 0 %}
         {% for menu in page.menus %}
             {% if i == 0 %}
@@ -33,3 +56,38 @@
             {% set i = i + 1 %}
         {% endfor %}
     {% endblock %}
+
+{# TODO: PASAR A LOS BLOQUES COMO FICHEROS EXTERNOS #}
+{% block js %}
+    {{ parent() }}
+    {# https://github.com/jschr/bootstrap-modal/ #}
+    <script src="{{ asset('bundles/trazeomypage/js/bootstrap-modalmanager.js') }}"></script>
+    <script src="{{ asset('bundles/trazeomypage/js/bootstrap-modal.js') }}"></script>
+    {% javascripts
+    '@SopinetOpenMapBundle/Resources/public/js/leaflet.js'
+    '@SopinetOpenMapBundle/Resources/public/js/leaflet-src.js'
+    '@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/utils/LineUtil.Snapping.js'
+    '@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/utils/Marker.Snapping.js'
+    '@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/utils/Polyline.Snapping.js'
+    '@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.js'
+    '@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Storage.js'
+    '@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Draw.js'
+    '@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Edit.js'
+    '@SopinetOpenMapBundle/Resources/public/js/plugins/Control.Geocoder/Control.Geocoder.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    {% for route in routes %}
+        {% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'id_map': 'map-'~route.id, 'routePoints': route.points,'editable': "false", 'realTime': "false", 'rideEvents': ''} %}
+        {% for group in route.groups %}
+            <script>
+                $("#full-width-{{ group.id }}").on('shown', function(){
+                    //alert("H");
+                    //$("#map-{{ route.id }}").hide();
+                    // TODO: REVISANDO: http://stackoverflow.com/questions/10762984/leaflet-map-not-displayed-properly-inside-tabbed-panel
+                    $("#map-{{ route.id }}").invalidateSize(false);
+                });
+            </script>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}
