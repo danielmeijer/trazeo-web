@@ -13,3 +13,11 @@ trazeo_api_user:
 trazeo_api_ride:
     type: rest
     resource: Trazeo\BaseBundle\Controller\ApiRideController
+
+trazeo_api_child:
+    type: rest
+    resource: Trazeo\BaseBundle\Controller\ApiChildController
+
+trazeo_api_timeline:
+    type: rest
+    resource: Trazeo\BaseBundle\Controller\ApiTimelineController
