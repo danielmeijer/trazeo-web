@@ -1,3 +1,15 @@
 trazeo_api: 
     type: rest
     resource: Trazeo\BaseBundle\Controller\ApiController
+
+trazeo_api_group:
+    type: rest
+    resource: Trazeo\BaseBundle\Controller\ApiGroupController
+
+trazeo_api_user:
+    type: rest
+    resource: Trazeo\BaseBundle\Controller\ApiUserController
+
+trazeo_api_ride:
+    type: rest
+    resource: Trazeo\BaseBundle\Controller\ApiRideController
