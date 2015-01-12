@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpKernel\Exception\PreconditionFailedHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Trazeo\BaseBundle\Entity\EGroup;
 use Trazeo\BaseBundle\Entity\ERoute;
 use Trazeo\BaseBundle\Entity\EGroupAccess;
@@ -15,6 +17,7 @@ use Trazeo\BaseBundle\Entity\EChild;
 use Trazeo\BaseBundle\Form\GroupType;
 use Trazeo\BaseBundle\Controller\GroupsController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Trazeo\BaseBundle\TrazeoBaseBundle;
 
 /**
  * Groups controller.
@@ -1004,29 +1007,25 @@ class PanelGroupsController extends Controller
     	
     	$fos_user = $this->container->get('security.context')->getToken()->getUser();
     	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
-    	$userId = $user->getId();
 
-        $group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
-        
-        $container = $this->get('sopinet_flashMessages');
-        
-        if (!$group) {
-        	$notification = $container->addFlashMessages("warning","El grupo que intentas eliminar no existe");
-        	return $this->redirect($this->generateUrl('panel_dashboard'));
-        }
-        
-        $groupAdmin = $group->getAdmin();
-        
-		if($groupAdmin == $user){
+		/** @var \Trazeo\BaseBundle\Entity\EGroupRepository $repositoryGroup */
+		$repositoryGroup=$em->getRepository('TrazeoBaseBundle:EGroup');
 
-			$em->remove($group);
-			$em->flush();
+		$container = $this->get('sopinet_flashMessages');
+
+		//Tratamos de borrar el grupo
+		try{
+			$repositoryGroup->userDeleteGroup($id,$user);
 			$notification = $container->addFlashMessages("success","El grupo ha sido eliminado");
 			return $this->redirect($this->generateUrl('panel_dashboard'));
-			
-		}else {
+		}
+		catch(PreconditionFailedHttpException $e){
+			$notification = $container->addFlashMessages("warning","El grupo que intentas eliminar no existe");
+			return $this->redirect($this->generateUrl('panel_dashboard'));
+		}
+		catch(AccessDeniedException $e){
 			$notification = $container->addFlashMessages("error","Sólo el administrador puede eliminar un grupo");
-			return $this->redirect($this->generateUrl('panel_dashboard'));	
+			return $this->redirect($this->generateUrl('panel_dashboard'));
 		}
     }
 

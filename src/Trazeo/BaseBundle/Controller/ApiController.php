@@ -15,6 +15,9 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\PreconditionFailedHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Trazeo\BaseBundle\Entity\ERide;
 use Trazeo\BaseBundle\Entity\EChild;
 use Trazeo\BaseBundle\Entity\EEvent;
@@ -63,8 +66,21 @@ class ApiController extends Controller {
 			$ret['data'] = $data;
 		return $ret;
 	}
-	
-	
+
+
+	/**
+	 * Funcion para manejar una excepcion
+	 * @param exception
+	 * @return view
+	 */
+	private function exceptionHandler($e) {
+		$view = View::create()
+			->setStatusCode(200)
+			->setData($this->msgDenied($e->getMessage()));
+
+		return $this->get('fos_rest.view_handler')->handle($view);
+	}
+
 	/**
 	 * Funcion que controla el usuario que envia datos a la API, sin estar logueado, con parámetros email y pass
 	 */
@@ -1284,6 +1300,44 @@ class ApiController extends Controller {
 		return $this->get('fos_rest.view_handler')->handle($view);
 	}
 
+
+	/**
+	 * @POST("/api/deleteChild")
+	 * @param Request request
+	 */
+	public function deleteChildrenAction(Request $request) {
+		//Comprobamos el acceso del usuario al sistema
+		$user = $this->checkPrivateAccess($request);
+		if( $user == false || $user == null ){
+			$view = View::create()
+				->setStatusCode(200)
+				->setData($this->msgDenied());
+
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+		$em = $this->get('doctrine.orm.entity_manager');
+		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+		$repositoryChild=$em->getRepository('TrazeoBaseBundle:EChild');
+		$id_child= $request->get('id_child');
+		//Tratamos de borrar el niño
+		try{
+			$repositoryChild->userDeleteChild($id_child,$userextend);
+			$view = View::create()
+				->setStatusCode(200)
+				->setData($this->doOK('ok'));
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+		//si no encontramos el niño
+		catch(NotFoundHttpException $e){
+			return $this->exceptionHandler($e);
+
+		}
+		//Si el usuario no es el tutor del niño y lo intenta borrar
+		catch(AccessDeniedException $e){
+			return $this->exceptionHandler($e);
+		}
+	}
+
 	/**
 	 * @GET("/api/groupsCity")
 	 */
@@ -1803,4 +1857,102 @@ class ApiController extends Controller {
             ->setData($this->doOK($url));
         return $this->get('fos_rest.view_handler')->handle($view);
     }
+
+	/**
+	 * Método que devuelve el listado de ciudades con catalogo de ofertas
+	 * @GET("/api/catalog/cities")
+	 */
+	public function getCitiesWithCatalogAction(Request $request) {
+		$user = $this->checkPrivateAccess($request);
+		if( $user == false || $user == null ){
+			$view = View::create()
+				->setStatusCode(200)
+				->setData($this->msgDenied());
+
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+		$em = $this->get('doctrine.orm.entity_manager');
+
+		//Ciudades que estan dentro del catalogo
+		$catalogItems=$em->getRepository('TrazeoBaseBundle:ECatalogItem')->findAll();
+		$cities=[];
+		foreach($catalogItems as $item){
+			//Obtenemos todas las ciudades con catalogo
+			if($item->getCitys()!=null && !in_array($item->getCitys()->getNameUtf8(),$cities))
+				$cities[]=$item->getCitys()->getNameUtf8();
+		}
+		$view = View::create()
+			->setStatusCode(200)
+			->setData($this->doOK($cities));
+		return $this->get('fos_rest.view_handler')->handle($view);
+	}
+
+	/**
+	 * Método que devuelve el listado de ciuades con catalogo de ofertas
+	 * @GET("/api/catalog/city")
+	 */
+	public function getCatalogCitiesAction(Request $request) {
+		$user = $this->checkPrivateAccess($request);
+		if( $user == false || $user == null ){
+			$view = View::create()
+				->setStatusCode(200)
+				->setData($this->msgDenied());
+
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+		$em = $this->get('doctrine.orm.entity_manager');
+
+		$cityName=$request->get('city');
+		//Ofertas del catalogo local
+		$city=$em->getRepository('JJsGeonamesBundle:City')->findOneByNameUtf8($cityName);
+		$catalogItems = $em->getRepository('TrazeoBaseBundle:ECatalogItem')->findByCitys($city);
+		$info['local']=$catalogItems;
+		//Ofertas del catalogo web
+		$catalogItems = $em->getRepository('TrazeoBaseBundle:ECatalogItem')->findByCitys(null);
+		$info['internet']=$catalogItems;
+		$view = View::create()
+			->setStatusCode(200)
+			->setData($this->doOK($info));
+		return $this->get('fos_rest.view_handler')->handle($view);
+	}
+
+
+	/**
+	 * @POST("/api/deleteGroup")
+	 * @param Request request
+	 */
+	public function deleteGroupAction(Request $request) {
+
+		$id_group= $request->get('id_group');
+		$user = $this->checkPrivateAccess($request);
+		if( $user == false || $user == null ){
+			$view = View::create()
+				->setStatusCode(200)
+				->setData($this->msgDenied());
+
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+		$em = $this->get('doctrine.orm.entity_manager');
+		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+		//Obtenemos el repositorio del grupo
+		$repositoryGroup=$em->getRepository('TrazeoBaseBundle:EGroup');
+		//Intentamos borrar el grupo
+		try{
+			$repositoryGroup->userDeleteGroup($id_group,$userextend);
+			//Grupo borrado con exito
+			$view = View::create()
+				->setStatusCode(200)
+				->setData($this->doOK('ok'));
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+		//no encontramos el grupo
+		catch (PreconditionFailedHttpException $e){
+			return $this->exceptionHandler($e);
+		}
+		//el usuario no es el administrador del grupo
+		catch (AccessDeniedException $e){
+			return $this->exceptionHandler($e);
+		}
+	}
+
 }

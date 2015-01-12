@@ -2,6 +2,7 @@
 namespace Trazeo\BaseBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\PreconditionFailedHttpException;
 
 class EGroupRepository extends EntityRepository
@@ -64,6 +65,7 @@ class EGroupRepository extends EntityRepository
         $em->persist($group);
         $em->flush();
     }
+
     /**
      * set country from string
      * @param $group_id
@@ -82,5 +84,27 @@ class EGroupRepository extends EntityRepository
         $em->persist($group);
         $em->flush();
     }
+
+
+    /**
+     * If user is the admin of the group it will be deleted
+     * @param $group_id
+     * @param $userextend
+     * @throws PreconditionFailedHttpException
+     * @throws OperationNotPermitedException
+     */
+    public function userDeleteGroup($group_id,$userextend){
+        $em = $this->getEntityManager();
+
+        $group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($group_id);
+        // el grupo no existe
+        if(!$group) throw new PreconditionFailedHttpException("Group not found");
+        // el usuario no es el admin
+        else if($group->getAdmin()!=$userextend) throw new AccessDeniedException("User is not the admin");
+
+        $em->remove($group);
+        $em->flush();
+    }
+
 
 }
