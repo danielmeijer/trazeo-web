@@ -31,7 +31,8 @@ use Hip\MandrillBundle\Message;
 use Hip\MandrillBundle\Dispatcher;
 
 class ApiController extends Controller {
-	
+
+	#ToDo pasar los métodos comunes a un helper
 	/**
 	 * Funcion para representar un uso erroneo de la API
 	 */
@@ -150,42 +151,6 @@ class ApiController extends Controller {
 	
 	}	
 
-	/**
-	 * Lista los mensajes del TimeLine (Muro) del Grupo
-	 * 
-	 * @POST("/api/group/timeline/list")
-	 * @param Request $request
-	 */	
-	public function getTimeLineAction(Request $request) {
-		$user = $this->checkPrivateAccess($request);
-		if( $user == false || $user == null ){
-			$view = View::create()
-			->setStatusCode(200)
-			->setData($this->msgDenied());
-		
-			return $this->get('fos_rest.view_handler')->handle($view);
-		}
-		
-		$em = $this->get('doctrine.orm.entity_manager');
-		
-		$id_group = $request->get('id_group');
-		
-		$thread = $em->getRepository('SopinetTimelineBundle:Thread')->findOneById($id_group);
-		$comments = $em->getRepository('SopinetTimelineBundle:Comment')->findByThread($thread);
-		$data = array();
-		foreach($comments as $comment) {
-			$comment->setAuthorName($comment->getAuthorName());
-			$data[] = $comment;
-		}
-		
-		$view = View::create()
-		->setStatusCode(200)
-		->setData($this->doOK($data));
-			
-		return $this->get('fos_rest.view_handler')->handle($view);
-	}
-
-
     /**
 	 * Crea un nuevo mensaje en el TimeLine (Muro) del Grupo
 	 * 
@@ -225,61 +190,7 @@ class ApiController extends Controller {
 			
 		return $this->get('fos_rest.view_handler')->handle($view);	
 	}
-	/**
-	 * Crea un nuevo mensaje en el TimeLine (Muro) del Grupo
-	 * 
-	 * @POST("/api/group/timeline/new")
-	 * @param Request $request
-	 */
-	public function newTimeLineAction(Request $request) {
-		$user = $this->checkPrivateAccess($request);
-		if( $user == false || $user == null ){
-			$view = View::create()
-			->setStatusCode(200)
-			->setData($this->msgDenied());
-		
-			return $this->get('fos_rest.view_handler')->handle($view);
-		}
-		$em = $this->get('doctrine.orm.entity_manager');
-		$id_group = $request->get('id_group');
-		$text = $request->get('text');
-		
-		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneById($id_group);
-		$thread = $em->getRepository('SopinetTimelineBundle:Thread')->findOneById($id_group);
-		
-		// Save comment
-		$comment = new Comment();
-		$comment->setThread($thread);
-		$comment->setAuthor($user);
-		$comment->setBody($text);
-		
-		$em->persist($comment);
-		$em->flush();
-		
-		// Send notifications to Users
-		$userextends = $group->getUserextendgroups()->toArray();
-		$not = $this->container->get('sopinet_user_notification');
-		foreach($userextends as $userextend)
-		{
-			$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($user,'panel_group_timeline', array('id' => $group->getId()));	
-			$not->addNotification(
-					"timeline.newFromMonitor",
-					"TrazeoBaseBundle:EGroup,SopinetTimelineBundle:Comment",
-					$group->getId().",".$comment->getId(),
-					$url,
-					$userextend->getUser(),
-					null,
-					$this->generateUrl('panel_group_timeline', array('id' => $group->getId()))
-			);
-		}	
-		
-		$view = View::create()
-		->setStatusCode(200)
-		->setData($this->doOK($comment));
-			
-		return $this->get('fos_rest.view_handler')->handle($view);		
-	}
-	
+
 	/**
 	 * @GET("/api/geo/city/list")
 	 */
@@ -362,111 +273,6 @@ class ApiController extends Controller {
 		return $this->get('fos_rest.view_handler')->handle($view);		
 	}
 
-
-	/**
-	 * @POST("/api/manageChild")
-	 * @param Request request
-	 */
-	public function manageChildrenAction(Request $request) {
-
-		$id_child= $request->get('id_child');	
-		$name = $request->get('name');
-		$school = $request->get('school');
-		$date = $request->get('date');
-		$gender= $request->get('gender');//boy girl
-
-		$user = $this->checkPrivateAccess($request);
-		if( $user == false || $user == null ){
-			$view = View::create()
-			->setStatusCode(200)
-			->setData($this->msgDenied());
-	
-			return $this->get('fos_rest.view_handler')->handle($view);
-		}
-		$em = $this->get('doctrine.orm.entity_manager');
-		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
-		//Si el niño existe se modifica si no se crea uno nuevo
-		$child = $em->getRepository('TrazeoBaseBundle:EChild')->findOneById($id_child);
-		$tutor= in_array($child, $userextend->getChilds()->toArray());	
-
-		$new=false;//flag que indica si el niño se va a crear como nuevo
-		//Si el usuario no es el tutor del niño y lo intenta modificar se deniega el ascesso
-		if($id_child!=null && $tutor==false){
-			$view = View::create()
-			->setStatusCode(200)
-			->setData($this->msgDenied("User is not the tutor"));
-	
-			return $this->get('fos_rest.view_handler')->handle($view);			
-		}
-		//Si el niño no existe se crea
-		else if($child==null){
-			$child=new EChild();
-			$new=true;
-		}
-
-		if($date)$child->setDateBirth(new \DateTime($date));
-		else $child->setDateBirth(new \DateTime());
-		if($school)$child->setScholl($school);
-		if($new)$child->addUserextendchild($userextend); 
-		$child->setSelected(false);
-		$child->setGender($gender);
-        $child->setNick($name);		
-		$child->setVisibility(true);
-
-        $em->persist($child);
-        $em->flush();
-
-        if($new){
-        	$userextend->addChild($child);
-   	        $em->persist($userextend);
-	        $em->flush();
-        }
-        //Se devuelve el id del niño
-        $data['id'] = $child->getId();
-		$view = View::create()
-		->setStatusCode(200)
-		->setData($this->doOK($data));
-		return $this->get('fos_rest.view_handler')->handle($view);
-	}
-
-
-	/**
-	 * @POST("/api/deleteChild")
-	 * @param Request request
-	 */
-	public function deleteChildrenAction(Request $request) {
-		//Comprobamos el acceso del usuario al sistema
-		$user = $this->checkPrivateAccess($request);
-		if( $user == false || $user == null ){
-			$view = View::create()
-				->setStatusCode(200)
-				->setData($this->msgDenied());
-
-			return $this->get('fos_rest.view_handler')->handle($view);
-		}
-		$em = $this->get('doctrine.orm.entity_manager');
-		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
-		$repositoryChild=$em->getRepository('TrazeoBaseBundle:EChild');
-		$id_child= $request->get('id_child');
-		//Tratamos de borrar el niño
-		try{
-			$repositoryChild->userDeleteChild($id_child,$userextend);
-			$view = View::create()
-				->setStatusCode(200)
-				->setData($this->doOK('ok'));
-			return $this->get('fos_rest.view_handler')->handle($view);
-		}
-		//si no encontramos el niño
-		catch(NotFoundHttpException $e){
-			return $this->exceptionHandler($e);
-
-		}
-		//Si el usuario no es el tutor del niño y lo intenta borrar
-		catch(AccessDeniedException $e){
-			return $this->exceptionHandler($e);
-		}
-	}
-
 	/**
 	 * @GET("/api/cities")
 	 */
@@ -495,33 +301,6 @@ class ApiController extends Controller {
 		return new Response($response, 200, array(
             'Content-Type' => 'application/json'
         ));
-	}
-
-	/**
-	 * @POST("/api/user/childs")
-	 */
-	public function getUserChildrensAction(Request $request) {
-	
-		$user = $this->checkPrivateAccess($request);
-		if( $user == false || $user == null ){
-			$view = View::create()
-			->setStatusCode(200)
-			->setData($this->msgDenied());
-	
-			return $this->get('fos_rest.view_handler')->handle($view);
-		}
-	
-		$em = $this->get('doctrine.orm.entity_manager');
-	
-		$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
-		
-		$childs = $userextend->getChilds();
-
-        $view = View::create()
-            ->setStatusCode(200)
-            ->setData($this->doOK($childs));
-
-        return $this->get('fos_rest.view_handler')->handle($view);
 	}
 
     /**
