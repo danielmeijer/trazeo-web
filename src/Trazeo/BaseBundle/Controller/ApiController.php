@@ -16,19 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\PreconditionFailedHttpException;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Trazeo\BaseBundle\Entity\ERide;
-use Trazeo\BaseBundle\Entity\EChild;
-use Trazeo\BaseBundle\Entity\EEvent;
-use Trazeo\BaseBundle\Entity\EReport;
 use Trazeo\BaseBundle\Entity\EGroup;
-use Trazeo\BaseBundle\Entity\EGroupInvite;
-use Trazeo\BaseBundle\Entity\EGroupAccess;
-use Sopinet\Bundle\SimplePointBundle\ORM\Type\SimplePoint;
-use Sopinet\TimelineBundle\Entity\Comment;
-use Hip\MandrillBundle\Message;
-use Hip\MandrillBundle\Dispatcher;
 
 class ApiController extends Controller {
 

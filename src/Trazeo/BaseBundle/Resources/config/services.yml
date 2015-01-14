@@ -129,6 +129,11 @@ services:
     trazeo_base_distance_measurer:
        class: Trazeo\BaseBundle\Service\DistanceMeasurer
        arguments: ["@service_container"]  
+
+    trazeo_base_api_helper:
+       class: Trazeo\BaseBundle\Service\ApiHelper
+       arguments: ["@doctrine.orm.default_entity_manager","@fos_rest.view_handler"]
+
     Trazeo_user.form.handler.registration:
         class: Trazeo\BaseBundle\Form\RegistrationFormType
         arguments: [%fos_user.model.user.class%]
