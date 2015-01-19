@@ -79,19 +79,9 @@
     {% endjavascripts %}
     {% for route in routes %}
         <script>
-            $('#route-{{ route.id }}').click(function(){
+            $("#full-width-{{ route.id }}").on('shown', function(){
                 {% include 'SopinetOpenMapBundle:Map:openmap.html.twig' with {'id_map': 'map-'~route.id, 'routePoints': route.points,'editable': "false", 'realTime': "false", 'rideEvents': ''}|e('js') %}
             });
         </script>
-        {% for group in route.groups %}
-            <script>
-                $("#full-width-{{ group.id }}").on('shown', function(){
-                    //alert("H");
-                    //$("#map-{{ route.id }}").hide();
-                    // TODO: REVISANDO: http://stackoverflow.com/questions/10762984/leaflet-map-not-displayed-properly-inside-tabbed-panel
-                    map.invalidateSize(false);
-                });
-            </script>
-        {% endfor %}
     {% endfor %}
 {% endblock %}
