@@ -7,7 +7,7 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandler;
 use Symfony\Component\HttpFoundation\Request;
 
-class Helper {
+class ApiHelper {
     private $em;
     private $viewHandler;
 

@@ -190,6 +190,8 @@ class ApiRideController extends Controller {
                 $emailsToFilter[] = "elenacarrie@gmail.com";
                 $emailsToFilter[] = "hidabe@gmail.com";
                 $emailsToFilter[] = "susana_sgr_86@hotmail.com";
+                $emailsToFilter[] = "carlos.p.fuentes@hotmail.com";
+                $emailsToFilter[] = "eduplazas_76@hotmail.com";
 
                 $canInitRide = true;
                 if (in_array($id_group, $groupsIds)) {

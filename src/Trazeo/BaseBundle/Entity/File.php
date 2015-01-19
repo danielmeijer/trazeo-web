@@ -2,6 +2,9 @@
  namespace Trazeo\BaseBundle\Entity;
 
  use Doctrine\ORM\Mapping as ORM;
+ use JMS\Serializer\Annotation\SerializedName;
+ use JMS\Serializer\Annotation\Type;
+ use JMS\Serializer\Annotation\VirtualProperty;
  use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
  /**
@@ -27,6 +30,16 @@
 	 * @ORM\OneToOne(targetEntity="ECatalogItem")
 	 */
 	 protected $catalogitems;
+
+
+     /**
+      * @VirtualProperty
+      * @Type("string")
+      * @SerializedName("path")
+      */
+     public function path(){
+         return $this->getPathRelative();
+     }
 
     /**
      * Get id
