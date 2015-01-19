@@ -12,7 +12,7 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
  */
 class EGroupInvite
 {
-	use ORMBehaviors\Timestampable\Timestampable;
+    use ORMBehaviors\Timestampable\Timestampable;
     /**
      * @var integer
      *
@@ -23,12 +23,12 @@ class EGroupInvite
     protected $id;
 
     /** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="inviteGroup")
-     *  @ORM\JoinColumn(name="userextend_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="userextend_id", referencedColumnName="id")
      * @var unknown
      */
     protected $userextend;
-    
-    /** 
+
+    /**
      * @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="inviteGroupSender")
      * @ORM\JoinColumn(name="sender_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      * @var unknown
@@ -37,19 +37,20 @@ class EGroupInvite
 
 
     /** @ORM\ManyToOne(targetEntity="EGroup", inversedBy="inviteGroup")
-     *  @ORM\JoinColumn(name="group_id", referencedColumnName="id") 
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
      */
     protected $group;
- 
 
-     public function __toString(){
-            return (string)$this->id;
+
+    public function __toString()
+    {
+        return (string)$this->id;
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -74,7 +75,7 @@ class EGroupInvite
     /**
      * Get userextend
      *
-     * @return \Trazeo\BaseBundle\Entity\UserExtend 
+     * @return \Trazeo\BaseBundle\Entity\UserExtend
      */
     public function getUserextend()
     {
@@ -98,7 +99,7 @@ class EGroupInvite
     /**
      * Get group
      *
-     * @return \Trazeo\BaseBundle\Entity\EGroup 
+     * @return \Trazeo\BaseBundle\Entity\EGroup
      */
     public function getGroup()
     {
@@ -127,9 +128,5 @@ class EGroupInvite
     public function getSender()
     {
         return $this->sender;
-    }
-
-    public function __toString() {
-        return (string) $this->getId();
     }
 }
