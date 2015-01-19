@@ -22,4 +22,16 @@ class AjaxController extends Controller
 		return array('count' => $not->clearNotifications());
     	//die("HOLA");
     }
+
+	/**
+	 * @Route("/{not_id}/view", name="sopinetusernotifications_view")
+	 * @Template
+	 */
+    public function viewAction($not_id)
+    {
+		$em = $this->getDoctrine()->getManager();
+		$not = $this->container->get('sopinet_user_notification');
+		$not->clearNotification(null,$not_id);
+    	//die("HOLA");
+    }
 }

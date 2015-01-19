@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandler;
 use FOS\RestBundle\Controller\FOSRestController;
+use Hip\MandrillBundle\Message;
+use Hip\MandrillBundle\Dispatcher;
 
 /**
 * @Route("/panel")
@@ -53,42 +55,35 @@ class PanelController extends Controller
 	    	$em->persist($user);
 	    	$em->flush();
 	    	$tutorial = 1;
-	    	
 	    	// Creamos el correo de bienvenida
-	    	$message = \Swift_Message::newInstance()
-	    	// TODO: Traducir
-	    	->setSubject("Bienvenido a Trazeo.")
-	    	->setFrom(array("hola@trazeo.es" => "Trazeo"))
-	    	->setTo($fos_user->getEmail())
-	    	->setBody($this->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:newUser.html.twig', array()), 'text/html');
-	    	$ok = $this->get('mailer')->send($message);    	
+	        $dispatcher = $this->get('hip_mandrill.dispatcher');
+
+    	    $message = new Message();
+
+        	$message
+            	->setFromEmail('hola@trazeo.es')
+            	->setFromName('Trazeo')
+            	->addTo($fos_user->getEmail())
+            	->setSubject("Bienvenido a Trazeo.")
+            	->setHtml($this->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:newUser.html.twig', array()));
+ 			$result = $dispatcher->send($message);
+	    	
 	    }
-	    
 	    /**
 	     * Do Suggestion
 	     */    
-	    $reSu = $em->getRepository('TrazeoBaseBundle:ESuggestion');
-	    $sugs = $reSu->findBy(
-                 array('useLike' => $user->getUseLike()), 
-                 array('forder' => 'ASC')
-               );
-	    $already = false;
+	    $reSu = $em->getRepository('SopinetSuggestionBundle:ESuggestion');
+	    $sugs = $reSu->getSuggestionsFor($user->getUseLike(), 'home');
+	    $suggestion=null;
+
 	    foreach($sugs as $sug) {
-	    	if (!$already) {
-		    	$okrule = eval($sug->getRule());
-		    	if ($okrule) {
-		    		$suggestion = $sug;
-		    		$already = true;
-		    	}
+	    	if (eval($sug->getRule())) {
+	    		$suggestion = $sug;
+	    		break;
 	    	}
 	    }
 	    
-	    if ($already) {
-	    	$suggestion->setText($this->get('translator')->trans('Suggestion.'.$suggestion->getText()));
-	    	if ($suggestion->getPosition() == null) $suggestion->setPosition('n');
-	    } else {
-	    	$suggestion = null;
-	    }
+	    if($suggestion!=null)$suggestion->setText($this->get('translator')->trans('Suggestion.'.$suggestion->getText()));
 	    /** END SUGGESTION **/
 	    
 	   	return array(

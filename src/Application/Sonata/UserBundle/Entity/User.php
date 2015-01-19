@@ -33,7 +33,7 @@ class User extends BaseUser
 
     public function setSopinetUserExtend(\Sopinet\UserBundle\Entity\SopinetUserExtend $sopinetuserextend = null)
     {
-    	$this->userextend = $userextend;
+    	$this->sopinetuserextend = $sopinetuserextend;
     
     	return $this;
     }

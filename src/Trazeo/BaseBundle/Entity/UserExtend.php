@@ -9,8 +9,8 @@ use JMS\Serializer\Annotation\ExclusionPolicy;
 
 /**
  * @ORM\Table("userextend")
- * @ORM\Entity
- * 
+ * @ORM\Entity(repositoryClass="UserExtendRepository")
+ *
  * @ExclusionPolicy("all")
  */
 class UserExtend
@@ -100,7 +100,7 @@ class UserExtend
      * // Datos: monitor / user
      * @ORM\Column(name="useLike", type="string", length=50, nullable=true)
      */    
-    protected $useLike;
+    protected $useLike='user';
     
     /**
      * @var string
@@ -141,10 +141,13 @@ class UserExtend
 
     public function __toString(){
     	if($this->name != "")
-    		return $this->name;
+    		$string= $this->name;
     	else if($this->nick!= "")
-    		return $this->nick;
-    	return (string)$this->id;
+    		$string= $this->nick;
+    	else $string= (string)$this->id;
+        $patrón = '/@[\d|\D]*$/';
+        $sustitución = '';
+        return preg_replace($patrón, $sustitución, $string);
     }
     
     /**

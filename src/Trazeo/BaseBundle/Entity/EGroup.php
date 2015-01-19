@@ -9,7 +9,7 @@ use JMS\Serializer\Annotation\Exclude;
  * Entity Group
  *
  * @ORM\Table(name="e_group")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="EGroupRepository")
  */
 class EGroup
 {
@@ -42,7 +42,7 @@ class EGroup
     protected $childs;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="ERoute", inversedBy="groups")
+     * @ORM\OneToOne(targetEntity="ERoute", inversedBy="group")
      * @ORM\JoinColumn(name="route_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $route;
@@ -85,7 +85,23 @@ class EGroup
      * @ORM\Column(name="hasRide", type="boolean", nullable=true)
      */
     protected $hasRide;
+
+    /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\City")
+     */
+    protected $city;
     
+    /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\Country")
+     */
+    protected $country;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="school1", type="string", nullable=true)
+     *
+     */
+    protected $school1;
+
     /**
      * @var string
      *
@@ -469,11 +485,15 @@ class EGroup
     
     public function getCity()
     {
-    	if ($this->getRoute() != null) {
-    		if ($this->getRoute()->getCity() != null) {
-    			return $this->getRoute()->getCity();
-    		}
-    	}
+
+        if ($this->city!=null) {
+            return $this->city;
+        }
+        elseif ($this->route != null) {
+            if ($this->route->getCity() != null) {
+                return $this->getRoute()->getCity();
+            }
+        }
     	return null;
     }
 
@@ -487,6 +507,19 @@ class EGroup
     public function setPage(\Trazeo\MyPageBundle\Entity\Page $page = null)
     {
         $this->page = $page;
+        return $this;
+    }
+
+    /**
+     * Set city
+     *
+     * @param \JJs\Bundle\GeonamesBundle\Entity\City $city
+     *
+     * @return EGroup
+     */
+    public function setCity(\JJs\Bundle\GeonamesBundle\Entity\City $city = null)
+    {
+        $this->city = $city;
 
         return $this;
     }
@@ -499,5 +532,61 @@ class EGroup
     public function getPage()
     {
         return $this->page;
+    }
+
+    /**
+     * Set country
+     *
+     * @param \JJs\Bundle\GeonamesBundle\Entity\Country $country
+     *
+     * @return EGroup
+     */
+    public function setCountry(\JJs\Bundle\GeonamesBundle\Entity\Country $country = null)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return \JJs\Bundle\GeonamesBundle\Entity\Country
+     */
+    public function getCountry()
+    {
+        if ($this->getRoute() != null) {
+            if ($this->getRoute()->getCountry() != null) {
+                return $this->getRoute()->getCountry();
+            }
+        }
+        elseif ($this->country!=null) {
+            return $this->country;
+        }
+        return null;
+    }
+
+    /**
+     * Set school1
+     *
+     * @param string $school1
+     *
+     * @return EGroup
+     */
+    public function setSchool1($school1)
+    {
+        $this->school1 = $school1;
+
+        return $this;
+    }
+
+    /**
+     * Get school1
+     *
+     * @return string
+     */
+    public function getSchool1()
+    {
+        return $this->school1;
     }
 }

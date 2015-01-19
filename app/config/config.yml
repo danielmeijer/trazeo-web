@@ -41,6 +41,7 @@ twig:
     globals:
         fos_csrf_provider: "@form.csrf_provider"
         base_url: %base_url%
+        exchange_code: %exchange_code%
     form:
         resources:
             - 'SopinetTemplateSbadmin2Bundle:Form:bootstrap.html.twig'  
@@ -49,7 +50,7 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ FOSCommentBundle, SopinetTemplateSbadmin2Bundle, TrazeoFrontBundle, SopinetTemplateLandingBundle,SopinetTemplateAmoebaBundle, JMSTranslationBundle, FOSUserBundle, SopinetFlashMessagesBundle, SopinetTimelineBundle, TrazeoMyPageBundle ]
+    bundles:        [ FOSCommentBundle, SopinetTemplateSbadmin2Bundle, TrazeoFrontBundle, SopinetTemplateLandingBundle,SopinetTemplateAmoebaBundle, JMSTranslationBundle, FOSUserBundle, SopinetFlashMessagesBundle, SopinetTimelineBundle, SopinetSuggestionBundle, SopinetUploadMagicBundle, TrazeoMyPageBundle]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -103,19 +104,70 @@ swiftmailer:
         path:                 "%kernel.cache_dir%/swiftmailer/spool"
 
 # FOSUserBundle Configuration
-
 fos_user:
     db_driver: orm
     firewall_name: main
     user_class: Application\Sonata\UserBundle\Entity\User
     group:
           group_class: Trazeo\BaseBundle\Entity\Group
+    registration:
+        form:
+            type: trazeo_user_registration
+            name: trazeo_user_registration_form
+            validation_groups:  [Registration, Default]      
 
 # Sonata User
 sonata_user:
     admin:
         user:
             class:  Trazeo\BaseBundle\Admin\UserAdmin
+
+# Sonata Admin Dashboard
+sonata_admin:
+    title:      Trazeo - Dashboard
+    templates:
+        ## default global templates
+        layout:  SonataAdminBundle::standard_layout.html.twig
+        ajax:    SonataAdminBundle::ajax_layout.html.twig
+ 
+        ## default actions templates, should extend a global templates
+        list:    SonataAdminBundle:CRUD:list.html.twig
+        show:    SonataAdminBundle:CRUD:show.html.twig
+        edit:    SonataAdminBundle:CRUD:edit.html.twig
+    dashboard:
+        blocks:
+            - { position: left,  type: sonata.admin.block.admin_list, settings: { groups: [admin] } }
+
+sonata_doctrine_orm_admin:
+    templates:
+        types:
+            list:
+                array:      SonataAdminBundle:CRUD:list_array.html.twig
+                boolean:    SonataAdminBundle:CRUD:list_boolean.html.twig
+                date:       SonataAdminBundle:CRUD:list_date.html.twig
+                time:       SonataAdminBundle:CRUD:list_time.html.twig
+                datetime:   SonataAdminBundle:CRUD:list_datetime.html.twig
+                text:       SonataAdminBundle:CRUD:base_list_field.html.twig
+                trans:      SonataAdminBundle:CRUD:list_trans.html.twig
+                string:     SonataAdminBundle:CRUD:base_list_field.html.twig
+                smallint:   SonataAdminBundle:CRUD:base_list_field.html.twig
+                bigint:     SonataAdminBundle:CRUD:base_list_field.html.twig
+                integer:    SonataAdminBundle:CRUD:base_list_field.html.twig
+                decimal:    SonataAdminBundle:CRUD:base_list_field.html.twig
+                identifier: SonataAdminBundle:CRUD:base_list_field.html.twig
+            show:
+                array:      SonataAdminBundle:CRUD:show_array.html.twig
+                boolean:    SonataAdminBundle:CRUD:show_boolean.html.twig
+                date:       SonataAdminBundle:CRUD:show_date.html.twig
+                time:       SonataAdminBundle:CRUD:show_time.html.twig
+                datetime:   SonataAdminBundle:CRUD:show_datetime.html.twig
+                text:       SonataAdminBundle:CRUD:base_show_field.html.twig
+                trans:      SonataAdminBundle:CRUD:show_trans.html.twig
+                string:     SonataAdminBundle:CRUD:base_show_field.html.twig
+                smallint:   SonataAdminBundle:CRUD:base_show_field.html.twig
+                bigint:     SonataAdminBundle:CRUD:base_show_field.html.twig
+                integer:    SonataAdminBundle:CRUD:base_show_field.html.twig
+                decimal:    SonataAdminBundle:CRUD:base_show_field.html.twig
         
 services:
     #apikey_authenticator:
@@ -135,13 +187,17 @@ services:
         class: Trazeo\BaseBundle\Listener\UpdatedListener
         arguments: ['@service_container']
         tags:
-            - { name: doctrine.event_subscriber }     
+            - { name: doctrine.event_subscriber }
     sopinet_flashMessages:
         class:        Sopinet\FlashMessagesBundle\Service\FlashNotifier
         arguments:
             entityManager: @doctrine.orm.entity_manager
             container: @service_container
-              
+    sopinet.uploadlistener:
+        class: Sopinet\Bundle\UploadMagicBundle\Listener\UploadListener
+        arguments: ['@doctrine']
+        tags:
+            - { name: kernel.event_listener, event: oneup_uploader.post_persist, method: onUpload }
 jms_translation:
     configs:
         app:
@@ -180,3 +236,22 @@ lunetics_locale:
        - browser
     cookie:
        set_on_change: true
+       
+sopinet_gamification:
+    class: 'TrazeoBaseBundle:UserExtend'      
+    api: 'CiviClub'
+sopinet_suggestion: ~
+
+sopinet_autologin:
+    domain: http://localhost/trazeo-web/web/app_dev.php/
+
+hip_mandrill:
+    api_key: sG8TY_s5xMA6wOvc9gLMmg
+    disable_delivery: false # useful for dev/test environment. Default value is 'false'
+    default:
+        sender: hola@trazeo.es
+        sender_name: Trazeo
+oneup_uploader:
+    mappings:
+        gallery:
+            frontend: dropzone

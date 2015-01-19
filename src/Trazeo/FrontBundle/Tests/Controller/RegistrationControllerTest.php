@@ -13,10 +13,10 @@ class RegistrationControllerTest extends WebTestCase
     	$crawler = $client->request('GET', '/register/');
     	$form = $crawler->selectButton('Registrar')->form();
     	$crawler = $client->submit($form, array(
-    			'fos_user_registration_form[email]' => 'syamuza@sopinet.com',
-    			'fos_user_registration_form[username]' => 'Sergio',
-    			'fos_user_registration_form[plainPassword][first]' => 'password',
-    			'fos_user_registration_form[plainPassword][second]' => 'password',
+    			'trazeo_user_registration_form[email][first]' => 'syamuza@sopinet.com',
+    			'trazeo_user_registration_form[email][second]' => 'syamuza@sopinet.com',
+    			'trazeo_user_registration_form[plainPassword][first]' => 'password',
+    			'trazeo_user_registration_form[plainPassword][second]' => 'password',
     	
     	));    	
     }

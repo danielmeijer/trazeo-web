@@ -5,31 +5,91 @@
 
 {% block body_content %}
 <!-- START pointsResume -->
-		<div class="col-lg-12">
-			<span class="btn btn-warning howto" data-toggle="modal" data-target="#howToModal">
-				<i class="fa fa-info "></i>&nbsp;{{"Points.index.howto"|trans}}
-			</span>&nbsp;	
+	<div class="col-lg-12" >
+		<div class="howto col-md-4" data-toggle="modal" data-target="#howToModal">
+			<button type="button" class="btn btn-warning">
+				 <i class="fa fa-info"></i>&nbsp; {{ 'Points.exchange'|trans }}	
+			</button>
+		</div>	
+		<div class="civi col-md-4" data-toggle="modal" data-target="#civiModal">
+			<button type="button" class="btn btn-warning">
+				 <i class="fa fa-info"></i>&nbsp; {{ 'Points.modal.civi.button'|trans }}	
+			</button>
+		</div>	
+		<div class="code col-md-4">
+			<button type="button" class="btn btn-warning exchange-code">
+				 <i class="fa fa-plus-circle"></i>&nbsp; {{ "Exchange.button.code"|trans}}
+			</button>
+			<input type="text" id="exchangecode"  name="_exchangecode" placeholder='{{ "Exchange.help.code"|trans}}'/>
+		</div>	
+	</div>
+	</br>
+	</br>
+	<div class="col-lg-12 alert alert-success">
+       	<div class="col-md-2">
+       		<i class="fa fa-5x fa-trophy"></i>
+       	</div>
+        <div class="col-md-2">
+            {% include 'SopinetTemplateSbadmin2Bundle:Elements/Basics:helper.html.twig' with{id:'point',help_text: "Help.button.pointsList"|trans, size:5}%}
+        </div>
+		<div class="col-md-4">
+			{% if (user.points-user.spendedPoints)>1%}
+			<h4><span class="points">{{ user.points-user.spendedPoints }}</span> {{"Points.name_plural"|trans}} {{ "Points.index.remains"|trans }}</h4>
+			{% else %}
+			<h4><span class="points">{{ user.points-user.spendedPoints }}</span> {{"Points.name"|trans}} {{ "Points.index.remains"|trans }}</h4>
+			{% endif %}
+			{% if (user.points)>1%}				
+			<h4><span class="points">{{ user.points }}</span> {{"Points.name_plural"|trans}} {{ "Points.index.total"|trans }} </h4>
+			{% else %}
+			<h4><span class="points">{{ user.points }}</span> {{"Points.name"|trans}} {{ "Points.index.total"|trans }} </h4>
+			{% endif %}
 		</div>
-		</br>
-        <div class="col-lg-12 alert alert-success">
-        	<div class="col-md-4">
-        		<i class="fa fa-5x fa-trophy"></i>
-        	</div>
-
-			<div class="col-md-4">
-				<h4>{{ user.points-user.spendedPoints }} {{"Points.name"|trans}} {{ "Points.index.remains"|trans }}</h4>
-				<h4>{{ user.points }} {{"Points.name"|trans}} {{ "Points.index.total"|trans }} </h4>
-			</div>
-			<div class="col-md-4"><br/>
-				<a class="btn-xs btn-warning historical" href="{{ path('panel_point_historical') }}">
-					<i class="fa fa-bar-chart-o "></i>&nbsp;{{ 'Points.historical.button'|trans }}
-				</a>&nbsp;		
-			</div>
+		<div class="col-md-4"><br/>
+			<a class="btn-xs btn-warning historical" href="{{ path('panel_point_historical') }}">
+				<i class="fa fa-bar-chart-o "></i>&nbsp;{{ 'Points.historical.button'|trans }}
+			</a>&nbsp;
 		</div>
-		{% include 'TrazeoFrontBundle:PanelPoint:_howto_modal.html.twig' %}
+	</div>
+    <div class="row col-md-12">
+        <select class="form-control change-city col-md-3 pull-left" name="city">
+            <option value="all"> - {{ "City.all"|trans }} - </option>
+            {% for c in cities %}
+                <option {% if city is not null and city.id == c.id %} selected="selected" {% endif %}value="{{ c.nameUtf8 }}">{{ c.nameUtf8 }}</option>
+            {% endfor %}
+        </select>
+    </div>
+	{% include 'TrazeoFrontBundle:PanelPoint:_howto_modal.html.twig' %}
+	{% include 'TrazeoFrontBundle:PanelPoint:_exchange_modal.html.twig'%}
+	{% include 'TrazeoFrontBundle:PanelPoint:_exchangeFail_modal.html.twig'%}
+	{% include 'TrazeoFrontBundle:PanelPoint:_civi_modal.html.twig' %}
+	{% include 'TrazeoFrontBundle:PanelPoint:exchange.html.twig' %}
 	<!-- END pointsResume -->
 {% endblock %}{# END body_content #}
 {% block js %}
 	{{parent()}}
 	{% include 'TrazeoFrontBundle:PanelPoint:_index_analytics.html.twig' %}
+	{%if exchange is defined%}
+		{% if exchange==1 %}
+			<script type="text/javascript">
+				$('#exchangeModal').modal();
+			</script>
+		{%elseif exchange==2 %}
+			<script type="text/javascript">
+				$('#exchangeFailModal').modal();
+			</script>
+		{%endif %}
+	{%endif%}
+	<script type="text/javascript">
+		$('.modalchange').click(function(){$('#howToModal').modal('hide')});
+		$('.exchange').click(function(){sessionStorage.exchange=true});
+	</script>
+	{% include 'TrazeoFrontBundle:PanelPoint:_ajax_exchange.html.twig' %}
+    {% include '@TrazeoFront/PanelRoutes/_filter.js.twig' %}
+    <script>
+        filterBy('data-city',$( "select option:selected" ).val());//filtramos con el valor inicial
+        $( ".change-city" ).change(function() {
+            //$("#filter-city").submit();
+            filterBy('data-city',$( "select option:selected" ).val());
+        });
+    </script>
 {% endblock %}

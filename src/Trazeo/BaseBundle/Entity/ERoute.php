@@ -23,10 +23,10 @@ class ERoute
 	 */
 	protected $id;
 	
-	/** @ORM\OneToMany(targetEntity="EGroup", mappedBy="route")
+	/** @ORM\OneToOne(targetEntity="EGroup", mappedBy="route")
      *  @Exclude
 	 */
-	protected $groups;
+	protected $group;
 	
 	/** @ORM\OneToMany(targetEntity="EPoints", mappedBy="route", cascade={"remove"})
 	 */
@@ -69,14 +69,6 @@ class ERoute
 		
 		return $this->getName();
 	}
-   
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -110,40 +102,6 @@ class ERoute
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Add groups
-     *
-     * @param \Trazeo\BaseBundle\Entity\EGroup $groups
-     *
-     * @return ERoute
-     */
-    public function addGroup(\Trazeo\BaseBundle\Entity\EGroup $groups)
-    {
-        $this->groups[] = $groups;
-
-        return $this;
-    }
-
-    /**
-     * Remove groups
-     *
-     * @param \Trazeo\BaseBundle\Entity\EGroup $groups
-     */
-    public function removeGroup(\Trazeo\BaseBundle\Entity\EGroup $groups)
-    {
-        $this->groups->removeElement($groups);
-    }
-
-    /**
-     * Get groups
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getGroups()
-    {
-        return $this->groups;
     }
 
     /**
@@ -322,5 +280,36 @@ class ERoute
     public function getDescription()
     {
         return $this->description;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->points = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set group
+     *
+     * @param \Trazeo\BaseBundle\Entity\EGroup $group
+     *
+     * @return ERoute
+     */
+    public function setGroup(\Trazeo\BaseBundle\Entity\EGroup $group = null)
+    {
+        $this->group = $group;
+
+        return $this;
+    }
+
+    /**
+     * Get group
+     *
+     * @return \Trazeo\BaseBundle\Entity\EGroup
+     */
+    public function getGroup()
+    {
+        return $this->group;
     }
 }

@@ -1,0 +1,44 @@
+{#Local oferts#}
+<div class="col-md-12 row-offset-min row">
+    <h3 class="text-center">
+        {{ "Points.local.offerts"|trans }}
+    </h3>
+</div>
+{%set i =0%}
+	{%set j =0%}
+{%for ofert in oferts %}
+	{%if ofert.complete==1 %}
+        {#{%if j==0%}<div class="row col-md-12 col-xs-12 col-sm-12 col-lg-12" style="margin-top:10px">{%endif%}#}
+		{% if ofert.citys is not null %}
+        {% include 'TrazeoFrontBundle:PanelPoint:_row_catalogItem.html.twig' with {
+		'ofert': ofert, 'file': files[i]
+		} %}
+        {% endif %}
+		{%set j=j+1%}
+        {# {%if j==3%}</div>{%set j=0%}{%endif%} #}
+	{%endif%}
+	{%set i =i+1%}
+{%endfor%}
+<div class="row"></div>
+{#Internet oferts#}
+<div class="col-md-12 row-offset-min row">
+    <h3 class="text-center">
+        {{ "Points.internet.offerts"|trans }}
+    </h3>
+</div>
+{%set i =0%}
+	{%set j =0%}
+{%for ofert in oferts %}
+    {%if ofert.complete==1 %}
+        {#{%if j==0%}<div class="row col-md-12 col-xs-12 col-sm-12 col-lg-12" style="margin-top:10px">{%endif%}#}
+        {% if ofert.citys is null %}
+            {% include 'TrazeoFrontBundle:PanelPoint:_row_catalogItem.html.twig' with {
+            'ofert': ofert, 'file': files[i]
+            } %}
+        {% endif %}
+        {%set j=j+1%}
+        {# {%if j==3%}</div>{%set j=0%}{%endif%} #}
+    {%endif%}
+    {%set i =i+1%}
+{%endfor%}
+

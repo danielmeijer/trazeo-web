@@ -85,14 +85,20 @@ class PanelChildrenController extends Controller
 		}else{
 			// Si no existen los UserExtend y Group anteriormente obtenidos,
 			// directamente se crea la petición
-
+            $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($fos_user,'panel_child');
 			$not = $this->container->get('sopinet_user_notification');
 			$el = $not->addNotification(
 					'child.invite.user',
 					"TrazeoBaseBundle:EChild",
 					$childId,
-					$this->generateUrl('panel_child'), $fos_user
+					$url,
+                    $fos_user,
+                    null,
+                    $this->generateUrl('panel_child')
 			);
+            $el->setImportant(1);
+            $em->persist($el);
+            $em->flush();
 
 			$access = new EChildInvite();
 			$access->setChild($child);
@@ -156,11 +162,28 @@ class PanelChildrenController extends Controller
         $allChildsInvite = $em->getRepository('TrazeoBaseBundle:EChildInvite')->findAll();
         
         $childs = $user->getChilds();
+        /**
+         * Do Suggestion
+         */    
+        $reSu = $em->getRepository('SopinetSuggestionBundle:ESuggestion');
+        $sugs = $reSu->getSuggestionsFor($user->getUseLike(), 'child');
+        $suggestion=null;
+
+        foreach($sugs as $sug) {
+            if (eval($sug->getRule())) {
+                $suggestion = $sug;
+                break;
+            }
+        }
+
+        if($suggestion!=null)$suggestion->setText($this->get('translator')->trans('Suggestion.'.$suggestion->getText()));
+        /** END SUGGESTION **/
 
         return array(
             'childs' => $childs,
         	'allChildsInvite' => $allChildsInvite,
-        	'user' => $user,
+            'suggestion' => $suggestion,
+        	'user' => $user
         );
     }
     
@@ -200,13 +223,19 @@ class PanelChildrenController extends Controller
     	$em->flush();
     
     	$not = $this->container->get('sopinet_user_notification');
+        $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($fos_userSender,'panel_child');
     	$el = $not->addNotification(
     			'child.invite.accept',
     			"TrazeoBaseBundle:Userextend,TrazeoBaseBundle:EChild",
     			$id . "," . $child,
-    			$this->generateUrl('panel_child'), $fos_userSender
+    			$url,
+                $fos_userSender,
+                null,
+                $this->generateUrl('panel_child')
     	);
-    
+        $el->setImportant(1);
+        $em->persist($el);
+        $em->flush();    
     
     	$notification = $container->addFlashMessages("success","Has aceptado la invitación para ser tutor");
     	return $this->redirect($this->generateUrl('panel_child'));
@@ -233,12 +262,19 @@ class PanelChildrenController extends Controller
     	$userSender = $em->getRepository('TrazeoBaseBundle:Userextend')->findOneById($sender);
     	$fos_userSender = $userSender->getUser();
     	$not = $this->container->get('sopinet_user_notification');
+        $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($fos_userSender,'panel_child');
     	$el = $not->addNotification(
     			'child.invite.deny',
     			"TrazeoBaseBundle:Userextend,TrazeoBaseBundle:EChild",
     			$id . "," . $child,
-    			$this->generateUrl('panel_child'), $fos_userSender
+    			$url,
+                $fos_userSender,
+                null,
+                $this->generateUrl('panel_child')
     	);
+        $el->setImportant(1);
+        $em->persist($el);
+        $em->flush();
     
     	$container = $this->get('sopinet_flashMessages');
     	$notification = $container->addFlashMessages("success","Has rechazado la invitación");

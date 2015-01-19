@@ -1,0 +1,25 @@
+<script type="text/javascript">
+	$(".exchange-code").click(function()
+	{
+		$.ajax({
+ 			url: "{{base_url}}"+"/api/exchange/code",
+  			type: "POST",
+  			data: { code : $("#exchangecode").val()}
+		}).done(function(textResponse){
+			if(textResponse!='false'){
+				var text="código canjeado correctamente";
+				$(".points").html(textResponse);
+			}					
+			else var text="código erroneo";
+			trip = new Trip([
+					{
+						sel : $('.exchange-code'),
+						content : text,
+						position: 'n'
+	           		}
+		        ]);
+			trip.start();
+			$("#exchangecode").val("");
+		});
+	});
+</script>

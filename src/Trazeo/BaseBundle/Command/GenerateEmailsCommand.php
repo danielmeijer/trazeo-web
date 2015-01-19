@@ -9,6 +9,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Application\Sonata\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RequestContext;
+use Hip\MandrillBundle\Message;
+use Hip\MandrillBundle\Dispatcher;
 
 class GenerateEmailsCommand extends ContainerAwareCommand
 {
@@ -54,9 +56,10 @@ class GenerateEmailsCommand extends ContainerAwareCommand
     		if($time=='important'){
     			$notifications = $reNOT->findBy(array('user' => $user, 'email' => 0,'action' => 'ride.finish'));
     			$notifications2= $reNOT->findBy(array('user' => $user, 'email' => 0,'action' => 'group.invite.user'));
-    			$notifications=array_merge($notifications,$notifications2);			
+                $notifications3= $reNOT->findBy(array('user' => $user, 'email' => 0,'action' => 'timeline.newFromMonitor'));
+    			$notifications=array_merge($notifications,$notifications2,$notifications3);			
     		}
-    		
+            
     		else $notifications = $reNOT->findBy(array('user' => $user, 'email' => 0));
 
     		if (count($notifications) > 0) {
@@ -68,22 +71,28 @@ class GenerateEmailsCommand extends ContainerAwareCommand
     				$em->flush();
     			}
 
-    			$message = \Swift_Message::newInstance()
-    			->setFrom(array("hola@trazeo.es" => "Trazeo"))
-    			->setTo($user->getUser()->getEmail())
-    			->setBody($con->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:notifyUser.html.twig', array('user' => $user, 'notifications' => $notifications)), 'text/html');
-    			
-    			if (count($notifications) == 1) {
-    				$not  = $con->get('sopinet_user_notification');
-    				$string_not = $not->parseNotification($notifications[0], "title");
-    				$message->setSubject($string_not);
-    			} else {
-    				$message->setSubject("Tiene ".count($notifications)." novedades");
-    			}
-    			
-    			$ok = $con->get('mailer')->send($message);
+            if (count($notifications) == 1) {
+                $not  = $con->get('sopinet_user_notification');
+                $string_not = $not->parseNotification($notifications[0], "title");
+                $subject=$string_not;
+            } else {
+                $subject=("Tiene ".count($notifications)." novedades");
+            }
 
-    			$output->writeln('<info>Hecho</info>');
+            $dispatcher = $con->get('hip_mandrill.dispatcher');
+
+            $message = new Message();
+
+            $message
+                ->setFromEmail('hola@trazeo.es')
+                ->setFromName('Trazeo')
+                ->addTo($user->getUser()->getEmail())
+                ->setSubject($subject)
+                ->setHtml($con->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:notifyUser.html.twig', array('user' => $user, 'notifications' => $notifications)));
+
+
+            $result = $dispatcher->send($message);
+   			$output->writeln('<info>Hecho</info>');
     		}
     	}
     }

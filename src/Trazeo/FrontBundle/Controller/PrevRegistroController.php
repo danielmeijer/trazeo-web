@@ -53,7 +53,7 @@ class PrevRegistroController extends Controller
 				
 			$container = $this->get('sopinet_flashMessages');
 			$notification = $container->addFlashMessages("success","Se ha registrado correctamente");
-			
+
 			return $this->redirect($this->generateUrl('home'));
 		}
 	}

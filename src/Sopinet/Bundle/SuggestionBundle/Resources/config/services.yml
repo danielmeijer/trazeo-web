@@ -1,0 +1,7 @@
+parameters:
+#    sopinet_suggestion.example.class: Sopinet\Bundle\SuggestionBundle\Example
+
+services:
+#    sopinet_suggestion.example:
+#        class: %sopinet_suggestion.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

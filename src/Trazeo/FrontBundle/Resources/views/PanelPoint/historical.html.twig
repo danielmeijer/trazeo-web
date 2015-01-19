@@ -1,4 +1,4 @@
-{% set activeMenu = "route" %}
+{% set activeMenu = "historical" %}
 {% set pageheader_title = "Points.historical.title"|trans %}
 {% set pageheader_description = "Points.historical.description"|trans %}
 {% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
@@ -10,15 +10,18 @@
         		<i class="fa fa-4x fa-bar-chart-o"></i>
         	</div>
         	<div class="col-md-10">
-				&nbsp; <h4>{{ "Points.historical.explanation"|trans }}</h4>
+				&nbsp; <h4>{{ "Points.historical.explanation"|trans }} {# {% include 'SopinetTemplateSbadmin2Bundle:Elements/Basics:helper.html.twig' with{id:'historical',help_text: "Help.button.historical"|trans}%}#}</h4>
 			</div>
 		
         </div><!-- END col-lg-12 alert alert-info -->
         <p>&nbsp;</p>
+        {#{% include 'TrazeoFrontBundle:PanelPoint:_customHistorical.html.twig' with{
+    		'actions' : actions, 'acumulative_actions' : acumulative_actions
+        }
+    	%}#}
         {% include 'TrazeoFrontBundle:PanelPoint:_customHistorical.html.twig' with{
-    		'userChilds' : userChilds,
-    		'distances' : distances,
-    		'points' : points}
-    	%}
+            'actions' : actions,
+        }
+        %}
 
 {% endblock %}

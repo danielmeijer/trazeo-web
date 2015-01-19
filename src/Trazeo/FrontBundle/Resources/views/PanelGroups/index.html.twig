@@ -11,10 +11,10 @@
         		<i class="fa fa-5x fa-users"></i>
         	</div>
         	<div class="col-md-10">
-				<h4>{{ 'Groups.index.subtitle'|trans }}</h4>
+				<h4>{{ 'Groups.index.subtitle'|trans }} {% include 'SopinetTemplateSbadmin2Bundle:Elements/Basics:helper.html.twig' with{id:'group',help_text: "Help.button.groupList"|trans}%}</h4>
 					<a class="pull-left" href="{{ path('panel_group_new') }}">
 						<button type="button" class="btn btn-success" id="new_group">
-							 <i class="fa fa-plus-circle"></i>&nbsp; {{ 'Groups.new.title'|trans }}									
+							 <i class="fa fa-plus-circle"></i>&nbsp; {{ 'Groups.new.title'|trans }}
 						</button>
 					</a>	
 			</div>
@@ -76,7 +76,6 @@
 	<script>
 		filterBy('city',$( "select option:selected" ).val());//filtramos con el valor inicial 
 		$( ".change-city" ).change(function() {
-			//$("#filter-city").submit();
 			filterBy('city',$( "select option:selected" ).val());
 		});
 	</script>

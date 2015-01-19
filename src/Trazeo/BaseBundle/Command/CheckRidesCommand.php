@@ -66,9 +66,8 @@ class CheckRidesCommand extends ContainerAwareCommand
 	    	$minutes = $now - $rideupdated;
 
 	 		$rideGroup = $ride->getGroup();
-	 		
+	
 	 		if($minutes >= 900 && $rideGroup != null){
-	 		
 	 			// Detener el paseo del grupo
 	 			$rideGroup->setHasRide(0);
 	 			

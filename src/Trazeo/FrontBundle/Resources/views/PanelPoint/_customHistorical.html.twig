@@ -3,11 +3,9 @@
 		{{"Points.historical.description"|trans}}
 	</div>
 </h3>
-<div style="clear:both"></div>	
-{% for userChild in userChilds %}
-    {% include 'TrazeoFrontBundle:PanelPoint:_rowHistorical.html.twig' with {
-    'userChild' : userChild,
-    'distance' : distances[userChild.id],
-    'point' : points[userChild.id]}
+<div style="clear:both"></div>
+{% for action in actions %}
+    	{% include 'TrazeoFrontBundle:PanelPoint:_rowHistorical.html.twig' with {
+    'action' : action}
      %}
 {% endfor %}
