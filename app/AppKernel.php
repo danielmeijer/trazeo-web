@@ -81,6 +81,7 @@ class AppKernel extends Kernel
         $loader->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
 
         //TODO: Si viene de un subdominio
+        //ldd($_SERVER);
         //if ($_SERVER['PATH_INFO'] == "/adminPanel") {
             $loader->load(__DIR__ . '/config/configSonataPanel.yml');
         //}
