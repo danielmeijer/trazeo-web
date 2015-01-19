@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpKernel\Exception\PreconditionFailedHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Trazeo\BaseBundle\Entity\EGroup;
 use Trazeo\BaseBundle\Entity\ERoute;
 use Trazeo\BaseBundle\Entity\EGroupAccess;
@@ -15,6 +17,7 @@ use Trazeo\BaseBundle\Entity\EChild;
 use Trazeo\BaseBundle\Form\GroupType;
 use Trazeo\BaseBundle\Controller\GroupsController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Trazeo\BaseBundle\TrazeoBaseBundle;
 
 /**
  * Groups controller.
@@ -167,32 +170,10 @@ class PanelGroupsController extends Controller
 		$fos_user = $this->container->get('security.context')->getToken()->getUser();
 		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
 		$container = $this->get('sopinet_flashMessages');
-		$group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
-	
-		// Grupo eliminado
-		if (!$group) {
-			$notification = $container->addFlashMessages("warning","El grupo ha sido eliminado");
-			return $this->redirect($this->generateUrl('panel_group'));
-		}
-		
-		// Solicitud del Administrador
-		if ($group->getAdmin()->getId() == $user->getId()) {
-			$notification = $container->addFlashMessages("warning","Usted es el Administrador del Grupo, no puede desvincularse de él.");
-			return $this->redirect($this->generateUrl('panel_group'));			
-		}
-	
-		$group->removeUserextendgroup($user);
-		$em->persist($group);
-		
-		//Children autojoin on parent join to group
-		$childs=$user->getChilds();
-		foreach($childs as $child){
-			$group->removeChild($child);
-		}
-		$em->persist($group);
-		$em->flush();
-		
-		$em->flush();
+		$reGroup = $em->getRepository('TrazeoBaseBundle:EGroup');
+
+        $reGroup->disjoinGroup($id,$user);
+
 		$notification = $container->addFlashMessages("warning","Has salido del grupo");
 		return $this->redirect($this->generateUrl('panel_group'));
 	}
@@ -251,12 +232,19 @@ class PanelGroupsController extends Controller
 			$fos_user_admin = $groupAdminUser->getUser();
 			//ldd($fos_user_admin);
 			$not = $this->container->get('sopinet_user_notification');
+			$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($groupAdminUser->getUser(),'panel_group');
 			$el = $not->addNotification(
 					'group.join.request',
 					"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
 					$userId . "," . $groupId,
-					$this->generateUrl('panel_group'),$groupAdminUser->getUser()
+					$url,
+					$groupAdminUser->getUser(),
+					null,
+					$this->generateUrl('panel_group')
 			);
+			$el->setImportant(1);
+			$em->persist($el);
+			$em->flush();
 			
 			$access = new EGroupAccess();
 			$access->setGroup($group);
@@ -318,13 +306,19 @@ class PanelGroupsController extends Controller
 		$em->flush();
 
 		$not = $this->container->get('sopinet_user_notification');
-
+		$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($fos_user,'panel_group');
 		$el = $not->addNotification(
 				'group.join.let',
 				"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
 				$user_current->getId() . ',' . $groupId,
-				$this->generateUrl('panel_group'), $fos_user
+				$url,
+				$fos_user,
+				null,
+				$this->generateUrl('panel_group')
 		);
+		$el->setImportant(1);
+		$em->persist($el);
+		$em->flush();
 		
 		$notification = $container->addFlashMessages("success","El usuario ha sido añadido al grupo");
 	
@@ -360,13 +354,20 @@ class PanelGroupsController extends Controller
 		$notification = $container->addFlashMessages("success","Has rechazado la petición del usuario para unirse al grupo");
 		
 		$not = $this->container->get('sopinet_user_notification');
+		$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($fos_user,'panel_group');
 		$el = $not->addNotification(
 				'group.join.deny',
 				"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
 				$user_current->getId() . ',' . $group,
-				$this->generateUrl('panel_group'), $fos_user
+				$url,
+				$fos_user,
+				null,
+				$this->generateUrl('panel_group')
 		);
-		
+		$el->setImportant(1);
+		$em->persist($el);
+		$em->flush();
+
 		return $this->redirect($this->generateUrl('panel_group'));
 		
 	}
@@ -450,15 +451,21 @@ class PanelGroupsController extends Controller
 			// Si no existen los UserExtend y Group anteriormente obtenidos,
 			// directamente se crea la petición
 			$user_current = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user_current->getId());
-
+			$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($fos_user,'panel_group');
 			$not = $this->container->get('sopinet_user_notification');
 			$el = $not->addNotification(
 					'group.invite.user',
 					"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
 					$user_current->getId() . "," . $groupId ,
-					$this->generateUrl('panel_group'), $fos_user
+					$url,
+					$fos_user,
+					null,
+					$this->generateUrl('panel_group')
 			);
-
+			$el->setImportant(1);
+			$em->persist($el);
+			$em->flush();
+			
 			$access = new EGroupInvite();
 			$access->setGroup($group);
 			$access->setUserextend($user);
@@ -494,6 +501,11 @@ class PanelGroupsController extends Controller
 			$notification = $container->addFlashMessages("success","No puedes unirte al grupo porque ha sido eliminado");
 			return $this->redirect($this->generateUrl('panel_group'));
 		}
+
+		if(in_array($user,$groupToJoin->getUserextendgroups()->toArray())){
+			$notification = $container->addFlashMessages("success","Ya eres miembro de este grupo");
+			return $this->redirect($this->generateUrl('panel_group'));			
+		}	
 	
 		$groupToJoin->addUserextendgroup($user);
 		$em->persist($groupToJoin);
@@ -507,24 +519,28 @@ class PanelGroupsController extends Controller
 		$em->persist($groupToJoin);
 		$em->flush();
 		
-
 		$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findOneByUserextend($id);
 		$sender=$userRequest->getSender();
 		$userSender = $em->getRepository('TrazeoBaseBundle:Userextend')->findOneById($sender);
     	$fos_userSender = $userSender->getUser();
-
 		$groupAdmin = $groupToJoin->getAdmin();
 		$groupAdminUser = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($groupAdmin);
 		
 		$not = $this->container->get('sopinet_user_notification');
+		$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($fos_userSender,'panel_group');
 		$el = $not->addNotification(
 				'group.invite.accept',
 				"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
 				// FIX: #4416 $groupAdminUser->getId() . "," . $group ,
                 $user->getId() . "," . $group ,
-				$this->generateUrl('panel_group'), $fos_userSender
+				$url,
+				$fos_userSender,
+				null,
+				$this->generateUrl('panel_group')
 		);
-
+		$el->setImportant(1);
+		$em->persist($el);
+		$em->flush();
 	
 		$em->remove($userRequest);
 		$em->flush();
@@ -543,28 +559,34 @@ class PanelGroupsController extends Controller
 	 */
 	
 	public function denyInviteGroupAction($id,$group) {
-	
+		
 		$em = $this->getDoctrine()->getManager();
 		$fos_user_current = $this->container->get('security.context')->getToken()->getUser();
 		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($id);
 		$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findOneByUserextend($id);
-	
 		$groupEntity = $em->getRepository('TrazeoBaseBundle:EGroup')->find($group);
 		$groupAdmin = $groupEntity->getAdmin();
 		$groupAdminUser = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($groupAdmin);
 		$groupAdmin_fos_user = $groupAdminUser->getUser();
-
+		$userRequest = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findOneByUserextend($id);
 		$sender=$userRequest->getSender();
 		$userSender = $em->getRepository('TrazeoBaseBundle:Userextend')->findOneById($sender);
     	$fos_userSender = $userSender->getUser();
 
 		$not = $this->container->get('sopinet_user_notification');
+		$url=$this->get('trazeo_base_helper')->getAutoLoginUrl($fos_userSender,'panel_group');
 		$el = $not->addNotification(
 				'group.invite.deny',
 				"TrazeoBaseBundle:UserExtend,TrazeoBaseBundle:EGroup",
                 $user->getId() . "," . $group ,
-				$this->generateUrl('panel_group'), $fos_userSender
+				$url,
+				$fos_userSender,
+				null,
+				$this->generateUrl('panel_group')
 		);
+		$el->setImportant(1);
+		$em->persist($el);
+		$em->flush();
 
 		$em->remove($userRequest);
 		$em->flush();
@@ -588,7 +610,7 @@ class PanelGroupsController extends Controller
 		$fos_user = $this->container->get('security.context')->getToken()->getUser();
 		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
 		$userId = $user->getId();
-		 
+
 		$groupsMember = $user->getGroups();
 		$allGroups = $em->getRepository('TrazeoBaseBundle:EGroup')->findAll();
 		$restGroups = array_diff($allGroups,$groupsMember->toArray());
@@ -607,13 +629,12 @@ class PanelGroupsController extends Controller
 		}
 		if (!$iscity) $city = "all"; // if no cities for user
 		// End City Filter
-	
 		$groupsAdmin = $user->getAdminGroups();
 		$userAdmin = $em->getRepository('TrazeoBaseBundle:EGroup')->findByAdmin($userId);
 		
 		$allGroupsAccess = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findAll();
 		$allGroupsInvite = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findAll();
-	
+
 		return array(
 				'user' => $user,
 				'userAdmin' => $userAdmin,
@@ -633,7 +654,7 @@ class PanelGroupsController extends Controller
      *
      * @Route("/", name="panel_group_create")
      * @Method("POST")
-     * @Template("TrazeoBaseBundle:Groups:new.html.twig")
+     * @Template("TrazeoFrontBundle:PanelGroups:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -663,12 +684,22 @@ class PanelGroupsController extends Controller
         
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            
+            //Obtener usuarios que tengan marcada la opcion de conexion con civiclub
+	        $reUserValue = $em->getRepository("SopinetUserPreferencesBundle:UserValue");
+	        $civiclub_setting = $em->getRepository("SopinetUserPreferencesBundle:UserSetting")->findOneByName("civiclub_conexion");
+
+			$city = $request->get('city');
+			$helper = $this->get('trazeo_base_helper');
+			$city_entity = $helper->getCities($city, 10, true);
+			if (count($city_entity) > 0) {
+				$group->setCity($city_entity[0]);
+			}
             $fos_user = $this->container->get('security.context')->getToken()->getUser();
             $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);            
             $group->setAdmin($user);
             $group->addUserextendgroup($user);            
-            
+        	$now=$group->getHasRide();
+			$group->setHasRide(0);            
             $em->persist($group);
             $em->flush();
             
@@ -682,14 +713,22 @@ class PanelGroupsController extends Controller
             }
             $em->persist($group);
             $em->flush();
-            
-            return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
-
-            return $this->redirect($this->generateUrl('panel_group'));
+            $sopinetuserextend=$em->getRepository("SopinetUserBundle:SopinetUserExtend")->findOneByUser($user->getUser());
+            $container = $this->get('sopinet_gamification');
+        	$container->addUserAction(
+        		"Create_Group",
+        		"TrazeoBaseBundle:UserExtend",
+        		$user->getId(),
+        		$user,
+        		1,
+        		false
+        		);
+            if(!$now)return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
+			else return $this->redirect($this->generateUrl('panel_route_new',array('id'=>$group->getId())));
         }
 
         return array(
-            'entity' => $entity,
+            'entity' => $group,
             'form'   => $form->createView(),
         );
     }
@@ -703,16 +742,27 @@ class PanelGroupsController extends Controller
      */
     private function createCreateForm(EGroup $group)
     {
+    	$em = $this->getDoctrine()->getManager();
+    	$fos_user = $this->container->get('security.context')->getToken()->getUser();
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+    	if($user->getCountry()!=null){
+    		$cityCode = $em->getRepository('JJs\Bundle\GeonamesBundle\Entity\Country')->find($user->getCountry()->getId());
+    		$cityCodeId = $cityCode->getId();
+    	}
+    	else $cityCodeId =1;
         $form = $this->createForm(new GroupType(), $group, array(
             'action' => $this->generateUrl('panel_group_create'),
             'method' => 'POST',
         	'attr' => array(
         				'Groups.help.name' => $this->get('translator')->trans('Groups.help.name'),
         				'Groups.help.name2' => $this->get('translator')->trans('Groups.help.name2'),
-        				'Groups.help.route' => $this->get('translator')->trans('Groups.help.route')
+        				'Groups.help.route' => $this->get('translator')->trans('Groups.help.route'),
+        				'Groups.help.city' => $this->get('translator')->trans('Groups.help.city'),
+                        'Groups.help.school' => $this->get('translator')->trans('Groups.help.shool'),
+	       				'default' => $cityCodeId
         		)
         ));
-
+ 		$form->add('hasRide', 'hidden', array('data' => 0));
         $form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
@@ -809,16 +859,27 @@ class PanelGroupsController extends Controller
     */
     private function createEditForm(EGroup $group)
     {
+    	$em = $this->getDoctrine()->getManager();
+    	$fos_user = $this->container->get('security.context')->getToken()->getUser();
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+    	if($user->getCountry()!=null){
+    		$cityCode = $em->getRepository('JJs\Bundle\GeonamesBundle\Entity\Country')->find($user->getCountry()->getId());
+    		$cityCodeId = $cityCode->getId();
+    	}
+    	else $cityCodeId =1;
         $form = $this->createForm(new GroupType(), $group, array(
-            'action' => $this->generateUrl('panel_group_update', array('id' => $group->getId())),
-            'method' => 'PUT',
+            'action' => $this->generateUrl('panel_group_update',array('id' => $group->getId())),
+            'method' => 'POST',
         	'attr' => array(
         				'Groups.help.name' => $this->get('translator')->trans('Groups.help.name'),
         				'Groups.help.name2' => $this->get('translator')->trans('Groups.help.name2'),
-        				'Groups.help.route' => $this->get('translator')->trans('Groups.help.route')
+        				'Groups.help.route' => $this->get('translator')->trans('Groups.help.route'),
+        				'Groups.help.city' => $this->get('translator')->trans('Groups.help.city'),
+                        'Groups.help.school' => $this->get('translator')->trans('Groups.help.shool'),
+                       'default' => $cityCodeId
         		)
         ));
-
+        //$form->add('city',null,array('data'=>$cityCodeId, 'attr'=>array('style'=>'display:none;')));       
         $form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
@@ -874,7 +935,7 @@ class PanelGroupsController extends Controller
 	 * @Template()
 	 */
     
-	public function seRouteAction($group,$route) {
+	public function setRouteAction($group,$route) {
 
 		$em = $this->getDoctrine()->getManager();
 
@@ -895,11 +956,12 @@ class PanelGroupsController extends Controller
      * Edits an existing Groups entity.
      *
      * @Route("/{id}", name="panel_group_update")
-     * @Method("PUT")
-     * @Template("TrazeoBaseBundle:Groups:edit.html.twig")
+     * @Method("POST")
+     * @Template("TrazeoFrontBundle:PanelGroups:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
+ 
         $em = $this->getDoctrine()->getManager();
 
         $group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
@@ -913,6 +975,14 @@ class PanelGroupsController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+			$city = $request->get('city');
+			$helper = $this->get('trazeo_base_helper');
+			$city_entity = $helper->getCities($city, 10, true);
+			if (count($city_entity) > 0) {
+				$group->setCity($city_entity[0]);
+			}
+
+			$em->persist($group);       	
             $em->flush();
 
             return $this->redirect($this->generateUrl('panel_group_edit', array('id' => $id)));
@@ -920,7 +990,7 @@ class PanelGroupsController extends Controller
 
         return array(
             'group'      => $group,
-            'edit_form'   => $editForm->createView(),
+            'edit_form'   => $editForm->createView()
             //'delete_form' => $deleteForm->createView(),
         );
     }
@@ -937,29 +1007,25 @@ class PanelGroupsController extends Controller
     	
     	$fos_user = $this->container->get('security.context')->getToken()->getUser();
     	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
-    	$userId = $user->getId();
 
-        $group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
-        
-        $container = $this->get('sopinet_flashMessages');
-        
-        if (!$group) {
-        	$notification = $container->addFlashMessages("warning","El grupo que intentas eliminar no existe");
-        	return $this->redirect($this->generateUrl('panel_dashboard'));
-        }
-        
-        $groupAdmin = $group->getAdmin();
-        
-		if($groupAdmin == $user){
+		/** @var \Trazeo\BaseBundle\Entity\EGroupRepository $repositoryGroup */
+		$repositoryGroup=$em->getRepository('TrazeoBaseBundle:EGroup');
 
-			$em->remove($group);
-			$em->flush();
+		$container = $this->get('sopinet_flashMessages');
+
+		//Tratamos de borrar el grupo
+		try{
+			$repositoryGroup->userDeleteGroup($id,$user);
 			$notification = $container->addFlashMessages("success","El grupo ha sido eliminado");
 			return $this->redirect($this->generateUrl('panel_dashboard'));
-			
-		}else {
+		}
+		catch(PreconditionFailedHttpException $e){
+			$notification = $container->addFlashMessages("warning","El grupo que intentas eliminar no existe");
+			return $this->redirect($this->generateUrl('panel_dashboard'));
+		}
+		catch(AccessDeniedException $e){
 			$notification = $container->addFlashMessages("error","Sólo el administrador puede eliminar un grupo");
-			return $this->redirect($this->generateUrl('panel_dashboard'));	
+			return $this->redirect($this->generateUrl('panel_dashboard'));
 		}
     }
 

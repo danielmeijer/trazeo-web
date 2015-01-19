@@ -34,6 +34,10 @@
         "sopinet/flash-messages-bundle" : "dev-master",
         "jms/serializer": "dev-master",
         "lunetics/locale-bundle": "2.2.*",
-        "endroid/qrcode-bundle": "dev-master"
+        "endroid/qrcode-bundle": "dev-master",
+		"sopinet/upload-magic-bundle" : "dev-master",
+		"phpunit/phpunit-selenium": ">=1.2",
+		"hipaway-travel/mandrill-bundle": "dev-master",
+		"sopinet/autologin-bundle": "dev-master"
     }
 }

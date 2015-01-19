@@ -1,0 +1,26 @@
+<script type="text/javascript">
+var OnSubtreeModified=function(){
+	$('.fos_comment_comment_new_form>.fos_comment_submit>.btn-success').off('click');
+	$('.fos_comment_comment_new_form>.fos_comment_submit>.btn-success').click(
+		function(){
+			var texto=$(this).parent().parent().children('textarea').val();
+			if(texto!=''&&texto.length>2){
+				$.ajax({
+ 					url: '{{base_url}}'+"api/group/timeline/notification",
+  					type: "POST",
+  					data: {
+						'id_group': $('#fos_comment_thread').attr('data-thread'),
+						'text': texto
+    	   			}
+				});
+			}
+		}
+	);	
+}
+OnSubtreeModified();
+
+document.addEventListener("DOMContentLoaded",function(){
+	document.addEventListener('DOMSubtreeModified', OnSubtreeModified, false);
+});
+
+</script>

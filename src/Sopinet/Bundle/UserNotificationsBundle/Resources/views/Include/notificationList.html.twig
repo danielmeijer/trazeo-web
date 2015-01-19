@@ -4,7 +4,7 @@
 </h4><br />
     	{% for notification in notifications %}
     	<li class="col-md-9 col-md-offset-1" style="list-style-type:none;">
-			<a class="alert-warning" href="{{ notification.link }}">
+			<a class="alert-warning" href="{{ notification.internallink }}">
 				<div>
                 	<i class="fa fa-comment fa-fw"></i>&nbsp;
                 	{{ notification|parseSopinetUserNotification() }}

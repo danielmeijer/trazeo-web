@@ -1,7 +1,13 @@
 <div class="row alert alert-warning" 
 	{# Attributos para el filtrado #}
-	{% if nois is defined and groupMember.Route.city.nameUtf8 is defined %}
-	city="{{ groupMember.Route.city.nameUtf8 }}"
+	{% if nois is defined and groupMember.city.nameUtf8 is defined %}
+	city="{{ groupMember.city.nameUtf8 }}"
+	style="display: none"
+	{% elseif nois is defined and groupMember.Route.city.nameUtf8 is defined %}
+	city="{{ groupMember.route.city.nameUtf8 }}"
+	style="display: none"	
+	{% elseif nois is defined  %}
+	city="empty"
 	style="display: none"
 	{% endif %} >
 	<!-- Nombre de Grupo -->
@@ -67,9 +73,12 @@
  		 			
 		<!-- Ruta del Grupo -->
         {% if groupMember.route %}
-        	<a href="{{ path('panel_route')}}{{ groupMember.Route.Id }}">{{ groupMember.Route.Name }}</a>
-        {% else %}
-         	<span class="hidden-xs">{{ 'Groups.noRoute'|trans }}</span>
+        	<a href="{{ path('panel_route')}}{{ groupMember.Route.Id }}" type="button" 
+			class="btn btn-default btn-xs"><i class="fa fa-compass"></i> {{ 'Groups.route'|trans }}</a>
+        {% elseif groupMember.Admin.Id == app.user.userextend.Id %}
+			<a href="{{ path('panel_route_new', {'id': groupMember.id }) }}" type="button" class="btn btn-default btn-xs create-route">
+				<i class="fa fa-plus"></i>&nbsp; {{ 'Route.new.title'|trans }}				
+			</a>
         {% endif %}
 	</div>
 	

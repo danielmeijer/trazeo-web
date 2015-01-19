@@ -1,26 +1,19 @@
-{% if distance/1000>0 %}
+{% set actionObjects=action|getSopinetUserAction() %}
 <div class="row alert alert-warning">
 	<!-- Child name -->
 	<div class="col-md-4">
-    	{% if  userChild.Gender == "boy" %}
-        	<i class="fa fa-male"></i>
-        {% else %}  
-            <i class="fa fa-female"></i>
-        {% endif %}
-        
-        {#<a href="{{ path('panel_child') }}/#collapse{{ child.id }}">#}
-        	{{ userChild.nick }} {{ 'Points.historical.walk'|trans }}
-        {#</a>#}	
+            <i class="fa fa-star"></i> {{action.createdAt|date("d/m/Y")}}
 	</div>
 	
 	<!-- Child meters -->
 	<div class="col-md-5">
-		<h4>&nbsp; {{ distance // 1000 }} {{ 'Points.historical.distance'|trans }} </h4>
+		<h4>&nbsp; {{ ('Points.action.'~action.actions.name)|trans(actionObjects) }}</h4>
 	</div>
 	
 	<!-- Child points -->
 	<div class="col-md-3">
-		<h4>&nbsp; {{ point }} {{ 'Points.name'|trans }} {{ 'Points.historical.exchange'|trans }}</h4>
+		<h4>&nbsp; {{ (action.acumulated * action.actions.points)|round(0,'ceil')}}
+		{% if (action.acumulated * action.actions.points)|round(0,'ceil') >1  %} {{ 'Points.name_plural'|trans }} {{ 'Points.historical.exchange_plural'|trans }}</h4>
+		{% else %} {{ 'Points.name'|trans }} {{ 'Points.historical.exchange'|trans }}{% endif %}
 	</div>
 </div>
-{% endif %}

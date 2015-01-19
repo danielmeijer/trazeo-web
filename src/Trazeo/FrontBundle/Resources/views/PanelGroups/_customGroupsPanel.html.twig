@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="pull-left">
 				<h1>
-					<span class="alert"><i class="fa fa-users"></i> {{ 'Groups.mine'|trans }}
+					<span class="alert"><i class="fa fa-users"></i> {{ 'Groups.mine'|trans }} {% include 'SopinetTemplateSbadmin2Bundle:Elements/Basics:helper.html.twig' with{id:'group',help_text: "Help.button.group"|trans}%}
 					</span>
 				</h1>
 			</div>
@@ -31,11 +31,12 @@
 	<div class="row alert-success">
 		<div class="col-md-6">
 			<i class="fa fa-users fa-5x pull-left"></i>
-			<h3>
+            <h3>
 			{{ 'Groups.empty'|trans }}
 			&nbsp;&nbsp;
+           {% include 'SopinetTemplateSbadmin2Bundle:Elements/Basics:helper.html.twig' with{id:'group',help_text: "Help.button.group"|trans,size:1}%}
 			</h3>
-		</div>
+        </div>
 		<div class="pull-right"><br/>
 			<a class="btn btn-warning" id="group-list-link" href="{{ path('panel_group') }}">
 				<i class="fa fa-list-ul"></i>&nbsp; {{ 'Groups.list'|trans }}

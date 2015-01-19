@@ -5,7 +5,7 @@
 
 		{% block body_content %} 
 			<div class="row">
-                <h4 class="alert alert-success"><i class="fa fa-user"></i>&nbsp; {{ child.nick }}</h4>
+                <h4 class="alert alert-success"><i class="fa fa-user"></i>&nbsp; {{ child.nick }} {% include 'SopinetTemplateSbadmin2Bundle:Elements/Basics:helper.html.twig' with{id:'child',help_text: "Help.button.editChild"|trans}%}</h4>
                 <div class="alert alert-warning">
     				{{ form(edit_form) }}
 		        	<ul class="record_actions">

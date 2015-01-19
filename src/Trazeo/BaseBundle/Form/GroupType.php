@@ -17,31 +17,49 @@ class GroupType extends AbstractType
     {
     	
         $builder
-        ->add('name', null, array(
-        		'attr' => array(
-        				'placeholder' => 'Groups.name',
-        				'data-toggle' => 'popover',
-        				'data-placement' => 'right',
-        				'data-content' => $options['attr']['Groups.help.name']
-        		),'required' => true))
-        		
-        		->add('visibility', 'choice', array(
-        				'choices'   => array(0 => 'Groups.visibility.public', 1 => 'Groups.visibility.private',2 => 'Groups.visibility.hidden'),
-        				'attr' => array(
-        						'placeholder' => 'Groups.visibility',
-        						'data-toggle' => 'popover',
-        						'data-placement' => 'right',
-        						'data-content' => $options['attr']['Groups.help.name2']
-        				)))
+        ->add('country', 'entity', array(
+            'class' => 'JJsGeonamesBundle:Country',
+            'attr' => array('class' => 'chosen-select'),
+            'required' => false, //Para permitir hacer submit con una opción 'vacía'
+            'empty_value' => 'España', //Valor que aparece por defecto si no tiene un país asignado
+            'empty_data' => $options['attr']['default'],
+            'property' => 'name'))
         
-        ->add('route', null, array(
+        ->add('name', null, array(
+        	'attr' => array(
+        		'placeholder' => 'Groups.name',
+        		'data-toggle' => 'popover',
+            	'data-placement' => 'right',
+        	'data-content' => $options['attr']['Groups.help.name']
+        ),'required' => true))
+        /*->add('city', 'entity', array(
+            'class' => 'JJsGeonamesBundle:City',
+            'attr' => array(
+                'class' => 'chosen-select',
+                'data-toggle' => 'popover',
+                'data-placement' => 'right',
+                'data-content' => $options['attr']['Groups.help.city']
+            ),
+            'required' => false, //Para permitir hacer submit con una opción 'vacía'
+            'empty_value' => 'España', //Valor que aparece por defecto si no tiene un país asignado
+            'property' => 'city')
+        )*/
+
+        ->add('visibility', 'choice', array(
+            	'choices'   => array(0 => 'Groups.visibility.public', 1 => 'Groups.visibility.private',2 => 'Groups.visibility.hidden'),
         		'attr' => array(
-        				'placeholder' => 'Groups.name',
-        				'data-toggle' => 'popover',
-        				'data-placement' => 'right',
-        				'data-content' => $options['attr']['Groups.help.route']
-        		)),
-        		array('empty_value' => 'Trans.select.option'));
+        		'placeholder' => 'Groups.visibility',
+        		'data-toggle' => 'popover',
+        		'data-placement' => 'right',
+        		'data-content' => $options['attr']['Groups.help.name2']
+        )))
+        ->add('school1', null, array(
+                'attr' => array(
+                    'placeholder' => 'Group.school',
+                    'data-toggle' => 'popover',
+                    'data-placement' => 'right',
+                    'data-content' => $options['attr']['Groups.help.school']
+        )));
     }
     
     /**

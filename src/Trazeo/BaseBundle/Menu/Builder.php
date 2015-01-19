@@ -22,6 +22,7 @@ class Builder extends ContainerAware
         ->setLabel("");
         $menu['Home']->setAttribute('icon', 'fa-home fa-2x');
         $menu['Home']->setAttribute('tooltip', 'Menu.tooltip.home');
+        $menu['Home']->setAttribute('id', 'home');
         if ($options['activeMenu'] == "home") {
         	$menu['Home']->setAttribute('class', 'active');
         }
@@ -48,17 +49,6 @@ class Builder extends ContainerAware
         	$menu['Group']->setAttribute('class', 'active');
         }
  
-        // Routes
-        $menu->addChild('Route', array(
-        		'route' => 'panel_route'
-        ))
-        ->setLabel("");
-        $menu['Route']->setAttribute('icon', 'fa-compass fa-2x');
-        $menu['Route']->setAttribute('tooltip', 'Menu.tooltip.route');
-        if ($options['activeMenu'] == "route") {
-        	$menu['Route']->setAttribute('class', 'active');
-        }
-
         // Points
         $menu->addChild('Point', array(
                 'route' => 'panel_point'
@@ -70,6 +60,15 @@ class Builder extends ContainerAware
             $menu['Point']->setAttribute('class', 'active');
         }              
 
+        if($this->container->get('security.context')->getToken()->getUser()->hasRole('ROLE_SUPER_ADMIN')){
+            // Points
+            $menu->addChild('Catalog', array(
+                'route' => 'panel_catalogitems_list'
+            ))
+                ->setLabel("");
+            $menu['Catalog']->setAttribute('icon', 'fa-file fa-2x');
+            $menu['Catalog']->setAttribute('tooltip', 'Menu.tooltip.catalog');
+        }
         return $menu;
     }
 }

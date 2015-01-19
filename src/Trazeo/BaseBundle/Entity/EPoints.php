@@ -28,7 +28,7 @@ class EPoints
 	protected $route;
 	
 	/**
-	 * @ORM\Column(name="pickup", type="boolean")
+	 * @ORM\Column(name="pickup", type="boolean", nullable=true)
 	 */
 	protected $pickup;
 	

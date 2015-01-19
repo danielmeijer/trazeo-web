@@ -21,7 +21,6 @@ class ERouteAdmin extends Admin
             ->add('name')
             ->add('groups')
             ->add('admin')
-            ->add('city')
             ->add('createdAt')
             ->add('updatedAt')
         ;
@@ -38,7 +37,6 @@ class ERouteAdmin extends Admin
             ->add('name')
             ->add('groups')
             ->add('admin')
-            ->add('city')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
@@ -61,7 +59,10 @@ class ERouteAdmin extends Admin
             ->add('id')
             ->add('distance')
             ->add('name')
-        ;
+            ->add('groups')
+            ->add('admin')
+            ->add('createdAt')
+            ->add('updatedAt')        ;
     }
 
     /**
@@ -73,6 +74,9 @@ class ERouteAdmin extends Admin
             ->add('id')
             ->add('distance')
             ->add('name')
-        ;
+            ->add('groups')
+            ->add('admin')
+            ->add('createdAt')
+            ->add('updatedAt')        ;
     }
 }

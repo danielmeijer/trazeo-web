@@ -5,7 +5,7 @@
 		<div class="row">
 			<div class="pull-left">
 				<h1>
-					<span class="alert"><i class="fa fa-user"></i> {{ 'Children.mine'|trans }}
+					<span class="alert"><i class="fa fa-user"></i> {{ 'Children.mine'|trans }} {% include 'SopinetTemplateSbadmin2Bundle:Elements/Basics:helper.html.twig' with{id:'child',help_text: "Help.button.createChild"|trans}%}
 					</span>
 				</h1>
 			</div>
@@ -28,6 +28,7 @@
 			<h3>
 			{{ 'Children.empty'|trans }}
 			&nbsp;&nbsp;
+            {% include 'SopinetTemplateSbadmin2Bundle:Elements/Basics:helper.html.twig' with{id:'child',help_text: "Help.button.createChild"|trans}%}
 			</h3>
 		</div>
 		<div class="pull-right"><br/>

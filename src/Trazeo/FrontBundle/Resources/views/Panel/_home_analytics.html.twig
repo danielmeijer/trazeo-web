@@ -1,23 +1,17 @@
 <script type="text/javascript">
 	var analytics_user=analytics.identify('{{ app.user.id }}',{email: '{{ app.user.email }}', username: '{{ app.user }}'});
 	if(sessionStorage.getItem('justLoged')=='true'){
-		analytics.track('user.loged');
+		analytics.track('user.loged',{device: isMobile.any()});
 		sessionStorage.setItem('justLoged','false');
 	}
 	if(sessionStorage.getItem('justRegistered')=='true'){
-		analytics.track('user.registered');
+		analytics.track('user.registered',{device: isMobile.any()});
 		sessionStorage.setItem('justRegistered','false');
 	}
 	//Analytics current ride button 	
-	$(".ride-action").click(function (event){
-		analytics.track('click.ride.action',
-				{ride: $(event.currentTarget).attr('ride')
-				 ,group: $(event.currentTarget).attr('group')
-				}
-		) 
-	});
+	analytics.trackLink('click.ride.action',$(".ride-action"),{device: isMobile.any()});
 	//Analytics new child button
 	$("#new_child").click(function (event){
-		analytics.track('click.child.prev.new') 
+		analytics.track('click.child.prev.new',{device: isMobile.any()}) 
 	});
 </script>
