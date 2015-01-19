@@ -197,8 +197,9 @@ class ApiUserController extends Controller
 
             return $this->get('fos_rest.view_handler')->handle($view);
         }
-
-        $array['points'] = $user->getSopinetUserExtend()->getPoints();
+        $repositoryUserExtend=$this->get('doctrine.orm.default_entity_manager')->getRepository('TrazeoBaseBundle:UserExtend');
+        $userextend = $repositoryUserExtend->findOneByNick($user->getUsername());
+        $array['points'] = $repositoryUserExtend->getCurrentPoints($userextend);
 
         $view = View::create()
             ->setStatusCode(200)
