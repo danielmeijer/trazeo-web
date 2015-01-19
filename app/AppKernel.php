@@ -85,7 +85,6 @@ class AppKernel extends Kernel
         if ($parts[0] == "beta") {
             $loader->load(__DIR__ . '/config/configSonataAdmin.yml');
         } else {
-            ldd($parts[0]);
             $loader->load(__DIR__ . '/config/configSonataPanel.yml');
         }
         //}
