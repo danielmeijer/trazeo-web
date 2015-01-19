@@ -110,42 +110,12 @@ fos_user:
     user_class: Application\Sonata\UserBundle\Entity\User
     group:
           group_class: Trazeo\BaseBundle\Entity\Group
-          
+
 # Sonata User
 sonata_user:
     admin:
         user:
             class:  Trazeo\BaseBundle\Admin\UserAdmin
-
-# Sonata Admin Dashboard
-sonata_admin:
-    title:      Trazeo - Dashboard
-    templates:
-        ## default global templates
-        layout:  SonataAdminBundle::standard_layout.html.twig
-        ajax:    SonataAdminBundle::ajax_layout.html.twig
- 
-        ## default actions templates, should extend a global templates
-        list:    SonataAdminBundle:CRUD:list.html.twig
-        show:    SonataAdminBundle:CRUD:show.html.twig
-        edit:    SonataAdminBundle:CRUD:edit.html.twig
-        
-    dashboard:
-        blocks:
-            - { position: left,  type: sonata.admin.block.admin_list, settings: { groups: [admin] } }
-
-# Sonata 
-
-sonata_block:
-    default_contexts: [cms]
-    blocks:
-        sonata.user.block.menu:
-        sonata.admin.block.admin_list:
-            contexts:   [admin]
-        sonata.block.service.text:
-        sonata.block.service.action:
-        sonata.block.service.rss:
-        sonata.block.service.tableinput:
         
 services:
     #apikey_authenticator:
@@ -210,6 +180,3 @@ lunetics_locale:
        - browser
     cookie:
        set_on_change: true
-       
-       
-         

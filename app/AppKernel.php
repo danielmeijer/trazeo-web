@@ -39,26 +39,26 @@ class AppKernel extends Kernel
             new Sopinet\Bundle\BootstrapExtendBundle\SopinetBootstrapExtendBundle(),
             new JJs\Bundle\GeonamesBundle\JJsGeonamesBundle(),
             new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle(),
-        	new JMS\TranslationBundle\JMSTranslationBundle(),
-        	new Elao\ErrorNotifierBundle\ElaoErrorNotifierBundle(),
-        	new Sopinet\Bundle\AdminBundle\SopinetAdminBundle(),
-        	new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
-        	new Sopinet\UserBundle\SopinetUserBundle(),
+            new JMS\TranslationBundle\JMSTranslationBundle(),
+            new Elao\ErrorNotifierBundle\ElaoErrorNotifierBundle(),
+            new Sopinet\Bundle\AdminBundle\SopinetAdminBundle(),
+            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+            new Sopinet\UserBundle\SopinetUserBundle(),
             new Sopinet\Template\LandingBundle\SopinetTemplateLandingBundle(),
-        	new FOS\CommentBundle\FOSCommentBundle(),
+            new FOS\CommentBundle\FOSCommentBundle(),
             new Sopinet\TimelineBundle\SopinetTimelineBundle(),
             new Sopinet\OpenMapBundle\SopinetOpenMapBundle(),
             new Sopinet\UserPreferencesBundle\SopinetUserPreferencesBundle(),
             new Sopinet\Bundle\UserNotificationsBundle\SopinetUserNotificationsBundle(),
-        	new Sopinet\FlashMessagesBundle\SopinetFlashMessagesBundle(),
-        	new Lunetics\LocaleBundle\LuneticsLocaleBundle(),
-        	new Endroid\Bundle\QrCodeBundle\EndroidQrCodeBundle(),
+            new Sopinet\FlashMessagesBundle\SopinetFlashMessagesBundle(),
+            new Lunetics\LocaleBundle\LuneticsLocaleBundle(),
+            new Endroid\Bundle\QrCodeBundle\EndroidQrCodeBundle(),
             new Sopinet\Template\Sbadmin2Bundle\SopinetTemplateSbadmin2Bundle(),
             new Sopinet\Template\AmoebaBundle\SopinetTemplateAmoebaBundle(),
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
             new Trazeo\BaseBundle\TrazeoBaseBundle(),
             new Trazeo\FrontBundle\TrazeoFrontBundle(),
-            new Trazeo\MyPageBundle\TrazeoMyPageBundle(),
+            new Trazeo\MyPageBundle\TrazeoMyPageBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
@@ -72,6 +72,11 @@ class AppKernel extends Kernel
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
+        $loader->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
+
+        //TODO: Si viene de un subdominio
+        //if ($_SERVER['PATH_INFO'] == "/adminPanel") {
+            $loader->load(__DIR__ . '/config/configSonataPanel.yml');
+        //}
     }
 }

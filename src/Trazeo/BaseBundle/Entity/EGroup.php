@@ -46,6 +46,12 @@ class EGroup
      * @ORM\JoinColumn(name="route_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $route;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\Trazeo\MyPageBundle\Entity\Page", inversedBy="groups")
+     * @ORM\JoinColumn(name="page_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    protected $page;
     
     /**
      *
@@ -469,5 +475,29 @@ class EGroup
     		}
     	}
     	return null;
+    }
+
+    /**
+     * Set page
+     *
+     * @param \Trazeo\MyPageBundle\Entity\Page $page
+     *
+     * @return EGroup
+     */
+    public function setPage(\Trazeo\MyPageBundle\Entity\Page $page = null)
+    {
+        $this->page = $page;
+
+        return $this;
+    }
+
+    /**
+     * Get page
+     *
+     * @return \Trazeo\MyPageBundle\Entity\Page
+     */
+    public function getPage()
+    {
+        return $this->page;
     }
 }

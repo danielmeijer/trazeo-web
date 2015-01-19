@@ -14,3 +14,10 @@ services:
         arguments: [~, Trazeo\MyPageBundle\Entity\Module, SonataAdminBundle:CRUD]
         tags:
             - {name: sonata.admin, manager_type: orm, group: admin, label: Module}
+
+    sonata.block.mypagebundle.stats:
+        id: sonata.block.mypagebundle.stats
+        class: Trazeo\MyPageBundle\Block\StatBlockService
+        arguments: [ "sonata.block.mypagebundle.stats", @templating ]
+        tags:
+            - { name: sonata.block }

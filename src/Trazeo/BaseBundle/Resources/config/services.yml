@@ -4,6 +4,18 @@ parameters:
 #    trazeo_base.example.class: Trazeo\BaseBundle\Example
 
 services:
+    custom.sonata.security.handler.role:
+        class: Trazeo\BaseBundle\Security\Handler\CustomRoleSecurityHandler
+        arguments:
+            - @security.context
+            - [ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_USER]
+            - %security.role_hierarchy.roles%
+    security.access.project_user:
+        class:      Trazeo\BaseBundle\Voter\ProjectVoter
+        arguments:  ["@request_stack"]
+        public:     true
+        tags:
+           - { name: security.voter }
 #    trazeo_base.example:
 #        class: %trazeo_base.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
@@ -25,7 +37,7 @@ services:
         class: Trazeo\BaseBundle\Admin\EChildAdmin
         arguments: [~, Trazeo\BaseBundle\Entity\EChild, SonataAdminBundle:CRUD]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: admin, label: EChild}
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Niños}
 
     trazeo_base.admin.e_child_ride:
         class: Trazeo\BaseBundle\Admin\EChildRideAdmin
@@ -37,7 +49,7 @@ services:
         class: Trazeo\BaseBundle\Admin\EChildInviteAdmin
         arguments: [~, Trazeo\BaseBundle\Entity\EChildInvite, SonataAdminBundle:CRUD]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: admin, label: EChildInvite}
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Invitaciones}
 
     trazeo_base.admin.e_event:
         class: Trazeo\BaseBundle\Admin\EEventAdmin
@@ -49,7 +61,7 @@ services:
         class: Trazeo\BaseBundle\Admin\EGroupAdmin
         arguments: [~, Trazeo\BaseBundle\Entity\EGroup, SonataAdminBundle:CRUD]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: admin, label: EGroup}
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Grupos}
 
     trazeo_base.admin.e_group_access:
         class: Trazeo\BaseBundle\Admin\EGroupAccessAdmin
@@ -103,7 +115,7 @@ services:
         class: Trazeo\BaseBundle\Admin\UserExtendAdmin
         arguments: [~, Trazeo\BaseBundle\Entity\UserExtend, SonataAdminBundle:CRUD]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: admin, label: UserExtend}
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Padres/Monitores}
 
     trazeo_base.admin.e_suggestion:
         class: Trazeo\BaseBundle\Admin\ESuggestionAdmin

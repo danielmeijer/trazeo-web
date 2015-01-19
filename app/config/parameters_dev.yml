@@ -3,7 +3,7 @@ parameters:
     database_host:     127.0.0.1
     database_port:     ~
     database_name:     trazeo2
-    database_user:     yo
+    database_user:     root
     database_password: root
 
     mailer_transport:  smtp

@@ -49,6 +49,10 @@ class Page
      */
     protected $menus;
 
+    /** @ORM\OneToMany(targetEntity="\Trazeo\BaseBundle\Entity\EGroup",  mappedBy="page")
+     */
+    protected $groups;
+
 
     /**
      * Get id

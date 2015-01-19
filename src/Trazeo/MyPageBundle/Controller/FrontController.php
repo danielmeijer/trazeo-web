@@ -39,6 +39,8 @@ class FrontController extends Controller
        /** @var Page $page */
        $page = $repositoryPage->findOneBySubdomain($subdomain);
 
+       $this->isGranted("edit", $page);
+
        /** @var Menu $menu */
        foreach($page->getMenus() as $menu) {
            /** @var Module $module */
