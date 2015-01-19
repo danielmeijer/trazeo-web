@@ -32,6 +32,7 @@ class EChildRepository extends EntityRepository
      * @throws AccessDeniedException
      */
     public function userDeleteChild($id_child,$userextend){
+        $em=$this->getEntityManager();
         //Obtenemos el niño a borrar
         /** @var EChild $child */
         $child = $em->getRepository('TrazeoBaseBundle:EChild')->findOneById($id_child);
