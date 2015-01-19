@@ -113,6 +113,7 @@ namespace Trazeo\BaseBundle\Entity;
       */
      public function url(){
          if($this->getFile()==null)return null;
+         if(count($this->getFile()->toArray()) == 0)return null;
          return $this->getFile()->toArray()[0]->getPathRelative();
      }
 
