@@ -3,6 +3,9 @@
 namespace Trazeo\BaseBundle\Entity;
 
  use Doctrine\ORM\Mapping as ORM;
+ use JMS\Serializer\Annotation\SerializedName;
+ use JMS\Serializer\Annotation\Type;
+ use JMS\Serializer\Annotation\VirtualProperty;
  use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
  /**
@@ -102,6 +105,16 @@ namespace Trazeo\BaseBundle\Entity;
     {
         return $this->id;
     }
+
+     /**
+      * @VirtualProperty
+      * @Type("string")
+      * @SerializedName("url")
+      */
+     public function url(){
+         if($this->getFile()==null)return null;
+         return $this->getFile()->toArray()[0]->getPathRelative();
+     }
 
     /**
      * Set company

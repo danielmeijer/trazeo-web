@@ -31,16 +31,6 @@
 	 */
 	 protected $catalogitems;
 
-
-     /**
-      * @VirtualProperty
-      * @Type("string")
-      * @SerializedName("path")
-      */
-     public function path(){
-         return $this->getPathRelative();
-     }
-
     /**
      * Get id
      *
