@@ -85,7 +85,6 @@ namespace Trazeo\BaseBundle\Entity;
 	 protected $citys;
 
 
-     
     /**
      * Constructor
      */

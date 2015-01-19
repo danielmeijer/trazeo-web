@@ -181,4 +181,32 @@ class ApiUserController extends Controller
             ->setData($this->doOK($array));
         return $this->get('fos_rest.view_handler')->handle($view);
     }
+
+
+    /**
+     * @POST("/api/user/points", name="api_user_points")
+     */
+    public function postUserPointsAction(Request $request)
+    {
+        $user = $this->checkPrivateAccess($request);
+
+        if ($user == false || $user == null) {
+            $view = View::create()
+                ->setStatusCode(200)
+                ->setData($this->msgDenied());
+
+            return $this->get('fos_rest.view_handler')->handle($view);
+        }
+
+        $array['points'] = $user->getSopinetUserExtend()->getPoints();
+
+        $view = View::create()
+            ->setStatusCode(200)
+            ->setData($this->doOK($array));
+
+        return $this->get('fos_rest.view_handler')->handle($view);
+        //}else
+        //return $this->msgDenied();
+    }
+
 }

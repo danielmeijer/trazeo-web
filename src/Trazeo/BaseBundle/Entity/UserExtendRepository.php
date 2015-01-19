@@ -16,4 +16,9 @@ class UserExtendRepository extends EntityRepository
         }
         return false;
     }
+
+    public function getCurrentPoints(UserExtend $user){
+        $points=$user->getPoints()-$user->getSpendedPoints();
+        return $points;
+    }
 }
