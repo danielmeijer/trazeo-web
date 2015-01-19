@@ -80,10 +80,13 @@ class AppKernel extends Kernel
     {
         $loader->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
 
-        //TODO: Si viene de un subdominio
-        //ldd($_SERVER);
-        //if ($_SERVER['PATH_INFO'] == "/adminPanel") {
+        // Subdominio personalizado o BETA subdominio
+        $parts=explode('.', $_SERVER["SERVER_NAME"]);
+        if ($parts[0] == "beta") {
+            $loader->load(__DIR__ . '/config/configSonataAdmin.yml');
+        } else {
             $loader->load(__DIR__ . '/config/configSonataPanel.yml');
+        }
         //}
     }
 }

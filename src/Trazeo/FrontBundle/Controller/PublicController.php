@@ -24,6 +24,12 @@ class PublicController extends Controller
 	 */
     public function indexAction()
     {
+        $parts=explode('.', $_SERVER["SERVER_NAME"]);
+        if ($parts[0] != "beta" && $parts[0] != "app") {
+            ldd("Esta página personalizada no existe.");
+        }
+
+
     	$banners = array();
     	
     	$banners[0]['url'] = "http://static.trazeo.es/banner/100/acerapeatonal.jpg";
