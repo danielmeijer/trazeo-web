@@ -398,9 +398,9 @@ class ApiController extends Controller {
 		try{
 			$message=$repositoryCatalogItem->exchangeCatalogItem($user,$request->get('id_catalog_item'));
 		}catch (PreconditionFailedHttpException $e){
-			$this->exceptionHandler($e);
+			return $this->exceptionHandler($e);
 		}catch (NotFoundHttpException $e){
-			$this->exceptionHandler($e);
+			return $this->exceptionHandler($e);
 		}
 		$this->container->get('mailer')->send($message);
 		$view = View::create()
