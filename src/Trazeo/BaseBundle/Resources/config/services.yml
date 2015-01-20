@@ -64,6 +64,7 @@ services:
             - {name: sonata.admin, manager_type: orm, group: admin, label: Grupos}
         calls:
             - [setSecurityContext, [@security.context]]
+            - [setContainer, [ @service_container ]]
 
     trazeo_base.admin.e_group_access:
         class: Trazeo\BaseBundle\Admin\EGroupAccessAdmin

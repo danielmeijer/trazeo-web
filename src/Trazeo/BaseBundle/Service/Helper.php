@@ -88,15 +88,19 @@ class Helper {
 		return $path;
 	}
 
-    function getPageBySubdomain() {
-        $parts=explode('.', $_SERVER["SERVER_NAME"]);
-        if ($parts[0] == "beta" || $parts[0] == "app") {
+    function getPageBySubdomain($subdomain = null) {
+        if ($subdomain == null) {
+            $parts=explode('.', $_SERVER["SERVER_NAME"]);
+            $subdomain = $parts[0];
+        }
+
+        if ($subdomain == "beta" || $subdomain == "app") {
             return null;
         }
 
         $em = $this->_container->get("doctrine.orm.entity_manager");
         $repositoryPage = $em->getRepository("TrazeoMyPageBundle:Page");
-        $page = $repositoryPage->findOneBySubdomain($parts[0]);
+        $page = $repositoryPage->findOneBySubdomain($subdomain);
 
         return $page;
     }
