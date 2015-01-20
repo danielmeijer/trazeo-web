@@ -209,4 +209,37 @@ class Page
     {
         return $this->title;
     }
+
+    /**
+     * Add groups
+     *
+     * @param \Trazeo\BaseBundle\Entity\EGroup $groups
+     * @return Page
+     */
+    public function addGroup(\Trazeo\BaseBundle\Entity\EGroup $groups)
+    {
+        $this->groups[] = $groups;
+
+        return $this;
+    }
+
+    /**
+     * Remove groups
+     *
+     * @param \Trazeo\BaseBundle\Entity\EGroup $groups
+     */
+    public function removeGroup(\Trazeo\BaseBundle\Entity\EGroup $groups)
+    {
+        $this->groups->removeElement($groups);
+    }
+
+    /**
+     * Get groups
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGroups()
+    {
+        return $this->groups;
+    }
 }

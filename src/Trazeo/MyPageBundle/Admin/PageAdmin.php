@@ -17,6 +17,7 @@ class PageAdmin extends Admin
         ->add('title')
         ->add('subdomain')
         ->add('userextend',null, array('required' => false))
+        ->add('groups')
         ->add('menus')
     ;
   }
@@ -27,6 +28,7 @@ class PageAdmin extends Admin
         ->add('title')
         ->add('subdomain')
         ->add('userextend')
+        ->add('groups')
         ->add('menus')
     ;
   }
@@ -38,6 +40,7 @@ class PageAdmin extends Admin
         ->add('title')
         ->add('subdomain')
         ->add('userextend')
+        ->add('groups')
         ->add('menus')
     ;
   }

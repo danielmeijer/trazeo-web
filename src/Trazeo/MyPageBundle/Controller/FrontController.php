@@ -46,14 +46,14 @@ class FrontController extends Controller
            /** @var Module $module */
            foreach($menu->getModules() as $module) {
                if ($module->getClass()->getClassName() == "TrazeoRoutes") {
-                   $routes = $module->getClass()->prepareFront($this, $module);
+                   $groups = $module->getClass()->prepareFront($this, $module);
                }
            }
        }
 
 	   	return array(
             'container' => $this,
-            'routes' => $routes,
+            'groups' => $groups,
             'page' => $page
 	   	);
 	}

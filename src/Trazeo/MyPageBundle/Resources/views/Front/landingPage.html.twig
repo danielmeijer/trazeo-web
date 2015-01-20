@@ -32,7 +32,6 @@
     {% endblock %}
 
     {% block content %}
-        {% set routes = "adios" %}
         {% set i = 0 %}
         {% for menu in page.menus %}
             {% if i == 0 %}
@@ -77,10 +76,10 @@
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
-    {% for route in routes %}
+    {% for group in groups %}
         <script>
-            $("#full-width-{{ route.id }}").on('shown', function(){
-                {% include 'SopinetOpenMapBundle:Map:openmap.html.twig' with {'id_map': 'map-'~route.id, 'routePoints': route.points,'editable': "false", 'realTime': "false", 'rideEvents': ''}|e('js') %}
+            $("#full-width-{{ group.id }}").on('shown', function(){
+                {% include 'SopinetOpenMapBundle:Map:openmap.html.twig' with {'id_map': 'map-'~group.id, 'routePoints': group.route.points,'editable': "false", 'realTime': "false", 'rideEvents': ''}|e('js') %}
             });
         </script>
     {% endfor %}
