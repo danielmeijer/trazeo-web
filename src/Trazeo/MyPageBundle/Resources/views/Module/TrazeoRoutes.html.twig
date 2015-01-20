@@ -5,7 +5,7 @@
             <hr class="small">
             <div class="row">
                 {% set i = 0 %}
-                {% for route in vars %}
+                {% for group in vars %}
                     <div class="col-md-3 col-sm-6">
                         <div class="service-item">
                             <span class="fa-stack fa-4x">
@@ -17,30 +17,30 @@
                                 {% endif %}
                             </span>
                             <h4>
-                                <strong>{{ route.name }}</strong>
+                                <strong>{{ group.name }}</strong>
                             </h4>
-                            <p>{{ route.description }}</p>
+                            <p>{{ group.route.description }}</p>
 
-                            <div id="full-width-{{ route.id }}" class="modal container fade">
+                            <div id="full-width-{{ group.id }}" class="modal container fade">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    <h3>{{ route.name }}</h3>
+                                    <h3>{{ group.name }}</h3>
                                 </div>
                                 <div class="modal-body">
-                                    <p>{{ route.description }}</p>
+                                    <p>{{ group.route.description }}</p>
                                     <p>
                                         <div class="row">
-                                            <div class="map-popup" id="map-{{ route.id }}" class="col-md-12"></div>
+                                            <div class="map-popup" id="map-{{ group.id }}" class="col-md-12"></div>
                                         </div>
                                     </p>
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="{{ path('loginInGroup', {'group_id': route.id}) }}" class="btn btn-light">¡Participar!</a>
+                                    <a href="{{ path('loginInGroup', {'group_id': group.id}) }}" class="btn btn-light">¡Participar!</a>
                                     <button type="button" data-dismiss="modal" class="btn">Cerrar</button>
                                 </div>
                             </div>
 
-                            <button id="route-{{ route.id }}" class="demo btn btn-primary btn-large" data-toggle="modal" href="#full-width-{{ route.id }}">Saber más</button>
+                            <button class="demo btn btn-primary btn-large" data-toggle="modal" href="#full-width-{{ group.id }}">Saber más</button>
 
 
                         </div>

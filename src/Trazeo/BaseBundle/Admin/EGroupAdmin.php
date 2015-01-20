@@ -58,6 +58,7 @@ class EGroupAdmin extends Admin
             ->add('route')
             ->add('inviteGroup')
             ->add('ride')
+            ->add('page')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
@@ -84,6 +85,7 @@ class EGroupAdmin extends Admin
             ->add('route')
             ->add('inviteGroup')
             ->add('ride')
+            ->add('page')
         ;
     }
 
@@ -106,7 +108,7 @@ class EGroupAdmin extends Admin
 
         $query = parent::createQuery($context);
 
-        if(true || !$this->securityContext->isGranted('ROLE_SUPER_ADMIN'))
+        if(!$this->securityContext->isGranted('ROLE_SUPER_ADMIN'))
         {
             $user = $this->securityContext->getToken()->getUser();
 
