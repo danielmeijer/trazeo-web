@@ -12,7 +12,7 @@ namespace Trazeo\BaseBundle\Entity;
  * Entity ECatalogItem
  *
  * @ORM\Table("e_catalogitem")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ECatalogItemRepository")
  */
  class ECatalogItem
  {
