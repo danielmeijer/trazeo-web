@@ -35,9 +35,7 @@ class CustomRoleSecurityHandler extends RoleSecurityHandler
      */
     public function isGranted(AdminInterface $admin, $attributes, $object = null)
     {
-        if ($user->hasRole('ROLE_SUPER_ADMIN')){
-            return true;
-        }
+        if ($this->securityContext->isGranted('ROLE_SUPER_ADMIN')) return true;
 
         if (get_class($object) == "Trazeo\BaseBundle\Admin\EGroupAdmin") {
             $object->setSecurityContext($this->securityContext);
