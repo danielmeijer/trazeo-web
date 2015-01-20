@@ -9,6 +9,8 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\DatagridBundle\ProxyQuery\Doctrine\ProxyQuery;
 use Symfony\Component\Security\Core\SecurityContextInterface;
+use Trazeo\BaseBundle\Service\Helper;
+use Trazeo\MyPageBundle\Entity\Page;
 
 class EGroupAdmin extends Admin
 {
@@ -18,9 +20,16 @@ class EGroupAdmin extends Admin
      */
     protected $securityContext;
 
+    /** @var \Symfony\Component\DependencyInjection\ContainerInterface */
+    private $container;
+
     public function setSecurityContext(SecurityContextInterface $securityContext)
     {
         $this->securityContext = $securityContext;
+    }
+
+    public function setContainer (\Symfony\Component\DependencyInjection\ContainerInterface $container) {
+        $this->container = $container;
     }
 
     /**
@@ -104,6 +113,8 @@ class EGroupAdmin extends Admin
 
     public function createQuery($context = 'list')
     {
+        //ldd($this->securityContext->isGranted('ROLE_ADMIN'));
+
         $queryBuilder = $this->getModelManager()->getEntityManager($this->getClass())->createQueryBuilder();
 
         $query = parent::createQuery($context);
@@ -112,7 +123,18 @@ class EGroupAdmin extends Admin
         {
             $user = $this->securityContext->getToken()->getUser();
 
-            $query->andWhere($query->getRootAlias().'.id=70');
+            /** @var Helper $helper */
+            $helper = $this->container->get('trazeo_base_helper');
+            /** @var Page $page */
+            $page = $helper->getPageBySubdomain();
+
+            if ($page == null) die("No Project for you");
+
+            if ($page->getUserextend()->getUser()->getId() != $user->getId()) die("No Project for you");
+
+            foreach($page->getGroups() as $group) {
+                $query->orWhere($query->getRootAlias() . '.id=' . $group->getId());
+            }
             /**
             $query->add('select', '*')
                 //->add('from'  , 'ApplicationSonataUserBundle:User c')
