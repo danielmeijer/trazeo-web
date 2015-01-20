@@ -16,7 +16,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\PreconditionFailedHttpException;
 use Trazeo\BaseBundle\Entity\EGroup;
+use Trazeo\BaseBundle\Entity\UserExtend;
 
 class ApiController extends Controller {
 
@@ -372,4 +374,38 @@ class ApiController extends Controller {
 		return $this->get('fos_rest.view_handler')->handle($view);
 	}
 
+
+	/**
+	 * Función para solicitar el canjeo de una oferta
+	 * @param Request $request
+	 * @return Response
+	 * @Post("/api/catalog/exchange")
+     */
+	public function postExchangeAction(Request $request)
+	{
+		$user = $this->checkPrivateAccess($request);
+		if( $user == false || $user == null ){
+			$view = View::create()
+				->setStatusCode(200)
+				->setData($this->msgDenied());
+
+			return $this->get('fos_rest.view_handler')->handle($view);
+		}
+		$em = $this->get('doctrine.orm.default_entity_manager');
+		$repositoryCatalogItem=$em->getRepository('TrazeoBaseBundle:ECatalogItem');
+		/** @var UserExtend $user */
+		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+		try{
+			$message=$repositoryCatalogItem->exchangeCatalogItem($user,$request->get('id_catalog_item'));
+		}catch (PreconditionFailedHttpException $e){
+			$this->exceptionHandler($e);
+		}catch (NotFoundHttpException $e){
+			$this->exceptionHandler($e);
+		}
+		$this->container->get('mailer')->send($message);
+		$view = View::create()
+			->setStatusCode(200)
+			->setData($this->doOK('ok'));
+		return $this->get('fos_rest.view_handler')->handle($view);
+	}
 }
