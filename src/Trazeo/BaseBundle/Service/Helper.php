@@ -87,4 +87,17 @@ class Helper {
 		$path = substr($path, $pos);
 		return $path;
 	}
+
+    function getPageBySubdomain() {
+        $parts=explode('.', $_SERVER["SERVER_NAME"]);
+        if ($parts[0] == "beta" || $parts[0] == "app") {
+            return null;
+        }
+
+        $em = $this->_container->get("doctrine.orm.entity_manager");
+        $repositoryPage = $em->getRepository("TrazeoMyPageBundle:Page");
+        $page = $repositoryPage->findOneBySubdomain($parts[0]);
+
+        return $page;
+    }
 }

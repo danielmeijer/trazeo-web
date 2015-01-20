@@ -12,6 +12,8 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Trazeo\BaseBundle\Entity\UserExtend;
+use Trazeo\BaseBundle\Service\Helper;
+use Trazeo\MyPageBundle\Entity\Page;
 
 /**
  * @Route("/")
@@ -24,12 +26,20 @@ class PublicController extends Controller
 	 */
     public function indexAction()
     {
-        $parts=explode('.', $_SERVER["SERVER_NAME"]);
-        if ($parts[0] != "beta" && $parts[0] != "app") {
-            ldd("Esta página personalizada no existe.");
+        // Si estamos en una página personalizada redirigimos
+
+        /** @var Helper $helper */
+        $helper = $this->get('trazeo_base_helper');
+        /** @var Page $page */
+        $page = $helper->getPageBySubdomain();
+        if ($page != null) {
+            $response = $this->forward('TrazeoMyPageBundle:Front:landingPage', array(
+                'subdomain'  => $page->getSubdomain()
+            ));
+            return $response;
         }
 
-
+        // Si es una página normal, continuamos
     	$banners = array();
     	
     	$banners[0]['url'] = "http://static.trazeo.es/banner/100/acerapeatonal.jpg";

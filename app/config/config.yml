@@ -2,7 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: "../../vendor/sopinet/userbundle/Sopinet/UserBundle/Resources/config/config.yml" }
-    - { resource: ../../vendor/knplabs/doctrine-behaviors/config/orm-services.yml }    
+    - { resource: ../../vendor/knplabs/doctrine-behaviors/config/orm-services.yml }
 
 parameters:
     #sopinet_user_facebook_id: "202407359917838"
