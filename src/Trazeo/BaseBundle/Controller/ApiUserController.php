@@ -199,7 +199,7 @@ class ApiUserController extends Controller
         }
 
         $repositoryUserExtend=$this->get('doctrine.orm.default_entity_manager')->getRepository('TrazeoBaseBundle:UserExtend');
-        $userextend = $repositoryUserExtend->findOneByNick($user->getUsername());
+        $userextend = $repositoryUserExtend->findOneByNick($user->getEmail());
         $array['points'] = $repositoryUserExtend->getCurrentPoints($userextend);
 
         $view = View::create()
