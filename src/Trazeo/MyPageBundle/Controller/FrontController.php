@@ -120,7 +120,7 @@ class FrontController extends Controller
         $repositoryGroup = $em->getRepository("TrazeoBaseBundle:EGroup");
         $group = $repositoryGroup->findOneById($group_id);
 
-        $user = $this->container->get('fos_user.user_manager')->findUserByEmail($request->get('email'));
+        $user = $this->container->get('fos_user.user_manager')->findUserByUsernameOrEmail($request->get('email'));
         $encoder = $this->get('security.encoder_factory')->getEncoder($user);
         $encodedPass = $encoder->encodePassword($request->get('password'), $user->getSalt());
 
