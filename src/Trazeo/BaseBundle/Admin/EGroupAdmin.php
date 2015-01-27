@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\DatagridBundle\ProxyQuery\Doctrine\ProxyQuery;
 use Symfony\Component\Security\Core\SecurityContextInterface;
+use Trazeo\BaseBundle\Entity\EGroup;
 use Trazeo\BaseBundle\Service\Helper;
 use Trazeo\MyPageBundle\Entity\Page;
 
@@ -92,6 +93,10 @@ class EGroupAdmin extends Admin
             ->add('admin')
             ->add('childs')
             ->add('route')
+            ->add('bymode', 'choice', array('choices' => array(
+                EGroup::BYMODE_PEDIBUS => "Pedibús",
+                EGroup::BYMODE_BICIBUS => "Bicibús",
+            ) ))
             ->add('inviteGroup')
             ->add('ride')
             ->add('page')
