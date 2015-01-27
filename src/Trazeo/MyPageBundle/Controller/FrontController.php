@@ -34,6 +34,37 @@ use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 class FrontController extends Controller
 {
     /**
+     * Hace Login al usuario pasado por parámetro
+     *
+     * @param User $user
+     */
+    private function doLogin(User $user) {
+        // Hacemos LOGIN
+        $token = new UsernamePasswordToken($user, null, "main", $user->getRoles());
+        $this->get("security.context")->setToken($token); //now the user is logged in
+
+        //now dispatch the login event
+        $request = $this->get("request");
+        $event = new InteractiveLoginEvent($request, $token);
+        $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
+    }
+
+    /**
+     * Accede a un Grupo
+     *
+     * @param Group $group
+     */
+    private function doJoin(EGroup $group) {
+        if ($group->getVisibility() == EGroup::VISIBILITY_PUBLIC) {
+            return $this->forward("TrazeoFrontBundle:PanelGroups:joinGroup", array('id' => $group->getId()));
+        } else if ($group->getVisibility() == EGroup::VISIBILITY_PRIVATE) {
+            return $this->forward("TrazeoFrontBundle:PanelGroups:requestJoinGroup", array('id' => $group->getId()));
+        } else {
+            die("Error");
+        }
+    }
+
+    /**
     * @Route("/landing/{subdomain}", name="landingPage")
     * @Template()
     */
@@ -65,10 +96,45 @@ class FrontController extends Controller
 	}
 
     /**
-     * @Route("/inGroup/{group_id}", name="loginInGroup")
+     * @Route("/loginInGroup/{group_id}", name="loginInGroup")
      * @Template()
      */
     public function loginInGroupAction($group_id) {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $repositoryGroup = $em->getRepository("TrazeoBaseBundle:EGroup");
+        $group = $repositoryGroup->findOneById($group_id);
+
+        return array(
+            'group' => $group
+        );
+    }
+
+    /**
+     * @Route("/loginSaveInGroup/{group_id}", name="loginSaveInGroup")
+     * @Template()
+     */
+    public function loginSaveInGroupAction($group_id, Request $request) {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $repositoryGroup = $em->getRepository("TrazeoBaseBundle:EGroup");
+        $group = $repositoryGroup->findOneById($group_id);
+
+        $user = $this->container->get('fos_user.user_manager')->findUserByEmail($request->get('email'));
+        $encoder = $this->get('security.encoder_factory')->getEncoder($user);
+        $encodedPass = $encoder->encodePassword($request->get('password'), $user->getSalt());
+
+        if ($user->getPassword() === $encodedPass) {
+            $this->doLogin($user);
+            return $this->doJoin($group);
+        }
+    }
+
+    /**
+     * @Route("/registerInGroup/{group_id}", name="registerInGroup")
+     * @Template()
+     */
+    public function registerInGroupAction($group_id) {
         $em = $this->getDoctrine()->getEntityManager();
 
         $repositoryGroup = $em->getRepository("TrazeoBaseBundle:EGroup");
@@ -99,7 +165,7 @@ class FrontController extends Controller
     }
 
     /**
-     * @Route("saveInGroup/{group_id}", name="saveInGroup")
+     * @Route("/saveInGroup/{group_id}", name="saveInGroup")
      */
     public function saveInGroup($group_id, Request $request) {
         $em = $this->getDoctrine()->getEntityManager();
@@ -134,7 +200,6 @@ class FrontController extends Controller
 
             /** @var EChild $child */
             $child = $form_children->getData();
-            $child->addGroup($group);
             $child->setVisibility(false);
             $em->persist($child);
             $em->flush();
@@ -144,7 +209,6 @@ class FrontController extends Controller
             $userExtend->setMobile($request->get('user_phone'));
             $userExtend->setName($request->get('user_name'));
             $userExtend->addChild($child);
-            $userExtend->addGroup($group);
             $em->persist($userExtend);
             $em->flush();
 
@@ -152,25 +216,18 @@ class FrontController extends Controller
             $child->addUserextendchild($userExtend);
             $em->persist($child);
             $em->flush();
-            $group->addUserextendgroup($userExtend);
-            $em->persist($group);
-            $em->flush();
 
-            // Hacemos LOGIN
-            $token = new UsernamePasswordToken($user, null, "main", $user->getRoles());
-            $this->get("security.context")->setToken($token); //now the user is logged in
+            $this->doLogin($user);
+            $this->doJoin($group);
 
-            //now dispatch the login event
-            $request = $this->get("request");
-            $event = new InteractiveLoginEvent($request, $token);
-            $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
-
-            $container = $this->get('sopinet_flashMessages');
-            $container->addFlashMessages("success","Se ha registrado con éxito");
             return $this->redirect($this->generateUrl('panel_dashboard'));
         } else {
-            ld($form_user->getErrorsAsString());
-            ldd($form_children->getErrorsAsString());
+            $container = $this->get('sopinet_flashMessages');
+            $container->addFlashMessages("warning","Ha ocurrido algún error, por favor, revise los datos.");
+            return $this->redirect($this->generateUrl('registerInGroup', array('group_id' => $group->getId())));
+
+            // ld($form_user->getErrorsAsString());
+            // ldd($form_children->getErrorsAsString());
         }
     }
 }

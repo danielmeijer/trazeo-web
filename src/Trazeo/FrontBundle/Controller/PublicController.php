@@ -186,7 +186,7 @@ class PublicController extends Controller
     		$em->flush();
     		
     		// Logueamos Usuario
-    		$token = new UsernamePasswordToken($user, null, "your_firewall_name", $user->getRoles());
+    		$token = new UsernamePasswordToken($user, null, "main", $user->getRoles());
     		$this->get("security.context")->setToken($token); //now the user is logged in
     		
     		// Lanzamos evento de Login
