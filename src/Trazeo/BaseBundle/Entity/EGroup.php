@@ -16,6 +16,10 @@ class EGroup
     const BYMODE_PEDIBUS = "pedibus";
     const BYMODE_BICIBUS = "bicibus";
 
+    const VISIBILITY_PUBLIC = "0";
+    const VISIBILITY_PRIVATE = "1";
+    const VISIBILITY_HIDE = "2";
+
 	use ORMBehaviors\Timestampable\Timestampable;
     /**
      * @var integer
