@@ -25,11 +25,9 @@ class EChildAdmin extends Admin
             ->add('selected')
             ->add('ride')
             ->add('groups')
-            ->add('inviteChild')            
+            ->add('inviteChild')
             ->add('createdAt')
-            ->add('updatedAt')
-            
-        ;
+            ->add('updatedAt');
     }
 
     /**
@@ -56,8 +54,7 @@ class EChildAdmin extends Admin
             ->add('groups')
             ->add('inviteChild')
             ->add('createdAt')
-            ->add('updatedAt')       
-        ;
+            ->add('updatedAt');
     }
 
     /**

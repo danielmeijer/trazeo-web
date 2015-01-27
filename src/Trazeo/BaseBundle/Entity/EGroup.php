@@ -13,6 +13,9 @@ use JMS\Serializer\Annotation\Exclude;
  */
 class EGroup
 {
+    const BYMODE_PEDIBUS = "pedibus";
+    const BYMODE_BICIBUS = "bicibus";
+
 	use ORMBehaviors\Timestampable\Timestampable;
     /**
      * @var integer
@@ -93,6 +96,12 @@ class EGroup
     /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\Country")
      */
     protected $country;
+
+    /**
+     *
+     * @ORM\Column(name="bymode", type="string", length=255, nullable=true)
+     */
+    protected $bymode;
 
     /**
      * @var string
@@ -588,5 +597,30 @@ class EGroup
     public function getSchool1()
     {
         return $this->school1;
+    }
+
+    /**
+     * Set bymode
+     *
+     * @param string $bymode
+     *
+     * @return EGroup
+     */
+    public function setByMode($bymode)
+    {
+        $this->bymode = $bymode;
+
+        return $this;
+    }
+
+    /**
+     * Get bymode
+     *
+     * @return string
+     */
+    public function getByMode()
+    {
+        if ($this->bymode == "") return EGroup::BYMODE_PEDIBUS;
+        return $this->bymode;
     }
 }
