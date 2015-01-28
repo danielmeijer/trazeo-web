@@ -211,4 +211,33 @@ class ApiUserController extends Controller
         //return $this->msgDenied();
     }
 
+
+    /**
+     * @POST("/api/user/profile", name="api_user_profile")
+     */
+    public function postUserProfileAction(Request $request)
+    {
+        $user = $this->checkPrivateAccess($request);
+
+        if ($user == false || $user == null) {
+            $view = View::create()
+                ->setStatusCode(200)
+                ->setData($this->msgDenied());
+
+            return $this->get('fos_rest.view_handler')->handle($view);
+        }
+
+        $repositoryUserExtend=$this->get('doctrine.orm.default_entity_manager')->getRepository('TrazeoBaseBundle:UserExtend');
+        $userextend = $repositoryUserExtend->findOneByNick($user->getEmail());
+
+        $view = View::create()
+            ->setStatusCode(200)
+            ->setData($this->doOK($userextend));
+
+        return $this->get('fos_rest.view_handler')->handle($view);
+        //}else
+        //return $this->msgDenied();
+    }
+
+
 }
