@@ -61,7 +61,6 @@ class UserExtendAdmin extends Admin
         ->add('spendedPoints')
         ->add('mobile')
         ->add('city.nameUtf8')
-        ->add('useLike')
     ;
   }
 
