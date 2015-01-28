@@ -5,7 +5,9 @@ namespace Trazeo\BaseBundle\Entity;
 use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
+use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Table("userextend")
@@ -55,10 +57,12 @@ class UserExtend
     protected $childs;
     
     /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\City")
+     * @Expose
      */
     protected $city;
     
     /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\Country")
+     * @Expose
      */
     protected $country;
     
@@ -106,6 +110,7 @@ class UserExtend
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @Expose
      */
     protected $name;
         
@@ -113,6 +118,7 @@ class UserExtend
      * @var string
      *
      * @ORM\Column(name="nick", type="string", length=255)
+     * @Expose
      */
     protected $nick;
  
@@ -121,6 +127,7 @@ class UserExtend
      * @var integer
      *
      * @ORM\Column(name="points", type="integer")
+     * @Expose
      */
     protected $points=0;
 
@@ -135,6 +142,7 @@ class UserExtend
      * @var integer
      *
      * @ORM\Column(name="mobile", type="integer", nullable=true)
+     * @Expose
      */
     protected $mobile=null;
 
