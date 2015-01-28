@@ -18,6 +18,10 @@ class PageAdmin extends Admin
         ->add('subdomain')
         ->add('userextend',null, array('required' => false))
         ->add('groups')
+        ->add('data_email')
+        ->add('data_facebook')
+        ->add('data_twitter')
+        ->add('data_web')
         ->add('menus')
     ;
   }

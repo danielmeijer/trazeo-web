@@ -13,6 +13,9 @@ use JMS\Serializer\Annotation\Exclude;
  */
 class EChild
 {
+    const GENDER_BOY = "boy";
+    const GENDER_GIRL = "girl";
+
 	use ORMBehaviors\Timestampable\Timestampable;
     /**
      * @var integer

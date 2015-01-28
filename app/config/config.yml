@@ -44,13 +44,14 @@ twig:
         exchange_code: %exchange_code%
     form:
         resources:
-            - 'SopinetTemplateSbadmin2Bundle:Form:bootstrap.html.twig'  
+            - 'SopinetTemplateSbadmin2Bundle:Form:bootstrap.html.twig'
+            - 'SonataCoreBundle:Form:datepicker.html.twig'
 
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ FOSCommentBundle, SopinetTemplateSbadmin2Bundle, TrazeoFrontBundle, SopinetTemplateLandingBundle,SopinetTemplateAmoebaBundle, JMSTranslationBundle, FOSUserBundle, SopinetFlashMessagesBundle, SopinetTimelineBundle, SopinetSuggestionBundle, SopinetUploadMagicBundle, TrazeoMyPageBundle]
+    bundles:        [ FOSCommentBundle, SopinetTemplateSbadmin2Bundle, TrazeoFrontBundle, SopinetTemplateLandingBundle,SopinetTemplateAmoebaBundle, JMSTranslationBundle, FOSUserBundle, SopinetFlashMessagesBundle, SopinetTimelineBundle, SopinetSuggestionBundle, SopinetUploadMagicBundle, TrazeoMyPageBundle, SonataAdminBundle]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~

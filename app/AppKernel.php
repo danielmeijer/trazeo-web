@@ -64,7 +64,8 @@ class AppKernel extends Kernel
             new Hip\MandrillBundle\HipMandrillBundle(),
             new Oneup\UploaderBundle\OneupUploaderBundle(),
             new Sopinet\Bundle\UploadMagicBundle\SopinetUploadMagicBundle(),
-            new Trazeo\MyPageBundle\TrazeoMyPageBundle()
+            new Trazeo\MyPageBundle\TrazeoMyPageBundle(),
+            new Ob\HighchartsBundle\ObHighchartsBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

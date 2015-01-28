@@ -6,6 +6,9 @@
 {% set cancel_button = "Route.show.buttons.cancel"|trans %}
 {% if id_map is not defined %}
     {% set id_map =  "mapa" %}
+    {% set add = "" %}
+{% else %}
+    {% set add = id_map %}
 {% endif %}
 
     var points=new Array;
@@ -285,7 +288,7 @@
                 pointList+=map._layers[marker]._latlng.lat+","+map._layers[marker]._latlng.lng+","+pick;
             };
         // populate inputs
-        $("#cityInput").val($("#start").html().split(',')[1].slice(1));
+        $("#cityInput").val($("#start{{ add }}").html().split(',')[1].slice(1));
         $("#inputPoints").val(pointList);
         $("#distanceInput").val(map.getDistance());
     });
@@ -347,7 +350,7 @@
                 var aux=r.name.split(',');
                 aux.splice(1,2);
                 aux.splice(3,1);
-                $("#start").html(aux.toString());
+                $("#start{{ add }}").html(aux.toString());
             });
         }
         if(last){
@@ -362,10 +365,10 @@
                 var aux=r.name.split(',');
                 aux.splice(1,2);
                 aux.splice(3,1);
-                $("#finish").html(aux.toString());
+                $("#finish{{ add }}").html(aux.toString());
             });
         }
-        if(first && last)$("#distance").html(map.getDistance()+" m");
+        if(first && last)$("#distance{{ add }}").html(map.getDistance()+" m");
         $(".leaflet-marker-icon").on();
         for(var marker in map._layers)if(map._layers[marker]._icon && map._layers[marker]._icon.className===icon)
             map._layers[marker].on('contextmenu',showPopUpMenu);
