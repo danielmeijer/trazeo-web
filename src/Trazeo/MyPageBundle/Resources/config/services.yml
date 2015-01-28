@@ -15,6 +15,11 @@ services:
         tags:
             - {name: sonata.admin, manager_type: orm, group: admin, label: Module}
 
+    trazeo_mypage.form.type.DateRangePickerType:
+        class: Trazeo\MyPageBundle\Form\DateRangePickerType
+        tags:
+            - { name: form.type, alias: DateRangePicker }
+
     sonata.block.mypagebundle.stats:
         id: sonata.block.mypagebundle.stats
         class: Trazeo\MyPageBundle\Block\StatBlockService

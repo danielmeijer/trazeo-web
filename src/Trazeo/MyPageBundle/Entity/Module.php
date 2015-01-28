@@ -13,6 +13,11 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
  */
 class Module
 {
+    const TYPE_IMAGE = "Image";
+    const TYPE_HTML = "Html";
+    const TYPE_COMBOBIGINTRO = "ComboBigIntro";
+    const TYPE_TRAZEOROUTES = "TrazeoRoutes";
+
     use ORMBehaviors\Timestampable\Timestampable;
     /**
      * @var integer

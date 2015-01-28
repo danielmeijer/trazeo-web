@@ -771,3 +771,19 @@ security:
         remember_me: Recordar
         submit: Entrar
         username: 'Nombre de usuario:'
+
+# Project Admin
+list:
+    label_nick: 'Nombre'
+    label_date_birth: 'Fecha de Nacimiento'
+    label_created_at: 'Fecha de Registro'
+    label_scholl: 'Centro Educativo'
+
+breadcrumb:
+    link_e_child_list: 'Listado de Niños'
+
+filter:
+    label_groups: 'Grupos'
+    label_created_at: 'Fecha de Registro'
+    label_gender: 'Género'
+    label_scholl: 'Centro Educativo'

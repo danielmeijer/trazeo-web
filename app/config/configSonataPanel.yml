@@ -1,3 +1,11 @@
+# Services
+services:
+    trazeo_mypage.panel.p_child:
+        class: Trazeo\MyPageBundle\Admin\PChildAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\EChild, TrazeoMyPageBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Niños, label_translator_strategy: "sonata.admin.label.strategy.underscore" }
+
 # Sonata Admin Dashboard
 sonata_admin:
     security:
@@ -11,6 +19,7 @@ sonata_admin:
         search:              SonataAdminBundle:Core:search.html.twig
         search_result_block: SonataAdminBundle:Block:block_search_result.html.twig
         dashboard: SonataAdminBundle:Core:dashboard.html.twig
+        layout:    TrazeoMyPageBundle:Admin:custom_project_layout.html.twig
 
     dashboard:
         blocks:
@@ -23,21 +32,19 @@ sonata_admin:
                 label: Gestión de Rutas
                 icon:            '<i class="fa fa-th"></i>'
                 items:
-                  - trazeo_base.admin.e_group
+                  #- trazeo_base.admin.e_group
             manageRoutes:
                 label: Gestión de Usuarios
                 icon:            '<i class="fa fa-user"></i>'
                 items:
-                  - trazeo_base.admin.e_child
-                  - trazeo_base.admin.user_extend
+                  - trazeo_mypage.panel.p_child
+                  #- trazeo_base.admin.user_extend
 
 # Sonata
 sonata_block:
     default_contexts: [cms]
     blocks:
         sonata.admin.block.admin_list:
-            contexts:   [admin]
         sonata.block.service.text:
         sonata.block.mypagebundle.stats:
         sonata.admin.block.search_result:
-            contexts: [admin]

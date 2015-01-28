@@ -1,3 +1,109 @@
+# Services
+services:
+    trazeo_base.admin.e_child:
+        class: Trazeo\BaseBundle\Admin\EChildAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\EChild, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Niños}
+
+    trazeo_base.admin.e_child_ride:
+        class: Trazeo\BaseBundle\Admin\EChildRideAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\EChildRide, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: EChildRide}
+
+    trazeo_base.admin.e_child_invite:
+        class: Trazeo\BaseBundle\Admin\EChildInviteAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\EChildInvite, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Invitaciones}
+
+    trazeo_base.admin.e_event:
+        class: Trazeo\BaseBundle\Admin\EEventAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\EEvent, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: EEvent}
+
+    trazeo_base.admin.e_group:
+        class: Trazeo\BaseBundle\Admin\EGroupAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\EGroup, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Grupos}
+        calls:
+            - [setSecurityContext, [@security.context]]
+            - [setContainer, [ @service_container ]]
+
+    trazeo_base.admin.e_group_access:
+        class: Trazeo\BaseBundle\Admin\EGroupAccessAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\EGroupAccess, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: EGroupAccess}
+
+    trazeo_base.admin.e_group_anon_invite:
+        class: Trazeo\BaseBundle\Admin\EGroupAnonInviteAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\EGroupAnonInvite, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: EGroupAnonInvite}
+
+    trazeo_base.admin.e_group_invite:
+        class: Trazeo\BaseBundle\Admin\EGroupInviteAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\EGroupInvite, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: EGroupInvite}
+
+    trazeo_base.admin.e_points:
+        class: Trazeo\BaseBundle\Admin\EPointsAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\EPoints, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: EPoints}
+
+    trazeo_base.admin.e_report:
+        class: Trazeo\BaseBundle\Admin\EReportAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\EReport, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: EReport}
+
+    trazeo_base.admin.e_ride:
+        class: Trazeo\BaseBundle\Admin\ERideAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\ERide, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: ERide}
+
+    trazeo_base.admin.e_route:
+        class: Trazeo\BaseBundle\Admin\ERouteAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\ERoute, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: ERoute}
+
+    trazeo_base.admin.e_sponsor:
+        class: Trazeo\BaseBundle\Admin\ESponsorAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\ESponsor, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: ESponsor}
+
+    trazeo_base.admin.user_extend:
+        class: Trazeo\BaseBundle\Admin\UserExtendAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\UserExtend, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Padres/Monitores}
+
+    trazeo_base.admin.e_suggestion:
+        class: Trazeo\BaseBundle\Admin\ESuggestionAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\ESuggestion, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: ESuggestion}
+
+    trazeo_base.admin.e_useraction:
+        class: Trazeo\BaseBundle\Admin\EUserActionAdmin
+        arguments: [~, Sopinet\Bundle\GamificationBundle\Entity\EUserAction, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: EUserAction}
+    trazeo_base.admin.e_catalogitem:
+        class: Trazeo\BaseBundle\Admin\ECatalogItemAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\ECatalogItem, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: ECatalogItem}
+
 # Sonata Admin Dashboard
 sonata_admin:
     title:      Trazeo - Dashboard

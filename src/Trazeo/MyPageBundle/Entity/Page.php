@@ -53,6 +53,34 @@ class Page
      */
     protected $groups;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="data_email", type="string", length=255, nullable=true)
+     */
+    protected $data_email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="data_facebook", type="string", length=255, nullable=true)
+     */
+    protected $data_facebook;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="data_twitter", type="string", length=255, nullable=true)
+     */
+    protected $data_twitter;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="data_web", type="string", length=255, nullable=true)
+     */
+    protected $data_web;
+
 
     /**
      * Get id
@@ -241,5 +269,97 @@ class Page
     public function getGroups()
     {
         return $this->groups;
+    }
+
+    /**
+     * Set data_email
+     *
+     * @param string $dataEmail
+     * @return Page
+     */
+    public function setDataEmail($dataEmail)
+    {
+        $this->data_email = $dataEmail;
+
+        return $this;
+    }
+
+    /**
+     * Get data_email
+     *
+     * @return string 
+     */
+    public function getDataEmail()
+    {
+        return $this->data_email;
+    }
+
+    /**
+     * Set data_facebook
+     *
+     * @param string $dataFacebook
+     * @return Page
+     */
+    public function setDataFacebook($dataFacebook)
+    {
+        $this->data_facebook = $dataFacebook;
+
+        return $this;
+    }
+
+    /**
+     * Get data_facebook
+     *
+     * @return string 
+     */
+    public function getDataFacebook()
+    {
+        return $this->data_facebook;
+    }
+
+    /**
+     * Set data_twitter
+     *
+     * @param string $dataTwitter
+     * @return Page
+     */
+    public function setDataTwitter($dataTwitter)
+    {
+        $this->data_twitter = $dataTwitter;
+
+        return $this;
+    }
+
+    /**
+     * Get data_twitter
+     *
+     * @return string 
+     */
+    public function getDataTwitter()
+    {
+        return $this->data_twitter;
+    }
+
+    /**
+     * Set data_web
+     *
+     * @param string $dataWeb
+     * @return Page
+     */
+    public function setDataWeb($dataWeb)
+    {
+        $this->data_web = $dataWeb;
+
+        return $this;
+    }
+
+    /**
+     * Get data_web
+     *
+     * @return string 
+     */
+    public function getDataWeb()
+    {
+        return $this->data_web;
     }
 }

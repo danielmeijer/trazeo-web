@@ -61,20 +61,28 @@
                     <!--<p>3481 Melrose Place<br>Beverly Hills, CA 90210</p>-->
                     <ul class="list-unstyled">
                         <!--<li><i class="fa fa-phone fa-fw"></i> (123) 456-7890</li>-->
-                        <li><i class="fa fa-envelope-o fa-fw"></i>  <a href="mailto:hola@trazeo.es">hola@trazeo.es</a>
-                        </li>
+                        {% if page.dataEmail != "" %}
+                            <li><i class="fa fa-envelope-o fa-fw"></i>  <a href="mailto:{{ page.dataEmail }}">{{ page.dataEmail }}</a>
+                            </li>
+                        {% endif %}
                     </ul>
                     <br>
                     <ul class="list-inline">
-                        <li>
-                            <a href="https://www.facebook.com/trazeo"><i class="fa fa-facebook fa-fw fa-3x"></i></a>
-                        </li>
-                        <li>
-                            <a href="https://twitter.com/trazeo"><i class="fa fa-twitter fa-fw fa-3x"></i></a>
-                        </li>
-                        <li>
-                            <a href="http://trazeo.es"><i class="fa fa-dribbble fa-fw fa-3x"></i></a>
-                        </li>
+                        {% if page.dataFacebook != "" %}
+                            <li>
+                                <a href="{{ page.dataFacebook }}"><i class="fa fa-facebook fa-fw fa-3x"></i></a>
+                            </li>
+                        {% endif %}
+                        {% if page.dataTwitter != "" %}
+                            <li>
+                                <a href="{{ page.dataTwitter }}"><i class="fa fa-twitter fa-fw fa-3x"></i></a>
+                            </li>
+                        {% endif %}
+                        {% if page.dataWeb != "" %}
+                            <li>
+                                <a href="{{ page.dataWeb }}"><i class="fa fa-dribbble fa-fw fa-3x"></i></a>
+                            </li>
+                        {% endif %}
                     </ul>
                     <hr class="small">
                     <p class="text-muted">{{ page.title }} &copy; Trazeo: Caminos Escolares</p>

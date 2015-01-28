@@ -6,7 +6,8 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
 use Sonata\AdminBundle\Form\FormMapper;
- 
+use Trazeo\MyPageBundle\Entity\Module;
+
 class ModuleAdmin extends Admin
 {
   protected $translationDomain = 'TrazeoBaseBundleAdmin';
@@ -16,7 +17,12 @@ class ModuleAdmin extends Admin
     $formMapper
         ->add('title')
         ->add('content')
-        ->add('type')
+        ->add('type', 'choice', array('choices' => array(
+            Module::TYPE_COMBOBIGINTRO => "ComboBigIntro",
+            Module::TYPE_HTML => "Html",
+            Module::TYPE_IMAGE => "Image",
+            Module::TYPE_TRAZEOROUTES => "TrazeoRoutes"
+        ) ))
         ->add('position')
         ->add('menu')
     ;
