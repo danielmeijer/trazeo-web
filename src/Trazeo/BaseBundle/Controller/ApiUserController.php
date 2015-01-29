@@ -4,6 +4,7 @@ namespace Trazeo\BaseBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
+use Sopinet\UserPreferencesBundle\Entity\UserValueRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandler;
@@ -18,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Hip\MandrillBundle\Message;
 use Hip\MandrillBundle\Dispatcher;
+use Trazeo\BaseBundle\Entity\UserExtend;
 
 class ApiUserController extends Controller
 {
@@ -81,23 +83,8 @@ class ApiUserController extends Controller
      * Funcion que controla si el usuario está logueado o se comprueba con su email y pass
      */
     private function checkPrivateAccess(Request $request) {
-        //$user = $this->get('security.context')->getToken()->getUser();
-
-        /*if ($user != null && $user != "anon.") {
-            return $user;
-        }*/
-
-        // TODO: ACTIVAR, QUITAR FALSE / NO HACE FALTA ESTA COMPROBACION
-// 		if ('POST' != $request->getMethod() && false) {
-// 			return false;
-// 		}
 
         $user = $this->checkUser($request->get('email'), $request->get('pass'));
-
-        //No es necesario
-        if($user == false) {
-            return false;
-        }
 
         return $user;
     }
@@ -207,8 +194,6 @@ class ApiUserController extends Controller
             ->setData($this->doOK($array));
 
         return $this->get('fos_rest.view_handler')->handle($view);
-        //}else
-        //return $this->msgDenied();
     }
 
 
@@ -235,9 +220,147 @@ class ApiUserController extends Controller
             ->setData($this->doOK($userextend));
 
         return $this->get('fos_rest.view_handler')->handle($view);
-        //}else
-        //return $this->msgDenied();
     }
 
+
+
+
+    /**
+     * @POST("/api/user/modify/profile", name="api_user_modify_profile")
+     */
+    public function postUserModifyProfileAction(Request $request)
+    {
+        $user = $this->checkPrivateAccess($request);
+
+        if ($user == false || $user == null) {
+            $view = View::create()
+                ->setStatusCode(200)
+                ->setData($this->msgDenied());
+
+            return $this->get('fos_rest.view_handler')->handle($view);
+        }
+
+        $repositoryUserExtend=$this->get('doctrine.orm.default_entity_manager')->getRepository('TrazeoBaseBundle:UserExtend');
+        /** @var UserExtend $userextend */
+        $userextend = $repositoryUserExtend->findOneByNick($user->getEmail());
+        //Obtenemos los datos de la petición
+        $name=$request->get('name');
+        $phone=$request->get('phone');
+        $city=$request->get('city');
+        //Actualizamos los datos del perfil
+        $userextend->setName($name);
+        $userextend->setCity($city);
+        $userextend->setMobile($phone);
+        //Guardamos los datos
+        $this->get('doctrine.orm.default_entity_manager')->persist($userextend);
+        $this->get('doctrine.orm.default_entity_manager')->flush();
+
+        $view = View::create()
+            ->setStatusCode(200)
+            ->setData($this->doOK('ok'));
+
+        return $this->get('fos_rest.view_handler')->handle($view);
+    }
+
+    /**
+     * Petición para obtener las preferencías con respecto a las notificaciones de un usuario
+     * @POST("/api/user/notification/settings", name="api_user_notification_settings")
+     */
+    public function postUserNotificationSettingsAction(Request $request)
+    {
+        $user = $this->checkPrivateAccess($request);
+
+        if ($user == false || $user == null) {
+            $view = View::create()
+                ->setStatusCode(200)
+                ->setData($this->msgDenied());
+
+            return $this->get('fos_rest.view_handler')->handle($view);
+        }
+        $em=$this->get('doctrine.orm.default_entity_manager');
+
+        $repositoryUserExtend=$em->getRepository('SopinetUserBundle:SopinetUserExtend');
+        $userextend = $repositoryUserExtend->findOneByUser($user);
+
+        $repositoryUserValue = $em->getRepository('SopinetUserPreferencesBundle:UserValue');
+
+        /** @var UserValue[] $settings */
+        $settings=$repositoryUserValue->findByUser($userextend);
+
+        $data=[];
+        foreach($settings as $setting){
+            $data['value']=$repositoryUserValue->getValue($userextend,$setting->getSetting());
+            $data['setting']=$setting->getSetting();
+            $data['id']=$setting->getId();
+        }
+        $view = View::create()
+            ->setStatusCode(200)
+            ->setData($this->doOK($settings));
+
+        return $this->get('fos_rest.view_handler')->handle($view);
+    }
+
+
+    /**
+     * Petición para modificar las preferencías con respecto a las notificaciones de un usuario
+     * @POST("/api/user/notification/modify/settings", name="api_user__modify_notification_settings")
+     */
+    public function postUserModifyNotificationSettingsAction(Request $request)
+    {
+        $user = $this->checkPrivateAccess($request);
+
+        if ($user == false || $user == null) {
+            $view = View::create()
+                ->setStatusCode(200)
+                ->setData($this->msgDenied());
+
+            return $this->get('fos_rest.view_handler')->handle($view);
+        }
+        $em=$this->get('doctrine.orm.default_entity_manager');
+
+        $repositoryUserExtend=$em->getRepository('SopinetUserBundle:SopinetUserExtend');
+        $userextend = $repositoryUserExtend->findOneByUser($user);
+
+        $repositoryUserValue = $em->getRepository('SopinetUserPreferencesBundle:UserValue');
+        $repositoryUserValue->setValue($userextend,$request->get('email_notification_id'),$request->get('email_notification_value'));
+        $repositoryUserValue->setValue($userextend,$request->get('civiclub_conexion_id'),$request->get('civiclub_conexion_value'));
+
+        /** @var UserValue[] $settings */
+        $settings=$repositoryUserValue->findByUser($userextend);
+
+        $view = View::create()
+            ->setStatusCode(200)
+            ->setData($this->doOK('ok'));
+
+        return $this->get('fos_rest.view_handler')->handle($view);
+    }
+
+
+    /**
+     * @POST("/api/user/change/password")
+     * @param Request request
+     */
+    public function postChangePasswordAction(Request $request)
+    {
+        $user = $this->checkPrivateAccess($request);
+        if ($user == false || $user == null) {
+            $view = View::create()
+                ->setStatusCode(200)
+                ->setData($this->msgDenied());
+
+            return $this->get('fos_rest.view_handler')->handle($view);
+        }
+        $em=$this->get('doctrine.orm.default_entity_manager');
+        $password=$request->get('newPassword');
+        //se crea el usuario
+        $user->setPassword($password);
+        $em->persist($user);
+        $em->flush();
+
+        $view = View::create()
+            ->setStatusCode(201)
+            ->setData($this->doOK('ok'));
+        return $this->get('fos_rest.view_handler')->handle($view);
+    }
 
 }
