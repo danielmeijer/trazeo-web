@@ -247,9 +247,10 @@ class ApiUserController extends Controller
         $name=$request->get('name');
         $phone=$request->get('phone');
         $city=$request->get('city');
+        $city=$this->get('trazeo_base_helper')->getCities($city,1,true);
         //Actualizamos los datos del perfil
         $userextend->setName($name);
-        $userextend->setCity($city);
+        $userextend->setCity($city[0]);
         $userextend->setMobile($phone);
         //Guardamos los datos
         $this->get('doctrine.orm.default_entity_manager')->persist($userextend);
