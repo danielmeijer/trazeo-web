@@ -2,6 +2,7 @@
 namespace Sopinet\UserPreferencesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Exclude;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use Doctrine\ORM\Event\OnFlushEventArgs;
  
@@ -22,6 +23,7 @@ class UserValue
     /**
      * @ORM\ManyToOne(targetEntity="Sopinet\UserBundle\Entity\SopinetUserExtend", inversedBy="uservalues")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
+     * @Exclude
      */
     protected $user;
     
