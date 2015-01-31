@@ -191,6 +191,14 @@ class FrontController extends Controller
         ));
         $form_children->handleRequest($request);
 
+        $user_check = $request->request->get('trazeo_mypagebundle_userdirecttype');
+        $user_exists = $user = $this->container->get('fos_user.user_manager')->findUserByUsernameOrEmail($user_check['email']);
+        if ($user_exists != null) {
+            $container = $this->get('sopinet_flashMessages');
+            $container->addFlashMessages("warning","Este usuario ya existe, si es el suyo, acceda desde esta pantalla.");
+            return $this->redirect($this->generateUrl('loginInGroup', array('group_id' => $group->getId())));
+        }
+
         if ($form_user->isValid() && $form_children->isValid()) {
             /** @var User $user */
             $user = $form_user->getData();
