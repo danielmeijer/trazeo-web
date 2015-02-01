@@ -1,3 +1,7 @@
 trazeo_my_page_front:
     resource: "@TrazeoMyPageBundle/Controller/FrontController.php"
     type:     annotation
+
+trazeo_my_page_registered:
+    resource: "@TrazeoMyPageBundle/Controller/RegisteredAdminController.php"
+    type:     annotation
