@@ -19,10 +19,3 @@ services:
         class: Trazeo\MyPageBundle\Form\DateRangePickerType
         tags:
             - { name: form.type, alias: DateRangePicker }
-
-    sonata.block.mypagebundle.stats:
-        id: sonata.block.mypagebundle.stats
-        class: Trazeo\MyPageBundle\Block\StatBlockService
-        arguments: [ "sonata.block.mypagebundle.stats", @templating ]
-        tags:
-            - { name: sonata.block }

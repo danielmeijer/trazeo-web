@@ -1,0 +1,9 @@
+{% extends 'TrazeoMyPageBundle:Admin:custom_project_layout.html.twig' %}
+
+{% block content %}
+    <form method="POST" action="{{ path('registered_evolution') }}">
+        {% form_theme form_filters 'TrazeoMyPageBundle:Form:bootstrap.12_label.html.twig' %}
+        {{ form_widget(form_filters) }}
+        <button class="btn btn-lg btn-success btn-block" type="submit">Generar gráfica</button>
+    </form>
+{% endblock %}
