@@ -29,6 +29,7 @@ class RegisteredAdminType extends AbstractType
 
         $builder->add('group', 'entity', array(
                 'label' => "Grupos",
+                'required' => false,
                 'class' => 'TrazeoBaseBundle:EGroup',
                 'multiple' => true,
                 'query_builder' => function(EntityRepository $er) {
