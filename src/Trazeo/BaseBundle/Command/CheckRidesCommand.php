@@ -91,7 +91,7 @@ class CheckRidesCommand extends ContainerAwareCommand
 	 			$childs = $em->getRepository('TrazeoBaseBundle:EChild')->findByRide($ride);
 
 	 			foreach ($childs as $child){
-	 				//$child->setRide(null);
+	 				$child->setRide(null);
 	 				$child->setSelected(0);
 	 				$em->persist($child);
 	 			}
