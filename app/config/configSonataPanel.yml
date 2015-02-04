@@ -5,6 +5,9 @@ services:
         arguments: [~, Trazeo\BaseBundle\Entity\EChild, TrazeoMyPageBundle:CRUD]
         tags:
             - {name: sonata.admin, manager_type: orm, group: admin, label: Niños, label_translator_strategy: "sonata.admin.label.strategy.underscore" }
+        calls:
+            - [setSecurityContext, [@security.context]]
+            - [setContainer, [ @service_container ]]
 
     sonata.block.mypagebundle.stats:
         id: sonata.block.mypagebundle.stats
@@ -15,6 +18,13 @@ services:
 
     trazeo_mypage.panel.registered:
         class: Trazeo\MyPageBundle\Admin\RegisteredCustomAdmin
+
+    custom.sonata.security.handler.role:
+        class: Trazeo\BaseBundle\Security\Handler\CustomRoleSecurityHandler
+        arguments:
+            - @security.context
+            - [ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_USER]
+            - %security.role_hierarchy.roles%
 
 # Sonata Admin Dashboard
 sonata_admin:

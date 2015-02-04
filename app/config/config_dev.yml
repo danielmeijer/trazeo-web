@@ -1,7 +1,7 @@
 imports:
     - { resource: config.yml }
-    - { resource: configSonataAdmin.yml }
-    #- { resource: configSonataPanel.yml }
+    #- { resource: configSonataAdmin.yml }
+    - { resource: configSonataPanel.yml }
     - { resource: parameters_dev.yml }
 
 framework:

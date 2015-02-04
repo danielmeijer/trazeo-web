@@ -4,12 +4,6 @@ parameters:
 #    trazeo_base.example.class: Trazeo\BaseBundle\Example
 
 services:
-    custom.sonata.security.handler.role:
-        class: Trazeo\BaseBundle\Security\Handler\CustomRoleSecurityHandler
-        arguments:
-            - @security.context
-            - [ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_USER]
-            - %security.role_hierarchy.roles%
     security.access.project_user:
         class:      Trazeo\BaseBundle\Voter\ProjectVoter
         arguments:  ["@request_stack"]
