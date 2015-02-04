@@ -120,7 +120,7 @@ class EGroupAdmin extends Admin
     {
         //ldd($this->securityContext->isGranted('ROLE_ADMIN'));
 
-        $queryBuilder = $this->getModelManager()->getEntityManager($this->getClass())->createQueryBuilder();
+        // $queryBuilder = $this->getModelManager()->getEntityManager($this->getClass())->createQueryBuilder();
 
         $query = parent::createQuery($context);
 
