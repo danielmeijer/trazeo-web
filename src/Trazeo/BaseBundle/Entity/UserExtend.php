@@ -8,6 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\SerializedName;
+use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
  * @ORM\Table("userextend")
@@ -127,10 +129,18 @@ class UserExtend
      * @var integer
      *
      * @ORM\Column(name="points", type="integer")
-     * @Expose
      */
     protected $points=0;
 
+    /**
+     * @VirtualProperty
+     * @SerializedName("points")
+     *
+     * @return int
+     */
+    public function getCurrentPoints(){
+        return $this->getPoints()-$this->getSpendedPoints();
+    }
     /**
      * @var integer
      *
