@@ -36,7 +36,7 @@ class Module
     protected $title;
 
     /**
-     * @ORM\Column(name="content", type="string")
+     * @ORM\Column(name="content", type="string", length=5000)
      *
      * @var string $content
      */

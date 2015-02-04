@@ -111,7 +111,7 @@ class PanelRidesController extends FOSRestController
     	}
     	$group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneById($groupId);
     	
-    	
+    	// TODO: Se puede cambiar por la función ERideRepository - getChildrenInRide
 		//List of childrens joined to the ride 
     	$childrens = [];
     	foreach ($events as $event){
