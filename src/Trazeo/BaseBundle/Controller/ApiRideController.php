@@ -249,7 +249,7 @@ class ApiRideController extends Controller {
                     //desvinculamos a los niños del paseo
                     $childs = $em->getRepository('TrazeoBaseBundle:EChild')->findByRide($ride);
                     foreach ($childs as $child){
-                        $child->setRide(null);
+                        //$child->setRide(null);
                         $child->setSelected(0);
                         $em->persist($child);
 
@@ -438,7 +438,7 @@ class ApiRideController extends Controller {
         $em->flush();
 
         //Registramos al niño dentro del paseo
-        $child->setRide($ride);
+        //$child->setRide($ride);
         $child->setSelected(1);
         $em->persist($child);
         $em->flush();
@@ -521,7 +521,7 @@ class ApiRideController extends Controller {
         $em->flush();
 
         //Eliminamos el niño del paseo
-        $child->setRide(null);
+        //$child->setRide(null);
         $child->setSelected(0);
         $em->persist($child);
         $em->flush();
