@@ -21,7 +21,7 @@ class ERideAdmin extends Admin
             ->add('distance')
             ->add('groupid')
             ->add('group')
-            ->add('events')
+//            ->add('events') TODO: Da un error si se activa
             ->add('reports')
             ->add('userextend')
             ->add('createdAt')
@@ -35,7 +35,7 @@ class ERideAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
+            ->addIdentifier('id')
             ->add('duration')
             ->add('distance')
             ->add('groupid')

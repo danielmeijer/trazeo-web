@@ -2,18 +2,38 @@
 
 namespace Trazeo\MyPageBundle\Admin;
 
+use Doctrine\ORM\QueryBuilder;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 use Trazeo\BaseBundle\Entity\EChild;
 
 use Knp\Menu\ItemInterface as MenuItemInterface;
 
 class PChildAdmin extends Admin
 {
+    /**
+     * Security Context
+     * @var \Symfony\Component\Security\Core\SecurityContextInterface
+     */
+    protected $securityContext;
+
+    /** @var \Symfony\Component\DependencyInjection\ContainerInterface */
+    private $container;
+
+    public function setSecurityContext(SecurityContextInterface $securityContext)
+    {
+        $this->securityContext = $securityContext;
+    }
+
+    public function setContainer (\Symfony\Component\DependencyInjection\ContainerInterface $container) {
+        $this->container = $container;
+    }
+
     public function getBatchActions()
     {
         // retrieve the default batch actions (currently only delete)
@@ -156,5 +176,20 @@ class PChildAdmin extends Admin
             $this->trans('sidemenu.link_edit_page'),
             array('uri' => $admin->generateUrl('edit', array('id' => $id)))
         );
+    }
+
+    public function createQuery($context = 'list')
+    {
+        // TODO: Aquí se pueden modificar cosas
+
+        /** @var QueryBuilder $query */
+        $query = parent::createQuery($context);
+        //if(!$this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
+            $user = $this->securityContext->getToken()->getUser();
+
+            //$query->andWhere($query->getRootAlias() . '.id=' . 19);
+        //}
+
+        return $query;
     }
 }
