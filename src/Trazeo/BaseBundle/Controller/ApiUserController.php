@@ -247,10 +247,17 @@ class ApiUserController extends Controller
         $name=$request->get('name');
         $phone=$request->get('phone');
         $city=$request->get('city');
-        $city=$this->get('trazeo_base_helper')->getCities($city,1,true);
+        $city=$this->get('doctrine.orm.default_entity_manager')->getRepository("JJsGeonamesBundle:City")->findOneByNameUtf8($city);
+        if($city==null){
+            $view = View::create()
+                ->setStatusCode(200)
+                ->setData($this->msgDenied('City '.$city.' not found'));
+
+            return $this->get('fos_rest.view_handler')->handle($view);
+        }
         //Actualizamos los datos del perfil
         $userextend->setName($name);
-        $userextend->setCity($city[0]);
+        $userextend->setCity($city);
         $userextend->setMobile($phone);
         //Guardamos los datos
         $this->get('doctrine.orm.default_entity_manager')->persist($userextend);
