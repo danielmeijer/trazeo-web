@@ -757,35 +757,4 @@ class ApiGroupController extends Controller
 
         return $this->get('fos_rest.view_handler')->handle($view);
     }
-
-
-    /**
-     * @POST("/api/group/removeChild")
-     */
-    public function removeChildGroupAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-        $user = $this->checkPrivateAccess($request);
-        if ($user == false || $user == null) {
-            $view = View::create()
-                ->setStatusCode(200)
-                ->setData($this->msgDenied());
-
-            return $this->get('fos_rest.view_handler')->handle($view);
-        }
-
-        $userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
-        $id_group = $request->get('id_group');
-        $id_child = $request->get('id_child');
-        $add = $request->get('$add');
-
-        $reGroup = $em->getRepository('TrazeoBaseBundle:EGroup');
-        $reGroup->setChildOnGroup($id_group, $id_child, $userextend, $add);
-
-        $view = View::create()
-            ->setStatusCode(200)
-            ->setData($this->doOK('ok'));
-
-        return $this->get('fos_rest.view_handler')->handle($view);
-    }
 }
