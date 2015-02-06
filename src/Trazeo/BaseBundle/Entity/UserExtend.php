@@ -105,6 +105,7 @@ class UserExtend
     /**
      * // Datos: monitor / user
      * @ORM\Column(name="useLike", type="string", length=50, nullable=true)
+     * @Expose
      */    
     protected $useLike='user';
     
