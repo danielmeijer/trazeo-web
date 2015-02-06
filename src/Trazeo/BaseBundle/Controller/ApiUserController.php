@@ -247,6 +247,7 @@ class ApiUserController extends Controller
         $name=$request->get('name');
         $phone=$request->get('phone');
         $city=$request->get('city');
+        $useLike=$request->get('useLike');
         $city=$this->get('doctrine.orm.default_entity_manager')->getRepository("JJsGeonamesBundle:City")->findOneByNameUtf8($city);
         if($city==null){
             $view = View::create()
@@ -259,6 +260,7 @@ class ApiUserController extends Controller
         $userextend->setName($name);
         $userextend->setCity($city);
         $userextend->setMobile($phone);
+        $userextend->setUseLike($useLike);
         //Guardamos los datos
         $this->get('doctrine.orm.default_entity_manager')->persist($userextend);
         $this->get('doctrine.orm.default_entity_manager')->flush();
