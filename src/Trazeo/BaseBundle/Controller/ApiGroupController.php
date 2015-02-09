@@ -749,7 +749,12 @@ class ApiGroupController extends Controller
         $add = $request->get('add');
 
         $reGroup = $em->getRepository('TrazeoBaseBundle:EGroup');
-        $reGroup->setChildOnGroup($id_group, $id_child, $userextend, $add);
+        try{
+            $reGroup->setChildOnGroup($id_group, $id_child, $userextend, $add);
+        }
+        catch(PreconditionFailedHttpException $e){
+            return $this->exceptionHandler($e);
+        }
 
         $view = View::create()
             ->setStatusCode(200)
