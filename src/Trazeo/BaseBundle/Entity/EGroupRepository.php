@@ -53,10 +53,10 @@ class EGroupRepository extends EntityRepository
 
         // Grupo eliminado
         if (!$group)throw new PreconditionFailedHttpException('Group not found');
-        // el niño esta/no esta para añadir/remover del grupo
-        if($add==in_array($child,$group->getChilds()->toArray()))throw new PreconditionFailedHttpException('Child on group: '.$add);
         // el niño no existe
         if(!$child) throw new PreconditionFailedHttpException("The child doesn't exist");
+        // el niño esta/no esta para añadir/remover del grupo
+        if($add&&in_array($child,$group->getChilds()->toArray()))throw new PreconditionFailedHttpException('Child on group: '.$add);
         // el usuario no es tutor del niño
         if(!in_array($child,$user->getChilds()->toArray()))throw new PreconditionFailedHttpException("The parent is not the tutor");
 
