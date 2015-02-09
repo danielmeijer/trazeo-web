@@ -58,7 +58,7 @@ class EGroupRepository extends EntityRepository
         // el niño no existe
         if(!$child) throw new PreconditionFailedHttpException("The child doesn't exist");
         // el usuario no es tutor del niño
-        if(!in_array($child,$user->getChilds()->toArry()))throw new PreconditionFailedHttpException("The parent is not the tutor");
+        if(!in_array($child,$user->getChilds()->toArray()))throw new PreconditionFailedHttpException("The parent is not the tutor");
 
         if($add)$group->addChild($child);
         else $group->removeChild($child);
