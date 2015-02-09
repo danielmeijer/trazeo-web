@@ -746,10 +746,10 @@ class ApiGroupController extends Controller
         $userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
         $id_group = $request->get('id_group');
         $id_child = $request->get('id_child');
-        $add = $request->get('$add');
+        $add = $request->get('add');
 
         $reGroup = $em->getRepository('TrazeoBaseBundle:EGroup');
-        $reGroup->setChildOnGroup($id_group, $id_child, $userextend, true);
+        $reGroup->setChildOnGroup($id_group, $id_child, $userextend, $add);
 
         $view = View::create()
             ->setStatusCode(200)
