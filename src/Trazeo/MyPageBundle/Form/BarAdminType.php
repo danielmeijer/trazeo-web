@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Trazeo\BaseBundle\Service\Helper;
 
-class RegisteredAdminType extends AbstractType
+class BarAdminType extends AbstractType
 {
     private $container;
 
@@ -65,32 +65,6 @@ class RegisteredAdminType extends AbstractType
             ),
             $options['field_options']
         );
-        $builder->add('age_from',
-            'integer',
-            array(
-                'label' => "Edad (desde)",
-                'required' => false,
-                'attr' => array(
-                    'placeholder' => 'Edad'
-                )
-            ),
-            $options['field_options']
-        );
-        $builder->add('age_to',
-            'integer',
-            array(
-                'label' => "Edad (hasta)",
-                'required' => false,
-                'attr' => array(
-                    'placeholder' => 'Edad'
-                )
-            ),
-            $options['field_options']
-        );
-
-        // Sexo
-
-        // Centro Educativo
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -108,6 +82,6 @@ class RegisteredAdminType extends AbstractType
      */
     public function getName()
     {
-        return "RegisteredAdmin";
+        return "BarAdmin";
     }
 }

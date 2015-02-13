@@ -9,6 +9,15 @@ services:
             - [setSecurityContext, [@security.context]]
             - [setContainer, [ @service_container ]]
 
+    trazeo_mypage.panel.p_group:
+        class: Trazeo\MyPageBundle\Admin\PGroupAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\EGroup, TrazeoMyPageBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Control de Grupos, label_translator_strategy: "sonata.admin.label.strategy.underscore" }
+        calls:
+            - [setSecurityContext, [@security.context]]
+            - [setContainer, [ @service_container ]]
+
     sonata.block.mypagebundle.stats:
         id: sonata.block.mypagebundle.stats
         class: Trazeo\MyPageBundle\Block\StatBlockService
@@ -59,10 +68,11 @@ sonata_admin:
                 items:
                   #- trazeo_base.admin.e_group
             manageRoutes:
-                label: Gestión de Usuarios
+                label: Gestión
                 icon:            '<i class="fa fa-user"></i>'
                 items:
                   - trazeo_mypage.panel.p_child
+                  - trazeo_mypage.panel.p_group
                   #- sonata.block.mypagebundle.stats
                   #- trazeo_base.admin.user_extend
 

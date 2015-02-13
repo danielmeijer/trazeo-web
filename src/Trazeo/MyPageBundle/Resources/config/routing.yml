@@ -3,5 +3,5 @@ trazeo_my_page_front:
     type:     annotation
 
 trazeo_my_page_registered:
-    resource: "@TrazeoMyPageBundle/Controller/RegisteredAdminController.php"
+    resource: "@TrazeoMyPageBundle/Controller/StatsAdminController.php"
     type:     annotation

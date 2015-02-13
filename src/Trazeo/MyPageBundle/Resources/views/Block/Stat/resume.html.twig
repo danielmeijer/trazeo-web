@@ -6,7 +6,23 @@
             <h3 class="box-title">{{ settings.title }}</h3>
         </div>
         <div class="box-body">
-            <a href="{{ path('registered_evolution') }}">Evolución de familias registradas y niños que participan</a>
+            <ul>
+                <li>
+                    <a href="{{ path('stats_registered_evolution') }}">
+                        Evolución de familias registradas y niños que participan
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('stats_bar') }}">
+                        Estadísticas del Proyecto
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Datos Generales
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 {% endblock %}
