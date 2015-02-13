@@ -383,4 +383,15 @@ class EChild
     {
         return $this->ride;
     }
+
+    /**
+     * Devuelve la edad en años del niño/a
+     */
+    public function getYears() {
+        $now = new \DateTime();
+        $diff = $now->getTimestamp() - $this->getDateBirth()->getTimestamp();
+        $year_stamp = 31536000;
+        $ret = $diff / $year_stamp;
+        return round($ret, 0);
+    }
 }

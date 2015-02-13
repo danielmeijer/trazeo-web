@@ -160,24 +160,6 @@ class PChildAdmin extends Admin
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configureSideMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
-    {
-
-        if (!$childAdmin && !in_array($action, array('edit'))) {
-            return;
-        }
-
-        $admin = $this->isChild() ? $this->getParent() : $this;
-        $id = $admin->getRequest()->get('id');
-        $menu->addChild(
-            $this->trans('sidemenu.link_edit_page'),
-            array('uri' => $admin->generateUrl('edit', array('id' => $id)))
-        );
-    }
-
     public function createQuery($context = 'list')
     {
         // TODO: Aquí se pueden modificar cosas

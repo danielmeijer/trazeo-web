@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block content %}
-    <form method="POST" action="{{ path('registered_evolution') }}">
+    <form method="POST" action="{{ path('stats_registered_evolution') }}">
         {% form_theme form_filters 'TrazeoMyPageBundle:Form:bootstrap.12_label.html.twig' %}
         {{ form_widget(form_filters) }}
         <div class="row">
