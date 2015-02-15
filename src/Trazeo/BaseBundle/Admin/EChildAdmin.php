@@ -66,7 +66,7 @@ class EChildAdmin extends Admin
         $formMapper
             ->add('nick')
             ->add('dateBirth')
-            ->add('visibility')
+            //->add('visibility')
             ->add('gender')
             ->add('selected')
             ->add('ride')
