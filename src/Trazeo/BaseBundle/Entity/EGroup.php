@@ -151,6 +151,15 @@ class EGroup
     	return $this->getName();
     }
 
+    public function isMonitor(UserExtend $userextend) {
+        if ($this->getPrivateMonitor() == null || $this->getPrivateMonitor() == false) {
+            return true;
+        }
+        foreach($this->monitor_userextendgroups as $ue) {
+            if ($userextend->getId() == $ue->getId()) return true;
+        }
+        return false;
+    }
   
     /**
      * Constructor
