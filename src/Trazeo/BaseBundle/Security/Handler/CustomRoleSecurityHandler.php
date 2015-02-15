@@ -37,8 +37,6 @@ class CustomRoleSecurityHandler extends RoleSecurityHandler
     public function isGranted(AdminInterface $admin, $attributes, $object = null)
     {
         // VIEW / EDIT
-
-
         if ($this->securityContext->isGranted('ROLE_SUPER_ADMIN')) return true;
 
         if (get_class($object) == "Trazeo\BaseBundle\Admin\EGroupAdmin") {
@@ -52,23 +50,26 @@ class CustomRoleSecurityHandler extends RoleSecurityHandler
         }
 
         if (get_class($object) == "Trazeo\BaseBundle\Entity\EChild") {
-            //$em = $this->getR
-            //$repositoryEChild =
-        }
-
-        $user = $this->securityContext->getToken()->getUser();
-        foreach($user->getUserExtend()->getPageFront() as $page) {
-            /** @var EGroup $group */
-            foreach($page->getGroups() as $group) {
-                foreach($group->getChilds() as $child) {
-                    if ($child->getId() == $object->getId()) return true;
+            $user = $this->securityContext->getToken()->getUser();
+            foreach ($user->getUserExtend()->getPageFront() as $page) {
+                /** @var EGroup $group */
+                foreach ($page->getGroups() as $group) {
+                    foreach ($group->getChilds() as $child) {
+                        if ($child->getId() == $object->getId()) return true;
+                    }
                 }
             }
-
-            /** @var $page Page */
-            // if ($page->getUserextend()->getUser()->getId() == $user->getId()) return true;
         }
 
+        if (get_class($object) == "Trazeo\BaseBundle\Entity\EGroup") {
+            $user = $this->securityContext->getToken()->getUser();
+            foreach ($user->getUserExtend()->getPageFront() as $page) {
+                /** @var EGroup $group */
+                foreach ($page->getGroups() as $group) {
+                    if ($group->getId() == $object->getId()) return true;
+                }
+            }
+        }
         //ldd($user);
 
         return false;
