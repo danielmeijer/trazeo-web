@@ -54,6 +54,8 @@ sonata_admin:
         blocks:
            #- { position: left,  type: sonata.block.service.text, settings: { content: "<div class='panel panel-default'><div class='panel-heading'><h3 class='panel-title'>¡Bienvenido!</h3></div><div class='panel-body'>Podras gestionar tu cuenta de Trazeo Premium desde este panel. Recuerda que cualquier duda puedes acudir a nuestro servicio de soporte a traves de <a href='mailto:soportepremium@trazeo.es'>soportepremium@trazeo.es</a>.</div></div>"} }
            - { position: right,  type: sonata.block.mypagebundle.stats }
+           - { position: left, type: sonata.admin.block.admin_list, settings: { groups: [viewData] } }
+           - { position: left, type: sonata.admin.block.admin_list, settings: { groups: [manageData] } }
            #- { position: left,  type: sonata.admin.block.admin_list, settings: { groups: [manageGroups] } }
 
         groups:
@@ -62,16 +64,15 @@ sonata_admin:
                 icon: '<i class="fa fa-stats"></i>'
                 items:
                   #- trazeo_mypage.panel.registered
-            manageGroups:
-                label: Gestión de Rutas
-                icon:            '<i class="fa fa-th"></i>'
-                items:
-                  #- trazeo_base.admin.e_group
-            manageRoutes:
-                label: Gestión
+            viewData:
+                label: Visualización de Datos
                 icon:            '<i class="fa fa-user"></i>'
                 items:
                   - trazeo_mypage.panel.p_child
+            manageData:
+                label: Gestión de Datos
+                icon:            '<i class="fa fa-user"></i>'
+                items:
                   - trazeo_mypage.panel.p_group
                   #- sonata.block.mypagebundle.stats
                   #- trazeo_base.admin.user_extend

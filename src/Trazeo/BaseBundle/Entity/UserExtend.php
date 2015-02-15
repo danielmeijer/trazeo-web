@@ -36,6 +36,11 @@ class UserExtend
      *  @ORM\ManyToMany(targetEntity="EGroup", mappedBy="userextendgroups")
      */
     protected $groups;
+
+    /**
+     *  @ORM\ManyToMany(targetEntity="EGroup", mappedBy="monitor_userextendgroups")
+     */
+    protected $mgroups;
     
     /** 
      * @ORM\OneToMany(targetEntity="EGroup", mappedBy="admin")
@@ -159,6 +164,7 @@ class UserExtend
 
 
     public function __toString(){
+        //return "Antonio Pérez (634728192) (hola@trazeo.es)<br/>";
     	if($this->name != "")
     		$string= $this->name;
     	else if($this->nick!= "")
@@ -166,7 +172,13 @@ class UserExtend
     	else $string= (string)$this->id;
         $patrón = '/@[\d|\D]*$/';
         $sustitución = '';
-        return preg_replace($patrón, $sustitución, $string);
+        $name = preg_replace($patrón, $sustitución, $string);
+        $ret = $name . ' (';
+        if ($this->getMobile() != null) {
+            $ret .= $this->getMobile() . " - ";
+        }
+        $ret .= $this->getUser()->getEmail() . ')';
+        return $ret;
     }
     
     /**
@@ -856,5 +868,38 @@ class UserExtend
     public function getPageFront()
     {
         return $this->pageFront;
+    }
+
+    /**
+     * Add mgroups
+     *
+     * @param \Trazeo\BaseBundle\Entity\EGroup $mgroups
+     * @return UserExtend
+     */
+    public function addMgroup(\Trazeo\BaseBundle\Entity\EGroup $mgroups)
+    {
+        $this->mgroups[] = $mgroups;
+
+        return $this;
+    }
+
+    /**
+     * Remove mgroups
+     *
+     * @param \Trazeo\BaseBundle\Entity\EGroup $mgroups
+     */
+    public function removeMgroup(\Trazeo\BaseBundle\Entity\EGroup $mgroups)
+    {
+        $this->mgroups->removeElement($mgroups);
+    }
+
+    /**
+     * Get mgroups
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMgroups()
+    {
+        return $this->mgroups;
     }
 }

@@ -1,0 +1,36 @@
+{% extends 'TrazeoMyPageBundle:Admin:custom_project_layout.html.twig' %}
+
+{% block content %}
+    <form method="POST" action="{{ path('stats_global') }}">
+        {% form_theme form_filters 'TrazeoMyPageBundle:Form:bootstrap.12_label.html.twig' %}
+        {{ form_widget(form_filters) }}
+        <div class="row">
+            <div class="col-md-6">
+                <input type="reset" class="btn btn-lg btn-primary btn-block" value="Limpiar filtros"/>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-lg btn-success btn-block" type="submit">Refrescar datos</button>
+            </div>
+        </div>
+    </form>
+
+    {% if (data.km is defined) %}
+    <h2>{{ "customAdmin.stats.global.table.title"|trans }}</h2>
+    <table class="table table-bordered table-striped sonata-ba-list">
+        <thead>
+            <tr class="sonata-ba-list-field-header">
+                <th>{{ "customAdmin.stats.global.table.data"|trans }}</th>
+                <th>{{ "customAdmin.stats.global.table.value"|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for key,value in data %}
+            <tr>
+                <td>{{ ("customAdmin.stats.global.table."~key)|trans }}</td>
+                <td>{{ data[key] }}{{ ("customAdmin.stats.global.table."~key~"_add")|trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+{% endblock %}

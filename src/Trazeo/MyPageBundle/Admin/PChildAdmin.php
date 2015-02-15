@@ -8,6 +8,7 @@ use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Trazeo\BaseBundle\Entity\EChild;
@@ -39,19 +40,22 @@ class PChildAdmin extends Admin
         // retrieve the default batch actions (currently only delete)
         $actions = parent::getBatchActions();
 
-        /**
-        if (
-            $this->hasRoute('edit') && $this->isGranted('EDIT') &&
-            $this->hasRoute('delete') && $this->isGranted('DELETE')
-        ) {**/
-            $actions['merge'] = array(
-                'label' => $this->trans('action_graph', array(), 'SonataAdminBundle'),
-                'ask_confirmation' => false
-            );
-
-        //}
+        // TODO: LA QUITAMOS
+        /*
+        $actions['merge'] = array(
+            'label' => $this->trans('action_graph', array(), 'SonataAdminBundle'),
+            'ask_confirmation' => false
+        );
+        */
 
         return $actions;
+    }
+
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->remove('edit');
+        $collection->remove('delete');
+        $collection->remove('create');
     }
 
     /**
@@ -101,8 +105,15 @@ class PChildAdmin extends Admin
         $listMapper
             ->addIdentifier('nick')
             ->add('scholl')
+            ->add('groups')
+            ->add('userextendchilds')
             ->add('dateBirth')
-            ->add('createdAt');
+            ->add('createdAt')
+            ->add('_action', 'actions', array(
+                'actions' => array(
+                    'show' => array()
+                )
+            ));
 
         /**
             $listMapper
@@ -130,22 +141,6 @@ class PChildAdmin extends Admin
     }
 
     /**
-     * @param FormMapper $formMapper
-     */
-    protected function configureFormFields(FormMapper $formMapper)
-    {
-        $formMapper
-            ->add('nick')
-            ->add('dateBirth', 'sonata_type_datetime_picker')
-            ->add('visibility')
-            ->add('gender')
-            ->add('selected')
-            ->add('ride')
-            ->add('inviteChild')
-        ;
-    }
-
-    /**
      * @param ShowMapper $showMapper
      */
     protected function configureShowFields(ShowMapper $showMapper)
@@ -153,24 +148,45 @@ class PChildAdmin extends Admin
         $showMapper
             ->add('id')
             ->add('nick')
+            ->add('userextendchilds')
             ->add('dateBirth')
             ->add('visibility')
             ->add('gender')
-            ->add('selected')
+            ->add('groups')
+            ->add('ride')
+            ->add('createdAt')
+            ->add('updatedAt')
         ;
     }
 
     public function createQuery($context = 'list')
     {
-        // TODO: Aquí se pueden modificar cosas
-
         /** @var QueryBuilder $query */
         $query = parent::createQuery($context);
-        //if(!$this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
+
+        if(!$this->securityContext->isGranted('ROLE_SUPER_ADMIN'))
+        {
             $user = $this->securityContext->getToken()->getUser();
 
-            //$query->andWhere($query->getRootAlias() . '.id=' . 19);
-        //}
+            /** @var Helper $helper */
+            $helper = $this->container->get('trazeo_base_helper');
+            /** @var Page $page */
+            $page = $helper->getPageBySubdomain();
+
+            if ($page == null) die("No Project for you");
+
+            if ($page->getUserextend()->getUser()->getId() != $user->getId()) die("No Project for you");
+
+            $group_ids = array();
+            foreach($page->getGroups() as $group) {
+                $group_ids[] = $group->getId();
+            }
+
+            $query->leftJoin($query->getRootAlias() . '.groups','g');
+            $query->andWhere('g.id IN (:group_ids)');
+            $query->setParameter('group_ids', $group_ids);
+
+        }
 
         return $query;
     }

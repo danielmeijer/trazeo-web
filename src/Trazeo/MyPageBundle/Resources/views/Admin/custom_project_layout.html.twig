@@ -5,9 +5,31 @@
         <li class="treeview">
             <a href="#">
                 <i class="fa fa-user"></i>
-                <span>Hola</span>
+                <span>{{ "customAdmin.stats.menu.title"|trans }}</span>
                 <i class="fa pull-right fa-angle-left"></i>
             </a>
+            <ul class="treeview-menu">
+                <li>
+                    <a href="{{ path('stats_evolution') }}">
+                        <i class="fa fa-angle-double-right"></i> {{ "customAdmin.stats.evolution.title"|trans }}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('stats_registered') }}">
+                        <i class="fa fa-angle-double-right"></i> {{ "customAdmin.stats.registered.title"|trans }}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('stats_bar') }}">
+                        <i class="fa fa-angle-double-right"></i> {{ "customAdmin.stats.bar.title"|trans }}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('stats_global') }}">
+                        <i class="fa fa-angle-double-right"></i> {{ "customAdmin.stats.global.title"|trans }}
+                    </a>
+                </li>
+            </ul>
         </li>
     </ul>
 {% endblock %}

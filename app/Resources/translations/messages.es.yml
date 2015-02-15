@@ -778,12 +778,78 @@ list:
     label_date_birth: 'Fecha de Nacimiento'
     label_created_at: 'Fecha de Registro'
     label_scholl: 'Centro Educativo'
+    label_groups: 'Grupos'
+    label__action: 'Acción'
+    label_userextendchilds: 'Padre/Madre'
+    label_number_childs: 'Niños'
+    label_number_users: 'Padres/Madres'
+    label_name: 'Nombre'
+
+form:
+    label_name: 'Nombre'
+    label_admin: 'Administrador'
+    label_childs: 'Niños/as'
+    label_userextendgroups: 'Padres/Madres'
+    label_private_monitor: 'Monitor Privado'
+    label_monitor_userextendgroups: 'Monitores autorizados'
+    label_bymode: 'Tipo de Grupo'
+
+show:
+    label_id: 'Identificador'
+    label_nick: 'Nombre'
+    label_userextendchilds: 'Padre/Madre'
+    label_date_birth: 'Fecha de nacimiento'
+    label_visibility: 'Visibilidad'
+    label_gender: 'Sexo'
+    label_groups: 'Grupos'
+    label_created_at: 'Fecha de Registro'
+    label_updated_at: 'Fecha de Actualización'
+    label_name: 'Nombre'
+    label_admin: 'Administrador'
+    label_childs: 'Niños/as'
+    label_userextendgroups: 'Padres/Madres'
+    label_private_monitor: 'Monitor Privado'
+    label_monitor_userextendgroups: 'Monitores autorizados'
+    label_bymode: 'Tipo de Grupo'
 
 breadcrumb:
+    link_dashboard: 'Das'
     link_e_child_list: 'Listado de Niños'
+    link_e_group_list: 'Listado de Grupos'
 
 filter:
     label_groups: 'Grupos'
     label_created_at: 'Fecha de Registro'
     label_gender: 'Género'
     label_scholl: 'Centro Educativo'
+
+customAdmin:
+    stats:
+         menu:
+             title: 'Estadísticas'
+         evolution:
+             title: 'Evolución de niños que participan'
+         registered:
+             title: 'Niños y familias registradas'
+         bar:
+             title: 'Estadísticas del Proyecto'
+         global:
+             title: 'Datos Generales'
+             table:
+                 title: 'Datos Resumen:'
+                 data: 'Dato'
+                 value: 'Valor'
+                 km: 'Nº total de Kilómetros recorridos por los niños'
+                 km_add: ' km'
+                 paseos: 'Nº total de Paseos'
+                 paseos_add: ' paseos'
+                 participaciones: 'Nº total de Participaciones'
+                 participaciones_add: ' participaciones'
+                 co2: 'KG. de CO2 evitados si todos esos trayectos se hubieran realizado en coche'
+                 co2_add: ' kg'
+                 litros_combustible: 'Litros de combustible consumido evitado'
+                 litros_combustible_add: ' litros'
+                 euros_combustible: 'Combustible ahorrado'
+                 euros_combustible_add: ' euros'
+                 tiempo_formato: 'Tiempo total caminado por los niños'
+                 tiempo_formato_add: ''

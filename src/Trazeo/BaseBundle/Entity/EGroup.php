@@ -41,6 +41,13 @@ class EGroup
      *  @Exclude
      */
     protected $admin;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="UserExtend", inversedBy="mgroups")
+     * @ORM\JoinTable(name="mgroups_userextend")
+     * @Exclude
+     **/
+    protected $monitor_userextendgroups;
     
     /**
      * @ORM\ManyToMany(targetEntity="EChild", inversedBy="groups")
@@ -108,6 +115,11 @@ class EGroup
     protected $bymode;
 
     /**
+     * @ORM\Column(name="privateMonitor", type="boolean", nullable=true)
+     */
+    protected $privateMonitor;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="school1", type="string", nullable=true)
@@ -121,6 +133,18 @@ class EGroup
      * @ORM\Column(name="name", type="string", length=255)
      */
     protected $name;
+
+    protected $numberChilds;
+
+    protected $numberUsers;
+
+    public function getNumberChilds() {
+        return count($this->childs);
+    }
+
+    public function getNumberUsers() {
+        return count($this->userextendgroups);
+    }
 
     public function __toString(){
  
@@ -626,5 +650,61 @@ class EGroup
     {
         if ($this->bymode == "") return EGroup::BYMODE_PEDIBUS;
         return $this->bymode;
+    }
+
+    /**
+     * Add monitor_userextendgroups
+     *
+     * @param \Trazeo\BaseBundle\Entity\UserExtend $monitorUserextendgroups
+     * @return EGroup
+     */
+    public function addMonitorUserextendgroup(\Trazeo\BaseBundle\Entity\UserExtend $monitorUserextendgroups)
+    {
+        $this->monitor_userextendgroups[] = $monitorUserextendgroups;
+
+        return $this;
+    }
+
+    /**
+     * Remove monitor_userextendgroups
+     *
+     * @param \Trazeo\BaseBundle\Entity\UserExtend $monitorUserextendgroups
+     */
+    public function removeMonitorUserextendgroup(\Trazeo\BaseBundle\Entity\UserExtend $monitorUserextendgroups)
+    {
+        $this->monitor_userextendgroups->removeElement($monitorUserextendgroups);
+    }
+
+    /**
+     * Get monitor_userextendgroups
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMonitorUserextendgroups()
+    {
+        return $this->monitor_userextendgroups;
+    }
+
+    /**
+     * Set privateMonitor
+     *
+     * @param boolean $privateMonitor
+     * @return EGroup
+     */
+    public function setPrivateMonitor($privateMonitor)
+    {
+        $this->privateMonitor = $privateMonitor;
+
+        return $this;
+    }
+
+    /**
+     * Get privateMonitor
+     *
+     * @return boolean 
+     */
+    public function getPrivateMonitor()
+    {
+        return $this->privateMonitor;
     }
 }
