@@ -53,6 +53,7 @@ class EChildAdmin extends Admin
             ->add('ride')
             ->add('groups')
             ->add('inviteChild')
+            ->add('school')
             ->add('createdAt')
             ->add('updatedAt');
     }
@@ -70,6 +71,7 @@ class EChildAdmin extends Admin
             ->add('selected')
             ->add('ride')
             ->add('inviteChild')
+            ->add('school')
         ;
     }
 
@@ -85,6 +87,7 @@ class EChildAdmin extends Admin
             ->add('visibility')
             ->add('gender')
             ->add('selected')
+            ->add('school')
         ;
     }
 }
