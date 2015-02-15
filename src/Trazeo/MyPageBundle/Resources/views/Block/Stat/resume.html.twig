@@ -8,18 +8,23 @@
         <div class="box-body">
             <ul>
                 <li>
-                    <a href="{{ path('stats_registered_evolution') }}">
-                        Evolución de familias registradas y niños que participan
+                    <a href="{{ path('stats_evolution') }}">
+                        {{ "customAdmin.stats.evolution.title"|trans }}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('stats_registered') }}">
+                        {{ "customAdmin.stats.registered.title"|trans }}
                     </a>
                 </li>
                 <li>
                     <a href="{{ path('stats_bar') }}">
-                        Estadísticas del Proyecto
+                        {{ "customAdmin.stats.bar.title"|trans }}
                     </a>
                 </li>
                 <li>
-                    <a href="#">
-                        Datos Generales
+                    <a href="{{ path('stats_global') }}">
+                        {{ 'customAdmin.stats.global.title'|trans }}
                     </a>
                 </li>
             </ul>

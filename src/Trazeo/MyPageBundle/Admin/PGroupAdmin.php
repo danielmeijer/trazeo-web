@@ -12,6 +12,7 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 use Knp\Menu\ItemInterface as MenuItemInterface;
+use Trazeo\BaseBundle\Entity\EChild;
 use Trazeo\BaseBundle\Entity\EGroup;
 
 class PGroupAdmin extends Admin
@@ -44,13 +45,13 @@ class PGroupAdmin extends Admin
             //->add('id')
             //->add('visibility')
             //->add('hasRide')
-            ->add('name')
+            //->add('name')
             //->add('admin')
             //->add('childs')
             //->add('route')
             //->add('inviteGroup')
             //->add('ride')
-            ->add('createdAt')
+            //->add('createdAt')
             //->add('updatedAt')
         ;
     }
@@ -65,9 +66,12 @@ class PGroupAdmin extends Admin
             //->add('visibility')
             //->add('hasRide')
             ->addIdentifier('name')
-            ->add('admin')
-            ->add('childs')
-            ->add('userextendgroups')
+            //->add('admin')
+            //->add('childs')
+            ->add('numberChilds')
+            ->add('numberUsers')
+            //->add('userextendgroups')
+            //->add('monitor_userextendgroups')
             //->add('userextendgroups.user.message')
             //->add('route')
             //->add('inviteGroup')
@@ -85,6 +89,22 @@ class PGroupAdmin extends Admin
         ;
     }
 
+    protected function configureShowFields(ShowMapper $showMapper)
+    {
+        $showMapper
+            ->add('name')
+            ->add('admin')
+            ->add('childs')
+            ->add('userextendgroups')
+            ->add('privateMonitor')
+            ->add('monitor_userextendgroups')
+            //->add('route')
+            ->add('bymode', 'choice', array('choices' => array(
+                EGroup::BYMODE_PEDIBUS => "Pedibús",
+                EGroup::BYMODE_BICIBUS => "Bicibús",
+            ) ));
+    }
+
     /**
      * @param FormMapper $formMapper
      */
@@ -97,14 +117,13 @@ class PGroupAdmin extends Admin
             ->add('admin')
             ->add('childs')
             ->add('userextendgroups')
+            ->add('privateMonitor')
+            ->add('monitor_userextendgroups')
             //->add('route')
             ->add('bymode', 'choice', array('choices' => array(
                 EGroup::BYMODE_PEDIBUS => "Pedibús",
                 EGroup::BYMODE_BICIBUS => "Bicibús",
             ) ))
-            //->add('inviteGroup')
-            //->add('ride')
-            //->add('page')
         ;
     }
 
@@ -131,5 +150,24 @@ class PGroupAdmin extends Admin
         }
 
         return $query;
+    }
+
+    public function preUpdate($group)
+    {
+        // Si elimino un padre se quitan los niños que pueda tener
+
+        /** @var EGroup $group */
+        /** @var EChild $child */
+        foreach($group->getChilds() as $child) {
+            $is_child = false;
+            foreach($child->getUserextendchilds() as $userC) {
+                foreach($group->getUserextendgroups() as $userG) {
+                    if ($userC->getId() == $userG->getId()) $is_child = true;
+                }
+            }
+            if (!$is_child) {
+                $group->removeChild($child);
+            }
+        }
     }
 }

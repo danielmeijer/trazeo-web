@@ -2,7 +2,8 @@
 
 namespace Application\Sonata\UserBundle\Entity;
 
-use FOS\UserBundle\Entity\User as BaseUser;
+#use FOS\UserBundle\Entity\User as BaseUser;
+use Sonata\UserBundle\Entity\BaseUser;
 use FOS\MessageBundle\Model\ParticipantInterface;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -74,5 +75,16 @@ class User extends BaseUser
     public function getUserExtend()
     {
     	return $this->userextend;
-    }    
+    }
+
+    public function getCreatedAt() {
+        if ($this->createdAt->getTimestamp() < 0) {
+            $childs = $this->getUserExtend()->getChilds();
+            if (count($childs) > 0) {
+                $date = $childs[0]->getCreatedAt();
+                if ($date != null) return $date;
+            }
+        }
+        return $this->createdAt;
+    }
 }

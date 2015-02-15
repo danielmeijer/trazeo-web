@@ -293,6 +293,22 @@ class ERide
         return $this->duration;
     }
 
+    public function getDurationSeconds() {
+        $duration = $this->getDuration();
+        $temp1 = explode(",", $duration);
+        $temp2 = explode(" y ", $temp1[1]);
+
+        $htemp = explode(" ", $temp1[0]);
+        $mtemp = explode(" ", trim($temp2[0]));
+        $stemp = explode(" ", trim($temp2[1]));
+
+        $h = $htemp[0];
+        $m = $mtemp[0];
+        $s = $stemp[0];
+
+        return ($h*60*60) + ($m*60) + $s;
+    }
+
     /**
      * Set groupid
      *

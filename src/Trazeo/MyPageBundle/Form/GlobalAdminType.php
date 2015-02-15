@@ -1,5 +1,4 @@
 <?php
-
 namespace Trazeo\MyPageBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
@@ -8,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Trazeo\BaseBundle\Service\Helper;
 
-class RegisteredEvolutionAdminType extends AbstractType
+class GlobalAdminType extends AbstractType
 {
     private $container;
 
@@ -23,20 +22,15 @@ class RegisteredEvolutionAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-
-        //ldd($page);
-
         $builder->add('group', 'entity', array(
                 'label' => "Grupos",
                 'required' => false,
                 'class' => 'TrazeoBaseBundle:EGroup',
                 'multiple' => true,
-                'query_builder' => function(EntityRepository $er) {
+                'query_builder' => function (EntityRepository $er) {
                     /** @var Helper $helper */
                     $helper = $this->container->get('trazeo_base_helper');
-                    // TODO: Sólo para pruebas, cambiar
-                    $page = $helper->getPageBySubdomain("torrelodones");
+                    $page = $helper->getPageBySubdomain();
                     return $er->createQueryBuilder('u')
                         ->where('u.page = :page')
                         ->setParameter('page', $page)
@@ -65,32 +59,6 @@ class RegisteredEvolutionAdminType extends AbstractType
             ),
             $options['field_options']
         );
-        $builder->add('age_from',
-            'integer',
-            array(
-                'label' => "Edad (desde)",
-                'required' => false,
-                'attr' => array(
-                    'placeholder' => 'Edad'
-                )
-            ),
-            $options['field_options']
-        );
-        $builder->add('age_to',
-            'integer',
-            array(
-                'label' => "Edad (hasta)",
-                'required' => false,
-                'attr' => array(
-                    'placeholder' => 'Edad'
-                )
-            ),
-            $options['field_options']
-        );
-
-        // Sexo
-
-        // Centro Educativo
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -108,6 +76,6 @@ class RegisteredEvolutionAdminType extends AbstractType
      */
     public function getName()
     {
-        return "RegisteredEvolutionAdmin";
+        return "GlobalAdmin";
     }
 }

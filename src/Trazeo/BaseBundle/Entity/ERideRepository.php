@@ -12,10 +12,6 @@ class ERideRepository extends EntityRepository
         $repositoryEChildRide = $em->getRepository('TrazeoBaseBundle:EChildRide');
         $childsInRide = $repositoryEChildRide->findBy(array('ride' => $ride->getId()));
 
-        if (count($childsInRide) > 100) {
-            ldd($childsInRide);
-        }
-
         return $childsInRide;
     }
 }

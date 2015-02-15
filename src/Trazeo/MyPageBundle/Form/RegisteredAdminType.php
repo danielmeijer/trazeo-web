@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Trazeo\BaseBundle\Service\Helper;
 
-class BarAdminType extends AbstractType
+class RegisteredAdminType extends AbstractType
 {
     private $container;
 
@@ -23,10 +23,6 @@ class BarAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-
-        //ldd($page);
-
         $builder->add('group', 'entity', array(
                 'label' => "Grupos",
                 'required' => false,
@@ -35,7 +31,6 @@ class BarAdminType extends AbstractType
                 'query_builder' => function(EntityRepository $er) {
                     /** @var Helper $helper */
                     $helper = $this->container->get('trazeo_base_helper');
-                    // TODO: Sólo para pruebas, cambiar
                     $page = $helper->getPageBySubdomain();
                     return $er->createQueryBuilder('u')
                         ->where('u.page = :page')
@@ -65,6 +60,18 @@ class BarAdminType extends AbstractType
             ),
             $options['field_options']
         );
+        $builder->add('mode',
+            'choice',
+            array(
+                'label' => 'Agrupación de datos',
+                'choices' => array(
+                    'month' => 'por Mes',
+                    'week' => 'por Semana',
+                    'day' => 'por Días'
+                )
+            ),
+            $options['field_options']
+        );
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -82,6 +89,6 @@ class BarAdminType extends AbstractType
      */
     public function getName()
     {
-        return "BarAdmin";
+        return "RegisteredAdmin";
     }
 }

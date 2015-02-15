@@ -11,6 +11,18 @@
         {% if chartSexo is not null %}
             {{ chart(chartSexo) }}
         {% endif %}
+        {% if chartColegio is not null %}
+            {{ chart(chartColegio) }}
+        {% endif %}
+        {% if chartGrupo is not null %}
+            {{ chart(chartGrupo) }}
+        {% endif %}
+        {% if chartUsersColegio is not null %}
+        {{ chart(chartUsersColegio) }}
+        {% endif %}
+        {% if chartUsersGrupo is not null %}
+        {{ chart(chartUsersGrupo) }}
+        {% endif %}
     </script>
 {% endblock %}
 
@@ -33,9 +45,26 @@
 
 
     {% if chartEdad is not null %}
+        <h2>Gráficos de Registro de Niños/as</h2>
         <div id="edad" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
     {% endif %}
     {% if chartSexo is not null %}
         <div id="sexo" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+    {% endif %}
+    {% if chartColegio is not null %}
+        <div id="colegio" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+    {% endif %}
+    {% if chartGrupo is not null %}
+        <div id="grupo" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+    {% endif %}
+
+    <hr/>
+
+    {% if chartUsersColegio is not null %}
+        <h2>Gráficos de Registro de Familias</h2>
+        <div id="users_colegio" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+    {% endif %}
+    {% if chartUsersGrupo is not null %}
+        <div id="users_grupo" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
     {% endif %}
 {% endblock %}
