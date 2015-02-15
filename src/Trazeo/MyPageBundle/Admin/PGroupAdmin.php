@@ -144,6 +144,7 @@ class PGroupAdmin extends Admin
 
             if ($page->getUserextend()->getUser()->getId() != $user->getId()) die("No Project for you");
 
+            $query->where($query->getRootAlias() . '.id=0');
             foreach($page->getGroups() as $group) {
                 $query->orWhere($query->getRootAlias() . '.id=' . $group->getId());
             }
