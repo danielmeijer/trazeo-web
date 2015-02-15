@@ -173,6 +173,8 @@ class UserExtend
         $patrón = '/@[\d|\D]*$/';
         $sustitución = '';
         $name = preg_replace($patrón, $sustitución, $string);
+        return $name;
+        // TODO: Ver de activar esto
         $ret = $name . ' (';
         if ($this->getMobile() != null) {
             $ret .= $this->getMobile() . " - ";
