@@ -196,6 +196,7 @@ class ApiGroupController extends Controller
             $arrayGroups['name'] = $group->getName();
             $arrayGroups['visibility'] = $group->getVisibility();
             $arrayGroups['hasride'] = $group->getHasRide();
+            $arrayGroups['isMonitor'] = $group->isMonitor($userextend);
             if ($group->getCity()) $arrayGroups['city'] = $group->getCity()->getNameUtf8();
             $arrayGroups['school'] = $group->getSchool1();
             if (in_array($group, $admingroups)) $arrayGroups['admin'] = true;
