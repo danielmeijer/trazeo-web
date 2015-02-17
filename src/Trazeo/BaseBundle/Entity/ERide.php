@@ -11,7 +11,7 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
  * @ORM\Table("e_ride")
  * @ORM\Entity(repositoryClass="ERideRepository")
  */
-class ERide
+class ERide extends AbstractEntity
 {
 	use ORMBehaviors\Timestampable\Timestampable;
 	/**
@@ -63,6 +63,44 @@ class ERide
      * @ORM\ManyToOne(targetEntity="UserExtend")
      **/
     protected $userextend;
+
+    protected $groupObject;
+
+    protected $childsR;
+
+    protected $stringChildsR;
+
+    protected $countChildsR;
+
+    public function getGroupObject() {
+        $em = $this->getEntityManager();
+        $repositoryGroup = $em->getRepository('TrazeoBaseBundle:EGroup');
+        $group = $repositoryGroup->findOneById($this->getGroupid());
+        $this->groupObject = $group;
+        return $this->groupObject;
+    }
+
+    public function getChildsR() {
+        $repositoryRide = $this->getRepository();
+        $this->childsR = $repositoryRide->getChildrenInRide($this);
+        //ldd($this->childsR);
+        return $this->childsR;
+    }
+
+    public function getStringChildsR() {
+        $names = array();
+        /** @var EChildRide $child */
+        foreach($this->getChildsR() as $child) {
+            $names[] = $child->getChild()->getNick();
+        }
+        $this->stringChildsR = implode(", ", $names);
+        return $this->stringChildsR;
+    }
+
+    public function getCountChildsR() {
+        $this->countChildsR = count($this->getChildsR());
+        return $this->countChildsR;
+    }
 
     /**
      * Get id

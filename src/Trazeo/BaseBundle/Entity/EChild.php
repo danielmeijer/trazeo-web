@@ -88,6 +88,26 @@ class EChild
      * @ORM\Column(name="scholl", type="string", nullable=true)
      */
     protected $scholl;
+
+    protected $emailParent;
+
+    protected $mobileParent;
+
+    public function getEmailParent() {
+        /** @var UserExtend $ue */
+        foreach($this->userextendchilds as $ue) {
+            if ($ue->getUser()->getEmail() != "") $this->emailParent = $ue->getUser()->getEmail();
+        }
+        return $this->emailParent;
+    }
+
+    public function getMobileParent() {
+        /** @var UserExtend $ue */
+        foreach($this->userextendchilds as $ue) {
+            if ($ue->getMobile() != "") $this->mobileParent = $ue->getMobile();
+        }
+        return $this->mobileParent;
+    }
         
        
     public function __toString(){

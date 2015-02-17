@@ -1,5 +1,37 @@
 {% extends 'SonataAdminBundle::standard_layout.html.twig' %}
 
+{% block sonata_breadcrumb %}
+    <div class="hidden-xs">
+        {% if _breadcrumb is not empty or action is defined %}
+            <ol class="nav navbar-top-links breadcrumb">
+                {% if _breadcrumb is empty %}
+                    {% if action is defined %}
+                        {% for menu in admin.breadcrumbs(action) %}
+                            {% if not loop.last  %}
+                                <li>
+                                    {% if menu.uri is not empty %}
+                                        {% if menu.label == "breadcrumb.link_dashboard" %}
+                                            <a href="{{ menu.uri }}">Panel de Control</a>
+                                        {% else %}
+                                            <a href="{{ menu.uri }}">{{ menu.label|raw }}</a>
+                                        {% endif %}
+                                    {% else %}
+                                        {{ menu.label }}
+                                    {% endif %}
+                                </li>
+                            {% else %}
+                                <li class="active"><span>{{ menu.label }}</span></li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% else %}
+                    {{ _breadcrumb|raw }}
+                {% endif %}
+            </ol>
+        {% endif %}
+    </div>
+{% endblock sonata_breadcrumb %}
+
 {% block side_bar_after_nav %}
     <ul class="sidebar-menu">
         <li class="treeview">

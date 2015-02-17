@@ -7,20 +7,15 @@ use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Trazeo\BaseBundle\Entity\UserExtend;
+use Trazeo\MyPageBundle\Form\SendEmailType;
 
 class CRUDController extends Controller
 {
-    public function batchActionMerge(ProxyQueryInterface $selectedModelQuery)
-    {
+    public function batchActionCreateGraph(ProxyQueryInterface $selectedModelQuery) {
         if ($this->admin->isGranted('EDIT') === false || $this->admin->isGranted('DELETE') === false) {
             throw new AccessDeniedException();
         }
-
-        $request = $this->get('request');
-        $modelManager = $this->admin->getModelManager();
-
-        //$target = $modelManager->find($this->admin->getClass(), $request->get('targetId'));
-        //ldd($selectedModelQuery);
 
         // Obtenemos los datos seleccionados
         $selectedModels = $selectedModelQuery->execute();
@@ -46,6 +41,30 @@ class CRUDController extends Controller
 
         return $this->render('TrazeoMyPageBundle:Admin:view_linegraph.html.twig', array(
             'chart' => $ob
+        ));
+
+    }
+
+    public function batchActionSendEmail(ProxyQueryInterface $selectedModelQuery) {
+        if ($this->admin->isGranted('EDIT') === false || $this->admin->isGranted('DELETE') === false) {
+            throw new AccessDeniedException();
+        }
+
+        // Obtenemos los datos seleccionados
+        $selectedModels = $selectedModelQuery->execute();
+
+        $emails = array();
+        /** @var UserExtend $userExtend */
+        foreach($selectedModels as $userExtend) {
+            $emails[] = $userExtend->getUser()->getEmail();
+        }
+        $emails_string = implode(",",$emails);
+
+        $form = $this->createForm(new SendEmailType($this));
+
+        return $this->render('TrazeoMyPageBundle:Admin:sendEmail.html.twig', array(
+            'emails' => $emails_string,
+            'form' => $form->createView()
         ));
     }
 
