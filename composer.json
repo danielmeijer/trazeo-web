@@ -21,7 +21,6 @@
 	"minimum-stability" : "dev",
     "require" : {
         "sopinet/composergeneric" : "dev-master",
-        "sonata-project/admin-bundle": "2.4.*",
         "egeloen/ckeditor-bundle": "~2.0",
         "jjs/geonames-bundle" : "*",
         "jms/translation-bundle" : "dev-master",
