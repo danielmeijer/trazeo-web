@@ -470,7 +470,7 @@ class StatsAdminController extends Controller
                 $createdAt = $userExtend->getUser()->getCreatedAt();
                 $createdAtF = $createdAt->format('Y-m-d');
                 foreach($userExtend->getGroups() as $group) {
-                    if (in_array($group->getId(), $group_ids)) {
+                    if (in_array($group->getId(), $group_ids) && count($userExtend->getChilds()) > 0) {
                         if (!isset($return_users[$group->getId()])) {
                             $return_users[$group->getId()] = array();
                         }
@@ -482,6 +482,7 @@ class StatsAdminController extends Controller
                     }
                 }
             }
+            $return_users = $this->fixFillBiArray($return_users);
 
             // Datos por NIÑOS
             /** @var EChildRepository $repositoryChildRepository */
@@ -530,6 +531,7 @@ class StatsAdminController extends Controller
                     }
                 }
             }
+            $return_childs = $this->fixFillBiArray($return_childs);
 
             // Gráfica TOTAL
             /** @var EGroupRepository $repositoryEGroup */
@@ -684,6 +686,8 @@ class StatsAdminController extends Controller
                 }
             }
 
+            $return = $this->fixFillBiArray($return);
+
             // Gráfica Global
             $formattedData = $this->filterByModeDatePlus($total, $data['mode']);
             $labels = $formattedData['label'];
@@ -708,6 +712,7 @@ class StatsAdminController extends Controller
                 /** @var EGroup $group */
                 $group = $repositoryEGroup->findOneById($key);
                 $formattedData = $this->filterByModeDatePlus($value, $data['mode']);
+                //ldd($formattedData);
                 $serie = array("name" => $group->getName(), "data" => $formattedData['data']);
                 $series[] = $serie;
             }
@@ -727,6 +732,25 @@ class StatsAdminController extends Controller
             'chartByGroup' => $chartByGroup,
             'chartTotal' => $chartTotal
         );
+    }
+
+    /**
+     * Rellena los datos de un Array bidimensional con 0
+     * en los huecos que no tienen datos
+     *
+     * @param $biArray
+     */
+    private function fixFillBiArray($biArray) {
+        foreach($biArray as $key1 => $array_value1) {
+            foreach($array_value1 as $keyv1 => $value1) {
+                foreach($biArray as $key2 => $array_value2) {
+                    if (!isset($biArray[$key2][$keyv1])) {
+                        $biArray[$key2][$keyv1] = 0;
+                    }
+                }
+            }
+        }
+        return $biArray;
     }
 
     private function getGroupsIDs($data) {
