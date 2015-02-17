@@ -753,6 +753,7 @@ class StatsAdminController extends Controller
             }
         }
 
+        // Ordenamos los Arrays por fecha
         $newArray = array();
         foreach($biArray as $key => $array) {
             ksort($array);
