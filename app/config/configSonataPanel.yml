@@ -1,5 +1,23 @@
 # Services
 services:
+    trazeo_mypage.panel.p_userextend:
+        class: Trazeo\MyPageBundle\Admin\PUserExtendAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\UserExtend, TrazeoMyPageBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Usuarios, label_translator_strategy: "sonata.admin.label.strategy.underscore" }
+        calls:
+            - [setSecurityContext, [@security.context]]
+            - [setContainer, [ @service_container ]]
+
+    trazeo_mypage.panel.p_ride:
+        class: Trazeo\MyPageBundle\Admin\PRideAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\ERide, TrazeoMyPageBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Paseos, label_translator_strategy: "sonata.admin.label.strategy.underscore" }
+        calls:
+            - [setSecurityContext, [@security.context]]
+            - [setContainer, [ @service_container ]]
+
     trazeo_mypage.panel.p_child:
         class: Trazeo\MyPageBundle\Admin\PChildAdmin
         arguments: [~, Trazeo\BaseBundle\Entity\EChild, TrazeoMyPageBundle:CRUD]
@@ -68,7 +86,9 @@ sonata_admin:
                 label: Visualización de Datos
                 icon:            '<i class="fa fa-user"></i>'
                 items:
+                  - trazeo_mypage.panel.p_userextend
                   - trazeo_mypage.panel.p_child
+                  - trazeo_mypage.panel.p_ride
             manageData:
                 label: Gestión de Datos
                 icon:            '<i class="fa fa-user"></i>'

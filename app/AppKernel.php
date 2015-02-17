@@ -65,7 +65,8 @@ class AppKernel extends Kernel
             new Oneup\UploaderBundle\OneupUploaderBundle(),
             new Sopinet\Bundle\UploadMagicBundle\SopinetUploadMagicBundle(),
             new Trazeo\MyPageBundle\TrazeoMyPageBundle(),
-            new Ob\HighchartsBundle\ObHighchartsBundle()
+            new Ob\HighchartsBundle\ObHighchartsBundle(),
+            new Ivory\CKEditorBundle\IvoryCKEditorBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -3,7 +3,6 @@
 namespace Trazeo\MyPageBundle\Admin;
 
 use Doctrine\ORM\QueryBuilder;
-use Proxies\__CG__\Trazeo\BaseBundle\Entity\UserExtend;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -11,12 +10,13 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\CoreBundle\Form\Type\EqualType;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Trazeo\BaseBundle\Entity\EChild;
 
 use Knp\Menu\ItemInterface as MenuItemInterface;
 
-class PChildAdmin extends Admin
+class PUserExtendAdmin extends Admin
 {
     /**
      * Security Context
@@ -41,13 +41,10 @@ class PChildAdmin extends Admin
         // retrieve the default batch actions (currently only delete)
         $actions = parent::getBatchActions();
 
-        // TODO: LA QUITAMOS
-        /*
-        $actions['createGraph'] = array(
-            'label' => $this->trans('action_graph', array(), 'SonataAdminBundle'),
+        $actions['send_email'] = array(
+            'label' => $this->trans('Enviar un Email', array(), 'SonataAdminBundle'),
             'ask_confirmation' => false
         );
-        */
 
         return $actions;
     }
@@ -66,36 +63,10 @@ class PChildAdmin extends Admin
     {
         $datagridMapper
             ->add('groups')
-            //->add('createdAt', 'doctrine_orm_datetime', array('input_type' => 'datetime'))
-            ->add('scholl')
-            // EDAD
-            //->add('createdAt', 'doctrine_orm_datetime_range', array(), 'sonata_type_datetime_picker')
-            ->add('gender', 'doctrine_orm_choice', [],
-                'choice',
-                [
-                    'choices' => array(
-                        EChild::GENDER_BOY => "Niño",
-                        Echild::GENDER_GIRL => "Niña"
-                    )
-                ]
-            );
-
-        /**
-            $datagridMapper
-                ->add('id')
-                ->add('nick')
-                ->add('userextendchilds')
-                ->add('dateBirth')
-                ->add('visibility')
-                ->add('gender')
-                ->add('selected')
-                ->add('ride')
-                ->add('groups')
-                ->add('inviteChild')
-                ->add('createdAt')
-                ->add('updatedAt');
-        }
-         * **/
+ //           ->add('city')
+   //          ->add('country')
+            //->add('createdAt', 'doctrine_orm_datetime_range', array('format' => 'MM/dd/yyyy'), 'DateRangePicker')
+        ;
     }
 
     /**
@@ -104,43 +75,19 @@ class PChildAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('nick')
-            ->add('scholl')
+            //->addIdentifier('id')
+            ->add('user.username')
+            ->add('user.email')
+            ->add('mobile')
             ->add('groups')
-            ->add('userextendchilds')
-            ->add('emailParent')
-            ->add('mobileParent')
-            ->add('dateBirth')
-            ->add('createdAt')
+//            ->add('city')
+//            ->add('country')
+            ->add('user.createdAt')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array()
                 )
             ));
-
-        /**
-            $listMapper
-                ->addIdentifier('id')
-                ->add('nick')
-                ->add('userextendchilds')
-                ->add('dateBirth')
-                ->add('visibility')
-                ->add('gender')
-                ->add('selected')
-                ->add('_action', 'actions', array(
-                    'actions' => array(
-                        'show' => array(),
-                        'edit' => array(),
-                        'delete' => array(),
-                    )
-                ))
-                ->add('ride')
-                ->add('groups')
-                ->add('inviteChild')
-                ->add('createdAt')
-                ->add('updatedAt');
-        }
-         **/
     }
 
     /**
@@ -150,20 +97,14 @@ class PChildAdmin extends Admin
     {
         $showMapper
             ->add('id')
-            ->add('nick')
-            ->add('userextendchilds')
-            ->add('emailParent')
-            ->add('mobileParent')
-            ->add('dateBirth')
-            ->add('visibility')
-            ->add('gender', 'choice', array('choices' => array(
-                EChild::GENDER_BOY => "Niño",
-                Echild::GENDER_GIRL => "Niña"
-            ) ))
+            ->add('user.username')
+            ->add('user.email')
+            ->add('mobile')
             ->add('groups')
-            ->add('ride')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('childs')
+            ->add('city.name')
+            ->add('country.name')
+            ->add('user.createdAt')
         ;
     }
 
@@ -185,6 +126,7 @@ class PChildAdmin extends Admin
 
             if ($page->getUserextend()->getUser()->getId() != $user->getId()) die("No Project for you");
 
+            // TODO: FIX
             $group_ids = array();
             foreach($page->getGroups() as $group) {
                 $group_ids[] = $group->getId();

@@ -88,8 +88,9 @@ class Helper {
 		return $path;
 	}
 
-    // TODO: Para pruebas poner "torrelodones"
     function getPageBySubdomain($subdomain = null) {
+        // TODO: DEBUG
+        if ($_SERVER['HTTP_HOST'] == "localhost" && $subdomain == null) $subdomain = "torrelodones";
         if ($subdomain == null) {
             $parts=explode('.', $_SERVER["SERVER_NAME"]);
             $subdomain = $parts[0];

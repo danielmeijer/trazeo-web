@@ -784,6 +784,14 @@ list:
     label_number_childs: 'Niños'
     label_number_users: 'Padres/Madres'
     label_name: 'Nombre'
+    label_email_parent: 'Email'
+    label_mobile_parent: 'Móvil'
+    label_user_username: 'Usuario'
+    label_user_email: 'Email'
+    label_mobile: 'Móvil'
+    label_user_created_at: 'Fecha registro'
+    label_count_childs_r: 'Niños que han participado'
+    label_group_object: 'Grupo al que pertenece'
 
 form:
     label_name: 'Nombre'
@@ -811,11 +819,26 @@ show:
     label_private_monitor: 'Monitor Privado'
     label_monitor_userextendgroups: 'Monitores autorizados'
     label_bymode: 'Tipo de Grupo'
+    label_ride: 'Paseo'
+    label_email_parent: 'Email'
+    label_mobile_parent: 'Móvil'
+    label_user_username: 'Usuario'
+    label_user_email: 'Email'
+    label_mobile: 'Móvil'
+    label_city_name: 'Ciudad'
+    label_country_name: 'Pais'
+    label_group_object: 'Grupo'
+    label_string_childs_r: 'Niños/as'
+    label_duration: 'Duración'
+    label_distance: 'Distancia'
+
 
 breadcrumb:
     link_dashboard: 'Das'
     link_e_child_list: 'Listado de Niños'
     link_e_group_list: 'Listado de Grupos'
+    link_e_ride_list: 'Listado de Paseos'
+    link_user_extend_list: 'Listado de Usuarios'
 
 filter:
     label_groups: 'Grupos'
