@@ -685,8 +685,9 @@ class StatsAdminController extends Controller
                     $total[$ride->getCreatedAt()->format('Y-m-d')]['total'] += count($children);
                 }
             }
-
             $return = $this->fixFillBiArray($return);
+
+            //ldd($return);
 
             // Gráfica Global
             $formattedData = $this->filterByModeDatePlus($total, $data['mode']);
@@ -745,12 +746,20 @@ class StatsAdminController extends Controller
             foreach($array_value1 as $keyv1 => $value1) {
                 foreach($biArray as $key2 => $array_value2) {
                     if (!isset($biArray[$key2][$keyv1])) {
-                        $biArray[$key2][$keyv1] = 0;
+                        $biArray[$key2][$keyv1] = array();
+                        $biArray[$key2][$keyv1]['total'] = 0;
                     }
                 }
             }
         }
-        return $biArray;
+
+        $newArray = array();
+        foreach($biArray as $key => $array) {
+            ksort($array);
+            $newArray[$key] = $array;
+        }
+
+        return $newArray;
     }
 
     private function getGroupsIDs($data) {
