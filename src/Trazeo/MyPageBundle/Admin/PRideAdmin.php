@@ -64,7 +64,6 @@ class PRideAdmin extends Admin
         $datagridMapper
             //->add('group')
             //->add('groupid')
-                ->add('id')
             ->add('createdAt', 'doctrine_orm_callback',
                 array(
                     'label' => 'Fecha de los Paseos',
