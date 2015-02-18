@@ -542,7 +542,7 @@ class StatsAdminController extends Controller
             }
             $return_childs = $this->fixFillBiArray($return_childs);
 
-            ldd($return_childs);
+            //ldd($return_childs);
 
             // Gráfica TOTAL
             /** @var EGroupRepository $repositoryEGroup */
@@ -564,7 +564,7 @@ class StatsAdminController extends Controller
                     $labels = $formattedData['label'];
                 }
                 $serie = array(
-                    "name" => "FAMILIAS: " . $group->getName(),
+                    "name" => "NIÑOS/AS: " . $group->getName(),
                     "data" => $formattedData['data'],
                     "dashStyle" => 'longdash',
                     "color" => $this->getColorForGroupID($i));
@@ -583,7 +583,7 @@ class StatsAdminController extends Controller
                     $labels = $formattedData['label'];
                 }
                 $serie = array(
-                    "name" => "NIÑOS/AS: " . $group->getName(),
+                    "name" => "FAMILIAS: " . $group->getName(),
                     "data" => $formattedData['data'],
                     "color" => $this->getColorForGroupID($i)
                 );
