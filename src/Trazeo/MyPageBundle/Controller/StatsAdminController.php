@@ -493,7 +493,7 @@ class StatsAdminController extends Controller
             }
             $return_users = $this->fixFillBiArray($return_users);
 
-            ldd($return_users);
+            //ldd($return_users);
 
             // Datos por NIÑOS
             /** @var EChildRepository $repositoryChildRepository */
