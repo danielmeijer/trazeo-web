@@ -13,6 +13,7 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\CoreBundle\Form\Type\EqualType;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Trazeo\BaseBundle\Entity\EChild;
+use Trazeo\MyPageBundle\DQL\DateFunction;
 
 use Knp\Menu\ItemInterface as MenuItemInterface;
 
@@ -57,10 +58,36 @@ class PRideAdmin extends Admin
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
+        $em = $this->container->get('doctrine');
+        $em->getEntityManager()->getConfiguration()->addCustomDatetimeFunction('DATE', '\Trazeo\MyPageBundle\DQL\DateFunction');
+
         $datagridMapper
-            ->add('group')
-            ->add('groupid')
-            ->add('createdAt', 'doctrine_orm_datetime_range', array('format' => 'MM/dd/yyyy'), 'DateRangePicker')
+            //->add('group')
+            //->add('groupid')
+                ->add('id')
+            ->add('createdAt', 'doctrine_orm_callback',
+                array(
+                    'label' => 'Fecha de los Paseos',
+                    'callback' => function($queryBuilder, $alias, $field, $value) {
+                        if (!isset($value['value']['Inicio'])) {
+                            return;
+                        }
+                        /** @var \DateTime $dateINI */
+                        $dateINI = $value['value']['Inicio'];
+                        $inputValueINI = $dateINI->format('Y-m-d');
+                        $dateFIN = $value['value']['Fin'];
+                        $inputValueFIN = $dateFIN->format('Y-m-d');
+
+                        $queryBuilder->andWhere("DATE($alias.createdAt) >= :CreatedAtINI");
+                        $queryBuilder->andWhere("DATE($alias.createdAt) <= :CreatedAtFIN");
+
+                        $queryBuilder->setParameter('CreatedAtINI', $inputValueINI);
+                        $queryBuilder->setParameter('CreatedAtFIN', $inputValueFIN);
+                        return true;
+                    },
+                    'field_type' => 'text'
+                ), 'DateRangePicker')
+            //->add('createdAt', 'doctrine_orm_datetime_range', array('format' => 'MM/dd/yyyy'), 'DateRangePicker')
             ;
     }
 
@@ -70,6 +97,7 @@ class PRideAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
+            ->add('id')
             ->add('groupObject')
             ->add('createdAt')
             ->add('countChildsR')
@@ -136,20 +164,69 @@ class PRideAdmin extends Admin
         if ($action == 'list') {
             $filterParameters = $this->getFilterParameters();
 
-            $filterParameters['state'] = array(
-                'createdAt'  => EqualType::TYPE_IS_EQUAL, // equal to
+            // AYER
+            $dateYesterday = new \DateTime();
+            $dateYesterday->add(\DateInterval::createFromDateString('yesterday'));
+
+            $filterParameters['createdAt'] = array(
+                'value' => array(
+                    'Inicio' => $dateYesterday->format('Y-m-d'),
+                    'Fin' => $dateYesterday->format('Y-m-d')
+                )
             );
 
             // Add filters to uri of tab
+            $menu->addChild('AYER', array('uri' => $this->generateUrl('list', array(
+                'filter' => $filterParameters
+            ))));
+
+            // HOY
+            $dateToday = new \DateTime();
+
+            $filterParameters['createdAt'] = array(
+                'value' => array(
+                    'Inicio' => $dateToday->format('Y-m-d'),
+                    'Fin' => $dateToday->format('Y-m-d')
+                )
+            );
+
+            // Add filters to uri of tab
+            $menu->addChild('HOY', array('uri' => $this->generateUrl('list', array(
+                'filter' => $filterParameters
+            ))));
+
+
+
+           // ldd($filterParameters);
+
+            /**
+            $filterParameters['state'] = array(
+                'createdAt'  => EqualType::TYPE_IS_EQUAL, // equal to
+            );
+             * */
+
+            // Add filters to uri of tab
+            /**
             $filterParameters['state']['value'] = "02/17/2015";
             $menu->addChild('AYER', array('uri' => $this->generateUrl('list', array(
                 'createdAt' => $filterParameters
             ))));
+             * */
 
-            $filterParameters['state']['value'] = "02/17/2015";
+            //?filter[createdAt][type]=&filter[createdAt][value][Inicio]=2015-02-01&filter[createdAt][value][Fin]=2015-02-02&filter[_page]=1&filter[_sort_by]=createdAt&filter[_sort_order]=DESC&filter[_per_page]=32
+
+            //?createdAt[_sort_order]=DESC&createdAt[_sort_by]=createdAt&createdAt[_page]=1&createdAt[_per_page]=32&createdAt[createdAt][value][Inicio]=02%2F17%2F2015&createdAt[createdAt][value][Fin]=03%2F17%2F2015
+
+            //?createdAt[_sort_order]=DESC&createdAt[_sort_by]=createdAt&createdAt[_page]=1&createdAt[_per_page]=32&createdAt[state][createdAt]=1&createdAt[state][value]=02%2F17%2F2015&createdAt[createdAt][value][Inicio]=02%2F17%2F2015&createdAt[createdAt][value][Fin]=03%2F17%2F2015
+
+/**
+            $filterParameters['createdAt']['value'] = array();
+            //$filterParameters['createdAt']['value']['Inicio'] = "02/17/2015";
+            //$filterParameters['createdAt']['value']['Fin'] = "03/17/2015";
             $menu->addChild('HOY', array('uri' => $this->generateUrl('list', array(
-                'createdAt' => $filterParameters
+                'filter[createdAt][type]' => $filterParameters
             ))));
+ * */
             return;
         }
     }

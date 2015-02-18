@@ -19,3 +19,8 @@ services:
         class: Trazeo\MyPageBundle\Form\DateRangePickerType
         tags:
             - { name: form.type, alias: DateRangePicker }
+
+    trazeo_mypage.form.type.DatePickerType:
+        class: Trazeo\MyPageBundle\Form\DatePickerType
+        tags:
+            - { name: form.type, alias: DatePicker }
