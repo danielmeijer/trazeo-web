@@ -78,7 +78,7 @@ class User extends BaseUser
     }
 
     public function getCreatedAt() {
-        if ($this->createdAt->getTimestamp() < 0) {
+        if ($this->createdAt->getTimestamp() === false || $this->createdAt->getTimestamp() < 0) {
             $childs = $this->getUserExtend()->getChilds();
             if (count($childs) > 0) {
                 $date = $childs[0]->getCreatedAt();
