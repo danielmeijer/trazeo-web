@@ -114,8 +114,8 @@ class StatsAdminController extends Controller
             $data['km'] = round($temp_metros * 0.0001);
             $data['co2'] = $data['km'] * 0.4;
             // TODO: OJO CON LOS LITROS CONSUMIDOS
-            $data['litros_combustible'] = round($data['km'] / 9);
-            $data['euros_combustible'] = $data['km'] * 1.5;
+            $data['litros_combustible'] = round($data['km'] / 12.5);
+            $data['euros_combustible'] = $data['litros_combustible'] * 1.4;
 
             // Ponemos el tiempo en el formato correcto
             $temp_tiempo_date = new \DateTime();
@@ -541,6 +541,8 @@ class StatsAdminController extends Controller
                 }
             }
             $return_childs = $this->fixFillBiArray($return_childs);
+
+            ldd($return_childs);
 
             // Gráfica TOTAL
             /** @var EGroupRepository $repositoryEGroup */
