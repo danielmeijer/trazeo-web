@@ -113,7 +113,8 @@ class StatsAdminController extends Controller
             $data['paseos'] = count($rides_good);
             $data['km'] = round($temp_metros * 0.0001);
             $data['co2'] = $data['km'] * 0.4;
-            $data['litros_combustible'] = $data['km'];
+            // TODO: OJO CON LOS LITROS CONSUMIDOS
+            $data['litros_combustible'] = round($data['km'] / 9);
             $data['euros_combustible'] = $data['km'] * 1.5;
 
             // Ponemos el tiempo en el formato correcto
@@ -183,17 +184,18 @@ class StatsAdminController extends Controller
             $qb->leftJoin('ue.groups','g');
             $qb->where('g.id IN (:group_ids)');
             $qb->setParameter('group_ids', $group_ids);
+            $qb->leftJoin('ue.user', 'fuser');
 
             // Filtro por Fecha
             if (isset($data['date_from']) && $data['date_from'] != "") {
                 $date_temp_formated = new \DateTime($data['date_from']);
-                $qb->andWhere('ue.createdAt > :date_from');
+                $qb->andWhere('fuser.createdAt > :date_from');
                 $qb->setParameter('date_from', $date_temp_formated->format('Y-m-d'));
             }
 
             if (isset($data['date_to']) && $data['date_to'] != "") {
                 $date_temp_formated = new \DateTime($data['date_to']);
-                $qb->andWhere('ue.createdAt < :date_to');
+                $qb->andWhere('fuser.createdAt < :date_to');
                 $qb->setParameter('date_to', $date_temp_formated->format('Y-m-d'));
             }
 
@@ -218,10 +220,12 @@ class StatsAdminController extends Controller
                 }
 
                 // Por Grupos
-                foreach($user->getGroups() as $group) {
-                    if (in_array($group->getId(), $group_ids)) {
-                        if (!isset($groups[$group->getId()])) $groups[$group->getId()] = 0;
-                        $groups[$group->getId()]++;
+                if (count($user->getChilds()) > 0) {
+                    foreach ($user->getGroups() as $group) {
+                        if (in_array($group->getId(), $group_ids)) {
+                            if (!isset($groups[$group->getId()])) $groups[$group->getId()] = 0;
+                            $groups[$group->getId()]++;
+                        }
                     }
                 }
             }
@@ -324,11 +328,15 @@ class StatsAdminController extends Controller
                 $data_groups[] = $data_temp;
             }
 
-
+            $label_years = array();
+            foreach($data_years as $dt) {
+                $label_years[] = $dt[0];
+            }
             // Gráfico EDAD
             $obEdad = new Highchart();
             $obEdad->chart->renderTo('edad');
             $obEdad->title->text('Gráfico por Edad');
+            $obEdad->xAxis->categories($label_years);
             $obEdad->plotOptions->pie(array(
                 'allowPointSelect'  => true,
                 'cursor'    => 'pointer',
@@ -448,17 +456,18 @@ class StatsAdminController extends Controller
             $qb->leftJoin('ue.groups','g');
             $qb->where('g.id IN (:group_ids)');
             $qb->setParameter('group_ids', $group_ids);
+            $qb->leftJoin('ue.user', 'fuser');
 
             // Filtro por Fecha
             if (isset($data['date_from']) && $data['date_from'] != "") {
                 $date_temp_formated = new \DateTime($data['date_from']);
-                $qb->andWhere('ue.createdAt > :date_from');
+                $qb->andWhere('fuser.createdAt > :date_from');
                 $qb->setParameter('date_from', $date_temp_formated->format('Y-m-d'));
             }
 
             if (isset($data['date_to']) && $data['date_to'] != "") {
                 $date_temp_formated = new \DateTime($data['date_to']);
-                $qb->andWhere('ue.createdAt < :date_to');
+                $qb->andWhere('fuser.createdAt < :date_to');
                 $qb->setParameter('date_to', $date_temp_formated->format('Y-m-d'));
             }
 
