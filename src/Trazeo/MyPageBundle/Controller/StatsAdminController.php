@@ -678,8 +678,8 @@ class StatsAdminController extends Controller
             /** @var ERide $ride */
             foreach($rides as $ride) {
                 //ld($ride->getId());
-                $children = $repositoryERide->getChildrenInRide($ride);
-                if ($children != null) {
+                $children_count = $repositoryERide->getFixCountChildrenInRide($ride);
+                if ($children_count > 0) {
                     // Por Grupos
                     if (!isset($return[$ride->getGroupid()])) $return[$ride->getGroupid()] = array();
                     if (!isset($return[$ride->getGroupid()][$ride->getCreatedAt()->format('Y-m-d')])) {
@@ -688,14 +688,14 @@ class StatsAdminController extends Controller
                         $return[$ride->getGroupid()][$ride->getCreatedAt()->format('Y-m-d')]['ride'] = $ride;
                     }
 
-                    $return[$ride->getGroupid()][$ride->getCreatedAt()->format('Y-m-d')]['total'] += count($children);
+                    $return[$ride->getGroupid()][$ride->getCreatedAt()->format('Y-m-d')]['total'] += $children_count;
 
                     // Total
                     if (!isset($total[$ride->getCreatedAt()->format('Y-m-d')])) {
                         $total[$ride->getCreatedAt()->format('Y-m-d')] = array();
                         $total[$ride->getCreatedAt()->format('Y-m-d')]['total'] = 0;
                     }
-                    $total[$ride->getCreatedAt()->format('Y-m-d')]['total'] += count($children);
+                    $total[$ride->getCreatedAt()->format('Y-m-d')]['total'] += $children_count;
                 }
             }
             $return = $this->fixFillBiArray($return);

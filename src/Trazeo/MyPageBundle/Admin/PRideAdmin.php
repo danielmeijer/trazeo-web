@@ -48,7 +48,7 @@ class PRideAdmin extends Admin
 
     protected function configureRoutes(RouteCollection $collection)
     {
-        $collection->remove('edit');
+        //$collection->remove('edit');
         $collection->remove('delete');
         $collection->remove('create');
     }
@@ -96,7 +96,7 @@ class PRideAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
+            ->addIdentifier('id')
             ->add('groupObject')
             ->add('createdAt')
             ->add('countChildsR')
@@ -119,6 +119,17 @@ class PRideAdmin extends Admin
             ->add('createdAt')
             ->add('duration')
             ->add('distance')
+        ;
+    }
+
+    /**
+     * @param FormMapper $formMapper
+     */
+    protected function configureFormFields(FormMapper $formMapper)
+    {
+        $formMapper
+            ->add('distance')
+            ->add('fixChildCount')
         ;
     }
 

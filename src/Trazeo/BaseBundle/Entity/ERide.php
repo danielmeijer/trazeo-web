@@ -39,6 +39,11 @@ class ERide extends AbstractEntity
      **/
     protected $childs;
 
+    /**
+     * @ORM\Column(name="fixChildCount", type="integer", length=2, nullable=true)
+     */
+    protected $fixChildCount;
+
 	/**
 	 * @ORM\OneToMany(targetEntity="EReport", mappedBy="ride", cascade={"remove"})
 	 **/
@@ -98,7 +103,8 @@ class ERide extends AbstractEntity
     }
 
     public function getCountChildsR() {
-        $this->countChildsR = count($this->getChildsR());
+        if ($this->getFixChildCount() != null) $this->countChildsR = $this->getFixChildCount();
+        else $this->countChildsR = count($this->getChildsR());
         return $this->countChildsR;
     }
 
@@ -454,5 +460,28 @@ class ERide extends AbstractEntity
     public function getChilds()
     {
         return $this->childs;
+    }
+
+    /**
+     * Set fixChildCount
+     *
+     * @param integer $fixChildCount
+     * @return ERide
+     */
+    public function setFixChildCount($fixChildCount)
+    {
+        $this->fixChildCount = $fixChildCount;
+
+        return $this;
+    }
+
+    /**
+     * Get fixChildCount
+     *
+     * @return integer
+     */
+    public function getFixChildCount()
+    {
+        return $this->fixChildCount;
     }
 }
