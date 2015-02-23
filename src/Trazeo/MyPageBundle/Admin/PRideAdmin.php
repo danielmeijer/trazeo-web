@@ -102,7 +102,8 @@ class PRideAdmin extends Admin
             ->add('countChildsR')
             ->add('_action', 'actions', array(
                 'actions' => array(
-                    'show' => array()
+                    'show' => array(),
+                    'edit' => array()
                 )
             ));
     }
@@ -116,6 +117,7 @@ class PRideAdmin extends Admin
             ->add('id')
             ->add('groupObject')
             ->add('stringChildsR')
+            ->add('fixChildCount')
             ->add('createdAt')
             ->add('duration')
             ->add('distance')

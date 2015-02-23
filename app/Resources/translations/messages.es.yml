@@ -834,6 +834,7 @@ show:
     label_string_childs_r: 'Niños/as'
     label_duration: 'Duración'
     label_distance: 'Distancia'
+    label_fix_child_count: 'Participación (Este dato se puede editar)'
 
 
 breadcrumb:
