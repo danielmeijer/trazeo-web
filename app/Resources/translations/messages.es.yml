@@ -792,6 +792,7 @@ list:
     label_user_created_at: 'Fecha registro'
     label_count_childs_r: 'Niños que han participado'
     label_group_object: 'Grupo al que pertenece'
+    label_id: 'Identificador'
 
 form:
     label_name: 'Nombre'
@@ -801,6 +802,8 @@ form:
     label_private_monitor: 'Monitor Privado'
     label_monitor_userextendgroups: 'Monitores autorizados'
     label_bymode: 'Tipo de Grupo'
+    label_distance: 'Distancia'
+    label_fix_child_count: 'Indique manualmente la participación'
 
 show:
     label_id: 'Identificador'
