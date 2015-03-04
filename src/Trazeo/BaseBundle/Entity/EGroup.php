@@ -94,6 +94,11 @@ class EGroup
      * @ORM\OneToOne(targetEntity="ERide", mappedBy="group", cascade={"remove"})
      */
     protected $ride;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ERide", mappedBy="groupRegistered", cascade={"remove"})
+     */
+    protected $ridesRegistered;
     
     /**
      * @ORM\Column(name="hasRide", type="boolean", nullable=true)
@@ -715,5 +720,38 @@ class EGroup
     public function getPrivateMonitor()
     {
         return $this->privateMonitor;
+    }
+
+    /**
+     * Add ridesRegistered
+     *
+     * @param \Trazeo\BaseBundle\Entity\ERide $ridesRegistered
+     * @return EGroup
+     */
+    public function addRidesRegistered(\Trazeo\BaseBundle\Entity\ERide $ridesRegistered)
+    {
+        $this->ridesRegistered[] = $ridesRegistered;
+
+        return $this;
+    }
+
+    /**
+     * Remove ridesRegistered
+     *
+     * @param \Trazeo\BaseBundle\Entity\ERide $ridesRegistered
+     */
+    public function removeRidesRegistered(\Trazeo\BaseBundle\Entity\ERide $ridesRegistered)
+    {
+        $this->ridesRegistered->removeElement($ridesRegistered);
+    }
+
+    /**
+     * Get ridesRegistered
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRidesRegistered()
+    {
+        return $this->ridesRegistered;
     }
 }
