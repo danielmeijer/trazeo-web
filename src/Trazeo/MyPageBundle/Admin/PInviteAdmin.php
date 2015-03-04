@@ -12,11 +12,10 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Security\Core\SecurityContextInterface;
-use Trazeo\BaseBundle\Entity\EChild;
 
 use Knp\Menu\ItemInterface as MenuItemInterface;
 
-class PChildAdmin extends Admin
+class PInviteAdmin extends Admin
 {
     /**
      * Security Context
@@ -65,37 +64,9 @@ class PChildAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('groups')
-            //->add('createdAt', 'doctrine_orm_datetime', array('input_type' => 'datetime'))
-            ->add('scholl')
-            // EDAD
-            //->add('createdAt', 'doctrine_orm_datetime_range', array(), 'sonata_type_datetime_picker')
-            ->add('gender', 'doctrine_orm_choice', [],
-                'choice',
-                [
-                    'choices' => array(
-                        EChild::GENDER_BOY => "Niño",
-                        Echild::GENDER_GIRL => "Niña"
-                    )
-                ]
-            );
-
-        /**
-            $datagridMapper
-                ->add('id')
-                ->add('nick')
-                ->add('userextendchilds')
-                ->add('dateBirth')
-                ->add('visibility')
-                ->add('gender')
-                ->add('selected')
-                ->add('ride')
-                ->add('groups')
-                ->add('inviteChild')
-                ->add('createdAt')
-                ->add('updatedAt');
-        }
-         * **/
+            ->add('group')
+            ->add('userextend')
+            ->add('sender');
     }
 
     /**
@@ -104,44 +75,15 @@ class PChildAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('nick')
-            ->add('scholl')
-            ->add('groups')
-            ->add('userextendchilds')
-            ->add('emailParent')
-            ->add('mobileParent')
-            ->add('dateBirth')
-            ->add('createdAt')
-            ->add('weekNotActivity')
+            ->addIdentifier('id')
+            ->add('group')
+            ->add('sender')
+            ->add('userextend')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array()
                 )
             ));
-
-        /**
-            $listMapper
-                ->addIdentifier('id')
-                ->add('nick')
-                ->add('userextendchilds')
-                ->add('dateBirth')
-                ->add('visibility')
-                ->add('gender')
-                ->add('selected')
-                ->add('_action', 'actions', array(
-                    'actions' => array(
-                        'show' => array(),
-                        'edit' => array(),
-                        'delete' => array(),
-                    )
-                ))
-                ->add('ride')
-                ->add('groups')
-                ->add('inviteChild')
-                ->add('createdAt')
-                ->add('updatedAt');
-        }
-         **/
     }
 
     /**
@@ -151,20 +93,9 @@ class PChildAdmin extends Admin
     {
         $showMapper
             ->add('id')
-            ->add('nick')
-            ->add('userextendchilds')
-            ->add('emailParent')
-            ->add('mobileParent')
-            ->add('dateBirth')
-            ->add('visibility')
-            ->add('gender', 'choice', array('choices' => array(
-                EChild::GENDER_BOY => "Niño",
-                Echild::GENDER_GIRL => "Niña"
-            ) ))
-            ->add('groups')
-            ->add('ride')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('group')
+            ->add('sender')
+            ->add('userextend')
         ;
     }
 
@@ -172,6 +103,8 @@ class PChildAdmin extends Admin
     {
         /** @var QueryBuilder $query */
         $query = parent::createQuery($context);
+
+        // TODO: REVISAR FILTRO
 
         if(!$this->securityContext->isGranted('ROLE_SUPER_ADMIN'))
         {
