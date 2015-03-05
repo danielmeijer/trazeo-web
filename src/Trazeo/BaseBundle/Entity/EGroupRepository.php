@@ -106,5 +106,14 @@ class EGroupRepository extends EntityRepository
         $em->flush();
     }
 
-
+    /**
+     * Funcion que comprueba si un usuario esta en dentro de un grupo
+     * @param $userextend
+     * @param EGroup $group
+     * @return bool
+     */
+    public function isUserInGroup($userextend,EGroup $group)
+    {
+        return in_array($userextend,$group->getUserextendgroups()->toArray());
+    }
 }

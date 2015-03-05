@@ -103,7 +103,13 @@ class EGroup
     /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\City")
      */
     protected $city;
-    
+
+
+    /** @ORM\OneToOne(targetEntity="Sopinet\Bundle\ChatBundle\Entity\Chat")
+     * @ORM\JoinColumn(name="chat_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
+     */
+    protected $chat;
+
     /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\Country")
      */
     protected $country;
@@ -715,5 +721,28 @@ class EGroup
     public function getPrivateMonitor()
     {
         return $this->privateMonitor;
+    }
+
+    /**
+     * Set chat
+     *
+     * @param \Sopinet\Bundle\ChatBundle\Entity\Chat $chat
+     * @return EGroup
+     */
+    public function setChat(\Sopinet\Bundle\ChatBundle\Entity\Chat $chat = null)
+    {
+        $this->chat = $chat;
+
+        return $this;
+    }
+
+    /**
+     * Get chat
+     *
+     * @return \Sopinet\Bundle\ChatBundle\Entity\Chat 
+     */
+    public function getChat()
+    {
+        return $this->chat;
     }
 }

@@ -4,6 +4,10 @@ namespace Trazeo\BaseBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Sopinet\Bundle\ChatBundle\Entity\Chat;
+use Sopinet\Bundle\ChatBundle\Entity\ChatRepository;
+use Sopinet\Bundle\ChatBundle\Service\ApiHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandler;
@@ -730,6 +734,17 @@ class ApiGroupController extends Controller
     }
 
     /**
+     * @ApiDoc(
+     *   description="Función que une/saca a un niño de un grupo ",
+     *   section="group",
+     *   parameters={
+     *      {"name"="email", "dataType"="string", "required"=true, "description"="Email del usuario"},
+     *      {"name"="pass", "dataType"="string", "required"=true, "description"="Password del usuario"},
+     *      {"name"="id_child", "dataType"="string", "required"=true, "description"="id del niño"},
+     *      {"name"="id_group", "dataType"="string", "required"=true, "description"="id del grupo"},
+     *      {"name"="add", "dataType"="string", "required"=false, "description"="Indica si se une o sale del grupo true|false"},
+     *   }
+     * )
      * @POST("/api/group/setChild")
      */
     public function joinChildGroupAction(Request $request)
@@ -761,5 +776,78 @@ class ApiGroupController extends Controller
             ->setData($this->doOK('ok'));
 
         return $this->get('fos_rest.view_handler')->handle($view);
+    }
+
+    /**
+     * @ApiDoc(
+     *   description="Función que crea un chat para un grupo, o si ya existe lo devuelve",
+     *   section="group",
+     *   parameters={
+     *      {"name"="email", "dataType"="string", "required"=true, "description"="Email del usuario"},
+     *      {"name"="pass", "dataType"="string", "required"=true, "description"="Password del usuario"},
+     *      {"name"="device_token", "dataType"="string", "required"=true, "description"="Token del dispositivo"},
+     *      {"name"="group_id", "dataType"="string", "required"=true, "description"="id del grupo"},
+     *   }
+     * )
+     *
+     * @POST("/api/group/create/chat")
+     */
+    public function postCreateChatAction(Request $request)
+    {
+        $apiHelper=$this->get('apihelper');
+        //Comprobamos el usuario
+        $user = $this->checkPrivateAccess($request);
+        if ($user == false || $user == null) {
+            $view = View::create()
+                ->setStatusCode(200)
+                ->setData($this->msgDenied());
+
+            return $this->get('fos_rest.view_handler')->handle($view);
+        }
+        $em=$this->get('doctrine.orm.default_entity_manager');
+        $repositoryUserExtend=$this->get('doctrine.orm.default_entity_manager')->getRepository('TrazeoBaseBundle:UserExtend');
+        $userextend = $repositoryUserExtend->findOneByNick($user->getEmail());
+        //se comprueba el device
+        $token=$request->get('device_token');
+        $repositoryDevice = $em->getRepository('SopinetGCMBundle:Device');
+        $device=$repositoryDevice->findOneBy(array('user'=>$userextend,'token'=>$token));
+        if($device==null)return $apiHelper->msgDenied(ApiHelper::NODEVICE);
+        //Obtenemos el grupo
+        $repositoryGroup = $em->getRepository('TrazeoBaseBundle:EGroup');
+        $group=$repositoryGroup->find($request->get('group_id'));
+        //Comprobamos si el usuario pertenece al grupo
+        if(!$repositoryGroup->isUserInGroup($userextend,$group))$apiHelper->msgDenied('User is not in the group');
+        /** @var ChatRepository $repositoryChat */
+        $repositoryChat = $em->getRepository('SopinetChatBundle:Chat');
+        //Comprobamos si el grupo ya tiene chat
+        if($group->getChat()!=null){
+            $chat=$group->getChat();
+            if(!$repositoryChat->userInChat($userextend,$chat)){
+                $chat->addChatMember($userextend);
+            }
+            return $apiHelper->msgOK($chat);
+        }
+        //Si no lo tiene se crea
+        else{
+            $chat=new Chat();
+            $chat->setType(Chat::EVENT);
+            $chat->setName($group->getName());
+            $chat->setAdmin($userextend);
+            //Añadimos todos los user del grupo en el chat
+            foreach($group->getUserextendgroups() as $user){
+                try{
+                    $repositoryChat->addMember($chat,$user->getId());
+                }
+                catch(\Exception $e){
+                    return $this->exceptionHandler($e);
+                }
+            }
+            $group->setChat($chat);
+            $em->persist($chat);
+            $em->persist($group);
+            $em->flush();
+
+        }
+        return $apiHelper->msgOK($chat);
     }
 }
