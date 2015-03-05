@@ -1,34 +1,38 @@
 <?php
-    namespace Sopinet\GCMBundle\Model;
+namespace Sopinet\GCMBundle\Model;
 
-    /**
-     * text: file o texto
-     * type: text o file
-     * chatid: id del chat
-     * from: REGISTRATION_ID
-     *
-     *
-     */
-    class Msg {
-        const IOS="iOS";
-        const ANDROID="Android";
+/**
+ * text: file o texto
+ * type: text o file
+ * chatid: id del chat
+ * from: REGISTRATION_ID
+ *
+ *
+ */
+class Msg {
+    const IOS="iOS";
+    const ANDROID="Android";
 
-        public $text;
+    public $text;
 
-        public $type;
+    public $type;
 
-        public $chatid;
+    public $chatid;
 
-        public $chattype;
+    public $chattype;
 
-        public $msgid;
+    public $msgid;
 
-        public $from;
+    public $from;
 
-        public $phone;
+    public $phone;
 
-        public $time;
+    public $time;
 
-        public $device;
-    }
+    public $device;
+
+    public $groupId;
+
+    public $username;
+}
 ?>

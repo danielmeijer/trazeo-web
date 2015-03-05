@@ -1,7 +1,25 @@
 <?php
+namespace Sopinet\GCMBundle\Model;
+
 /**
- * Created by PhpStorm.
- * User: hud
- * Date: 5/03/15
- * Time: 14:10
+ * text: file o texto
+ * type: text o file
+ * chatid: id del chat
+ * from: REGISTRATION_ID
+ *
+ *
  */
+class CustomMsg {
+
+    public function __construct(){
+        $this->msg=new Msg();
+    }
+
+    const IOS="iOS";
+    const ANDROID="Android";
+
+    public $msg;
+
+    public $custom_data;
+}
+?>

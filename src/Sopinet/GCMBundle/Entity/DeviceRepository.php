@@ -25,15 +25,10 @@
          * @param $type('Android','iOS')
          * @return bool|Device
          */
-        public function addDevice($device_id, User $user ,$type='Android') {
+        public function addDevice($device_id, $user ,$type='Android') {
             $em = $this->getEntityManager();
-            $repositoryUser = $em->getRepository("ApplicationSopinetUserBundle:User");
 
             if (!$this->existsDevice($device_id)) {
-                // TODO: Esto hay que revisarlo
-                // Eliminar los devices antiguos del sistema, dejar sólo 1
-                    $repositoryUser->clearDevices($user);
-                // Hasta aquí hay que cambiarlo
                 $device = new Device();
                 $device->setToken($device_id);
                 $device->setDateRegister(new \DateTime());

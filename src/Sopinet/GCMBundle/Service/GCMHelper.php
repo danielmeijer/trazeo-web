@@ -205,7 +205,11 @@ class GCMHelper {
         $mes['chattype'] = $msg->chattype;
         $mes['msgid'] = $msg->msgid;
         $mes['phone'] = $msg->phone;
-        $mes['time'] = $msg->time;
+        /** @var \DateTime $time */
+        $time=new \DateTime($msg->time);
+        $mes['time'] =$time->getTimestamp();
+        $mes['groupId']= $msg->groupId;
+        $mes['username']=$msg->username;
         if($msg->device==$msg::ANDROID){
             $this->sendGCMessage($mes, $to);
         }
@@ -242,6 +246,7 @@ class GCMHelper {
      */
     private function sendAPNMessage($mes, $to)
     {
+        ldd('wtf!');
         $message=new iOSMessage();
         try{
             $message->setData($mes);
