@@ -12,6 +12,20 @@ use Trazeo\MyPageBundle\Form\SendEmailType;
 
 class CRUDController extends Controller
 {
+    public function linkAction() {
+        $id = $this->get('request')->get($this->admin->getIdParameter());
+
+        $object = $this->admin->getObject($id);
+
+        if (!$object) {
+            throw new NotFoundHttpException(sprintf('unable to find the object with id : %s', $id));
+        }
+
+        $response = $this->redirect($this->generateUrl('panel_ride_resume', array('id' => $object->getId())));
+
+        return $response;
+    }
+
     public function batchActionCreateGraph(ProxyQueryInterface $selectedModelQuery) {
         if ($this->admin->isGranted('EDIT') === false || $this->admin->isGranted('DELETE') === false) {
             throw new AccessDeniedException();

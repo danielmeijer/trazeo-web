@@ -11,7 +11,7 @@ use JMS\Serializer\Annotation\Exclude;
  * @ORM\Table("e_child")
  * @ORM\Entity(repositoryClass="EChildRepository")
  */
-class EChild
+class EChild extends AbstractEntity
 {
     const GENDER_BOY = "boy";
     const GENDER_GIRL = "girl";
@@ -92,6 +92,27 @@ class EChild
     protected $emailParent;
 
     protected $mobileParent;
+
+    protected $weekNotActivity;
+
+    public function getWeekNotActivity() {
+        $em = $this->getEntityManager();
+        $repositoryEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
+        /** @var EEvent $last_event */
+        $last_event = $repositoryEvent->findOneBy(array(
+            'data' => $this->getId() . "/" . $this->getNick(),
+            'action' => 'in',
+        ), array('createdAt' => 'DESC'));
+
+        if ($last_event == null) return "Nunca";
+
+        $today = new \DateTime();
+
+        /** @var \DateInterval $diff */
+        $diff = $last_event->getCreatedAt()->diff($today);
+
+        return round($diff->days / 7);
+    }
 
     public function getEmailParent() {
         /** @var UserExtend $ue */

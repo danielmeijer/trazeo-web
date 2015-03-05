@@ -94,6 +94,11 @@ class EGroup
      * @ORM\OneToOne(targetEntity="ERide", mappedBy="group", cascade={"remove"})
      */
     protected $ride;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ERide", mappedBy="groupRegistered", cascade={"remove"})
+     */
+    protected $ridesRegistered;
     
     /**
      * @ORM\Column(name="hasRide", type="boolean", nullable=true)
@@ -732,11 +737,21 @@ class EGroup
     public function setChat(\Sopinet\Bundle\ChatBundle\Entity\Chat $chat = null)
     {
         $this->chat = $chat;
+    }
+    /*
+     * Add ridesRegistered
+     *
+     * @param \Trazeo\BaseBundle\Entity\ERide $ridesRegistered
+     * @return EGroup
+     */
+    public function addRidesRegistered(\Trazeo\BaseBundle\Entity\ERide $ridesRegistered)
+    {
+        $this->ridesRegistered[] = $ridesRegistered;
 
         return $this;
     }
 
-    /**
+    /*
      * Get chat
      *
      * @return \Sopinet\Bundle\ChatBundle\Entity\Chat 
@@ -744,5 +759,24 @@ class EGroup
     public function getChat()
     {
         return $this->chat;
+    }
+    /*
+     * Remove ridesRegistered
+     *
+     * @param \Trazeo\BaseBundle\Entity\ERide $ridesRegistered
+     */
+    public function removeRidesRegistered(\Trazeo\BaseBundle\Entity\ERide $ridesRegistered)
+    {
+        $this->ridesRegistered->removeElement($ridesRegistered);
+    }
+
+    /**
+     * Get ridesRegistered
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRidesRegistered()
+    {
+        return $this->ridesRegistered;
     }
 }
