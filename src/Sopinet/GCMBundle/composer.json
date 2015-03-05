@@ -1,0 +1,45 @@
+{
+	"name" : "myProject",
+	"description" : "Project Debug",
+	"autoload" : {
+		"psr-0" : {
+			"" : "src/"
+		}
+	},
+	"repositories" : [{
+			"type" : "package",
+			"package" : {
+				"name" : "jquery/jquery",
+				"version" : "1.10.2",
+				"dist" : {
+					"url" : "http://code.jquery.com/jquery-1.10.2.js",
+					"type" : "file"
+				}
+			}
+		}
+	],
+	"minimum-stability" : "dev",
+    "require" : {
+        "sopinet/composergeneric" : "dev-master",
+        "egeloen/ckeditor-bundle": "~2.0",
+        "jjs/geonames-bundle" : "*",
+        "jms/translation-bundle" : "dev-master",
+        "elao/error-notifier-bundle" : "dev-master",
+        "hwi/oauth-bundle" : "0.4.*@dev",
+        "sopinet/userbundle" : "dev-master",
+        "jmikola/auto-login-bundle" : "~1.0",
+        "friendsofsymfony/comment-bundle" : "dev-master",
+        "sopinet/timeline-bundle" : "dev-master",
+        "sopinet/simple-point-bundle": "dev-master",
+        "sopinet/flash-messages-bundle" : "dev-master",
+        "jms/serializer": "dev-master",
+        "lunetics/locale-bundle": "2.2.*",
+        "endroid/qrcode-bundle": "dev-master",
+		"sopinet/upload-magic-bundle" : "dev-master",
+		"phpunit/phpunit-selenium": ">=1.2",
+		"hipaway-travel/mandrill-bundle": "dev-master",
+		"sopinet/autologin-bundle": "dev-master",
+		"ob/highcharts-bundle": "~1.2@dev",
+        "nelmio/api-doc-bundle": "dev-master"
+    }
+}

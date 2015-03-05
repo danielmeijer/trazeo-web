@@ -1,0 +1,10 @@
+services:
+    sopinet_gcmhelper:
+        class: Sopinet\GCMBundle\Service\GCMHelper
+        arguments:
+            container: @service_container
+    gcmhelper.admin.device:
+        class: Sopinet\GCMBundle\Admin\DeviceAdmin
+        arguments: [~, Sopinet\GCMBundle\Entity\Device, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: gcmbundle, label: Device}
