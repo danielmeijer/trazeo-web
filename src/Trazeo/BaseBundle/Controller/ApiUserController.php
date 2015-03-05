@@ -4,6 +4,7 @@ namespace Trazeo\BaseBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sopinet\UserPreferencesBundle\Entity\UserValueRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\View\View;
@@ -373,4 +374,42 @@ class ApiUserController extends Controller
         return $this->get('fos_rest.view_handler')->handle($view);
     }
 
+    /**
+     * @ApiDoc(
+     *   description="Función que registra un nuevo device para un usuario",
+     *   section="user",
+     *   parameters={
+     *      {"name"="email", "dataType"="string", "required"=true, "description"="Email del usuario administrador"},
+     *      {"name"="pass", "dataType"="string", "required"=true, "description"="Password del usuario administrador"},
+     *      {"name"="device_token", "dataType"="string", "required"=true, "description"="Token a registrar"},
+     *      {"name"="device", "dataType"="string", "required"=true, "description"="Tipo de dispositivo=iOS|Android"},
+     *   }
+     * )
+     *
+     * @POST("/api/user/register/device")
+     */
+    public function postRegisterDeviceAction(Request $request)
+    {
+        $user = $this->checkPrivateAccess($request);
+        if ($user == false || $user == null) {
+            $view = View::create()
+                ->setStatusCode(200)
+                ->setData($this->msgDenied());
+
+            return $this->get('fos_rest.view_handler')->handle($view);
+        }
+        $em=$this->get('doctrine.orm.default_entity_manager');
+        $repositoryUserExtend=$this->get('doctrine.orm.default_entity_manager')->getRepository('TrazeoBaseBundle:UserExtend');
+        $userextend = $repositoryUserExtend->findOneByNick($user->getEmail());
+        $token=$request->get('device_token');
+        $type=$request->get('device');
+        //se registra el device
+        $repositoryDevice = $em->getRepository('SopinetGCMBundle:Device');
+        $repositoryDevice->addDevice($token,$userextend,$type);
+
+        $view = View::create()
+            ->setStatusCode(201)
+            ->setData($this->doOK('ok'));
+        return $this->get('fos_rest.view_handler')->handle($view);
+    }
 }

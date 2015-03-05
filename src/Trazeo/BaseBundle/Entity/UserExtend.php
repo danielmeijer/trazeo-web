@@ -10,6 +10,7 @@ use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\VirtualProperty;
+use Sopinet\Bundle\ChatBundle as Chat;
 
 /**
  * @ORM\Table("userextend")
@@ -19,6 +20,9 @@ use JMS\Serializer\Annotation\VirtualProperty;
  */
 class UserExtend
 {
+    use Chat\Model\UserChat {
+        __construct as _traitconstructor;
+    }
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -192,6 +196,7 @@ class UserExtend
         $this->adminGroups = new \Doctrine\Common\Collections\ArrayCollection();
         $this->adminRoutes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->childs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->_traitconstructor();
     }
 
     /**
@@ -819,6 +824,17 @@ class UserExtend
     {
         return $this->mobile;
     }
+
+    /**
+     * Get phone tweak for chatBundle
+     *
+     * @return integer
+     */
+    public function getPhone()
+    {
+        return $this->mobile;
+    }
+
     /*
      * Remove inviteGroupSender
      *
@@ -903,5 +919,51 @@ class UserExtend
     public function getMgroups()
     {
         return $this->mgroups;
+    }
+
+    /**
+     * Set chatsOwned
+     *
+     * @param \Sopinet\Bundle\ChatBundle\Entity\Chat $chatsOwned
+     * @return UserExtend
+     */
+    public function setChatsOwned(\Sopinet\Bundle\ChatBundle\Entity\Chat $chatsOwned = null)
+    {
+        $this->chatsOwned = $chatsOwned;
+
+        return $this;
+    }
+
+    /**
+     * Get chatsOwned
+     *
+     * @return \Sopinet\Bundle\ChatBundle\Entity\Chat 
+     */
+    public function getChatsOwned()
+    {
+        return $this->chatsOwned;
+    }
+
+    /**
+     * Add chatsOwned
+     *
+     * @param \Sopinet\Bundle\ChatBundle\Entity\Chat $chatsOwned
+     * @return UserExtend
+     */
+    public function addChatsOwned(\Sopinet\Bundle\ChatBundle\Entity\Chat $chatsOwned)
+    {
+        $this->chatsOwned[] = $chatsOwned;
+
+        return $this;
+    }
+
+    /**
+     * Remove chatsOwned
+     *
+     * @param \Sopinet\Bundle\ChatBundle\Entity\Chat $chatsOwned
+     */
+    public function removeChatsOwned(\Sopinet\Bundle\ChatBundle\Entity\Chat $chatsOwned)
+    {
+        $this->chatsOwned->removeElement($chatsOwned);
     }
 }
