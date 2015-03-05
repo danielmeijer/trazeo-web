@@ -91,12 +91,6 @@ class ChatApiController extends FOSRestController{
         $msg->msgid = $request->get('msgid');
         $msg->time = $request->get('time');
         $msg->username=$user->__toString();
-        /*TODO remplazar el mensaje hardcodeado por una del siguiente estilo:
-        $message=array();
-        foreach($request->request->all() as $key=>$value){
-            $message[$key]=$value;
-        }*/
-
         $repositoryGroup = $em->getRepository('TrazeoBaseBundle:EGroup');
         $repositoryChat = $em->getRepository("SopinetChatBundle:Chat");
         $chat=$repositoryChat->find($msg->chatid);
