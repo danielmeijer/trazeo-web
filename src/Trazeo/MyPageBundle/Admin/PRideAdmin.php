@@ -48,9 +48,10 @@ class PRideAdmin extends Admin
 
     protected function configureRoutes(RouteCollection $collection)
     {
+        $collection->add('link', $this->getRouterIdParameter().'/link');
         //$collection->remove('edit');
-        $collection->remove('delete');
-        $collection->remove('create');
+        //$collection->remove('delete');
+        //$collection->remove('create');
     }
 
     /**
@@ -63,7 +64,7 @@ class PRideAdmin extends Admin
 
         $datagridMapper
             //->add('group')
-            //->add('groupid')
+            ->add('groupRegistered')
             ->add('createdAt', 'doctrine_orm_callback',
                 array(
                     'label' => 'Fecha de los Paseos',
@@ -97,13 +98,18 @@ class PRideAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('id')
-            ->add('groupObject')
+            ->add('groupRegistered')
             ->add('createdAt')
             ->add('countChildsR')
+            ->add('countReport')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
-                    'edit' => array()
+                    'edit' => array(),
+                    'delete' => array(),
+                    'link' => array(
+                        'template' => 'CRUD\list__action_link.html.twig'
+                    )
                 )
             ));
     }
@@ -115,12 +121,14 @@ class PRideAdmin extends Admin
     {
         $showMapper
             ->add('id')
-            ->add('groupObject')
+            ->add('groupRegistered')
             ->add('stringChildsR')
             ->add('fixChildCount')
             ->add('createdAt')
             ->add('duration')
             ->add('distance')
+            ->add('countReport')
+            ->add('reports')
         ;
     }
 
@@ -131,6 +139,8 @@ class PRideAdmin extends Admin
     {
         $formMapper
             ->add('distance')
+            ->add('groupRegistered')
+            ->add('createdAt', 'sonata_type_datetime_picker')
             ->add('fixChildCount')
         ;
     }
@@ -207,38 +217,6 @@ class PRideAdmin extends Admin
                 'filter' => $filterParameters
             ))));
 
-
-
-           // ldd($filterParameters);
-
-            /**
-            $filterParameters['state'] = array(
-                'createdAt'  => EqualType::TYPE_IS_EQUAL, // equal to
-            );
-             * */
-
-            // Add filters to uri of tab
-            /**
-            $filterParameters['state']['value'] = "02/17/2015";
-            $menu->addChild('AYER', array('uri' => $this->generateUrl('list', array(
-                'createdAt' => $filterParameters
-            ))));
-             * */
-
-            //?filter[createdAt][type]=&filter[createdAt][value][Inicio]=2015-02-01&filter[createdAt][value][Fin]=2015-02-02&filter[_page]=1&filter[_sort_by]=createdAt&filter[_sort_order]=DESC&filter[_per_page]=32
-
-            //?createdAt[_sort_order]=DESC&createdAt[_sort_by]=createdAt&createdAt[_page]=1&createdAt[_per_page]=32&createdAt[createdAt][value][Inicio]=02%2F17%2F2015&createdAt[createdAt][value][Fin]=03%2F17%2F2015
-
-            //?createdAt[_sort_order]=DESC&createdAt[_sort_by]=createdAt&createdAt[_page]=1&createdAt[_per_page]=32&createdAt[state][createdAt]=1&createdAt[state][value]=02%2F17%2F2015&createdAt[createdAt][value][Inicio]=02%2F17%2F2015&createdAt[createdAt][value][Fin]=03%2F17%2F2015
-
-/**
-            $filterParameters['createdAt']['value'] = array();
-            //$filterParameters['createdAt']['value']['Inicio'] = "02/17/2015";
-            //$filterParameters['createdAt']['value']['Fin'] = "03/17/2015";
-            $menu->addChild('HOY', array('uri' => $this->generateUrl('list', array(
-                'filter[createdAt][type]' => $filterParameters
-            ))));
- * */
             return;
         }
     }

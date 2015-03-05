@@ -153,6 +153,7 @@ class ApiRideController extends Controller {
         }*/
         $userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 
+        /** @var EGroup $group */
         $group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneBy(array("id" => $id_group));
         $members = $group->getUserextendgroups()->toArray();
 
@@ -230,6 +231,7 @@ class ApiRideController extends Controller {
 
                     $ride->setDuration($duration);
                     $ride->setGroupid($group->getId());
+                    $ride->setGroupRegistered($group);
                     $ride->setGroup(null);
                     $em->persist($ride);
                     $em->flush();
@@ -630,6 +632,7 @@ class ApiRideController extends Controller {
         }
         $userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 
+        /** @var ERide $ride */
         $ride = $em->getRepository('TrazeoBaseBundle:ERide')->find($id_ride);
         $group = $ride->getGroup();
 
@@ -653,6 +656,7 @@ class ApiRideController extends Controller {
 
         $ride->setDuration($duration);
         $ride->setGroupid($group->getId());
+        $ride->setGroupRegistered($group);
         $ride->setGroup(null);
         $em->persist($ride);
 

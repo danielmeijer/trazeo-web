@@ -11,6 +11,7 @@ use Trazeo\BaseBundle\Entity\EEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RequestContext;
 use Sopinet\Bundle\SimplePointBundle\ORM\Type\SimplePoint;
+use Trazeo\BaseBundle\Entity\ERide;
 
 class CheckRidesCommand extends ContainerAwareCommand
 {
@@ -33,7 +34,8 @@ class CheckRidesCommand extends ContainerAwareCommand
     	//Sacar grupos en marcha
     	$rides = $em->getRepository("TrazeoBaseBundle:ERide")->findByGroupid(null);
 
-    	foreach($rides as $ride){
+        /** @var ERide $ride */
+        foreach($rides as $ride){
     		
     		
     		/*
@@ -83,6 +85,7 @@ class CheckRidesCommand extends ContainerAwareCommand
 	 			
 	 			$ride->setDuration($duration);
 	 			$ride->setGroupid($rideGroup->getId());
+                $ride->setGroupRegistered($rideGroup);
 	 			$ride->setGroup(null);
 	 			$em->persist($ride);
 	 			$em->flush();

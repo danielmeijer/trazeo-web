@@ -651,9 +651,10 @@ class StatsAdminController extends Controller
             /** @var QueryBuilder $qb */
             $qb = $repositoryERide->createQueryBuilder("r");
 
+            // He cambiado el groupsids por groupRegistered
             // Filtro por Grupos
             $group_ids = $this->getGroupsIDs($data);
-            $qb->where('r.groupid IN (:group_ids)');
+            $qb->where('r.groupRegistered IN (:group_ids)');
             $qb->setParameter('group_ids', $group_ids);
 
             // Filtro por Fecha

@@ -65,11 +65,17 @@ class ERide extends AbstractEntity
 	protected $groupid;
 
     /**
+     * @ORM\ManyToOne(targetEntity="EGroup", inversedBy="ridesRegistered")
+     * @ORM\JoinColumn(name="groupRegistered_id", referencedColumnName="id", nullable=true)
+     **/
+    protected $groupRegistered;
+
+    /**
      * @ORM\ManyToOne(targetEntity="UserExtend")
      **/
     protected $userextend;
 
-    protected $groupObject;
+    protected $countReport;
 
     protected $childsR;
 
@@ -77,12 +83,8 @@ class ERide extends AbstractEntity
 
     protected $countChildsR;
 
-    public function getGroupObject() {
-        $em = $this->getEntityManager();
-        $repositoryGroup = $em->getRepository('TrazeoBaseBundle:EGroup');
-        $group = $repositoryGroup->findOneById($this->getGroupid());
-        $this->groupObject = $group;
-        return $this->groupObject;
+    public function countReport() {
+        return count($this->getReports());
     }
 
     public function getChildsR() {
@@ -374,6 +376,9 @@ class ERide extends AbstractEntity
      */
     public function getGroupid()
     {
+        if ($this->groupid == null) {
+            if ($this->getGroupRegistered() != null) $this->groupid = $this->getGroupRegistered()->getId();
+        }
         return $this->groupid;
     }
     
@@ -483,5 +488,28 @@ class ERide extends AbstractEntity
     public function getFixChildCount()
     {
         return $this->fixChildCount;
+    }
+
+    /**
+     * Set groupRegistered
+     *
+     * @param \Trazeo\BaseBundle\Entity\EGroup $groupRegistered
+     * @return ERide
+     */
+    public function setGroupRegistered(\Trazeo\BaseBundle\Entity\EGroup $groupRegistered = null)
+    {
+        $this->groupRegistered = $groupRegistered;
+
+        return $this;
+    }
+
+    /**
+     * Get groupRegistered
+     *
+     * @return \Trazeo\BaseBundle\Entity\EGroup 
+     */
+    public function getGroupRegistered()
+    {
+        return $this->groupRegistered;
     }
 }

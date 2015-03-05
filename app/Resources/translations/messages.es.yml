@@ -776,7 +776,7 @@ security:
 list:
     label_nick: 'Nombre'
     label_date_birth: 'Fecha de Nacimiento'
-    label_created_at: 'Fecha de Registro'
+    label_created_at: 'Fecha'
     label_scholl: 'Centro Educativo'
     label_groups: 'Grupos'
     label__action: 'Acción'
@@ -793,6 +793,14 @@ list:
     label_count_childs_r: 'Niños que han participado'
     label_group_object: 'Grupo al que pertenece'
     label_id: 'Identificador'
+    label_group_registered: 'Grupo al que pertenece'
+    label_count_report: 'Reportes'
+    label_body: 'Mensaje'
+    label_group: 'Grupo'
+    label_thread_id: 'Grupo'
+    label_author: 'Autor'
+    label_score: 'Me gustas'
+    label_week_not_activity: 'Semanas sin Actividad'
 
 form:
     label_name: 'Nombre'
@@ -803,7 +811,12 @@ form:
     label_monitor_userextendgroups: 'Monitores autorizados'
     label_bymode: 'Tipo de Grupo'
     label_distance: 'Distancia'
-    label_fix_child_count: 'Indique manualmente la participación'
+    label_fix_child_count: 'Indique cuántos niños han participado'
+    label_group_registered: 'Grupo al que pertenece'
+    label_created_at: 'Fecha y hora de creación'
+    label_author: 'Autor'
+    label_score: 'Me gustas'
+    label_body: 'Mensaje'
 
 show:
     label_id: 'Identificador'
@@ -813,7 +826,7 @@ show:
     label_visibility: 'Visibilidad'
     label_gender: 'Sexo'
     label_groups: 'Grupos'
-    label_created_at: 'Fecha de Registro'
+    label_created_at: 'Fecha'
     label_updated_at: 'Fecha de Actualización'
     label_name: 'Nombre'
     label_admin: 'Administrador'
@@ -835,6 +848,12 @@ show:
     label_duration: 'Duración'
     label_distance: 'Distancia'
     label_fix_child_count: 'Participación (Este dato se puede editar)'
+    label_group_registered: 'Grupo'
+    label_count_report: 'Numero de Reportes'
+    label_reports: 'Reportes'
+    label_body: 'Mensaje'
+    label_author: 'Autor'
+    label_score: 'Me gustas'
 
 
 breadcrumb:
@@ -843,12 +862,15 @@ breadcrumb:
     link_e_group_list: 'Listado de Grupos'
     link_e_ride_list: 'Listado de Paseos'
     link_user_extend_list: 'Listado de Usuarios'
+    link_comment_list: 'Listado de Comentarios'
 
 filter:
     label_groups: 'Grupos'
-    label_created_at: 'Fecha de Registro'
+    label_created_at: 'Fecha'
     label_gender: 'Género'
     label_scholl: 'Centro Educativo'
+    label_author: 'Autor'
+    label_group_registered: 'Grupo'
 
 customAdmin:
     stats:
