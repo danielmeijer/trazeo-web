@@ -3,7 +3,6 @@ namespace Sopinet\GCMBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
-use Sopinet\UserBundle\Model\BaseUser;
 
 use Doctrine\ORM\Event\OnFlushEventArgs;
 /**
@@ -22,11 +21,13 @@ class Device
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
     /**
-     * @ORM\ManyToOne(targetEntity="\Application\Sopinet\UserBundle\Entity\User", inversedBy="devices")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="\Trazeo\BaseBundle\Entity\UserExtend", inversedBy="devices")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
     protected $user;
+
     /**
      * @ORM\Column(name="date_register", type="datetime")
      * @var \Date $date_register
@@ -130,15 +131,17 @@ class Device
         return $this->type;
     }
 
+    public function __toString() {
+        return $this->getToken();
+    }
 
     /**
      * Set user
      *
-     * @param BaseUser $user
-     *
+     * @param \Trazeo\BaseBundle\Entity\UserExtend $user
      * @return Device
      */
-    public function setUser(\Application\Sopinet\UserBundle\Entity\User $user = null)
+    public function setUser(\Trazeo\BaseBundle\Entity\UserExtend $user = null)
     {
         $this->user = $user;
 
@@ -148,14 +151,10 @@ class Device
     /**
      * Get user
      *
-     * @return \Application\Sopinet\UserBundle\Entity\User
+     * @return \Trazeo\BaseBundle\Entity\UserExtend 
      */
     public function getUser()
     {
         return $this->user;
-    }
-
-    public function __toString() {
-        return $this->getToken();
     }
 }

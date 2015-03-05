@@ -11,7 +11,7 @@
         private $msg;
         private $container;
 
-        public function __construct($container, Msg $msg)
+        public function __construct($container,$msg)
         {
             $this->msg = $msg;
             $this->container = $container;
