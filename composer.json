@@ -39,6 +39,8 @@
 		"phpunit/phpunit-selenium": ">=1.2",
 		"hipaway-travel/mandrill-bundle": "dev-master",
 		"sopinet/autologin-bundle": "dev-master",
-		"ob/highcharts-bundle": "~1.2@dev"
+		"ob/highcharts-bundle": "~1.2@dev",
+        "nelmio/api-doc-bundle": "dev-master",
+        "richsage/rms-push-notifications-bundle": "dev-master"
     }
 }
