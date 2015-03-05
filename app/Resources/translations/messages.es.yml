@@ -870,6 +870,7 @@ filter:
     label_gender: 'Género'
     label_scholl: 'Centro Educativo'
     label_author: 'Autor'
+    label_group_registered: 'Grupo'
 
 customAdmin:
     stats:

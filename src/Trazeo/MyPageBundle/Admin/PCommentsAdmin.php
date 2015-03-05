@@ -140,9 +140,7 @@ class PCommentsAdmin extends Admin
         /** @var QueryBuilder $query */
         $query = parent::createQuery($context);
 
-        // TODO: REVISAR FILTRO
-
-        if(false && !$this->securityContext->isGranted('ROLE_SUPER_ADMIN'))
+        if(!$this->securityContext->isGranted('ROLE_SUPER_ADMIN'))
         {
             $user = $this->securityContext->getToken()->getUser();
 
@@ -160,7 +158,7 @@ class PCommentsAdmin extends Admin
                 $group_ids[] = $group->getId();
             }
 
-            $query->leftJoin($query->getRootAlias() . '.groups','g');
+            $query->leftJoin($query->getRootAlias() . '.thread','g');
             $query->andWhere('g.id IN (:group_ids)');
             $query->setParameter('group_ids', $group_ids);
 
