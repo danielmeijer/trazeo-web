@@ -281,3 +281,18 @@ security:
                 oauth_user_provider:
                     service: sopinet_user_provider
             switch_user: true
+
+nelmio_api_doc: ~
+
+jms_serializer:
+  metadata:
+    auto_detection: true
+    directories:
+      SopinetChatBundle:
+        namespace_prefix: "Sopinet\\Bundle\\ChatBundle"
+        path: "@SopinetChatBundle/Resources/config/serializer"
+
+rms_push_notifications:
+    android:
+        gcm:
+            api_key: %gcm_api_key%
