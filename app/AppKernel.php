@@ -60,13 +60,17 @@ class AppKernel extends Kernel
             new Endroid\Bundle\QrCodeBundle\EndroidQrCodeBundle(),
             new Sopinet\Bundle\GamificationBundle\SopinetGamificationBundle(),
             new Sopinet\Bundle\SuggestionBundle\SopinetSuggestionBundle(),
+            new Sopinet\GCMBundle\SopinetGCMBundle(),
             new Sopinet\AutologinBundle\SopinetAutologinBundle(),
             new Hip\MandrillBundle\HipMandrillBundle(),
             new Oneup\UploaderBundle\OneupUploaderBundle(),
             new Sopinet\Bundle\UploadMagicBundle\SopinetUploadMagicBundle(),
             new Trazeo\MyPageBundle\TrazeoMyPageBundle(),
             new Ob\HighchartsBundle\ObHighchartsBundle(),
-            new Ivory\CKEditorBundle\IvoryCKEditorBundle()
+            new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
+            new Sopinet\Bundle\ChatBundle\SopinetChatBundle(),
+            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
+            new RMS\PushNotificationsBundle\RMSPushNotificationsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

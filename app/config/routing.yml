@@ -1,3 +1,7 @@
+sopinet_chat:
+    resource: "@SopinetChatBundle/Resources/config/routing.yml"
+    prefix:   /
+
 trazeo_my_page:
     resource: "@TrazeoMyPageBundle/Resources/config/routing.yml"
 
@@ -122,3 +126,6 @@ upload:
 oneup_uploader:
     resource: .
     type: uploader
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc
