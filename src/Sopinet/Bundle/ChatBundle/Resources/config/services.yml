@@ -1,0 +1,4 @@
+services:
+    apihelper:
+        class: Sopinet\Bundle\ChatBundle\Service\ApiHelper
+        arguments: ["@doctrine.orm.entity_manager", "@fos_rest.view_handler"]

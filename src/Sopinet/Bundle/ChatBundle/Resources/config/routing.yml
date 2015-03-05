@@ -1,0 +1,4 @@
+sopinet.chatbundle_api_chat:
+    type: rest
+    resource: @SopinetChatBundle/Controller/ChatApiController.php
+    prefix: /api/chat

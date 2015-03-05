@@ -1,0 +1,3 @@
+sopinet_gcm_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: SopinetGCMBundle:Default:index }
