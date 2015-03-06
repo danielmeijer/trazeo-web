@@ -169,7 +169,7 @@ class PRideAdmin extends Admin
                 $group_ids[] = $group->getId();
             }
 
-            $query->andWhere($query->getRootAlias() . '.groupid IN (:group_ids)');
+            $query->andWhere($query->getRootAlias() . '.groupRegistered IN (:group_ids)');
             $query->setParameter('group_ids', $group_ids);
 
         }
