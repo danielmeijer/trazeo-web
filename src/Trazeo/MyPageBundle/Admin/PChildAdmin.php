@@ -105,9 +105,9 @@ class PChildAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('nick')
-            ->add('scholl')
-            ->add('groups')
-            ->add('userextendchilds')
+            //->add('scholl')
+            //->add('groups')
+            //->add('userextendchilds')
             ->add('emailParent')
             ->add('mobileParent')
             ->add('dateBirth')

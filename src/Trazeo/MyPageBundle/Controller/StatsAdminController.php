@@ -41,6 +41,8 @@ class StatsAdminController extends Controller
 
         $data = array();
 
+        $helper = $this->get('trazeo_base_helper');
+
         if ($request->getMethod() == "POST") {
             $data = $request->get('GlobalAdmin');
 
@@ -58,13 +60,13 @@ class StatsAdminController extends Controller
 
             // Filtro por Fecha
             if (isset($data['date_from']) && $data['date_from'] != "") {
-            $date_temp_formated = new \DateTime($data['date_from']);
+                $date_temp_formated = $helper->getDateTime($data['date_from']);
             $qb->andWhere('r.createdAt > :date_from');
             $qb->setParameter('date_from', $date_temp_formated->format('Y-m-d'));
             }
 
             if (isset($data['date_to']) && $data['date_to'] != "") {
-            $date_temp_formated = new \DateTime($data['date_to']);
+                $date_temp_formated = $helper->getDateTime($data['date_to']);
             $qb->andWhere('r.createdAt < :date_to');
             $qb->setParameter('date_to', $date_temp_formated->format('Y-m-d'));
             }
@@ -169,6 +171,8 @@ class StatsAdminController extends Controller
         $obUsersColegio = null;
         $obUsersGrupo = null;
 
+        $helper = $this->get('trazeo_base_helper');
+
         if ($request->getMethod() == "POST") {
             $data = $request->get('BarAdmin');
 
@@ -188,13 +192,13 @@ class StatsAdminController extends Controller
 
             // Filtro por Fecha
             if (isset($data['date_from']) && $data['date_from'] != "") {
-                $date_temp_formated = new \DateTime($data['date_from']);
+                $date_temp_formated = $helper->getDateTime($data['date_from']);
                 $qb->andWhere('fuser.createdAt > :date_from');
                 $qb->setParameter('date_from', $date_temp_formated->format('Y-m-d'));
             }
 
             if (isset($data['date_to']) && $data['date_to'] != "") {
-                $date_temp_formated = new \DateTime($data['date_to']);
+                $date_temp_formated = $helper->getDateTime($data['data_to']);
                 $qb->andWhere('fuser.createdAt < :date_to');
                 $qb->setParameter('date_to', $date_temp_formated->format('Y-m-d'));
             }
@@ -261,13 +265,13 @@ class StatsAdminController extends Controller
 
             // Filtro por Fecha
             if (isset($data['date_from']) && $data['date_from'] != "") {
-                $date_temp_formated = new \DateTime($data['date_from']);
+                $date_temp_formated = $helper->getDateTime($data['date_from']);
                 $qb->andWhere('c.createdAt > :date_from');
                 $qb->setParameter('date_from', $date_temp_formated->format('Y-m-d'));
             }
 
             if (isset($data['date_to']) && $data['date_to'] != "") {
-                $date_temp_formated = new \DateTime($data['date_to']);
+                $date_temp_formated = $helper->getDateTime($data['date_to']);
                 $qb->andWhere('c.createdAt < :date_to');
                 $qb->setParameter('date_to', $date_temp_formated->format('Y-m-d'));
             }
@@ -441,6 +445,8 @@ class StatsAdminController extends Controller
         $chartByChild = null;
         $chartTotal = null;
 
+        $helper = $this->get('trazeo_base_helper');
+
         if ($request->getMethod() == "POST") {
             $data = $request->get('RegisteredAdmin');
 
@@ -460,13 +466,13 @@ class StatsAdminController extends Controller
 
             // Filtro por Fecha
             if (isset($data['date_from']) && $data['date_from'] != "") {
-                $date_temp_formated = new \DateTime($data['date_from']);
+                $date_temp_formated = $helper->getDateTime($data['date_from']);
                 $qb->andWhere('fuser.createdAt > :date_from');
                 $qb->setParameter('date_from', $date_temp_formated->format('Y-m-d'));
             }
 
             if (isset($data['date_to']) && $data['date_to'] != "") {
-                $date_temp_formated = new \DateTime($data['date_to']);
+                $date_temp_formated = $helper->getDateTime($data['date_to']);
                 $qb->andWhere('fuser.createdAt < :date_to');
                 $qb->setParameter('date_to', $date_temp_formated->format('Y-m-d'));
             }
@@ -510,13 +516,13 @@ class StatsAdminController extends Controller
 
             // Filtro por Fecha
             if (isset($data['date_from']) && $data['date_from'] != "") {
-                $date_temp_formated = new \DateTime($data['date_from']);
+                $date_temp_formated = $helper->getDateTime($data['date_from']);
                 $qb->andWhere('c.createdAt > :date_from');
                 $qb->setParameter('date_from', $date_temp_formated->format('Y-m-d'));
             }
 
             if (isset($data['date_to']) && $data['date_to'] != "") {
-                $date_temp_formated = new \DateTime($data['date_to']);
+                $date_temp_formated = $helper->getDateTime($data['date_to']);
                 $qb->andWhere('c.createdAt < :date_to');
                 $qb->setParameter('date_to', $date_temp_formated->format('Y-m-d'));
             }
@@ -640,6 +646,8 @@ class StatsAdminController extends Controller
         //$child = new EChild();
         $form_filters = $this->createForm(new EvolutionAdminType($this));
 
+        $helper = $this->get('trazeo_base_helper');
+
         $chartByGroup = null;
         $chartTotal = null;
 
@@ -659,13 +667,13 @@ class StatsAdminController extends Controller
 
             // Filtro por Fecha
             if (isset($data['date_from']) && $data['date_from'] != "") {
-                $date_temp_formated = new \DateTime($data['date_from']);
+                $date_temp_formated = $helper->getDateTime($data['date_from']);
                 $qb->andWhere('r.createdAt > :date_from');
                 $qb->setParameter('date_from', $date_temp_formated->format('Y-m-d'));
             }
 
             if (isset($data['date_to']) && $data['date_to'] != "") {
-                $date_temp_formated = new \DateTime($data['date_to']);
+                $date_temp_formated = $helper->getDateTime($data['date_to']);
                 $qb->andWhere('r.createdAt < :date_to');
                 $qb->setParameter('date_to', $date_temp_formated->format('Y-m-d'));
             }
@@ -803,6 +811,9 @@ class StatsAdminController extends Controller
 
     private function filterByModeDatePlus($data, $modeDate = "month") {
         setlocale(LC_ALL,"es_ES");
+
+        $helper = $this->container->get('trazeo_base_helper');
+
         switch ($modeDate) {
             case "day":
                 $formatCode = "Y-m-d";
@@ -826,7 +837,7 @@ class StatsAdminController extends Controller
         foreach($data as $key => $value)
         {
             /** @var \DateTime $datetime */
-            $datetime = new \DateTime($key, new \DateTimeZone('Europe/Madrid'));
+            $datetime = $helper->getDateTime($key);
             if ($datetime != null) {
                 //$day = $datetime->format("Y-m-d");
                 //ld($formatCode);
