@@ -96,11 +96,6 @@ sonata_admin:
            #- { position: left,  type: sonata.admin.block.admin_list, settings: { groups: [manageGroups] } }
 
         groups:
-            stats:
-                label: Estadísticas
-                icon: '<i class="fa fa-stats"></i>'
-                items:
-                  #- trazeo_mypage.panel.registered
             viewData:
                 label: Visualización de Datos
                 icon:            '<i class="fa fa-user"></i>'
