@@ -842,6 +842,7 @@ class StatsAdminController extends Controller
             }
         }
 
+        $values = array();
         // Preparamos los datos
         foreach($output as $key => $value) {
             $values[] = $value;
