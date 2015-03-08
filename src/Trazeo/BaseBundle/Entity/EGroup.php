@@ -97,6 +97,7 @@ class EGroup
 
     /**
      * @ORM\OneToMany(targetEntity="ERide", mappedBy="groupRegistered", cascade={"remove"})
+     * @Exclude
      */
     protected $ridesRegistered;
     
