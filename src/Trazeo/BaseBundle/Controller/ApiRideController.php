@@ -331,7 +331,6 @@ class ApiRideController extends Controller {
 
         /** @var ERide $ride */
         $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
-        $ride->setGroupRegistered(null);
 
         $view = View::create()
             ->setStatusCode(200)
