@@ -54,6 +54,7 @@ class PRideAdmin extends Admin
         //$collection->remove('create');
     }
 
+
     /**
      * @param DatagridMapper $datagridMapper
      */
@@ -169,7 +170,7 @@ class PRideAdmin extends Admin
                 $group_ids[] = $group->getId();
             }
 
-            $query->andWhere($query->getRootAlias() . '.groupid IN (:group_ids)');
+            $query->andWhere($query->getRootAlias() . '.groupRegistered IN (:group_ids)');
             $query->setParameter('group_ids', $group_ids);
 
         }
@@ -192,8 +193,8 @@ class PRideAdmin extends Admin
 
             $filterParameters['createdAt'] = array(
                 'value' => array(
-                    'Inicio' => $dateYesterday->format('Y-m-d'),
-                    'Fin' => $dateYesterday->format('Y-m-d')
+                    'Inicio' => $dateYesterday->format('d/m/Y'),
+                    'Fin' => $dateYesterday->format('d/m/Y')
                 )
             );
 
@@ -207,8 +208,8 @@ class PRideAdmin extends Admin
 
             $filterParameters['createdAt'] = array(
                 'value' => array(
-                    'Inicio' => $dateToday->format('Y-m-d'),
-                    'Fin' => $dateToday->format('Y-m-d')
+                    'Inicio' => $dateToday->format('d/m/Y'),
+                    'Fin' => $dateToday->format('d/m/Y')
                 )
             );
 

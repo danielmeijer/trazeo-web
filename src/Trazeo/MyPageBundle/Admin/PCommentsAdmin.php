@@ -182,8 +182,8 @@ class PCommentsAdmin extends Admin
 
             $filterParameters['createdAt'] = array(
                 'value' => array(
-                    'Inicio' => $dateYesterday->format('Y-m-d'),
-                    'Fin' => $dateYesterday->format('Y-m-d')
+                    'Inicio' => $dateYesterday->format('d/m/Y'),
+                    'Fin' => $dateYesterday->format('d/m/Y')
                 )
             );
 
@@ -197,8 +197,8 @@ class PCommentsAdmin extends Admin
 
             $filterParameters['createdAt'] = array(
                 'value' => array(
-                    'Inicio' => $dateToday->format('Y-m-d'),
-                    'Fin' => $dateToday->format('Y-m-d')
+                    'Inicio' => $dateToday->format('d/m/Y'),
+                    'Fin' => $dateToday->format('d/m/Y')
                 )
             );
 
