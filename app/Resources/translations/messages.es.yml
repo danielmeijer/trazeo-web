@@ -817,6 +817,7 @@ form:
     label_author: 'Autor'
     label_score: 'Me gustas'
     label_body: 'Mensaje'
+    label_page: 'Proyecto'
 
 show:
     label_id: 'Identificador'

@@ -4,6 +4,7 @@ namespace Trazeo\BaseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use JMS\Serializer\Annotation\Exclude;
 
 /**
  * Entity ERide
@@ -67,6 +68,7 @@ class ERide extends AbstractEntity
     /**
      * @ORM\ManyToOne(targetEntity="EGroup", inversedBy="ridesRegistered")
      * @ORM\JoinColumn(name="groupRegistered_id", referencedColumnName="id", nullable=true)
+     * @Exclude
      **/
     protected $groupRegistered;
 

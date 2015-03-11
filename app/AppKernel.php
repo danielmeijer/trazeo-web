@@ -70,7 +70,7 @@ class AppKernel extends Kernel
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
             new Sopinet\Bundle\ChatBundle\SopinetChatBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
-            new RMS\PushNotificationsBundle\RMSPushNotificationsBundle(),
+            new RMS\PushNotificationsBundle\RMSPushNotificationsBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

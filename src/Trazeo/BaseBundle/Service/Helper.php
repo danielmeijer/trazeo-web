@@ -106,4 +106,15 @@ class Helper {
 
         return $page;
     }
+
+    function getDateTime($datetime_string) {
+        $pos = strpos($datetime_string, "/");
+        if ($pos !== false) {
+            $temp_arr = explode("/", $datetime_string);
+            $datetime_string_good = $temp_arr[2] . "-" . $temp_arr[1] . "-" . $temp_arr[0];
+        } else {
+            $datetime_string_good = $datetime_string;
+        }
+        return new \DateTime($datetime_string_good, new \DateTimeZone('Europe/Madrid'));
+    }
 }

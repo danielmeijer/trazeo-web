@@ -64,6 +64,7 @@ class CustomRoleSecurityHandler extends RoleSecurityHandler
         if (get_class($object) == "Trazeo\BaseBundle\Entity\EGroup") {
             $user = $this->securityContext->getToken()->getUser();
             foreach ($user->getUserExtend()->getPageFront() as $page) {
+                if ($object->getId() == null && $page->getId() == $object->getPage()->getId()) return true;
                 /** @var EGroup $group */
                 foreach ($page->getGroups() as $group) {
                     if ($group->getId() == $object->getId()) return true;

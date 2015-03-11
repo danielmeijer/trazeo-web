@@ -119,7 +119,7 @@ class PGroupAdmin extends Admin
             ->add('userextendgroups')
             ->add('privateMonitor')
             ->add('monitor_userextendgroups')
-            //->add('route')
+            ->add('page')
             ->add('bymode', 'choice', array('choices' => array(
                 EGroup::BYMODE_PEDIBUS => "Pedibús",
                 EGroup::BYMODE_BICIBUS => "Bicibús",

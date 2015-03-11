@@ -194,6 +194,7 @@ class ApiRideController extends Controller {
                 $emailsToFilter[] = "susana_sgr_86@hotmail.com";
                 $emailsToFilter[] = "carlos.p.fuentes@hotmail.com";
                 $emailsToFilter[] = "eduplazas_76@hotmail.com";
+                $emailsToFilter[] = "gutizinguer2@hotmail.com";
 
                 $canInitRide = true;
                 if (in_array($id_group, $groupsIds)) {
@@ -341,6 +342,7 @@ class ApiRideController extends Controller {
 
         $userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 
+        /** @var ERide $ride */
         $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
 
         $view = View::create()
