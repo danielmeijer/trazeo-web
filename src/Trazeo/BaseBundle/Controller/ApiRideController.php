@@ -4,6 +4,7 @@ namespace Trazeo\BaseBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandler;
@@ -310,6 +311,18 @@ class ApiRideController extends Controller {
     }
 
     /**
+     * @ApiDoc(
+     *   description="Función que obtiene la información de un paseo",
+     *   section="ride",
+     *   parameters={
+     *      {"name"="email", "dataType"="string", "required"=true, "description"="Email del usuario administrador"},
+     *      {"name"="pass", "dataType"="string", "required"=true, "description"="Password del usuario administrador"},
+     *      {"name"="id_group", "dataType"="string", "required"=true, "description"="Id del paseo"},
+     *   },
+     *   output={
+     *      "class"="Trazeo\BaseBundle\Entity\ERide"
+     *   }
+     * )
      * @POST("/api/ride/data")
      */
     public function getDataRideAction(Request $request) {

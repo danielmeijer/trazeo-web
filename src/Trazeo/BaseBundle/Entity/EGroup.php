@@ -64,6 +64,7 @@ class EGroup
     /**
      * @ORM\ManyToOne(targetEntity="\Trazeo\MyPageBundle\Entity\Page", inversedBy="groups")
      * @ORM\JoinColumn(name="page_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     * @Exclude
      */
     protected $page;
     
@@ -75,7 +76,7 @@ class EGroup
     
     
     /** @ORM\OneToMany(targetEntity="EGroupAccess",  mappedBy="group", cascade={"remove"})
-     * @var unknown
+     *  @Exclude
      */
     protected $access;
     
