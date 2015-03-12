@@ -17,6 +17,7 @@ use Trazeo\BaseBundle\Entity\EGroup;
 use Trazeo\BaseBundle\Entity\EGroupRepository;
 use Trazeo\BaseBundle\Entity\UserExtend;
 use Trazeo\BaseBundle\Form\ChildType;
+use Trazeo\BaseBundle\Form\UserExtendType;
 use Trazeo\BaseBundle\Form\UserType;
 use Trazeo\MyPageBundle\Classes\Module\TrazeoGroups;
 use Application\Sonata\UserBundle\Entity\User;
@@ -138,6 +139,7 @@ class FrontController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         $repositoryGroup = $em->getRepository("TrazeoBaseBundle:EGroup");
+        /** @var EGroup $group */
         $group = $repositoryGroup->findOneById($group_id);
 
         $user = new User();
@@ -156,11 +158,23 @@ class FrontController extends Controller
             )
         ));
 
+        $spainCode = $em->getRepository('JJs\Bundle\GeonamesBundle\Entity\Country')->findOneByCode("ES");
+        $spainCodeId = $spainCode->getId();
+
+        $userExtend = new UserExtend();
+        $form_userExtend = $this->createForm(new UserExtendType(), $userExtend, array(
+            'attr' => array(
+                'Userextend.help.nick' => $this->get('translator')->trans('Userextend.help.nick'),
+                'Userextend.help.mobile' => $this->get('translator')->trans('Userextend.help.mobile'),
+                'default' => $spainCodeId
+            )
+        ));
+
         return array(
             'group' => $group,
             'form_user' => $form_user->createView(),
+            'form_userExtend' => $form_userExtend->createView(),
             'form_children' => $form_children->createView()
-
         );
     }
 
@@ -191,6 +205,20 @@ class FrontController extends Controller
         ));
         $form_children->handleRequest($request);
 
+        $spainCode = $em->getRepository('JJs\Bundle\GeonamesBundle\Entity\Country')->findOneByCode("ES");
+        $spainCodeId = $spainCode->getId();
+
+        $form_userExtend = $this->createForm(new UserExtendType(), new UserExtend(), array(
+            'attr' => array(
+                'Userextend.help.nick' => $this->get('translator')->trans('Userextend.help.nick'),
+                'Userextend.help.mobile' => $this->get('translator')->trans('Userextend.help.mobile'),
+                'default' => $spainCodeId
+            )
+        ));
+
+        $form_userExtend->handleRequest($request);
+
+
         $user_check = $request->request->get('trazeo_mypagebundle_userdirecttype');
         $user_exists = $user = $this->container->get('fos_user.user_manager')->findUserByUsernameOrEmail($user_check['email']);
         if ($user_exists != null) {
@@ -199,7 +227,7 @@ class FrontController extends Controller
             return $this->redirect($this->generateUrl('loginInGroup', array('group_id' => $group->getId())));
         }
 
-        if ($form_user->isValid() && $form_children->isValid()) {
+        if ($form_user->isValid() && $form_children->isValid() && $form_userExtend->isValid()) {
             /** @var User $user */
             $user = $form_user->getData();
             $user->setUsername($user->getEmail());
@@ -213,9 +241,19 @@ class FrontController extends Controller
             $em->flush();
 
             // Grabamos UserExtend
+            /** @var UserExtend $userExtend */
             $userExtend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
-            $userExtend->setMobile($request->get('user_phone'));
-            $userExtend->setName($request->get('user_name'));
+            $dataUE = $request->get('trazeo_basebundle_userextend');
+            $userExtend->setMobile($dataUE['mobile']);
+            $userExtend->setName($dataUE['name']);
+            if ($request->get('trazeo_basebundle_userextend[country]') == '') {
+                $userExtend->setCountry($spainCode);
+            }
+            $helper = $this->get('trazeo_base_helper');
+            $city_entity = $helper->getCities($request->get('city'), 10, true);
+            if (count($city_entity) > 0) {
+                $userExtend->setCity($city_entity[0]);
+            }
             $userExtend->addChild($child);
             $em->persist($userExtend);
             $em->flush();
@@ -231,11 +269,25 @@ class FrontController extends Controller
             return $this->redirect($this->generateUrl('panel_dashboard'));
         } else {
             $container = $this->get('sopinet_flashMessages');
+
+            /**
+            if (!$form_user->isValid()) {
+                ldd($form_user->getErrorsAsString());
+            }
+            if (!$form_userExtend->isValid()) {
+                ldd($form_userExtend->getErrorsAsString());
+            }
+            if (!$form_children->isValid()) {
+                ld($request);
+                ldd($form_children->getErrorsAsString());
+            }
+             **/
+
+
             $container->addFlashMessages("warning","Ha ocurrido algún error, por favor, revise los datos.");
             return $this->redirect($this->generateUrl('registerInGroup', array('group_id' => $group->getId())));
 
-            // ld($form_user->getErrorsAsString());
-            // ldd($form_children->getErrorsAsString());
+
         }
     }
 }

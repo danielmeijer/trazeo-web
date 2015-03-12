@@ -1,0 +1,26 @@
+<p>Rellene sus datos y los de su hijo/a.</p>
+<form method="POST" action="{{ path('saveInGroup', {'group_id': group.id}) }}">
+    {% form_theme form_user 'TrazeoMyPageBundle:Form:bootstrap.12.html.twig' %}
+    {{ form_widget(form_user) }}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <input type="text" id="user_name" name="user_name" placeholder="Su nombre" class="form-control" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <input type="phone" id="user_phone" name="user_phone" placeholder="Su teléfono" class="form-control" />
+            </div>
+        </div>
+    </div>
+    {% form_theme form_children 'TrazeoMyPageBundle:Form:bootstrap.12.html.twig' %}
+    {{ form_widget(form_children) }}
+    <button class="btn btn-lg btn-success btn-block" type="submit">Registrarse</button>
+</form>
+
+<div class="panel-footer">
+    <a href="{{ path('loginInGroup', {'group_id': group.id}) }}"/>Ya tengo cuenta</a>
+</div>
