@@ -1,45 +1,86 @@
-{% extends "SopinetTemplateSbadmin2Bundle:Login:layout.html.twig" %}
+{% extends "SopinetTemplateSbadmin2Bundle:Base:god.html.twig" %}
 
-{% block title %}
-    Acceso a {{ group.route.name }}
-{% endblock %}
+{% block title %}Login{% endblock %}
 
-{% block header %}
-    Acceso a {{ group.route.name }}
-{% endblock %}
+ {% block css %}
+     {% stylesheets
+     'bundles/sopinettemplatelanding/css/font-awesome.css'
+     '@SopinetTemplateLandingBundle/Resources/public/css/style.css'
+     '@TrazeoMyPageBundle/Resources/public/css/bootstrap.min.css'
+     '@TrazeoMyPageBundle/Resources/public/css/gsdk-base.css'
+     '@SopinetTemplateSbadmin2Bundle/Resources/public/css/typeahead.css'
+     '@SopinetTemplateSbadmin2Bundle/Resources/public/css/datepicker.css'
+     output='css/*.css' filter='cssrewrite' %}
+     <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+     {% endstylesheets %}
+ {% endblock %}
 
-{% block fos_user_content %}
-    <p>Rellene sus datos y los de su hijo/a.</p>
-    <form method="POST" action="{{ path('saveInGroup', {'group_id': group.id}) }}">
-        {% form_theme form_user 'TrazeoMyPageBundle:Form:bootstrap.12.html.twig' %}
-        {{ form_widget(form_user) }}
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <input type="text" id="user_name" name="user_name" placeholder="Su nombre" class="form-control" />
-                </div>
-            </div>
+{% block body %}
+<img class="img-responsive pull-right" src="{{ asset('bundles/sopinettemplatelanding//img/banner.jpg') }}" alt="Trazeo" />
+<img class="img-responsive" style="position:absolute;margin-top:150px;" width="200" height="200" src="{{ asset('bundles/sopinettemplatelanding//img/trazeo_icon_bg_trans.png') }}" alt="Trazeo" />
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+            {% include 'TrazeoMyPageBundle:Front:_wizzard_register.html.twig' with {
+                'form_user':form_user,
+                'form_children': form_children,
+                'group': group
+            } %}
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <input type="phone" id="user_phone" name="user_phone" placeholder="Su teléfono" class="form-control" />
-                </div>
-            </div>
-        </div>
-        {% form_theme form_children 'TrazeoMyPageBundle:Form:bootstrap.12.html.twig' %}
-        {{ form_widget(form_children) }}
-        <button class="btn btn-lg btn-success btn-block" type="submit">Registrarse</button>
-    </form>
-
-    <div class="panel-footer">
-        <a href="{{ path('loginInGroup', {'group_id': group.id}) }}"/>Ya tengo cuenta</a>
     </div>
+    <br /><br />
+    </div>
+    {% embed "SopinetTemplateLandingBundle:Base:footer.html.twig" %}
+    {% endembed %}
 {% endblock %}
 
 {% block js %}
-    {{ parent() }}
+    {% javascripts
+    '@TrazeoMyPageBundle/Resources/public/js/jquery-1.10.2.js'
+    '@TrazeoMyPageBundle/Resources/public/js/bootstrap.min.js'
+    '@TrazeoMyPageBundle/Resources/public/js/jquery.bootstrap.wizard.js'
+    '@TrazeoMyPageBundle/Resources/public/js/wizard.js'
+    '@SopinetTemplateSbadmin2Bundle/Resources/public/js/analytics.js'
+    '@SopinetTemplateSbadmin2Bundle/Resources/public/js/typeahead.js'
+    '@SopinetTemplateSbadmin2Bundle/Resources/public/js/bootstrap-datepicker.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
     {% include 'SopinetTemplateSbadmin2Bundle:Login:_register_analytics.html.twig' %}
     {% include 'SopinetTemplateSbadmin2Bundle:Login:_user_same.html.twig' %}
     {% include 'SopinetFlashMessagesBundle:Messages:notification.html.twig' %}
+
+    <script>
+        $(function() {
+            // Datepicker for input type
+            $('.inputDate').datepicker({
+                language: 'es',
+                orientation: 'auto top',
+                format: 'dd/mm/yyyy'
+            }).on('changeDate', function (ev) {
+                $(this).datepicker('hide');
+            });
+        });
+
+        var countries = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('nameUtf8'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            limit: 10,
+            remote: '{{ base_url }}/api/geo/city/list?q=%QUERY',
+        });
+
+        // kicks off the loading/processing of `local` and `prefetch`
+        countries.initialize();
+
+        // passing in `null` for the `options` arguments will result in the default
+        // options being used
+        $('#city').typeahead(null, {
+            name: 'cities',
+            displayKey: 'nameUtf8',
+            // `ttAdapter` wraps the suggestion engine in an adapter that
+            // is compatible with the typeahead jQuery plugin
+            source: countries.ttAdapter()
+        });
+    </script>
 {% endblock %}

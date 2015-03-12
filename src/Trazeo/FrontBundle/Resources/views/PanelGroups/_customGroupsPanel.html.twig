@@ -20,11 +20,13 @@
 		{% for groupMember in groupsMember %}
 			{% include 'TrazeoFrontBundle:PanelGroups:_rowGroup.html.twig' with {'groupMember': groupMember}  %}
 		{% endfor %}
-		
+
 		{% for restGroup in restGroups %}
-			{% if restGroup.Admin.Id == app.user.userextend.Id %}
-				{% include 'TrazeoFrontBundle:PanelGroups:_rowGroup.html.twig' with {'groupMember': restGroup}  %}
-			{% endif %}
+            {% if restGroup.Admin.Id is defined %}
+                {% if restGroup.Admin.Id == app.user.userextend.Id %}
+                    {% include 'TrazeoFrontBundle:PanelGroups:_rowGroup.html.twig' with {'groupMember': restGroup}  %}
+                {% endif %}
+            {% endif %}
 		{% endfor %}
 		
 {% else %}
