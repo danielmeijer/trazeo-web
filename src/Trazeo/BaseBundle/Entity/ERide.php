@@ -32,6 +32,7 @@ class ERide extends AbstractEntity
 	
 	/**
 	 * @ORM\OneToMany(targetEntity="EEvent", mappedBy="ride", cascade={"remove"})
+     * @Exclude
 	 **/
 	protected $events;
 
@@ -47,6 +48,7 @@ class ERide extends AbstractEntity
 
 	/**
 	 * @ORM\OneToMany(targetEntity="EReport", mappedBy="ride", cascade={"remove"})
+     * @Exclude
 	 **/
 	protected $reports;
 	
