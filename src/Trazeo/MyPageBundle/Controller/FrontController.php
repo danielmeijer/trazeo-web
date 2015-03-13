@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\View\View;
@@ -16,7 +17,8 @@ use Trazeo\BaseBundle\Entity\EChild;
 use Trazeo\BaseBundle\Entity\EGroup;
 use Trazeo\BaseBundle\Entity\EGroupRepository;
 use Trazeo\BaseBundle\Entity\UserExtend;
-use Trazeo\BaseBundle\Form\ChildType;
+use Trazeo\MyPageBundle\Form\ChildOptionalType;
+use Trazeo\MyPageBundle\Form\UserExtendCustomType;
 use Trazeo\BaseBundle\Form\UserExtendType;
 use Trazeo\BaseBundle\Form\UserType;
 use Trazeo\MyPageBundle\Classes\Module\TrazeoGroups;
@@ -145,36 +147,47 @@ class FrontController extends Controller
         $user = new User();
         $form_user = $this->createForm(new UserDirectType(), $user);
 
-        $child = new EChild();
-        $form_children = $this->createForm(new ChildType(), $child, array(
-            'action' => $this->generateUrl('panel_child_create'),
-            'method' => 'POST',
-            'attr' => array(
-                'Children.help.nick' => $this->get('translator')->trans('Children.help.nick'),
-                'Children.help.datebirth' => $this->get('translator')->trans('Children.help.datebirth'),
-                'Children.help.visibility' => $this->get('translator')->trans('Children.help.visibility'),
-                'Children.help.gender' => $this->get('translator')->trans('Children.help.gender'),
-                'Children.help.scholl' => $this->get('translator')->trans('Children.help.scholl'),
-            )
-        ));
 
-        $spainCode = $em->getRepository('JJs\Bundle\GeonamesBundle\Entity\Country')->findOneByCode("ES");
-        $spainCodeId = $spainCode->getId();
+        for($i = 0; $i < 5; $i++) {
+            $child = new EChild();
+            $f = new ChildOptionalType();
+            $f->setName("child_".$i);
+            $form_children[] = $this->createForm($f, $child, array(
+                'action' => $this->generateUrl('panel_child_create'),
+                'method' => 'POST',
+                'attr' => array(
+                    'Children.help.nick' => $this->get('translator')->trans('Children.help.nick'),
+                    'Children.help.datebirth' => $this->get('translator')->trans('Children.help.datebirth'),
+                    'Children.help.visibility' => $this->get('translator')->trans('Children.help.visibility'),
+                    'Children.help.gender' => $this->get('translator')->trans('Children.help.gender'),
+                    'Children.help.scholl' => $this->get('translator')->trans('Children.help.scholl'),
+                )
+            ));
+        }
 
-        $userExtend = new UserExtend();
-        $form_userExtend = $this->createForm(new UserExtendType(), $userExtend, array(
-            'attr' => array(
-                'Userextend.help.nick' => $this->get('translator')->trans('Userextend.help.nick'),
-                'Userextend.help.mobile' => $this->get('translator')->trans('Userextend.help.mobile'),
-                'default' => $spainCodeId
-            )
-        ));
+        $userExtendCustom = new UserExtend();
+        $form_userExtendCustom = $this->createForm(new UserExtendCustomType(), $userExtendCustom);
 
         return array(
             'group' => $group,
             'form_user' => $form_user->createView(),
-            'form_userExtend' => $form_userExtend->createView(),
-            'form_children' => $form_children->createView()
+            'form_userExtend' => $form_userExtendCustom->createView(),
+            'form_children_0' => $form_children[0]->createView(),
+            'form_children_1' => $form_children[1]->createView(),
+            'form_children_2' => $form_children[2]->createView(),
+            'form_children_3' => $form_children[3]->createView(),
+            'form_children_4' => $form_children[4]->createView()
+        );
+    }
+
+    /**
+     * @Route("/welcome/{group}", name="welcome_login")
+     * @ParamConverter("group", class="TrazeoBaseBundle:EGroup")
+     * @Template()
+     */
+    public function welcomeLoginAction($group) {
+        return array(
+            'group' => $group
         );
     }
 
@@ -189,34 +202,40 @@ class FrontController extends Controller
         /** @var EGroup $group */
         $group = $repositoryGroup->findOneById($group_id);
 
+        $container = $this->get('sopinet_flashMessages');
+        if ($request->get('condiciones') != "on") {
+            $container->addFlashMessages("warning","Debe aceptar las condiciones de uso.");
+            return $this->redirect($this->generateUrl('registerInGroup', array('group_id' => $group->getId())));
+        }
+
         $form_user = $this->createForm(new UserDirectType(), new User());
         $form_user->handleRequest($request);
 
-        $form_children = $this->createForm(new ChildType(), new EChild(), array(
-            'action' => $this->generateUrl('panel_child_create'),
-            'method' => 'POST',
-            'attr' => array(
-                'Children.help.nick' => $this->get('translator')->trans('Children.help.nick'),
-                'Children.help.datebirth' => $this->get('translator')->trans('Children.help.datebirth'),
-                'Children.help.visibility' => $this->get('translator')->trans('Children.help.visibility'),
-                'Children.help.gender' => $this->get('translator')->trans('Children.help.gender'),
-                'Children.help.scholl' => $this->get('translator')->trans('Children.help.scholl'),
-            )
-        ));
-        $form_children->handleRequest($request);
+        $form_children = array();
+        for ($i = 0; $i < 5; $i++) {
+            $child = new EChild();
+            $f = new ChildOptionalType();
+            $f->setName("child_".$i);
+            $f_children = $this->createForm($f, $child, array(
+                'action' => $this->generateUrl('panel_child_create'),
+                'method' => 'POST',
+                'attr' => array(
+                    'Children.help.nick' => $this->get('translator')->trans('Children.help.nick'),
+                    'Children.help.datebirth' => $this->get('translator')->trans('Children.help.datebirth'),
+                    'Children.help.visibility' => $this->get('translator')->trans('Children.help.visibility'),
+                    'Children.help.gender' => $this->get('translator')->trans('Children.help.gender'),
+                    'Children.help.scholl' => $this->get('translator')->trans('Children.help.scholl'),
+                )
+            ));
+            $f_children->handleRequest($request);
+            $form_children[] = $f_children;
+        }
 
         $spainCode = $em->getRepository('JJs\Bundle\GeonamesBundle\Entity\Country')->findOneByCode("ES");
-        $spainCodeId = $spainCode->getId();
 
-        $form_userExtend = $this->createForm(new UserExtendType(), new UserExtend(), array(
-            'attr' => array(
-                'Userextend.help.nick' => $this->get('translator')->trans('Userextend.help.nick'),
-                'Userextend.help.mobile' => $this->get('translator')->trans('Userextend.help.mobile'),
-                'default' => $spainCodeId
-            )
-        ));
-
-        $form_userExtend->handleRequest($request);
+        $userExtendCustom = new UserExtend();
+        $form_userExtendCustom = $this->createForm(new UserExtendCustomType(), $userExtendCustom);
+        $form_userExtendCustom->handleRequest($request);
 
 
         $user_check = $request->request->get('trazeo_mypagebundle_userdirecttype');
@@ -224,21 +243,31 @@ class FrontController extends Controller
         if ($user_exists != null) {
             $container = $this->get('sopinet_flashMessages');
             $container->addFlashMessages("warning","Este usuario ya existe, si es el suyo, acceda desde esta pantalla.");
-            return $this->redirect($this->generateUrl('loginInGroup', array('group_id' => $group->getId())));
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+            //return $this->redirect($this->generateUrl('loginInGroup', array('group_id' => $group->getId())));
         }
 
-        if ($form_user->isValid() && $form_children->isValid() && $form_userExtend->isValid()) {
+        if ($form_user->isValid() && $form_userExtendCustom->isValid()) {
             /** @var User $user */
             $user = $form_user->getData();
+            $user->setPlainPassword($user->getPassword());
+            $user->setPassword(null);
             $user->setUsername($user->getEmail());
+            $user->setEnabled(true);
             $em->persist($user);
             $em->flush();
 
-            /** @var EChild $child */
-            $child = $form_children->getData();
-            $child->setVisibility(false);
-            $em->persist($child);
-            $em->flush();
+            $children = array();
+            foreach($form_children as $f) {
+                if ($f->getData()->getNick() != null && $f->getData()->getNick() != "") {
+                    /** @var EChild $child */
+                    $child = $f->getData();
+                    $child->setVisibility(false);
+                    $em->persist($child);
+                    $em->flush();
+                    $children[] = $child;
+                }
+            }
 
             // Grabamos UserExtend
             /** @var UserExtend $userExtend */
@@ -254,22 +283,27 @@ class FrontController extends Controller
             if (count($city_entity) > 0) {
                 $userExtend->setCity($city_entity[0]);
             }
-            $userExtend->addChild($child);
-            $em->persist($userExtend);
-            $em->flush();
+
+            foreach($children as $child) {
+                $userExtend->addChild($child);
+                $em->persist($userExtend);
+                $em->flush();
+            }
 
             // Grabamos Niño y Grupo
-            $child->addUserextendchild($userExtend);
-            $em->persist($child);
-            $em->flush();
+            foreach($children as $child) {
+                $child->addUserextendchild($userExtend);
+                $em->persist($child);
+                $em->flush();
+            }
 
             $this->doLogin($user);
             $this->doJoin($group);
 
-            return $this->redirect($this->generateUrl('panel_dashboard'));
+            return $this->redirect($this->generateUrl('welcome_login', array(
+                'group' => $group->getId()
+            )));
         } else {
-            $container = $this->get('sopinet_flashMessages');
-
             /**
             if (!$form_user->isValid()) {
                 ldd($form_user->getErrorsAsString());

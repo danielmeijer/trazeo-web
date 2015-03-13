@@ -1,86 +1,53 @@
-{% extends "SopinetTemplateSbadmin2Bundle:Base:god.html.twig" %}
+{% extends 'TrazeoMyPageBundle:Front:baseLogin.html.twig' %}
 
-{% block title %}Login{% endblock %}
-
- {% block css %}
-     {% stylesheets
-     'bundles/sopinettemplatelanding/css/font-awesome.css'
-     '@SopinetTemplateLandingBundle/Resources/public/css/style.css'
-     '@TrazeoMyPageBundle/Resources/public/css/bootstrap.min.css'
-     '@TrazeoMyPageBundle/Resources/public/css/gsdk-base.css'
-     '@SopinetTemplateSbadmin2Bundle/Resources/public/css/typeahead.css'
-     '@SopinetTemplateSbadmin2Bundle/Resources/public/css/datepicker.css'
-     output='css/*.css' filter='cssrewrite' %}
-     <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
-     {% endstylesheets %}
- {% endblock %}
-
-{% block body %}
-<img class="img-responsive pull-right" src="{{ asset('bundles/sopinettemplatelanding//img/banner.jpg') }}" alt="Trazeo" />
-<img class="img-responsive" style="position:absolute;margin-top:150px;" width="200" height="200" src="{{ asset('bundles/sopinettemplatelanding//img/trazeo_icon_bg_trans.png') }}" alt="Trazeo" />
-<div class="container">
-    <div class="row">
-        <div class="col-sm-8 col-sm-offset-2">
-            {% include 'TrazeoMyPageBundle:Front:_wizzard_register.html.twig' with {
-                'form_user':form_user,
-                'form_children': form_children,
-                'group': group
-            } %}
-        </div>
-    </div>
-    <br /><br />
-    </div>
-    {% embed "SopinetTemplateLandingBundle:Base:footer.html.twig" %}
-    {% endembed %}
+{% block content %}
+    {% include 'TrazeoMyPageBundle:Front:_wizzard_register.html.twig' with {
+        'form_user':form_user,
+        'form_children_0': form_children_0,
+        'form_children_1': form_children_1,
+        'form_children_2': form_children_2,
+        'form_children_3': form_children_3,
+        'form_children_4': form_children_4,
+        'group': group
+    } %}
 {% endblock %}
 
 {% block js %}
-    {% javascripts
-    '@TrazeoMyPageBundle/Resources/public/js/jquery-1.10.2.js'
-    '@TrazeoMyPageBundle/Resources/public/js/bootstrap.min.js'
-    '@TrazeoMyPageBundle/Resources/public/js/jquery.bootstrap.wizard.js'
-    '@TrazeoMyPageBundle/Resources/public/js/wizard.js'
-    '@SopinetTemplateSbadmin2Bundle/Resources/public/js/analytics.js'
-    '@SopinetTemplateSbadmin2Bundle/Resources/public/js/typeahead.js'
-    '@SopinetTemplateSbadmin2Bundle/Resources/public/js/bootstrap-datepicker.js'
-    %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-
-    {% include 'SopinetTemplateSbadmin2Bundle:Login:_register_analytics.html.twig' %}
-    {% include 'SopinetTemplateSbadmin2Bundle:Login:_user_same.html.twig' %}
-    {% include 'SopinetFlashMessagesBundle:Messages:notification.html.twig' %}
-
+    {{ parent() }}
     <script>
         $(function() {
-            // Datepicker for input type
-            $('.inputDate').datepicker({
-                language: 'es',
-                orientation: 'auto top',
-                format: 'dd/mm/yyyy'
-            }).on('changeDate', function (ev) {
-                $(this).datepicker('hide');
+            $("#form_child_1").hide();
+            $("#form_child_2").hide();
+            $("#form_child_3").hide();
+            $("#form_child_4").hide();
+            $("#activate_form_1").click(function() {
+                $("#activate_form_1").html("Niñ@ número 2");
+                $("#activate_form_1").addClass('btn-warning');
+                $("#activate_form_1").prop( "disabled", true );
+                $("#form_child_1").show();
+                return false;
             });
-        });
-
-        var countries = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('nameUtf8'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            limit: 10,
-            remote: '{{ base_url }}/api/geo/city/list?q=%QUERY',
-        });
-
-        // kicks off the loading/processing of `local` and `prefetch`
-        countries.initialize();
-
-        // passing in `null` for the `options` arguments will result in the default
-        // options being used
-        $('#city').typeahead(null, {
-            name: 'cities',
-            displayKey: 'nameUtf8',
-            // `ttAdapter` wraps the suggestion engine in an adapter that
-            // is compatible with the typeahead jQuery plugin
-            source: countries.ttAdapter()
+            $("#activate_form_2").click(function() {
+                $("#activate_form_2").html("Niñ@ número 3");
+                $("#activate_form_2").addClass('btn-warning');
+                $("#activate_form_2").prop( "disabled", true );
+                $("#form_child_2").show();
+                return false;
+            });
+            $("#activate_form_3").click(function() {
+                $("#activate_form_3").html("Niñ@ número 4");
+                $("#activate_form_3").addClass('btn-warning');
+                $("#activate_form_3").prop( "disabled", true );
+                $("#form_child_3").show();
+                return false;
+            });
+            $("#activate_form_4").click(function() {
+                $("#activate_form_4").html("Niñ@ número 5");
+                $("#activate_form_4").addClass('btn-warning');
+                $("#activate_form_4").prop( "disabled", true );
+                $("#form_child_4").show();
+                return false;
+            });
         });
     </script>
 {% endblock %}
