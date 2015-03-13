@@ -22,6 +22,7 @@ class PageAdmin extends Admin
         ->add('data_facebook')
         ->add('data_twitter')
         ->add('data_web')
+        ->add('data_phone')
         ->add('menus')
     ;
   }
@@ -44,6 +45,7 @@ class PageAdmin extends Admin
         ->add('title')
         ->add('subdomain')
         ->add('userextend')
+        ->add('data_phone')
         ->add('groups')
         ->add('menus')
     ;

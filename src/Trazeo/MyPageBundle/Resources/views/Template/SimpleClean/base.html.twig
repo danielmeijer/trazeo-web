@@ -60,7 +60,9 @@
                     </h4>
                     <!--<p>3481 Melrose Place<br>Beverly Hills, CA 90210</p>-->
                     <ul class="list-unstyled">
-                        <!--<li><i class="fa fa-phone fa-fw"></i> (123) 456-7890</li>-->
+                        {% if page.dataPhone != "" %}
+                            <li><i class="fa fa-phone fa-fw"></i>{{ page.dataPhone }}</li>
+                        {% endif %}
                         {% if page.dataEmail != "" %}
                             <li><i class="fa fa-envelope-o fa-fw"></i>  <a href="mailto:{{ page.dataEmail }}">{{ page.dataEmail }}</a>
                             </li>

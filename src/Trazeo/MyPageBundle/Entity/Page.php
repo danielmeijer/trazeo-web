@@ -63,6 +63,13 @@ class Page
     /**
      * @var string
      *
+     * @ORM\Column(name="data_phone", type="string", length=255, nullable=true)
+     */
+    protected $data_phone;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="data_facebook", type="string", length=255, nullable=true)
      */
     protected $data_facebook;
@@ -292,6 +299,29 @@ class Page
     public function getDataEmail()
     {
         return $this->data_email;
+    }
+
+    /**
+     * Set data_phone
+     *
+     * @param string $dataPhone
+     * @return Page
+     */
+    public function setDataPhone($dataPhone)
+    {
+        $this->data_phone = $dataPhone;
+
+        return $this;
+    }
+
+    /**
+     * Get data_phone
+     *
+     * @return string
+     */
+    public function getDataPhone()
+    {
+        return $this->data_phone;
     }
 
     /**
