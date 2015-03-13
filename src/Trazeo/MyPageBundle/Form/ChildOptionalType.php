@@ -1,12 +1,12 @@
 <?php
 
-namespace Trazeo\BaseBundle\Form;
+namespace Trazeo\MyPageBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ChildType extends AbstractType
+class ChildOptionalType extends AbstractType
 {
     private $name = 'trazeo_basebundle_child';
 
@@ -31,7 +31,7 @@ class ChildType extends AbstractType
         					'data-toggle' => 'popover',
         					'data-placement' => 'right',
         					'data-content' => $options['attr']['Children.help.nick']
-        					),'required' => true
+        					),'required' => false
         			)
         		)
             ->add('scholl', null, array(
@@ -40,7 +40,7 @@ class ChildType extends AbstractType
         					'data-toggle' => 'popover',
         					'data-placement' => 'right',
         					'data-content' => $options['attr']['Children.help.scholl']
-        					)))
+        					),'required' => false))
             /*->add('groups', null, array(
         			'attr' => array(
         					'placeholder' => 'Route.name',
@@ -57,8 +57,8 @@ class ChildType extends AbstractType
     					'data-placement' => 'right',
     					'data-content' => $options['attr']['Children.help.datebirth']
     			),
-    			'format' => 'dd/MM/yyyy','required' => true))
-    			
+    			'format' => 'dd/MM/yyyy','required' => false))
+
            /* ->add('visibility', 'choice', array(
             		'choices'   => array(1 => 'Children.visibility.enabled', 0 => 'Children.visibility.disabled'),
             		'attr' => array(
@@ -67,7 +67,7 @@ class ChildType extends AbstractType
             				'data-placement' => 'right',
             				'data-content' => $options['attr']['Children.help.visibility']
             		)))*/
-            		
+
             ->add('gender', 'choice', array(
             		'choices' => array('boy' => 'Children.gender.boy', 'girl' => 'Children.gender.girl'),
         			'attr' => array(
@@ -75,7 +75,7 @@ class ChildType extends AbstractType
         					'data-toggle' => 'popover',
         					'data-placement' => 'right',
         					'data-content' => $options['attr']['Children.help.gender']
-        					)
+        					),'required' => false
         			)
         		)
         ;

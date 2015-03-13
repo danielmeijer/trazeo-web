@@ -1,0 +1,18 @@
+{% extends 'TrazeoMyPageBundle:Front:baseLogin.html.twig' %}
+
+{% block content %}
+    TODO: ESTO HAY QUE TERMINARLO, TAMBIÉN EN EL CONTROLADOR
+    <div class="card wizard-card ct-wizard-green">
+        <div class="wizard-header" style="text-align: center; margin: 10px">
+            <h3>Gracias por registrate en Trazeo.<br/>
+                <small>Tus niñ@s han sido dados de alta en el grupo {{ group.name }}.</small>
+            </h3>
+            <hr/>
+            <a href="https://play.google.com/store/apps/details?id=com.sopinet.trazeo.app" class="btn btn-primary btn-large">Descarga la Aplicación</a>
+            <h4>Mañana, el monitor ya los tendrá en su listado.</h4>
+            <p>Te recomendamos que descargues Trazeo en tu móvil {{ app.user.userextend.mobile }} para comunicarte con el resto de miembros y el monitor de tu grupo, ver por donde va éste cuando esté en marcha, obtener notificaciones cuando lleguen al colegio y canjear por premios los puntos que ganais por vuestra participación.</p>
+            <hr/>
+            <!--<a href="https://play.google.com/store/apps/details?id=com.sopinet.trazeo.app" class="btn btn-primary btn-large">Descarga la Aplicación</a>-->
+        </div>
+    </div>
+{% endblock %}
