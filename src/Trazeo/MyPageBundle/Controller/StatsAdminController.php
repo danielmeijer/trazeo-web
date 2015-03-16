@@ -446,6 +446,8 @@ class StatsAdminController extends Controller
         $chartByUser = null;
         $chartByChild = null;
         $chartTotal = null;
+        $chartChildren = null;
+        $chartUsers = null;
 
         $helper = $this->get('trazeo_base_helper');
 
@@ -561,7 +563,6 @@ class StatsAdminController extends Controller
 
             // Gráfica con línea por cada Grupo
             $series = array();
-
             $labels = array();
 
             // Líneas de niños/as
@@ -579,6 +580,7 @@ class StatsAdminController extends Controller
                     "data" => $formattedData['data'],
                     "dashStyle" => 'longdash',
                     "color" => $this->getColorForGroupID($i));
+                $series_child[] = $serie;
                 $series[] = $serie;
                 $i++;
 
@@ -586,7 +588,16 @@ class StatsAdminController extends Controller
                 //ld($series);
                 //ldd($formattedData);
             }
+            $chartChildren = new Highchart();
+            $chartChildren->chart->renderTo('linechartByChildren');  // The #id of the div where to render the chart
+            $chartChildren->title->text('Evolución de registros de Niños');
+            $chartChildren->xAxis->title(array('text'  => "Fecha"));
+            $chartChildren->xAxis->categories($labels);
+            $chartChildren->yAxis->title(array('text'  => "Número de Registros"));
+            $chartChildren->series($series);
 
+            $series = array();
+            $labels = array();
             $i = 0;
             // Líneas de usuarios/familias
             foreach($return_users as $key => $value) {
@@ -607,15 +618,25 @@ class StatsAdminController extends Controller
                 //ld($labels);
                 //ldd($serie);
             }
+            $chartUsers = new Highchart();
+            $chartUsers->chart->renderTo('linechartByUser');  // The #id of the div where to render the chart
+            $chartUsers->title->text('Evolución de registros de Familias');
+            $chartUsers->xAxis->title(array('text'  => "Fecha"));
+            $chartUsers->xAxis->categories($labels);
+            $chartUsers->yAxis->title(array('text'  => "Número de Registros"));
+            $chartUsers->series($series);
 
+
+            // Chart TOTAL (YA NO SE USA)
+            /**
             $chartTotal = new Highchart();
-            $chartTotal->chart->renderTo('linechartByUser');  // The #id of the div where to render the chart
+            $chartTotal->chart->renderTo('linechartByTotal');  // The #id of the div where to render the chart
             $chartTotal->title->text('Evolución de registros');
             $chartTotal->xAxis->title(array('text'  => "Fecha"));
             $chartTotal->xAxis->categories($labels);
             $chartTotal->yAxis->title(array('text'  => "Número de Registros"));
             $chartTotal->series($series);
-
+            **/
             //ld($labels);
             //ldd($series);
 
@@ -625,7 +646,8 @@ class StatsAdminController extends Controller
         return array(
             'admin_pool' => $admin_pool,
             'form_filters' => $form_filters->createView(),
-            'chartTotal' => $chartTotal
+            'chartChildren' => $chartChildren,
+            'chartUsers' => $chartUsers
         );
     }
 

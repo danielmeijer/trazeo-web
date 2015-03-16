@@ -345,6 +345,7 @@ class ERide extends AbstractEntity
 
     public function getDurationSeconds() {
         $duration = $this->getDuration();
+        if ($duration == null) return 0;
         $temp1 = explode(",", $duration);
         $temp2 = explode(" y ", $temp1[1]);
 
