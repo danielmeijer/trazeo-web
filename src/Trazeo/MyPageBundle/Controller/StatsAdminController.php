@@ -45,6 +45,7 @@ class StatsAdminController extends Controller
 
         if ($request->getMethod() == "POST") {
             $data = $request->get('GlobalAdmin');
+            $form_filters->handleRequest($request);
 
             // Datos por PASEOS
             /** @var ERideRepository $repositoryERide */
@@ -175,6 +176,7 @@ class StatsAdminController extends Controller
 
         if ($request->getMethod() == "POST") {
             $data = $request->get('BarAdmin');
+            $form_filters->handleRequest($request);
 
             // Datos por USUARIOS REGISTRADOS
             /** @var UserExtendRepository $repositoryUserExtend */
@@ -449,6 +451,7 @@ class StatsAdminController extends Controller
 
         if ($request->getMethod() == "POST") {
             $data = $request->get('RegisteredAdmin');
+            $form_filters->handleRequest($request);
 
             // Datos por USUARIOS REGISTRADOS
             /** @var UserExtendRepository $repositoryUserExtend */
@@ -550,7 +553,7 @@ class StatsAdminController extends Controller
             }
             $return_childs = $this->fixFillBiArray($return_childs);
 
-            //ldd($return_childs);
+            //ld($return_childs);
 
             // Gráfica TOTAL
             /** @var EGroupRepository $repositoryEGroup */
@@ -578,6 +581,10 @@ class StatsAdminController extends Controller
                     "color" => $this->getColorForGroupID($i));
                 $series[] = $serie;
                 $i++;
+
+                //ld($labels);
+                //ld($series);
+                //ldd($formattedData);
             }
 
             $i = 0;
@@ -588,7 +595,7 @@ class StatsAdminController extends Controller
                 $group = $repositoryEGroup->findOneById($key);
                 $formattedData = $this->filterByModeDatePlus($value, $data['mode']);
                 if (count($formattedData['label']) > count($labels)) {
-                    $labels = $formattedData['label'];
+                   $labels = $formattedData['label'];
                 }
                 $serie = array(
                     "name" => "FAMILIAS: " . $group->getName(),
@@ -597,6 +604,8 @@ class StatsAdminController extends Controller
                 );
                 $series[] = $serie;
                 $i++;
+                //ld($labels);
+                //ldd($serie);
             }
 
             $chartTotal = new Highchart();
@@ -607,6 +616,8 @@ class StatsAdminController extends Controller
             $chartTotal->yAxis->title(array('text'  => "Número de Registros"));
             $chartTotal->series($series);
 
+            //ld($labels);
+            //ldd($series);
 
             //ldd($data);
         }
@@ -653,6 +664,7 @@ class StatsAdminController extends Controller
 
         if ($request->getMethod() == "POST") {
             $data = $request->get('EvolutionAdmin');
+            $form_filters->handleRequest($request);
 
             /** @var ERideRepository $repositoryERide */
             $repositoryERide = $this->getDoctrine()->getRepository('TrazeoBaseBundle:ERide');
@@ -816,17 +828,17 @@ class StatsAdminController extends Controller
 
         switch ($modeDate) {
             case "day":
-                $formatCode = "Y-m-d";
+                $formatCode = "Ymd";
                 $formatView = "d-m-Y";
                 break;
 
             case "week":
-                $formatCode = "Y-W";
+                $formatCode = "YW";
                 $formatView = "l, d-m-Y";
                 break;
 
             case "month":
-                $formatCode = "Y-m";
+                $formatCode = "Ym";
                 $formatView = "F";
                 break;
         }
@@ -847,6 +859,7 @@ class StatsAdminController extends Controller
                 $dateFormatView = $datetime->format($formatView);
                 if (!isset($output[$dateFormatCode])) {
                     $output[$dateFormatCode] = 0;
+                    // $dateFormatCode KEY
                     $categoriesDateFormat[] = $dateFormatView;
                 }
                 $output[$dateFormatCode] += $value['total'];
@@ -854,17 +867,26 @@ class StatsAdminController extends Controller
         }
 
         $values = array();
-        // Preparamos los datos
         foreach($output as $key => $value) {
             $values[] = $value;
         }
+
+        /**
+        $values = array();
+        // Preparamos los datos
+        foreach($output as $key => $value) {
+            $d = array();
+            $d[] = $key;
+            $d[] = $value;
+            $values[] = $d;
+        }
+         **/
 
         // Preparamos las etiquetas (TODO)
 
         $return['data'] = $values;
         $return['label'] = $categoriesDateFormat;
-
-
+        //ldd($return);
         return $return;
     }
 
