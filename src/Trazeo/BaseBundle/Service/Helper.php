@@ -90,7 +90,7 @@ class Helper {
 
     function getPageBySubdomain($subdomain = null) {
         // TODO: DEBUG
-        if ($_SERVER['HTTP_HOST'] == "localhost" && $subdomain == null) $subdomain = "torrelodones";
+        if ($_SERVER['HTTP_HOST'] == "localhost" && $subdomain == null) $subdomain = "paseandoalcole";
         if ($subdomain == null) {
             $parts=explode('.', $_SERVER["SERVER_NAME"]);
             $subdomain = $parts[0];
