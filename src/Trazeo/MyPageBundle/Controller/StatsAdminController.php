@@ -105,19 +105,19 @@ class StatsAdminController extends Controller
             $temp_tiempo = 0;
 
             foreach($rides_good as $ride) {
-                $children = $repositoryERide->getChildrenInRide($ride);
-                $data['participaciones'] += count($children);
-                $temp_metros += $ride->getDistance() * count($children);
+                $children_count = $ride->getCountChildsR();
+                $data['participaciones'] += $children_count;
+                $temp_metros += $ride->getDistance();
 
                 // Sumamos el tiempo en segundos
-                $temp_tiempo += $ride->getDurationSeconds() * count($children);
+                $temp_tiempo += $ride->getDurationSeconds() * $children_count;
             }
 
             $data['paseos'] = count($rides_good);
-            $data['km'] = round($temp_metros * 0.0001);
+            $data['km'] = round($temp_metros * 0.001, 2);
             $data['co2'] = $data['km'] * 0.4;
             // TODO: OJO CON LOS LITROS CONSUMIDOS
-            $data['litros_combustible'] = round($data['km'] / 12.5);
+            $data['litros_combustible'] = round($data['km'] / 12.5, 2);
             $data['euros_combustible'] = $data['litros_combustible'] * 1.4;
 
             // Ponemos el tiempo en el formato correcto
