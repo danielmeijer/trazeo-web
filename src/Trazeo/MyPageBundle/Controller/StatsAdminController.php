@@ -844,6 +844,9 @@ class StatsAdminController extends Controller
     }
 
     private function filterByModeDatePlus($data, $modeDate = "month") {
+        // Order data by Date
+        ksort($data);
+
         setlocale(LC_ALL,"es_ES");
 
         $helper = $this->container->get('trazeo_base_helper');
