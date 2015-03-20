@@ -11,24 +11,29 @@ use Sopinet\GCMBundle\SopinetGCMBundle;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class GCMHelper {
+class GCMHelper
+{
     private $_container;
-    function __construct(ContainerInterface $container) {
+    function __construct(ContainerInterface $container)
+    {
         $this->_container = $container;
     }
 
     /**
      * Añade un dispositivo a un usuario en la base de datos
      *
-     * @param $device_id
+     * @param String $deviceId
      * @param $user
-     * @param $type('Android'|'iOS')
+     * @param String $type('Android'|'iOS')
+     *
      * @return mixed
      */
-    public function addDevice($device_id, $user, $type='Android') {
+    public function addDevice($deviceId, $user, $token, $type='Android')
+    {
         $em = $this->_container->get("doctrine.orm.entity_manager");
         $reDevice = $em->getRepository('SopinetGCMBundle:Device');
-        return $reDevice->addDevice($device_id, $user,$type);
+
+        return $reDevice->addDevice($deviceId, $user, $token, $type);
     }
 
     /*private function sendGoogleCloudMessage( $apiKey, $data, $id )
@@ -198,7 +203,13 @@ class GCMHelper {
                 * */
     //}
 
-    public function sendMessage(Msg $msg, $to) {
+    /**
+     * @param Msg $msg
+     * @param String $to
+     *
+     */
+    public function sendMessage(Msg $msg, $to)
+    {
         $mes['type'] = $msg->type;
         $mes['text'] = $msg->text;
         $mes['chatid'] = $msg->chatid;
@@ -210,11 +221,11 @@ class GCMHelper {
         $mes['time'] =$time->getTimestamp();
         $mes['groupId']= $msg->groupId;
         $mes['username']=$msg->username;
-        if($msg->device==$msg::ANDROID){
+        if ($msg->device==$msg::ANDROID) {
             $this->sendGCMessage($mes, $to);
         }
-        elseif($msg->device==$msg::IOS){
-            $this->sendAPNMessage($mes,$to);
+        elseif ($msg->device==$msg::IOS) {
+            $this->sendAPNMessage($mes, $to);
         }
     }
 
@@ -230,10 +241,9 @@ class GCMHelper {
         $message->setData($mes);
         $message->setDeviceIdentifier($to);
         $message->setGCM(true);
-        try{
+        try {
             $this->_container->get('rms_push_notifications')->send($message);
-        }
-        catch(InvalidMessageTypeException $e){
+        } catch (InvalidMessageTypeException $e) {
             throw $e;
         }
     }
@@ -241,17 +251,17 @@ class GCMHelper {
 
     /**
      * Funcion que envia un mensaje con el sevricio APN de Apple
-     * @param $mes
-     * @param $to
+     * @param Msg $mes
+     * @param String $to
+     *
+     * @throws \InvalidArgumentException
      */
     private function sendAPNMessage($mes, $to)
     {
-        ldd('wtf!');
         $message=new iOSMessage();
-        try{
+        try {
             $message->setData($mes);
-        }
-        catch(\InvalidArgumentException $e){
+        } catch (\InvalidArgumentException $e) {
             throw $e;
         }
         $message->setMessage($mes['text']);

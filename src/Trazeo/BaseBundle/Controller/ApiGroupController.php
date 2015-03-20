@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandler;
 use FOS\RestBundle\View\RouteRedirectView;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Get;
@@ -36,12 +37,19 @@ class ApiGroupController extends Controller
 
     /**
      * Funcion para representar un uso erroneo de la API
+     * @param null $msg
+     *
+     * @return array $array
      */
     private function msgDenied($msg = null)
     {
         $array['state'] = -1;
-        if ($msg != null) $array['msg'] = $msg;
-        else $array['msg'] = "Access Denied";
+        if ($msg != null) {
+            $array['msg'] = $msg;
+        } else {
+            $array['msg'] = "Access Denied";
+        }
+
         return $array;
     }
 
@@ -66,8 +74,10 @@ class ApiGroupController extends Controller
         if ($data == null) {
             $arr[] = null;
             $ret['data'] = $arr;
-        } else
+        } else {
             $ret['data'] = $data;
+        }
+
         return $ret;
     }
 
@@ -93,23 +103,24 @@ class ApiGroupController extends Controller
 
         $user = $this->getDoctrine()->getRepository('\Application\Sonata\UserBundle\Entity\User')->findOneBy(array ("email"=>$email, "password"=>$password));
         //$user= $this->getDoctrine()->getRepository('\Application\Sonata\UserBundle\Entity\User')->findOneBy(array ("username"=>$email));
-        if ($user == null){
+        if ($user == null) {
             $user = $this->getDoctrine()->getRepository('\Application\Sonata\UserBundle\Entity\User')->findOneBy(array ("username"=>$email, "password"=>$password));
-            if ($user == null){
+            if ($user == null) {
                 return false;
             }
         }
-        if ($password == $user->getPassword()){
+        if ($password == $user->getPassword()) {
             return $user;
-        }
-        else
+        } else {
             return false;
+        }
     }
 
     /**
      * Funcion que controla si el usuario está logueado o se comprueba con su email y pass
      */
-    private function checkPrivateAccess(Request $request) {
+    private function checkPrivateAccess(Request $request)
+    {
         //$user = $this->get('security.context')->getToken()->getUser();
 
         /*if ($user != null && $user != "anon.") {
@@ -124,7 +135,7 @@ class ApiGroupController extends Controller
         $user = $this->checkUser($request->get('email'), $request->get('pass'));
 
         //No es necesario
-        if($user == false) {
+        if ($user == false) {
             return false;
         }
 
@@ -132,13 +143,23 @@ class ApiGroupController extends Controller
     }
 
     /**
+     * @param Request $request
+     *
+     * @return View|Response
+     * @ApiDoc(
+     *   description="Función que borra un grupo",
+     *   section="group",
+     *   parameters={
+     *      {"name"="email", "dataType"="string", "required"=true, "description"="Email del usuario"},
+     *      {"name"="pass", "dataType"="string", "required"=true, "description"="Password del usuario"},
+     *      {"name"="group_id", "dataType"="string", "required"=true, "description"="id del grupo"},
+     *   }
+     * )
      * @POST("/api/deleteGroup")
-     * @param Request request
      */
     public function deleteGroupAction(Request $request)
     {
-
-        $id_group = $request->get('id_group');
+        //Comprobamos las credenciales de usuaio
         $user = $this->checkPrivateAccess($request);
         if ($user == false || $user == null) {
             $view = View::create()
@@ -147,31 +168,44 @@ class ApiGroupController extends Controller
 
             return $this->get('fos_rest.view_handler')->handle($view);
         }
+        $idGroup = $request->get('id_group');
         $em = $this->get('doctrine.orm.entity_manager');
         $userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
         //Obtenemos el repositorio del grupo
         $repositoryGroup = $em->getRepository('TrazeoBaseBundle:EGroup');
         //Intentamos borrar el grupo
         try {
-            $repositoryGroup->userDeleteGroup($id_group, $userextend);
+            $repositoryGroup->userDeleteGroup($idGroup, $userextend);
             //Grupo borrado con exito
             $view = View::create()
                 ->setStatusCode(200)
                 ->setData($this->doOK('ok'));
+
             return $this->get('fos_rest.view_handler')->handle($view);
-        } //no encontramos el grupo
-        catch (PreconditionFailedHttpException $e) {
+        } catch (PreconditionFailedHttpException $e) {
+            //no encontramos el grupo
             return $this->exceptionHandler($e);
-        } //el usuario no es el administrador del grupo
-        catch (AccessDeniedException $e) {
+        } catch (AccessDeniedException $e) {
+            //el usuario no es el administrador del grupo
             return $this->exceptionHandler($e);
         }
     }
 
 
     /**
+     * @param Request $request
+     *
+     * @return Response
      * @POST("/api/groups")
-     * @param Request request
+     * @ApiDoc(
+     *   description="Función que devuelve el listado de grupos de un usuario",
+     *   section="group",
+     *   parameters={
+     *      {"name"="email", "dataType"="string", "required"=true, "description"="Email del usuario"},
+     *      {"name"="pass", "dataType"="string", "required"=true, "description"="Password del usuario"},
+     *   },
+     *  output="array<Trazeo\BaseBundle\Entity\EGroup>"
+     *  )
      */
     public function getGroupsAction(Request $request)
     {
@@ -220,6 +254,24 @@ class ApiGroupController extends Controller
 
 
     /**
+     * @param Request $request
+     *
+     * @return Response
+     * @ApiDoc(
+     *   description="Petición para crear un grupo en la bbdd, o modificar uno existente",
+     *   section="group",
+     *   parameters={
+     *      {"name"="email", "dataType"="string", "required"=true, "description"="Email del usuario"},
+     *      {"name"="pass", "dataType"="string", "required"=true, "description"="Password del usuario"},
+     *      {"name"="name", "dataType"="string", "required"=true, "description"="Nombre del grupo"},
+     *      {"name"="visibility", "dataType"="string", "required"=true, "description"="Visibilidad del grupo"},
+     *      {"name"="school1", "dataType"="string", "required"=true, "description"="Nombre del centro escolar"},
+     *      {"name"="country", "dataType"="string", "required"=true, "description"="Pais del grupo"},
+     *      {"name"="city", "dataType"="string", "required"=true, "description"="Ciudad del grupo"},
+     *      {"name"="id_grupo", "dataType"="string", "required"=true, "description"="Id del grupo a modificar"},
+     *   },
+     *  output="Integer"
+     *  )
      * Petición para crear un grupo en la bbdd
      * @POST("/api/manageGroup")
      */
@@ -228,7 +280,7 @@ class ApiGroupController extends Controller
 
         $name = $request->get('name');
         $visibility = $request->get('visibility');
-        $id_group = $request->get('id_group');
+        $idGroup = $request->get('id_group');
         $school1 = $request->get('school1');
         $country = $request->get('country');
 
@@ -246,7 +298,7 @@ class ApiGroupController extends Controller
 
         //Se comprueba si ya existe otro grupo con el mismo nombre
         $group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneByName($name);
-        if ($group != null && $group != $em->getRepository('TrazeoBaseBundle:EGroup')->find($id_group)) {
+        if ($group != null && $group != $em->getRepository('TrazeoBaseBundle:EGroup')->find($idGroup)) {
             $view = View::create()
                 ->setStatusCode(200)
                 ->setData($this->msgDenied("Name is already in use"));
@@ -255,10 +307,10 @@ class ApiGroupController extends Controller
         }
 
         //Si el grupo existe se modifica si no se crea uno nuevo
-        $group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneBy(array('id' => $id_group, 'admin' => $userextend));
+        $group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneBy(array('id' => $idGroup, 'admin' => $userextend));
 
         //Si el usuario no es el admin del grupo y lo intenta modificar se deniega el ascesso
-        if ($id_group != null && $group == null) {
+        if ($idGroup != null && $group == null) {
             $view = View::create()
                 ->setStatusCode(200)
                 ->setData($this->msgDenied("User is not the admin"));
@@ -294,9 +346,9 @@ class ApiGroupController extends Controller
         if ($request->get('city')) {
             $city = $request->get('city');
             $helper = $this->get('trazeo_base_helper');
-            $city_entity = $helper->getCities($city, 10, true);
-            if (count($city_entity) > 0) {
-                $group->setCity($city_entity[0]);
+            $cityEntity = $helper->getCities($city, 10, true);
+            if (count($cityEntity) > 0) {
+                $group->setCity($cityEntity[0]);
             }
         }
         $reGroup = $em->getRepository('TrazeoBaseBundle:EGroup')->setCountry($group->getId(), $country);
@@ -319,6 +371,20 @@ class ApiGroupController extends Controller
 
 
     /**
+     * @param Request $request
+     *
+     * @return Response
+     * @ApiDoc(
+     *   description="Funcion que devuelve todos los grupos de una ciudad",
+     *   section="group",
+     *   parameters={
+     *      {"name"="email", "dataType"="string", "required"=true, "description"="Email del usuario"},
+     *      {"name"="pass", "dataType"="string", "required"=true, "description"="Password del usuario"},
+     *      {"name"="city", "dataType"="string", "required"=true, "description"="Ciudad del grupo|all todas"},
+     *      {"name"="object", "dataType"="string", "required"=false, "description"="Si es para web o app"},
+     *   },
+     *  output="Integer"
+     *  )
      * @GET("/api/groupsCity")
      */
     public function getGroupsByCityAction(Request $request)
@@ -352,8 +418,11 @@ class ApiGroupController extends Controller
                     }
                     $arrayGroups['visibility'] = $group->getVisibility();
                     $arrayGroups['hasride'] = $group->getHasRide();
-                    if (in_array($group, $admingroups)) $arrayGroups['admin'] = true;
-                    else $arrayGroups['admin'] = false;
+                    if (in_array($group, $admingroups)) {
+                        $arrayGroups['admin'] = true;
+                    } else {
+                        $arrayGroups['admin'] = false;
+                    }
                     if ($group->getHasRide() == 1) {
                         $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneByGroup($group);
                         $arrayGroups['ride_id'] = $ride->getId();
@@ -373,7 +442,9 @@ class ApiGroupController extends Controller
         $aux = array();
         foreach ($routes as $route) {
             $group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneByRoute($route);
-            if ($group != null) $aux[] = $group;
+            if ($group != null) {
+                $aux[] = $group;
+            }
         }
         $groups = $em->getRepository('TrazeoBaseBundle:EGroup')->findByCity($cities[0]);
         $groups = array_merge($groups, $aux);
@@ -393,8 +464,11 @@ class ApiGroupController extends Controller
                 }
                 $arrayGroups['visibility'] = $group->getVisibility();
                 $arrayGroups['hasride'] = $group->getHasRide();
-                if (in_array($group, $admingroups)) $arrayGroups['admin'] = true;
-                else $arrayGroups['admin'] = false;
+                if (in_array($group, $admingroups)) {
+                    $arrayGroups['admin'] = true;
+                } else {
+                    $arrayGroups['admin'] = false;
+                }
                 if ($group->getHasRide() == 1) {
                     $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneByGroup($group);
                     $arrayGroups['ride_id'] = $ride->getId();
@@ -411,10 +485,25 @@ class ApiGroupController extends Controller
     }
 
     /**
+     * @param Request $request
+     *
+     * @return Response
+     *
+     * @ApiDoc(
+     *   description="Llamada que une un usuario a un grupo",
+     *   section="group",
+     *   parameters={
+     *      {"name"="email", "dataType"="string", "required"=true, "description"="Email del usuario"},
+     *      {"name"="pass", "dataType"="string", "required"=true, "description"="Password del usuario"},
+     *      {"name"="id_group", "dataType"="string", "required"=true, "description"="Id del grupo al que quiere unirse"},
+     *   },
+     *  output="Boolean"
+     *  )
      * @POST("/api/joinGroup")
      */
     public function joinGroupAction(Request $request)
     {
+        //Comprobamos las credenciales del usuario
         $user = $this->checkPrivateAccess($request);
         if ($user == false || $user == null) {
             $view = View::create()
@@ -423,59 +512,43 @@ class ApiGroupController extends Controller
 
             return $this->get('fos_rest.view_handler')->handle($view);
         }
-        $id_group = $request->get('id_group');
+        $idGroup = $request->get('id_group');
 
         $em = $this->getDoctrine()->getManager();
         $userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
-        $group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id_group);
-
-        if (!$group) {
-            $view = View::create()
-                ->setStatusCode(200)
-                ->setData($this->msgDenied("Group doesn't exist"));
-
-            return $this->get('fos_rest.view_handler')->handle($view);
-        }
-
-        $userextends = $group->getUserextendgroups()->toArray();
-
-        if (in_array($userextend, $userextends)) {
-            $view = View::create()
-                ->setStatusCode(200)
-                ->setData($this->msgDenied("User it's already on group"));
-            return $this->get('fos_rest.view_handler')->handle($view);
-        }
-        $groupAdmin = $group->getAdmin();
-        $groupVisibility = $group->getVisibility();
-        $info = array();
-        if ($groupAdmin == $user || $groupVisibility == 0) {
-
-            $group->addUserextendgroup($userextend);
-            $em->persist($group);
-            $em->flush();
-
-            //Children autojoin on parent join to group
-            $childs = $userextend->getChilds();
-            foreach ($childs as $child) {
-                $group->addChild($child);
-            }
-            $em->persist($group);
-            $em->flush();
-
+        $groupRepository = $em->getRepository('TrazeoBaseBundle:EGroup');
+        //Unimos el usuario al grupo
+        try {
+            $groupRepository->joinGroup($idGroup, $userextend);
             $info['joined'] = 'true';
             $response = json_encode($info);
+
             return new Response($response, 200, array(
                 'Content-Type' => 'application/json'
             ));
-        }
-        $view = View::create()
-            ->setStatusCode(200)
-            ->setData($this->msgDenied("The group is not public"));
+        } catch (Exception $e) {
+            $view = View::create()
+                ->setStatusCode(200)
+                ->setData($this->msgDenied($e->getMessage()));
 
-        return $this->get('fos_rest.view_handler')->handle($view);
+            return $this->get('fos_rest.view_handler')->handle($view);
+        }
     }
 
     /**
+     * @param Request $request
+     *
+     * @return Response
+     * @ApiDoc(
+     *   description="Llamada para solicitar el acesso a un grupo",
+     *   section="group",
+     *   parameters={
+     *      {"name"="email", "dataType"="string", "required"=true, "description"="Email del usuario"},
+     *      {"name"="pass", "dataType"="string", "required"=true, "description"="Password del usuario"},
+     *      {"name"="id_grupo", "dataType"="string", "required"=true, "description"="Id del grupo al que quiere unirse"},
+     *   },
+     *  output="Boolean"
+     *  )
      * @POST("/api/requestJoinGroup")
      */
     public function requestJoinGroupAction(Request $request)
@@ -514,17 +587,20 @@ class ApiGroupController extends Controller
             $view = View::create()
                 ->setStatusCode(200)
                 ->setData($this->msgDenied("The group is hidden"));
+
             return $this->get('fos_rest.view_handler')->handle($view);
         } else if ($groupVisibility == 0) {
             $view = View::create()
                 ->setStatusCode(200)
                 ->setData($this->msgDenied("The group is public"));
+
             return $this->get('fos_rest.view_handler')->handle($view);
         } //comprobar que el user no este vinculado ya al grupo
         else if (in_array($group, $user->getGroups()->toArray())) {
             $view = View::create()
                 ->setStatusCode(200)
                 ->setData($this->msgDenied("User it's already on group"));
+
             return $this->get('fos_rest.view_handler')->handle($view);
         }
         // Comprobar que existen
@@ -539,6 +615,7 @@ class ApiGroupController extends Controller
                 $view = View::create()
                     ->setStatusCode(200)
                     ->setData($this->msgDenied("Join to group request has been did before"));
+
                 return $this->get('fos_rest.view_handler')->handle($view);
             }
 
@@ -574,6 +651,7 @@ class ApiGroupController extends Controller
             $em->flush();
             $info['request'] = 'true';
             $response = json_encode($info);
+
             return new Response($response, 200, array(
                 'Content-Type' => 'application/json'
             ));
@@ -585,6 +663,20 @@ class ApiGroupController extends Controller
 
 
     /**
+     * @param Request $request
+     *
+     * @return Response
+     * @ApiDoc(
+     *   description="Llamada para invitar a un usuario  a un grupo",
+     *   section="group",
+     *   parameters={
+     *      {"name"="email", "dataType"="string", "required"=true, "description"="Email del usuario"},
+     *      {"name"="pass", "dataType"="string", "required"=true, "description"="Password del usuario"},
+     *      {"name"="id_grupo", "dataType"="string", "required"=true, "description"="Id del grupo al que quiere unirse"},
+     *      {"name"="email_invite", "dataType"="string", "required"=true, "description"="Email del usuario a invitar"},
+     *   },
+     *  output="Boolean"
+     *  )
      * @POST("/api/group/invite")
      */
     public function groupInviteAction(Request $request)
@@ -707,6 +799,19 @@ class ApiGroupController extends Controller
     }
 
     /**
+     * @param Request $request
+     *
+     * @return Response
+     * @ApiDoc(
+     *   description="Llamada para salirse de un grupo",
+     *   section="group",
+     *   parameters={
+     *      {"name"="email", "dataType"="string", "required"=true, "description"="Email del usuario"},
+     *      {"name"="pass", "dataType"="string", "required"=true, "description"="Password del usuario"},
+     *      {"name"="id_group", "dataType"="string", "required"=true, "description"="Id del grupo del que quiere salirse"},
+     *   },
+     *  output="Boolean"
+     *  )
      * @POST("/api/group/disjoin")
      */
     public function disjoinGroupAction(Request $request)
@@ -721,10 +826,14 @@ class ApiGroupController extends Controller
             return $this->get('fos_rest.view_handler')->handle($view);
         }
         $userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
-        $id_group = $request->get('id_group');
+        $idGroup = $request->get('id_group');
         $reGroup = $em->getRepository('TrazeoBaseBundle:EGroup');
-
-        $reGroup->disjoinGroup($id_group, $userextend);
+        //Desvinculamos al usuario del grupo
+        try {
+            $reGroup->disjoinGroup($idGroup, $userextend);
+        } catch (\Exception $e) {
+            $this->exceptionHandler($e);
+        }
 
         $view = View::create()
             ->setStatusCode(200)
@@ -734,6 +843,9 @@ class ApiGroupController extends Controller
     }
 
     /**
+     * @param Request $request
+     *
+     * @return View|Response
      * @ApiDoc(
      *   description="Función que une/saca a un niño de un grupo ",
      *   section="group",
@@ -760,14 +872,13 @@ class ApiGroupController extends Controller
         }
 
         $userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
-        $id_group = $request->get('id_group');
-        $id_child = $request->get('id_child');
+        $idGroup = $request->get('id_group');
+        $idChild = $request->get('id_child');
         $add = $request->get('add')=="true";
         $reGroup = $em->getRepository('TrazeoBaseBundle:EGroup');
-        try{
-            $reGroup->setChildOnGroup($id_group, $id_child, $userextend, $add);
-        }
-        catch(PreconditionFailedHttpException $e){
+        try {
+            $reGroup->setChildOnGroup($idGroup, $idChild, $userextend, $add);
+        } catch (PreconditionFailedHttpException $e) {
             return $this->exceptionHandler($e);
         }
 
@@ -779,6 +890,10 @@ class ApiGroupController extends Controller
     }
 
     /**
+     * @param Request $request
+     *
+     * @return View|mixed
+     *
      * @ApiDoc(
      *   description="Función que crea un chat para un grupo, o si ya existe lo devuelve",
      *   section="group",
@@ -811,21 +926,29 @@ class ApiGroupController extends Controller
         $token=$request->get('device_token');
         $repositoryDevice = $em->getRepository('SopinetGCMBundle:Device');
         $device=$repositoryDevice->findOneBy(array('user'=>$userextend,'token'=>$token));
-        if($device==null)return $apiHelper->msgDenied(ApiHelper::NODEVICE);
+        if ($device==null) {
+            return $apiHelper->msgDenied(ApiHelper::NODEVICE);
+        }
         //Obtenemos el grupo
         $repositoryGroup = $em->getRepository('TrazeoBaseBundle:EGroup');
         $group=$repositoryGroup->find($request->get('group_id'));
         //Comprobamos si el usuario pertenece al grupo
-        if(!$repositoryGroup->isUserInGroup($userextend,$group))$apiHelper->msgDenied('User is not in the group');
+        if (!$repositoryGroup->isUserInGroup($userextend, $group)) {
+            $apiHelper->msgDenied('User is not in the group');
+        }
         /** @var ChatRepository $repositoryChat */
         $repositoryChat = $em->getRepository('SopinetChatBundle:Chat');
         //Comprobamos si el grupo ya tiene chat
-        if($group->getChat()!=null){
+        if ($group->getChat()!=null) {
             $chat=$group->getChat();
-            if(!$repositoryChat->userInChat($userextend,$chat)){
-                $chat->addChatMember($userextend);
+            if (!$repositoryChat->userInChat($userextend, $chat)) {
+                //Si el usuario no esta en el chat se añade
+                try {
+                    $repositoryChat->addMember($chat, $userextend->getId());
+                } catch (\Exception $e) {
+                    return $this->exceptionHandler($e);
+                }
             }
-            return $apiHelper->msgOK($chat);
         }
         //Si no lo tiene se crea
         else{
@@ -834,20 +957,20 @@ class ApiGroupController extends Controller
             $chat->setName($group->getName());
             $chat->setAdmin($userextend);
             //Añadimos todos los user del grupo en el chat
-            foreach($group->getUserextendgroups() as $user){
-                try{
-                    $repositoryChat->addMember($chat,$user->getId());
-                }
-                catch(\Exception $e){
+            foreach ($group->getUserextendgroups() as $user) {
+                try {
+                    $repositoryChat->addMember($chat, $user->getId());
+                } catch (\Exception $e) {
                     return $this->exceptionHandler($e);
                 }
             }
-            $group->setChat($chat);
-            $em->persist($chat);
-            $em->persist($group);
-            $em->flush();
 
         }
+        $group->setChat($chat);
+        $em->persist($chat);
+        $em->persist($group);
+        $em->flush();
+
         return $apiHelper->msgOK($chat);
     }
 }

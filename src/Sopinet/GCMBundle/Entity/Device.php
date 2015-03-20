@@ -39,6 +39,12 @@ class Device
      */
     protected $token;
 
+
+    /**
+     * @ORM\Column(name="device_id", type="string", length=1000)
+     */
+    protected $device_id;
+
     /**
      * @var string
      * iOS
@@ -156,5 +162,28 @@ class Device
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set device_id
+     *
+     * @param string $deviceId
+     * @return Device
+     */
+    public function setDeviceId($deviceId)
+    {
+        $this->device_id = $deviceId;
+
+        return $this;
+    }
+
+    /**
+     * Get device_id
+     *
+     * @return string 
+     */
+    public function getDeviceId()
+    {
+        return $this->device_id;
     }
 }
