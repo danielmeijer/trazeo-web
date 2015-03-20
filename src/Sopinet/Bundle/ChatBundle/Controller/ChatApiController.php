@@ -24,6 +24,10 @@ use Trazeo\BaseBundle\Entity\UserExtend;
 class ChatApiController extends FOSRestController{
 
     /**
+     * @param Request $request
+     *
+     * @return Response
+     *
      * @ApiDoc(
      *   description="Replica un mensaje de chat en el servidor. Se puede usar para recibir ficheros de tipo image, video, doc. En los ficheros se devolverá siempre la URL de los mismos en msg->text para los dispositivos receptores. En el caso de los ficheros de tipo video, se puede añadir _thumb.png tras la URL devuelta del vídeo y esto será el thumbnail del vídeo.",
      *   section="chat",
@@ -46,9 +50,9 @@ class ChatApiController extends FOSRestController{
      * Función replicar un mensaje
      *
      * @Post("/reply")
-     * @param Request $request
      */
-    public function replyAction(Request $request){
+    public function replyAction(Request $request)
+    {
         // Comprobamos Usuario
         $apiHelper=$this->get('apihelper');
         $user = $apiHelper->checkPrivateAccess($request);
@@ -57,13 +61,14 @@ class ChatApiController extends FOSRestController{
         //@var $user User
         if ($user === false) {
             $response = $apiHelper->msgDenied(ApiHelper::USERNOTVALID, 400);
+
             return $response;
         }
 
         // Construímos el MSG
         $msg = new Msg();
         // Si es de tipo file
-        if($request->get('type') == "file" || $request->get('type')=="file_image" || $request->get("type") == "file_video" || $request->get("type") == "file_doc") {
+        if ($request->get('type') == "file" || $request->get('type')=="file_image" || $request->get("type") == "file_video" || $request->get("type") == "file_doc") {
             $em = $this->get('doctrine')->getManager();
             /* @var $repositoryFile FileRepository */
             $repositoryFile = $em->getRepository('PetyCashAppBundle:File');
@@ -80,8 +85,7 @@ class ChatApiController extends FOSRestController{
             }
 
             $msg->text = $this->container->getParameter("image_url") . $fileObject->getName();
-        }
-        else {
+        } else {
             $msg->text = $request->get('text');
         }
         $msg->type = $request->get('type');
@@ -103,23 +107,23 @@ class ChatApiController extends FOSRestController{
         $repositoryDevice = $em->getRepository('SopinetGCMBundle:Device');
         /** @var Device $device */
         $device=$repositoryDevice->findOneByToken($msg->from);
-        if($device==null)$apiHelper->msgDenied(ApiHelper::NODEVICE, 400);
+        if ($device==null) {
+            $apiHelper->msgDenied(ApiHelper::NODEVICE, 400);
+        }
         $msg->device=$device->getType();
-        /** @var MessageRepository $repositoryMessage */
-        $repositoryMessage = $em->getRepository('SopinetChatBundle:Message');
-        /** @var Message $message */
-        $repositoryMessage->addMsg($msg);
 
         // Obtenemos los devices del chatid
         $repositoryChat = $em->getRepository("SopinetChatBundle:Chat");
         $devices = $repositoryChat->getDevices($msg->chatid);
 
         // Si no hay dispositivos que notificar: salimos
-        if (!is_array($devices)) return false;
+        if (!is_array($devices)) {
+            return false;
+        }
 
         // Comprobamos permisos (el from tiene permiso para trabajar en el chatid)
         $ok = false;
-        foreach($devices as $device) {
+        foreach ($devices as $device) {
             /* @var $device Device */
             if ($device->getToken() == $msg->from) {
                 $ok = true;
@@ -127,7 +131,9 @@ class ChatApiController extends FOSRestController{
                 $msg->phone = $device->getUser()->getPhone();
             }
         }
-        if (!$ok) return false; // Ha sucedido algo inesperado, ha mandado un mensaje alguien que no estaba en el Chat.
+        if (!$ok) {
+            return false; // Ha sucedido algo inesperado, ha mandado un mensaje alguien que no estaba en el Chat.
+        }
 
         // Enviamos el mensaje correspondiente a todos los dispositivos, excepto
         // al que está enviando este mensaje.
@@ -148,6 +154,10 @@ class ChatApiController extends FOSRestController{
     }
 
     /**
+     * @param Request $request
+     *
+     * @return Response
+     *
      * @ApiDoc(
      *   description="Función para actualizar la imagen de un Evento",
      *   section="chat",
@@ -160,10 +170,10 @@ class ChatApiController extends FOSRestController{
      * )
      *
      * Función para actualizar la imagen del chat
-     * @param Request $request
      * @Post("/upgradeImage")
      */
-    public function upgradeImageChatAction(Request $request) {
+    public function upgradeImageChatAction(Request $request)
+    {
         $em = $this->get('doctrine')->getManager();
 
         /** @var ApiHelper $apiHelper */
@@ -174,6 +184,7 @@ class ChatApiController extends FOSRestController{
         $chat = $repositoryChat->findOneById($request->get('chatid'));
         if ($chat == null) {
             $response = $apiHelper->msgDenied(ApiHelper::GENERALERROR, 400);
+
             return $response;
         }
 
@@ -182,6 +193,7 @@ class ChatApiController extends FOSRestController{
         /* @var $user User */
         if ($user === false) {
             $response = $apiHelper->msgDenied(ApiHelper::USERNOTADMIN, 400);
+
             return $response;
         }
 
@@ -193,11 +205,16 @@ class ChatApiController extends FOSRestController{
 
         // Devolvemos ok
         $response = $apiHelper->msgOK($url);
+
         return $response;
     }
 
 
     /**
+     * @param Request $request
+     *
+     * @return mixed
+     *
      * @ApiDoc(
      *   description="Muestra los datos de un chat en el sistema",
      *   section="chat",
@@ -215,7 +232,8 @@ class ChatApiController extends FOSRestController{
      * Funcion para ver un chat
      * @Post("/get")
      */
-    public function getAction(Request $request){
+    public function getAction(Request $request)
+    {
         $id = $request->get('id');
         /** @var EntityManager $em */
         $em = $this->get('doctrine')->getManager();
@@ -227,14 +245,15 @@ class ChatApiController extends FOSRestController{
         // Comprobamos usuario
         $apiHelper = $this->get('apihelper');
         $user=$apiHelper->checkPrivateAccess($request);
-        $userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);#FIXME
+        $userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user); //FIXME
         /* @var $user User */
         if ($user === false ) {
             $response = $apiHelper->msgDenied(ApiHelper::USERNOTVALID, 400);
+
             return $response;
-        }
-        elseif(!$repositoryChat->userInChat($userextend,$chat)){
+        } elseif (!$repositoryChat->userInChat($userextend, $chat)) {
             $response= $apiHelper->msgDenied(ApiHelper::USERNOTINCHAT, 400);
+
             return $response;
         }
 
@@ -262,8 +281,10 @@ class ChatApiController extends FOSRestController{
      *
      * Funcion para crear un chat bilateral o cargar uno existente con los mismos miembros, si ya existe
      * @Post("/newBilateral")
+     * @return Response
      */
-    public function newBilateralAction(){
+    public function newBilateralAction()
+    {
         $em = $this->get('doctrine')->getManager();
         $request = $this->get('request');
         $repositoryUser = $em->getRepository('ApplicationSopinetUserBundle:User');
@@ -280,6 +301,7 @@ class ChatApiController extends FOSRestController{
         if ($idchat != 0) {
             $chat = $repositoryChat->findOneById($idchat);
             $response = $apiHelper->msgOK($chat);
+
             return $response;
         }
 
@@ -291,16 +313,18 @@ class ChatApiController extends FOSRestController{
         if ($form->isValid()) {
             //Creamos el primer miembro
             $starter = $repositoryUser->findOneById($request->get('starter'));
-            if(!$starter){
+            if (!$starter) {
                 $response = $apiHelper->msgDenied(ApiHelper::USERSTARTERNOTVALID, 400);
+
                 return $response;
             }
             $repositoryChatMember->createNew($chat, $starter);
 
             //Creamos el segundo miembro
             $user = $repositoryUser->findOneById($request->get('user_id'));
-            if(!$user){
+            if (!$user) {
                 $response = $apiHelper->msgDenied(ApiHelper::USERNOTVALID, 400);
+
                 return $response;
             }
             $repositoryChatMember->createNew($chat, $user);
@@ -309,10 +333,12 @@ class ChatApiController extends FOSRestController{
             $em->flush();
 
             $response = $apiHelper->msgOK($chat);
+
             return $response;
         }
 
         $response = $apiHelper->msgDenied($form->getErrorsAsString(), 400);
+
         return $response;
     }
 
@@ -335,7 +361,8 @@ class ChatApiController extends FOSRestController{
      * Funcion para crear un chat grupal
      * @Post("/newEvent")
      */
-    public function newEventAction(){
+    public function newEventAction()
+    {
         /** @var EntityManager $em */
         $em = $this->get('doctrine')->getManager();
         $request = $this->get('request');
@@ -364,11 +391,10 @@ class ChatApiController extends FOSRestController{
                 /** @var ChatRepository $repositoryChat */
                 $repositoryChat = $em->getRepository('SopinetChatBundle:Chat');
                 $users_array = explode(",", $users);
-                foreach($users_array as $u) {
-                    try{
+                foreach ($users_array as $u) {
+                    try {
                         $repositoryChat->addMember($chat, $u);
-                    }
-                    catch(\Exception $e){
+                    } catch (\Exception $e) {
                         return $apiHelper->exceptionHandler($e);
                     }
                 }

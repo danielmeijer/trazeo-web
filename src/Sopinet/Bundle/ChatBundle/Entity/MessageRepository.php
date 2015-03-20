@@ -12,26 +12,31 @@ class MessageRepository extends EntityRepository{
      * Guarda un msg en la base de datos
      *
      * @param Msg $msg
+     *
      * @return Message
      */
-    public function addMsg(Msg $msg) {
+    public function addMsg(Msg $msg)
+    {
         $em = $this->getEntityManager();
         $message=$this->msgToMessage($msg);
         $em->persist($message);
         $em->flush();
+
         return $message;
     }
 
     /**
      * Guarda un mensaje en la base de datos
      *
-     * @param Msg $msg
+     * @param Message $msg
+     *
      * @return Message
      */
     public function addMessage(Message $message) {
         $em = $this->getEntityManager();
         $em->persist($message);
         $em->flush();
+
         return $message;
     }
 

@@ -5,6 +5,8 @@ namespace Trazeo\BaseBundle\Controller;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Sopinet\GCMBundle\Entity\Device;
+use Sopinet\GCMBundle\Entity\DeviceRepository;
 use Sopinet\UserPreferencesBundle\Entity\UserValueRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\View\View;
@@ -299,8 +301,8 @@ class ApiUserController extends Controller
         $settings=$repositoryUserValue->findByUser($userextend);
 
         $data=[];
-        foreach($settings as $setting){
-            $data['value']=$repositoryUserValue->getValue($userextend,$setting->getSetting());
+        foreach ($settings as $setting) {
+            $data['value']=$repositoryUserValue->getValue($userextend, $setting->getSetting());
             $data['setting']=$setting->getSetting();
             $data['id']=$setting->getId();
         }
@@ -313,6 +315,9 @@ class ApiUserController extends Controller
 
 
     /**
+     * @param Request $request
+     *
+     * @return Response
      * Petición para modificar las preferencías con respecto a las notificaciones de un usuario
      * @POST("/api/user/notification/modify/settings", name="api_user__modify_notification_settings")
      */
@@ -333,8 +338,8 @@ class ApiUserController extends Controller
         $userextend = $repositoryUserExtend->findOneByUser($user);
 
         $repositoryUserValue = $em->getRepository('SopinetUserPreferencesBundle:UserValue');
-        $repositoryUserValue->setValue($userextend,$request->get('email_notification_id'),$request->get('email_notification_value'));
-        $repositoryUserValue->setValue($userextend,$request->get('civiclub_conexion_id'),$request->get('civiclub_conexion_value'));
+        $repositoryUserValue->setValue($userextend, $request->get('email_notification_id'), $request->get('email_notification_value'));
+        $repositoryUserValue->setValue($userextend, $request->get('civiclub_conexion_id'), $request->get('civiclub_conexion_value'));
 
         /** @var UserValue[] $settings */
         $settings=$repositoryUserValue->findByUser($userextend);
@@ -348,8 +353,10 @@ class ApiUserController extends Controller
 
 
     /**
+     * @param Request $request
+     *
+     * @return Response
      * @POST("/api/user/change/password")
-     * @param Request request
      */
     public function postChangePasswordAction(Request $request)
     {
@@ -371,10 +378,14 @@ class ApiUserController extends Controller
         $view = View::create()
             ->setStatusCode(201)
             ->setData($this->doOK('ok'));
+
         return $this->get('fos_rest.view_handler')->handle($view);
     }
 
     /**
+     * @param Request $request
+     *
+     * @return Response
      * @ApiDoc(
      *   description="Función que registra un nuevo device para un usuario",
      *   section="user",
@@ -383,10 +394,12 @@ class ApiUserController extends Controller
      *      {"name"="pass", "dataType"="string", "required"=true, "description"="Password del usuario administrador"},
      *      {"name"="device_token", "dataType"="string", "required"=true, "description"="Token a registrar"},
      *      {"name"="device", "dataType"="string", "required"=true, "description"="Tipo de dispositivo=iOS|Android"},
+     *      {"name"="device_id", "dataType"="string", "required"=true, "description"="Código identificador unico del device"}
      *   }
      * )
      *
      * @POST("/api/user/register/device")
+
      */
     public function postRegisterDeviceAction(Request $request)
     {
@@ -404,12 +417,17 @@ class ApiUserController extends Controller
         $token=$request->get('device_token');
         $type=$request->get('device');
         //se registra el device
+        /** @var DeviceRepository $repositoryDevice */
         $repositoryDevice = $em->getRepository('SopinetGCMBundle:Device');
-        $repositoryDevice->addDevice($token,$userextend,$type);
+        if ($request->get('device_id')) {
+            $deviceId=$request->get('device_id');
+            $repositoryDevice->addDevice($deviceId, $userextend, $token, $type);
+        }
 
         $view = View::create()
             ->setStatusCode(201)
             ->setData($this->doOK('ok'));
+
         return $this->get('fos_rest.view_handler')->handle($view);
     }
 }
