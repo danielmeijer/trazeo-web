@@ -504,6 +504,7 @@ class ERide extends AbstractEntity
     public function setGroupRegistered(\Trazeo\BaseBundle\Entity\EGroup $groupRegistered = null)
     {
         $this->groupRegistered = $groupRegistered;
+        $this->groupid = $groupRegistered->getId();
 
         return $this;
     }

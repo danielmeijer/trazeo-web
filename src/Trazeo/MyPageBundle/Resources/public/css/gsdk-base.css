@@ -692,10 +692,15 @@ label{
 
 
 .wizard-container{
-
-    padding-top: 100px;
+    padding-top: 30px;
     z-index: 3;
 }
+
+.login-button-add-sopinet {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 .wizard-card{
     min-height: 410px;
     background-color: #FFFFFF;
