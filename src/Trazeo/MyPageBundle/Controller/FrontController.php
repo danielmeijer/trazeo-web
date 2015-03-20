@@ -272,7 +272,8 @@ class FrontController extends Controller
             // Grabamos UserExtend
             /** @var UserExtend $userExtend */
             $userExtend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
-            $dataUE = $request->get('trazeo_basebundle_userextend');
+            $dataUE = $request->get('trazeo_basebundle_userextendcustom');
+
             $userExtend->setMobile($dataUE['mobile']);
             $userExtend->setName($dataUE['name']);
             if ($request->get('trazeo_basebundle_userextend[country]') == '') {
@@ -283,6 +284,8 @@ class FrontController extends Controller
             if (count($city_entity) > 0) {
                 $userExtend->setCity($city_entity[0]);
             }
+            $em->persist($userExtend);
+            $em->flush();
 
             foreach($children as $child) {
                 $userExtend->addChild($child);

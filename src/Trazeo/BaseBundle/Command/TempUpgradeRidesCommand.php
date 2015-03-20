@@ -32,7 +32,7 @@ class TempUpgradeRidesCommand extends ContainerAwareCommand
         $em = $con->get('doctrine')->getManager();
 
         //Sacar paseos cuya distancia sea nula
-        $rides = $em->getRepository("TrazeoBaseBundle:ERide")->findByGroupRegistered(null);
+        $rides = $em->getRepository("TrazeoBaseBundle:ERide")->findAll();
 
         $repositoryGroup = $em->getRepository("TrazeoBaseBundle:EGroup");
 
@@ -40,6 +40,14 @@ class TempUpgradeRidesCommand extends ContainerAwareCommand
 
         /** @var ERide $ride */
         foreach($rides as $ride) {
+            if ($ride->getGroup() == null && $ride->getGroupRegistered() != null) {
+                $ride->setGroupid($ride->getGroupRegistered()->getId());
+                $em->persist($ride);
+                $em->flush();
+                $output->writeln("Actualizado paseo con ID: ".$ride->getId());
+            }
+            /**
+             * Antiguo actualizador
             if ($ride->getGroupid() != null && $ride->getGroupid() != 0) {
                 $group = $repositoryGroup->findOneById($ride->getGroupid());
                 $ride->setGroupRegistered($group);
@@ -47,6 +55,7 @@ class TempUpgradeRidesCommand extends ContainerAwareCommand
                 $em->flush();
                 $output->writeln("Actualizado paseo con ID: ".$ride->getId());
             }
+             * */
         }
     }
 }
