@@ -41,9 +41,9 @@ class Device
 
 
     /**
-     * @ORM\Column(name="device_id", type="string", length=1000)
+     * @ORM\Column(name="deviceId", type="string", length=1000)
      */
-    protected $device_id;
+    protected $deviceId;
 
     /**
      * @var string
@@ -172,7 +172,7 @@ class Device
      */
     public function setDeviceId($deviceId)
     {
-        $this->device_id = $deviceId;
+        $this->deviceId = $deviceId;
 
         return $this;
     }
@@ -184,6 +184,6 @@ class Device
      */
     public function getDeviceId()
     {
-        return $this->device_id;
+        return $this->deviceId;
     }
 }
