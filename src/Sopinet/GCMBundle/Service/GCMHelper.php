@@ -223,8 +223,7 @@ class GCMHelper
         $mes['username']=$msg->username;
         if ($msg->device==$msg::ANDROID) {
             $this->sendGCMessage($mes, $to);
-        }
-        elseif ($msg->device==$msg::IOS) {
+        } elseif ($msg->device==$msg::IOS) {
             $this->sendAPNMessage($mes, $to);
         }
     }
@@ -267,6 +266,29 @@ class GCMHelper
         $message->setMessage($mes['text']);
         $message->setDeviceIdentifier($to);
         $this->_container->get('rms_push_notifications')->send($message);
+    }
+
+    /**
+     * @param $text
+     * @param $from
+     * @param $type
+     * @param $time
+     * @param $phone
+     * @param $toToken
+     */
+    public function sendNotification($text, $type, $time, $phone, $toToken, $deviceType)
+    {
+        $mes['type'] = $type;
+        $mes['text'] = $text;
+        $mes['phone'] = $phone;
+        /** @var \DateTime $time */
+        $time=new \DateTime($time);
+        $mes['time'] =$time->getTimestamp();
+        if ($deviceType==Msg::ANDROID) {
+            $this->sendGCMessage($mes, $toToken);
+        } elseif ($deviceType==Msg::IOS) {
+            $this->sendAPNMessage($mes, $toToken);
+        }
     }
 }
 ?>

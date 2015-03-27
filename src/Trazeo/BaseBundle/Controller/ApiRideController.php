@@ -25,6 +25,7 @@ use Trazeo\BaseBundle\Entity\EGroup;
 use Sopinet\Bundle\SimplePointBundle\ORM\Type\SimplePoint;
 use Hip\MandrillBundle\Message;
 use Hip\MandrillBundle\Dispatcher;
+use Trazeo\BaseBundle\Entity\UserExtend;
 
 class ApiRideController extends Controller {
 
@@ -124,6 +125,20 @@ class ApiRideController extends Controller {
 
 
     /**
+     * @ApiDoc(
+     *   description="Función que crea un nuevo paseo ",
+     *   section="ride",
+     *   parameters={
+     *      {"name"="email", "dataType"="string", "required"=true, "description"="Email del usuario administrador"},
+     *      {"name"="pass", "dataType"="string", "required"=true, "description"="Password del usuario administrador"},
+     *      {"name"="id_group", "dataType"="string", "required"=true, "description"="Id del grupo"},
+     *      {"name"="latitude", "dataType"="number", "required"=true, "description"="latitud del punto donde empieza el paseo"},
+     *      {"name"="longitude", "dataType"="number", "required"=true, "description"="longitud del punto donde empieza el paseo"}
+     *   },
+     *   output={
+     *      "class"="Trazeo\BaseBundle\Entity\ERide"
+     *   }
+     * )
      * @POST("/api/ride/createNew")
      */
     public function getCreateNewRideAction(Request $request) {
@@ -133,7 +148,7 @@ class ApiRideController extends Controller {
         $longitude = $request->get('longitude');
 
         $user = $this->checkPrivateAccess($request);
-        if( $user == false || $user == null ){
+        if ( $user == false || $user == null ) {
             $view = View::create()
                 ->setStatusCode(200)
                 ->setData($this->msgDenied());
@@ -276,10 +291,9 @@ class ApiRideController extends Controller {
                 //Añadimos las notificaciones por correo
                 $userextends = $group->getUserextendgroups()->toArray();
                 $not = $this->container->get('sopinet_user_notification');
-                foreach($userextends as $userextend)
-                {
+                foreach ($userextends as $userextend) {
 
-                    $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($userextend->getUser(),'panel_ride_current', array('id' => $ride->getId()));
+                    $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($userextend->getUser(), 'panel_ride_current', array('id' => $ride->getId()));
                     $not->addNotification(
                         "ride.start",
                         "TrazeoBaseBundle:EGroup",
@@ -290,509 +304,542 @@ class ApiRideController extends Controller {
                         $this->generateUrl('panel_ride_current', array('id' => $ride->getId()))
 
                     );
+                    $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
+                    $devices=$repositoryDevice->findByUser($user);
+                    $gcmHelper=$this->container->get('sopinet_gcmhelper');
+                    /** @var Device $device */
+                    foreach ($devices as $device) {
+                        $time=new \DateTime('now');
+                        $gcmHelper->sendNotification($group->getId(), $not->getAction(), $time, $not->getUser()->getUser()->getPhone(), $device->getToken(), $device->getType());
+                    }
                 }
 
-                $event = new EEvent();
-                $event->setRide($ride);
-                $event->setAction("start");
-                $event->setData("");
-                $event->setLocation(new SimplePoint($latitude, $longitude));
-                $em->persist($event);
+            $event = new EEvent();
+            $event->setRide($ride);
+            $event->setAction("start");
+            $event->setData("");
+            $event->setLocation(new SimplePoint($latitude, $longitude));
+            $em->persist($event);
 
-                $array['id_ride'] = $group->getRide()->getId();
+            $array['id_ride'] = $group->getRide()->getId();
 
-                $view = View::create()
-                    ->setStatusCode(200)
-                    ->setData($this->doOK($array));
-
-                return $this->get('fos_rest.view_handler')->handle($view);
-            }
-
-        }
-
-    }
-
-    /**
-     * @ApiDoc(
-     *   description="Función que obtiene la información de un paseo",
-     *   section="ride",
-     *   parameters={
-     *      {"name"="email", "dataType"="string", "required"=true, "description"="Email del usuario administrador"},
-     *      {"name"="pass", "dataType"="string", "required"=true, "description"="Password del usuario administrador"},
-     *      {"name"="id_group", "dataType"="string", "required"=true, "description"="Id del paseo"},
-     *   },
-     *   output={
-     *      "class"="Trazeo\BaseBundle\Entity\ERide"
-     *   }
-     * )
-     * @POST("/api/ride/data")
-     */
-    public function getDataRideAction(Request $request) {
-
-        $id_ride = $request->get('id_ride');
-
-        $user = $this->checkPrivateAccess($request);
-        if( $user == false || $user == null ){
             $view = View::create()
                 ->setStatusCode(200)
-                ->setData($this->msgDenied());
+                ->setData($this->doOK($array));
 
             return $this->get('fos_rest.view_handler')->handle($view);
         }
 
-        $em = $this->get('doctrine.orm.entity_manager');
+    }
 
-        $userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+}
 
-        /** @var ERide $ride */
-        $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
+/**
+ * @ApiDoc(
+ *   description="Función que obtiene la información de un paseo",
+ *   section="ride",
+ *   parameters={
+ *      {"name"="email", "dataType"="string", "required"=true, "description"="Email del usuario administrador"},
+ *      {"name"="pass", "dataType"="string", "required"=true, "description"="Password del usuario administrador"},
+ *      {"name"="id_group", "dataType"="string", "required"=true, "description"="Id del paseo"},
+ *   },
+ *   output={
+ *      "class"="Trazeo\BaseBundle\Entity\ERide"
+ *   }
+ * )
+ * @POST("/api/ride/data")
+ */
+public function getDataRideAction(Request $request) {
 
+    $id_ride = $request->get('id_ride');
+
+    $user = $this->checkPrivateAccess($request);
+    if ( $user == false || $user == null ) {
         $view = View::create()
             ->setStatusCode(200)
-            ->setData($this->doOK($ride));
+            ->setData($this->msgDenied());
 
         return $this->get('fos_rest.view_handler')->handle($view);
-
     }
 
-    /**
-     * Guarda en el servidor la nueva posición del Paseo
-     * @POST("/api/ride/sendPosition")
-     */
-    public function getSendPositionRideAction(Request $request) {
+    $em = $this->get('doctrine.orm.entity_manager');
 
-        $id_ride = $request->get('id_ride');
-        $latitude = $request->get('latitude');
-        $longitude = $request->get('longitude');
-        $createdat = $request->get('createdat');
+    $userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 
-        $user = $this->checkPrivateAccess($request);
-        if( $user == false || $user == null ){
-            $view = View::create()
-                ->setStatusCode(200)
-                ->setData($this->msgDenied());
+    /** @var ERide $ride */
+    $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
 
-            return $this->get('fos_rest.view_handler')->handle($view);
-        }
+    $view = View::create()
+        ->setStatusCode(200)
+        ->setData($this->doOK($ride));
 
-        $em = $this->get('doctrine.orm.entity_manager');
-        if($latitude==0.0 && $longitude==0.0){
-            $reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
+    return $this->get('fos_rest.view_handler')->handle($view);
 
-            $events = $reEvent->findBy(array('action' => "point", 'ride' => $id_ride), array('createdAt' => 'DESC'));
-            $lastEvent = $events[0];
-            if($lastEvent!=null){
-                $latitude=$lastEvent->getLocation()->getLatitude();
-                $longitude=$lastEvent->getLocation()->getLongitude();
-            }
-        }
-        //$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+}
 
-        $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
+/**
+ * Guarda en el servidor la nueva posición del Paseo
+ * @POST("/api/ride/sendPosition")
+ */
+public function getSendPositionRideAction(Request $request) {
 
-        $event = new EEvent();
-        $event->setRide($ride);
-        $event->setAction("point");
-        $event->setLocation(new SimplePoint($latitude, $longitude));
-        $event->setCreatedAt(new\DateTime($createdat));
-        $event->setData("");
+    $id_ride = $request->get('id_ride');
+    $latitude = $request->get('latitude');
+    $longitude = $request->get('longitude');
+    $createdat = $request->get('createdat');
 
-        $em->persist($event);
-        $em->flush();
-
+    $user = $this->checkPrivateAccess($request);
+    if( $user == false || $user == null ){
         $view = View::create()
             ->setStatusCode(200)
-            ->setData($this->doOK($event));
+            ->setData($this->msgDenied());
 
         return $this->get('fos_rest.view_handler')->handle($view);
-
     }
 
-    /**
-     * Guarda en el servidor la nueva posición del Grupo
-     * @POST("/api/ride/sendChildInRide")
-     */
-    public function getSendChildInRideAction(Request $request) {
+    $em = $this->get('doctrine.orm.entity_manager');
+    if($latitude==0.0 && $longitude==0.0){
+        $reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
 
-        $id_ride = $request->get('id_ride');
-        $id_child = $request->get('id_child');
-        $latitude = $request->get('latitude');
-        $longitude = $request->get('longitude');
-        $createdat = $request->get('createdat');
-
-        $user = $this->checkPrivateAccess($request);
-        if( $user == false || $user == null ){
-            $view = View::create()
-                ->setStatusCode(200)
-                ->setData($this->msgDenied());
-
-            return $this->get('fos_rest.view_handler')->handle($view);
+        $events = $reEvent->findBy(array('action' => "point", 'ride' => $id_ride), array('createdAt' => 'DESC'));
+        $lastEvent = $events[0];
+        if($lastEvent!=null){
+            $latitude=$lastEvent->getLocation()->getLatitude();
+            $longitude=$lastEvent->getLocation()->getLongitude();
         }
+    }
+    //$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 
-        $em = $this->get('doctrine.orm.entity_manager');
-        if($latitude==0.0 && $longitude==0.0){
-            $reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
+    $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
 
-            $events = $reEvent->findBy(array('action' => "point", 'ride' => $id_ride), array('createdAt' => 'DESC'));
-            $lastEvent = $events[0];
-            if($lastEvent !=null){
-                $latitude=$lastEvent->getLocation()->getLatitude();
-                $longitude=$lastEvent->getLocation()->getLongitude();
-            }
-        }
-        //$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+    $event = new EEvent();
+    $event->setRide($ride);
+    $event->setAction("point");
+    $event->setLocation(new SimplePoint($latitude, $longitude));
+    $event->setCreatedAt(new\DateTime($createdat));
+    $event->setData("");
 
-        $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
-        $child = $em->getRepository('TrazeoBaseBundle:EChild')->findOneById($id_child);
-        $userextends = $child->getUserextendchilds()->toArray();
+    $em->persist($event);
+    $em->flush();
 
-        //Creamos evento de entrada de un niño
-        $event = new EEvent();
-        $event->setRide($ride);
-        $event->setAction("in");
-        $event->setData($id_child."/".$child->getNick());
-        $event->setLocation(new SimplePoint($latitude, $longitude));
-        $event->setCreatedAt(new\DateTime($createdat));
-        $em->persist($event);
-        $em->flush();
+    $view = View::create()
+        ->setStatusCode(200)
+        ->setData($this->doOK($event));
 
-        //Registramos al niño dentro del paseo
-        $child->setRide($ride);
-        $child->setSelected(1);
-        $em->persist($child);
-        $em->flush();
+    return $this->get('fos_rest.view_handler')->handle($view);
 
-        //Obtenemos el id del grupo
-        if($ride->getGroup()!=null)$group=$ride->getGroup()->getId();
-        else $group=$em->getRepository("TrazeoBaseBundle:EGroup")->findOneById($ride->getGroupid());
+}
 
+/**
+ * Guarda en el servidor la nueva posición del Grupo
+ * @POST("/api/ride/sendChildInRide")
+ */
+public function getSendChildInRideAction(Request $request) {
 
-        //Notificamos a sus tutores
-        foreach($userextends as $userextend){
-            $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($userextend->getUser(),'panel_ride_current', array('id' => $ride->getId()));
-            $not = $this->container->get('sopinet_user_notification');
-            $not->addNotification(
-                "child.in",
-                "TrazeoBaseBundle:EChild,TrazeoBaseBundle:EGroup",
-                $child->getId() . "," . $group,
-                $url,
-                $userextend->getUser(),
-                null,
-                $this->generateUrl('panel_ride_current', array('id' => $ride->getId()))
-            );
-        }
+    $id_ride = $request->get('id_ride');
+    $id_child = $request->get('id_child');
+    $latitude = $request->get('latitude');
+    $longitude = $request->get('longitude');
+    $createdat = $request->get('createdat');
 
-        $array['selected'] = $child->getSelected();
-
+    $user = $this->checkPrivateAccess($request);
+    if( $user == false || $user == null ){
         $view = View::create()
             ->setStatusCode(200)
-            ->setData($this->doOK($array));
+            ->setData($this->msgDenied());
 
         return $this->get('fos_rest.view_handler')->handle($view);
-
     }
 
-    /**
-     * Guarda en el servidor la nueva posición del Grupo
-     * @POST("/api/ride/sendChildOutRide")
-     */
-    public function getSendChildOutRideAction(Request $request) {
+    $em = $this->get('doctrine.orm.entity_manager');
+    if($latitude==0.0 && $longitude==0.0){
+        $reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
 
-        $id_ride = $request->get('id_ride');
-        $id_child = $request->get('id_child');
-        $latitude = $request->get('latitude');
-        $longitude = $request->get('longitude');
-        $createdat = $request->get('createdat');
-
-        $user = $this->checkPrivateAccess($request);
-        if( $user == false || $user == null ){
-            $view = View::create()
-                ->setStatusCode(200)
-                ->setData($this->msgDenied());
-
-            return $this->get('fos_rest.view_handler')->handle($view);
+        $events = $reEvent->findBy(array('action' => "point", 'ride' => $id_ride), array('createdAt' => 'DESC'));
+        $lastEvent = $events[0];
+        if($lastEvent !=null){
+            $latitude=$lastEvent->getLocation()->getLatitude();
+            $longitude=$lastEvent->getLocation()->getLongitude();
         }
+    }
+    //$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 
-        $em = $this->get('doctrine.orm.entity_manager');
-        if($latitude==0.0 && $longitude==0.0){
-            $reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
+    $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
+    $child = $em->getRepository('TrazeoBaseBundle:EChild')->findOneById($id_child);
+    $userextends = $child->getUserextendchilds()->toArray();
 
-            $events = $reEvent->findBy(array('action' => "point", 'ride' => $id_ride), array('createdAt' => 'DESC'));
-            $lastEvent = $events[0];
-            if($lastEvent !=null){
-                $latitude=$lastEvent->getLocation()->getLatitude();
-                $longitude=$lastEvent->getLocation()->getLongitude();
-            }
+    //Creamos evento de entrada de un niño
+    $event = new EEvent();
+    $event->setRide($ride);
+    $event->setAction("in");
+    $event->setData($id_child."/".$child->getNick());
+    $event->setLocation(new SimplePoint($latitude, $longitude));
+    $event->setCreatedAt(new\DateTime($createdat));
+    $em->persist($event);
+    $em->flush();
+
+    //Registramos al niño dentro del paseo
+    $child->setRide($ride);
+    $child->setSelected(1);
+    $em->persist($child);
+    $em->flush();
+
+    //Obtenemos el id del grupo
+    if($ride->getGroup()!=null)$group=$ride->getGroup()->getId();
+    else $group=$em->getRepository("TrazeoBaseBundle:EGroup")->findOneById($ride->getGroupid());
+
+
+    //Notificamos a sus tutores
+    /** @var UserExtend $userextend */
+    foreach($userextends as $userextend){
+        $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($userextend->getUser(),'panel_ride_current', array('id' => $ride->getId()));
+        $not = $this->container->get('sopinet_user_notification');
+        $not->addNotification(
+            "child.in",
+            "TrazeoBaseBundle:EChild,TrazeoBaseBundle:EGroup",
+            $child->getId() . "," . $group,
+            $url,
+            $userextend->getUser(),
+            null,
+            $this->generateUrl('panel_ride_current', array('id' => $ride->getId()))
+        );
+        $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
+        $devices=$repositoryDevice->findByUser($userextend);
+        $gcmHelper=$this->container->get('sopinet_gcmhelper');
+        /** @var Device $device */
+        foreach ($devices as $device) {
+            $time=new \DateTime('now');
+            $gcmHelper->sendNotification($group->getId(), $not->getAction(), $time, $not->getUser()->getUser()->getPhone(), $device->getToken(), $device->getType());
         }
-        //$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+    }
 
-        $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
-        $child = $em->getRepository('TrazeoBaseBundle:EChild')->findOneById($id_child);
-        $userextends = $child->getUserextendchilds()->toArray();
+    $array['selected'] = $child->getSelected();
 
-        $event = new EEvent();
-        $event->setRide($ride);
-        $event->setAction("out");
-        $event->setData($id_child."/".$child->getNick());
-        $event->setLocation(new SimplePoint($latitude, $longitude));
-        $event->setCreatedAt(new\DateTime($createdat));
-        $em->persist($event);
-        $em->flush();
+    $view = View::create()
+        ->setStatusCode(200)
+        ->setData($this->doOK($array));
 
-        //Eliminamos el niño del paseo
+    return $this->get('fos_rest.view_handler')->handle($view);
+
+}
+
+/**
+ * Guarda en el servidor la nueva posición del Grupo
+ * @POST("/api/ride/sendChildOutRide")
+ */
+public function getSendChildOutRideAction(Request $request) {
+
+    $id_ride = $request->get('id_ride');
+    $id_child = $request->get('id_child');
+    $latitude = $request->get('latitude');
+    $longitude = $request->get('longitude');
+    $createdat = $request->get('createdat');
+
+    $user = $this->checkPrivateAccess($request);
+    if( $user == false || $user == null ){
+        $view = View::create()
+            ->setStatusCode(200)
+            ->setData($this->msgDenied());
+
+        return $this->get('fos_rest.view_handler')->handle($view);
+    }
+
+    $em = $this->get('doctrine.orm.entity_manager');
+    if($latitude==0.0 && $longitude==0.0){
+        $reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
+
+        $events = $reEvent->findBy(array('action' => "point", 'ride' => $id_ride), array('createdAt' => 'DESC'));
+        $lastEvent = $events[0];
+        if($lastEvent !=null){
+            $latitude=$lastEvent->getLocation()->getLatitude();
+            $longitude=$lastEvent->getLocation()->getLongitude();
+        }
+    }
+    //$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+
+    $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
+    $child = $em->getRepository('TrazeoBaseBundle:EChild')->findOneById($id_child);
+    $userextends = $child->getUserextendchilds()->toArray();
+
+    $event = new EEvent();
+    $event->setRide($ride);
+    $event->setAction("out");
+    $event->setData($id_child."/".$child->getNick());
+    $event->setLocation(new SimplePoint($latitude, $longitude));
+    $event->setCreatedAt(new\DateTime($createdat));
+    $em->persist($event);
+    $em->flush();
+
+    //Eliminamos el niño del paseo
+    $child->setRide(null);
+    $child->setSelected(0);
+    $em->persist($child);
+    $em->flush();
+
+    //Obtenemos el id del grupo
+    if($ride->getGroup()!=null)$group=$ride->getGroup()->getId();
+    else $group=$em->getRepository("TrazeoBaseBundle:EGroup")->findOneById($ride->getGroupid());
+
+    $not = $this->container->get('sopinet_user_notification');
+    //Notificamos a sus tutores
+    foreach($userextends as $userextend){
+        $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($userextend->getUser(),'panel_ride_current', array('id' => $ride->getId()));
+        $not->addNotification(
+            "child.out",
+            "TrazeoBaseBundle:EChild,TrazeoBaseBundle:EGroup",
+            $child->getId() . "," . $group,
+            $url,
+            $userextend->getUser(),
+            null,
+            $this->generateUrl('panel_ride_current', array('id' => $ride->getId()))
+        );
+        $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
+        $devices=$repositoryDevice->findByUser($userextend);
+        $gcmHelper=$this->container->get('sopinet_gcmhelper');
+        /** @var Device $device */
+        foreach ($devices as $device) {
+            $time=new \DateTime('now');
+            $gcmHelper->sendNotification($group->getId(), $not->getAction(), $time, $not->getUser()->getUser()->getPhone(), $device->getToken(), $device->getType());
+        }
+    }
+
+    $array['selected'] = $child->getSelected();
+
+    $view = View::create()
+        ->setStatusCode(200)
+        ->setData($this->doOK($array));
+
+    return $this->get('fos_rest.view_handler')->handle($view);
+
+}
+
+/**
+ * Mandar último punto del paseo
+ * @POST("/api/ride/lastPoint")
+ */
+public function getlastPointRideAction(Request $request) {
+
+    $id_ride = $request->get('id_ride');
+    $latitude = $request->get('latitude');
+    $longitude = $request->get('longitude');
+
+    $user = $this->checkPrivateAccess($request);
+    if( $user == false || $user == null ){
+        $view = View::create()
+            ->setStatusCode(200)
+            ->setData($this->msgDenied());
+
+        return $this->get('fos_rest.view_handler')->handle($view);
+    }
+
+    $em = $this->get('doctrine.orm.entity_manager');
+
+    //$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+    $reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
+
+    $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
+    // TODO: Lo ideal sería coger el último PUNTO con un REPOSITORY
+    $events = $reEvent->findBy(array('action' => "point", 'ride' => $ride->getId()), array('createdAt' => 'DESC'));
+
+    if (count($events) > 0) {
+        $data = $events[0];
+    } else {
+        $data = null;
+    }
+
+    $view = View::create()
+        ->setStatusCode(200)
+        ->setData($this->doOK($data));
+
+    return $this->get('fos_rest.view_handler')->handle($view);
+
+}
+
+/**
+ * @POST("/api/ride/finish")
+ */
+public function getFinishRideAction(Request $request) {
+
+    //Comprobar si el ride asociado al grupo está creado(hasRide=1)
+    $id_ride = $request->get('id_ride');
+    $latitude = $request->get('latitude');
+    $longitude = $request->get('longitude');
+    $createdat = $request->get('createdat');
+
+    $user = $this->checkPrivateAccess($request);
+    if( $user == false || $user == null ){
+        $view = View::create()
+            ->setStatusCode(200)
+            ->setData($this->msgDenied());
+
+        return $this->get('fos_rest.view_handler')->handle($view);
+    }
+
+    $em = $this->get('doctrine.orm.entity_manager');
+    if($latitude==0.0 && $longitude==0.0){
+        $reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
+
+        $events = $reEvent->findBy(array('action' => "point", 'ride' => $id_ride), array('createdAt' => 'DESC'));
+        $lastEvent = $events[0];
+        if($lastEvent !=null){
+            $latitude=$lastEvent->getLocation()->getLatitude();
+            $longitude=$lastEvent->getLocation()->getLongitude();
+        }
+    }
+    $userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+
+    /** @var ERide $ride */
+    $ride = $em->getRepository('TrazeoBaseBundle:ERide')->find($id_ride);
+    $group = $ride->getGroup();
+
+    //Cálculo del tiempo transcurrido en el paseo
+    $inicio = $ride->getCreatedAt();
+    $fin = new \DateTime();
+
+    $diff = $inicio->diff($fin);
+    $duration = $diff->h." horas, ".$diff->i." minutos y ".$diff->s." segundos";
+
+    if ($group == null) {
+        $view = View::create()
+            ->setStatusCode(200)
+            ->setData($this->doOK("ok"));
+
+        return $this->get('fos_rest.view_handler')->handle($view);
+    }
+
+    $group->setHasRide(0);
+    $em->persist($group);
+
+    $ride->setDuration($duration);
+    $ride->setGroupid($group->getId());
+    $ride->setGroupRegistered($group);
+    $ride->setGroup(null);
+    $em->persist($ride);
+
+    //desvinculamos a los niños del paseo
+
+    $childs = $em->getRepository('TrazeoBaseBundle:EChild')->findByRide($ride);
+    foreach ($childs as $child){
         $child->setRide(null);
         $child->setSelected(0);
         $em->persist($child);
-        $em->flush();
+    }
 
-        //Obtenemos el id del grupo
-        if($ride->getGroup()!=null)$group=$ride->getGroup()->getId();
-        else $group=$em->getRepository("TrazeoBaseBundle:EGroup")->findOneById($ride->getGroupid());
+    $em->flush();
 
-        $not = $this->container->get('sopinet_user_notification');
-        //Notificamos a sus tutores
-        foreach($userextends as $userextend){
-            $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($userextend->getUser(),'panel_ride_current', array('id' => $ride->getId()));
+    $event = new EEvent();
+    $event->setRide($ride);
+    $event->setAction("finish");
+    $event->setData("");
+    $event->setLocation(new SimplePoint($latitude, $longitude));
+    $event->setCreatedAt(new\DateTime($createdat));
+    $em->persist($event);
+
+    $em->flush();
+
+
+    //add notifications for parents
+    $userextends = $group->getUserextendgroups();
+
+    $not = $this->container->get('sopinet_user_notification');
+    $repositoryUserExtend = $em->getRepository('TrazeoBaseBundle:UserExtend');
+
+    foreach($userextends as $userextend)
+    {
+        if($repositoryUserExtend->hasChildOnRide($userextend,$ride)){
+            $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($userextend->getUser(),'panel_ride_resume', array('id' => $ride->getId()));
             $not->addNotification(
-                "child.out",
-                "TrazeoBaseBundle:EChild,TrazeoBaseBundle:EGroup",
-                $child->getId() . "," . $group,
+                "ride.finish",
+                "TrazeoBaseBundle:EGroup",
+                $group->getId(),
                 $url,
                 $userextend->getUser(),
                 null,
                 $this->generateUrl('panel_ride_current', array('id' => $ride->getId()))
             );
+            $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
+            $devices=$repositoryDevice->findByUser($userextend);
+            $gcmHelper=$this->container->get('sopinet_gcmhelper');
+            /** @var Device $device */
+            foreach ($devices as $device) {
+                $time=new \DateTime('now');
+                $gcmHelper->sendNotification($group->getId(), $not->getAction(), $time, $not->getUser()->getUser()->getPhone(), $device->getToken(), $device->getType());
+            }
         }
-
-        $array['selected'] = $child->getSelected();
-
-        $view = View::create()
-            ->setStatusCode(200)
-            ->setData($this->doOK($array));
-
-        return $this->get('fos_rest.view_handler')->handle($view);
-
     }
 
-    /**
-     * Mandar último punto del paseo
-     * @POST("/api/ride/lastPoint")
-     */
-    public function getlastPointRideAction(Request $request) {
 
-        $id_ride = $request->get('id_ride');
-        $latitude = $request->get('latitude');
-        $longitude = $request->get('longitude');
+    $view = View::create()
+        ->setStatusCode(200)
+        ->setData($this->doOK('ok'));
 
-        $user = $this->checkPrivateAccess($request);
-        if( $user == false || $user == null ){
-            $view = View::create()
-                ->setStatusCode(200)
-                ->setData($this->msgDenied());
+    return $this->get('fos_rest.view_handler')->handle($view);
 
-            return $this->get('fos_rest.view_handler')->handle($view);
-        }
 
-        $em = $this->get('doctrine.orm.entity_manager');
+}
 
-        //$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+
+/**
+ * Guarda en el servidor la nueva posición del Grupo
+ * @POST("/api/ride/report")
+ */
+public function getReportAction(Request $request) {
+
+    $id_ride = $request->get('id_ride');
+    $texto = $request->get('text');
+    $latitude = $request->get('latitude');
+    $longitude = $request->get('longitude');
+    //$tipo_de_incidencia = $request->get('tipo_de_incidencia');
+
+    $user = $this->checkPrivateAccess($request);
+    if( $user == false || $user == null ){
+        $view = View::create()
+            ->setStatusCode(200)
+            ->setData($this->msgDenied());
+
+        return $this->get('fos_rest.view_handler')->handle($view);
+    }
+
+    $em = $this->get('doctrine.orm.entity_manager');
+    if($latitude==0.0 && $longitude==0.0){
         $reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
 
-        $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
-        // TODO: Lo ideal sería coger el último PUNTO con un REPOSITORY
-        $events = $reEvent->findBy(array('action' => "point", 'ride' => $ride->getId()), array('createdAt' => 'DESC'));
-
-        if (count($events) > 0) {
-            $data = $events[0];
-        } else {
-            $data = null;
+        $events = $reEvent->findBy(array('action' => "point", 'ride' => $id_ride), array('createdAt' => 'DESC'));
+        $lastEvent = $events[0];
+        if($lastEvent !=null){
+            $latitude=$lastEvent->getLocation()->getLatitude();
+            $longitude=$lastEvent->getLocation()->getLongitude();
         }
-
-        $view = View::create()
-            ->setStatusCode(200)
-            ->setData($this->doOK($data));
-
-        return $this->get('fos_rest.view_handler')->handle($view);
-
     }
 
-    /**
-     * @POST("/api/ride/finish")
-     */
-    public function getFinishRideAction(Request $request) {
+    $userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 
-        //Comprobar si el ride asociado al grupo está creado(hasRide=1)
-        $id_ride = $request->get('id_ride');
-        $latitude = $request->get('latitude');
-        $longitude = $request->get('longitude');
-        $createdat = $request->get('createdat');
+    $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
 
-        $user = $this->checkPrivateAccess($request);
-        if( $user == false || $user == null ){
-            $view = View::create()
-                ->setStatusCode(200)
-                ->setData($this->msgDenied());
+    $report = new EReport();
+    $report->setText($texto);
+    $report->setUserextend($userextend);
+    $report->setRide($ride);
+    //$report->setType($tipo_de_incidencia);
 
-            return $this->get('fos_rest.view_handler')->handle($view);
-        }
+    $em->persist($report);
+    $em->flush();
+    $event = new EEvent();
+    $event->setRide($ride);
+    $event->setAction("report");
+    $event->setData($report->getId()."/".$texto);
+    $event->setLocation(new SimplePoint($latitude, $longitude));
 
-        $em = $this->get('doctrine.orm.entity_manager');
-        if($latitude==0.0 && $longitude==0.0){
-            $reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
+    $em->persist($event);
+    $em->flush();
 
-            $events = $reEvent->findBy(array('action' => "point", 'ride' => $id_ride), array('createdAt' => 'DESC'));
-            $lastEvent = $events[0];
-            if($lastEvent !=null){
-                $latitude=$lastEvent->getLocation()->getLatitude();
-                $longitude=$lastEvent->getLocation()->getLongitude();
-            }
-        }
-        $userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+    $array['id'] = $report->getId();
 
-        /** @var ERide $ride */
-        $ride = $em->getRepository('TrazeoBaseBundle:ERide')->find($id_ride);
-        $group = $ride->getGroup();
+    $view = View::create()
+        ->setStatusCode(200)
+        ->setData($this->doOK($array));
 
-        //Cálculo del tiempo transcurrido en el paseo
-        $inicio = $ride->getCreatedAt();
-        $fin = new \DateTime();
-
-        $diff = $inicio->diff($fin);
-        $duration = $diff->h." horas, ".$diff->i." minutos y ".$diff->s." segundos";
-
-        if ($group == null) {
-            $view = View::create()
-                ->setStatusCode(200)
-                ->setData($this->doOK("ok"));
-
-            return $this->get('fos_rest.view_handler')->handle($view);
-        }
-
-        $group->setHasRide(0);
-        $em->persist($group);
-
-        $ride->setDuration($duration);
-        $ride->setGroupid($group->getId());
-        $ride->setGroupRegistered($group);
-        $ride->setGroup(null);
-        $em->persist($ride);
-
-        //desvinculamos a los niños del paseo
-
-        $childs = $em->getRepository('TrazeoBaseBundle:EChild')->findByRide($ride);
-        foreach ($childs as $child){
-            $child->setRide(null);
-            $child->setSelected(0);
-            $em->persist($child);
-        }
-
-        $em->flush();
-
-        $event = new EEvent();
-        $event->setRide($ride);
-        $event->setAction("finish");
-        $event->setData("");
-        $event->setLocation(new SimplePoint($latitude, $longitude));
-        $event->setCreatedAt(new\DateTime($createdat));
-        $em->persist($event);
-
-        $em->flush();
-
-
-        //add notifications for parents
-        $userextends = $group->getUserextendgroups();
-
-        $not = $this->container->get('sopinet_user_notification');
-        $repositoryUserExtend = $em->getRepository('TrazeoBaseBundle:UserExtend');
-
-        foreach($userextends as $userextend)
-        {
-            if($repositoryUserExtend->hasChildOnRide($userextend,$ride)){
-                $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($userextend->getUser(),'panel_ride_resume', array('id' => $ride->getId()));
-                $not->addNotification(
-                    "ride.finish",
-                    "TrazeoBaseBundle:EGroup",
-                    $group->getId(),
-                    $url,
-                    $userextend->getUser(),
-                    null,
-                    $this->generateUrl('panel_ride_current', array('id' => $ride->getId()))
-                );
-            }
-        }
-
-
-        $view = View::create()
-            ->setStatusCode(200)
-            ->setData($this->doOK('ok'));
-
-        return $this->get('fos_rest.view_handler')->handle($view);
-
-
-    }
-
-
-    /**
-     * Guarda en el servidor la nueva posición del Grupo
-     * @POST("/api/ride/report")
-     */
-    public function getReportAction(Request $request) {
-
-        $id_ride = $request->get('id_ride');
-        $texto = $request->get('text');
-        $latitude = $request->get('latitude');
-        $longitude = $request->get('longitude');
-        //$tipo_de_incidencia = $request->get('tipo_de_incidencia');
-
-        $user = $this->checkPrivateAccess($request);
-        if( $user == false || $user == null ){
-            $view = View::create()
-                ->setStatusCode(200)
-                ->setData($this->msgDenied());
-
-            return $this->get('fos_rest.view_handler')->handle($view);
-        }
-
-        $em = $this->get('doctrine.orm.entity_manager');
-        if($latitude==0.0 && $longitude==0.0){
-            $reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
-
-            $events = $reEvent->findBy(array('action' => "point", 'ride' => $id_ride), array('createdAt' => 'DESC'));
-            $lastEvent = $events[0];
-            if($lastEvent !=null){
-                $latitude=$lastEvent->getLocation()->getLatitude();
-                $longitude=$lastEvent->getLocation()->getLongitude();
-            }
-        }
-
-        $userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
-
-        $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
-
-        $report = new EReport();
-        $report->setText($texto);
-        $report->setUserextend($userextend);
-        $report->setRide($ride);
-        //$report->setType($tipo_de_incidencia);
-
-        $em->persist($report);
-        $em->flush();
-        $event = new EEvent();
-        $event->setRide($ride);
-        $event->setAction("report");
-        $event->setData($report->getId()."/".$texto);
-        $event->setLocation(new SimplePoint($latitude, $longitude));
-
-        $em->persist($event);
-        $em->flush();
-
-        $array['id'] = $report->getId();
-
-        $view = View::create()
-            ->setStatusCode(200)
-            ->setData($this->doOK($array));
-
-        return $this->get('fos_rest.view_handler')->handle($view);
-    }
+    return $this->get('fos_rest.view_handler')->handle($view);
+}
 
 }

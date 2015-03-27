@@ -76,24 +76,6 @@ class GenerateEmailsCommand extends ContainerAwareCommand
                     $not->setEmail(1);
                     $em->persist($not);
                     $em->flush();
-                    if ($not->getAction()=='ride.finish' || $not->getAction()=='ride.start' || $not->getAction()=='child.in' || $not->getAction()=='child.out') {
-                        $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
-                        $devices=$repositoryDevice->findByUser($user);
-                        /** @var Device $device */
-                        foreach ($devices as $device) {
-                            $gcmHelper=$con->get('sopinet_gcmhelper');
-                            $msg=new Msg();
-                            $msg->text = $not->getObjects();
-                            $msg->from = 'SERVER';
-                            $msg->device=$device->getType();
-                            $msg->type=$not->getAction();
-                            $msg->time=new \DateTime('now');
-                            if ($not->getUser()!=null && $not->getUser()->getUser()->getPhone()!=null) {
-                                $msg->phone=$not->getUser()->getUser()->getPhone();
-                            }
-                            $gcmHelper->sendMessage($msg, $device->getToken());
-                        }
-                    }
                 }
 
                 if (count($notifications) == 1) {
