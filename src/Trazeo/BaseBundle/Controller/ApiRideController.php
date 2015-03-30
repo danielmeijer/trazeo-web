@@ -2,29 +2,17 @@
 
 namespace Trazeo\BaseBundle\Controller;
 
-use FOS\RestBundle\Controller\FOSRestController;
-use FOS\RestBundle\Routing\ClassResourceInterface;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\View\View;
-use FOS\RestBundle\View\ViewHandler;
-use FOS\RestBundle\View\RouteRedirectView;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Sopinet\Bundle\SimplePointBundle\ORM\Type\SimplePoint;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use FOS\RestBundle\Controller\Annotations\Post;
-use FOS\RestBundle\Controller\Annotations\Get;
-use FOS\RestBundle\Controller\Annotations\RouteResource;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Trazeo\BaseBundle\Entity\ERide;
 use Trazeo\BaseBundle\Entity\EChild;
 use Trazeo\BaseBundle\Entity\EEvent;
-use Trazeo\BaseBundle\Entity\EReport;
 use Trazeo\BaseBundle\Entity\EGroup;
-use Sopinet\Bundle\SimplePointBundle\ORM\Type\SimplePoint;
-use Hip\MandrillBundle\Message;
-use Hip\MandrillBundle\Dispatcher;
+use Trazeo\BaseBundle\Entity\EReport;
+use Trazeo\BaseBundle\Entity\ERide;
 use Trazeo\BaseBundle\Entity\UserExtend;
 
 class ApiRideController extends Controller {
@@ -308,12 +296,12 @@ class ApiRideController extends Controller {
 
                     );
                     $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
-                    $devices=$repositoryDevice->findByUser($user);
+                    $devices=$repositoryDevice->findByUser($userextend);
                     $gcmHelper=$this->container->get('sopinet_gcmhelper');
                     /** @var Device $device */
                     foreach ($devices as $device) {
                         $time=new \DateTime('now');
-                        $gcmHelper->sendNotification($group->getId(), "ride.start", $time, $userextend->getUser()->getPhone(), $device->getToken(), $device->getType());
+                        $gcmHelper->sendNotification($group->getName(), $group->getId(), "ride.start", $time, $userextend->getUser()->getPhone(), $device->getToken(), $device->getType());
                     }
                 }
 
@@ -506,6 +494,7 @@ class ApiRideController extends Controller {
         //$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 
         $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
+        /** @var EChild $child */
         $child = $em->getRepository('TrazeoBaseBundle:EChild')->findOneById($id_child);
         $userextends = $child->getUserextendchilds()->toArray();
 
@@ -553,7 +542,7 @@ class ApiRideController extends Controller {
             /** @var Device $device */
             foreach ($devices as $device) {
                 $time=new \DateTime('now');
-                $gcmHelper->sendNotification($group, "child.in", $time, $userextend->getUser()->getPhone(), $device->getToken(), $device->getType());
+                $gcmHelper->sendNotification($child->getNick(), $group, "child.in", $time, $userextend->getUser()->getPhone(), $device->getToken(), $device->getType());
             }
         }
 
@@ -643,7 +632,7 @@ class ApiRideController extends Controller {
             /** @var Device $device */
             foreach ($devices as $device) {
                 $time=new \DateTime('now');
-                $gcmHelper->sendNotification($group, "child.out", $time, $userextend->getUser()->getPhone(), $device->getToken(), $device->getType());
+                $gcmHelper->sendNotification($child->getNick(), $group, "child.out", $time, $userextend->getUser()->getPhone(), $device->getToken(), $device->getType());
             }
         }
 
@@ -819,7 +808,7 @@ class ApiRideController extends Controller {
                 /** @var Device $device */
                 foreach ($devices as $device) {
                     $time=new \DateTime('now');
-                    $gcmHelper->sendNotification($group->getId(), "ride.finish", $time, $userextend->getUser()->getPhone(), $device->getToken(), $device->getType());
+                    $gcmHelper->sendNotification($group->getName(), $group->getId(), "ride.finish", $time, $userextend->getUser()->getPhone(), $device->getToken(), $device->getType());
                 }
             }
         }
