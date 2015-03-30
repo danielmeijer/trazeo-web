@@ -131,7 +131,9 @@ class ChatApiController extends FOSRestController{
             }
         }
         if (!$ok) {
-            return false; // Ha sucedido algo inesperado, ha mandado un mensaje alguien que no estaba en el Chat.
+            $response = $apiHelper->msgDenied(ApiHelper::NODEVICE, 400);
+
+            return $response; // Ha sucedido algo inesperado, ha mandado un mensaje alguien que no estaba en el Chat.
         }
 
         // Enviamos el mensaje correspondiente a todos los dispositivos, excepto
