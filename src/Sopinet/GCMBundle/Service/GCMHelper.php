@@ -281,9 +281,7 @@ class GCMHelper
         $mes['type'] = $type;
         $mes['text'] = $text;
         $mes['phone'] = $phone;
-        /** @var \DateTime $time */
-        $time=new \DateTime($time);
-        $mes['time'] =$time->getTimestamp();
+        $mes['time'] =$time;
         if ($deviceType==Msg::ANDROID) {
             $this->sendGCMessage($mes, $toToken);
         } elseif ($deviceType==Msg::IOS) {
