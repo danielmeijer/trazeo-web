@@ -58,14 +58,18 @@ class MessageRepository extends EntityRepository{
         /** @var EntityManager $em */
         $em = $this->getEntityManager();
         $message = new Message();
-        $message->setDateSend(new \DateTime((int) $msg->time/1000));
-        $message->setDateReceieved(new \DateTime((int) $msg->time/1000));
+        $message->setDateSend(new \DateTime(date('Y-m-d H:i:s', $msg->time)));
+        $message->setDateReceieved(new \DateTime(date('Y-m-d H:i:s', $msg->time)));
         $chat=$em->getRepository('SopinetChatBundle:Chat')->find($msg->chatid);
-        if($chat==null)throw new EntityNotFoundException();
+        if ($chat==null) {
+            throw new EntityNotFoundException();
+        }
         $message->setChat($chat);
         /** @var Device $device */
         $device=$em->getRepository('SopinetGCMBundle:Device')->findOneByToken($msg->from);
-        if($device==null)throw new EntityNotFoundException();
+        if ($device==null) {
+            throw new EntityNotFoundException();
+        }
         $message->setDevice($device);
         $message->setUser($device->getUser());
         $message->setText($msg->text);
