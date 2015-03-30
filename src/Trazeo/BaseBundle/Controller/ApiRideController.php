@@ -2,6 +2,7 @@
 
 namespace Trazeo\BaseBundle\Controller;
 
+use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sopinet\Bundle\SimplePointBundle\ORM\Type\SimplePoint;
@@ -131,7 +132,7 @@ class ApiRideController extends Controller {
      *      "class"="Trazeo\BaseBundle\Entity\ERide"
      *   }
      * )
-     * @POST("/api/ride/createNew")
+     * @Post("/api/ride/createNew")
      */
     public function getCreateNewRideAction(Request $request) {
         //Comprobar si el ride asociado al grupo está creado(hasRide=1)
@@ -341,7 +342,7 @@ class ApiRideController extends Controller {
      *      "class"="Trazeo\BaseBundle\Entity\ERide"
      *   }
      * )
-     * @POST("/api/ride/data")
+     * @Post("/api/ride/data")
      */
     public function getDataRideAction(Request $request)
     {
@@ -390,7 +391,7 @@ class ApiRideController extends Controller {
      *   }
      * )
      * Guarda en el servidor la nueva posición del Paseo
-     * @POST("/api/ride/sendPosition")
+     * @Post("/api/ride/sendPosition")
      */
     public function getSendPositionRideAction(Request $request)
     {
@@ -460,7 +461,7 @@ class ApiRideController extends Controller {
      *   }
      * )
      * Guarda en el servidor la nueva posición del Grupo
-     * @POST("/api/ride/sendChildInRide")
+     * @Post("/api/ride/sendChildInRide")
      */
     public function getSendChildInRideAction(Request $request)
     {
@@ -558,7 +559,7 @@ class ApiRideController extends Controller {
 
     /**
      * Guarda en el servidor la nueva posición del Grupo
-     * @POST("/api/ride/sendChildOutRide")
+     * @Post("/api/ride/sendChildOutRide")
      */
     public function getSendChildOutRideAction(Request $request) {
 
@@ -648,7 +649,7 @@ class ApiRideController extends Controller {
 
     /**
      * Mandar último punto del paseo
-     * @POST("/api/ride/lastPoint")
+     * @Post("/api/ride/lastPoint")
      */
     public function getlastPointRideAction(Request $request) {
 
@@ -701,7 +702,7 @@ class ApiRideController extends Controller {
      *      {"name"="createdat", "dataType"="number", "required"=true, "description"="Fecha fin de paseo"}
      *   }
      * )
-     * @POST("/api/ride/finish")
+     * @Post("/api/ride/finish")
      */
     public function getFinishRideAction(Request $request) {
 
@@ -826,7 +827,7 @@ class ApiRideController extends Controller {
 
     /**
      * Guarda en el servidor la nueva posición del Grupo
-     * @POST("/api/ride/report")
+     * @Post("/api/ride/report")
      */
     public function getReportAction(Request $request) {
 
