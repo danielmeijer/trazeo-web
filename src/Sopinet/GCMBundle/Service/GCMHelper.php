@@ -212,8 +212,7 @@ class GCMHelper
         $mes['msgid'] = $msg->msgid;
         $mes['phone'] = $msg->phone;
         /** @var \DateTime $time */
-        $time=new \DateTime($msg->time);
-        $mes['time'] =$time->getTimestamp();
+        $mes['time'] =$msg->time;
         $mes['groupId']= $msg->groupId;
         $mes['username']=$msg->username;
         if ($msg->device==$msg::ANDROID) {
