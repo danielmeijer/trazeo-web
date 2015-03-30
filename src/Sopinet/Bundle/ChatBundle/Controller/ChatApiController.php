@@ -115,7 +115,9 @@ class ChatApiController extends FOSRestController{
 
         // Si no hay dispositivos que notificar: salimos
         if (!is_array($devices)) {
-            return false;
+            $response = $apiHelper->msgDenied('no devices', 400);
+
+            return $response;
         }
 
         // Comprobamos permisos (el from tiene permiso para trabajar en el chatid)
