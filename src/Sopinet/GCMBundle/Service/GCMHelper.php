@@ -1,15 +1,10 @@
 <?php
 namespace Sopinet\GCMBundle\Service;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
 use RMS\PushNotificationsBundle\Exception\InvalidMessageTypeException;
 use RMS\PushNotificationsBundle\Message\AndroidMessage;
 use RMS\PushNotificationsBundle\Message\iOSMessage;
-use RMS\PushNotificationsBundle\Service\OS\AndroidGCMNotification;
 use Sopinet\GCMBundle\Model\Msg;
-use Sopinet\GCMBundle\SopinetGCMBundle;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class GCMHelper
 {
@@ -276,12 +271,13 @@ class GCMHelper
      * @param $phone
      * @param $toToken
      */
-    public function sendNotification($text, $type, $time, $phone, $toToken, $deviceType)
+    public function sendNotification($text, $groupId, $type, $time, $phone, $toToken, $deviceType)
     {
         $mes['type'] = $type;
         $mes['text'] = $text;
+        $mes['groupId']= $groupId;
         $mes['phone'] = $phone;
-        $mes['time'] =$time;
+        $mes['time'] =$time->getTimestamp();
         if ($deviceType==Msg::ANDROID) {
             $this->sendGCMessage($mes, $toToken);
         } elseif ($deviceType==Msg::IOS) {
