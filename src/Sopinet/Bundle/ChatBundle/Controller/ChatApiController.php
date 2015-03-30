@@ -3,8 +3,9 @@
 namespace Sopinet\Bundle\ChatBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\Post;
+use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sopinet\Bundle\ChatBundle\Entity\Chat;
 use Sopinet\Bundle\ChatBundle\Entity\ChatRepository;
@@ -12,12 +13,8 @@ use Sopinet\Bundle\ChatBundle\Entity\Message;
 use Sopinet\Bundle\ChatBundle\Entity\MessageRepository;
 use Sopinet\Bundle\ChatBundle\Service\ApiHelper;
 use Sopinet\GCMBundle\Entity\Device;
-use Sopinet\GCMBundle\Model\CustomMsg;
-use Symfony\Component\HttpFoundation\Request;
 use Sopinet\GCMBundle\Model\Msg;
-use Sopinet\GCMBundle\Event\GCMEvent;
-use Sopinet\GCMBundle\GCMEvents;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\HttpFoundation\Request;
 use Trazeo\BaseBundle\Entity\UserExtend;
 
 
@@ -64,7 +61,7 @@ class ChatApiController extends FOSRestController{
 
             return $response;
         }
-
+        $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user); //FIXME
         // Construímos el MSG
         $msg = new Msg();
         // Si es de tipo file
@@ -198,7 +195,7 @@ class ChatApiController extends FOSRestController{
         }
 
         // Subimos la imagen
-        /** @var FileRepository $repositoryFile */
+        /** @var  File $repositoryFile */
         $repositoryFile = $em->getRepository('PetyCashAppBundle:File');
         $fileObject = $repositoryFile->uploadImageForChat($this->container, $request->files->get('file'), $chat);
         $url = $this->container->getParameter("image_url") . $fileObject->getName();
@@ -378,8 +375,9 @@ class ChatApiController extends FOSRestController{
         if ($form->isValid()) {
             //Creamos el administrador
             $admin = $repositoryUser->findOneById($request->get('admin'));
-            if(!$admin){
+            if (!$admin) {
                 $response = $apiHelper->msgDenied(ApiHelper::USERNOTVALID, 400);
+
                 return $response;
             }
             $chat->setAdmin($admin);
