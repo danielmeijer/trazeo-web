@@ -18,8 +18,9 @@ class GCMHelper
      * Añade un dispositivo a un usuario en la base de datos
      *
      * @param String $deviceId
-     * @param $user
-     * @param String $type('Android'|'iOS')
+     * @param User $user
+     * @param String $token
+     * @param String $type ('Android'|'iOS')
      *
      * @return mixed
      */
@@ -211,7 +212,6 @@ class GCMHelper
         $mes['chattype'] = $msg->chattype;
         $mes['msgid'] = $msg->msgid;
         $mes['phone'] = $msg->phone;
-        /** @var \DateTime $time */
         $mes['time'] =$msg->time;
         $mes['groupId']= $msg->groupId;
         $mes['username']=$msg->username;
@@ -276,7 +276,7 @@ class GCMHelper
         $mes['text'] = $text;
         $mes['groupId']= $groupId;
         $mes['phone'] = $phone;
-        $mes['time'] =$time->getTimestamp();
+        $mes['time'] =$time->getTimestamp()*1000;
         if ($deviceType==Msg::ANDROID) {
             $this->sendGCMessage($mes, $toToken);
         } elseif ($deviceType==Msg::IOS) {
