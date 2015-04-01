@@ -212,7 +212,7 @@ class GCMHelper
         $mes['chattype'] = $msg->chattype;
         $mes['msgid'] = $msg->msgid;
         $mes['phone'] = $msg->phone;
-        $mes['time'] =$msg->time;
+        $mes['time'] =$msg->time->getTimestamp()*1000;
         $mes['groupId']= $msg->groupId;
         $mes['username']=$msg->username;
         if ($msg->device==$msg::ANDROID) {
