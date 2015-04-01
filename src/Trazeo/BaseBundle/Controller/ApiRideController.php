@@ -803,14 +803,14 @@ class ApiRideController extends Controller {
                     null,
                     $this->generateUrl('panel_ride_current', array('id' => $ride->getId()))
                 );
-                $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
-                $devices=$repositoryDevice->findByUser($userextend);
-                $gcmHelper=$this->container->get('sopinet_gcmhelper');
-                /** @var Device $device */
-                foreach ($devices as $device) {
-                    $time=new \DateTime('now');
-                    $gcmHelper->sendNotification($group->getName(), $group->getId(), "ride.finish", $time, $userextend->getUser()->getPhone(), $device->getToken(), $device->getType());
-                }
+            }
+            $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
+            $devices=$repositoryDevice->findByUser($userextend);
+            $gcmHelper=$this->container->get('sopinet_gcmhelper');
+            /** @var Device $device */
+            foreach ($devices as $device) {
+                $time=new \DateTime('now');
+                $gcmHelper->sendNotification($group->getName(), $group->getId(), "ride.finish", $time, $userextend->getUser()->getPhone(), $device->getToken(), $device->getType());
             }
         }
 
