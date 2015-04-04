@@ -20,7 +20,7 @@ class EGroup
     const VISIBILITY_PRIVATE = "1";
     const VISIBILITY_HIDE = "2";
 
-	use ORMBehaviors\Timestampable\Timestampable;
+    use ORMBehaviors\Timestampable\Timestampable;
     /**
      * @var integer
      *
@@ -36,7 +36,7 @@ class EGroup
      * @Exclude
      **/
     protected $userextendgroups;
-    
+
     /** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="adminGroups")
      *  @Exclude
      */
@@ -48,14 +48,14 @@ class EGroup
      * @Exclude
      **/
     protected $monitor_userextendgroups;
-    
+
     /**
      * @ORM\ManyToMany(targetEntity="EChild", inversedBy="groups")
      * @ORM\JoinTable(name="groups_childs")
      **/
     protected $childs;
 
-    /** 
+    /**
      * @ORM\OneToOne(targetEntity="ERoute", inversedBy="group")
      * @ORM\JoinColumn(name="route_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
@@ -67,31 +67,31 @@ class EGroup
      * @Exclude
      */
     protected $page;
-    
+
     /**
      *
      * @ORM\Column(name="visibility", type="string", length=255, nullable=true)
      */
     protected $visibility;
-    
-    
+
+
     /** @ORM\OneToMany(targetEntity="EGroupAccess",  mappedBy="group", cascade={"remove"})
      *  @Exclude
      */
     protected $access;
-    
+
     /** @ORM\OneToMany(targetEntity="EGroupInvite",  mappedBy="group", cascade={"remove"})
      *  @Exclude
      */
     protected $inviteGroup;
-    
+
     /** @ORM\OneToMany(targetEntity="EGroupAnonInvite",  mappedBy="group", cascade={"remove"})
      * @var unknown
      * @Exclude
      */
-    protected $inviteGroupAnon;    
-    
-    /** 
+    protected $inviteGroupAnon;
+
+    /**
      * @ORM\OneToOne(targetEntity="ERide", mappedBy="group", cascade={"remove"})
      */
     protected $ride;
@@ -101,7 +101,7 @@ class EGroup
      * @Exclude
      */
     protected $ridesRegistered;
-    
+
     /**
      * @ORM\Column(name="hasRide", type="boolean", nullable=true)
      */
@@ -160,8 +160,8 @@ class EGroup
     }
 
     public function __toString(){
- 
-    	return $this->getName();
+
+        return $this->getName();
     }
 
     public function isMonitor(UserExtend $userextend) {
@@ -173,7 +173,7 @@ class EGroup
         }
         return false;
     }
-  
+
     /**
      * Constructor
      */
@@ -186,7 +186,7 @@ class EGroup
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -210,7 +210,7 @@ class EGroup
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -244,7 +244,7 @@ class EGroup
     /**
      * Get userextendgroups
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getUserextendgroups()
     {
@@ -268,7 +268,7 @@ class EGroup
     /**
      * Get admin
      *
-     * @return \Trazeo\BaseBundle\Entity\UserExtend 
+     * @return \Trazeo\BaseBundle\Entity\UserExtend
      */
     public function getAdmin()
     {
@@ -302,7 +302,7 @@ class EGroup
     /**
      * Get childs
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getChilds()
     {
@@ -326,13 +326,13 @@ class EGroup
     /**
      * Get route
      *
-     * @return \Trazeo\BaseBundle\Entity\ERoute 
+     * @return \Trazeo\BaseBundle\Entity\ERoute
      */
     public function getRoute()
     {
         return $this->route;
     }
-    
+
 
     /**
      * Set visibility
@@ -343,11 +343,11 @@ class EGroup
      */
     public function setVisibility($visibility)
     {
-    	$this->visibility = $visibility;
-    
-    	return $this;
+        $this->visibility = $visibility;
+
+        return $this;
     }
-    
+
     /**
      * Get visibility
      *
@@ -355,7 +355,7 @@ class EGroup
      */
     public function getVisibility()
     {
-    	return $this->visibility;
+        return $this->visibility;
     }
 
     /**
@@ -385,7 +385,7 @@ class EGroup
     /**
      * Get access
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAccess()
     {
@@ -419,7 +419,7 @@ class EGroup
     /**
      * Get invite
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getInvite()
     {
@@ -443,7 +443,7 @@ class EGroup
     /**
      * Get hasRide
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getHasRide()
     {
@@ -467,7 +467,7 @@ class EGroup
     /**
      * Get ride
      *
-     * @return \Trazeo\BaseBundle\Entity\ERide 
+     * @return \Trazeo\BaseBundle\Entity\ERide
      */
     public function getRide()
     {
@@ -501,7 +501,7 @@ class EGroup
     /**
      * Get inviteGroup
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getInviteGroup()
     {
@@ -535,13 +535,13 @@ class EGroup
     /**
      * Get inviteGroupAnon
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getInviteGroupAnon()
     {
         return $this->inviteGroupAnon;
     }
-    
+
     public function getCity()
     {
 
@@ -553,7 +553,7 @@ class EGroup
                 return $this->getRoute()->getCity();
             }
         }
-    	return null;
+        return null;
     }
 
     /**
@@ -700,7 +700,7 @@ class EGroup
     /**
      * Get monitor_userextendgroups
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMonitorUserextendgroups()
     {
@@ -723,7 +723,7 @@ class EGroup
     /**
      * Get privateMonitor
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getPrivateMonitor()
     {
@@ -775,7 +775,7 @@ class EGroup
     /**
      * Get ridesRegistered
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getRidesRegistered()
     {
