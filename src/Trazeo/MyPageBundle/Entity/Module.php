@@ -17,6 +17,7 @@ class Module
     const TYPE_HTML = "Html";
     const TYPE_COMBOBIGINTRO = "ComboBigIntro";
     const TYPE_TRAZEOROUTES = "TrazeoRoutes";
+    const TYPE_FORMCONTACT = "FormContact";
 
     use ORMBehaviors\Timestampable\Timestampable;
     /**

@@ -68,6 +68,14 @@ class FrontController extends Controller
     }
 
     /**
+     * @Route("/execute/{module}", name="executeAction")
+     * @ParamConverter("module", class="TrazeoMyPageBundle:Module")
+     */
+    public function executeAction($module, Request $request) {
+        return $module->getClass()->executeAction($this, $module, $request);
+    }
+
+    /**
     * @Route("/landing/{subdomain}", name="landingPage")
     * @Template()
     */
