@@ -20,9 +20,9 @@
 	],
 	"minimum-stability" : "dev",
     "require" : {
-        "sopinet/composergeneric" : "dev-master",
+        "sopinet/composergeneric": "2.4.x-dev",
         "egeloen/ckeditor-bundle": "~2.0",
-        "jjs/geonames-bundle" : "*",
+        "jjs/geonames-bundle" : "dev-master",
         "jms/translation-bundle" : "dev-master",
         "elao/error-notifier-bundle" : "dev-master",
         "hwi/oauth-bundle" : "0.4.*@dev",

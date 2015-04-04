@@ -7,12 +7,19 @@ use Trazeo\BaseBundle\Entity\UserExtend as User;
 use Trazeo\BaseBundle\Entity\UserExtend;
 use Trazeo\BaseBundle\Entity\UserExtendRepository;
 
-class ChatRepository extends EntityRepository{
-    public function isNew($id){
+class ChatRepository extends EntityRepository
+{
+    /**
+     * @param Integer $id
+     *
+     * @return bool
+     */
+    public function isNew($id)
+    {
         $chat = $this->findOneById($id);
 
-        if($chat != null){
-            if($chat->getId() === $id){
+        if ($chat != null) {
+            if ($chat->getId() === $id) {
                 return false;
             }
         }
@@ -23,17 +30,22 @@ class ChatRepository extends EntityRepository{
     /**
      * Función que comprueba si existe un chat
      *
-     * @param $users
-     * @return int|string
+     * @param Array $users
+     *
+     * @return boolean
      */
-    public function checkChatExist($users) {
+    public function checkChatExist($users)
+    {
         $em = $this->getEntityManager();
         $repositoryChat = $em->getRepository('SopinetChatBundle:Chat');
         $chats=$repositoryChat->findAll();
         /** @var Chat $chat */
-        foreach($chats as $chat){
-            if($users==$chat->getChatMembers()->toArray())return true;
+        foreach ($chats as $chat) {
+            if ($users==$chat->getChatMembers()->toArray()) {
+                return true;
+            }
         }
+
         return false;
     }
 
@@ -42,30 +54,36 @@ class ChatRepository extends EntityRepository{
      *
      * @param Chat $chat
      * @param User $newAdminUser
+     *
+     * @throws \Exception
+     *
      * @return bool
      */
-    public function modifyAdmin(Chat $chat, User $newAdminUser) {
+    public function modifyAdmin(Chat $chat, User $newAdminUser)
+    {
         $em = $this->getEntityManager();
 
         // Buscamos el antiguo administrador
         $oldAdminMember = $chat->getAdmin();
         // Si no encontramos administrador, devolvemos error
-        if ($oldAdminMember == null) throw new \Exception(ApiHelper::GENERALERROR);
-
+        if ($oldAdminMember == null) {
+            throw new \Exception(ApiHelper::GENERALERROR);
+        }
         // Si son el mismo, el antiguo administrador y el nuevo, devolvemos un true y no hacemos nada más
-        if ($newAdminUser->getId() == $oldAdminMember->getId()) return true;
+        if ($newAdminUser->getId() == $oldAdminMember->getId()) {
+            return true;
+        }
 
         // Se comprueba si el nuevo administrador es miembro del grupo
-        if ($this->userInChat($newAdminUser,$chat)){
+        if ($this->userInChat($newAdminUser, $chat)) {
             $chat->setAdmin($newAdminUser);
             $em->persist($chat);
             $em->flush();
+
             return true;
-        }
-        else{
+        } else {
             throw new \Exception(ApiHelper::USERNOTINCHAT);
         }
-
     }
 
     /**
@@ -74,11 +92,17 @@ class ChatRepository extends EntityRepository{
      * Devuelve false si no existe o el chat no es de tipo Event
      *
      * @param Chat $chat
-     * @param $user_id - ID del usuario a eliminar del Chat
+     * @param Integer $userId - ID del usuario a eliminar del Chat
+     *
+     * @throws \Exception
+     *
      * @return bool|Chat
      */
-    public function removeMember(Chat $chat, $user_id) {
-        if ($chat->getType() != Chat::EVENT) throw new \Exception(ApiHelper::CHATTYPEINCORRECT);
+    public function removeMember(Chat $chat, $userId)
+    {
+        if ($chat->getType() != Chat::EVENT) {
+            throw new \Exception(ApiHelper::CHATTYPEINCORRECT);
+        }
 
         $em = $this->getEntityManager();
 
@@ -86,14 +110,17 @@ class ChatRepository extends EntityRepository{
         $repositoryUser = $em->getRepository('TrazeoBaseBundle:UserExtend');
 
         /** @var UserExtend $user */
-        $user = $repositoryUser->findOneById($user_id);
-        if ($user == null) throw new \Exception(ApiHelper::USERNOTVALID);
-        if($this->userInChat($user,$chat)){
+        $user = $repositoryUser->findOneById($userId);
+        if ($user == null) {
+            throw new \Exception(ApiHelper::USERNOTVALID);
+        }
+        if ($this->userInChat($user, $chat)) {
             $chat->removeChatMember($user);
             $user->removeChat($chat);
             $em->persist($chat);
             $em->persist($user);
             $em->flush();
+
             return $chat;
         }
 
@@ -104,24 +131,33 @@ class ChatRepository extends EntityRepository{
      * Añade un miembro a un chat Grupal
      *
      * @param Chat $chat - Entidad chat
-     * @param $admin_id - ID del usuario administrador del Chat
-     * @param $user_id - ID del usuario a introducir en el Chat
+     * @param Integer $userId - ID del usuario a introducir en el Chat
+     *
+     * @throws \Exception
+     *
      * @return Chat|bool
      */
-    public function addMember(Chat $chat, $user_id) {
+    public function addMember(Chat $chat, $userId)
+    {
         $em = $this->getEntityManager();
 
-        if(!$chat->isType(CHAT::EVENT))throw new \Exception(ApiHelper::CHATTYPEINCORRECT) ;
+        if (!$chat->isType(CHAT::EVENT)) {
+            throw new \Exception(ApiHelper::CHATTYPEINCORRECT);
+        }
         /** @var UserExtendRepository $repositoryUser */
         $repositoryUser = $em->getRepository('TrazeoBaseBundle:UserExtend');
         /** @var UserExtend $userToAdd */
-        $userToAdd = $repositoryUser->findOneById($user_id);
+        $userToAdd = $repositoryUser->findOneById($userId);
 
         // Comprobar que existe el usuario
-        if(!$userToAdd)throw new \Exception(ApiHelper::USERNOTVALID);
+        if (!$userToAdd) {
+            throw new \Exception(ApiHelper::USERNOTVALID);
+        }
 
         // Comprobar que no está ya en el chat
-        if($this->userInChat($userToAdd,$chat))throw new \Exception(ApiHelper::USERNOTINCHAT);
+        if ($this->userInChat($userToAdd, $chat)) {
+            throw new \Exception(ApiHelper::USERNOTINCHAT);
+        }
 
         $chat->addChatMember($userToAdd);
         $userToAdd->addChat($chat);
@@ -136,12 +172,15 @@ class ChatRepository extends EntityRepository{
      * Marca un chat como borrado
      *
      * @param Chat $chat
+     *
      * @return bool
      */
-    public function deleteChat(Chat $chat) {
+    public function deleteChat(Chat $chat)
+    {
         $em = $this->getEntityManager();
         $em->remove($chat);
         $em->flush();
+
         return true;
     }
 
@@ -149,27 +188,33 @@ class ChatRepository extends EntityRepository{
      * Devuelve los dispositivos de todos los usuarios
      * vinculados al Chat
      *
-     * @param $id
+     * @param Integer $id
+     *
+     * @return array|bool
      */
-    public function getDevices($id) {
+    public function getDevices($id)
+    {
         /* @var $chat Chat */
         $chat = $this->findOneById($id);
 
-        if ($chat == null) return false; // TODO: Devolver excepción en lugar de false?
+        if ($chat == null) {
+            return false; // TODO: Devolver excepción en lugar de false?
+        }
 
         $devices = array();
         foreach ($chat->getChatMembers() as $chatMember) {
             /* @var $chatMember UserExtend */
             // Pasamos los Devices a un Array
-            $devices_array = array();
-            $devices_object = $chatMember->getDevices();
-            foreach($devices_object as $do) {
-                $devices_array[] = $do;
+            $devicesArray = array();
+            $devicesObject = $chatMember->getDevices();
+            foreach ($devicesObject as $do) {
+                $devicesArray[] = $do;
             }
 
             // Mezclamos con los que ya teníamos
-            $devices = array_merge($devices, $devices_array);
+            $devices = array_merge($devices, $devicesArray);
         }
+
         return $devices;
     }
 
@@ -181,6 +226,6 @@ class ChatRepository extends EntityRepository{
      */
     public function userInChat($user,Chat $chat)
     {
-        return in_array($user,$chat->getChatMembers()->toArray());
+        return in_array($user, $chat->getChatMembers()->toArray());
     }
 }

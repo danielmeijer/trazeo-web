@@ -1,34 +1,35 @@
 <?php
 namespace Sopinet\GCMBundle\Service;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
 use RMS\PushNotificationsBundle\Exception\InvalidMessageTypeException;
 use RMS\PushNotificationsBundle\Message\AndroidMessage;
 use RMS\PushNotificationsBundle\Message\iOSMessage;
-use RMS\PushNotificationsBundle\Service\OS\AndroidGCMNotification;
 use Sopinet\GCMBundle\Model\Msg;
-use Sopinet\GCMBundle\SopinetGCMBundle;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
 
-class GCMHelper {
+class GCMHelper
+{
     private $_container;
-    function __construct(ContainerInterface $container) {
+    function __construct(ContainerInterface $container)
+    {
         $this->_container = $container;
     }
 
     /**
      * Añade un dispositivo a un usuario en la base de datos
      *
-     * @param $device_id
-     * @param $user
-     * @param $type('Android'|'iOS')
+     * @param String $deviceId
+     * @param User $user
+     * @param String $token
+     * @param String $type ('Android'|'iOS')
+     *
      * @return mixed
      */
-    public function addDevice($device_id, $user, $type='Android') {
+    public function addDevice($deviceId, $user, $token, $type='Android')
+    {
         $em = $this->_container->get("doctrine.orm.entity_manager");
         $reDevice = $em->getRepository('SopinetGCMBundle:Device');
-        return $reDevice->addDevice($device_id, $user,$type);
+
+        return $reDevice->addDevice($deviceId, $user, $token, $type);
     }
 
     /*private function sendGoogleCloudMessage( $apiKey, $data, $id )
@@ -198,23 +199,27 @@ class GCMHelper {
                 * */
     //}
 
-    public function sendMessage(Msg $msg, $to) {
+    /**
+     * @param Msg $msg
+     * @param String $to
+     *
+     */
+    public function sendMessage(Msg $msg, $to)
+    {
         $mes['type'] = $msg->type;
         $mes['text'] = $msg->text;
         $mes['chatid'] = $msg->chatid;
         $mes['chattype'] = $msg->chattype;
         $mes['msgid'] = $msg->msgid;
         $mes['phone'] = $msg->phone;
-        /** @var \DateTime $time */
         $time=new \DateTime($msg->time);
-        $mes['time'] =$time->getTimestamp();
+        $mes['time'] =$time->getTimestamp()*1000;
         $mes['groupId']= $msg->groupId;
         $mes['username']=$msg->username;
-        if($msg->device==$msg::ANDROID){
+        if ($msg->device==$msg::ANDROID) {
             $this->sendGCMessage($mes, $to);
-        }
-        elseif($msg->device==$msg::IOS){
-            $this->sendAPNMessage($mes,$to);
+        } elseif ($msg->device==$msg::IOS) {
+            $this->sendAPNMessage($mes, $to);
         }
     }
 
@@ -230,10 +235,9 @@ class GCMHelper {
         $message->setData($mes);
         $message->setDeviceIdentifier($to);
         $message->setGCM(true);
-        try{
+        try {
             $this->_container->get('rms_push_notifications')->send($message);
-        }
-        catch(InvalidMessageTypeException $e){
+        } catch (InvalidMessageTypeException $e) {
             throw $e;
         }
     }
@@ -241,22 +245,44 @@ class GCMHelper {
 
     /**
      * Funcion que envia un mensaje con el sevricio APN de Apple
-     * @param $mes
-     * @param $to
+     * @param Msg $mes
+     * @param String $to
+     *
+     * @throws \InvalidArgumentException
      */
     private function sendAPNMessage($mes, $to)
     {
-        ldd('wtf!');
         $message=new iOSMessage();
-        try{
+        try {
             $message->setData($mes);
-        }
-        catch(\InvalidArgumentException $e){
+        } catch (\InvalidArgumentException $e) {
             throw $e;
         }
         $message->setMessage($mes['text']);
         $message->setDeviceIdentifier($to);
         $this->_container->get('rms_push_notifications')->send($message);
+    }
+
+    /**
+     * @param $text
+     * @param $from
+     * @param $type
+     * @param $time
+     * @param $phone
+     * @param $toToken
+     */
+    public function sendNotification($text, $groupId, $type, $time, $phone, $toToken, $deviceType)
+    {
+        $mes['type'] = $type;
+        $mes['text'] = $text;
+        $mes['groupId']= $groupId;
+        $mes['phone'] = $phone;
+        $mes['time'] =$time->getTimestamp()*1000;
+        if ($deviceType==Msg::ANDROID) {
+            $this->sendGCMessage($mes, $toToken);
+        } elseif ($deviceType==Msg::IOS) {
+            $this->sendAPNMessage($mes, $toToken);
+        }
     }
 }
 ?>

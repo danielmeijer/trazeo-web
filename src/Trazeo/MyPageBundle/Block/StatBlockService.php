@@ -3,12 +3,12 @@
 namespace Trazeo\MyPageBundle\Block;
 
 use Sonata\BlockBundle\Block\BlockContextInterface;
+use Sonata\BlockBundle\Model\BlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
 
-use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\BlockBundle\Block\BaseBlockService;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -24,9 +24,6 @@ class StatBlockService extends BaseBlockService
         return array();
     }
 
-    public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
-    {
-    }
 
     public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
     {

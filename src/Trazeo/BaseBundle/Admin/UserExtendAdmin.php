@@ -110,13 +110,5 @@ class UserExtendAdmin extends Admin
 
     }
 
-  public function validate(ErrorElement $errorElement, $object)
-  {
-    /*$errorElement
-      ->with('text')
-      ->assertMaxLength(array('limit' => 3))
-      ->end()
-    ;*/
-  }
 }
 ?>
