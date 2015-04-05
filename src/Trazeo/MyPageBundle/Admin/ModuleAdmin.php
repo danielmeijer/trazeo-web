@@ -22,7 +22,8 @@ class ModuleAdmin extends Admin
             Module::TYPE_HTML => "Html",
             Module::TYPE_IMAGE => "Image",
             Module::TYPE_TRAZEOROUTES => "TrazeoRoutes",
-            Module::TYPE_FORMCONTACT => "FormContact"
+            Module::TYPE_FORMCONTACT => "FormContact",
+            Module::TYPE_GENERALDATA => "GeneralData"
         ) ))
         ->add('position')
         ->add('menu')
