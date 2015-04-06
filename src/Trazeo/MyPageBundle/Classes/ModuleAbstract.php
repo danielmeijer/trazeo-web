@@ -1,6 +1,7 @@
 <?php
     namespace Trazeo\MyPageBundle\Classes;
 
+    use Symfony\Component\HttpFoundation\Request;
     use Trazeo\MyPageBundle\Entity\Module;
 
     class ModuleAbstract {
@@ -12,7 +13,28 @@
             );
         }
 
+        /**
+         * Prepara la visualización del form
+         * Devuelve las variables necesarias para el módulo
+         * [Listo para sobreescribir]
+         *
+         * @param $container
+         * @param Module $module
+         * @return null
+         */
         function prepareFront($container, Module $module = null) {
+            return null;
+        }
+
+        /**
+         * Ejecuta una acción de un módulo
+         * Se llama desde un Controlador genérico
+         * [Listo para sobreescribir]
+         *
+         * @param $container
+         * @return null
+         */
+        function executeAction($container, Module $module, Request $request) {
             return null;
         }
 
@@ -40,7 +62,11 @@
 
         public function getContentByPart(Module $module, $int_part = 0) {
             $parts = explode("|", $module->getContent());
-            return $parts[$int_part];
+            if (isset($parts[$int_part])) {
+                return $parts[$int_part];
+            } else {
+                return null;
+            }
         }
 
         public function getClassCSS() {

@@ -17,6 +17,8 @@ class Module
     const TYPE_HTML = "Html";
     const TYPE_COMBOBIGINTRO = "ComboBigIntro";
     const TYPE_TRAZEOROUTES = "TrazeoRoutes";
+    const TYPE_FORMCONTACT = "FormContact";
+    const TYPE_GENERALDATA = "GeneralData";
 
     use ORMBehaviors\Timestampable\Timestampable;
     /**
@@ -36,7 +38,7 @@ class Module
     protected $title;
 
     /**
-     * @ORM\Column(name="content", type="string", length=5000)
+     * @ORM\Column(name="content", type="string", length=5000, nullable=true)
      *
      * @var string $content
      */
