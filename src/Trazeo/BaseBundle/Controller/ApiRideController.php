@@ -302,7 +302,7 @@ class ApiRideController extends Controller {
                     /** @var Device $device */
                     foreach ($devices as $device) {
                         $time=new \DateTime('now');
-                        $gcmHelper->sendNotification($group->getName().';'.$ride->getUserextend()->getVirtualName(), $group->getId(), "ride.start", $time, $userextend->getUser()->getPhone(), $device->getToken(), $device->getType());
+                        $gcmHelper->sendNotification($ride->getUserextend()->getVirtualName(), $group->getId(), "ride.start", $time, $userextend->getUser()->getPhone(), $device->getToken(), $device->getType());
                     }
                 }
 
