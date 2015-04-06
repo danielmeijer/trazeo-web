@@ -59,6 +59,8 @@
 {# TODO: PASAR A LOS BLOQUES COMO FICHEROS EXTERNOS #}
 {% block js %}
     {{ parent() }}
+    {% include 'SopinetFlashMessagesBundle:Messages:notification.html.twig' %}
+
     {# https://github.com/jschr/bootstrap-modal/ #}
     <script src="{{ asset('bundles/trazeomypage/js/bootstrap-modalmanager.js') }}"></script>
     <script src="{{ asset('bundles/trazeomypage/js/bootstrap-modal.js') }}"></script>

@@ -16,12 +16,14 @@ class ModuleAdmin extends Admin
   {
     $formMapper
         ->add('title')
-        ->add('content')
+        ->add('content', null, array('required' => false))
         ->add('type', 'choice', array('choices' => array(
             Module::TYPE_COMBOBIGINTRO => "ComboBigIntro",
             Module::TYPE_HTML => "Html",
             Module::TYPE_IMAGE => "Image",
-            Module::TYPE_TRAZEOROUTES => "TrazeoRoutes"
+            Module::TYPE_TRAZEOROUTES => "TrazeoRoutes",
+            Module::TYPE_FORMCONTACT => "FormContact",
+            Module::TYPE_GENERALDATA => "GeneralData"
         ) ))
         ->add('position')
         ->add('menu')
