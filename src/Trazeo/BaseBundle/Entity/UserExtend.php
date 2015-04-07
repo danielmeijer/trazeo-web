@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\VirtualProperty;
 use Sopinet\Bundle\ChatBundle as Chat;
@@ -27,6 +28,7 @@ class UserExtend
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
      */
     protected $id;   
     
@@ -148,7 +150,8 @@ class UserExtend
      *
      * @return int
      */
-    public function getCurrentPoints(){
+    public function getCurrentPoints()
+    {
         return $this->getPoints()-$this->getSpendedPoints();
     }
     /**
@@ -163,9 +166,21 @@ class UserExtend
      *
      * @ORM\Column(name="mobile", type="integer", nullable=true)
      * @Expose
+     * @Groups({"list"})
      */
     protected $mobile=null;
 
+    /**
+     * @VirtualProperty
+     * @SerializedName("name")
+     * @Groups({"list"})
+     *
+     * @return string
+     */
+    public function getVirtualName()
+    {
+        return $this->__toString();
+    }
 
     public function __toString(){
         //return "Antonio Pérez (634728192) (hola@trazeo.es)<br/>";
