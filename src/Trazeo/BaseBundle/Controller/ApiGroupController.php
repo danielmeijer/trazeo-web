@@ -4,6 +4,7 @@ namespace Trazeo\BaseBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
+use JMS\Serializer\SerializationContext;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sopinet\Bundle\ChatBundle\Entity\Chat;
 use Sopinet\Bundle\ChatBundle\Entity\ChatRepository;
@@ -140,6 +141,20 @@ class ApiGroupController extends Controller
         }
 
         return $user;
+    }
+
+    /**
+     * Devuelve una vista filtrada por un Grupo
+     *
+     * @return mixed
+     */
+    public function msgByGroup($msg, $groups, $status=200) {
+        $view = view::create()
+            ->setStatusCode($status)
+            ->setSerializationContext(SerializationContext::create()->setGroups($groups))
+            ->setData($this->doOk($msg));
+
+        return $this->viewhandler->handle($view);
     }
 
     /**
@@ -972,5 +987,59 @@ class ApiGroupController extends Controller
         $em->flush();
 
         return $apiHelper->msgOK($chat);
+    }
+
+
+
+    /**
+     * @param Request $request
+     *
+     * @return View|mixed
+     *
+     * @ApiDoc(
+     *   description="Función que devuelve el listado de usuarios de un chat",
+     *   section="chat",
+     *   parameters={
+     *      {"name"="email", "dataType"="string", "required"=true, "description"="Email del usuario"},
+     *      {"name"="pass", "dataType"="string", "required"=true, "description"="Password del usuario"},
+     *      {"name"="group_id", "dataType"="string", "required"=true, "description"="id del grupo"},
+     *   }
+     * )
+     *
+     * @POST("/api/group/userList/chat")
+     */
+    public function postGetUserListChatAction(Request $request)
+    {
+        $apiHelper=$this->get('apihelper');
+        //Comprobamos el usuario
+        $user = $this->checkPrivateAccess($request);
+        if ($user == false || $user == null) {
+            $view = View::create()
+                ->setStatusCode(200)
+                ->setData($this->msgDenied());
+
+            return $this->get('fos_rest.view_handler')->handle($view);
+        }
+        $em=$this->get('doctrine.orm.default_entity_manager');
+        $repositoryUserExtend=$this->get('doctrine.orm.default_entity_manager')->getRepository('TrazeoBaseBundle:UserExtend');
+        $userextend = $repositoryUserExtend->findOneByNick($user->getEmail());
+        //Obtenemos el grupo
+        $repositoryGroup = $em->getRepository('TrazeoBaseBundle:EGroup');
+        /** @var EGroup $group */
+        $group=$repositoryGroup->find($request->get('group_id'));
+        //Comprobamos si el usuario pertenece al grupo
+        if (!$repositoryGroup->isUserInGroup($userextend, $group)) {
+            $apiHelper->msgDenied('User is not in the group');
+        }
+        /** @var ChatRepository $repositoryChat */
+        $repositoryChat = $em->getRepository('SopinetChatBundle:Chat');
+        //Comprobamos si el grupo tiene chat
+        if ($group->getChat()!=null) {
+            $members=$group->getChat()->getChatMembers();
+        } else {
+            $apiHelper->msgDenied("Chat doesn't exist");
+        }
+
+        return $apiHelper->msgByGroup($members, array("list"), 200);
     }
 }
