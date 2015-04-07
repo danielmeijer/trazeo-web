@@ -6,6 +6,10 @@ trazeo_my_page_registered:
     resource: "@TrazeoMyPageBundle/Controller/StatsAdminController.php"
     type:     annotation
 
+trazeo_my_page_modulecomposer:
+    resource: "@TrazeoMyPageBundle/Controller/ModuleComposerController.php"
+    type:     annotation
+
 trazeo_my_page_helper:
     resource: "@TrazeoMyPageBundle/Controller/HelperSonataController.php"
     type:     annotation

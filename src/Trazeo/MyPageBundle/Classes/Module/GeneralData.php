@@ -3,6 +3,7 @@
 namespace Trazeo\MyPageBundle\Classes\Module;
 
 use Hip\MandrillBundle\Message;
+use Symfony\Component\Form\Form;
 use Trazeo\BaseBundle\Entity\EGroup;
 use Trazeo\BaseBundle\Service\Helper;
 use Trazeo\MyPageBundle\Classes\ModuleAbstract;
@@ -49,5 +50,27 @@ class GeneralData extends ModuleAbstract
 
          **/
         return $data;
+    }
+
+    public function getAdminDescription(Module $module) {
+        $description = "Este módulo insertará los datos globales de su proyecto en su página personalizada. Podrá indicar qué datos desea mostrar.";
+        return $description;
+    }
+
+    public function addFieldsContentAdmin(Form $builder, $container, $module) {
+        $builder->add('contentArray', 'choice', array(
+            'choices' => array(
+                'participaciones'   => 'Participaciones',
+                'paseos' => 'Paseos',
+                'km'   => 'Kilómetros',
+                'co2'   => 'CO2',
+                'litros_combustible'   => 'Litros de Combustible',
+                'euros_combustible'   => 'Euros de Combustible',
+                'tiempo_formato'   => 'Tiempo caminado',
+            ),
+            'multiple' => true,
+            'label' => "¿Qué datos desea mostrar?"
+        ));
+        return $builder;
     }
 }
