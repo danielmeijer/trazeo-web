@@ -1,0 +1,114 @@
+{% extends 'TrazeoMyPageBundle:Admin:custom_project_layout.html.twig' %}
+
+{% block content %}
+    <p>Esta pantalla se encuentra en construcción.</p>
+    <p>Las funciones de ordenar no se guardan en el sistema.</p>
+    <p>Acceda a "Editar" los módulos, y podrá modificarlos.</p>
+
+    <div id="menus">
+        {% for menu in page.menus %}
+            <div class="menu">
+                <div class="title_menu">
+                    <span class="menu_colorback" style="background-color: #{{ menu.colorback }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    {{ menu }}
+                </div>
+                <div class="modules">
+                        <div class="module empty"> - </div>
+                    {% for module in menu.modules %}
+                        <div class="module">{{ module }}<i class="js-edit">
+                                <a href="{{ path('moduleComposer_editModule', {'module': module.id}) }}">
+                                    Editar
+                                </a>
+                        </i></div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <style>
+        .menu {
+            padding: 10px;
+            margin: 10px;
+            border: 1px solid #0e0e0e;
+            background-color: #FEFEFE;
+        }
+        .title_menu {
+            cursor: move;
+            font-size: 120%;
+        }
+        .menu_colorback {
+            width: 30px;
+            height: 30px;
+            border: 1px dashed #030303;
+        }
+
+        .module {
+            cursor: move;
+            position: relative;
+        }
+
+        .module i {
+            -webkit-transition: opacity .2s;
+            transition: opacity .2s;
+            opacity: 0;
+            display: block;
+            cursor: pointer;
+            color: #c00;
+            top: 0px;
+            right: 40px;
+            position: absolute;
+            font-style: normal;
+        }
+
+        .module:hover i {
+            opacity: 1;
+        }
+
+
+    </style>
+    {{ parent() }}
+    {% javascripts
+    '@TrazeoMyPageBundle/Resources/public/js/jquery.binding.js'
+    '@TrazeoMyPageBundle/Resources/public/js/Sortable.min.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script>
+        $(function() {
+            var menus = $("#menus").sortable({
+                animation: 150,
+                draggable: '.menu',
+                handle: '.title_menu',
+                onUpdate: function (/**Event*/evt) {
+                    //console.log(evt);
+                }
+            });
+
+            $(".modules").sortable({
+                animation: 150,
+                draggable: '.module',
+                filter: ".empty"
+            });
+        });
+    </script>
+
+    {#
+    <script src="//cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.4/interact.min.js"></script>
+    <script>
+        $(function() {
+            var listMenus = document.querySelector('#list-menus');
+            interact('li', {
+                context: listMenus
+            }).draggable({
+                // enable inertial throwing
+                inertia: true
+            });
+            alert(listMenus);
+        });
+    </script>
+    #}
+{% endblock %}

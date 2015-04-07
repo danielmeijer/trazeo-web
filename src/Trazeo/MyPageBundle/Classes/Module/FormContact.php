@@ -3,6 +3,7 @@
 namespace Trazeo\MyPageBundle\Classes\Module;
 
 use Hip\MandrillBundle\Message;
+use Symfony\Component\Form\Form;
 use Trazeo\MyPageBundle\Classes\ModuleAbstract;
 use Trazeo\MyPageBundle\Entity\Module;
 use Trazeo\MyPageBundle\Form\FormContactType;
@@ -50,5 +51,19 @@ class FormContact extends ModuleAbstract {
         }
 
         return $container->redirect($container->generateUrl('landingPage', array('subdomain' => $subdomain)));
+    }
+
+    public function getAdminDescription(Module $module) {
+        return "Este módulo insertará un formulario de contacto en su página personalizada.";
+    }
+
+    public function addFieldsContentAdmin(Form $builder, $container, $module) {
+        $builder->add('content_0', 'text', array(
+            'label' => 'Título que aparecerá antes del Formulario'
+        ));
+        $builder->add('content_1', 'text', array(
+            'label' => 'Descripción que aparecerá debajo del título'
+        ));
+        return $builder;
     }
 }

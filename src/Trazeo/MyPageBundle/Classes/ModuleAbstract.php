@@ -1,6 +1,7 @@
 <?php
     namespace Trazeo\MyPageBundle\Classes;
 
+    use Symfony\Component\Form\Form;
     use Symfony\Component\HttpFoundation\Request;
     use Trazeo\MyPageBundle\Entity\Module;
 
@@ -69,6 +70,10 @@
             }
         }
 
+        public function getContentParts(Module $module) {
+            return explode("|", $module->getContent());
+        }
+
         public function getClassCSS() {
             return "module-" . $this->getClassName();
         }
@@ -85,6 +90,26 @@
             $html = "<legend>";
             $html .= $module->getTitle()."</legend>";
             return $html;
+        }
+
+        /**
+         * Añade al Form de edición los campos especiales para trabajar
+         * el apartado content del módulo
+         *
+         * @param $container
+         * @param $module
+         */
+        function addFieldsContentAdmin(Form $builder, $container, $module) {
+            $builder->add('content');
+            return $builder;
+        }
+
+        public function getAdminTitle(Module $module) {
+            return $module->getType();
+        }
+
+        public function getAdminDescription(Module $module) {
+            return "Descripción";
         }
     }
 ?>
