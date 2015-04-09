@@ -1,0 +1,12 @@
+{% extends 'TrazeoMyPageBundle:Admin:custom_project_layout.html.twig' %}
+
+{% block content %}
+    <h3>{{ module.getClass.getAdminTitle(module) }}</h3>
+    <p>{{ module.getClass.getAdminDescription(module) }}</p>
+    <form method="POST" action="{{ path("moduleComposer_editModule", {'module': module.id}) }}">
+        {% form_theme formModule 'TrazeoMyPageBundle:Form:bootstrap.12_label.html.twig' %}
+        {{ form_widget(formModule) }}
+        <button class="btn btn-lg btn-success btn-block" type="submit">Guardar</button>
+        <a href="{{ path('moduleComposer_view') }}" class="btn btn-secundary">Cancelar</a>
+    </form>
+{% endblock %}
