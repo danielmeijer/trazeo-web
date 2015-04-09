@@ -336,7 +336,7 @@ class ApiRideController extends Controller {
      *   parameters={
      *      {"name"="email", "dataType"="string", "required"=true, "description"="Email del usuario administrador"},
      *      {"name"="pass", "dataType"="string", "required"=true, "description"="Password del usuario administrador"},
-     *      {"name"="id_group", "dataType"="string", "required"=true, "description"="Id del paseo"},
+     *      {"name"="id_ride", "dataType"="string", "required"=true, "description"="Id del paseo"},
      *   },
      *   output={
      *      "class"="Trazeo\BaseBundle\Entity\ERide"
