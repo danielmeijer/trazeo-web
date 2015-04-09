@@ -60,24 +60,8 @@ class EGroup
     /**
      * @ORM\OneToOne(targetEntity="ERoute", inversedBy="group")
      * @ORM\JoinColumn(name="route_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
-     * @Exclude
      */
     protected $route;
-
-    /**
-     * @VirtualProperty
-     * @SerializedName("route")
-     *
-     * @return Array
-     */
-    public function getVirtualRoute()
-    {
-        if ($this->route==null) {
-            return array();
-        }
-
-        return $this->route;
-    }
 
     /**
      * @ORM\ManyToOne(targetEntity="\Trazeo\MyPageBundle\Entity\Page", inversedBy="groups")
