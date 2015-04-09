@@ -3,6 +3,8 @@
 namespace Trazeo\BaseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\SerializedName;
+use JMS\Serializer\Annotation\VirtualProperty;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 use JMS\Serializer\Annotation\Exclude;
 /**
@@ -58,8 +60,24 @@ class EGroup
     /**
      * @ORM\OneToOne(targetEntity="ERoute", inversedBy="group")
      * @ORM\JoinColumn(name="route_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     * @Exclude
      */
     protected $route;
+
+    /**
+     * @VirtualProperty
+     * @SerializedName("route")
+     *
+     * @return Array
+     */
+    public function getVirtualRoute()
+    {
+        if ($this->route==null) {
+            return array();
+        }
+
+        return $this->route;
+    }
 
     /**
      * @ORM\ManyToOne(targetEntity="\Trazeo\MyPageBundle\Entity\Page", inversedBy="groups")
@@ -753,11 +771,11 @@ class EGroup
         return $this;
     }
 
-    /*
+    /**
      * Get chat
      *
      * @return \Sopinet\Bundle\ChatBundle\Entity\Chat 
-     */
+     **/
     public function getChat()
     {
         return $this->chat;
