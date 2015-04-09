@@ -4,103 +4,14 @@
             <h2>Datos Generales</h2>
             <hr class="small">
             <div class="row">
-                <!-- Participaciones -->
-                <div class="col-md-3 col-sm-6">
-                    <div class="service-item">
-                        <span class="fa-stack fa-4x">
-                            <i class="fa fa-circle fa-stack-2x"></i>
-                            <i class="fa fa-male fa-stack-1x text-primary"></i>
-                        </span>
-                        <h4>
-                            <strong>{{ vars.participaciones }}</strong>
-                        </h4>
-                        <p>Participaciones</p>
-                    </div>
-                </div>
 
-                <!-- Paseos -->
-                <div class="col-md-3 col-sm-6">
-                    <div class="service-item">
-                        <span class="fa-stack fa-4x">
-                            <i class="fa fa-circle fa-stack-2x"></i>
-                            <i class="fa fa-location-arrow fa-stack-1x text-primary"></i>
-                        </span>
-                        <h4>
-                            <strong>{{ vars.paseos }}</strong>
-                        </h4>
-                        <p>Paseos realizados</p>
-                    </div>
-                </div>
+                {% for row in module.class.getContentParts(module) %}
+                    {% include 'TrazeoMyPageBundle:Module:_row_generaldata.html.twig' with {
+                        'key': row,
+                        'value': vars[row]
+                    } %}
+                {% endfor %}
 
-                <!-- KM -->
-                <div class="col-md-3 col-sm-6">
-                    <div class="service-item">
-                        <span class="fa-stack fa-4x">
-                            <i class="fa fa-circle fa-stack-2x"></i>
-                            <i class="fa fa-globe fa-stack-1x text-primary"></i>
-                        </span>
-                        <h4>
-                            <strong>{{ vars.km }}</strong>
-                        </h4>
-                        <p>Kilómetros recorridos</p>
-                    </div>
-                </div>
-
-                <!-- CO2 -->
-                <div class="col-md-3 col-sm-6">
-                    <div class="service-item">
-                        <span class="fa-stack fa-4x">
-                            <i class="fa fa-circle fa-stack-2x"></i>
-                            <i class="fa fa-cloud fa-stack-1x text-primary"></i>
-                        </span>
-                        <h4>
-                            <strong>{{ vars.co2 }}</strong>
-                        </h4>
-                        <p>CO2 Ahorrado</p>
-                    </div>
-                </div>
-
-                <!-- Litros combustible -->
-                <div class="col-md-3 col-sm-6">
-                    <div class="service-item">
-                        <span class="fa-stack fa-4x">
-                            <i class="fa fa-circle fa-stack-2x"></i>
-                            <i class="fa fa-car fa-stack-1x text-primary"></i>
-                        </span>
-                        <h4>
-                            <strong>{{ vars.litros_combustible }}</strong>
-                        </h4>
-                        <p>Litros ahorrados</p>
-                    </div>
-                </div>
-
-                <!-- Euros combustible -->
-                <div class="col-md-3 col-sm-6">
-                    <div class="service-item">
-                        <span class="fa-stack fa-4x">
-                            <i class="fa fa-circle fa-stack-2x"></i>
-                            <i class="fa fa-euro fa-stack-1x text-primary"></i>
-                        </span>
-                        <h4>
-                            <strong>{{ vars.euros_combustible }}</strong>
-                        </h4>
-                        <p>Euros ahorrados</p>
-                    </div>
-                </div>
-
-                <!-- Tiempo formato -->
-                <div class="col-md-3 col-sm-6">
-                    <div class="service-item">
-                        <span class="fa-stack fa-4x">
-                            <i class="fa fa-circle fa-stack-2x"></i>
-                            <i class="fa fa-clock-o fa-stack-1x text-primary"></i>
-                        </span>
-                        <h4>
-                            <strong>{{ vars.tiempo_formato }}</strong>
-                        </h4>
-                        <p>Tiempo andado</p>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

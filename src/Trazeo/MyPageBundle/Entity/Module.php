@@ -4,6 +4,7 @@ namespace Trazeo\MyPageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use Trazeo\MyPageBundle\Classes\ModuleAbstract;
 
 /**
  * Entity Module
@@ -224,5 +225,48 @@ class Module
 
     public function __toString() {
         return $this->getTitle();
+    }
+
+    public function __get($key) {
+        $temp = explode("_", $key);
+        if ($temp[0] == "content") {
+            /** @var ModuleAbstract $moduleObject */
+            $moduleObject = $this->getClass();
+            return $moduleObject->getContentByPart($this, $temp[1]);
+        } else {
+            return null;
+        }
+        return $key;
+    }
+
+    private function setContentByPart($int_part, $value) {
+        $parts = explode("|", $this->getContent());
+        $newContent = "";
+        foreach($parts as $key => $part) {
+            if (strlen($newContent) > 0) $newContent .= '|';
+            if ($key == $int_part) {
+                $newContent .= $value;
+            } else {
+                $newContent .= $part;
+            }
+        }
+        return $this->setContent($newContent);
+    }
+
+    public function __set($key, $value) {
+        $temp = explode("_", $key);
+        if ($temp[0] == "content") {
+            return $this->setContentByPart($temp[1], $value);
+        } else {
+            return $this;
+        }
+    }
+
+    public function getContentArray() {
+        return explode("|", $this->getContent());
+    }
+
+    public function setContentArray($values) {
+        $this->setContent(implode("|", $values));
     }
 }
