@@ -792,7 +792,7 @@ class ApiRideController extends Controller {
 
         foreach($userextends as $userextend)
         {
-            if($repositoryUserExtend->hasChildOnRide($userextend,$ride)){
+            if ($repositoryUserExtend->hasChildOnRide($userextend,$ride)) {
                 $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($userextend->getUser(),'panel_ride_resume', array('id' => $ride->getId()));
                 $not->addNotification(
                     "ride.finish",
@@ -803,14 +803,24 @@ class ApiRideController extends Controller {
                     null,
                     $this->generateUrl('panel_ride_current', array('id' => $ride->getId()))
                 );
-            }
-            $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
-            $devices=$repositoryDevice->findByUser($userextend);
-            $gcmHelper=$this->container->get('sopinet_gcmhelper');
-            /** @var Device $device */
-            foreach ($devices as $device) {
-                $time=new \DateTime('now');
-                $gcmHelper->sendNotification($group->getName(), $group->getId(), "ride.finish", $time, $userextend->getUser()->getPhone(), $device->getToken(), $device->getType());
+                $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
+                $devices=$repositoryDevice->findByUser($userextend);
+                $gcmHelper=$this->container->get('sopinet_gcmhelper');
+                /** @var Device $device */
+                foreach ($devices as $device) {
+                    $time=new \DateTime('now');
+                    $gcmHelper->sendNotification('showMessage', $group->getId(), "ride.finish", $time, $userextend->getUser()->getPhone(), $device->getToken(), $device->getType());
+                }
+            //Si el usuario no tiene ningun niño en el paseo se manda la notificación pero no se muestra
+            } else {
+                $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
+                $devices=$repositoryDevice->findByUser($userextend);
+                $gcmHelper=$this->container->get('sopinet_gcmhelper');
+                /** @var Device $device */
+                foreach ($devices as $device) {
+                    $time=new \DateTime('now');
+                    $gcmHelper->sendNotification('', $group->getId(), "ride.finish", $time, $userextend->getUser()->getPhone(), $device->getToken(), $device->getType());
+                }
             }
         }
 
