@@ -89,7 +89,46 @@ class CheckRidesCommand extends ContainerAwareCommand
 	 			$ride->setGroup(null);
 	 			$em->persist($ride);
 	 			$em->flush();
-	 			
+
+                $userextends = $rideGroup->getUserextendgroups();
+
+                $not = $con->get('sopinet_user_notification');
+                $repositoryUserExtend = $em->getRepository('TrazeoBaseBundle:UserExtend');
+
+                foreach($userextends as $userextend)
+                {
+                    if ($repositoryUserExtend->hasChildOnRide($userextend,$ride)) {
+                        $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($userextend->getUser(),'panel_ride_resume', array('id' => $ride->getId()));
+                        $not->addNotification(
+                            "ride.finish",
+                            "TrazeoBaseBundle:EGroup",
+                            $rideGroup->getId(),
+                            $url,
+                            $userextend->getUser(),
+                            null,
+                            $this->generateUrl('panel_ride_current', array('id' => $ride->getId()))
+                        );
+                        $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
+                        $devices=$repositoryDevice->findByUser($userextend);
+                        $gcmHelper=$con->get('sopinet_gcmhelper');
+                        /** @var Device $device */
+                        foreach ($devices as $device) {
+                            $time=new \DateTime('now');
+                            $gcmHelper->sendNotification('showMessage', $rideGroup->getId(), "ride.finish", $time, $userextend->getUser()->getPhone(), $device->getToken(), $device->getType());
+                        }
+                        //Si el usuario no tiene ningun niño en el paseo se manda la notificación pero no se muestra
+                    } else {
+                        $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
+                        $devices=$repositoryDevice->findByUser($userextend);
+                        $gcmHelper=$con->get('sopinet_gcmhelper');
+                        /** @var Device $device */
+                        foreach ($devices as $device) {
+                            $time=new \DateTime('now');
+                            $gcmHelper->sendNotification('', $rideGroup->getId(), "ride.finish", $time, $userextend->getUser()->getPhone(), $device->getToken(), $device->getType());
+                        }
+                    }
+                }
+
 	 			//desvinculamos a los niños del paseo
 	 			$childs = $em->getRepository('TrazeoBaseBundle:EChild')->findByRide($ride);
 
