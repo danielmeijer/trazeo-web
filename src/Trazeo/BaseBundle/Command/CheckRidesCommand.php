@@ -98,7 +98,7 @@ class CheckRidesCommand extends ContainerAwareCommand
                 foreach($userextends as $userextend)
                 {
                     if ($repositoryUserExtend->hasChildOnRide($userextend,$ride)) {
-                        $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($userextend->getUser(),'panel_ride_resume', array('id' => $ride->getId()));
+                        $url=$con->get('trazeo_base_helper')->getAutoLoginUrl($userextend->getUser(),'panel_ride_resume', array('id' => $ride->getId()));
                         $not->addNotification(
                             "ride.finish",
                             "TrazeoBaseBundle:EGroup",
@@ -106,7 +106,7 @@ class CheckRidesCommand extends ContainerAwareCommand
                             $url,
                             $userextend->getUser(),
                             null,
-                            $this->generateUrl('panel_ride_current', array('id' => $ride->getId()))
+                            $con->get('router')->generate('panel_ride_current', array('id' => $ride->getId()))
                         );
                         $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
                         $devices=$repositoryDevice->findByUser($userextend);
