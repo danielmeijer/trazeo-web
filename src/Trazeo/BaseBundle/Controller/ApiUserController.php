@@ -313,13 +313,8 @@ class ApiUserController extends Controller
         /** @var UserValue[] $settings */
         $settings=$repositoryUserValue->findByUser($userextend);
 
-        $data=[];
         if (count($settings)>0) {
-            foreach ($settings as $setting) {
-                $data['value']=$repositoryUserValue->getValue($userextend, $setting->getSetting());
-                $data['setting']=$setting->getSetting();
-                $data['id']=$setting->getId();
-            }
+            $data=$settings;
         } else {
             //Si el usuario no tiene settings se crean los settings por defecto
             $settingsRepository=$em->getRepository('SopinetUserPreferencesBundle:UserSetting');
@@ -334,14 +329,12 @@ class ApiUserController extends Controller
                 $em->persist($userSetting);
                 $em->flush($userSetting);
                 //Se añaden los datos para la respuesta
-                $data['value']=$setting->getName();
-                $data['setting']=$setting;
-                $data['id']=$userSetting->getId();
+                $data[]=$userSetting;
             }
         }
         $view = View::create()
             ->setStatusCode(200)
-            ->setData($this->doOK($settings));
+            ->setData($this->doOK($data));
 
         return $this->get('fos_rest.view_handler')->handle($view);
     }
