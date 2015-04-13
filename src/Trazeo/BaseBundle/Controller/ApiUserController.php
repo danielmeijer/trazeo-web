@@ -2,11 +2,14 @@
 
 namespace Trazeo\BaseBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sopinet\GCMBundle\Entity\Device;
 use Sopinet\GCMBundle\Entity\DeviceRepository;
+use Sopinet\UserPreferencesBundle\Entity\UserSetting;
+use Sopinet\UserPreferencesBundle\Entity\UserValue;
 use Sopinet\UserPreferencesBundle\Entity\UserValueRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\View\View;
@@ -277,6 +280,15 @@ class ApiUserController extends Controller
 
     /**
      * Petición para obtener las preferencías con respecto a las notificaciones de un usuario
+     *
+     * @ApiDoc(
+     *   description="Función que registra un nuevo device para un usuario",
+     *   section="user",
+     *   parameters={
+     *      {"name"="email", "dataType"="string", "required"=true, "description"="Email del usuario administrador"},
+     *      {"name"="pass", "dataType"="string", "required"=true, "description"="Password del usuario administrador"}
+     *   }
+     * )
      * @POST("/api/user/notification/settings", name="api_user_notification_settings")
      */
     public function postUserNotificationSettingsAction(Request $request)
@@ -290,6 +302,7 @@ class ApiUserController extends Controller
 
             return $this->get('fos_rest.view_handler')->handle($view);
         }
+        /** @var EntityManager $em */
         $em=$this->get('doctrine.orm.default_entity_manager');
 
         $repositoryUserExtend=$em->getRepository('SopinetUserBundle:SopinetUserExtend');
@@ -301,10 +314,30 @@ class ApiUserController extends Controller
         $settings=$repositoryUserValue->findByUser($userextend);
 
         $data=[];
-        foreach ($settings as $setting) {
-            $data['value']=$repositoryUserValue->getValue($userextend, $setting->getSetting());
-            $data['setting']=$setting->getSetting();
-            $data['id']=$setting->getId();
+        if (count($settings)>0) {
+            foreach ($settings as $setting) {
+                $data['value']=$repositoryUserValue->getValue($userextend, $setting->getSetting());
+                $data['setting']=$setting->getSetting();
+                $data['id']=$setting->getId();
+            }
+        } else {
+            //Si el usuario no tiene settings se crean los settings por defecto
+            $settingsRepository=$em->getRepository('SopinetUserPreferencesBundle:UserSetting');
+            $settings=$settingsRepository->findAll();
+            /** @var UserSetting $setting */
+            foreach ($settings as $setting) {
+                //Se añade el valor por defecto asociado al usuario y al setting
+                $userSetting=new UserValue();
+                $userSetting->setUser($userextend);
+                $userSetting->setValue($setting->getDefaultoption());
+                $userSetting->setSetting($setting);
+                $em->persist($userSetting);
+                $em->flush($userSetting);
+                //Se añaden los datos para la respuesta
+                $data['value']=$setting->getName();
+                $data['setting']=$setting;
+                $data['id']=$userSetting->getId();
+            }
         }
         $view = View::create()
             ->setStatusCode(200)
