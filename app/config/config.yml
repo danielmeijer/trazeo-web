@@ -87,6 +87,10 @@ doctrine:
                 point_str: Sopinet\Bundle\SimplePointBundle\ORM\MySQL\PointStr
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
+        filters:
+            page-filter:
+                class: Trazeo\MyPageBundle\Filter\PageFilter
+                enabled: true
         
 #KNP_menu
 knp_menu:
