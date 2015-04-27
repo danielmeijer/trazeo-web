@@ -79,6 +79,9 @@ class ERide extends AbstractEntity
      **/
     protected $userextend;
 
+    /**
+     * @ORM\Column(name="countReport", type="integer", length=255, nullable=true)
+     */
     protected $countReport;
 
     protected $childsR;
@@ -87,7 +90,7 @@ class ERide extends AbstractEntity
 
     protected $countChildsR;
 
-    public function countReport() {
+    public function getCountReport() {
         return count($this->getReports());
     }
 
@@ -294,6 +297,7 @@ class ERide extends AbstractEntity
      */
     public function addReport(\Trazeo\BaseBundle\Entity\EReport $reports)
     {
+        $this->countReport = $this->getCountReport();
         $this->reports[] = $reports;
 
         return $this;
@@ -517,5 +521,18 @@ class ERide extends AbstractEntity
     public function getGroupRegistered()
     {
         return $this->groupRegistered;
+    }
+
+    /**
+     * Set countReport
+     *
+     * @param integer $countReport
+     * @return ERide
+     */
+    public function setCountReport($countReport)
+    {
+        $this->countReport = $countReport;
+
+        return $this;
     }
 }

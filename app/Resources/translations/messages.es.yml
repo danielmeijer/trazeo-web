@@ -790,8 +790,10 @@ list:
     label_user_email: 'Email'
     label_user_name: 'Nombre'
     label_mobile: 'Móvil'
+    label_childs: 'Niños/as'
+    label_string_childs_r: 'Niños que han participado'
     label_user_created_at: 'Fecha registro'
-    label_count_childs_r: 'Niños que han participado'
+    label_count_childs_r: 'Número de Niños'
     label_group_object: 'Grupo al que pertenece'
     label_id: 'Identificador'
     label_group_registered: 'Grupo al que pertenece'
@@ -877,6 +879,7 @@ filter:
     label_group_registered: 'Grupo'
     label_user_email: 'Email'
     label_name: 'Nombre'
+    label_nick: 'Nombre'
 
 customAdmin:
     stats:

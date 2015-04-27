@@ -84,6 +84,7 @@ class PUserExtendAdmin extends Admin
             ->add('user.name')
             ->add('mobile')
             ->add('groups')
+            ->add('childs')
 //            ->add('city')
 //            ->add('country')
             ->add('user.createdAt')
