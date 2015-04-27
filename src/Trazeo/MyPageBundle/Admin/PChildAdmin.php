@@ -68,6 +68,7 @@ class PChildAdmin extends Admin
             ->add('groups')
             //->add('createdAt', 'doctrine_orm_datetime', array('input_type' => 'datetime'))
             ->add('scholl')
+            ->add('nick')
             // EDAD
             //->add('createdAt', 'doctrine_orm_datetime_range', array(), 'sonata_type_datetime_picker')
             ->add('gender', 'doctrine_orm_choice', [],
