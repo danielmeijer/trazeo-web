@@ -64,13 +64,13 @@ class StatsAdminController extends Controller
             // Filtro por Fecha
             if (isset($data['date_from']) && $data['date_from'] != "") {
                 $date_temp_formated = $helper->getDateTime($data['date_from']);
-            $qb->andWhere('r.createdAt > :date_from');
+            $qb->andWhere('r.createdAt >= :date_from');
             $qb->setParameter('date_from', $date_temp_formated->format('Y-m-d'));
             }
 
             if (isset($data['date_to']) && $data['date_to'] != "") {
                 $date_temp_formated = $helper->getDateTime($data['date_to']);
-            $qb->andWhere('r.createdAt < :date_to');
+            $qb->andWhere('r.createdAt <= :date_to');
             $qb->setParameter('date_to', $date_temp_formated->format('Y-m-d'));
             }
 
@@ -126,13 +126,13 @@ class StatsAdminController extends Controller
             // Filtro por Fecha
             if (isset($data['date_from']) && $data['date_from'] != "") {
                 $date_temp_formated = $helper->getDateTime($data['date_from']);
-                $qb->andWhere('fuser.createdAt > :date_from');
+                $qb->andWhere('fuser.createdAt >= :date_from');
                 $qb->setParameter('date_from', $date_temp_formated->format('Y-m-d'));
             }
 
             if (isset($data['date_to']) && $data['date_to'] != "") {
                 $date_temp_formated = $helper->getDateTime($data['data_to']);
-                $qb->andWhere('fuser.createdAt < :date_to');
+                $qb->andWhere('fuser.createdAt <= :date_to');
                 $qb->setParameter('date_to', $date_temp_formated->format('Y-m-d'));
             }
 
@@ -199,13 +199,13 @@ class StatsAdminController extends Controller
             // Filtro por Fecha
             if (isset($data['date_from']) && $data['date_from'] != "") {
                 $date_temp_formated = $helper->getDateTime($data['date_from']);
-                $qb->andWhere('c.createdAt > :date_from');
+                $qb->andWhere('c.createdAt >= :date_from');
                 $qb->setParameter('date_from', $date_temp_formated->format('Y-m-d'));
             }
 
             if (isset($data['date_to']) && $data['date_to'] != "") {
                 $date_temp_formated = $helper->getDateTime($data['date_to']);
-                $qb->andWhere('c.createdAt < :date_to');
+                $qb->andWhere('c.createdAt <= :date_to');
                 $qb->setParameter('date_to', $date_temp_formated->format('Y-m-d'));
             }
 
@@ -403,13 +403,13 @@ class StatsAdminController extends Controller
             // Filtro por Fecha
             if (isset($data['date_from']) && $data['date_from'] != "") {
                 $date_temp_formated = $helper->getDateTime($data['date_from']);
-                $qb->andWhere('fuser.createdAt > :date_from');
+                $qb->andWhere('fuser.createdAt >= :date_from');
                 $qb->setParameter('date_from', $date_temp_formated->format('Y-m-d'));
             }
 
             if (isset($data['date_to']) && $data['date_to'] != "") {
                 $date_temp_formated = $helper->getDateTime($data['date_to']);
-                $qb->andWhere('fuser.createdAt < :date_to');
+                $qb->andWhere('fuser.createdAt <= :date_to');
                 $qb->setParameter('date_to', $date_temp_formated->format('Y-m-d'));
             }
 
@@ -453,13 +453,13 @@ class StatsAdminController extends Controller
             // Filtro por Fecha
             if (isset($data['date_from']) && $data['date_from'] != "") {
                 $date_temp_formated = $helper->getDateTime($data['date_from']);
-                $qb->andWhere('c.createdAt > :date_from');
+                $qb->andWhere('c.createdAt >= :date_from');
                 $qb->setParameter('date_from', $date_temp_formated->format('Y-m-d'));
             }
 
             if (isset($data['date_to']) && $data['date_to'] != "") {
                 $date_temp_formated = $helper->getDateTime($data['date_to']);
-                $qb->andWhere('c.createdAt < :date_to');
+                $qb->andWhere('c.createdAt <= :date_to');
                 $qb->setParameter('date_to', $date_temp_formated->format('Y-m-d'));
             }
 
@@ -633,13 +633,13 @@ class StatsAdminController extends Controller
             // Filtro por Fecha
             if (isset($data['date_from']) && $data['date_from'] != "") {
                 $date_temp_formated = $helper->getDateTime($data['date_from']);
-                $qb->andWhere('r.createdAt > :date_from');
+                $qb->andWhere('r.createdAt >= :date_from');
                 $qb->setParameter('date_from', $date_temp_formated->format('Y-m-d'));
             }
 
             if (isset($data['date_to']) && $data['date_to'] != "") {
                 $date_temp_formated = $helper->getDateTime($data['date_to']);
-                $qb->andWhere('r.createdAt < :date_to');
+                $qb->andWhere('r.createdAt <= :date_to');
                 $qb->setParameter('date_to', $date_temp_formated->format('Y-m-d'));
             }
 

@@ -41,6 +41,7 @@ class PChildAdmin extends Admin
         // retrieve the default batch actions (currently only delete)
         $actions = parent::getBatchActions();
 
+
         // TODO: LA QUITAMOS
         /*
         $actions['createGraph'] = array(
@@ -108,7 +109,11 @@ class PChildAdmin extends Admin
             ->addIdentifier('nick')
             ->add('scholl')
             ->add('groups')
-            ->add('userextendchilds')
+            ->add('userextendchilds', null, array(
+                'sortable' => true,
+                'sort_field_mapping'=> array('fieldName'=>'id'),
+                'sort_parent_association_mappings' => array(array('fieldName'=>'userextendchilds'))
+            ))
             ->add('emailParent')
             ->add('mobileParent')
             ->add('dateBirth')

@@ -100,9 +100,17 @@ class PRideAdmin extends Admin
         $listMapper
             ->addIdentifier('id')
             ->add('groupRegistered')
+            ->add('stringChildsR')
             ->add('createdAt')
             ->add('countChildsR')
             ->add('countReport')
+            /**
+            ->add('countReport',null,array(
+                'sortable'=>true,
+                'sort_field_mapping'=> array('fieldName'=>'distance'),
+                'sort_parent_association_mappings' => array(array('fieldName'=>'distance'))
+                ))
+             **/
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
