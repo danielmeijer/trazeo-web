@@ -875,6 +875,8 @@ filter:
     label_scholl: 'Centro Educativo'
     label_author: 'Autor'
     label_group_registered: 'Grupo'
+    label_user_email: 'Email'
+    label_name: 'Nombre'
 
 customAdmin:
     stats:

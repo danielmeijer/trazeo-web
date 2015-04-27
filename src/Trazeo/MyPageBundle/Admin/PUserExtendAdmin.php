@@ -62,7 +62,10 @@ class PUserExtendAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('groups')
+            //->add('groups', null, array(), null, array('expanded' => true, 'multiple' => true))
+            ->add('groups', null, array(), null, array('multiple' => true))
+            ->add('user.email')
+            ->add('name')
  //           ->add('city')
    //          ->add('country')
             //->add('createdAt', 'doctrine_orm_datetime_range', array('format' => 'MM/dd/yyyy'), 'DateRangePicker')
