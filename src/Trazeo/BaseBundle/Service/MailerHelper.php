@@ -37,9 +37,11 @@ class MailerHelper {
         }
     }
 
-    public function sendMessage($message, $mailer='swiftMailer') {
+    public function sendMessage($message) {
+        $mailer=$this->_container->getParameter('mailer_service');
         if ($mailer=='swiftMailer') {
             /** @var \Swift_Mailer $dispatcher */
+
             $dispatcher = $this->_container->get('swiftmailer.mailer');
             $dispatcher->send($message);
         } else {
