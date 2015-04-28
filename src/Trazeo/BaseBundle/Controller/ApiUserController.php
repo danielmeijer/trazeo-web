@@ -154,7 +154,9 @@ class ApiUserController extends Controller
         $em->persist($newUser);
         $em->flush();
 
-        $dispatcher = $this->get('hip_mandrill.dispatcher');
+        //$dispatcher = $this->get('hip_mandrill.dispatcher');
+        $dispatcher = $con->get('swiftmailer.mailer');
+
 
         $message = new Message();
 

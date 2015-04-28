@@ -86,8 +86,8 @@ class GenerateEmailsCommand extends ContainerAwareCommand
                     $subject=("Tiene ".count($notifications)." novedades");
                 }
 
-                $dispatcher = $con->get('hip_mandrill.dispatcher');
-
+                //$dispatcher = $con->get('hip_mandrill.dispatcher');
+                $dispatcher = $con->get('swiftmailer.mailer');
                 $message = new Message();
 
                 $message
