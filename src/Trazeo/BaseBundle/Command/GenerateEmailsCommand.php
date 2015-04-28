@@ -86,18 +86,9 @@ class GenerateEmailsCommand extends ContainerAwareCommand
                     $subject=("Tiene ".count($notifications)." novedades");
                 }
 
-                //$dispatcher = $con->get('hip_mandrill.dispatcher');
-                $dispatcher = $con->get('swiftmailer.mailer');
-                $message = new Message();
-
-                $message
-                    ->setFrom('hola@trazeo.es', 'Trazeo')
-                    ->addTo($user->getUser()->getEmail())
-                    ->setSubject($subject)
-                    ->setBody($con->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:notifyUser.html.twig', array('user' => $user, 'notifications' => $notifications)));
-
-
-                $result = $dispatcher->send($message);
+                $mailer = $con->get('trazeo_mailer_helper');
+                $message = $mailer->createNewMessage('hola@trazeo.es', 'Trazeo', $user->getUser()->getEmail(), $subject, $con->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:notifyUser.html.twig', array('user' => $user, 'notifications' => $notifications)));
+                $mailer->sendMessage($message);
                 $output->writeln('<info>Hecho</info>');
             }
         }

@@ -26,6 +26,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Swift_Message as Message;
 use Hip\MandrillBundle\Dispatcher;
 use Trazeo\BaseBundle\Entity\UserExtend;
+use Trazeo\BaseBundle\Service\MailerHelper;
 
 class ApiUserController extends Controller
 {
@@ -155,19 +156,10 @@ class ApiUserController extends Controller
         $em->flush();
 
         //$dispatcher = $this->get('hip_mandrill.dispatcher');
-        $dispatcher = $this->get('swiftmailer.mailer');
-
-
-        $message = new Message();
-
-        $message
-            ->setFrom('hola@trazeo.es', 'Trazeo')
-            ->addTo($newUser->getEmail())
-            ->setSubject("Bienvenido a Trazeo.")
-            ->setBody($this->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:newUserApp.html.twig', array()));
-
-
-        $result = $dispatcher->send($message);
+        /** @var MailerHelper $mailer */
+        $mailer=$this->get('trazeo_mailer_helper');
+        $message = $mailer->createNewMessage('hola@trazeo.es', 'Trazeo', $newUser->getEmail(), "Bienvenido a Trazeo.", $this->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:newUserApp.html.twig', array()));
+        $mailer->sendMessage($message);
         //se devuelve el id del usuario
         $array['id'] = $newUser->getId();
         $view = View::create()
