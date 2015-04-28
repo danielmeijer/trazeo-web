@@ -30,8 +30,6 @@ use Trazeo\BaseBundle\Entity\EGroupInvite;
 use Trazeo\BaseBundle\Entity\EGroupAccess;
 use Sopinet\Bundle\SimplePointBundle\ORM\Type\SimplePoint;
 use Sopinet\TimelineBundle\Entity\Comment;
-use Hip\MandrillBundle\Message;
-use Hip\MandrillBundle\Dispatcher;
 
 class ApiGroupController extends Controller
 {

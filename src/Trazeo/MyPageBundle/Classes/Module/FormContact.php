@@ -2,7 +2,7 @@
 
 namespace Trazeo\MyPageBundle\Classes\Module;
 
-use Hip\MandrillBundle\Message;
+use Swift_Message as Message;;
 use Symfony\Component\Form\Form;
 use Trazeo\MyPageBundle\Classes\ModuleAbstract;
 use Trazeo\MyPageBundle\Entity\Module;
@@ -36,11 +36,10 @@ class FormContact extends ModuleAbstract {
         $html .= "<div>Mensaje: ".$dataForm['message']."</div>";
 
         $message
-            ->setFromEmail('hola@trazeo.es')
-            ->setFromName('Trazeo')
+            ->setFrom('hola@trazeo.es', 'Trazeo')
             ->addTo($email)
             ->setSubject("Trazeo - Formulario de Contacto")
-            ->setHtml($html);
+            ->setBody($html);
 
 
         $result = $dispatcher->send($message);

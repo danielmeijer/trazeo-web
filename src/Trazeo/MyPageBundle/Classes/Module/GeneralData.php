@@ -2,7 +2,6 @@
 
 namespace Trazeo\MyPageBundle\Classes\Module;
 
-use Hip\MandrillBundle\Message;
 use Symfony\Component\Form\Form;
 use Trazeo\BaseBundle\Entity\EGroup;
 use Trazeo\BaseBundle\Service\Helper;
