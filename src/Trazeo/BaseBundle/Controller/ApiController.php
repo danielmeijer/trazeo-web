@@ -304,7 +304,7 @@ class ApiController extends Controller {
      *      {"name"="email", "dataType"="string", "required"=true, "description"="Email del usuario"},
      *      {"name"="pass", "dataType"="string", "required"=true, "description"="Password del usuario"},
      *      {"name"="route", "dataType"="string", "required"=true, "description"="Ruta"},
-     *      {"name"="parameters", "dateType"="string", "required"=true. "description"="Parametros codificados para la ruta en formato json"}
+     *      {"name"="parameters", "dataType"="string", "required"=true,  "description"="Parametros codificados para la ruta en formato json"},
      *   }
      * )
      * @POST("/api/auto/url")
