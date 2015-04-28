@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Application\Sonata\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RequestContext;
-use Hip\MandrillBundle\Message;
+use Swift_Message as Message;
 use Hip\MandrillBundle\Dispatcher;
 
 class GenerateEmailsCommand extends ContainerAwareCommand
@@ -91,11 +91,10 @@ class GenerateEmailsCommand extends ContainerAwareCommand
                 $message = new Message();
 
                 $message
-                    ->setFromEmail('hola@trazeo.es')
-                    ->setFromName('Trazeo')
+                    ->setFrom('hola@trazeo.es', 'Trazeo')
                     ->addTo($user->getUser()->getEmail())
                     ->setSubject($subject)
-                    ->setHtml($con->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:notifyUser.html.twig', array('user' => $user, 'notifications' => $notifications)));
+                    ->setBody($con->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:notifyUser.html.twig', array('user' => $user, 'notifications' => $notifications)));
 
 
                 $result = $dispatcher->send($message);
