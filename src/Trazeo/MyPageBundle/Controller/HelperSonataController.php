@@ -29,7 +29,8 @@ class HelperSonataController extends Controller
         $emails_string = $request->get('emails');
         $emails = explode(",", $emails_string);
 
-        $dispatcher = $this->get('hip_mandrill.dispatcher');
+        //$dispatcher = $this->get('hip_mandrill.dispatcher');
+        $dispatcher = $this->get('swiftmailer.mailer');
         $message = new Message();
         $message
             ->setFromEmail('hola@trazeo.es')

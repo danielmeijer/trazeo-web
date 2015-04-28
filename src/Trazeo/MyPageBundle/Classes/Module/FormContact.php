@@ -22,7 +22,8 @@ class FormContact extends ModuleAbstract {
 
         $flashMessages = $container->get('sopinet_flashMessages');
 
-        $dispatcher = $container->get('hip_mandrill.dispatcher');
+        //$dispatcher = $container->get('hip_mandrill.dispatcher');
+        $dispatcher = $container->get('swiftmailer.mailer');
 
         $message = new Message();
 

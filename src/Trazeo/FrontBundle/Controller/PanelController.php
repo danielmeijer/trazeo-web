@@ -56,8 +56,8 @@ class PanelController extends Controller
 	    	$em->flush();
 	    	$tutorial = 1;
 	    	// Creamos el correo de bienvenida
-	        $dispatcher = $this->get('hip_mandrill.dispatcher');
-
+	        //$dispatcher = $this->get('hip_mandrill.dispatcher');
+            $dispatcher = $this->get('swiftmailer.mailer');
     	    $message = new Message();
 
         	$message
