@@ -5,7 +5,7 @@ namespace Trazeo\MyPageBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use Hip\MandrillBundle\Message;
+use Swift_Message as Message;
 use Ob\HighchartsBundle\Highcharts\Highchart;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -33,15 +33,14 @@ class HelperSonataController extends Controller
         $dispatcher = $this->get('swiftmailer.mailer');
         $message = new Message();
         $message
-            ->setFromEmail('hola@trazeo.es')
-            ->setFromName('Trazeo');
+            ->setFrom('hola@trazeo.es', 'Trazeo');
 
         foreach($emails as $email) {
             $message->addTo($email);
         }
 
         $message
-            ->setBccAddress('hola@trazeo.es')
+            ->setBcc('hola@trazeo.es')
             ->setSubject($data['subject'])
             ->setHtml($data['body']);
 

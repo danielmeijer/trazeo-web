@@ -23,7 +23,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Hip\MandrillBundle\Message;
+use Swift_Message as Message;
 use Hip\MandrillBundle\Dispatcher;
 use Trazeo\BaseBundle\Entity\UserExtend;
 
@@ -155,17 +155,16 @@ class ApiUserController extends Controller
         $em->flush();
 
         //$dispatcher = $this->get('hip_mandrill.dispatcher');
-        $dispatcher = $con->get('swiftmailer.mailer');
+        $dispatcher = $this->get('swiftmailer.mailer');
 
 
         $message = new Message();
 
         $message
-            ->setFromEmail('hola@trazeo.es')
-            ->setFromName('Trazeo')
+            ->setFrom('hola@trazeo.es', 'Trazeo')
             ->addTo($newUser->getEmail())
             ->setSubject("Bienvenido a Trazeo.")
-            ->setHtml($this->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:newUserApp.html.twig', array()));
+            ->setBody($this->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:newUserApp.html.twig', array()));
 
 
         $result = $dispatcher->send($message);
