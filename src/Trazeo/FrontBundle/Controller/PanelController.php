@@ -56,16 +56,9 @@ class PanelController extends Controller
             $em->flush();
             $tutorial = 1;
             // Creamos el correo de bienvenida
-            //$dispatcher = $this->get('hip_mandrill.dispatcher');
-            $dispatcher = $this->get('swiftmailer.mailer');
-            $message = new Message();
-
-            $message
-                ->setFrom('hola@trazeo.es', 'Trazeo')
-                ->addTo($fos_user->getEmail())
-                ->setSubject("Bienvenido a Trazeo.")
-                ->setBody($this->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:newUser.html.twig', array()));
-            $result = $dispatcher->send($message);
+            $mailer = $this->get('trazeo_mailer_helper');
+            $message = $mailer->createNewMessage('hola@trazeo.es', 'Trazeo', $fos_user->getEmail(), "Bienvenido a Trazeo.", $this->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:newUser.html.twig', array()));
+            $mailer->sendMessage($message);
 
         }
         /**

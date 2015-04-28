@@ -23,17 +23,9 @@
 			//echo $link;
 			//exit();
 	        //$dispatcher = $con->get('hip_mandrill.dispatcher');
-
-            $dispatcher = $con->get('swiftmailer.mailer');
-
-    	    $message = new Message();
-
-        	$message
-            	->setFrom('hola@trazeo.es', 'Trazeo')
-            	->addTo($userEmail)
-            	->setSubject("Ha sido invitado al sistema de Trazeo")
-            	->setBody($con->get('templating')->render('TrazeoFrontBundle:PanelGroups:email_invite.html.twig', array('link' => $link, 'group' => $group, 'user' => $fos_user_current)));
- 			$result = $dispatcher->send($message);
+            $mailer = $con->get('trazeo_mailer_helper');
+            $message = $mailer->createNewMessage('hola@trazeo.es', 'Trazeo', $userEmail, "Ha sido invitado al sistema de Trazeo", $con->get('templating')->render('TrazeoFrontBundle:PanelGroups:email_invite.html.twig', array('link' => $link, 'group' => $group, 'user' => $fos_user_current)));
+            $mailer->sendMessage($message);
 
 			return $eGAI;
 		}	

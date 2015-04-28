@@ -4,6 +4,7 @@ namespace Trazeo\MyPageBundle\Classes\Module;
 
 use Swift_Message as Message;;
 use Symfony\Component\Form\Form;
+use Trazeo\BaseBundle\Service\MailerHelper;
 use Trazeo\MyPageBundle\Classes\ModuleAbstract;
 use Trazeo\MyPageBundle\Entity\Module;
 use Trazeo\MyPageBundle\Form\FormContactType;
@@ -22,10 +23,6 @@ class FormContact extends ModuleAbstract {
 
         $flashMessages = $container->get('sopinet_flashMessages');
 
-        //$dispatcher = $container->get('hip_mandrill.dispatcher');
-        $dispatcher = $container->get('swiftmailer.mailer');
-
-        $message = new Message();
 
         $dataForm = $request->get('FormContact');
 
@@ -35,19 +32,15 @@ class FormContact extends ModuleAbstract {
         $html .= "<div>Email: ".$dataForm['email']."</div>";
         $html .= "<div>Mensaje: ".$dataForm['message']."</div>";
 
-        $message
-            ->setFrom('hola@trazeo.es', 'Trazeo')
-            ->addTo($email)
-            ->setSubject("Trazeo - Formulario de Contacto")
-            ->setBody($html);
-
-
-        $result = $dispatcher->send($message);
+        /** @var MailerHelper $mailer */
+        $mailer = $container->get('trazeo_mailer_helper');
+        $message = $mailer->createNewMessage('hola@trazeo.es', 'Trazeo', $email, "Trazeo - Formulario de Contacto", $html);
+        $mailer->sendMessage($message);
 
         if (isset($result[0]['status']) && $result[0]['status'] == "sent") {
-            $flashMessages->addFlashMessages("success","Mensaje enviado con éxito.");
+            $flashMessages->addFlashMessages("success", "Mensaje enviado con éxito.");
         } else {
-            $flashMessages->addFlashMessages("warning","Ha ocurrido un error.");
+            $flashMessages->addFlashMessages("warning", "Ha ocurrido un error.");
         }
 
         return $container->redirect($container->generateUrl('landingPage', array('subdomain' => $subdomain)));
