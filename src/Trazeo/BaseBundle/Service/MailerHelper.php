@@ -13,7 +13,8 @@ class MailerHelper {
         $this->_container = $container;
     }
 
-    public function createNewMessage($from='hola@trazeo.es', $fromName='Trazeo', $email, $subject, $body, $mailer='swiftMailer'){
+    public function createNewMessage($from='hola@trazeo.es', $fromName='Trazeo', $email, $subject, $body){
+        $mailer=$this->_container->getParameter('mailer_service');
         if ($mailer=='swiftMailer') {
             $message = new Swift_Message();
             $message
