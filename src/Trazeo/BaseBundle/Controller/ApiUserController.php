@@ -97,6 +97,14 @@ class ApiUserController extends Controller
     }
 
     /**
+     * @ApiDoc(
+     *   description="Función que comprueba el login de un usuario",
+     *   section="user",
+     *   parameters={
+     *      {"name"="email", "dataType"="string", "required"=true, "description"="Email del usuario administrador"},
+     *      {"name"="pass", "dataType"="string", "required"=true, "description"="Password del usuario administrador"}
+     *   }
+     * )
      * @POST("/api/login", name="api_login")
      */
     public function postLoginAction(Request $request)
