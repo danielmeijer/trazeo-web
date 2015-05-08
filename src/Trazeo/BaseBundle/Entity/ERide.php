@@ -96,7 +96,9 @@ class ERide extends AbstractEntity
 
     public function getChildsR() {
         $repositoryRide = $this->getRepository();
-        $this->childsR = $repositoryRide->getChildrenInRide($this);
+        if ($repositoryRide != null) {
+            $this->childsR = $repositoryRide->getChildrenInRide($this);
+        }
         //ldd($this->childsR);
         return $this->childsR;
     }
