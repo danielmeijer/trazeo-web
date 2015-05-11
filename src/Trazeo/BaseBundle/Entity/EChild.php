@@ -53,7 +53,7 @@ class EChild extends AbstractEntity
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateBirth", type="date")
+     * @ORM\Column(name="dateBirth", type="date", nullable=true)
      */
     protected $dateBirth;
 
