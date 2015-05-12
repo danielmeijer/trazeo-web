@@ -154,6 +154,18 @@ class PRideAdmin extends Admin
         ;
     }
 
+    public function getExportFields() {
+        return array(
+            'id',
+            'countChildsR',
+            'duration',
+            'distance',
+            'groupRegistered',
+            'reports',
+            'createdAt'
+        );
+    }
+
     public function createQuery($context = 'list')
     {
         /** @var QueryBuilder $query */
