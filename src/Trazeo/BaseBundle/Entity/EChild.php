@@ -72,7 +72,7 @@ class EChild extends AbstractEntity
 
 
 	/**
-	 * @ORM\Column(name="gender", type="string")
+	 * @ORM\Column(name="gender", type="string", nullable=true)
 	 */
 	protected $gender;
 	
