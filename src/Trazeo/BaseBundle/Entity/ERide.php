@@ -107,7 +107,9 @@ class ERide extends AbstractEntity
         $names = array();
         /** @var EChildRide $child */
         foreach($this->getChildsR() as $child) {
-            $names[] = $child->getChild()->getNick();
+            if ($child->getChild() != null) {
+                $names[] = $child->getChild()->getNick();
+            }
         }
         $this->stringChildsR = implode(", ", $names);
         return $this->stringChildsR;
