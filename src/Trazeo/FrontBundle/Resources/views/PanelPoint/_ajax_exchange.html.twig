@@ -2,7 +2,7 @@
 	$(".exchange-code").click(function()
 	{
 		$.ajax({
- 			url: "{{base_url}}"+"api/exchange/code",
+ 			url: "{{ path('exchange_code') }}",
   			type: "POST",
   			data: { code : $("#exchangecode").val()}
 		}).done(function(textResponse){
