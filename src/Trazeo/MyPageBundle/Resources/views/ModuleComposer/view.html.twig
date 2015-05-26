@@ -2,20 +2,21 @@
 
 {% block content %}
     <p>Esta pantalla se encuentra en construcción.</p>
-    <p>Las funciones de ordenar no se guardan en el sistema.</p>
+    <p>Las funciones de ordenar pueden no funcionar 100%.</p>
+    <p>Puede mover los elementos, clicando y soltando para reordenarlos.</p>
     <p>Acceda a "Editar" los módulos, y podrá modificarlos.</p>
 
     <div id="menus">
         {% for menu in page.menus %}
-            <div class="menu">
+            <div class="menu" data-id="menu-{{ menu.id }}" id="menu-{{ menu.id }}">
                 <div class="title_menu">
                     <span class="menu_colorback" style="background-color: #{{ menu.colorback }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     {{ menu }}
                 </div>
-                <div class="modules">
-                        <div class="module empty"> - </div>
+                <div class="modules" data-id="modules-{{ menu.id }}" id="modules-{{ menu.id }}">
+                        <div class="module empty" data-id="module-0_{{ menu.id }}" id="module-0_{{ menu.id }}"> - </div>
                     {% for module in menu.modules %}
-                        <div class="module">{{ module }}<i class="js-edit">
+                        <div class="module" data-id="module-{{ module.id }}" id="module-{{ module.id }}">{{ module }}<i class="js-edit">
                                 <a href="{{ path('moduleComposer_editModule', {'module': module.id}) }}">
                                     Editar
                                 </a>
@@ -78,20 +79,111 @@
     {% endjavascripts %}
 
     <script>
+        var order;
+
+        function replaceAll(find, replace, str) {
+            return str.replace(new RegExp(find, 'g'), replace);
+        }
+
+        function saveModules(parentID, order) {
+            if (typeof order == 'string') {
+                order = order.replace(/\|/g, ',');
+            }
+
+            var postURL = "{{base_url}}/admin/moduleComposer/saveOrderModules/" + parentID + "/" + order;
+
+            $.post( postURL, function( data ) {
+                alert(data);
+            });
+        }
+
+        function saveMenus(order) {
+            if (typeof order == 'string') {
+                order = order.replace(/\|/g, ',');
+            }
+
+            var postURL = "{{base_url}}/admin/moduleComposer/saveOrderMenus/" + order;
+
+            $.post( postURL, function( data ) {
+                alert(data);
+            });
+        }
+
         $(function() {
+            // http://labs.abeautifulsite.net/jquery-minicolors/
+            // .menu_colorback
+            // TODO: Implementar el cambio de color
+
             var menus = $("#menus").sortable({
                 animation: 150,
                 draggable: '.menu',
+                filter: '.menu_colorback',
                 handle: '.title_menu',
-                onUpdate: function (/**Event*/evt) {
-                    //console.log(evt);
+                dataIdAttr: 'data-id',
+                store: {
+                    /**
+                     * Get the order of elements. Called once during initialization.
+                     * @param   {Sortable}  sortable
+                     * @returns {Array}
+                     */
+                    get: function (sortable) {
+                        order = localStorage.getItem(sortable.options.group);
+                        return order ? order.split(',') : [];
+                    },
+
+                    /**
+                     * Save the order of elements. Called onEnd (when the item is dropped).
+                     * @param {Sortable}  sortable
+                     */
+                    set: function (sortable) {
+                        order = sortable.toArray();
+                        saveMenus(order);
+                        // DESACTIVADO: localStorage.setItem(sortable.options.group, order.join('|'));
+                    }
                 }
             });
+            console.log(menus);
+            console.log(menus.toArray());
 
             $(".modules").sortable({
                 animation: 150,
                 draggable: '.module',
-                filter: ".empty"
+                filter: ".empty, .menu_colorback",
+                dataIdAttr: 'data-id',
+                group: "localStorage-example",
+                store: {
+                    /**
+                     * Get the order of elements. Called once during initialization.
+                     * @param   {Sortable}  sortable
+                     * @returns {Array}
+                     */
+                    get: function (sortable) {
+                        order = localStorage.getItem(sortable.options.group);
+                        return order ? order.split(',') : [];
+                    },
+
+                    /**
+                     * Save the order of elements. Called onEnd (when the item is dropped).
+                     * @param {Sortable}  sortable
+                     */
+                    set: function (sortable) {
+                        order = sortable.toArray();
+                        var parentID = $("#" + order[0]).parent().attr('id');
+                        saveModules(parentID, order);
+                        // DESACTIVADO: localStorage.setItem(sortable.options.group, order.join('|'));
+                    }
+                },
+                onAdd: function (/**Event*/evt) {
+                    var moduleID = $(evt.item).attr("data-id");
+                    //alert(moduleID);
+                    // En moduleID tendré el ID del módulo, ahora tengo que buscar el Menú al que ha ido
+                    var parentID = $("#"+moduleID).parent().attr('id');
+                    var children = [];
+                    $("#"+parentID).children().each(function(el) {
+                        children.push($(this).attr('id'));
+                    });
+                    saveModules(parentID, order);
+                }
             });
         });
     </script>
