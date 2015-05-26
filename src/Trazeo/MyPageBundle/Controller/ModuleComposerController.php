@@ -19,6 +19,7 @@ use Trazeo\BaseBundle\Entity\EGroup;
 use Trazeo\BaseBundle\Entity\EGroupRepository;
 use Trazeo\BaseBundle\Entity\ERide;
 use Trazeo\BaseBundle\Entity\ERideRepository;
+use Trazeo\MyPageBundle\Entity\Menu;
 use Trazeo\MyPageBundle\Entity\Module;
 use Trazeo\MyPageBundle\Form\BarAdminType;
 use Trazeo\MyPageBundle\Form\ModuleEditComposerType;
@@ -83,5 +84,72 @@ class ModuleComposerController extends Controller
             'module' => $module,
             'formModule' => $formModule->createView()
         );
+    }
+
+    /**
+     * @Route("/saveOrderModules/{parentID}/{order_string}", name="moduleComposer_saveOrderModules")
+     */
+    public function saveOrderModulesAction($parentID, $order_string) {
+        $em = $this->get('doctrine')->getManager();
+
+        $repositoryMenu = $em->getRepository("TrazeoMyPageBundle:Menu");
+        $temp = explode("-", $parentID);
+        $menuID = $temp[1];
+        /** @var Menu $menu */
+        $menu = $repositoryMenu->findOneById($menuID);
+
+        // Desvinculamos los módulos
+        /** @var Module $module */
+        foreach($menu->getModules() as $module) {
+            $module->setMenu(null);
+            $em->persist($module);
+            $em->flush();
+        }
+
+        // Vinculamos los módulos ordenamos
+        $repositoryModule = $em->getRepository("TrazeoMyPageBundle:Module");
+        $order_array = explode(",", $order_string);
+        $i = 1;
+
+        foreach($order_array as $order) {
+            $temp = explode("-", $order);
+
+            $moduleID = $temp[1];
+            /** @var Module $module */
+            $module = $repositoryModule->findOneById($moduleID);
+            if ($module != null) {
+                $module->setMenu($menu);
+                $module->setPosition($i);
+                $em->persist($module);
+                $em->flush();
+                $i++;
+            }
+        }
+
+        die("Ok");
+    }
+
+    /**
+     * @Route("/saveOrderMenus/{order_string}", name="moduleComposer_saveOrderMenus")
+     */
+    public function saveOrderMenusAction($order_string  ) {
+        $em = $this->get('doctrine')->getManager();
+
+        $repositoryMenu = $em->getRepository("TrazeoMyPageBundle:Menu");
+        $order_array = explode(",", $order_string);
+        $i = 1;
+
+        foreach($order_array as $order) {
+            $temp = explode("-", $order);
+            $menuID = $temp[1];
+            /** @var Menu $menu */
+            $menu = $repositoryMenu->findOneById($menuID);
+            $menu->setPosition($i);
+            $em->persist($menu);
+            $em->flush();
+            $i++;
+        }
+
+        die("Ok");
     }
 }
