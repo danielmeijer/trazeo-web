@@ -27,7 +27,8 @@
 	 protected $id;
 
 	/**
-	 * @ORM\OneToOne(targetEntity="ECatalogItem")
+	 * @ORM\ManyToOne(targetEntity="ECatalogItem", inversedBy="file", cascade={"persist"})
+     * @ORM\JoinColumn(name="catalogitems_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
 	 */
 	 protected $catalogitems;
 
