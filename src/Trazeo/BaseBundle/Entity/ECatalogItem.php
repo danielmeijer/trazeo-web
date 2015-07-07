@@ -77,7 +77,7 @@ namespace Trazeo\BaseBundle\Entity;
      protected $complete=0;
 
 	/**
-	 * @ORM\OneToMany(targetEntity="File", mappedBy="catalogitems")
+	 * @ORM\OneToMany(targetEntity="File", mappedBy="catalogitems", cascade={"remove"}, orphanRemoval=true)
 	 */
 	 protected $file;
 
