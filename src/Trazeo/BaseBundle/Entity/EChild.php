@@ -430,6 +430,7 @@ class EChild extends AbstractEntity
      */
     public function getYears() {
         $now = new \DateTime();
+        if ($this->getDateBirth() == null) return 0;
         $diff = $now->getTimestamp() - $this->getDateBirth()->getTimestamp();
         $year_stamp = 31536000;
         $ret = $diff / $year_stamp;
