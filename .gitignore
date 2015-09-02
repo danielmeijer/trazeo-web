@@ -16,7 +16,6 @@ web/include/*
 scripts/composerSergio.sh
 # -- Composer -----------------------------------------
 composer.phar
-composer.lock
 
 # -- PHPUnit ------------------------------------------
 app/phpunit.xml  
