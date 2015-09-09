@@ -181,47 +181,10 @@ class ApiRideController extends Controller {
             // Sino, se crea un paseo y se asocia al grupo
             else{
                 // Comprobar si hay permisos para Crear el Paseo
-                $groupsIds = array();
-                $groupsIds[] = 63;
-                $groupsIds[] = 21;
-                $groupsIds[] = 20;
-                $groupsIds[] = 19;
-                $groupsIds[] = 18;
-                $groupsIds[] = 37;
-
-                $emailsToFilter = array();
-                $emailsToFilter[] = "prudennl92@gmail.com";
-                $emailsToFilter[] = "fermincabal94@gmail.com";
-                $emailsToFilter[] = "victornogpan@gmail.com";
-                $emailsToFilter[] = "clsouton@gmail.com";
-                $emailsToFilter[] = "laura.alberquilla@gmail.com";
-                $emailsToFilter[] = "lrodrigosanchez@gmail.com";
-                $emailsToFilter[] = "gemi87.jg@gmail.com";
-                $emailsToFilter[] = "elenacarrie@gmail.com";
-                $emailsToFilter[] = "hidabe@gmail.com";
-                $emailsToFilter[] = "susana_sgr_86@hotmail.com";
-                $emailsToFilter[] = "carlos.p.fuentes@hotmail.com";
-                $emailsToFilter[] = "eduplazas_76@hotmail.com";
-                $emailsToFilter[] = "gutizinguer2@hotmail.com";
-                $emailsToFilter[] = "t.curbelo.j@gmail.com";
-                $emailsToFilter[] = "eleena15@hotmail.com";
-
-                $canInitRide = true;
-                if (in_array($id_group, $groupsIds)) {
-                    $canInitRide = false;
-                    if (in_array($user->getEmail(), $emailsToFilter)) {
-                        $canInitRide = true;
-                    }
-                }
-                if (!$canInitRide) {
-                    $array['id_ride'] = "-1"; // No tiene permisos para iniciar el paseo
-
-                    $view = View::create()
-                        ->setStatusCode(200)
-                        ->setData($this->doOK($array));
-
-                    return $this->get('fos_rest.view_handler')->handle($view);
-                }
+                /**
+                 * DELETED
+                **/
+                // TODO: AÑADIR COMPROBACIÓN DINÁMICA
 
 
                 //Cerrar paseo asociado a este grupo, si los hubiera
