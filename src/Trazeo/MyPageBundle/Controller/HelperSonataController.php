@@ -42,7 +42,7 @@ class HelperSonataController extends Controller
         $message
             ->setBcc('hola@trazeo.es')
             ->setSubject($data['subject'])
-            ->setHtml($data['body']);
+            ->setBody($data['body'], 'text/html');
 
         $result = $dispatcher->send($message);
 
