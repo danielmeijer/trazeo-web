@@ -68,7 +68,7 @@ class ChatApiController extends FOSRestController{
         if ($request->get('type') == "file" || $request->get('type')=="file_image" || $request->get("type") == "file_video" || $request->get("type") == "file_doc") {
             $em = $this->get('doctrine')->getManager();
             /* @var $repositoryFile FileRepository */
-            $repositoryFile = $em->getRepository('PetyCashAppBundle:File');
+            $repositoryFile = $em->getRepository('TrazeoBaseBundle:File');
 
             if ($request->get('type') == "file_doc") {
                 $fileObject = $repositoryFile->uploadFileByFile($this->container, $request->files->get('file'), "doc");
@@ -138,10 +138,10 @@ class ChatApiController extends FOSRestController{
 
         // Enviamos el mensaje correspondiente a todos los dispositivos, excepto
         // al que está enviando este mensaje.
+        $gcmhelper = $this->get('sopinet_gcmhelper');
         foreach ($devices as $device) {
             if ($device->getToken() != $msg->from) {
                 /* @var $container Container */
-                $gcmhelper = $this->get('sopinet_gcmhelper');
                 $msg->device=$device->getType();
                 $gcmhelper->sendMessage($msg, $device->getToken());
             }
