@@ -2,10 +2,12 @@
 
 namespace Trazeo\BaseBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sopinet\Bundle\SimplePointBundle\ORM\Type\SimplePoint;
+use Sopinet\GCMBundle\Entity\Device;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -74,13 +76,13 @@ class ApiRideController extends Controller {
 
         $user = $this->getDoctrine()->getRepository('\Application\Sonata\UserBundle\Entity\User')->findOneBy(array ("email"=>$email, "password"=>$password));
         //$user= $this->getDoctrine()->getRepository('\Application\Sonata\UserBundle\Entity\User')->findOneBy(array ("username"=>$email));
-        if ($user == null){
+        if ($user == null) {
             $user = $this->getDoctrine()->getRepository('\Application\Sonata\UserBundle\Entity\User')->findOneBy(array ("username"=>$email, "password"=>$password));
-            if ($user == null){
+            if ($user == null) {
                 return false;
             }
         }
-        if ($password == $user->getPassword()){
+        if ($password == $user->getPassword()) {
             return $user;
         }
         else
@@ -105,7 +107,7 @@ class ApiRideController extends Controller {
         $user = $this->checkUser($request->get('email'), $request->get('pass'));
 
         //No es necesario
-        if($user == false) {
+        if ($user == false) {
             return false;
         }
 
@@ -149,24 +151,14 @@ class ApiRideController extends Controller {
             return $this->get('fos_rest.view_handler')->handle($view);
         }
 
+        /** @var EntityManager $em */
         $em = $this->get('doctrine.orm.entity_manager');
-        /*if($latitude==0.0 && $longitude==0.0){
-            $reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
-
-            $events = $reEvent->findBy(array('action' => "point", 'ride' => $id_ride), array('createdAt' => 'DESC'));
-            $lastEvent = $events[0];
-            if($lastEvent){
-                $latitude=$lastEvent->getLocation()->getLatitude();
-                $longitude=$lastEvent->getLocation()->getLongitude();
-            }
-        }*/
         $userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 
         /** @var EGroup $group */
-        $group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneBy(array("id" => $id_group));
-        $members = $group->getUserextendgroups()->toArray();
+        $group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneBy(array("id" => $id_group, "userextendgroups"=>$userextend));
 
-        if (in_array($userextend, $members)) {
+        if ($group!=null) {
 
             // Si el grupo tiene Paseo asociado(está en marcha), devuelve el paseo
             if ($group->getHasRide() == 1 && $group->getRide() != null) {
@@ -244,28 +236,33 @@ class ApiRideController extends Controller {
                 $em->persist($group);
                 $em->flush();
                 //Añadimos las notificaciones por correo
-                $userextends = $group->getUserextendgroups()->toArray();
+                //Se han sacado todos los datos "estaticos" con respecto del scope del foreach fuera de este por temas de optimización
                 $not = $this->container->get('sopinet_user_notification');
-                foreach ($userextends as $userextend) {
-
-                    $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($userextend->getUser(), 'panel_ride_current', array('id' => $ride->getId()));
+                $link = $this->generateUrl('panel_ride_current', array('id' => $ride->getId()));
+                $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
+                $gcmHelper=$this->container->get('sopinet_gcmhelper');
+                $time=new \DateTime('now');
+                $baseHelper=$this->get('trazeo_base_helper');
+                $monitorName=$ride->getUserextend()->getVirtualName();
+                $rideId=$ride->getId();
+                $groupId=$group->getId();
+                $members = $group->getUserextendgroups()->toArray();
+                //Se envian las notificaciones
+                foreach ($members as $userextend) {
+                    $url=$baseHelper->getAutoLoginUrl($userextend->getUser(), 'panel_ride_current', array('id' => $rideId));
                     $not->addNotification(
                         "ride.start",
                         "TrazeoBaseBundle:EGroup",
-                        $group->getId(),
+                        $groupId,
                         $url,
                         $userextend->getUser(),
                         null,
-                        $this->generateUrl('panel_ride_current', array('id' => $ride->getId()))
-
+                        $link
                     );
-                    $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
                     $devices=$repositoryDevice->findByUser($userextend);
-                    $gcmHelper=$this->container->get('sopinet_gcmhelper');
                     /** @var Device $device */
                     foreach ($devices as $device) {
-                        $time=new \DateTime('now');
-                        $gcmHelper->sendNotification($ride->getUserextend()->getVirtualName().';'.$ride->getId(), $group->getId(), "ride.start", $time, $userextend->getUser()->getPhone(), $device->getToken(), $device->getType());
+                        $gcmHelper->sendNotification($monitorName.';'.$rideId, $groupId, "ride.start", $time, $userextend->getUser()->getPhone(), $device->getToken(), $device->getType());
                     }
                 }
 
@@ -487,10 +484,13 @@ class ApiRideController extends Controller {
 
 
         //Notificamos a sus tutores
+        $not = $this->container->get('sopinet_user_notification');
+        $gcmHelper=$this->container->get('sopinet_gcmhelper');
+        $time=new \DateTime('now');
+        $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
         /** @var UserExtend $userextend */
         foreach ($userextends as $userextend) {
-            $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($userextend->getUser(),'panel_ride_current', array('id' => $ride->getId()));
-            $not = $this->container->get('sopinet_user_notification');
+            $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($userextend->getUser(), 'panel_ride_current', array('id' => $ride->getId()));
             $not->addNotification(
                 "child.in",
                 "TrazeoBaseBundle:EChild,TrazeoBaseBundle:EGroup",
@@ -500,12 +500,9 @@ class ApiRideController extends Controller {
                 null,
                 $this->generateUrl('panel_ride_current', array('id' => $ride->getId()))
             );
-            $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
             $devices=$repositoryDevice->findByUser($userextend);
-            $gcmHelper=$this->container->get('sopinet_gcmhelper');
             /** @var Device $device */
             foreach ($devices as $device) {
-                $time=new \DateTime('now');
                 $gcmHelper->sendNotification($child->getNick(), $group, "child.in", $time, $userextend->getUser()->getPhone(), $device->getToken(), $device->getType());
             }
         }
@@ -577,8 +574,11 @@ class ApiRideController extends Controller {
         if($ride->getGroup()!=null)$group=$ride->getGroup()->getId();
         else $group=$em->getRepository("TrazeoBaseBundle:EGroup")->findOneById($ride->getGroupid());
 
-        $not = $this->container->get('sopinet_user_notification');
         //Notificamos a sus tutores
+        $not = $this->container->get('sopinet_user_notification');
+        $gcmHelper=$this->container->get('sopinet_gcmhelper');
+        $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
+        $time=new \DateTime('now');
         foreach($userextends as $userextend){
             $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($userextend->getUser(),'panel_ride_current', array('id' => $ride->getId()));
             $not->addNotification(
@@ -590,12 +590,9 @@ class ApiRideController extends Controller {
                 null,
                 $this->generateUrl('panel_ride_current', array('id' => $ride->getId()))
             );
-            $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
             $devices=$repositoryDevice->findByUser($userextend);
-            $gcmHelper=$this->container->get('sopinet_gcmhelper');
             /** @var Device $device */
             foreach ($devices as $device) {
-                $time=new \DateTime('now');
                 $gcmHelper->sendNotification($child->getNick(), $group, "child.out", $time, $userextend->getUser()->getPhone(), $device->getToken(), $device->getType());
             }
         }
@@ -752,6 +749,10 @@ class ApiRideController extends Controller {
 
         $not = $this->container->get('sopinet_user_notification');
         $repositoryUserExtend = $em->getRepository('TrazeoBaseBundle:UserExtend');
+        $time=new \DateTime('now');
+        $gcmHelper=$this->container->get('sopinet_gcmhelper');
+        $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
+
 
         foreach($userextends as $userextend)
         {
@@ -766,22 +767,16 @@ class ApiRideController extends Controller {
                     null,
                     $this->generateUrl('panel_ride_current', array('id' => $ride->getId()))
                 );
-                $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
                 $devices=$repositoryDevice->findByUser($userextend);
-                $gcmHelper=$this->container->get('sopinet_gcmhelper');
                 /** @var Device $device */
                 foreach ($devices as $device) {
-                    $time=new \DateTime('now');
                     $gcmHelper->sendNotification('showMessage', $group->getId(), "ride.finish", $time, $userextend->getUser()->getPhone(), $device->getToken(), $device->getType());
                 }
             //Si el usuario no tiene ningun niño en el paseo se manda la notificación pero no se muestra
             } else {
-                $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
                 $devices=$repositoryDevice->findByUser($userextend);
-                $gcmHelper=$this->container->get('sopinet_gcmhelper');
                 /** @var Device $device */
                 foreach ($devices as $device) {
-                    $time=new \DateTime('now');
                     $gcmHelper->sendNotification('', $group->getId(), "ride.finish", $time, $userextend->getUser()->getPhone(), $device->getToken(), $device->getType());
                 }
             }
