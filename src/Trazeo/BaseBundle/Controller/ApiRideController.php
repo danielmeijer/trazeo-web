@@ -156,9 +156,9 @@ class ApiRideController extends Controller {
         $userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 
         /** @var EGroup $group */
-        $group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneBy(array("id" => $id_group, "userextendgroups"=>$userextend));
-
-        if ($group!=null) {
+        $group = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneBy(array("id" => $id_group));
+        $members = $group->getUserextendgroups()->toArray();
+        if (in_array($userextend, $members)) {
 
             // Si el grupo tiene Paseo asociado(está en marcha), devuelve el paseo
             if ($group->getHasRide() == 1 && $group->getRide() != null) {
@@ -246,7 +246,6 @@ class ApiRideController extends Controller {
                 $monitorName=$ride->getUserextend()->getVirtualName();
                 $rideId=$ride->getId();
                 $groupId=$group->getId();
-                $members = $group->getUserextendgroups()->toArray();
                 //Se envian las notificaciones
                 foreach ($members as $userextend) {
                     $url=$baseHelper->getAutoLoginUrl($userextend->getUser(), 'panel_ride_current', array('id' => $rideId));
