@@ -306,7 +306,7 @@ old_sound_rabbit_mq:
     connections:
         default:
             host:     'localhost'
-            port:     4369
+            port:     5672
             user:     'guest'
             password: 'guest'
             vhost:    '/'
