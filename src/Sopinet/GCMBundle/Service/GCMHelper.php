@@ -206,6 +206,8 @@ class GCMHelper
      */
     public function sendMessage(Msg $msg, $to)
     {
+        $mes = array();
+
         $mes['type'] = $msg->type;
         $mes['text'] = $msg->text;
         $mes['chatid'] = $msg->chatid;
