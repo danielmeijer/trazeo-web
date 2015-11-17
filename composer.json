@@ -41,6 +41,7 @@
 		"sopinet/autologin-bundle": "dev-master",
 		"ob/highcharts-bundle": "~1.2@dev",
         "nelmio/api-doc-bundle": "dev-master",
-        "richsage/rms-push-notifications-bundle": "dev-master"
+        "richsage/rms-push-notifications-bundle": "dev-master",
+        "oldsound/rabbitmq-bundle": "1.*"
     }
 }

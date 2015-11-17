@@ -53,3 +53,9 @@ services:
         arguments: ['@service_container', '@session']
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
+    send_trazeo:
+        class:  Trazeo\BaseBundle\Service\Consumer\SendConsumer
+        arguments:  ['@service_container']
+        calls:
+            - [setRequest, [@request_stack]]
