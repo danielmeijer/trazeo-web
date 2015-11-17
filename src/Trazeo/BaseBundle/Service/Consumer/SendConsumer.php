@@ -54,7 +54,12 @@ class SendConsumer implements ConsumerInterface
         $message->setDeviceIdentifier($to);
         $message->setGCM(true);
         try {
-            $this->container->get('rms_push_notifications')->send($message);
+            $return = $this->container->get('rms_push_notifications')->send($message);
+            if ($return) {
+                echo "Mandado mensaje ";
+            } else {
+                echo "Error ";
+            }
         } catch (InvalidMessageTypeException $e) {
             throw $e;
         }
