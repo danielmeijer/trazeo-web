@@ -35,6 +35,7 @@ class SendConsumer implements ConsumerInterface
     public function execute(AMQPMessage $msg)
     {
         $jsonBody = json_decode($msg->body);
+        if ($jsonBody == null) return true;
         $mes = array();
         $mes['type'] = $jsonBody->type;
         $mes['text'] = $jsonBody->text;
@@ -57,5 +58,7 @@ class SendConsumer implements ConsumerInterface
         } catch (InvalidMessageTypeException $e) {
             throw $e;
         }
+
+        return true;
     }
 }
