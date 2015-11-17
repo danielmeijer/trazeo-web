@@ -220,7 +220,7 @@ class GCMHelper
         $mes['username']=$msg->username;
         $mes['to'] = $to;
 
-        if ($msg['username'] == "nacho") {
+        if (true) {
             $this->_container->get('old_sound_rabbit_mq.send_trazeo_producer')->setContentType('application/json');
             $this->_container->get('old_sound_rabbit_mq.send_trazeo_producer')->publish(json_encode($mes));
         } else {
