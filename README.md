@@ -11,4 +11,5 @@ Lanzar RabbitMQ (para procesar mensajes en Background
 =====================================================
 
 rabbitmq-server 
+
 ./app/console rabbitmq:consumer send_trazeo
