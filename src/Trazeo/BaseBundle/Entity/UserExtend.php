@@ -30,14 +30,14 @@ class UserExtend
      * @ORM\GeneratedValue(strategy="AUTO")
      *
      */
-    protected $id;   
-    
+    protected $id;
+
     /**
      * @ORM\OneToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="userextend")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $user;
-    
+
     /**
      *  @ORM\ManyToMany(targetEntity="EGroup", mappedBy="userextendgroups")
      */
@@ -47,52 +47,52 @@ class UserExtend
      *  @ORM\ManyToMany(targetEntity="EGroup", mappedBy="monitor_userextendgroups")
      */
     protected $mgroups;
-    
-    /** 
+
+    /**
      * @ORM\OneToMany(targetEntity="EGroup", mappedBy="admin")
      */
     private $adminGroups;
-    
-    /** 
+
+    /**
      * @ORM\OneToMany(targetEntity="ERoute", mappedBy="admin")
      */
     protected $adminRoutes;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="EReport", mappedBy="userextend")
      **/
     protected $reports;
-    
+
     /**
      * @ORM\ManyToMany(targetEntity="EChild", mappedBy="userextendchilds", cascade={"remove"})
      * @ORM\JoinTable(name="usersextend_childs")
      **/
     protected $childs;
-    
+
     /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\City")
      * @Expose
      */
     protected $city;
-    
+
     /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\Country")
      * @Expose
      */
     protected $country;
-    
-    /**    
+
+    /**
      * @ORM\Column(name="tutorial", type="boolean")
      */
     protected $tutorial;
-    
+
     /**
      * @ORM\Column(name="tutorialMap", type="boolean")
      */
     protected $tutorialMap;
-    
+
     /** @ORM\OneToMany(targetEntity="EGroupAccess", mappedBy="userextend")
      */
     protected $access;
-    
+
     /** @ORM\OneToMany(targetEntity="EGroupInvite", mappedBy="userextend")
      */
     protected $inviteGroup;
@@ -104,7 +104,7 @@ class UserExtend
     /** @ORM\OneToMany(targetEntity="EChildInvite", mappedBy="userextend")
      */
     protected $inviteChild;
-    
+
     /** @ORM\OneToMany(targetEntity="EChildInvite", mappedBy="sender")
      */
     protected $inviteChildSender;
@@ -112,14 +112,14 @@ class UserExtend
     /** @ORM\OneToMany(targetEntity="\Trazeo\MyPageBundle\Entity\Page", mappedBy="userextend")
      */
     protected $pageFront;
-    
+
     /**
      * // Datos: monitor / user
      * @ORM\Column(name="useLike", type="string", length=50, nullable=true)
      * @Expose
-     */    
+     */
     protected $useLike='user';
-    
+
     /**
      * @var string
      *
@@ -127,7 +127,7 @@ class UserExtend
      * @Expose
      */
     protected $name;
-        
+
     /**
      * @var string
      *
@@ -135,7 +135,7 @@ class UserExtend
      * @Expose
      */
     protected $nick;
- 
+
 
     /**
      * @var integer
@@ -172,6 +172,24 @@ class UserExtend
 
     /**
      * @VirtualProperty
+     * @SerializedName("childrens")
+     * @Groups({"list"})
+     *
+     * @return array
+     */
+    public function getVirtualChildrens()
+    {
+        $childrens=[];
+        foreach ($this->childs as $child) {
+            /** @var EChild $child */
+            $childrens[]=$child->getNick();
+        }
+
+        return $childrens;
+    }
+
+    /**
+     * @VirtualProperty
      * @SerializedName("name")
      * @Groups({"list"})
      *
@@ -184,11 +202,11 @@ class UserExtend
 
     public function __toString(){
         //return "Antonio Pérez (634728192) (hola@trazeo.es)<br/>";
-    	if($this->name != "")
-    		$string= $this->name;
-    	else if($this->nick!= "")
-    		$string= $this->nick;
-    	else $string= (string)$this->id;
+        if($this->name != "")
+            $string= $this->name;
+        else if($this->nick!= "")
+            $string= $this->nick;
+        else $string= (string)$this->id;
         $patrón = '/@[\d|\D]*$/';
         $sustitución = '';
         $name = preg_replace($patrón, $sustitución, $string);
@@ -201,7 +219,7 @@ class UserExtend
         $ret .= $this->getUser()->getEmail() . ')';
         return $ret;
     }
-    
+
     /**
      * Constructor
      */
@@ -217,7 +235,7 @@ class UserExtend
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -241,7 +259,7 @@ class UserExtend
     /**
      * Get nick
      *
-     * @return string 
+     * @return string
      */
     public function getNick()
     {
@@ -265,7 +283,7 @@ class UserExtend
     /**
      * Get user
      *
-     * @return \Application\Sonata\UserBundle\Entity\User 
+     * @return \Application\Sonata\UserBundle\Entity\User
      */
     public function getUser()
     {
@@ -299,7 +317,7 @@ class UserExtend
     /**
      * Get groups
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getGroups()
     {
@@ -333,7 +351,7 @@ class UserExtend
     /**
      * Get adminGroups
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAdminGroups()
     {
@@ -367,7 +385,7 @@ class UserExtend
     /**
      * Get adminRoutes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAdminRoutes()
     {
@@ -401,7 +419,7 @@ class UserExtend
     /**
      * Get childs
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getChilds()
     {
@@ -425,7 +443,7 @@ class UserExtend
     /**
      * Get city
      *
-     * @return \JJs\Bundle\GeonamesBundle\Entity\City 
+     * @return \JJs\Bundle\GeonamesBundle\Entity\City
      */
     public function getCity()
     {
@@ -449,7 +467,7 @@ class UserExtend
     /**
      * Get country
      *
-     * @return \JJs\Bundle\GeonamesBundle\Entity\Country 
+     * @return \JJs\Bundle\GeonamesBundle\Entity\Country
      */
     public function getCountry()
     {
@@ -484,7 +502,7 @@ class UserExtend
     /**
      * Get access
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAccess()
     {
@@ -518,7 +536,7 @@ class UserExtend
     /**
      * Get invite
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getInvite()
     {
@@ -552,7 +570,7 @@ class UserExtend
     /**
      * Get inviteGroup
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getInviteGroup()
     {
@@ -586,7 +604,7 @@ class UserExtend
     /**
      * Get inviteChild
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getInviteChild()
     {
@@ -620,7 +638,7 @@ class UserExtend
     /**
      * Get inviteChildSender
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getInviteChildSender()
     {
@@ -654,7 +672,7 @@ class UserExtend
     /**
      * Get reports
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getReports()
     {
@@ -678,7 +696,7 @@ class UserExtend
     /**
      * Get tutorial
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getTutorial()
     {
@@ -702,7 +720,7 @@ class UserExtend
     /**
      * Get tutorialMap
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getTutorialMap()
     {
@@ -726,7 +744,7 @@ class UserExtend
     /**
      * Get useLike
      *
-     * @return string 
+     * @return string
      */
     public function getUseLike()
     {
@@ -896,7 +914,7 @@ class UserExtend
     /**
      * Get pageFront
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPageFront()
     {
@@ -929,7 +947,7 @@ class UserExtend
     /**
      * Get mgroups
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMgroups()
     {
@@ -952,7 +970,7 @@ class UserExtend
     /**
      * Get chatsOwned
      *
-     * @return \Sopinet\Bundle\ChatBundle\Entity\Chat 
+     * @return \Sopinet\Bundle\ChatBundle\Entity\Chat
      */
     public function getChatsOwned()
     {
