@@ -215,7 +215,7 @@ class GCMHelper
         $mes['msgid'] = $msg->msgid;
         $mes['phone'] = $msg->phone;
         $time=(int)$msg->time;
-        if ($time>10000000000000) {
+        if ($time>1000000000000) {
             $time=$time/1000;
         }
         $time=new \DateTime($msg->time);
