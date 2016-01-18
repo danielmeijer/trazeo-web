@@ -214,12 +214,7 @@ class GCMHelper
         $mes['chattype'] = $msg->chattype;
         $mes['msgid'] = $msg->msgid;
         $mes['phone'] = $msg->phone;
-        $time=(int)$msg->time;
-        if ($time>1000000000000) {
-            $time=$time/1000;
-        }
-        $time=new \DateTime($msg->time);
-        $mes['time'] =$time->getTimestamp()*1000;
+        $mes['time'] =$msg->time;
         $mes['groupId']= $msg->groupId;
         $mes['username']=$msg->username;
         $mes['to'] = $to;
