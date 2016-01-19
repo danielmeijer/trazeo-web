@@ -275,6 +275,12 @@ class PanelGroupsController extends Controller
             $notification = $container->addFlashMessages("error","No puedes dar acceso porque el grupo ya no existe");
             return $this->redirect($this->generateUrl('panel_group'));
         }
+
+        if(in_array($user, $groupToJoin->getUserextendgroups()->toArray())) {
+            $notification = $container->addFlashMessages("error","No puedes dar acceso porque el usuario ya pertenece al grupo");
+            return $this->redirect($this->generateUrl('panel_group'));
+        }
+
         $groupId = $groupToJoin->getId();
         $groupToJoin->addUserextendgroup($user);
         $em->persist($groupToJoin);
