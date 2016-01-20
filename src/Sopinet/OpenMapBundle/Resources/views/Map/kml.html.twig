@@ -8,7 +8,11 @@
     {% set id_map =  "mapa" %}
 {% endif %}
 <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
-<script src='{{ asset('js/kmlMap.js') }}'></script>
+{% if kml %}
+    <script src='{{ asset('js/kmlMap.js') }}'></script>
+{% else %}
+    <script src='{{ asset('js/trazeoMap.js') }}'></script>
+{% endif %}
 <script>
     POINT=function(lat,lng){
         this.latLng=new L.LatLng(lat,lng);
