@@ -268,7 +268,7 @@ function initMap(mapConfig) {
         }
         // populate inputs
         if(!$("#cityInput").html()!='Desconocido'){
-            $("#cityInput").val($("#start").html().split(',')[1].slice(1));
+            $("#cityInput").val($("#start").html());
         }
         $("#inputPoints").val(pointList);
         var distance=map.getDistance(arrayPoints);
