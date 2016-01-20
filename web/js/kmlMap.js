@@ -715,10 +715,12 @@ function initMap(mapConfig) {
                         } else if (map._layers[i]._latlng) {
                             marker = new L.Marker(map._layers[i]._latlng);
                         }
+                        var last=map._layers[i]._latlngs
                     }
                     map.updateRouteInfo();
                     $("#enviar").removeAttr("disabled");
                     $("#enviar").css('opacity','1');
+                    map.panTo(last);
                 });
                 kml=true;
             };
