@@ -47,7 +47,7 @@
         points: points,
         events: events,
         iconImagePath: '{{ asset('bundles/sopinetopenmap/css/images') }}',
-        kml: {{ kml }}
+        kml: {% if kml %}true{% else %} false {% endif %}
     };
 
     initMap(mapConfig);
