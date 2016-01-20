@@ -268,7 +268,6 @@ class PanelGroupsController extends Controller
         }
 
         if(in_array($user, $groupToJoin->getUserextendgroups()->toArray())) {
-            $notification = $container->addFlashMessages("error","No puedes dar acceso porque el usuario ya pertenece al grupo");
             return $this->redirect($this->generateUrl('panel_group'));
         }
 
