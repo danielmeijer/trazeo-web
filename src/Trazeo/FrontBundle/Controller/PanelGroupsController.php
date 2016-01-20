@@ -52,16 +52,7 @@ class PanelGroupsController extends Controller
         }
         $request = $this->getRequest();
 
-        //look for the referer route
-        $referer = $request->headers->get('referer');
-        $lastPath = substr($referer, strpos($referer, $request->getBaseUrl()));
-        $lastPath = str_replace($request->getBaseUrl(), '', $lastPath);
-
-        $matcher = $this->get('router')->getMatcher();
-        $parameters = $matcher->match($lastPath);
-        $route = $parameters['_route'];
-        //redirec to the referer route
-        return $this->redirect($this->generateUrl($route));
+        return $this->redirect($this->generateUrl('panel'));
     }
 
     /**
