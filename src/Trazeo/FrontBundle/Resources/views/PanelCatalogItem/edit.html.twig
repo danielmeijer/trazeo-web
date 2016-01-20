@@ -6,10 +6,15 @@
     <div class="col-md-12 col-xs-12">
 			{{ form(form_item) }}
 		</br>
-
+            {% if app.user.email != 'paseandoalcole@greenglobe.es' %}
             <div id="prefetch">
                 {{"Group.new.locality"|trans}}: <input name="city" class="typeahead form-control" type="text" placeholder="Localidad" value="{% if item.citys.nameUtf8 is defined %}{{ item.citys.nameUtf8 }}{% endif %}">
             </div>
+            {% else %}
+                <div>
+                    {{"Group.new.locality"|trans}}: <input name="city" class="typeahead form-control" type="text" placeholder="Localidad" value="Málaga">
+                </div>
+            {% endif %}
 			{% include 'SopinetUploadMagicBundle:Upload:simple.html.twig'
 								  	with {
 								  		'name': 'image',
