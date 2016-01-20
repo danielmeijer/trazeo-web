@@ -157,6 +157,7 @@ class PanelRoutesController extends Controller
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
+        /** @var ERoute $route */
         $route = $em->getRepository('TrazeoBaseBundle:ERoute')->find($id);
         $reGroups = $em->getRepository('TrazeoBaseBundle:EGroup');
         $fos_user = $this->container->get('security.context')->getToken()->getUser();
@@ -183,11 +184,13 @@ class PanelRoutesController extends Controller
         //$deleteForm = $this->createDeleteForm($id);
 		//$location = $route->getLocation();
 		//ldd($route->getPoints()->toArray());
+
         return array(
         	'user' => $user,
         	'tutorialmap' => $tutorialmap,
         	'cont'		  => $cont,
-            'route'      => $route
+            'route'      => $route,
+            'kml'   => $route->getAdmin()->getUser()->getEmail()=="paseandoalcole@greenglobe.es"
             //'delete_form' => $deleteForm->createView(),
         );
     }

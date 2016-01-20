@@ -39,6 +39,7 @@ class PageFilter extends SQLFilter
 
     protected function getSubdomain($subdomain = null) {
         // TODO: DEBUG
+        return null;
         if ($_SERVER['HTTP_HOST'] == "localhost" && $subdomain == null) $subdomain = "torrelodones";
         if ($subdomain == null) {
             $parts=explode('.', $_SERVER["SERVER_NAME"]);
