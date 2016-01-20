@@ -29,13 +29,14 @@ function initMap(mapConfig) {
         attribution: 'tiles &copy; <a target="_blank" href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         styleId: 22677
     });
+
 // preload image icon
     $('#' + mapConfig.mapContainerId).append("<img id='preload' src=" + mapConfig.iconImagePath + "/marker-icon-start.png>");
     $("#preload").hide();
-// cloudmade APi Key and info
+
     var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/8ee2a50541944fb9bcedded5165f09d9/{styleId}/256/{z}/{x}/{y}.png',
         cloudmadeAttribution = 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade';
-    var midnight = L.tileLayer(cloudmadeUrl, {styleId: 999, attribution: cloudmadeAttribution}),
+    var midnight   = L.tileLayer(cloudmadeUrl, {styleId: 999, attribution: cloudmadeAttribution}),
         motorways = L.tileLayer(cloudmadeUrl, {styleId: 46561, attribution: cloudmadeAttribution});
 
     waymarkedtrails = L.tileLayer('http://tile.waymarkedtrails.org/hiking/{z}/{x}/{y}.png', {
@@ -681,9 +682,8 @@ function initMap(mapConfig) {
 
     if (mapConfig.resume) {
         setTimeout(map.showResumeInfo,1000);
-    } else {
-        setInterval(map.updateRouteInfo,1000);
     }
+
     if(mapConfig.points){
         map.loadFromWaypoints(mapConfig.points);
     }
