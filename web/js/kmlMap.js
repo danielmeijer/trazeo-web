@@ -298,8 +298,9 @@ function initMap(mapConfig) {
                 var aux=r.name.split(',');
                 aux.splice(1,2);
                 aux.splice(3,1);
-                $("#start").html(aux.toString());
+                $("#start").html(aux.toString()||'');
             });
+            $("#start").html('Desconocido');
         }
         if(last){
             geocoder.reverse(last, map.options.crs.scale(16), function(results) {
@@ -309,6 +310,7 @@ function initMap(mapConfig) {
                 aux.splice(3,1);
                 $("#finish").html(aux.toString());
             });
+            $("#finish").html('Desconocido');
         }
         if(first && last)$("#distance").html(map.getDistance(arrayPoints)+" m");
         $(".leaflet-marker-icon").on();
