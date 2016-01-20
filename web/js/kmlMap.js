@@ -713,10 +713,10 @@ function initMap(mapConfig) {
                         }
                     }
                     map.updateRouteInfo();
+                    $("#enviar").removeAttr("disabled");
+                    $("#enviar").css('opacity','1');
                 });
                 kml=true;
-                $("#enviar").removeAttr("disabled");
-                $("#enviar").css('opacity','1');
             };
 
             reader.readAsDataURL(input.files[0]);
