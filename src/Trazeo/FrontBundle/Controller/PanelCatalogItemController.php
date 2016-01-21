@@ -2,6 +2,7 @@
 
 namespace Trazeo\FrontBundle\Controller;
 
+use Application\Sonata\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -142,17 +143,20 @@ class PanelCatalogItemController extends Controller
 	public function itemslistAction()
 	{
 		$em    = $this->get('doctrine.orm.entity_manager');
-		 
-		$user = $this->get('security.context')->getToken()->getUser();
+
+        /** @var User $user */
+        $user = $this->get('security.context')->getToken()->getUser();
         /** @var ECatalogItemRepository $reItem */
         $reItem = $em->getRepository("TrazeoBaseBundle:ECatalogItem");
-		if ($user->getEmail()=='paseandoalcole@greenglobe.es') {
-            $items=$reItem->findByCitys(2058);
+        if (!$this->get('security.context')->isGranted('ROLE_CATALOG')) {
+            throw new AccessDeniedException();
+        }
+		if (!$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            $items=$reItem->findByCitys($user->getUserExtend()->getCity());
         } else {
             $items=$reItem->findAll();
         }
 
-		 
 		return array(
 				'items' => $items
 		);
