@@ -1,4 +1,8 @@
-{%set file_path=ofert.file[0].getPathRelative%}
+{% if ofert.file[0] is defined %}
+    {%set file_path=ofert.file[0].getPathRelative%}
+{% else %}
+    {%set file_path=''%}
+{% endif %}
 	<span class="col-md-4 col-xs-12 col-sm-4 col-lg-4 img-responsive row-offset-min" {% if ofert.citys is not null%}data-city="{{ ofert.citys.nameUtf8 }}" {% if city.id != ofert.citys.id %}style=" display: none;"{% endif %}{% endif %} %}>
 		<div class="catalogItem" style="background-image: url({{asset(file_path)}}),-webkit-linear-gradient(top, #ffffff, #ffffff 60%, #cedcab 40%, #cedcab); 
     background-image: url({{asset(file_path)}}),-moz-linear-gradient(top, #ffffff, #ffffff 60%, #cedcab 40%, #cedcab);  

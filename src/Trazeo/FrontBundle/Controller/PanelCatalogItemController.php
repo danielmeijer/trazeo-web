@@ -10,9 +10,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Trazeo\BaseBundle\Entity\ECatalogItem;
+use Trazeo\BaseBundle\Entity\File;
 use Trazeo\BaseBundle\Form\CatalogItemType;
 /**
-* @Route("admin/catalogitem")
+* @Route("catalogitem")
 */
 class PanelCatalogItemController extends Controller
 {
@@ -51,9 +52,12 @@ class PanelCatalogItemController extends Controller
         $form_item->add('submit', 'submit', array('label' => 'Update'));									
 		
 		// Sacamos los ficheros
-		$file= $item->getFile()->toArray()[0];
+        if (count($item->getFile()->toArray())>0){
+            $file= $item->getFile()->toArray()[0];
+        } else {
+            $file = new File();
+        }
 
-	
 		return $this->render(
 				'TrazeoFrontBundle:PanelCatalogItem:edit.html.twig',
 				array(
@@ -140,8 +144,14 @@ class PanelCatalogItemController extends Controller
 		$em    = $this->get('doctrine.orm.entity_manager');
 		 
 		$user = $this->get('security.context')->getToken()->getUser();
-		$reItem = $em->getRepository("TrazeoBaseBundle:ECatalogItem");
-		$items=$reItem->findAll();		 
+        /** @var ECatalogItemRepository $reItem */
+        $reItem = $em->getRepository("TrazeoBaseBundle:ECatalogItem");
+		if ($user->getEmail()=='paseandoalcole@greenglobe.es') {
+            $items=$reItem->findByCitys(2058);
+        } else {
+            $items=$reItem->findAll();
+        }
+
 		 
 		return array(
 				'items' => $items
