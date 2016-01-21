@@ -13,15 +13,16 @@
     <div class="col-md-12 col-xs-12">
         {{ form_start(form_item) }}
         {{ form_widget(form_item) }}
-        {% if app.user.email == 'paseandoalcole@greenglobe.es' %}
+        {# Los usuario con acceso al catalogo que no son administradores pueden editar solo el catalogo de su ciudad #}
+        {% if not is_granted('ROLE_ADMIN') %}
             <div>
-                {{"Group.new.locality"|trans}}: <input readonly="readonly" name="city" class="typeahead form-control" type="text" placeholder="Localidad" value="Málaga">
+                {{"Group.new.locality"|trans}}: <input readonly="readonly" name="city" class="typeahead form-control" type="text" placeholder="Localidad" value="{{ app.user.user.city.nameUTF8 }}">
             </div>
         {% endif %}
         {{ form_end(form_item) }}
 		</br>
-
-        {% if app.user.email != 'paseandoalcole@greenglobe.es' %}
+        {# El administrador puede editar el catalogo de cualquier ciudad #}
+        {% if is_granted('ROLE_ADMIN') %}
             <div id="prefetch">
                 {{"Group.new.locality"|trans}}: <input name="city" class="typeahead form-control" type="text" placeholder="Localidad" value="{% if item.citys.nameUtf8 is defined %}{{ item.citys.nameUtf8 }}{% endif %}">
             </div>
