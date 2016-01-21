@@ -63,7 +63,7 @@ body_content %}
 		  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('nameUtf8'),
 		  queryTokenizer: Bloodhound.tokenizers.whitespace,
 		  limit: 10,
-		  remote: '{{ base_url }}/api/geo/city/list?q=%QUERY',
+		  remote: '{{ path('get_geo_cities') }}'+'?q=%QUERY'
 		});
 		 
 		// kicks off the loading/processing of `local` and `prefetch`
