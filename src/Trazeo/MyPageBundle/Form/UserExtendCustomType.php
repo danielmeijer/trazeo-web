@@ -21,7 +21,7 @@ class UserExtendCustomType extends AbstractType
                         'data-toggle' => 'popover',
                         'data-placement' => 'right'
                     ),
-                    'required' => false
+                    'required' => true
                 )
             )
             ->add('mobile', 'number', array(

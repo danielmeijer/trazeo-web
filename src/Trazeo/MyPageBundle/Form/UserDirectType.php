@@ -23,7 +23,7 @@ class UserDirectType extends AbstractType
             ->add('password', 'repeated', array(
                 'type' => 'password',
                 'invalid_message' => 'Ambas contraseñas deben coincidir',
-                'required' => false,
+                'required' => true,
                 'options' => array('attr' => array('class' => 'password-field')),
                 'first_options' => array('attr' => array('placeholder' => 'Form.profile.pass',        					'data-toggle' => 'popover',
                     'data-placement' => 'right',
