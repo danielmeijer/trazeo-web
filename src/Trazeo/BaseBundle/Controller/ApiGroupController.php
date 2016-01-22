@@ -248,10 +248,11 @@ class ApiGroupController extends Controller
             $arrayGroups['visibility'] = $group->getVisibility();
             $arrayGroups['hasride'] = $group->getHasRide();
             $arrayGroups['isMonitor'] = $group->isMonitor($userextend);
-            if ($group->getCity()) $arrayGroups['city'] = $group->getCity()->getNameUtf8();
+            if ($group->getCity()) {
+                $arrayGroups['city'] = $group->getCity()->getNameUtf8();
+            }
             $arrayGroups['school'] = $group->getSchool1();
-            if (in_array($group, $admingroups)) $arrayGroups['admin'] = true;
-            else $arrayGroups['admin'] = false;
+            $arrayGroups['admin'] = in_array($group, $admingroups);
             if ($group->getHasRide() == 1) {
                 $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneByGroup($group);
                 $arrayGroups['ride_id'] = $ride->getId();
@@ -431,11 +432,8 @@ class ApiGroupController extends Controller
                     }
                     $arrayGroups['visibility'] = $group->getVisibility();
                     $arrayGroups['hasride'] = $group->getHasRide();
-                    if (in_array($group, $admingroups)) {
-                        $arrayGroups['admin'] = true;
-                    } else {
-                        $arrayGroups['admin'] = false;
-                    }
+                    $arrayGroups['school'] = $group->getSchool1();
+                    $arrayGroups['admin'] = in_array($group, $admingroups);
                     if ($group->getHasRide() == 1) {
                         $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneByGroup($group);
                         $arrayGroups['ride_id'] = $ride->getId();
