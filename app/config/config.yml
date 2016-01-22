@@ -46,6 +46,7 @@ twig:
         resources:
             - 'SopinetTemplateSbadmin2Bundle:Form:bootstrap.html.twig'
             - 'SonataCoreBundle:Form:datepicker.html.twig'
+            - 'TrazeoFrontBundle:Form:data_list.html.twig'
 
 # Assetic Configuration
 assetic:

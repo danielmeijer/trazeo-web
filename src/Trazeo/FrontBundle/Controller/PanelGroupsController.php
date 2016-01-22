@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpKernel\Exception\PreconditionFailedHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Trazeo\BaseBundle\Entity\EGroup;
+use Trazeo\BaseBundle\Entity\EGroupRepository;
 use Trazeo\BaseBundle\Entity\ERoute;
 use Trazeo\BaseBundle\Entity\EGroupAccess;
 use Trazeo\BaseBundle\Entity\EGroupInvite;
@@ -734,6 +735,11 @@ class PanelGroupsController extends Controller
             $cityCodeId = $cityCode->getId();
         }
         else $cityCodeId =1;
+        /** @var EGroupRepository $reSchool */
+        $reSchool = $em->getRepository('TrazeoBaseBundle:EGroup');
+        $schools=$reSchool->createQueryBuilder('u')->select('u.school1')->distinct()->getQuery()->getScalarResult();
+        $schools = array_map('current', $schools);
+
         $form = $this->createForm(new GroupType(), $group, array(
             'action' => $this->generateUrl('panel_group_create'),
             'method' => 'POST',
@@ -743,8 +749,9 @@ class PanelGroupsController extends Controller
                 'Groups.help.route' => $this->get('translator')->trans('Groups.help.route'),
                 'Groups.help.city' => $this->get('translator')->trans('Groups.help.city'),
                 'Groups.help.school' => $this->get('translator')->trans('Groups.help.shool'),
-                'default' => $cityCodeId
-            )
+                'default' => $cityCodeId,
+            ),
+            'schools'=>$schools
         ));
         $form->add('hasRide', 'hidden', array('data' => 0));
         $form->add('submit', 'submit', array('label' => 'Create'));
@@ -851,6 +858,12 @@ class PanelGroupsController extends Controller
             $cityCodeId = $cityCode->getId();
         }
         else $cityCodeId =1;
+
+        /** @var EGroupRepository $reSchool */
+        $reSchool = $em->getRepository('TrazeoBaseBundle:EGroup');
+        $schools=$reSchool->createQueryBuilder('u')->select('u.school1')->distinct()->getQuery()->getScalarResult();
+        $schools = array_map('current', $schools);
+
         $form = $this->createForm(new GroupType(), $group, array(
             'action' => $this->generateUrl('panel_group_update',array('id' => $group->getId())),
             'method' => 'POST',
@@ -860,8 +873,9 @@ class PanelGroupsController extends Controller
                 'Groups.help.route' => $this->get('translator')->trans('Groups.help.route'),
                 'Groups.help.city' => $this->get('translator')->trans('Groups.help.city'),
                 'Groups.help.school' => $this->get('translator')->trans('Groups.help.shool'),
-                'default' => $cityCodeId
-            )
+                'default' => $cityCodeId,
+            ),
+            'schools'=>$schools
         ));
         //$form->add('city',null,array('data'=>$cityCodeId, 'attr'=>array('style'=>'display:none;')));       
         $form->add('submit', 'submit', array('label' => 'Update'));

@@ -59,3 +59,8 @@ services:
         arguments:  ['@service_container']
         calls:
             - [setRequest, [@request_stack]]
+
+    form.type.datalist_type:
+        class: Trazeo\BaseBundle\Form\Type\DatalistType
+        tags:
+            -  { name: form.type, alias: datalist }
