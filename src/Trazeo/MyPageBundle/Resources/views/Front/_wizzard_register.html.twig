@@ -2,7 +2,7 @@
 
 <div class="wizard-container">
     <a class="login-button-add-sopinet btn-fill btn btn-primary" href="{{ path('fos_user_security_login') }}">¿Ya tienes cuenta? Haz clic aquí</a>
-    <form method="POST" action="{{ path('saveInGroup', {'group_id': group.id}) }}" validate>
+    <form id="wizardForm" method="POST" action="{{ path('saveInGroup', {'group_id': group.id}) }}" validate>
         <div class="card wizard-card ct-wizard-blue" id="wizard">
 
             <!--        You can switch "ct-wizard-orange"  with one of the next bright colors: "ct-wizard-blue", "ct-wizard-green", "ct-wizard-orange", "ct-wizard-red"             -->

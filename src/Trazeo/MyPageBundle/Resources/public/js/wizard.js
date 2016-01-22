@@ -41,6 +41,15 @@ $(document).ready(function(){
                 $(wizard).find('.btn-next').show();
                 $(wizard).find('.btn-finish').hide();
             }
+        },
+        onNext: function(tab, navigation, index) {
+            var inputs = $(".tab-pane.active input[name]");
+            for (var i=0; i<inputs.length; i++) {
+                var element = inputs[i];
+                if (!$("#wizardForm").validate().element('[name="' + element.name+'"]')) {
+                    return false;
+                }
+            }
         }
     });
 

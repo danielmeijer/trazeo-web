@@ -48,6 +48,18 @@
                 $("#form_child_4").show();
                 return false;
             });
+            $( "#wizardForm" ).validate({
+                rules: {
+                    "trazeo_mypagebundle_userdirecttype[password][second]": {
+                        equalTo: "#trazeo_mypagebundle_userdirecttype_password_first"
+                    }
+                },
+                messages: {
+                    condiciones: {
+                        required: "Es necesario aceptar las condiciones"
+                    }
+                }
+            });
         });
     </script>
 {% endblock %}
