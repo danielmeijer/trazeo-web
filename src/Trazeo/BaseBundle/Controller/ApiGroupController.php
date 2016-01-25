@@ -422,6 +422,7 @@ class ApiGroupController extends Controller
                 if (!$object) {
                     $names['data']['groups'][] = $group->getName();
                     $names['data']['ids'][] = $group->getId();
+                    $names['data']['schools'][] = $group->getSchool1();
                 } else {
                     $arrayGroups = array();
                     $arrayGroups['id'] = $group->getId();
@@ -465,6 +466,7 @@ class ApiGroupController extends Controller
             if ($group != null && !$object) {
                 $names['data']['groups'][] = $group->getName();
                 $names['data']['ids'][] = $group->getId();
+                $names['data']['schools'][] = $group->getSchool1();
             } else if ($group != null) {
                 $arrayGroups = array();
                 $arrayGroups['id'] = $group->getId();
