@@ -253,8 +253,8 @@ class ApiGroupController extends Controller
             }
             $arrayGroups['school'] = $group->getSchool1();
             $arrayGroups['admin'] = in_array($group, $admingroups);
-            if ($group->getHasRide() == 1) {
-                $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneByGroup($group);
+            $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneByGroup($group);
+            if ($group->getHasRide() == 1 && $ride != null) {
                 $arrayGroups['ride_id'] = $ride->getId();
             }
             $array[] = $arrayGroups;
@@ -435,8 +435,8 @@ class ApiGroupController extends Controller
                     $arrayGroups['hasride'] = $group->getHasRide();
                     $arrayGroups['school'] = $group->getSchool1();
                     $arrayGroups['admin'] = in_array($group, $admingroups);
-                    if ($group->getHasRide() == 1) {
-                        $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneByGroup($group);
+                    $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneByGroup($group);
+                    if ($group->getHasRide() == 1 && $ride != null) {
                         $arrayGroups['ride_id'] = $ride->getId();
                     }
                     $names['data'][] = $arrayGroups;
@@ -482,8 +482,8 @@ class ApiGroupController extends Controller
                 } else {
                     $arrayGroups['admin'] = false;
                 }
-                if ($group->getHasRide() == 1) {
-                    $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneByGroup($group);
+                $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneByGroup($group);
+                if ($group->getHasRide() == 1 && $ride != null) {
                     $arrayGroups['ride_id'] = $ride->getId();
                 }
                 $names['data'][] = $arrayGroups;
