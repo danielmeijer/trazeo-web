@@ -13,3 +13,10 @@ Lanzar RabbitMQ (para procesar mensajes en Background
 rabbitmq-server 
 
 ./app/console rabbitmq:consumer send_trazeo
+
+phpStorm
+========
+
+Thanks!
+
+![Image of PHPStorm](phpstorm_logo_png.png)
