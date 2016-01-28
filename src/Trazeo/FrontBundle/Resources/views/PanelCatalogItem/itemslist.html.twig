@@ -1,0 +1,25 @@
+{% set activeMenu = "Catalog" %}
+{% set pageheader_title = "Catalog.index.title"|trans %}
+{% set pageheader_description = "Catalog.index.description"|trans %}
+{% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
+
+	{% block body_content %}    
+		<div class="row">
+			<div class="pull-right">
+				<a class="btn btn-success" href="{{ path('panel_itemscatalog_new') }}">
+					<i class="fa fa-plus-circle"></i>&nbsp; {{ 'Catalog.new.title'|trans }}
+				</a>
+			</div>
+		</div>        
+		{% for item in items %}
+			{%if item.complete%}{% include 'TrazeoFrontBundle:PanelCatalogItem:_row_item.html.twig' %}{%endif%}
+		{% endfor %}
+		</div>
+			
+		<br/><br/><br/><br/>
+		
+	{% endblock%}
+
+{% block js %}
+	{{ parent() }} 
+{% endblock %}

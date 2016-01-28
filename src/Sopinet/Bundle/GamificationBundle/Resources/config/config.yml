@@ -1,0 +1,2 @@
+sopinet_gamification:
+    class: 'TrazeoBaseBundle:UserExtend'

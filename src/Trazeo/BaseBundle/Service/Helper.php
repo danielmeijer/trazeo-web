@@ -73,4 +73,125 @@ class Helper {
 		}
 		return $cities;		
 	}
+	/**
+	 *
+	 *
+	 */
+	function getAutoLoginUrl($user,$name,$args=null) {
+		if($args!=null)$path=$this->_container->get('router')->generate($name, $args);
+		else $path=$this->_container->get('router')->generate($name);
+		$pos=strpos($path,'panel/');
+		$path = substr($path, $pos);
+		$path =$this->_container->get('urlhelper')->generateUrl($path,$user);
+		$pos=strpos($path,'auto/');
+		$path = substr($path, $pos);
+		return $path;
+	}
+
+    function getPageBySubdomain($subdomain = null) {
+        // TODO: DEBUG
+        if ($_SERVER['HTTP_HOST'] == "localhost" && $subdomain == null) $subdomain = "torrelodones";
+        if ($subdomain == null) {
+            $parts=explode('.', $_SERVER["SERVER_NAME"]);
+            $subdomain = $parts[0];
+        }
+
+        if ($subdomain == "beta" || $subdomain == "app") {
+            return null;
+        }
+
+        $em = $this->_container->get("doctrine.orm.entity_manager");
+        $repositoryPage = $em->getRepository("TrazeoMyPageBundle:Page");
+        $page = $repositoryPage->findOneBySubdomain($subdomain);
+
+        return $page;
+    }
+
+    function getDateTime($datetime_string) {
+        $pos = strpos($datetime_string, "/");
+        if ($pos !== false) {
+            $temp_arr = explode("/", $datetime_string);
+            $datetime_string_good = $temp_arr[2] . "-" . $temp_arr[1] . "-" . $temp_arr[0];
+        } else {
+            $datetime_string_good = $datetime_string;
+        }
+        return new \DateTime($datetime_string_good, new \DateTimeZone('Europe/Madrid'));
+    }
+
+    function getDataFromRides($rides) {
+        // Filtramos paseos que no son de prueba (más de 1 metro)
+        $rides_good = array();
+        /** @var ERide $ride */
+        foreach($rides as $ride) {
+            if ($ride->getDistance() > 0) {
+                $rides_good[] = $ride;
+            }
+        }
+
+        /**
+         * no total de kilómetros recorridos por los niños,
+         * no total de paseos,
+         * no total de participaciones en el proyecto,
+         * kg. de CO2 evitados si todos esos trayectos se hubieran realizado en coche,
+         * combustible y euros ahorrados por las familias,
+         * tiempo total caminado por los niños
+         *
+         *
+         *
+         *  $("#enviroment_resume").html((distance*0.0001).toFixed(2)+" litros de carburante");
+        $("#safe_resume").html((distance*0.0001*1.5).toFixed(2)+" € en carburante");
+        $("#pollution_resume").html((distance*0.0001*0.4).toFixed(2)+" kg");
+         *
+         */
+
+        $data = array();
+        $temp_metros = 0;
+        $data['participaciones'] = 0;
+        $temp_tiempo = 0;
+
+        foreach($rides_good as $ride) {
+            $children_count = $ride->getCountChildsR();
+            $data['participaciones'] += $children_count;
+            $temp_metros += $ride->getDistance();
+
+            // Sumamos el tiempo en segundos
+            $temp_tiempo += $ride->getDurationSeconds() * $children_count;
+        }
+
+        $data['paseos'] = count($rides_good);
+        $data['km'] = round($temp_metros * 0.001, 2);
+        $data['co2'] = $data['km'] * 0.4;
+        // TODO: OJO CON LOS LITROS CONSUMIDOS
+        $data['litros_combustible'] = round($data['km'] / 12.5, 2);
+        $data['euros_combustible'] = $data['litros_combustible'] * 1.4;
+
+        // Ponemos el tiempo en el formato correcto
+        $temp_tiempo_date = new \DateTime();
+        $temp_tiempo_date->setTimestamp($temp_tiempo);
+
+        $t = new \DateTime();
+        $t->setTimestamp(0);
+
+        $temp_tiempo_diff = $temp_tiempo_date->diff($t);
+        $data['tiempo_formato'] = $temp_tiempo_diff->s . " segundos.";
+        if ($temp_tiempo_diff->i > 0) {
+            $data['tiempo_formato'] = $temp_tiempo_diff->i . " minutos, " . $data['tiempo_formato'];
+        }
+        if ($temp_tiempo_diff->h > 0) {
+            $data['tiempo_formato'] = $temp_tiempo_diff->h . " horas, " . $data['tiempo_formato'];
+        }
+        if ($temp_tiempo_diff->d > 0) {
+            $data['tiempo_formato'] = $temp_tiempo_diff->d . " días, " . $data['tiempo_formato'];
+        }
+        if ($temp_tiempo_diff->m > 0) {
+            if ($temp_tiempo_diff->m == 1) $str = "mes";
+            else $str = "meses";
+            $data['tiempo_formato'] = $temp_tiempo_diff->m . " ".$str.", " . $data['tiempo_formato'];
+        }
+        if ($temp_tiempo_diff->y > 0) {
+            $data['tiempo_formato'] = $temp_tiempo_diff->y . " años, " . $data['tiempo_formato'];
+        }
+
+        return $data;
+    }
 }

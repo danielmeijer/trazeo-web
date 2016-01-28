@@ -21,8 +21,8 @@ class ERideAdmin extends Admin
             ->add('distance')
             ->add('groupid')
             ->add('group')
-            //->add('events')
             ->add('reports')
+            ->add('userextend')
             ->add('createdAt')
             ->add('updatedAt')
         ;
@@ -34,13 +34,14 @@ class ERideAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
+            ->addIdentifier('id')
             ->add('duration')
             ->add('distance')
             ->add('groupid')
             ->add('group')
             //->add('events')
             ->add('reports')
+            ->add('userextend')
             ->add('createdAt')
             ->add('updatedAt')
             ->add('_action', 'actions', array(
@@ -63,6 +64,7 @@ class ERideAdmin extends Admin
             ->add('duration')
             ->add('distance')
             ->add('groupid')
+            ->add('userextend')
             ->add('createdAt')
             ->add('updatedAt')
         ;
@@ -78,6 +80,7 @@ class ERideAdmin extends Admin
             ->add('duration')
             ->add('distance')
             ->add('groupid')
+            ->add('userextend')
             ->add('createdAt')
             ->add('updatedAt')
         ;

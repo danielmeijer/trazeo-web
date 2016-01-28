@@ -22,7 +22,7 @@ class PublicControllerTest extends WebTestCase
 
         
         $form = $crawler->selectButton('submitLogin')->form();
-        $client->submit($form, array('_username' => 'trazeo', '_password' => 'trazeo'));
+        $client->submit($form, array('_username' => 'aarrabal@sopinet.com', '_password' => 'ee'));
         $this->assertTrue(
         		$client->getResponse()->isRedirect('/panel')
         );        

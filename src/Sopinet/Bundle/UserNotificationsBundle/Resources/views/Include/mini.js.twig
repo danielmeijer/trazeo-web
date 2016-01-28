@@ -1,9 +1,31 @@
 	<script>
+
 		$(".clearNotifications").click(function() {
 			$.ajax({
 			  url: "{{ path('sopinetusernotifications_clear') }}",
 			  }).done(function(content) {
 				  $(".clearNotifications > .badge").fadeOut();
 			});
+		});
+		$(window).load(
+			function()
+				{
+					$(".notificationModal").detach().appendTo('#page-wrapper')
+					$(".notificationModal").modal();
+				}
+			);
+		$(".dismissModal").click(function()
+		{
+			$.ajax({
+ 				url: "{{base_url}}\x2Fsopinetusernotifications\x2F"+$(".goOut").data('notid')+"\x2Fview",
+  				type: "GET",
+			});
+		});
+		$(".goOut").click(function()
+		{
+			$.ajax({
+ 				url: "{{base_url}}\x2Fsopinetusernotifications\x2F"+$(".goOut").data('notid')+"\x2Fview",
+  				type: "GET",
+			}).done(function(){location.assign("http://"+location.hostname+$(".goOut").data("notpanel"));});
 		});
 	</script>

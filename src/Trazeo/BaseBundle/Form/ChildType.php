@@ -8,6 +8,16 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ChildType extends AbstractType
 {
+    private $name = 'trazeo_basebundle_child';
+
+    public function getName() {
+        return $this->name;
+    }
+
+    public function setName($name){
+        $this->name = $name;
+    }
+
         /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -79,13 +89,5 @@ class ChildType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Trazeo\BaseBundle\Entity\EChild'
         ));
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'trazeo_basebundle_child';
     }
 }

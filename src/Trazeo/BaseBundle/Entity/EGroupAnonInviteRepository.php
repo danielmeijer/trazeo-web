@@ -2,6 +2,8 @@
 	namespace Trazeo\BaseBundle\Entity;
 	use Doctrine\ORM\EntityRepository;
 	use Trazeo\BaseBundle\Entity\EGroup;
+	use Swift_Message as Message;
+	use Hip\MandrillBundle\Dispatcher;
 	 
 	class EGroupAnonInviteRepository extends EntityRepository
 	{
@@ -20,15 +22,10 @@
 			
 			//echo $link;
 			//exit();
-			
-			// Mandar email de invitación a Usuario
-			$message = \Swift_Message::newInstance()
-			// TODO: Traducir
-			->setSubject("Ha sido invitado al sistema de Trazeo")
-			->setFrom(array("hola@trazeo.es" => "Trazeo"))
-			->setTo($userEmail)
-			->setBody($con->get('templating')->render('TrazeoFrontBundle:PanelGroups:email_invite.html.twig', array('link' => $link, 'group' => $group, 'user' => $fos_user_current)), 'text/html');
-			$ok = $con->get('mailer')->send($message);
+	        //$dispatcher = $con->get('hip_mandrill.dispatcher');
+            $mailer = $con->get('trazeo_mailer_helper');
+            $message = $mailer->createNewMessage('hola@trazeo.es', 'Trazeo', $userEmail, "Ha sido invitado al sistema de Trazeo", $con->get('templating')->render('TrazeoFrontBundle:PanelGroups:email_invite.html.twig', array('link' => $link, 'group' => $group, 'user' => $fos_user_current)));
+            $mailer->sendMessage($message);
 
 			return $eGAI;
 		}	

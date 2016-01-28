@@ -31,7 +31,7 @@
 				{% for setting in settings %}
 				<div id="setting_tab_{{ setting.id }}" class="fade tab-pane{% if i == 0 %} in active{% endif %}">
 					<div class="row-fluid">
-						<span class="span7">{{ ("preference."~setting.description)|trans }}</span>
+						<span class="span7">{{ ("preference."~setting.description)|trans|raw }}</span>
 						<span class="span5">
 							{% if setting.type == "Enum" %}
 							{#

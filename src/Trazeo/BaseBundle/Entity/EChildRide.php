@@ -42,6 +42,12 @@ class EChildRide
      */
     protected $distance;
     
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="updated", type="boolean")
+     */
+    protected $updated=false;
 
     /**
      * Get id
@@ -124,5 +130,29 @@ class EChildRide
     public function getRide()
     {
         return $this->ride;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param boolean $updated
+     *
+     * @return EChildRide
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return boolean
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
     }
 }

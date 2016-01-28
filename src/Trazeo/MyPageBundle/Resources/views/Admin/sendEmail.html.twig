@@ -1,0 +1,10 @@
+{% extends admin.getTemplate('dashboard') %}
+
+{% block content %}
+    <form method="POST" action="{{ path("admin_helper_sendEmail") }}">
+        {% form_theme form 'TrazeoMyPageBundle:Form:bootstrap.12_label.html.twig' %}
+        {{ form_widget(form) }}
+        <input type="hidden" name="emails" value="{{ emails }}"/>
+        <button class="btn btn-lg btn-success btn-block" type="submit">Enviar Email</button>
+    </form>
+{% endblock %}

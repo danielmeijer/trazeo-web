@@ -1,0 +1,52 @@
+{% set icon = "" %}
+{% set text = "" %}
+
+<!-- Participaciones -->
+{% if key == "participaciones" %}
+    {% set icon = "fa-male" %}
+    {% set text = "Participaciones" %}
+
+<!-- Paseos -->
+{% elseif key == "paseos" %}
+    {% set icon = "fa-location-arrow" %}
+    {% set text = "Paseos realizados" %}
+
+<!-- KM -->
+{% elseif key == "km" %}
+    {% set icon = "fa-globe" %}
+    {% set text = "Kilómetros recorridos" %}
+
+<!-- CO2 -->
+{% elseif key == "co2" %}
+    {% set icon = "fa-cloud" %}
+    {% set text = "CO2 Ahorrado" %}
+
+<!-- Litros combustible -->
+{% elseif key == "litros_combustible" %}
+    {% set icon = "fa-car" %}
+    {% set text = "Litros ahorrados" %}
+
+<!-- Euros combustible -->
+{% elseif key == "euros_combustible" %}
+    {% set icon = "fa-euro" %}
+    {% set text = "Euros ahorrados" %}
+
+<!-- Tiempo formato -->
+{% elseif key == "tiempo_formato" %}
+    {% set icon = "fa-clock-o" %}
+    {% set text = "Tiempo andado" %}
+
+{% endif %}
+
+<div class="col-md-3 col-sm-6">
+    <div class="service-item">
+                        <span class="fa-stack fa-4x">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa {{ icon }} fa-stack-1x text-primary"></i>
+                        </span>
+        <h4>
+            <strong>{{ value }}</strong>
+        </h4>
+        <p>{{ text }}</p>
+    </div>
+</div>

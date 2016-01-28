@@ -11,6 +11,7 @@ use Trazeo\BaseBundle\Entity\EEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RequestContext;
 use Sopinet\Bundle\SimplePointBundle\ORM\Type\SimplePoint;
+use Trazeo\BaseBundle\Entity\ERide;
 
 class CheckRidesCommand extends ContainerAwareCommand
 {
@@ -33,7 +34,8 @@ class CheckRidesCommand extends ContainerAwareCommand
     	//Sacar grupos en marcha
     	$rides = $em->getRepository("TrazeoBaseBundle:ERide")->findByGroupid(null);
 
-    	foreach($rides as $ride){
+        /** @var ERide $ride */
+        foreach($rides as $ride){
     		
     		
     		/*
@@ -66,9 +68,8 @@ class CheckRidesCommand extends ContainerAwareCommand
 	    	$minutes = $now - $rideupdated;
 
 	 		$rideGroup = $ride->getGroup();
-	 		
+	
 	 		if($minutes >= 900 && $rideGroup != null){
-	 		
 	 			// Detener el paseo del grupo
 	 			$rideGroup->setHasRide(0);
 	 			
@@ -84,10 +85,50 @@ class CheckRidesCommand extends ContainerAwareCommand
 	 			
 	 			$ride->setDuration($duration);
 	 			$ride->setGroupid($rideGroup->getId());
+                $ride->setGroupRegistered($rideGroup);
 	 			$ride->setGroup(null);
 	 			$em->persist($ride);
 	 			$em->flush();
-	 			
+
+                $userextends = $rideGroup->getUserextendgroups();
+
+                $not = $con->get('sopinet_user_notification');
+                $repositoryUserExtend = $em->getRepository('TrazeoBaseBundle:UserExtend');
+
+                foreach($userextends as $userextend)
+                {
+                    if ($repositoryUserExtend->hasChildOnRide($userextend,$ride)) {
+                        $url=$con->get('trazeo_base_helper')->getAutoLoginUrl($userextend->getUser(),'panel_ride_resume', array('id' => $ride->getId()));
+                        $not->addNotification(
+                            "ride.finish",
+                            "TrazeoBaseBundle:EGroup",
+                            $rideGroup->getId(),
+                            $url,
+                            $userextend->getUser(),
+                            null,
+                            $con->get('router')->generate('panel_ride_current', array('id' => $ride->getId()))
+                        );
+                        $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
+                        $devices=$repositoryDevice->findByUser($userextend);
+                        $gcmHelper=$con->get('sopinet_gcmhelper');
+                        /** @var Device $device */
+                        foreach ($devices as $device) {
+                            $time=new \DateTime('now');
+                            $gcmHelper->sendNotification('showMessage', $rideGroup->getId(), "ride.finish", $time, $userextend->getUser()->getPhone(), $device->getToken(), $device->getType());
+                        }
+                        //Si el usuario no tiene ningun niño en el paseo se manda la notificación pero no se muestra
+                    } else {
+                        $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
+                        $devices=$repositoryDevice->findByUser($userextend);
+                        $gcmHelper=$con->get('sopinet_gcmhelper');
+                        /** @var Device $device */
+                        foreach ($devices as $device) {
+                            $time=new \DateTime('now');
+                            $gcmHelper->sendNotification('', $rideGroup->getId(), "ride.finish", $time, $userextend->getUser()->getPhone(), $device->getToken(), $device->getType());
+                        }
+                    }
+                }
+
 	 			//desvinculamos a los niños del paseo
 	 			$childs = $em->getRepository('TrazeoBaseBundle:EChild')->findByRide($ride);
 

@@ -57,7 +57,11 @@
 				<td style="font-weigth: bold">Niños que participaron en el paseo: </td>
 				<td>{{ children|length() }}</td>
 			</tr>
-
+			<tr>
+				<td><i class="fa fa-key"></i></td>
+				<td>Monitor</td>
+				<td>{{ ride.userextend }}</td>
+			</tr>
 		</tbody>
 	</table>
 </div>
@@ -118,9 +122,9 @@
 	
 	{% endjavascripts %}
 		{% if route is defined %}
-			{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': route.points,'editable': "false", 'realTime': "true", 'rideEvents': events, 'resume': true} %}
+			{% include 'SopinetOpenMapBundle:Map:kml.html.twig' with {'routePoints': route.points,'editable': "false", 'realTime': "true", 'rideEvents': events, 'resume': true} %}
 		{% else %}
-			{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'editable': "false", 'realTime': "true", 'rideEvents': events, 'resume': true} %}
+			{% include 'SopinetOpenMapBundle:Map:kml.html.twig' with {'editable': "false", 'realTime': "true", 'rideEvents': events, 'resume': true} %}
 		{% endif %}
 		
 	<script type="text/javascript">

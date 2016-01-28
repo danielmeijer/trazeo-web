@@ -1,0 +1,18 @@
+<div class="container">
+    <div class="row text-center">
+        <div class="col-lg-10 col-lg-offset-1">
+            <h2>Datos Generales</h2>
+            <hr class="small">
+            <div class="row">
+
+                {% for row in module.class.getContentParts(module) %}
+                    {% include 'TrazeoMyPageBundle:Module:_row_generaldata.html.twig' with {
+                        'key': row,
+                        'value': vars[row]
+                    } %}
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>

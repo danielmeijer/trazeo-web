@@ -9,10 +9,13 @@ use JMS\Serializer\Annotation\Exclude;
  * Entity Children
  *
  * @ORM\Table("e_child")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="EChildRepository")
  */
-class EChild
+class EChild extends AbstractEntity
 {
+    const GENDER_BOY = "boy";
+    const GENDER_GIRL = "girl";
+
 	use ORMBehaviors\Timestampable\Timestampable;
     /**
      * @var integer
@@ -33,7 +36,7 @@ class EChild
      *  @Exclude
      */
     protected $groups;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="ERide", inversedBy="childs")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
@@ -50,7 +53,7 @@ class EChild
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateBirth", type="date")
+     * @ORM\Column(name="dateBirth", type="date", nullable=true)
      */
     protected $dateBirth;
 
@@ -69,7 +72,7 @@ class EChild
 
 
 	/**
-	 * @ORM\Column(name="gender", type="string")
+	 * @ORM\Column(name="gender", type="string", nullable=true)
 	 */
 	protected $gender;
 	
@@ -85,6 +88,47 @@ class EChild
      * @ORM\Column(name="scholl", type="string", nullable=true)
      */
     protected $scholl;
+
+    protected $emailParent;
+
+    protected $mobileParent;
+
+    protected $weekNotActivity;
+
+    public function getWeekNotActivity() {
+        $em = $this->getEntityManager();
+        $repositoryEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
+        /** @var EEvent $last_event */
+        $last_event = $repositoryEvent->findOneBy(array(
+            'data' => $this->getId() . "/" . $this->getNick(),
+            'action' => 'in',
+        ), array('createdAt' => 'DESC'));
+
+        if ($last_event == null) return "Nunca";
+
+        $today = new \DateTime();
+
+        /** @var \DateInterval $diff */
+        $diff = $last_event->getCreatedAt()->diff($today);
+
+        return round($diff->days / 7);
+    }
+
+    public function getEmailParent() {
+        /** @var UserExtend $ue */
+        foreach($this->userextendchilds as $ue) {
+            if ($ue->getUser()->getEmail() != "") $this->emailParent = $ue->getUser()->getEmail();
+        }
+        return $this->emailParent;
+    }
+
+    public function getMobileParent() {
+        /** @var UserExtend $ue */
+        foreach($this->userextendchilds as $ue) {
+            if ($ue->getMobile() != "") $this->mobileParent = $ue->getMobile();
+        }
+        return $this->mobileParent;
+    }
         
        
     public function __toString(){
@@ -311,30 +355,6 @@ class EChild
     }
 
     /**
-     * Set ride
-     *
-     * @param \Trazeo\BaseBundle\Entity\ERide $ride
-     *
-     * @return EChild
-     */
-    public function setRide(\Trazeo\BaseBundle\Entity\ERide $ride = null)
-    {
-        $this->ride = $ride;
-
-        return $this;
-    }
-
-    /**
-     * Get ride
-     *
-     * @return \Trazeo\BaseBundle\Entity\ERide 
-     */
-    public function getRide()
-    {
-        return $this->ride;
-    }
-
-    /**
      * Set selected
      *
      * @param boolean $selected
@@ -359,30 +379,6 @@ class EChild
     }
 
     /**
-     * Set school
-     *
-     * @param string $school
-     *
-     * @return EChild
-     */
-    public function setSchool($school)
-    {
-        $this->school = $school;
-
-        return $this;
-    }
-
-    /**
-     * Get school
-     *
-     * @return string
-     */
-    public function getSchool()
-    {
-        return $this->school;
-    }
-
-    /**
      * Set scholl
      *
      * @param string $scholl
@@ -404,5 +400,40 @@ class EChild
     public function getScholl()
     {
         return $this->scholl;
+    }
+
+    /**
+     * Set ride
+     *
+     * @param \Trazeo\BaseBundle\Entity\ERide $ride
+     * @return EChild
+     */
+    public function setRide(\Trazeo\BaseBundle\Entity\ERide $ride = null)
+    {
+        $this->ride = $ride;
+
+        return $this;
+    }
+
+    /**
+     * Get ride
+     *
+     * @return \Trazeo\BaseBundle\Entity\ERide 
+     */
+    public function getRide()
+    {
+        return $this->ride;
+    }
+
+    /**
+     * Devuelve la edad en años del niño/a
+     */
+    public function getYears() {
+        $now = new \DateTime();
+        if ($this->getDateBirth() == null) return 0;
+        $diff = $now->getTimestamp() - $this->getDateBirth()->getTimestamp();
+        $year_stamp = 31536000;
+        $ret = $diff / $year_stamp;
+        return round($ret, 0);
     }
 }

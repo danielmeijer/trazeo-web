@@ -25,11 +25,9 @@ class EChildAdmin extends Admin
             ->add('selected')
             ->add('ride')
             ->add('groups')
-            ->add('inviteChild')            
+            ->add('inviteChild')
             ->add('createdAt')
-            ->add('updatedAt')
-            
-        ;
+            ->add('updatedAt');
     }
 
     /**
@@ -55,9 +53,9 @@ class EChildAdmin extends Admin
             ->add('ride')
             ->add('groups')
             ->add('inviteChild')
+            ->add('scholl')
             ->add('createdAt')
-            ->add('updatedAt')       
-        ;
+            ->add('updatedAt');
     }
 
     /**
@@ -68,11 +66,12 @@ class EChildAdmin extends Admin
         $formMapper
             ->add('nick')
             ->add('dateBirth')
-            ->add('visibility')
+            //->add('visibility')
             ->add('gender')
             ->add('selected')
             ->add('ride')
             ->add('inviteChild')
+            ->add('scholl')
         ;
     }
 
@@ -88,6 +87,7 @@ class EChildAdmin extends Admin
             ->add('visibility')
             ->add('gender')
             ->add('selected')
+            ->add('scholl')
         ;
     }
 }

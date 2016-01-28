@@ -1,0 +1,65 @@
+{% extends 'TrazeoMyPageBundle:Front:baseLogin.html.twig' %}
+
+{% block content %}
+    {% include 'TrazeoMyPageBundle:Front:_wizzard_register.html.twig' with {
+        'form_user':form_user,
+        'form_children_0': form_children_0,
+        'form_children_1': form_children_1,
+        'form_children_2': form_children_2,
+        'form_children_3': form_children_3,
+        'form_children_4': form_children_4,
+        'group': group
+    } %}
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script>
+        $(function() {
+            $("#form_child_1").hide();
+            $("#form_child_2").hide();
+            $("#form_child_3").hide();
+            $("#form_child_4").hide();
+            $("#activate_form_1").click(function() {
+                $("#activate_form_1").html("Niñ@ número 2");
+                $("#activate_form_1").addClass('btn-warning');
+                $("#activate_form_1").prop( "disabled", true );
+                $("#form_child_1").show();
+                return false;
+            });
+            $("#activate_form_2").click(function() {
+                $("#activate_form_2").html("Niñ@ número 3");
+                $("#activate_form_2").addClass('btn-warning');
+                $("#activate_form_2").prop( "disabled", true );
+                $("#form_child_2").show();
+                return false;
+            });
+            $("#activate_form_3").click(function() {
+                $("#activate_form_3").html("Niñ@ número 4");
+                $("#activate_form_3").addClass('btn-warning');
+                $("#activate_form_3").prop( "disabled", true );
+                $("#form_child_3").show();
+                return false;
+            });
+            $("#activate_form_4").click(function() {
+                $("#activate_form_4").html("Niñ@ número 5");
+                $("#activate_form_4").addClass('btn-warning');
+                $("#activate_form_4").prop( "disabled", true );
+                $("#form_child_4").show();
+                return false;
+            });
+            $( "#wizardForm" ).validate({
+                rules: {
+                    "trazeo_mypagebundle_userdirecttype[password][second]": {
+                        equalTo: "#trazeo_mypagebundle_userdirecttype_password_first"
+                    }
+                },
+                messages: {
+                    condiciones: {
+                        required: "Es necesario aceptar las condiciones"
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

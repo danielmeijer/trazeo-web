@@ -132,11 +132,11 @@ class UserAdmin extends Admin
     {
         // define group zoning
         $formMapper
-            ->with('Profile', array('class' => 'col-md-6'))
-            ->with('General', array('class' => 'col-md-6'))
-            ->with('Security', array('class' => 'col-md-6'))
-            ->with('Management', array('class' => 'col-md-6'))
-            ->with('Social', array('class' => 'col-md-6'))
+            ->with('Profile', array('class' => 'col-md-6'))->end()
+            ->with('General', array('class' => 'col-md-6'))->end()
+            ->with('Security', array('class' => 'col-md-6'))->end()
+            ->with('Management', array('class' => 'col-md-6'))->end()
+            ->with('Social', array('class' => 'col-md-6'))->end()
         ;
 
         $now = new \DateTime();

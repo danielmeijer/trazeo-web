@@ -5,7 +5,7 @@
 {% block body %}
 
 {% embed 'SopinetTemplateSbadmin2Bundle:Base:navbar.html.twig' with {
-		'custom_link_1': "http://help.trazeo.es/manual_padres.html",
+		'custom_link_1': "http://trazeo.es/help/manual_padres.html",
 		'custom_text_1': "Manual de Usuario",
 		'custom_icon_1': "fa-question",
 		'on_new_tab': true
@@ -47,11 +47,36 @@
 {% block js %}
 	{{ parent() }}
 	{% if suggestion is defined and suggestion is not empty %}
-		{% include "TrazeoFrontBundle:Panel:_sugestions.js.twig" with {
-			'suggestions': suggestion
+		{% include "SopinetSuggestionBundle:Suggestion:_suggestions.js.twig" with {
+			'suggestions': suggestion,
 		} %}
-	{% endif %}
+    {% else %}
+        {% include "SopinetSuggestionBundle:Suggestion:_suggestions.js.twig" %}
+    {% endif %}
 	{% include "TrazeoFrontBundle:Panel:_zopim.js.twig" %}
 	{% include "SopinetUserNotificationsBundle:Include:mini.js.twig" %}
 	{% include 'SopinetFlashMessagesBundle:Messages:notification.html.twig' %} 	
+	<script type="text/javascript">
+	isMobile = {
+    Android: function() {
+        return navigator.userAgent.match(/Android/i);
+    },
+    BlackBerry: function() {
+        return navigator.userAgent.match(/BlackBerry/i);
+    },
+    iOS: function() {
+        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+    },
+    Opera: function() {
+        return navigator.userAgent.match(/Opera Mini/i);
+    },
+    Windows: function() {
+        return navigator.userAgent.match(/IEMobile/i) || navigator.userAgent.match(/WPDesktop/i);
+    },
+    any: function() {
+    	if((isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows())==null)return 'Desktop';
+        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+    	}
+	};
+	</script>
 {% endblock %}

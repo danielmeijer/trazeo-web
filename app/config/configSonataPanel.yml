@@ -1,0 +1,131 @@
+# Services
+services:
+    trazeo_mypage.panel.p_userextend:
+        class: Trazeo\MyPageBundle\Admin\PUserExtendAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\UserExtend, TrazeoMyPageBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Usuarios, label_translator_strategy: "sonata.admin.label.strategy.underscore" }
+        calls:
+            - [setSecurityContext, [@security.context]]
+            - [setContainer, [ @service_container ]]
+
+    trazeo_mypage.panel.p_ride:
+        class: Trazeo\MyPageBundle\Admin\PRideAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\ERide, TrazeoMyPageBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Paseos, label_translator_strategy: "sonata.admin.label.strategy.underscore" }
+        calls:
+            - [setSecurityContext, [@security.context]]
+            - [setContainer, [ @service_container ]]
+
+    trazeo_mypage.panel.p_child:
+        class: Trazeo\MyPageBundle\Admin\PChildAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\EChild, TrazeoMyPageBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Niños, label_translator_strategy: "sonata.admin.label.strategy.underscore" }
+        calls:
+            - [setSecurityContext, [@security.context]]
+            - [setContainer, [ @service_container ]]
+
+    trazeo_mypage.panel.p_group:
+        class: Trazeo\MyPageBundle\Admin\PGroupAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\EGroup, TrazeoMyPageBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Control de Grupos, label_translator_strategy: "sonata.admin.label.strategy.underscore" }
+        calls:
+            - [setSecurityContext, [@security.context]]
+            - [setContainer, [ @service_container ]]
+
+    # NO SE ESTA USANDO AÚN
+    #trazeo_mypage.panel.p_invite:
+    #    class: Trazeo\MyPageBundle\Admin\PInviteAdmin
+    #    arguments: [~, Trazeo\BaseBundle\Entity\EGroupInvite, TrazeoMyPageBundle:CRUD]
+    #    tags:
+    #        - {name: sonata.admin, manager_type: orm, group: admin, label: Solicitudes Pendientes, label_translator_strategy: "sonata.admin.label.strategy.underscore" }
+    #    calls:
+    #        - [setSecurityContext, [@security.context]]
+    #        - [setContainer, [ @service_container ]]
+
+    trazeo_mypage.panel.p_comment:
+        class: Trazeo\MyPageBundle\Admin\PCommentsAdmin
+        arguments: [~, Sopinet\TimelineBundle\Entity\Comment, TrazeoMyPageBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Comentarios en el Muro, label_translator_strategy: "sonata.admin.label.strategy.underscore" }
+        calls:
+            - [setSecurityContext, [@security.context]]
+            - [setContainer, [ @service_container ]]
+
+    sonata.block.mypagebundle.stats:
+        id: sonata.block.mypagebundle.stats
+        class: Trazeo\MyPageBundle\Block\StatBlockService
+        arguments: [ "sonata.block.mypagebundle.stats", @templating ]
+        tags:
+            - { name: sonata.block }
+
+    sonata.block.mypagebundle.modulecomposer:
+        id: sonata.block.mypagebundle.modulecomposer
+        class: Trazeo\MyPageBundle\Block\ModuleComposerService
+        arguments: [ "sonata.block.mypagebundle.modulecomposer", @templating ]
+        tags:
+            - { name: sonata.block }
+
+    trazeo_mypage.panel.registered:
+        class: Trazeo\MyPageBundle\Admin\RegisteredCustomAdmin
+
+    custom.sonata.security.handler.role:
+        class: Trazeo\BaseBundle\Security\Handler\CustomRoleSecurityHandler
+        arguments:
+            - @security.context
+            - [ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_USER]
+            - %security.role_hierarchy.roles%
+
+# Sonata Admin Dashboard
+sonata_admin:
+    security:
+        handler: custom.sonata.security.handler.role
+
+    title:       Trazeo
+    title_logo:  favicon.ico
+
+    templates:
+        # other configuration options
+        search:              SonataAdminBundle:Core:search.html.twig
+        search_result_block: SonataAdminBundle:Block:block_search_result.html.twig
+        dashboard: TrazeoMyPageBundle:Admin:custom_project_dashboard.html.twig
+        layout:    TrazeoMyPageBundle:Admin:custom_project_layout.html.twig
+
+    dashboard:
+        blocks:
+           #- { position: left,  type: sonata.block.service.text, settings: { content: "<div class='panel panel-default'><div class='panel-heading'><h3 class='panel-title'>¡Bienvenido!</h3></div><div class='panel-body'>Podras gestionar tu cuenta de Trazeo Premium desde este panel. Recuerda que cualquier duda puedes acudir a nuestro servicio de soporte a traves de <a href='mailto:soportepremium@trazeo.es'>soportepremium@trazeo.es</a>.</div></div>"} }
+           - { position: right,  type: sonata.block.mypagebundle.stats }
+           - { position: right, type: sonata.block.mypagebundle.modulecomposer }
+           - { position: left, type: sonata.admin.block.admin_list, settings: { groups: [viewData] } }
+           - { position: left, type: sonata.admin.block.admin_list, settings: { groups: [manageData] } }
+           #- { position: left,  type: sonata.admin.block.admin_list, settings: { groups: [manageGroups] } }
+
+        groups:
+            viewData:
+                label: Visualización de Datos
+                icon:            '<i class="fa fa-user"></i>'
+                items:
+                  - trazeo_mypage.panel.p_userextend
+                  - trazeo_mypage.panel.p_child
+            manageData:
+                label: Gestión de Datos
+                icon:            '<i class="fa fa-user"></i>'
+                items:
+                  - trazeo_mypage.panel.p_ride
+                  - trazeo_mypage.panel.p_group
+                  - trazeo_mypage.panel.p_comment
+                  #- sonata.block.mypagebundle.stats
+                  #- trazeo_base.admin.user_extend
+
+# Sonata
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        sonata.admin.block.admin_list:
+        sonata.block.service.text:
+        sonata.block.mypagebundle.stats:
+        sonata.block.mypagebundle.modulecomposer:
+        sonata.admin.block.search_result:

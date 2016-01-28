@@ -1,0 +1,33 @@
+{% extends sonata_block.templates.block_base %}
+
+{% block block %}
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">{{ settings.title }}</h3>
+        </div>
+        <div class="box-body">
+            <ul>
+                <li>
+                    <a href="{{ path('stats_evolution') }}">
+                        {{ "customAdmin.stats.evolution.title"|trans }}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('stats_registered') }}">
+                        {{ "customAdmin.stats.registered.title"|trans }}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('stats_bar') }}">
+                        {{ "customAdmin.stats.bar.title"|trans }}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('stats_global') }}">
+                        {{ 'customAdmin.stats.global.title'|trans }}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}

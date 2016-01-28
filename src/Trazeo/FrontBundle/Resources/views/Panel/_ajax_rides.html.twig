@@ -9,10 +9,13 @@
 			$.ajax({
 				url: window.location+"getRides"
 				,success: function(response){
-					if(response.length>0 && response[0].ride){
-						if($(".currentGroups").length==0)ridesManager.createRidesContainer();
-						ridesManager.manageRides(response);
-						ridesManager.updateRidesContainer(response.length>1);
+					var groups=[];
+					for(var i in response)groups.push(response[i]);
+					if(groups[0]!=undefined && groups[0].ride){
+						if($(".currentGroups").length==0)
+							ridesManager.createRidesContainer();
+						ridesManager.manageRides(groups);
+						ridesManager.updateRidesContainer(groups.length>1);
 					}
 					else{
 						$(".currentRide").remove();
@@ -29,8 +32,9 @@
 		'addRide': function(group){
 			var container=$(".currentGroups > ,col-md-11")[1];
 			$(container).append(
-				'<div class="row currentRide" id="'+group.ride.id+'"><ul class="col-md-6"><li><i class="fa fa-2x fa-users"></i>&nbsp; <a href="'+'{{base_url}}'+'/panel/group/'+group.id+'/timeline">'+group.name+'</a></li></ul><ul class="col-md-6"><li><i class="fa fa-2x fa-mail-forward"></i><a group="'+group.name+'" ride="'+group.ride.id+'" class="ride-action" href="'+'{{base_url}}'+'/panel/ride/'+group.ride.id+'/current">&nbsp; Ir al paseo</a></li></ul></div>'
+				'<div class="row currentRide" id="'+group.ride.id+'"><ul class="col-md-6"><li><i class="fa fa-2x fa-users"></i>&nbsp; <a href="'+'{{base_url}}'+'panel/group/'+group.id+'/timeline">'+group.name+'</a></li></ul><ul class="col-md-6"><li><i class="fa fa-2x fa-mail-forward"></i><a group="'+group.name+'" ride="'+group.ride.id+'" class="ride-action" href="'+'{{base_url}}'+'panel/ride/'+group.ride.id+'/current">&nbsp; Ir al paseo</a></li></ul></div>'
 			);
+
 				
 		},
 		/*
@@ -43,9 +47,10 @@
 			var to_remove=$(".currentRide");
 			to_remove.remove();
 			//si esta abierto pero no existe se añade
-			for (var i =  0; i < groups.length; i++) {
+			for (var i in groups) {
 				this.addRide(groups[i]);
 			};
+			if(groups.length==undefined)this.addRide(groups[0]);
 		},
 		/*
 		* Update the container of actual rides

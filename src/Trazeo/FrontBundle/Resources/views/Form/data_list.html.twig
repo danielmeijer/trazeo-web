@@ -1,0 +1,8 @@
+{% block datalist_widget %}
+    <input list="{{ id }}List" {{ block('widget_attributes') }}>
+    <datalist id="{{ id }}List">
+        {% for choice in choices %}
+            <option value="{{ choice }}"></option>
+        {% endfor %}
+    </datalist>
+{% endblock %}

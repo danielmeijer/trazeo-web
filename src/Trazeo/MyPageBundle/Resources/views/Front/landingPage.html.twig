@@ -1,0 +1,88 @@
+{% set title = page.title %}
+
+{% extends "TrazeoMyPageBundle:Template/SimpleClean:base.html.twig" %}
+    {# TODO: PASAR A LOS BLOQUES COMO FICHEROS EXTERNOS #}
+    {% block css %}
+        {{ parent() }}
+        <link href="{{ asset('bundles/trazeomypage/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('bundles/trazeomypage/css/bootstrap-modal.css') }}" rel="stylesheet" type="text/css">
+
+        <style>
+            .map-popup {
+                height: 400px;
+            }
+        </style>
+
+        {% stylesheets
+        '@SopinetOpenMapBundle/Resources/public/css/leaflet.css'
+        '@SopinetOpenMapBundle/Resources/public/css/plugins/leafletRouting/app.css'
+        '@SopinetOpenMapBundle/Resources/public/css/plugins/Control.Geocoder/Control.Geocoder.css'
+        '@SopinetTemplateSbadmin2Bundle/Resources/public/css/plugins/openmap/openmap.css'
+        output='css/*.css' filter='cssrewrite' %}
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    {% endblock %}
+
+    {% block menu %}
+        {% for menu in page.menus %}
+            <li>
+                <a href="#{{ menu.link }}">{{ menu.title }}</a>
+            </li>
+        {% endfor %}
+    {% endblock %}
+
+    {% block content %}
+        {% set i = 0 %}
+        {% for menu in page.menus %}
+            {% if i == 0 %}
+                <header id="{{ menu.link }}" class="{{ menu.getClassCSS() }}">
+            {% else %}
+                <section id="{{ menu.link }}" class="{{ menu.getClassCSS() }}" style="background-color: #{{ menu.colorback }}; color: #{{ menu.colorfront }}">
+            {% endif %}
+
+            {% for module in menu.modules %}
+                <div class="{{ module.class.getClassCSS()|raw }}" style="{{ module.class.getStyle(module) }}">
+                    {{ module.class.renderFront(container, module)|raw }}
+                </div>
+            {% endfor %}
+
+            {% if i == 0 %}
+                </header>
+            {% else %}
+                </section>
+            {% endif %}
+
+            {% set i = i + 1 %}
+        {% endfor %}
+    {% endblock %}
+
+{# TODO: PASAR A LOS BLOQUES COMO FICHEROS EXTERNOS #}
+{% block js %}
+    {{ parent() }}
+    {% include 'SopinetFlashMessagesBundle:Messages:notification.html.twig' %}
+
+    {# https://github.com/jschr/bootstrap-modal/ #}
+    <script src="{{ asset('bundles/trazeomypage/js/bootstrap-modalmanager.js') }}"></script>
+    <script src="{{ asset('bundles/trazeomypage/js/bootstrap-modal.js') }}"></script>
+    {% javascripts
+    '@SopinetOpenMapBundle/Resources/public/js/leaflet.js'
+    '@SopinetOpenMapBundle/Resources/public/js/leaflet-src.js'
+    '@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/utils/LineUtil.Snapping.js'
+    '@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/utils/Marker.Snapping.js'
+    '@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/utils/Polyline.Snapping.js'
+    '@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.js'
+    '@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Storage.js'
+    '@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Draw.js'
+    '@SopinetOpenMapBundle/Resources/public/js/plugins/leafletRouting/L.Routing.Edit.js'
+    '@SopinetOpenMapBundle/Resources/public/js/plugins/Control.Geocoder/Control.Geocoder.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    {% for group in groups %}
+        <script>
+            $("#full-width-{{ group.id }}").on('shown', function(){
+                {% include 'SopinetOpenMapBundle:Map:openmap.html.twig' with {'id_map': 'map-'~group.id, 'routePoints': group.route.points,'editable': "false", 'realTime': "false", 'rideEvents': ''}|e('js') %}
+            });
+        </script>
+    {% endfor %}
+{% endblock %}

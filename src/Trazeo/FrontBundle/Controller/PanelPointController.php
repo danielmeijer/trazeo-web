@@ -12,6 +12,7 @@ use Trazeo\BaseBundle\Entity\ERoute;
 use Trazeo\BaseBundle\Entity\EGroupAccess;
 use Trazeo\BaseBundle\Entity\EGroupInvite;
 use Trazeo\BaseBundle\Entity\EChild;
+use Trazeo\BaseBundle\Entity\File;
 use Trazeo\BaseBundle\Form\GroupType;
 use Trazeo\BaseBundle\Controller\GroupsController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -32,18 +33,79 @@ class PanelPointController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $fos_user = $this->container->get('security.context')->getToken()->getUser();   
+        $exchange=$request->get('exchange');
+        $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+        $oferts = $em->getRepository('TrazeoBaseBundle:ECatalogItem')->findBy(
+             array('complete'=> '1'), 
+             array('position' => 'ASC')
+           );
+        $gamification = $this->container->get('sopinet_gamification');
+        $points=$gamification->getUserPoints();
+        $citys=[];
+        foreach ($oferts as $ofert) {
+            if(count($ofert->getFile()->getValues())>0){
+                $files[]=$ofert->getFile()->getValues()[0];
+            } else {
+                $files[]=new File();
+            }
+            if($ofert->getCitys()!=null && !in_array($ofert->getCitys(),$citys)) {
+                $citys[]=$ofert->getCitys();
+            }
+
+        }
+
+        return array(
+            'user' => $user,
+            'city' => $user->getCity(),
+            'points' => $points,
+            'oferts' => $oferts,
+            'files' => $files,
+            'exchange'=> $exchange,
+            'cities'=>$citys
+        );
+    }
+
+    /**
+     * Show user point.
+     *
+     * @Route("/exchange/{exchange}", name="panel_point_exchange")
+     * @Method("GET")
+     * @Template("TrazeoFrontBundle:PanelPoint:index.html.twig")
+     */
+    public function exchangedAction($exchange)
     {
         $em = $this->getDoctrine()->getManager();
         $fos_user = $this->container->get('security.context')->getToken()->getUser();   
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+        $oferts = $em->getRepository('TrazeoBaseBundle:ECatalogItem')->findBy(
+             array('complete'=> '1'), 
+             array('position' => 'ASC')
+           );
+        $citys=[];
+        foreach($oferts as $ofert){
+            if(!in_array($ofert->getCitys(),$citys))$citys[]=$ofert->getCitys();
+        }
 
+        $gamification = $this->container->get('sopinet_gamification');
+        $points=$gamification->getUserPoints();
+        foreach ($oferts as $ofert) {
+            $files[]=$ofert->getFile()->getValues()[0];
+        }
         return array(
             'user' => $user,
+            'city' => $user->getCity(),
+            'points' => $points,
+            'oferts' => $oferts,
+            'files' => $files,
+            'exchange'=> $exchange,
+            'cities'=> $citys
         );
     }
-
-        /**
+    /**
      * Show user point.
      *
      * @Route("/historical", name="panel_point_historical")
@@ -55,23 +117,45 @@ class PanelPointController extends Controller
         $em = $this->getDoctrine()->getManager();
         $fos_user = $this->container->get('security.context')->getToken()->getUser();   
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
-        $userChilds=$user->getChilds();
-        $points=[];
-        $distances=[];
-        foreach ($userChilds as $userChild) {
-            $distances[$userChild->getId()]=0;
-            $childrides = $em->getRepository("TrazeoBaseBundle:EChildRide")->findByChild($userChild);
-            foreach ($childrides as $childride){
-                $distances[$userChild->getId()]+=$childride->getDistance();
-            }
-            $points[$userChild->getId()]=floor($distances[$userChild->getId()]/1000);
-        }
-        
-        return array(
-        'userChilds' => $userChilds,
-        'distances' => $distances,
-        'points' => $points
-        );
+        $gamification = $this->container->get('sopinet_gamification');
+        $all_actions=$gamification->getUserActions($user);
+
+        return $all_actions;
     }
 
+
+    /**
+     * Show user point.
+     *
+     * @Route("/{id}/exchange", name="panel_point_exchange")
+     * @Method("GET")
+     * @Template()
+     */
+    public function exchangeAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $fos_user = $this->container->get('security.context')->getToken()->getUser(); 
+        $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+        $container = $this->get('sopinet_flashMessages');  
+        $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+        $ofert = $em->getRepository('TrazeoBaseBundle:ECatalogItem')->find($id);
+
+        if(($user->getPoints()-$user->getSpendedPoints())<$ofert->getPoints()){
+         $notification = $container->addFlashMessages("success","Tu solicitud no ha sido enviada ya que no tienes los puntos necesarios");
+         return $this->redirect($this->generateUrl('panel_point', array('exchange' => 2)));           
+        }
+        $user->setSpendedPoints($user->getSpendedPoints()+$ofert->getPoints());
+        $em->persist($user);
+        $em->flush();
+
+        $message = \Swift_Message::newInstance()
+        ->setFrom(array("hola@trazeo.es" => "Trazeo"))
+        ->setTo("hola@trazeo.es")
+        ->setSubject('Solicitud de canjeo de usuario')
+        ->setBody('<p>Solicitud de canjeo del usuario '.$user->getNick().' para la oferta '.$ofert->getTitle().' de la empresa '.$ofert->getCompany(). '</p>', 'text/html');
+        $ok = $this->container->get('mailer')->send($message);
+
+        $notification = $container->addFlashMessages("success","Tu solicitud ha sido enviada y se está procesando");
+        return $this->redirect($this->generateUrl('panel_point',array('exchange' => 1)));
+    }
 }

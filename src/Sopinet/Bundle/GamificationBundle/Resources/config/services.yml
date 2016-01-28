@@ -1,0 +1,19 @@
+parameters:
+#    sopinet_gamification.example.class: Sopinet\Bundle\GamificationBundle\Example
+
+services:
+#    sopinet_gamification.example:
+#        class: %sopinet_gamification.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+            
+    sopinet_gamification:
+       class: Sopinet\Bundle\GamificationBundle\Service\GamificationHelper
+       arguments: ["@service_container"]
+    sopinet_gamification_civiclub:
+       class: Sopinet\Bundle\GamificationBundle\Service\CiviClubApi
+       arguments: ["@service_container"]
+    sopinetgamification.twig.base_extension:
+        class: Sopinet\Bundle\GamificationBundle\Twig\BaseExtension
+        arguments: ['@service_container']
+        tags:
+            - { name: twig.extension }

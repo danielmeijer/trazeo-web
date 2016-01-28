@@ -1,0 +1,86 @@
+{% set activeMenu = "items" %}
+{% extends 'TrazeoFrontBundle:Panel:base.html.twig' %}
+
+{% block body_content %}
+<div class="row">
+        <div class="row">
+            <div class="pull-right">
+                <a class="btn btn-success" href="{{ path('panel_itemscatalog_new') }}">
+                    <i class="fa fa-plus-circle"></i>&nbsp; {{ 'Catalog.button.back'|trans }}
+                </a>
+            </div>
+        </div>    
+    <div class="col-md-12 col-xs-12">
+        {{ form_start(form_item) }}
+        {{ form_widget(form_item) }}
+        {# Los usuario con acceso al catalogo que no son administradores pueden editar solo el catalogo de su ciudad #}
+        {% if not is_granted('ROLE_ADMIN') %}
+            <div>
+                {{"Group.new.locality"|trans}}: <input readonly="readonly" name="city" class="typeahead form-control" type="text" placeholder="Localidad" value="{{ app.user.user.city.nameUTF8 }}">
+            </div>
+        {% endif %}
+        {{ form_end(form_item) }}
+		</br>
+        {# El administrador puede editar el catalogo de cualquier ciudad #}
+        {% if is_granted('ROLE_ADMIN') %}
+            <div id="prefetch">
+                {{"Group.new.locality"|trans}}: <input name="city" class="typeahead form-control" type="text" placeholder="Localidad" value="{% if item.citys.nameUtf8 is defined %}{{ item.citys.nameUtf8 }}{% endif %}">
+            </div>
+        {% endif %}
+			{% include 'SopinetUploadMagicBundle:Upload:simple.html.twig'
+								  	with {
+								  		'name': 'image',
+								  		'type': 'gallery',
+								  		'id': 0, 
+								  		'entity': 'Trazeo_BaseBundle_File',
+								  		'param1': 'title',
+                						'value1': 'Titulo',
+                						'param2': 'Trazeo_BaseBundle_ECatalogItem',
+                						'value2': item.id,	
+										}
+								  %}						  
+	</div>			
+</div>
+
+{% endblock %}
+
+{% block css %}
+	{{ parent() }}
+	{% include 'SopinetUploadMagicBundle:Upload:simple_css.html.twig' %}
+	
+{% endblock %}
+
+{% block js %}
+	{{ parent() }}
+	{% include 'SopinetUploadMagicBundle:Upload:simple_js.html.twig' %}
+	{% include 'SopinetUploadMagicBundle:Upload:simple_blockjs.html.twig' 
+		with {'name': 'image', 'type': 'gallery', 'files': [file], 'limit': 1, 'entity': 'Trazeo_BaseBundle_File','icon': 'fa fa-file', 'preview': true}
+	%}
+    <script>
+            $("#trazeo_basebundle_catalogitem").parent().submit(function(event) {
+               	$("#trazeo_basebundle_catalogitem").parent().unbind();
+                	$(".typeahead.form-control.tt-input").detach().appendTo($("#trazeo_basebundle_catalogitem").parent());
+                    $("#trazeo_basebundle_catalogitem").parent().submit();
+                });                
+            var countries = new Bloodhound({
+              datumTokenizer: Bloodhound.tokenizers.obj.whitespace('nameUtf8'),
+              queryTokenizer: Bloodhound.tokenizers.whitespace,
+            limit: 10,
+            remote: '{{ path('get_geo_cities') }}'+'?q=%QUERY'
+            });
+         
+            // kicks off the loading/processing of `local` and `prefetch`
+            countries.initialize();
+         
+            // passing in `null` for the `options` arguments will result in the default
+         // options being used
+            $('#prefetch .typeahead').typeahead(null, {
+            name: 'cities',
+            displayKey: 'nameUtf8',
+            // `ttAdapter` wraps the suggestion engine in an adapter that
+            // is compatible with the typeahead jQuery plugin
+            source: countries.ttAdapter()
+            });
+
+        </script>
+{% endblock %}

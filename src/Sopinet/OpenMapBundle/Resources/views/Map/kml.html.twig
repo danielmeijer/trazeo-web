@@ -1,0 +1,59 @@
+{% set start_button = "Route.show.buttons.start"|trans %}
+{% set end_button = "Route.show.buttons.end"|trans %}
+{% set erase_button = "Route.show.buttons.erase"|trans %}
+{% set pickup_button = "Route.show.buttons.pickup"|trans %}
+{% set pickup_erase_button = "Route.show.buttons.pickupErase"|trans %}
+{% set cancel_button = "Route.show.buttons.cancel"|trans %}
+{% if id_map is not defined %}
+    {% set id_map =  "mapa" %}
+{% endif %}
+<script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
+{% if kml %}
+    <script src='{{ asset('js/kmlMap.js') }}'></script>
+{% else %}
+    <script src='{{ asset('js/trazeoMap.js') }}'></script>
+{% endif %}
+<script>
+    POINT=function(lat,lng){
+        this.latLng=new L.LatLng(lat,lng);
+        var pick=false;
+        this.pickup=pick;
+    };
+    var points=new Array;
+    var events=new Array;
+    {% if routePoints is defined %}
+        {% for point in routePoints  %}
+            var aux=eval('new '+('{{ point.location }}'.replace(' ',',')));
+            aux.pickUpText='{{ point.description }}';
+            aux.pickup=('{{ point.pickup }}'==1);
+            points.push(aux);
+        {%  endfor %}
+    {% endif %}
+    {% for event in rideEvents  %}
+        {% if event.location.latitude is defined %}
+                events.push(new POINT({{ event.location.latitude }},{{ event.location.longitude }}));
+        {% endif %}
+    {%  endfor %}
+    var mapConfig=
+    {
+        buttonsText: {
+            startButton: "{{ start_button }}",
+            endButton: "{{ end_button }}",
+            eraseButton: "{{ erase_button }}",
+            pickupButton: "{{ pickup_button }}",
+            pickupEraseButton: "{{ pickup_erase_button }}",
+            cancelButton: "{{ cancel_button }}"
+        },
+        mapContainerId: "{{ id_map }}",
+        editable: {{ editable }},
+        realtime: {{ realTime }},
+        resume: {% if resume is defined %}true{% else %}false{% endif %},
+        points: points,
+        events: events,
+        iconImagePath: '{{ asset('bundles/sopinetopenmap/css/images') }}',
+        kml: {% if kml %}true{% else %} false {% endif %}
+    };
+
+    initMap(mapConfig);
+</script>
+

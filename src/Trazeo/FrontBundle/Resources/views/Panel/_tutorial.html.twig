@@ -36,7 +36,6 @@
 		 var tutorialRunning=function(){
 			 running=1;
 			 localStorage.setItem('tutorial','none');
-			 $('*').click(prevent);
 			 $('body').on('mousewheel',prevent);
 		 };
 		 //styles on tutorial stoped 
@@ -72,176 +71,129 @@
 
  		 //switch between diferents tutorials
  		  
-		 var tutorial=function(){switch(localStorage.getItem('tutorial')){
-		 case 'home':
-			 var loc=$(location).attr('href').toString();
-			 //global options customize 
-					 			 trip = new Trip([
-		    	                     { 
+		 var tutorial=function(){
+             switch(localStorage.getItem('tutorial')){
+                 case 'home':
+                     var loc=$(location).attr('href').toString();
+                     //global options customize
+                     trip = new Trip([
+                                 {
 
-		       	                     	 sel : $('.navbar-fixed-top')
-		       	                         ,content : 'Bienvenido a Trazeo, a continuación te explicaré las funciones basicas'
-		       	                         ,position: 's'
-		       	                      	 ,callback: function(){$(location).attr('href',loc+"#childs")}
-	       	                      	 	 ,expose: true
-		       	                     },
+                                     sel : $('.navbar-fixed-top')
+                                     ,content : 'Bienvenido a Trazeo, a continuación te explicaré las funciones basicas'
+                                     ,position: 's'
+                                     ,callback: function(){$(location).attr('href',loc+"#childs")}
+                                     ,expose: true
+                                 },
 
-		   	                         { 
-		   	                             sel : $('.resumeGroups'),
-		   	                             content : 'Aqui podras crear grupos, definir la visibilidad del grupo, chatear con otros tutores y asignar una ruta para el grupo',
-		   	                             position: 'n',
-		   	                          	 callback: function(){$(location).attr('href',loc+"#routes")}
-		       	                  		 ,expose: true					       	                         
-		   	                         },
-		   	                         { 
-		   	                             sel : $('.resumeRoutes'),
-		   	                             content : 'Aqui podras crear nuevas rutas o consultar rutas ya existentes',
-		   	                             position: 'n'
-		   	                            ,expose: true
+                                 {
+                                     sel : $('.resumeGroups'),
+                                     content : 'Aqui podras crear grupos, definir la visibilidad del grupo, chatear con otros tutores y asignar una ruta para el grupo',
+                                     position: 'n',
+                                     callback: function(){$(location).attr('href',loc+"#routes")}
+                                     ,expose: true
+                                 },
+                                 {
+                                     sel : $('.resumeChilds'),
+                                     content : 'En el panel de niños, podras añadir niños a trazeo',
+                                     position: 'n',
+                                     callback: function(){$(location).attr('href',loc+"#groups")}
+                                     ,expose: true
 
-		   	                         },
-		   	                         { 
-		   	                             sel : $('.resumeChilds'),
-		   	                             content : 'En el panel de niños, podras añadir niños a trazeo',
-		   	                             position: 'n',
-		   	                         	 callback: function(){$(location).attr('href',loc+"#groups")}	
-		       	                  		 ,expose: true
+                                 },
+                                 {
+                                     sel : $('.navbar-fixed-top')
+                                     ,content : 'Aqui termina nuestro paseo por la pagina principal de Trazeo'
+                                     ,position: 's'
+                                     ,canGoNext: false
+                                     ,expose: true
+                                 },
 
-		       	                     },
-		       	                     { 
-		   	                        	 sel : $('.navbar-fixed-top')
-	        	                         ,content : 'Aqui termina nuestro paseo por la pagina principal de Trazeo'
-	        	                         ,position: 's'
-		        	                     ,canGoNext: false
-		        	                     ,expose: true
-				        	             ,callback: function(){
-												setTimeout(function(){
-														$('#monitor').click(monitorRedirect);
-														$('#padre').click(userRedirect);
-													},300);
-					        	             }
-	        	                     },
-		       	                     { 
-		   	                        	 sel : $('.navbar-fixed-top')
-	        	                         ,content : '¿Cuál es el rol con el que vas a utilizar la aplicación?'
-	        	                         ,position: 's'
-		        	                     ,canGoNext: false
-		        	                     ,expose: true
-		        	                     ,delay: -1
-		        	                     ,showCloseBox: false
-	        				    	     ,prevLabel: "<p style='color:#428bca !important' id='monitor'>Monitor</p>"
-          						    	 ,nextLabel: "<p style='color:#428bca !important'id='padre'>Padre</p>"
-          								 ,finishLabel: "<p style='color:#428bca !important' id='padre'>Padre</p>"	    
-	        	                     },
-	        	                     
-	        	                     
-		  	            	   	],
-		  	            	   	options);
-					trip.start();
-					break;
 
-		 case 'child':
-			  trip = new Trip([
-		   	                         { 
-		       	                    	 sel : $('#new_child'),
-		   	                             content : 'Aqui podemos añadir niños a trazeo',
-		   	                             position: 'n'
-		   	                             ,expose: true
-		   	                         },
-		   	                         { 
-		   	                             sel : $('#new_group'),
-		   	                             content : 'Aqui podemos crear nuevos grupos',
-		   	                             position: 'n'
-		   	                             ,expose: true
-		   	                         },
-		   	                         { 
-		   	                             sel : $('#new_route'),
-		   	                             content : 'Aqui podemos crear una nueva ruta',
-		   	                             position: 'n'
-		   	                             ,expose: true
-		   	                         },
-			                         { 
-		    	                         sel : $('.fa-home.fa-2x'),
-		        	                     content : 'Esta es la pantalla de inicio',
-		            	                 position: 'e'
-		            	                 ,expose: true
-		                	         },
-		                    	     { 
-		                        	     sel : $('.fa-user.fa-2x'),
-		                            	 content : $('#children_desc').val(),
-		                        	     position: 'e'
-		                        	     ,expose: true
-		                         	 },
-		                         	{ 
-		                            	sel : $('.fa-users.fa-2x'),
-		                             	content : $('#groups_desc').val(),
-		                             	position: 'e'
-		                         	},
-		                         	{ 
-		                                sel : $('.fa-compass.fa-2x'),
-		                             	content : 'Listado de rutas creadas por los usuarios para definir los caminos al cole',
-		                             	position: 'e'
-		                         	},
-		                         	{ 
-		                            	sel : $('.fa-user.fa-2x'),
-		                             	content : 'Echemos un vistazo a la pantalla de niños',
-		                             	position: 'e',
-		                             	callback: function(){ 
-		                             		localStorage.setItem('tutorial','child');
-		                            	 	var url = $('#child_ref').val();    
-		                            	 	window.location.replace(url);
-		                                 }
-		                         	}
-		  	            	   	],
-		  	            	   	options);
-					trip.start();
-					break;
-		 case 'groups':
-	   		  trip = new Trip([
-	   	                         { 
-	   	                             sel : $('.fa-users.fa-2x'),
-	   	                             content : 'Echemos un vistazo a la pantalla de grupos',
-	   	                             position: 'e',
-	   	                             callback: function(){ 
-	   	                            		localStorage.setItem('tutorial','groups');
-	   	                            	 	var url = $('#group_ref').val();    
-	   	                            	 	//console.log(url);
-	   	                            	 	window.location.replace(url);
-	   	                                 }
-	   	                         }
+                             ],
+                             options);
+                     trip.start();
+                     break;
 
-	   	                      	 ],
-	   	                      	 options);
-	   				trip.start();
-	   				break;
-		 case 'routes':
-	  		  trip = new Trip([
-	  	                         { 
-	  	                             sel : $('.fa-compass.fa-2x'),
-	  	                             content : 'Echemos un vistazo a la pantalla de rutas',
-	  	                             position: 'e',
-	  	                             callback: function(){ 
-	  	                            		localStorage.setItem('tutorial','routes');
-	  	                            	 	var url = $('#route_ref').val();    
-	  	                            	 	//console.log(url);
-	  	                            	 	window.location.replace(url);
-	  	                                 }
-	  	                         }
-	  	                      	],
-	  	                      	options);
-	  				trip.start();
-	  				break;
-		 case 'last':
-	   		  trip = new Trip([
-	      	                     { 
-	        	                     	 sel : $('b'),
-	        	                         content : 'Aqui termina nuestro paseo por Trazeo, disfruta de la aplicación',
-	        	                         position: 'e'
-	        	                     }
-	                       		],
-	                       		options);
-	 			trip.start();
-	 			break;	
+                 case 'child':
+                     trip = new Trip([
+                                 {
+                                     sel : $('#new_child'),
+                                     content : 'Aqui podemos añadir niños a trazeo',
+                                     position: 'n'
+                                     ,expose: true
+                                 },
+                                 {
+                                     sel : $('#new_group'),
+                                     content : 'Aqui podemos crear nuevos grupos',
+                                     position: 'n'
+                                     ,expose: true
+                                 },
+                                 {
+                                     sel : $('.fa-home.fa-2x'),
+                                     content : 'Esta es la pantalla de inicio',
+                                     position: 'e'
+                                     ,expose: true
+                                 },
+                                 {
+                                     sel : $('.fa-user.fa-2x'),
+                                     content : $('#children_desc').val(),
+                                     position: 'e'
+                                     ,expose: true
+                                 },
+                                 {
+                                     sel : $('.fa-users.fa-2x'),
+                                     content : $('#groups_desc').val(),
+                                     position: 'e'
+                                 },
+                                 {
+                                     sel : $('.fa-compass.fa-2x'),
+                                     content : 'Listado de rutas creadas por los usuarios para definir los caminos al cole',
+                                     position: 'e'
+                                 },
+                                 {
+                                     sel : $('.fa-user.fa-2x'),
+                                     content : 'Echemos un vistazo a la pantalla de niños',
+                                     position: 'e',
+                                     callback: function(){
+                                         localStorage.setItem('tutorial','child');
+                                         var url = $('#child_ref').val();
+                                         window.location.replace(url);
+                                     }
+                                 }
+                             ],
+                             options);
+                     trip.start();
+                     break;
+                 case 'groups':
+                     trip = new Trip([
+                                 {
+                                     sel : $('.fa-users.fa-2x'),
+                                     content : 'Echemos un vistazo a la pantalla de grupos',
+                                     position: 'e',
+                                     callback: function(){
+                                         localStorage.setItem('tutorial','groups');
+                                         var url = $('#group_ref').val();
+                                         //console.log(url);
+                                         window.location.replace(url);
+                                     }
+                                 }
+
+                             ],
+                             options);
+                     trip.start();
+                     break;
+                 case 'last':
+                     trip = new Trip([
+                                 {
+                                     sel : $('b'),
+                                     content : 'Aqui termina nuestro paseo por Trazeo, disfruta de la aplicación',
+                                     position: 'e'
+                                 }
+                             ],
+                             options);
+                     trip.start();
+                     break;
 		 }}
 
 		var tutorialExtendido=function(){
@@ -250,8 +202,12 @@
 			trip.settings.onTripEnd=function(){};			
 			tutorial();
 		}
-
- 		tutorial();
+        var modalClose=function(){
+            $('#app').modal('hide');
+            tutorial();
+        }
+        document.getElementById('app_btn_close').onclick=modalClose;
+        document.getElementById('app_smallbtn_close').onclick=modalClose;
 
   		 
 	</script>		

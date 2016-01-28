@@ -1,12 +1,13 @@
 <?php
 namespace Trazeo\BaseBundle\Admin;
- 
+
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
 use Sonata\AdminBundle\Form\FormMapper;
- 
+use Sonata\AdminBundle\Show\ShowMapper;
+
 class UserExtendAdmin extends Admin
 {
   protected $translationDomain = 'TrazeoBaseBundleAdmin';
@@ -36,7 +37,7 @@ class UserExtendAdmin extends Admin
     ;
 
   }
- 
+
   protected function configureDatagridFilters(DatagridMapper $datagridMapper)
   {
     $datagridMapper
@@ -59,9 +60,10 @@ class UserExtendAdmin extends Admin
         ->add('points')
         ->add('spendedPoints')
         ->add('mobile')
+        ->add('city.nameUtf8')
     ;
   }
- 
+
   protected function configureListFields(ListMapper $listMapper)
   {
     $listMapper
@@ -85,16 +87,28 @@ class UserExtendAdmin extends Admin
         ->add('points')
         ->add('spendedPoints')
         ->add('mobile')
+        ->add('city.nameUtf8')
+        ->add('_action', 'actions', array(
+            'actions' => array(
+                'show' => array(),
+                'edit' => array(),
+                'delete' => array(),
+            )
+        ))
     ;
   }
- 
-  public function validate(ErrorElement $errorElement, $object)
-  {
-    /*$errorElement
-      ->with('text')
-      ->assertMaxLength(array('limit' => 3))
-      ->end()
-    ;*/
-  }
+
+    protected function configureShowFields(ShowMapper $showMapper)
+    {
+        // Here we set the fields of the ShowMapper variable, $showMapper (but this can be called anything)
+        $showMapper
+      ->add('nick')
+      ->add('points')
+      ->add('spendedPoints')
+      ->add('mobile')
+      ;
+
+    }
+
 }
 ?>

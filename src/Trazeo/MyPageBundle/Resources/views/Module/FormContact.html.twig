@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-10 col-lg-offset-1">
+            {% if (module.class.getContentByPart(module,0) is not null) %}
+                <h2 class="text-center">{{ module.class.getContentByPart(module,0) }}</h2>
+            {% endif %}
+            {% if (module.class.getContentByPart(module,1) is not null) %}
+                <p class="text-center">{{ module.class.getContentByPart(module,1) }}</p>
+            {% endif %}
+            <hr class="small">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <form method="POST" action="{{ path('executeAction', {'module': module.id}) }}" validate>
+                        {% form_theme vars 'TrazeoMyPageBundle:Form:bootstrap.12.html.twig' %}
+                        {{ form_widget(vars) }}
+                        <input type="submit" class="btn btn-button btn-primary"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

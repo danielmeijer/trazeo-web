@@ -1,0 +1,95 @@
+<!--START Sugestions script-->
+<script type="text/javascript">
+	/*
+	 * @parameter: A list of Sugestions
+	 * @description: Show a list of Sugestions in order
+	 */
+	var showSugestions=function(sugestions){
+		if(!sugestions.length)_showSugestion(sugestions);
+		else{
+			for(var i=0;i<sugestions.length;i++)if(sugestions[i+1])sugestions[i].next=sugestions[i+1];
+			_showSugestion(sugestions[0]);
+		}
+	}		       	                  	
+	/*
+	 * @parameter: A Sugestion with or without next parameter
+	 * @description: Show a Sugestion and queued his next
+	 */
+	var _showSugestion=function(sugestion){
+		if(!sugestion.element && !sugestion.text){
+			console.log('text and element selector are needed: '+sugestion);
+			return false;
+		}
+		var currentSugestion=new Sugestion(sugestion);
+
+		trip = new Trip(	[
+		                	 { 
+		                		 sel : currentSugestion.element
+		                		 ,delay: currentSugestion.delay
+		                		 ,content : currentSugestion.content
+		                		 ,position: currentSugestion.position
+		                	 }
+		                	 ],
+		                	 {//options
+								closeBoxLabel: "<i class='fa fa-times' style='color:#DDD !important'></i>"
+								,showCloseBox : currentSugestion.close
+								,skipUndefinedTrip: true
+								,tripTheme: currentSugestion.style
+								,onTripEnd: function(){
+									if(this.next)_showSugestion(this.next);
+								}.bind(currentSugestion)
+		                	 }	
+
+		);
+		trip.start();
+	}
+
+	/*
+	 * @description: Constructor of class sugestion
+	 * @parameter: a list of args
+	 * 			args:
+	 * 				element: css selector of the element
+	 * 				text: the content of the sugestion 
+	 * 				delay: time on ms before next sugestion -optional
+	 * 				positon: string with the position in the next format n,s,e,w -optional
+	 * 				next: the next sugestion if exist -optional
+	 * 
+	 */
+	var Sugestion= function(args){
+		this.element=args.element;
+		this.content=args.text;
+		this.delay=args.delay || 6000;
+		this.position=args.position || 'n';
+		this.style=args.style || 'black';
+        this.close=args.close!=false;
+		if(args.next)this.next=args.next;
+	}
+</script>
+{# {% for sug in suggestions %}
+TODO: Por ahora solo se muestra una sugerencía, para más habra que cambiar esta parte, y usar el método showSugestions 
+ #}
+{% if suggestion is defined and suggestion is not empty %}
+<script>
+	var suggest={
+		text: "{{ suggestion.text }}"
+		,element: "{{ suggestion.element }}"
+		,position: "{{ suggestion.position }}"
+		,delay: "{{ suggestion.delay }}"
+		,style: "{{suggestion.style}}"
+	};
+	_showSugestion(suggest);
+</script>
+{% endif %}
+{# {% endfor %} #}
+<script>
+    $(".ui-suggestion").hover(
+        function(){
+            var suggestion=({element:'#'+this.id,text:$(this).data('suggestion'),position:$(this).data('placement'),style:$(this).data('theme'),close:false,delay:-1});
+            _showSugestion(suggestion);
+        },
+        function(){
+            trip.stop();
+        }
+    );
+</script>
+<!--END Sugestions script-->

@@ -3,6 +3,6 @@
 	//Analytics invite group button 	
 	$(".group-join").click(function (event){
 		var group_id=$(event.currentTarget).attr('group.name');
-		analytics.track('click.groups.join',{group: group_id}); 
+		analytics.track('click.groups.join',{group: group_id,device: isMobile.any()}); 
 	});	
 </script>

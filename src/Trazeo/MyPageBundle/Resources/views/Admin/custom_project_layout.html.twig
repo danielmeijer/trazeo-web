@@ -1,0 +1,75 @@
+{% extends 'SonataAdminBundle::standard_layout.html.twig' %}
+
+{% block sonata_breadcrumb %}
+    <div class="hidden-xs">
+        {% if _breadcrumb is not empty or action is defined %}
+            <ol class="nav navbar-top-links breadcrumb">
+                {% if _breadcrumb is empty %}
+                    {% if action is defined %}
+                        {% for menu in admin.breadcrumbs(action) %}
+                            {% if not loop.last  %}
+                                <li>
+                                    {% if menu.uri is not empty %}
+                                        {% if menu.label == "breadcrumb.link_dashboard" %}
+                                            <a href="{{ menu.uri }}">Panel de Control</a>
+                                        {% else %}
+                                            <a href="{{ menu.uri }}">{{ menu.label|raw }}</a>
+                                        {% endif %}
+                                    {% else %}
+                                        {{ menu.label }}
+                                    {% endif %}
+                                </li>
+                            {% else %}
+                                <li class="active"><span>{{ menu.label }}</span></li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% else %}
+                    {{ _breadcrumb|raw }}
+                {% endif %}
+            </ol>
+        {% endif %}
+    </div>
+{% endblock sonata_breadcrumb %}
+
+{% block side_bar_after_nav %}
+    <ul class="sidebar-menu">
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-user"></i>
+                <span>{{ "customAdmin.stats.menu.title"|trans }}</span>
+                <i class="fa pull-right fa-angle-left"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+                    <a href="{{ path('stats_evolution') }}">
+                        <i class="fa fa-angle-double-right"></i> {{ "customAdmin.stats.evolution.title"|trans }}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('stats_registered') }}">
+                        <i class="fa fa-angle-double-right"></i> {{ "customAdmin.stats.registered.title"|trans }}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('stats_bar') }}">
+                        <i class="fa fa-angle-double-right"></i> {{ "customAdmin.stats.bar.title"|trans }}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('stats_global') }}">
+                        <i class="fa fa-angle-double-right"></i> {{ "customAdmin.stats.global.title"|trans }}
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    {# TODO: Aquí entran cosas #}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

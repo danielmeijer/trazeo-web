@@ -1,0 +1,32 @@
+services:
+    trazeo_mypage.admin.page:
+        class: Trazeo\MyPageBundle\Admin\PageAdmin
+        arguments: [~, Trazeo\MyPageBundle\Entity\Page, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Page}
+    trazeo_mypage.admin.menu:
+        class: Trazeo\MyPageBundle\Admin\MenuAdmin
+        arguments: [~, Trazeo\MyPageBundle\Entity\Menu, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Menu}
+    trazeo_mypage.admin.module:
+        class: Trazeo\MyPageBundle\Admin\ModuleAdmin
+        arguments: [~, Trazeo\MyPageBundle\Entity\Module, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Module}
+
+    trazeo_mypage.form.type.DateRangePickerType:
+        class: Trazeo\MyPageBundle\Form\DateRangePickerType
+        tags:
+            - { name: form.type, alias: DateRangePicker }
+
+    trazeo_mypage.form.type.DatePickerType:
+        class: Trazeo\MyPageBundle\Form\DatePickerType
+        tags:
+            - { name: form.type, alias: DatePicker }
+
+    trazeo.twig.base_extension:
+        class: Trazeo\MyPageBundle\Twig\BaseExtension
+        arguments: ['@service_container']
+        tags:
+            - { name: twig.extension }

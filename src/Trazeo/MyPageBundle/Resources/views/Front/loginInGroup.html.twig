@@ -1,0 +1,40 @@
+{% extends "SopinetTemplateSbadmin2Bundle:Login:layout.html.twig" %}
+
+{% block title %}
+    Acceso a {{ group.route.name }}
+{% endblock %}
+
+{% block header %}
+    Acceso a {{ group.route.name }}
+{% endblock %}
+
+{% block fos_user_content %}
+    <p>Rellene sus datos de acceso.</p>
+    <form method="POST" action="{{ path('loginSaveInGroup', {'group_id': group.id}) }}">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <input type="text" id="email" name="email" placeholder="Correo electrónico" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <input type="password" id="password" name="password" placeholder="Contraseña" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-lg btn-success btn-block" type="submit">Acceder</button>
+    </form>
+    <div class="panel-footer">
+        <a class="btn-lg btn-success btn-register btn-block" href="{{ path('registerInGroup', {'group_id': group.id}) }}">¿No tienes cuenta?</a>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    {% include 'SopinetTemplateSbadmin2Bundle:Login:_register_analytics.html.twig' %}
+    {% include 'SopinetTemplateSbadmin2Bundle:Login:_user_same.html.twig' %}
+    {% include 'SopinetFlashMessagesBundle:Messages:notification.html.twig' %}
+{% endblock %}

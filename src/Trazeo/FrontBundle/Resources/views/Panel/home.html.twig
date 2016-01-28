@@ -57,15 +57,6 @@
 	</div>
 	<hr/>
     <!-- END User Points -->
-	<!-- START resumeRoutes -->
-	<div class="row">
-		{% include 'TrazeoFrontBundle:PanelRoutes:_customRoutesPanel.html.twig' with {
-			'routes': routes
-		} %}
-	</div>
-	<hr/>
-	<!-- END resumeRoutes -->
-		
 	<!-- START resumeChilds -->	
 	<div class="row">
 		{% include 'TrazeoFrontBundle:PanelChildren:_customChildrenPanel.html.twig' with {
@@ -74,6 +65,20 @@
 	</div>
 	<hr/>
 	<!-- END resumeChilds -->
+    {% if tutorial == 1 %}
+        {%include 'SopinetTemplateSbadmin2Bundle:Elements/Basics:modal.html.twig' with{
+            modal: {
+            name: 'app',
+            title: "Home.modal.app.title"|trans,
+            close: "Home.modal.app.close"|trans,
+            body_template:'TrazeoFrontBundle:Panel:_app_body.html.twig',
+            body_parameters: {
+                link: "https://play.google.com/store/apps/details?id=com.sopinet.trazeo.app"
+            },
+            popup: 300
+        }
+    } %}
+    {% endif %}
 {% endblock %}
 
 {% block js %}

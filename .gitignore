@@ -10,13 +10,12 @@ bin/*
 vendor/*
 web/bundles/*
 web/css/*
-web/js/*
+web/js/
 web/uploads/*
 web/include/*
 scripts/composerSergio.sh
 # -- Composer -----------------------------------------
 composer.phar
-composer.lock
 
 # -- PHPUnit ------------------------------------------
 app/phpunit.xml  

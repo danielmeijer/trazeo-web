@@ -1,0 +1,5 @@
+\Sopinet\Bundle\ChatBundle\Model\UserChat:
+  exclusion_policy: NONE
+  properties:
+    messages:
+      exclude: true

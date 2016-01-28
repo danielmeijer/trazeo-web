@@ -1,0 +1,14 @@
+{
+	"name" : "GCMBundle",
+	"description" : "Bundle for GCMIntegration",
+	"autoload" : {
+		"psr-0" : {
+			"" : "src/"
+		}
+	},
+    "require" : {
+      "nelmio/api-doc-bundle": "dev-master",
+      "richsage/rms-push-notifications-bundle": "dev-master"
+
+    }
+}

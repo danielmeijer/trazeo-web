@@ -49,6 +49,11 @@
 				<td>{{ cont }} {{"Route.show.signed"|trans}}</td>
 			</tr>	
 			<tr>
+				<td><i class="fa fa-users"></i></td>
+				<td>{{"Route.show.group"|trans}}</td>
+				<td>{{ route.group }}</td>
+			</tr>
+			<tr>
 				<td><i class="fa fa-key"></i></td>
 				<td>{{"Route.show.creator"|trans}}</td>
 				<td>{{ route.admin }}</td>
@@ -57,7 +62,12 @@
 	</table>
 </div>
 
-		<h3 class="alert alert-success"><i class="fa fa-map-marker"></i>&nbsp; {{"Route.show.map"|trans}}</h3>
+		<h3 class="alert alert-success">
+			<i class="fa fa-map-marker"></i>&nbsp; {{"Route.show.map"|trans}}
+			{% if route.admin.id==user.id %}
+			<a href="{{ path('panel_route_edit',{ 'id': route.id }) }}" class="pull-right"> <i class="fa fa-pencil"></i>&nbsp; {{"Route.show.edit"|trans}}</a>
+			{% endif %}
+		</h3>
 
 		<form method="post" action={{ path('panel_save_map') }} id="form">
 			<div id="mapa" class="col-md-12"></div>
@@ -66,46 +76,16 @@
 			<input type="hidden" id="distanceInput" name="distanceInput" value="" />
 			<input type="hidden" id="cityInput" name="cityInput" value="" />
 			<p>&nbsp;</p>
-			<button class="btn btn-default" id="comenzar" type="button">&nbsp; {{"Route.show.buttons.start"|trans}}</button>
-			<button class="btn btn-default" id="deshacer" type="button"><i class="fa fa-undo"></i>&nbsp; {{"Route.show.buttons.undo"|trans}}</button>
+            {% if kml %}
+                <button class="btn btn-default" id="fileButton" type="button"><i class="fa fa-upload"></i>&nbsp; Cargar Kml</button>
+                <input id="selectFile" type="file" name="" style="display: none;" accept=".kml">
+            {% else %}
+                <button class="btn btn-default" id="comenzar" type="button">&nbsp; {{"Route.show.buttons.start"|trans}}</button>
+                <button class="btn btn-default" id="deshacer" type="button"><i class="fa fa-undo"></i>&nbsp; {{"Route.show.buttons.undo"|trans}}</button>
+            {% endif %}
 			<button class="btn btn-success" type="submit" id="enviar" disabled="disabled"><i class="fa fa-save"></i>&nbsp; {{"Route.show.buttons.save"|trans}}</button>
 		</form>
 	<br />
-		<div class="row">
-			<h3 class="alert alert-success"><i class="fa fa-users"></i>&nbsp; {{"Route.show.groups"|trans}}
-			</span>
-				<a href="{{ path('panel_group_new') }}" class="label label-success pull-right">
-					<i class="fa fa-plus-circle"></i>&nbsp; {{"Route.show.create"|trans}}
-				</a>
-			</h3>
-			{% if route.groups | length > 0 %}	
-			        <table class="table alert-warning col-md-12">
-			        	<tbody>
-			        	{% for group in route.groups %}
-							<tr>
-								<td>#</td>
-								<td id="group{{ group.id }}"> {{ group.name }}</td>
-							</tr>
-							{% for usergroup in user.groups %}
-								{% if group == usergroup %}
-								<script>
-									var group=document.getElementById("group"+'{{ group.id }}');
-									group.onclick=function(){
-										window.location.href="{{ path('panel_group_timeline',{'id': group.id}) }}";
-									}
-									group.className='btn btn-link';
-								</script>	
-								{% endif %}								
-							{% endfor %}
-						{% endfor %}
-			        	</tbody>
-			        </table>
-			{% else %}
-				<p class="alert alert-warning col-md-6">
-				<i class="fa fa-warning"></i>&nbsp;		
-				{{"Route.show.unasigned"|trans}}</p>	
-			{% endif %}
-		</div>
 		<br />
 {% endblock %}
 
@@ -128,9 +108,9 @@
 	{% endjavascripts %}
 	{% include 'TrazeoFrontBundle:PanelRoutes:_tutorialMap.html.twig' %}
 		{% if route.admin.id==user.id %}
-			{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': route.points,'editable': "true", 'realTime': "false", 'rideEvents': ''} %}
+			{% include 'SopinetOpenMapBundle:Map:kml.html.twig' with {'routePoints': route.points,'editable': "true", 'realTime': "false", 'rideEvents': ''} %}
 		{% else %}
-			{% include 'SopinetOpenMapBundle:Map:configuration.html.twig' with {'routePoints': route.points,'editable': "false", 'realTime': "false", 'rideEvents': ''} %}
+			{% include 'SopinetOpenMapBundle:Map:kml.html.twig' with {'routePoints': route.points,'editable': "false", 'realTime': "false", 'rideEvents': ''} %}
 		{% endif %}
 		
 {% endblock %}

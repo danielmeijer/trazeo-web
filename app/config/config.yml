@@ -2,7 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: "../../vendor/sopinet/userbundle/Sopinet/UserBundle/Resources/config/config.yml" }
-    - { resource: ../../vendor/knplabs/doctrine-behaviors/config/orm-services.yml }    
+    - { resource: ../../vendor/knplabs/doctrine-behaviors/config/orm-services.yml }
 
 parameters:
     #sopinet_user_facebook_id: "202407359917838"
@@ -41,15 +41,18 @@ twig:
     globals:
         fos_csrf_provider: "@form.csrf_provider"
         base_url: %base_url%
+        exchange_code: %exchange_code%
     form:
         resources:
-            - 'SopinetTemplateSbadmin2Bundle:Form:bootstrap.html.twig'  
+            - 'SopinetTemplateSbadmin2Bundle:Form:bootstrap.html.twig'
+            - 'SonataCoreBundle:Form:datepicker.html.twig'
+            - 'TrazeoFrontBundle:Form:data_list.html.twig'
 
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ FOSCommentBundle, SopinetTemplateSbadmin2Bundle, TrazeoFrontBundle, SopinetTemplateLandingBundle,SopinetTemplateAmoebaBundle, JMSTranslationBundle, FOSUserBundle, SopinetFlashMessagesBundle, SopinetTimelineBundle ]
+    bundles:        [ FOSCommentBundle, SopinetTemplateSbadmin2Bundle, TrazeoFrontBundle, SopinetTemplateLandingBundle,SopinetTemplateAmoebaBundle, JMSTranslationBundle, FOSUserBundle, SopinetFlashMessagesBundle, SopinetTimelineBundle, SopinetSuggestionBundle, SopinetUploadMagicBundle, TrazeoMyPageBundle, SonataAdminBundle]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -85,6 +88,10 @@ doctrine:
                 point_str: Sopinet\Bundle\SimplePointBundle\ORM\MySQL\PointStr
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
+        filters:
+            page-filter:
+                class: Trazeo\MyPageBundle\Filter\PageFilter
+                enabled: true
         
 #KNP_menu
 knp_menu:
@@ -103,14 +110,18 @@ swiftmailer:
         path:                 "%kernel.cache_dir%/swiftmailer/spool"
 
 # FOSUserBundle Configuration
-
 fos_user:
     db_driver: orm
     firewall_name: main
     user_class: Application\Sonata\UserBundle\Entity\User
     group:
           group_class: Trazeo\BaseBundle\Entity\Group
-          
+    registration:
+        form:
+            type: trazeo_user_registration
+            name: trazeo_user_registration_form
+            validation_groups:  [Registration, Default]
+
 # Sonata User
 sonata_user:
     admin:
@@ -129,23 +140,40 @@ sonata_admin:
         list:    SonataAdminBundle:CRUD:list.html.twig
         show:    SonataAdminBundle:CRUD:show.html.twig
         edit:    SonataAdminBundle:CRUD:edit.html.twig
-        
     dashboard:
         blocks:
             - { position: left,  type: sonata.admin.block.admin_list, settings: { groups: [admin] } }
 
-# Sonata 
-
-sonata_block:
-    default_contexts: [cms]
-    blocks:
-        sonata.user.block.menu:
-        sonata.admin.block.admin_list:
-            contexts:   [admin]
-        sonata.block.service.text:
-        sonata.block.service.action:
-        sonata.block.service.rss:
-        sonata.block.service.tableinput:
+sonata_doctrine_orm_admin:
+    templates:
+        types:
+            list:
+                array:      SonataAdminBundle:CRUD:list_array.html.twig
+                boolean:    SonataAdminBundle:CRUD:list_boolean.html.twig
+                date:       SonataAdminBundle:CRUD:list_date.html.twig
+                time:       SonataAdminBundle:CRUD:list_time.html.twig
+                datetime:   SonataAdminBundle:CRUD:list_datetime.html.twig
+                text:       SonataAdminBundle:CRUD:base_list_field.html.twig
+                trans:      SonataAdminBundle:CRUD:list_trans.html.twig
+                string:     SonataAdminBundle:CRUD:base_list_field.html.twig
+                smallint:   SonataAdminBundle:CRUD:base_list_field.html.twig
+                bigint:     SonataAdminBundle:CRUD:base_list_field.html.twig
+                integer:    SonataAdminBundle:CRUD:base_list_field.html.twig
+                decimal:    SonataAdminBundle:CRUD:base_list_field.html.twig
+                identifier: SonataAdminBundle:CRUD:base_list_field.html.twig
+            show:
+                array:      SonataAdminBundle:CRUD:show_array.html.twig
+                boolean:    SonataAdminBundle:CRUD:show_boolean.html.twig
+                date:       SonataAdminBundle:CRUD:show_date.html.twig
+                time:       SonataAdminBundle:CRUD:show_time.html.twig
+                datetime:   SonataAdminBundle:CRUD:show_datetime.html.twig
+                text:       SonataAdminBundle:CRUD:base_show_field.html.twig
+                trans:      SonataAdminBundle:CRUD:show_trans.html.twig
+                string:     SonataAdminBundle:CRUD:base_show_field.html.twig
+                smallint:   SonataAdminBundle:CRUD:base_show_field.html.twig
+                bigint:     SonataAdminBundle:CRUD:base_show_field.html.twig
+                integer:    SonataAdminBundle:CRUD:base_show_field.html.twig
+                decimal:    SonataAdminBundle:CRUD:base_show_field.html.twig
         
 services:
     #apikey_authenticator:
@@ -165,13 +193,17 @@ services:
         class: Trazeo\BaseBundle\Listener\UpdatedListener
         arguments: ['@service_container']
         tags:
-            - { name: doctrine.event_subscriber }     
+            - { name: doctrine.event_subscriber }
     sopinet_flashMessages:
         class:        Sopinet\FlashMessagesBundle\Service\FlashNotifier
         arguments:
             entityManager: @doctrine.orm.entity_manager
             container: @service_container
-              
+    sopinet.uploadlistener:
+        class: Sopinet\Bundle\UploadMagicBundle\Listener\UploadListener
+        arguments: ['@doctrine']
+        tags:
+            - { name: kernel.event_listener, event: oneup_uploader.post_persist, method: onUpload }
 jms_translation:
     configs:
         app:
@@ -211,5 +243,90 @@ lunetics_locale:
     cookie:
        set_on_change: true
        
-       
-         
+sopinet_gamification:
+    class: 'TrazeoBaseBundle:UserExtend'      
+    api: 'CiviClub'
+sopinet_suggestion: ~
+
+sopinet_autologin:
+    domain: http://localhost/trazeo-web/web/app_dev.php/
+
+hip_mandrill:
+    api_key: sG8TY_s5xMA6wOvc9gLMmg
+    disable_delivery: false # useful for dev/test environment. Default value is 'false'
+    default:
+        sender: hola@trazeo.es
+        sender_name: Trazeo
+oneup_uploader:
+    mappings:
+        gallery:
+            frontend: dropzone
+
+security:
+    firewalls:
+        main:
+            pattern:    ^/
+            anonymous: true
+            logout: true
+            form_login:
+                provider: fos_userbundle
+                login_path: /login
+                use_forward: false
+                check_path: /login_check
+                success_handler: %sopinet_user_sucess%
+                csrf_provider: form.csrf_provider
+                failure_path: null
+            oauth:
+                resource_owners:
+                    facebook: "/login/check-facebook"
+                    google: "/login/check-google"
+                login_path: /login
+                default_target_path: /panel
+                failure_path: /login
+                oauth_user_provider:
+                    service: sopinet_user_provider
+            switch_user: true
+
+nelmio_api_doc: ~
+
+jms_serializer:
+  metadata:
+    auto_detection: true
+    directories:
+      SopinetChatBundle:
+        namespace_prefix: "Sopinet\\Bundle\\ChatBundle"
+        path: "@SopinetChatBundle/Resources/config/serializer"
+
+rms_push_notifications:
+    android:
+        gcm:
+            api_key: %gcm_api_key%
+
+# RabbitMQBundle
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host:     'localhost'
+            port:     5672
+            user:     'guest'
+            password: 'guest'
+            vhost:    '/'
+            lazy:     false
+            connection_timeout: 3
+            read_write_timeout: 3
+
+            # requires php-amqplib v2.4.1+ and PHP5.4+
+            keepalive: false
+
+            # requires php-amqplib v2.4.1+
+            heartbeat: 0
+    producers:
+        send_trazeo:
+            connection:       default
+            exchange_options: {name: 'send_trazeo', type: direct}
+    consumers:
+        send_trazeo:
+            connection:       default
+            exchange_options: {name: 'send_trazeo', type: direct}
+            queue_options:    {name: 'send_trazeo'}
+            callback:         send_trazeo
