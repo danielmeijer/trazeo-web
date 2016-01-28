@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://work.sopinet.es/" />
+<title>GetChat</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">GetChat</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>${CurrentEnviroment}/petycash/web/app_dev.php/api/doc/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//li[@id='post--api-chat-get.{_format}']/div/h3/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//li[@id='post--api-chat-get.{_format}']/div[2]/ul/li[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//li[@id='post--api-chat-get.{_format}']/div[2]/div/div[2]/form/fieldset[3]/textarea</td>
+	<td>email=ihariza@gmail.com&amp;password=3f71916d46f94f5ee51bcee817ad8fae&amp;chatid=120</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@value='Try!'])[24]</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
