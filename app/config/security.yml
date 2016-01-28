@@ -14,7 +14,7 @@ security:
         ROLE_ADMIN:       [ROLE_USER, ROLE_SONATA_ADMIN, ROLE_CATALOG]
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
         ROLE_TRANS:       ROLE_TRANS
-        ROLE_CATALOG:  ROLE_CATALOG
+        ROLE_CATALOG:     ROLE_CATALOG
 
     providers:
         #webservice:

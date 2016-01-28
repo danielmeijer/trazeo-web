@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://work.sopinet.es/" />
+<title>TransferNormal</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">TransferNormal</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>${CurrentEnviroment}/petycash/web/app_dev.php/api/doc/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//li[@id='post--api-coin-transferNormal.{_format}']/div/h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//li[@id='post--api-coin-transferNormal.{_format}']/div[2]/ul/li[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//li[@id='post--api-coin-transferNormal.{_format}']/div[2]/div/div[2]/form/fieldset[3]/textarea</td>
+	<td>amount=2.5&amp;email=ihariza@gmail.com&amp;password=3f71916d46f94f5ee51bcee817ad8fae&amp;from=APA91bHu0SfP--_10VkdyUtTn2BrrZC4ADzr9oV1IjhIvXC6TPtJkn3nUK2MJ-YWahAbV-mqzbV6rBSF5ideLvgACzcCHHfd-CdfT6ssxgQM5diy6uTcMaMLYSabkpD7OyP49D-_M2xFYsei3bqZ_DY4lVPu-BfSKw&amp;msgid=3279061744484357226&amp;time=1430376369423&amp;chatid=120</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@value='Try!'])[37]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='post--api-coin-transferNormal.{_format}']/div[2]/div/div[2]/div/pre[3]/span[12]</td>
+	<td>&quot;Ok&quot;</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

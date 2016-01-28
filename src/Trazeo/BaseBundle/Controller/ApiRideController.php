@@ -282,6 +282,13 @@ class ApiRideController extends Controller {
             }
 
         }
+        else {
+            $view = View::create()
+                ->setStatusCode(200)
+                ->setData("No perteneces al grupo");
+
+            return $this->get('fos_rest.view_handler')->handle($view);
+        }
 
     }
 
