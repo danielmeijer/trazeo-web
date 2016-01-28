@@ -477,6 +477,7 @@ class ApiGroupController extends Controller
                 }
                 $arrayGroups['visibility'] = $group->getVisibility();
                 $arrayGroups['hasride'] = $group->getHasRide();
+                $arrayGroups['school'] = $group->getSchool1();
                 if (in_array($group, $admingroups)) {
                     $arrayGroups['admin'] = true;
                 } else {
