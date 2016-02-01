@@ -206,7 +206,7 @@ function initMap(mapConfig) {
         var points = [];
         var colors=['green','red','blue'];
         var j=0;
-        for (; i < waypoints.length; i++) {
+        for (var i=0; i < waypoints.length; i++) {
             points.push(waypoints[i].latLng);
             if (waypoints[i].pickup) {
                 var marker = new L.Marker(waypoints[i].latLng);

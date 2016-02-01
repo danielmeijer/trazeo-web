@@ -1,0 +1,5 @@
+{% set content = module.contentArray %}
+{% set width = 95/(module.contentArray|length) %}
+{% for image in content %}
+    <img width="{{ width }}%" src="{{ image }}"/>
+{% endfor %}

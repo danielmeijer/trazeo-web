@@ -78,11 +78,25 @@
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
+    {% if kml %}
+        <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
+        <script src='{{ asset('js/kmlMap.js') }}'></script>
+    {% endif %}
     {% for group in groups %}
-        <script>
-            $("#full-width-{{ group.id }}").on('shown', function(){
-                {% include 'SopinetOpenMapBundle:Map:openmap.html.twig' with {'id_map': 'map-'~group.id, 'routePoints': group.route.points,'editable': "false", 'realTime': "false", 'rideEvents': ''}|e('js') %}
-            });
-        </script>
+        {% if group.route != null %}
+            {% if not kml %}
+            <script>
+                $("#full-width-{{ group.id }}").on('shown', function(){
+                    {% include 'SopinetOpenMapBundle:Map:openmap.html.twig' with {'id_map': 'map-'~group.id, 'routePoints': group.route.points,'editable': "false", 'realTime': "false", 'rideEvents': ''}|e('js') %}
+                });
+            </script>
+            {% else %}
+                <script>
+                    $("#full-width-{{ group.id }}").on('shown', function(){
+                        {% include 'SopinetOpenMapBundle:Map:kml_plain.html.twig' with {'id_map': 'map-'~group.id, 'routePoints': group.route.points,'editable': "false", 'realTime': "false", 'rideEvents': ''}|e('js') %}
+                    });
+                </script>
+            {% endif %}
+        {% endif %}
     {% endfor %}
 {% endblock %}

@@ -88,13 +88,16 @@ class FrontController extends Controller
        $page = $repositoryPage->findOneBySubdomain($subdomain);
 
        //$this->isGranted("edit", $page);
-
+       $kml=false;
        /** @var Menu $menu */
        foreach($page->getMenus() as $menu) {
            /** @var Module $module */
            foreach($menu->getModules() as $module) {
                if ($module->getClass()->getClassName() == "TrazeoRoutes") {
                    $groups = $module->getClass()->prepareFront($this, $module);
+               } elseif ($module->getClass()->getClassName() == "TrazeoRoutesSchool") {
+                   $groups = $module->getClass()->prepareFront($this, $module);
+                   $kml=true;
                }
            }
        }
@@ -102,7 +105,8 @@ class FrontController extends Controller
 	   	return array(
             'container' => $this,
             'groups' => $groups,
-            'page' => $page
+            'page' => $page,
+            'kml'=> $kml
 	   	);
 	}
 
