@@ -96,16 +96,7 @@ class Helper {
 
         if ($subdomain == null) {
             $parts=explode('.', $_SERVER["SERVER_NAME"]);
-            $subdomain='';
-            foreach ($parts as $part) {
-                if($part!='trazeo') {
-                    if($subdomain!=null) {
-                        $subdomain .= '.';
-                    }
-                    $subdomain .= $part;
-                }
-            }
-
+            $subdomain = $parts[0];
         }
 
         if ($subdomain == "beta" || $subdomain == "app") {
