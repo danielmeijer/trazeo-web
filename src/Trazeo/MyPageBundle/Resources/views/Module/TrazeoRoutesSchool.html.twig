@@ -3,11 +3,11 @@
         <div class="col-lg-10 col-lg-offset-1">
             <h2>Paseando al cole</h2>
             <hr class="small">
-            {% set size = 12/(group|length) %}
+            {% set size = group|length %}
             <div class="row">
                 {% set i = 0 %}
                 {% for group in vars %}
-                    <div class="col-md-{{ size }} col-sm-{{ size*2 }}">
+                    <div style="-webkit-column-count: {{ size }}; -moz-column-count: {{ size }}; column-count: {{ size }};">
                         <div class="service-item">
                             <span class="fa-stack fa-4x">
                                 <i class="fa fa-circle fa-stack-2x"></i>
