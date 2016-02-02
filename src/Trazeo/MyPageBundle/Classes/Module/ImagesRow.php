@@ -8,7 +8,7 @@ use Trazeo\MyPageBundle\Entity\Module;
 
 class ImagesRow extends ModuleAbstract {
     public function getStyle(Module $module) {
-        return "margin-left: 2.5%";
+        return "padding-left: 2.5%";
     }
 
     public function addFieldsContentAdmin(Form $builder, $container, $module) {
