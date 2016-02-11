@@ -2,17 +2,19 @@
  * Created by hud on 19/01/16.
  */
 function initMap(mapConfig) {
+
     timeFromLastUpdate = 0;
 
     lastId = "0";
+
     if (!mapConfig.editable) {
         $("#comenzar").hide();
         $("#deshacer").hide();
         $("#enviar").hide();
         $("#fileButton").hide();
-    }
-    ;
+    };
 
+    //configuracion mapa leaflet
     var gk, topo, thunderforest, osm, waymarkedtrails;
     var menu = null;
     var last_actions = null
@@ -30,7 +32,7 @@ function initMap(mapConfig) {
         styleId: 22677
     });
 
-// preload image icon
+    // preload image icon
     $('#' + mapConfig.mapContainerId).append("<img id='preload' src=" + mapConfig.iconImagePath + "/marker-icon-start.png>");
     $("#preload").hide();
 
@@ -46,6 +48,7 @@ function initMap(mapConfig) {
         + '(<a target="_blank" href="http://creativecommons.org/licenses/by-sa/3.0/de/deed.en">CC-BY-SA 3.0 DE</a>)'
     });
 
+
     if (mapConfig.points.length > 1) {
         var center = mapConfig.points[0].latLng;
     }
@@ -60,7 +63,7 @@ function initMap(mapConfig) {
     });
 
 
-// Routing Machine plugin info
+    // Routing Machine plugin info
     router = function (m1, m2, cb) {
         var proxy = 'http://www2.turistforeningen.no/routing.php?url=';
         var route = 'http://www.yournavigation.org/api/1.0/gosmore.php&format=geojson&v=foot&fast=1&layer=mapnik';
@@ -76,7 +79,7 @@ function initMap(mapConfig) {
         });
     }
 
-
+    //añadimos el plugin de routing
     routing = new L.Routing({
         position: 'bottomright'
         , routing: {
@@ -103,14 +106,10 @@ function initMap(mapConfig) {
             }
         }
     });
-// Routing plugin methods overrided
-    routing._waypointClickHandler = function (e) {
-        showPopUpMenu(e);
-    }
     map.addControl(routing);
 
 
-// Map GeoCoder Plugin info
+    // Map GeoCoder Plugin info
     var options = {
 
         position: 'topright', /* The position of the control */
@@ -129,14 +128,13 @@ function initMap(mapConfig) {
             this._map.fitBounds(bounds);
         }
     };
-    geocoder = L.Control.Geocoder.nominatim(),
-
-        control = L.Control.geocoder({
-            collapsed: false /* Whether its collapsed or not */
-            , geocoder: geocoder
-            , placeholder: 'Locate'
-            , errorMessage: "Nothing found."
-        });
+    geocoder = L.Control.Geocoder.nominatim();
+    control = L.Control.geocoder({
+        collapsed: false /* Whether its collapsed or not */
+        , geocoder: geocoder
+        , placeholder: 'Locate'
+        , errorMessage: "Nothing found."
+    });
     control.markGeocode = function (result) {
         map.setView(result.center);
     }
@@ -144,8 +142,7 @@ function initMap(mapConfig) {
     routing.draw();
 
 
-// map custom events
-
+    // map custom events
     L.Map.prototype.disableRouting = function () {
         $(".leaflet-marker-icon").css("pointer-events", "none");
         routing.draw(false);
@@ -156,10 +153,7 @@ function initMap(mapConfig) {
         }
         $("#comenzar").on('click', map.enableRouting);
         $("#comenzar").html('<i class="fa fa-flag"></i>&nbsp' + mapConfig.buttonsText.startButton);
-
-
     };
-
     L.Map.prototype.enableRouting = function () {
 
         if (!mapConfig.editable) {
@@ -171,23 +165,17 @@ function initMap(mapConfig) {
         if (menu == null) {
             routing.draw(true);
         }
-
         $("#enviar").attr("disabled", "disabled");
         $("#enviar").css('opacity', '0.7');
         $("#deshacer").on('click', map.removeLast);
         $("#comenzar").on('click', map.disableRouting);
         $("#comenzar").html('<i class="fa fa-flag"></i>&nbsp' + mapConfig.buttonsText.endButton);
-        for (var marker in map._layers)if (map._layers[marker]._icon && map._layers[marker]._icon.className === icon)
-            map._layers[marker].on('contextmenu', showPopUpMenu);
-
 
     };
-
     // data functions
     L.Map.prototype.getWaypoints = function () {
         return routing.getWaypoints();
     };
-
     L.Map.prototype.loadFromEvents = function (events) {
         var i = 0;
 
@@ -200,31 +188,29 @@ function initMap(mapConfig) {
         for (; i < events.length; i++) {
             poly.addLatLng(events[i].latLng);
         }
-    }
+    };
 
     L.Map.prototype.loadFromWaypoints = function (waypoints) {
         var points = [];
         var colors=['green','red','blue'];
         var j=0;
         for (var i=0; i < waypoints.length; i++) {
-            points.push(waypoints[i].latLng);
             if (waypoints[i].pickup) {
                 var marker = new L.Marker(waypoints[i].latLng);
+                marker.feature=true;
                 marker.addTo(map);
-                if(waypoints[i].pickUpText!='Punto inicio'){
-                    poly = new L.polyline(points, {color: colors[j]});
-                    poly.addTo(map);
-                    j++;
-                }
-                points=[waypoints[i].latLng];
+            } else {
+                points.push(waypoints[i].latLng);
             }
-
         }
-    }
+        poly = new L.polyline(points, {color: colors[j]});
+        poly.feature=true;
+        poly.addTo(map);
+    };
 
+    // map save handler function
     $("form").submit(function(){
         // create input
-        var pointList="";
         if(document.getElementById("inputPoints")==null){
             var lat=document.createElement("INPUT");
             lat.id="inputPoints";
@@ -248,24 +234,7 @@ function initMap(mapConfig) {
             kmlInput.type="hidden";
             document.getElementById("form").appendChild(kmlInput);
         }
-        // getting points info from kml
-        for(var i in map._layers){
-            var arrayPoints= [];
-            if(map._layers[i]._latlngs) {
-                var last = map._layers[i]._latlngs.length-1;
-                for (var j in map._layers[i]._latlngs) {
-                    var latlng = map._layers[i]._latlngs[j];
-                    latlng.pickUp = false;
-                    if (j!=0) {
-                        var pick= j ==last ?'1,Punto fin':'0,;';
-                    } else {
-                        var pick='1,Punto inicio;';
-                    }
-                    pointList+=latlng.lat+","+latlng.lng+","+pick;
-                    arrayPoints.push(latlng);
-                }
-            }
-        }
+
         // populate inputs
         if(!$("#cityInput").html()!='Desconocido'){
             $("#cityInput").val($("#start").html());
@@ -276,25 +245,38 @@ function initMap(mapConfig) {
         $("#kmlInput").val(kml);
     });
 
-// methods
+    // methods
     L.Map.prototype.updateRouteInfo=function(e){
         var first=null;
         var last=null;
         // getting points info from kml
-        var arrayPoints=[];
+        arrayPoints=[];
+        pointList="";
+
         for(var i in map._layers){
-            if(map._layers[i]._latlngs) {
-                if(first==null) {
-                    first= map._layers[i]._latlngs[0]
-                }
+            if(map._layers[i] instanceof L.Polyline && map._layers[i].feature) {
                 for (var j in map._layers[i]._latlngs) {
-                    last = map._layers[i]._latlngs[j];
-                    arrayPoints.push(map._layers[i]._latlngs[j]);
+                    var latlng = map._layers[i]._latlngs[j];
+                    arrayPoints.push(latlng);
+                    pointList+=latlng.lat+","+latlng.lng+",0,;";
                 }
             }
+            else if(map._layers[i] instanceof L.Marker && map._layers[i].feature) {
+                var marker = map._layers[i];
+                var pick= '1,Punto Recogida;';
+                if(first==null) {
+                    first= marker._latlng;
+                    pick='1,Punto inicio;';
+                }
+                last = marker._latlng;
+                pointList+=marker._latlng.lat+","+marker._latlng.lng+","+pick;
+                arrayPoints.push(map._layers[i]._latlng);
+            }
         }
+
         var distance=0;
-        if(first){
+
+        if(first) {
             geocoder.reverse(first, map.options.crs.scale(16), function(results) {
                 var r = results[0];
                 var aux=r.name.split(',');
@@ -304,7 +286,8 @@ function initMap(mapConfig) {
             });
             $("#start").html('Desconocido');
         }
-        if(last){
+
+        if(last) {
             geocoder.reverse(last, map.options.crs.scale(16), function(results) {
                 var r = results[0];
                 var aux=r.name.split(',');
@@ -314,10 +297,12 @@ function initMap(mapConfig) {
             });
             $("#finish").html('Desconocido');
         }
-        if(first && last)$("#distance").html(map.getDistance(arrayPoints)+" m");
+
+        if(first && last) {
+            $("#distance").html(map.getDistance(arrayPoints)+" m");
+        }
+
         $(".leaflet-marker-icon").on();
-        for(var marker in map._layers)if(map._layers[marker]._icon && map._layers[marker]._icon.className===icon)
-            map._layers[marker].on('contextmenu',showPopUpMenu);
 
         routing.rerouteAllSegments(function(){});
         // routing._segments.clearLayers();
@@ -384,182 +369,57 @@ function initMap(mapConfig) {
         }
         return distance;
     };
+    /**
+    *    @param {string/timestamp} a
+    *    @return number time in secs
+    **/
 
-
-// PopUpMenu Layer and Event
-    var PopUpMenu = L.Class.extend({
-
-
-        initialize: function (latlng, marker) {
-            // save position of the layer or any options from the constructor
-            this._latlng = latlng;
-            this._marker = marker;
-        },
-
-        removeWaypoint: function(e){
-            routing.removeWaypoint(this._marker, function(){routing._draw.disable()});
-            if(routing.getWaypoints().length>0)routing.rerouteAllSegments(function(){});
-            // last_events.push(map.removePickUpWaypoint(this).bind(this._marker));
-            map.removeLayer(menu);
-            stop(e);
-        },
-
-        pickUpWaypoint: function(e){
-            map.createPickUpWaypoint(this._marker,$("#textRecogida").val());
-            map.removeLayer(menu);
-            last_events.push(map.removePickUpWaypoint(this).bind(this._marker));
-            stop(e);
-        },
-
-        removePickUpWaypoint: function(e){
-            map.removePickUpWaypoint(this._marker);
-            routing.rerouteAllSegments(function(){});
-            map.removeLayer(menu);
-            stop(e);
-        },
-
-        cancelMenu: function(e){
-            map.removeLayer(menu);
-            stop(e);
-        },
-
-        onAdd: function (map) {
-            this._map = map;
-            map.disableRouting();
-
-            // create a DOM element and put it into one of the map panes
-            this._el = L.DomUtil.create('div', 'pop-up-menu leaflet-zoom-hide');
-            map.getPanes().popupPane.appendChild(this._el);
-
-            // ... initialize other DOM elements, add listeners, etc.
-
-            var r=document.createElement("button");
-            r.id=mapConfig.mapContainerId+"_recogida";
-            document.getElementById(mapConfig.mapContainerId).appendChild(r);
-            var recogida=$("#"+mapConfig.mapContainerId+"_recogida");
-            recogida.attr('type','button');
-
-            if(!this._marker.pickUp || this._marker.pickUp==false){
-                recogida.html(mapConfig.buttonsText.pickupButton);// "Crear punto de
-                // recogida"
-                var pickUp=this.pickUpWaypoint.bind(this);
-                recogida.on('click',pickUp);
-
-
-            }
-            else{
-                recogida.html(mapConfig.buttonsText.pickupEraseButton);// "Eliminar punto
-                // de recogida"
-                var pickUp=this.removePickUpWaypoint.bind(this);
-                recogida.on('click',pickUp);
-            }
-
-            if(!this._marker.pickUp || this._marker.pickUp==false){
-                var t=document.createElement("input");
-                t.id=mapConfig.mapContainerId+"_textRecogida";
-                document.getElementById(mapConfig.mapContainerId).appendChild(t);
-                var text=$("#"+mapConfig.mapContainerId+"_textRecogida");
-                text.attr('type','input');
-                if(this._marker.pickUpText)	text.val(this._marker.pickUpText);
-                else{
-                    text.val('Cargando');
-                    geocoder.reverse(this._marker.getLatLng(), map.options.crs.scale(24), function(results) {
-                        var r=results[0];
-                        text.val(results[0].name.split(',')[0]);
-                    });
-                }
-            }
-
-            var b=document.createElement("button");
-            b.id=mapConfig.mapContainerId+"_borrar";
-            document.getElementById(mapConfig.mapContainerId).appendChild(b);
-            var borrar=$("#"+mapConfig.mapContainerId+"_borrar");
-            borrar.attr('type','button');
-            borrar.css('width','100%');
-            borrar.html(mapConfig.buttonsText.eraseButton);// Borrar punto
-
-
-            var erase=this.removeWaypoint.bind(this);
-            borrar.on('click',erase);
-
-            var c=document.createElement("button");
-            c.id=mapConfig.mapContainerId+"_cancelar";
-            document.getElementById(mapConfig.mapContainerId).appendChild(c);
-            var cancelar=$("#"+mapConfig.mapContainerId+"_cancelar");
-            cancelar.attr('type','button');
-            cancelar.css('width','100%');
-            cancelar.html(mapConfig.buttonsText.cancelButton);// Cancelar Acción
-
-            var cancel=this.cancelMenu.bind(this);
-            cancelar.on('click',cancel);
-
-            recogida.appendTo($(".pop-up-menu"));
-            if(!this._marker.pickUp || this._marker.pickUp==false){
-                text.appendTo($(".pop-up-menu"));
-            }
-            borrar.appendTo($(".pop-up-menu"));
-            cancelar.appendTo($(".pop-up-menu"));
-
-            // add a viewreset event listener for updating layer's position, do
-            // the latter
-            map.on('viewreset', this._reset, this);
-            this._reset();
-        },
-
-        onRemove: function (map) {
-            // remove layer's DOM elements and listeners
-            $("#textRecogida").remove();
-            $("#recogida").remove();
-            $("#borrar").remove();
-            $("#cancelar").remove()
-            map.getPanes().popupPane.removeChild(this._el);
-            map.off('viewreset', this._reset, this);
-            routing.rerouteAllSegments(this._reset);
-            setTimeout(map.enableRouting, 500);
-            menu=null;
-            map.updateRouteInfo();
-        },
-
-        _reset: function () {
-            // update layer's position
-            if(this._latlng){
-                var pos = map.latLngToLayerPoint(this._latlng);
-                L.DomUtil.setPosition(this._el, pos);
-            }
-        }
-
-    });
-
-
-
-
-    var showPopUpMenu=function(e){
-        if(menu!=null)return;
-        if(e.marker){
-            menu=new PopUpMenu(e.marker._latlng,e.marker);
-            map.setView(e.marker._latlng);
-        }
-        else{
-            menu=new PopUpMenu(e.latlng,e.target);
-            map.setView(e.latlng);
-        }
-        map.addLayer(menu,false);
-        $(".pop-up-menu").focus();
-        $(".pop-up-menu").css({'background':'grey'});
-    }
-
-
-
-//
-// param{string/timestamp} a
-// return number time in secs
-//
     var timestampToSecs=function(a){
         return(a.split(" ")[0]*360+a.split(" ")[1]*60+a.split(" ")[0]*1);
     };
 
     lastId=0;
 
+
+    //Kml controls
+    $('#fileButton').click(function(){
+        $('#selectFile').trigger('click');
+    });
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                for(var i in map._layers) {
+                    if (map._layers[i]._latlngs) {
+                        map.removeLayer(map._layers[i]);
+                    }
+                }
+                omnivore.kml(e.target.result).addTo(map).on('ready', function() {
+                    for(var i in map._layers) {
+                        if(map._layers[i]._latlngs) {
+                            map._layers[i].setStyle({'color':(i%2?'red':'green')});
+                        } else if (map._layers[i]._latlng) {
+                            marker = new L.Marker(map._layers[i]._latlng);
+                        }
+                        var last=map._layers[i]._latlngs
+                    }
+                    map.updateRouteInfo();
+                    $("#enviar").removeAttr("disabled");
+                    $("#enviar").css('opacity','1');
+                    map.panTo(last);
+                });
+                kml=true;
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#selectFile").change(function(){
+        readURL(this);
+    });
+
+    // Eventos para el mostrar el paseo en tiempo real
     var addLast=function(){
         $.ajax({
             url: lastRoute+lastId
@@ -600,7 +460,7 @@ function initMap(mapConfig) {
 
     }
 
-// Event Manager(handle events from DB)
+    // Event Manager(handle events from DB)
     L.Map.prototype.eventManager=
     {
         addPoint: function(response){
@@ -678,7 +538,8 @@ function initMap(mapConfig) {
 
         }
     };
-// Mapa tiempo real
+
+    // Mapa tiempo real
     if(mapConfig.realTime){
         //if(events.length>0)map.loadFromEvents(events);
         var dbRequest=setInterval(addLast,5000);
@@ -693,43 +554,4 @@ function initMap(mapConfig) {
     }
     map.updateRouteInfo();
     map.disableRouting();
-
-
-    //Kml controls
-    $('#fileButton').click(function(){
-        $('#selectFile').trigger('click');
-    });
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                for(var i in map._layers) {
-                    if (map._layers[i]._latlngs) {
-                        map.removeLayer(map._layers[i]);
-                    }
-                }
-                omnivore.kml(e.target.result).addTo(map).on('ready', function() {
-                    for(var i in map._layers) {
-                        if(map._layers[i]._latlngs) {
-                            map._layers[i].setStyle({'color':(i%2?'red':'green')});
-                        } else if (map._layers[i]._latlng) {
-                            marker = new L.Marker(map._layers[i]._latlng);
-                        }
-                        var last=map._layers[i]._latlngs
-                    }
-                    map.updateRouteInfo();
-                    $("#enviar").removeAttr("disabled");
-                    $("#enviar").css('opacity','1');
-                    map.panTo(last);
-                });
-                kml=true;
-            };
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-    $("#selectFile").change(function(){
-        readURL(this);
-    });
 }
