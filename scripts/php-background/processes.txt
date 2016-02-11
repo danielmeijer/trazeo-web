@@ -1,0 +1,1 @@
+php /var/www/vhosts/ns3000631.ovh.net/beta.trazeo.es/trazeo-web/app/console rabbitmq:consumer send_trazeo
