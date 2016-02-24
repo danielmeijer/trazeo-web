@@ -303,9 +303,6 @@ function initMap(mapConfig) {
         }
 
         $(".leaflet-marker-icon").on();
-
-        routing.rerouteAllSegments(function(){});
-        // routing._segments.clearLayers();
     };
 
     L.Map.prototype.showResumeInfo=function(){
@@ -346,7 +343,6 @@ function initMap(mapConfig) {
                 $("#pollution_resume").html((distance*0.0001*0.4).toFixed(2)+" kg");
             }
 
-            routing.rerouteAllSegments(function(){});
         }
         // routing._segments.clearLayers();
     };

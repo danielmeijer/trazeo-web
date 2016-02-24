@@ -20,7 +20,7 @@ class ApiHelper {
     const OK = "ok";
     const DENIED= "Data not valid";
     const USERNOTVALID = "User starter not valid";
-    const USERNOTINCHAT= "User is not member of the chat";
+    const USERNOTINCHAT= "User is member of the chat";
     const USERSTARTERNOTVALID = "User starter not valid";
     const USERNOTADMIN = "User not admin";
     const CHATTYPEINCORRECT = "The type of chat must be event";
