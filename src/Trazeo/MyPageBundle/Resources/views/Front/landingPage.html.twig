@@ -86,13 +86,13 @@
         {% if group.route != null %}
             {% if not kml %}
             <script>
-                $("#full-width-{{ group.id }}").on('shown', function(){
+                $("#full-width-{{ group.id }}").one('shown', function(){
                     {% include 'SopinetOpenMapBundle:Map:openmap.html.twig' with {'id_map': 'map-'~group.id, 'routePoints': group.route.points,'editable': "false", 'realTime': "false", 'rideEvents': ''}|e('js') %}
                 });
             </script>
             {% else %}
                 <script>
-                    $("#full-width-{{ group.id }}").on('shown', function(){
+                    $("#full-width-{{ group.id }}").one('shown', function(){
                         {% include 'SopinetOpenMapBundle:Map:kml_plain.html.twig' with {'id_map': 'map-'~group.id, 'routePoints': group.route.points,'editable': "false", 'realTime': "false", 'rideEvents': ''}|e('js') %}
                     });
                 </script>
