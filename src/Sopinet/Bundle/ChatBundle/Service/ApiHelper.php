@@ -111,6 +111,8 @@ class ApiHelper {
         //$user= $this->getDoctrine()->getRepository('\Application\Sonata\UserBundle\Entity\User')->findOneBy(array ("username"=>$email));
         if ($user == null){
             $user = $this->em->getRepository('\Application\Sonata\UserBundle\Entity\User')->findOneBy(array ("username"=>$email, "password"=>$password, "enabled"=>1));
+        }
+        if ($user == null) {
             return false;
         }
         return $user;
