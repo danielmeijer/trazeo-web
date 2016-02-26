@@ -286,10 +286,15 @@ class GCMHelper
         $mes['groupId']= $groupId;
         $mes['phone'] = $phone;
         $mes['time'] =$time->getTimestamp()*1000;
-        if ($deviceType==Msg::ANDROID) {
-            $this->sendGCMessage($mes, $toToken);
-        } elseif ($deviceType==Msg::IOS) {
-            $this->sendAPNMessage($mes, $toToken);
+        if (true) {
+            $this->_container->get('old_sound_rabbit_mq.send_trazeo_producer')->setContentType('application/json');
+            $this->_container->get('old_sound_rabbit_mq.send_trazeo_producer')->publish(json_encode($mes));
+        } else {
+            if ($deviceType==Msg::ANDROID) {
+                $this->sendGCMessage($mes, $toToken);
+            } elseif ($deviceType==Msg::IOS) {
+                $this->sendAPNMessage($mes, $toToken);
+            }
         }
     }
 }
