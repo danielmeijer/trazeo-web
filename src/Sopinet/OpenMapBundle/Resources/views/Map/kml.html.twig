@@ -48,6 +48,14 @@
         editable: {{ editable }},
         realtime: {{ realTime }},
         resume: {% if resume is defined %}true{% else %}false{% endif %},
+        resumeFields: {
+          start: $("#start_resume{{ groupId|default('') }}"),
+          end: $("#finish_resume{{ groupId|default('') }}"),
+          distance: $("#distance_resume{{ groupId|default('') }}"),
+          enviroment: $("#enviroment_resume{{ groupId|default('') }}"),
+          safe: $("#safe_resume{{ groupId|default('') }}"),
+          pollution: $("#pollution_resume{{ groupId|default('') }}")
+        },
         points: points,
         events: events,
         iconImagePath: '{{ asset('bundles/sopinetopenmap/css/images') }}',

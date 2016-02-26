@@ -14,6 +14,8 @@ function initMap(mapConfig) {
         $("#fileButton").hide();
     };
 
+
+
     //configuracion mapa leaflet
     var gk, topo, thunderforest, osm, waymarkedtrails;
     var menu = null;
@@ -319,7 +321,7 @@ function initMap(mapConfig) {
                     var aux=r.name.split(',');
                     aux.splice(1,2);
                     aux.splice(3,1);
-                    $("#start_resume").html(aux.toString());
+                    mapConfig.resumeFields.start.html(aux.toString());
                 });
             }
             if(last){
@@ -328,7 +330,7 @@ function initMap(mapConfig) {
                     var aux=r.name.split(',');
                     aux.splice(1,2);
                     aux.splice(3,1);
-                    $("#finish_resume").html(aux.toString());
+                    mapConfig.resumeFields.finish.html(aux.toString());
                 });
             }
             var aux_distance=new Array();
@@ -337,10 +339,10 @@ function initMap(mapConfig) {
             }
             if(first && last){
                 var distance=map.getDistance(aux_distance);
-                $("#distance_resume").html(distance+" m");
-                $("#enviroment_resume").html((distance*0.0001).toFixed(2)+" litros de carburante");
-                $("#safe_resume").html((distance*0.0001*1.5).toFixed(2)+" € en carburante");
-                $("#pollution_resume").html((distance*0.0001*0.4).toFixed(2)+" kg");
+                mapConfig.resumeFields.distance.html(distance+" m");
+                mapConfig.resumeFields.enviroment.html((distance*0.0001).toFixed(2)+" litros de carburante");
+                mapConfig.resumeFields.safe.html((distance*0.0001*1.5).toFixed(2)+" € en carburante");
+                mapConfig.resumeFields.pollution.html((distance*0.0001*0.4).toFixed(2)+" kg");
             }
 
         }

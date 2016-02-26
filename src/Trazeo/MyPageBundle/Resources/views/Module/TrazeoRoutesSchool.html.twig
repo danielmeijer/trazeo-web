@@ -41,17 +41,17 @@
                                             <tr>
                                                 <td><i class="fa fa-flag-o"></i></td>
                                                 <td>{{"Route.show.start"|trans}}</td>
-                                                <td id="startmap-{{ group.id }}"></td>
+                                                <td id="start_resume{{ group.id }}"></td>
                                             </tr>
                                             <tr>
                                                 <td><i class="fa fa-flag-checkered"></i></td>
                                                 <td>{{"Route.show.end"|trans}}</td>
-                                                <td id="finishmap-{{ group.id }}"></td>
+                                                <td id="finish_resume{{ group.id }}"></td>
                                             </tr>
                                             <tr>
                                                 <td><i class="fa fa-road"></i></td>
                                                 <td>{{"Route.show.distance"|trans}}</td>
-                                                <td id="distancemap-{{ group.id }}"></td>
+                                                <td id="distance_resume{{ group.id }}"></td>
                                             </tr>
                                             {% if group.route!=null %}
                                             <tr>
