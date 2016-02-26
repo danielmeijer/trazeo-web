@@ -143,7 +143,7 @@ function initMap(mapConfig) {
     control.addTo(map);
     routing.draw();
 
-    map.resumeField=mapConfig.resumeFields;
+    map.resumeFields=mapConfig.resumeFields;
 
 
     // map custom events
