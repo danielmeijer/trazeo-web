@@ -79,7 +79,7 @@ function initMap(mapConfig) {
             }
             return cb(null, L.GeoJSON.geometryToLayer(geojson));
         });
-    }
+    };
 
     //añadimos el plugin de routing
     routing = new L.Routing({
@@ -142,6 +142,8 @@ function initMap(mapConfig) {
     }
     control.addTo(map);
     routing.draw();
+
+    map.resumeField=mapConfig.resumeFields;
 
 
     // map custom events
@@ -284,9 +286,9 @@ function initMap(mapConfig) {
                 var aux=r.name.split(',');
                 aux.splice(1,2);
                 aux.splice(3,1);
-                $("#start").html(aux.toString()||'');
+                map.resumeFields.start.html(aux.toString()||'');
             });
-            $("#start").html('Desconocido');
+            map.resumeFields.start.html('Desconocido');
         }
 
         if(last) {
@@ -295,13 +297,13 @@ function initMap(mapConfig) {
                 var aux=r.name.split(',');
                 aux.splice(1,2);
                 aux.splice(3,1);
-                $("#finish").html(aux.toString());
+                map.resumeFields.finish.html(aux.toString());
             });
-            $("#finish").html('Desconocido');
+            map.resumeFields.finish.html('Desconocido');
         }
 
         if(first && last) {
-            $("#distance").html(map.getDistance(arrayPoints)+" m");
+            map.resumeFields.distance.html(map.getDistance(arrayPoints)+" m");
         }
 
         $(".leaflet-marker-icon").on();
@@ -339,10 +341,10 @@ function initMap(mapConfig) {
             }
             if(first && last){
                 var distance=map.getDistance(aux_distance);
-                mapConfig.resumeFields.distance.html(distance+" m");
-                mapConfig.resumeFields.enviroment.html((distance*0.0001).toFixed(2)+" litros de carburante");
-                mapConfig.resumeFields.safe.html((distance*0.0001*1.5).toFixed(2)+" € en carburante");
-                mapConfig.resumeFields.pollution.html((distance*0.0001*0.4).toFixed(2)+" kg");
+                map.resumeFields.distance.html(distance+" m");
+                map.resumeFields.enviroment.html((distance*0.0001).toFixed(2)+" litros de carburante");
+                map.resumeFields.safe.html((distance*0.0001*1.5).toFixed(2)+" € en carburante");
+                map.resumeFields.pollution.html((distance*0.0001*0.4).toFixed(2)+" kg");
             }
 
         }
