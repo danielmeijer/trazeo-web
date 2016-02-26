@@ -306,9 +306,9 @@ function initMap(mapConfig) {
     };
 
     L.Map.prototype.showResumeInfo=function(){
-        if(mapConfig.events){
-            var first=mapConfig.events[0].latLng;
-            if(mapConfig.events.length!=1)var last=mapConfig.events[mapConfig.events.length-2].latLng;
+        if(mapConfig.points && mapConfig.points.length>0){
+            var first=mapConfig.points[0].latLng;
+            if(mapConfig.points.length!=1)var last=mapConfig.points[mapConfig.points.length-2].latLng;
             else{
                 last=first;
             }
