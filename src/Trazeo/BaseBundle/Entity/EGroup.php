@@ -2,6 +2,7 @@
 
 namespace Trazeo\BaseBundle\Entity;
 
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\VirtualProperty;
@@ -12,6 +13,7 @@ use JMS\Serializer\Annotation\Exclude;
  *
  * @ORM\Table(name="e_group")
  * @ORM\Entity(repositoryClass="EGroupRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class EGroup
 {
@@ -758,7 +760,7 @@ class EGroup
     /**
      * Get chat
      *
-     * @return \Sopinet\Bundle\ChatBundle\Entity\Chat 
+     * @return \Sopinet\Bundle\ChatBundle\Entity\Chat
      **/
     public function getChat()
     {
@@ -782,5 +784,25 @@ class EGroup
     public function getRidesRegistered()
     {
         return $this->ridesRegistered;
+    }
+
+
+    /**
+     * @ORM\PostPersist
+     */
+    public function onPostPersist(LifecycleEventArgs $args)
+    {
+        /** @var EGroup $entity */
+        $entity = $args->getEntity();
+        $em = $args->getEntityManager();
+
+        /** @var UserExtend $user */
+        foreach ($entity->getChat()->getChatMembers() as $user) {
+            if (!$entity->getUserextendgroups()->contains($user)) {
+                $entity->getChat()->removeChatMember($user);
+            }
+        }
+        $em->persist($entity->getChat());
+        $em->flush($entity->getChat());
     }
 }
