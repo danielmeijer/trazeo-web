@@ -798,10 +798,9 @@ class EGroup
         $chat = $entity->getChat();
 
         /** @var UserExtend $user */
-        foreach ($chat->getChatMembers() as $user) {
-            if (!$entity->getUserextendgroups()->contains($user)) {
-                $chat->removeChatMember($user);
-            }
+        $chat->cleanChatMembers();
+        foreach ($entity->getUserextendgroups() as $user) {
+                $chat->addChatMember($user);
         }
         $em->persist($chat);
         $em->flush($chat);
