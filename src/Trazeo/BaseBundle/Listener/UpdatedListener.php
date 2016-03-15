@@ -3,8 +3,10 @@ namespace Trazeo\BaseBundle\Listener;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use FOS\UserBundle\Document\Group;
 use Sopinet\TimelineBundle\Entity\Comment;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Trazeo\BaseBundle\Entity\EGroup;
 use Trazeo\BaseBundle\Entity\UserExtend;
 use Application\Sonata\UserBundle\Entity\User as FOSUser;
 use Trazeo\BaseBundle\Entity\EEvent;
@@ -85,6 +87,12 @@ class UpdatedListener implements EventSubscriber {
                     );
                 }
             }
+        } elseif( $entity instanceof EGroup && $action == 'update' ) {
+            $chat = $entity->getChat();
+            $users = $entity->getUserextendgroups();
+            $chat->setChatMembers($users);
+            $em->persist($chat);
+            $em->flush($chat);
         }
 	}
 }

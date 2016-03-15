@@ -3,6 +3,7 @@
 namespace Trazeo\BaseBundle\Entity;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreFlushEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\VirtualProperty;
@@ -784,25 +785,5 @@ class EGroup
     public function getRidesRegistered()
     {
         return $this->ridesRegistered;
-    }
-
-
-    /**
-     * @ORM\PostUpdate
-     */
-    public function onPostUpdate(LifecycleEventArgs $args)
-    {
-        /** @var EGroup $entity */
-        $entity = $args->getEntity();
-        $em = $args->getEntityManager();
-        $chat = $entity->getChat();
-
-        /** @var UserExtend $user */
-        $chat->cleanChatMembers();
-        foreach ($entity->getUserextendgroups() as $user) {
-                $chat->addChatMember($user);
-        }
-        $em->persist($chat);
-        $em->flush($chat);
     }
 }
