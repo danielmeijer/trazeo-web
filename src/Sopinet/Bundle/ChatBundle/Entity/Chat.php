@@ -1,6 +1,7 @@
 <?php
 namespace Sopinet\Bundle\ChatBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 use JMS\Serializer\Annotation\Groups;
@@ -281,11 +282,23 @@ class Chat
     /**
      * Get chatMembers
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getChatMembers()
     {
         return $this->chatMembers;
+    }
+
+    /**
+     * Clean chatMembers
+     *
+     * @return Chat $this
+     */
+    public function cleanChatMembers()
+    {
+        $this->chatMembers=new ArrayCollection();
+
+        return $this;
     }
 
     /**
@@ -304,10 +317,22 @@ class Chat
     /**
      * Get admin
      *
-     * @return \Trazeo\BaseBundle\Entity\UserExtend 
+     * @return \Trazeo\BaseBundle\Entity\UserExtend
      */
     public function getAdmin()
     {
         return $this->admin;
+    }
+
+    /**
+     * @param ArrayCollection $users
+     *
+     * @return $this
+     */
+    public function setChatMembers($users)
+    {
+        $this->chatMembers=$users;
+
+        return $this;
     }
 }
