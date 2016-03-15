@@ -788,9 +788,9 @@ class EGroup
 
 
     /**
-     * @ORM\PostPersist
+     * @ORM\PrePersist
      */
-    public function onPostPersist(LifecycleEventArgs $args)
+    public function onPrePersist(LifecycleEventArgs $args)
     {
         /** @var EGroup $entity */
         $entity = $args->getEntity();
