@@ -788,21 +788,22 @@ class EGroup
 
 
     /**
-     * @ORM\PrePersist
+     * @ORM\PostUpdate
      */
-    public function onPrePersist(LifecycleEventArgs $args)
+    public function onPostUpdate(LifecycleEventArgs $args)
     {
         /** @var EGroup $entity */
         $entity = $args->getEntity();
         $em = $args->getEntityManager();
+        $chat = $entity->getChat();
 
         /** @var UserExtend $user */
-        foreach ($entity->getChat()->getChatMembers() as $user) {
+        foreach ($chat->getChatMembers() as $user) {
             if (!$entity->getUserextendgroups()->contains($user)) {
-                $entity->getChat()->removeChatMember($user);
+                $chat->removeChatMember($user);
             }
         }
-        $em->persist($entity->getChat());
-        $em->flush($entity->getChat());
+        $em->persist($chat);
+        $em->flush($chat);
     }
 }
