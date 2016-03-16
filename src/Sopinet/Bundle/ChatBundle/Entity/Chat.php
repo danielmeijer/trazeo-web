@@ -7,6 +7,7 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Exclude;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Trazeo\BaseBundle\Entity\EGroup;
 
 /**
  * Entity Chat
@@ -60,6 +61,11 @@ class Chat
      * @ORM\ManyToMany(targetEntity="\Trazeo\BaseBundle\Entity\UserExtend", mappedBy="chats")
      */
     protected $chatMembers;
+
+    /** @ORM\OneToOne(targetEntity="Trazeo\BaseBundle\Entity\EGroup", inversedBy="")
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
+     */
+    protected $group;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Trazeo\BaseBundle\Entity\UserExtend", inversedBy="chatsOwned", cascade={"persist", "remove"})
@@ -286,7 +292,7 @@ class Chat
      */
     public function getChatMembers()
     {
-        return $this->chatMembers;
+        return $this->getGroup()->getUserextendgroups();
     }
 
     /**
@@ -332,6 +338,20 @@ class Chat
     public function setChatMembers($users)
     {
         $this->chatMembers=$users;
+
+        return $this;
+    }
+
+    /**
+     * @return EGroup
+     */
+    public function getGroup(){
+        return $this->group;
+    }
+
+    public function setGroup(EGroup $group)
+    {
+        $this->group=$group;
 
         return $this;
     }
