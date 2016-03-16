@@ -292,7 +292,10 @@ class Chat
      */
     public function getChatMembers()
     {
-        return $this->getGroup()->getUserextendgroups();
+        if ($this->getGroup()!=null) {
+            return $this->getGroup()->getUserextendgroups();
+        }
+        return $this->chatMembers;
     }
 
     /**
