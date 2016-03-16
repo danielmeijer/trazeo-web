@@ -62,7 +62,7 @@ class Chat
      */
     protected $chatMembers;
 
-    /** @ORM\OneToOne(targetEntity="Trazeo\BaseBundle\Entity\EGroup", inversedBy="")
+    /** @ORM\OneToOne(targetEntity="Trazeo\BaseBundle\Entity\EGroup", inversedBy="chat")
      * @ORM\JoinColumn(name="group_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      */
     protected $group;
@@ -295,6 +295,7 @@ class Chat
         if ($this->getGroup()!=null) {
             return $this->getGroup()->getUserextendgroups();
         }
+
         return $this->chatMembers;
     }
 
