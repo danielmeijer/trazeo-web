@@ -87,12 +87,6 @@ class UpdatedListener implements EventSubscriber {
                     );
                 }
             }
-        } elseif( $entity instanceof EGroup && $action == 'update' ) {
-            $chat = $entity->getChat();
-            $users = $entity->getUserextendgroups();
-            $chat->setChatMembers($users);
-            $em->persist($chat);
-            $em->flush($chat);
         }
 	}
 }

@@ -189,21 +189,31 @@ services:
         class: Twig_Extensions_Extension_Text
         tags:
               - name: twig.extension
+
     trazeo.updatedlistener:
         class: Trazeo\BaseBundle\Listener\UpdatedListener
         arguments: ['@service_container']
         tags:
             - { name: doctrine.event_subscriber }
+
+    trazeo.sonataPersistlistener:
+        class: Trazeo\BaseBundle\Listener\SonataListener
+        arguments: ['@doctrine.orm.default_entity_manager']
+        tags:
+            - { name: kernel.event_listener, event: sonata.admin.event.persistence.post_update, method: onPostUpdate }
+
     sopinet_flashMessages:
         class:        Sopinet\FlashMessagesBundle\Service\FlashNotifier
         arguments:
             entityManager: @doctrine.orm.entity_manager
             container: @service_container
+
     sopinet.uploadlistener:
         class: Sopinet\Bundle\UploadMagicBundle\Listener\UploadListener
         arguments: ['@doctrine']
         tags:
             - { name: kernel.event_listener, event: oneup_uploader.post_persist, method: onUpload }
+
 jms_translation:
     configs:
         app:
