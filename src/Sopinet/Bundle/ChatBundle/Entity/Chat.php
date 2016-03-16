@@ -3,6 +3,8 @@ namespace Sopinet\Bundle\ChatBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\SerializedName;
+use JMS\Serializer\Annotation\VirtualProperty;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Exclude;
@@ -59,11 +61,13 @@ class Chat
 
     /**
      * @ORM\ManyToMany(targetEntity="\Trazeo\BaseBundle\Entity\UserExtend", mappedBy="chats")
+     * @Exclude
      */
     protected $chatMembers;
 
     /** @ORM\OneToOne(targetEntity="Trazeo\BaseBundle\Entity\EGroup", inversedBy="chat")
      * @ORM\JoinColumn(name="group_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
+     * @Exclude
      */
     protected $group;
 
@@ -289,6 +293,8 @@ class Chat
      * Get chatMembers
      *
      * @return \Doctrine\Common\Collections\Collection
+     * @VirtualProperty
+     * @SerializedName('chatMembers')
      */
     public function getChatMembers()
     {
