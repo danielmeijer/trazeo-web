@@ -117,7 +117,7 @@ class EGroup
     protected $city;
 
 
-    /** @ORM\OneToOne(targetEntity="Sopinet\Bundle\ChatBundle\Entity\Chat")
+    /** @ORM\OneToOne(targetEntity="Sopinet\Bundle\ChatBundle\Entity\Chat", mappedBy="group")
      * @ORM\JoinColumn(name="chat_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      */
     protected $chat;
