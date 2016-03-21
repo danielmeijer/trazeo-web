@@ -286,6 +286,7 @@ class GCMHelper
         $mes['groupId']= $groupId;
         $mes['phone'] = $phone;
         $mes['time'] =$time->getTimestamp()*1000;
+        $mes['to'] = $toToken;
         if (true) {
             $this->_container->get('old_sound_rabbit_mq.send_trazeo_producer')->setContentType('application/json');
             $this->_container->get('old_sound_rabbit_mq.send_trazeo_producer')->publish(json_encode($mes));
