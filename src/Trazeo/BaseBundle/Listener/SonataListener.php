@@ -25,7 +25,7 @@ class SonataListener implements EventSubscriber {
     public function getSubscribedEvents()
     {
         return array(
-            'post_update'
+            'pre_update'
         );
     }
 
@@ -34,19 +34,11 @@ class SonataListener implements EventSubscriber {
      *
      * @param PersistenceEvent $event
      */
-    public function onPostUpdate(PersistenceEvent $event)
+    public function onPreUpdate(PersistenceEvent $event)
     {
-        $entity=$event->getObject();
-        if ($entity instanceof EGroup) {
-            $entity = $this->_em->getRepository('TrazeoBaseBundle:EGroup')->find($entity->getId());
-            $chat=$entity->getChat();
-            $chat->getChatMembers()->clear();
-            $users= $entity->getUserextendgroups();
-            foreach ($users as $user) {
-                $chat->addChatMember($user);
-            }
-            $this->_em->persist($chat);
-            $this->_em->flush($chat);
-        }
+        $chatRepository=$this->_em->getRepository('SopinetChatBundle:Chat');
+        $group=$event->getObject();
+        $chat=$chatRepository->findOneByGroup($event->getObject());
+
     }
 }
