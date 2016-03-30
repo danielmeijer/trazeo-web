@@ -13,67 +13,82 @@ use JMS\Serializer\Annotation\Exclude;
  */
 class ERoute
 {
-	use ORMBehaviors\Timestampable\Timestampable;
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(name="id", type="integer")
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
-	protected $id;
-	
-	/** @ORM\OneToOne(targetEntity="EGroup", mappedBy="route")
+    use ORMBehaviors\Timestampable\Timestampable;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /** @ORM\OneToOne(targetEntity="EGroup", mappedBy="route")
      *  @Exclude
-	 */
-	protected $group;
-	
-	/** @ORM\OneToMany(targetEntity="EPoints", mappedBy="route", cascade={"remove"})
-	 */
-	protected $points;
-	
-	/** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="adminRoutes")
-	 *  @ORM\JoinColumn(name="admin_id", referencedColumnName="id")
+     */
+    protected $group;
+
+    /** @ORM\OneToMany(targetEntity="EPoints", mappedBy="route", cascade={"remove"})
+     */
+    protected $points;
+
+    /** @ORM\ManyToOne(targetEntity="UserExtend", inversedBy="adminRoutes")
+     *  @ORM\JoinColumn(name="admin_id", referencedColumnName="id")
      *  @Exclude
-	 */
-	protected $admin;
-	
-	/** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\City")
-	 */
-	protected $city;
-	
-	/** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\Country")
-	 */
-	protected $country;
-	
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="distance", type="string", length=50, nullable=true)
-	 */
-	protected $distance;
-	
-	/**
-	 * @ORM\Column(name="description", type="string", nullable=true)
-	 */
-	protected $description;
-	
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="name", type="string", length=255)
-	 */
-	protected $name;
-	
-	public function __toString() {
-		
-		return $this->getName();
-	}
+     */
+    protected $admin;
+
+    /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\City")
+     */
+    protected $city;
+
+    /** @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\Country")
+     */
+    protected $country;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="distance", type="string", length=50, nullable=true)
+     */
+    protected $distance;
+
+    /**
+     * @ORM\Column(name="description", type="string", nullable=true)
+     */
+    protected $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    protected $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="endAdress", type="string", length=255)
+     */
+    protected $endAdress;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="startAdress", type="string", length=255)
+     */
+    protected $startAdress;
+
+
+    public function __toString() {
+
+        return $this->getName();
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -97,7 +112,7 @@ class ERoute
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -121,7 +136,7 @@ class ERoute
     /**
      * Get admin
      *
-     * @return \Trazeo\BaseBundle\Entity\UserExtend 
+     * @return \Trazeo\BaseBundle\Entity\UserExtend
      */
     public function getAdmin()
     {
@@ -145,7 +160,7 @@ class ERoute
     /**
      * Get city
      *
-     * @return \JJs\Bundle\GeonamesBundle\Entity\City 
+     * @return \JJs\Bundle\GeonamesBundle\Entity\City
      */
     public function getCity()
     {
@@ -169,7 +184,7 @@ class ERoute
     /**
      * Get country
      *
-     * @return \JJs\Bundle\GeonamesBundle\Entity\Country 
+     * @return \JJs\Bundle\GeonamesBundle\Entity\Country
      */
     public function getCountry()
     {
@@ -203,7 +218,7 @@ class ERoute
     /**
      * Get points
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPoints()
     {
@@ -227,7 +242,7 @@ class ERoute
     /**
      * Get ride
      *
-     * @return \Trazeo\BaseBundle\Entity\ERide 
+     * @return \Trazeo\BaseBundle\Entity\ERide
      */
     public function getRide()
     {
@@ -251,7 +266,7 @@ class ERoute
     /**
      * Get distance
      *
-     * @return string 
+     * @return string
      */
     public function getDistance()
     {
@@ -275,7 +290,7 @@ class ERoute
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -311,5 +326,51 @@ class ERoute
     public function getGroup()
     {
         return $this->group;
+    }
+
+    /**
+     * Set endAdress
+     *
+     * @param string $endAdress
+     * @return ERoute
+     */
+    public function setEndAdress($endAdress)
+    {
+        $this->endAdress = $endAdress;
+
+        return $this;
+    }
+
+    /**
+     * Get endAdress
+     *
+     * @return string 
+     */
+    public function getEndAdress()
+    {
+        return $this->endAdress;
+    }
+
+    /**
+     * Set startAdress
+     *
+     * @param string $startAdress
+     * @return ERoute
+     */
+    public function setStartAdress($startAdress)
+    {
+        $this->startAdress = $startAdress;
+
+        return $this;
+    }
+
+    /**
+     * Get startAdress
+     *
+     * @return string 
+     */
+    public function getStartAdress()
+    {
+        return $this->startAdress;
     }
 }

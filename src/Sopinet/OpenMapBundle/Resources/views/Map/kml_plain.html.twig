@@ -50,6 +50,11 @@
             safe: $("#safe_resume{{ groupId|default('') }}"),
             pollution: $("#pollution_resume{{ groupId|default('') }}")
         },
+        resumeValues: {
+            endPoint: "{{ endPoint }}",
+            startPoint: "{{ startPoint }}",
+            distance: "{{ distance }}"
+        },
         points: points,
         events: events,
         iconImagePath: '{{ asset('bundles/sopinetopenmap/css/images') }}',

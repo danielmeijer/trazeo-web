@@ -87,13 +87,13 @@
             {% if not kml %}
             <script>
                 $("#full-width-{{ group.id }}").one('shown', function(){
-                    {% include 'SopinetOpenMapBundle:Map:openmap.html.twig' with {'id_map': 'map-'~group.id, 'routePoints': group.route.points,'editable': "false", 'realTime': "false", 'rideEvents': ''}|e('js') %}
+                    {% include 'SopinetOpenMapBundle:Map:openmap.html.twig' with {'id_map': 'map-'~group.id, 'routePoints': group.route.points,'editable': "false", 'realTime': "false", 'rideEvents': '','endPoint': group.route.endAdress|default(''),'startPoint': group.route.startAdress|default('')}|e('js') %}
                 });
             </script>
             {% else %}
                 <script>
                     $("#full-width-{{ group.id }}").one('shown', function(){
-                        {% include 'SopinetOpenMapBundle:Map:kml_plain.html.twig' with {'id_map': 'map-'~group.id, 'routePoints': group.route.points,'editable': "false", 'realTime': "false", 'rideEvents': '', 'groupId': group.id}|e('js') %}
+                        {% include 'SopinetOpenMapBundle:Map:kml_plain.html.twig' with {'id_map': 'map-'~group.id, 'routePoints': group.route.points,'editable': "false", 'realTime': "false", 'rideEvents': '', 'groupId': group.id,'endPoint': group.route.endAdress|default(''),'startPoint': group.route.startAdress|default('')}|e('js') %}
                     });
                 </script>
             {% endif %}

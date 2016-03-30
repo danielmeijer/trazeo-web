@@ -12,20 +12,24 @@ function initMap(mapConfig) {
         $("#deshacer").hide();
         $("#enviar").hide();
         $("#fileButton").hide();
-    };
-
-
-
+        mapConfig.resumeValues.endSite=mapConfig.resumeValues.endPoint||null;
+        mapConfig.resumeValues.startSite=mapConfig.resumeValues.startPoint||null;
+        mapConfig.resumeValues.distance=mapConfig.resumeValues.distance||null;
+    } else {
+        mapConfig.resumeValues.endSite=null;
+        mapConfig.resumeValues.startSite=null;
+        mapConfig.resumeValues.distance=null;
+    }
+    
     //configuracion mapa leaflet
-    var gk, topo, thunderforest, osm, waymarkedtrails;
+    var osm;
     var menu = null;
-    var last_actions = null
+    var last_actions = null;
     var icon = "leaflet-marker-icon leaflet-zoom-animated leaflet-clickable leaflet-marker-draggable";
 
     L.Icon.Default.imagePath = mapConfig.iconImagePath;
     L.Icon.Default.prototype.options.iconSize[1] = 35;
     L.Icon.Default.prototype.options.iconSize[0] = 22;
-    gk = 'http://opencache.statkart.no/gatekeeper/gk';
 
 
     osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -40,8 +44,6 @@ function initMap(mapConfig) {
 
     var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/8ee2a50541944fb9bcedded5165f09d9/{styleId}/256/{z}/{x}/{y}.png',
         cloudmadeAttribution = 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade';
-    var midnight   = L.tileLayer(cloudmadeUrl, {styleId: 999, attribution: cloudmadeAttribution}),
-        motorways = L.tileLayer(cloudmadeUrl, {styleId: 46561, attribution: cloudmadeAttribution});
 
     waymarkedtrails = L.tileLayer('http://tile.waymarkedtrails.org/hiking/{z}/{x}/{y}.png', {
         maxZoom: 19,
@@ -57,6 +59,7 @@ function initMap(mapConfig) {
     else {
         center = new L.LatLng(37.8938548, -4.788015299999984)
     }
+
     map = new L.Map(mapConfig.mapContainerId, {
         layers: [osm]
         , center: center
@@ -65,51 +68,6 @@ function initMap(mapConfig) {
     });
 
 
-    // Routing Machine plugin info
-    router = function (m1, m2, cb) {
-        var proxy = 'http://www2.turistforeningen.no/routing.php?url=';
-        var route = 'http://www.yournavigation.org/api/1.0/gosmore.php&format=geojson&v=foot&fast=1&layer=mapnik';
-        var params = '&flat=' + m1.lat + '&flon=' + m1.lng + '&tlat=' + m2.lat + '&tlon=' + m2.lng;
-        $.getJSON(proxy + route + params, function (geojson, status) {
-            if (!geojson || !geojson.coordinates || !geojson.coordinates.length === 0) {
-                if (typeof console.error === 'function') {
-                    console.error('OSM router failed', geojson);
-                }
-                return cb(new Error());
-            }
-            return cb(null, L.GeoJSON.geometryToLayer(geojson));
-        });
-    };
-
-    //añadimos el plugin de routing
-    routing = new L.Routing({
-        position: 'bottomright'
-        , routing: {
-            router: router
-        }
-        , icons: {
-            start: new L.Icon({iconUrl: mapConfig.iconImagePath + '/marker-icon-start.png', iconSize: 22})
-            ,
-            end: new L.Icon({iconUrl: mapConfig.iconImagePath + '/marker-icon-start.png', iconSize: 22})
-            ,
-            normal: new L.Icon({
-                iconUrl: mapConfig.iconImagePath + '/marker-icon.png',
-                iconSize: [22, 35],
-                iconAnchor: [10, 35]
-            })
-        }
-        , snapping: {
-            layers: []
-        }
-        , shortcut: {
-            draw: {
-                enable: 68    // 'd'
-                , disable: 81  // 'q'
-            }
-        }
-    });
-    map.addControl(routing);
-
 
     // Map GeoCoder Plugin info
     var options = {
@@ -117,7 +75,8 @@ function initMap(mapConfig) {
         position: 'topright', /* The position of the control */
         text: 'Locate', /* The text of the submit button */
         bounds: null, /* a L.LatLngBounds object to limit the results to */
-        email: null, /*
+        email: 'aarrabal@sopinet.com',
+         /*
          * an email string with a contact to provide to
          * Nominatim. Useful if you are doing lots of queries
          */
@@ -139,47 +98,13 @@ function initMap(mapConfig) {
     });
     control.markGeocode = function (result) {
         map.setView(result.center);
-    }
+    };
+
     control.addTo(map);
-    routing.draw();
+
 
     map.resumeFields=mapConfig.resumeFields;
 
-
-    // map custom events
-    L.Map.prototype.disableRouting = function () {
-        $(".leaflet-marker-icon").css("pointer-events", "none");
-        routing.draw(false);
-
-        if (routing.getWaypoints().length > 0) {
-            $("#enviar").removeAttr("disabled");
-            $("#enviar").css('opacity', '1');
-        }
-        $("#comenzar").on('click', map.enableRouting);
-        $("#comenzar").html('<i class="fa fa-flag"></i>&nbsp' + mapConfig.buttonsText.startButton);
-    };
-    L.Map.prototype.enableRouting = function () {
-
-        if (!mapConfig.editable) {
-            return;
-        }
-
-        $(".leaflet-marker-icon").css("pointer-events", "all");
-
-        if (menu == null) {
-            routing.draw(true);
-        }
-        $("#enviar").attr("disabled", "disabled");
-        $("#enviar").css('opacity', '0.7');
-        $("#deshacer").on('click', map.removeLast);
-        $("#comenzar").on('click', map.disableRouting);
-        $("#comenzar").html('<i class="fa fa-flag"></i>&nbsp' + mapConfig.buttonsText.endButton);
-
-    };
-    // data functions
-    L.Map.prototype.getWaypoints = function () {
-        return routing.getWaypoints();
-    };
     L.Map.prototype.loadFromEvents = function (events) {
         var i = 0;
 
@@ -261,8 +186,10 @@ function initMap(mapConfig) {
             if(map._layers[i] instanceof L.Polyline && map._layers[i].feature) {
                 for (var j in map._layers[i]._latlngs) {
                     var latlng = map._layers[i]._latlngs[j];
-                    arrayPoints.push(latlng);
-                    pointList+=latlng.lat+","+latlng.lng+",0,;";
+                    if (arrayPoints.indexOf(map._layers[i]._latlng)==-1) {
+                        arrayPoints.push(latlng);
+                        pointList += latlng.lat + "," + latlng.lng + ",0,;";
+                    }
                 }
             }
             else if(map._layers[i] instanceof L.Marker && map._layers[i].feature) {
@@ -273,37 +200,49 @@ function initMap(mapConfig) {
                     pick='1,Punto inicio;';
                 }
                 last = marker._latlng;
-                pointList+=marker._latlng.lat+","+marker._latlng.lng+","+pick;
-                arrayPoints.push(map._layers[i]._latlng);
+                if (arrayPoints.indexOf(map._layers[i]._latlng)==-1) {
+                    pointList+=marker._latlng.lat+","+marker._latlng.lng+","+pick;
+                    arrayPoints.push(map._layers[i]._latlng);
+                }
             }
         }
 
         var distance=0;
 
-        if(first) {
+        //Info del sitio de inicio
+        if(first && mapConfig.resumeValues.startSite == null){
             geocoder.reverse(first, map.options.crs.scale(16), function(results) {
                 var r = results[0];
                 var aux=r.name.split(',');
                 aux.splice(1,2);
                 aux.splice(3,1);
-                map.resumeFields.start.html(aux.toString()||'');
+                mapConfig.resumeFields.start.html(aux.toString());
             });
-            map.resumeFields.start.html('Desconocido');
+            map.resumeFields.finish.html('Desconocido');
+        } else if (mapConfig.resumeValues.startSite!=null) {
+            mapConfig.resumeFields.start.html(mapConfig.resumeValues.startSite);
         }
 
-        if(last) {
+        //Info del sitio de fin
+        if(last && mapConfig.resumeValues.endSite == null){
             geocoder.reverse(last, map.options.crs.scale(16), function(results) {
                 var r = results[0];
                 var aux=r.name.split(',');
                 aux.splice(1,2);
                 aux.splice(3,1);
-                map.resumeFields.finish.html(aux.toString());
+                mapConfig.resumeFields.finish.html(aux.toString());
             });
-            map.resumeFields.finish.html('Desconocido');
+            map.resumeFields.start.html('Desconocido');
+        } else if(mapConfig.resumeValues.endSite != null) {
+            mapConfig.resumeFields.finish.html(mapConfig.resumeValues.endSite);
         }
-
+        
         if(first && last) {
-            map.resumeFields.distance.html(map.getDistance(arrayPoints)+" m");
+            if(mapConfig.resumeValues.distance==null){
+                map.resumeFields.distance.html(map.getDistance(arrayPoints)+" m");
+            } else {
+                map.resumeFields.distance.html(mapConfig.resumeValues.distance);
+            }
         }
 
         $(".leaflet-marker-icon").on();
@@ -317,7 +256,8 @@ function initMap(mapConfig) {
                 last=first;
             }
             var distance=0;
-            if(first){
+            //Info del sitio de inicio
+            if(first && mapConfig.resumeValues.startSite == null){
                 geocoder.reverse(first, map.options.crs.scale(16), function(results) {
                     var r = results[0];
                     var aux=r.name.split(',');
@@ -325,8 +265,12 @@ function initMap(mapConfig) {
                     aux.splice(3,1);
                     mapConfig.resumeFields.start.html(aux.toString());
                 });
+            } else if (mapConfig.resumeValues.startSite!=null) {
+                mapConfig.resumeFields.start.html(mapConfig.resumeValues.startSite);
             }
-            if(last){
+
+            //Info del sitio de fin
+            if(last && mapConfig.resumeValues.endSite == null){
                 geocoder.reverse(last, map.options.crs.scale(16), function(results) {
                     var r = results[0];
                     var aux=r.name.split(',');
@@ -334,13 +278,17 @@ function initMap(mapConfig) {
                     aux.splice(3,1);
                     mapConfig.resumeFields.finish.html(aux.toString());
                 });
+            } else if(mapConfig.resumeValues.endSite != null) {
+                mapConfig.resumeFields.finish.html(mapConfig.resumeValues.endSite);
             }
-            var aux_distance=new Array();
-            for(var i=0;i<mapConfig.events.length-1;i++){
-                aux_distance.push(mapConfig.events[i].latLng);
-            }
+
+
             if(first && last){
-                var distance=map.getDistance(aux_distance);
+                if(mapConfig.resumeValues.distance==null){
+                    distance=map.getDistance(aux_distance);    
+                } else {
+                    distance=mapConfig.resumeValues.distance==null;
+                }
                 map.resumeFields.distance.html(distance+" m");
                 map.resumeFields.enviroment.html((distance*0.0001).toFixed(2)+" litros de carburante");
                 map.resumeFields.safe.html((distance*0.0001*1.5).toFixed(2)+" € en carburante");
@@ -348,7 +296,6 @@ function initMap(mapConfig) {
             }
 
         }
-        // routing._segments.clearLayers();
     };
 
     L.Map.prototype.getDistance=function(points){
@@ -385,12 +332,13 @@ function initMap(mapConfig) {
     $('#fileButton').click(function(){
         $('#selectFile').trigger('click');
     });
+
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
-                for(var i in map._layers) {
-                    if (map._layers[i]._latlngs) {
+                for(var i in map._layers ) {
+                    if (map._layers[i] instanceof L.Polyline || map._layers[i] instanceof L.Marker) {
                         map.removeLayer(map._layers[i]);
                     }
                 }
@@ -552,6 +500,6 @@ function initMap(mapConfig) {
     if(mapConfig.points){
         map.loadFromWaypoints(mapConfig.points);
     }
+
     map.updateRouteInfo();
-    map.disableRouting();
 }
