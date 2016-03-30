@@ -78,5 +78,5 @@
 	%}
 	<script type="text/javascript" src="{{ asset_url }}"></script>
 	{% endjavascripts %}
-	{% include 'SopinetOpenMapBundle:Map:kml.html.twig' with {'routePoints': "",'editable': "false", 'realTime': "true",'endPoint': group.route.endAdress|default(''),'startPoint': group.route.startAdress|default(''), 'distance':route.distance} %}
+	{% include 'SopinetOpenMapBundle:Map:kml.html.twig' with {'routePoints': "",'editable': "false", 'realTime': "true",'endPoint': group.route.endAdress|default(''),'startPoint': group.route.startAdress|default(''), 'distance':group.route.distance} %}
 {% endblock %}
