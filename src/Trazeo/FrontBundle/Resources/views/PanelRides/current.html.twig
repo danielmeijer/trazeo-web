@@ -109,8 +109,8 @@
 	<script type="text/javascript" src="{{ asset_url }}"></script>
 	{% endjavascripts %}
 		{% if route is defined %}
-			{% include 'SopinetOpenMapBundle:Map:kml.html.twig' with {'routePoints': route.points,'editable': "false", 'realTime': "true", 'rideEvents': ''} %}
+			{% include 'SopinetOpenMapBundle:Map:kml.html.twig' with {'routePoints': route.points,'editable': "false", 'realTime': "true", 'rideEvents': '','endPoint': route.endAdress|default(''),'startPoint': route.startAdress|default(''), 'distance':route.distance} %}
 		{% else %}
-			{% include 'SopinetOpenMapBundle:Map:kml.html.twig' with {'editable': "false", 'realTime': "true", 'rideEvents': ''} %}
+			{% include 'SopinetOpenMapBundle:Map:kml.html.twig' with {'editable': "false", 'realTime': "true", 'rideEvents': '','endPoint': route.endAdress|default(''),'startPoint': route.startAdress|default(''), 'distance':route.distance %}
 		{% endif %}
 {% endblock %}

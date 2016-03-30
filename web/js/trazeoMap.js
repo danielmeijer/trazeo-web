@@ -10,11 +10,19 @@ function initMap(mapConfig){
         $("#comenzar").hide();
         $("#deshacer").hide();
         $("#enviar").hide();
-    };
+        mapConfig.resumeValues.endSite=mapConfig.resumeValues.endPoint||null;
+        mapConfig.resumeValues.startSite=mapConfig.resumeValues.startPoint||null;
+        mapConfig.resumeValues.distance=mapConfig.resumeValues.distance||null;
+    } else {
+        mapConfig.resumeValues.endSite=null;
+        mapConfig.resumeValues.startSite=null;
+        mapConfig.resumeValues.distance=null;
+    }
+
 
     var gk, topo, thunderforest, osm, waymarkedtrails;
     var menu=null;
-    var last_actions=null
+    var last_actions=null;
     var icon="leaflet-marker-icon leaflet-zoom-animated leaflet-clickable leaflet-marker-draggable";
 
     L.Icon.Default.imagePath = mapConfig.iconImagePath;
@@ -75,7 +83,7 @@ function initMap(mapConfig){
     }
 
 
-    routing = new L.Routing({
+    var routing = new L.Routing({
         position: 'bottomright'
         ,routing: {
             router: router
@@ -98,7 +106,7 @@ function initMap(mapConfig){
 // Routing plugin methods overrided
     routing._waypointClickHandler= function(e){
         showPopUpMenu(e);
-    }
+    };
     map.addControl(routing);
 
 
@@ -321,7 +329,7 @@ function initMap(mapConfig){
         var first=routing.getFirst();
         var last=routing.getLast();
         var distance=0;
-        if(first){
+        if(first && mapConfig.resumeValues.startSite == null){
             map.createPickUpWaypoint(first,'Punto inicio');
             if(first._routing && first._routing.nextMarker && first._routing.nextMarker!==last &&
                 (!first._routing.nextMarker.pickUp || first._routing.nextMarker.pickUp==false
@@ -337,8 +345,10 @@ function initMap(mapConfig){
                 aux.splice(3,1);
                 $("#start").html(aux.toString());
             });
+        } else if(mapConfig.resumeValues.startSite != null) {
+            $("#start").html(mapConfig.resumeValues.startSite);
         }
-        if(last){
+        if(last && mapConfig.resumeValues.endSite == null){
             map.createPickUpWaypoint(last,'Punto fin');
             if(last._routing && last._routing.prevMarker && last._routing.prevMarker!==routing.getFirst() &&
                 ( !last._routing.prevMarker.pickUp ||last._routing.prevMarker.pickUp==false
@@ -352,8 +362,16 @@ function initMap(mapConfig){
                 aux.splice(3,1);
                 $("#finish").html(aux.toString());
             });
+        } else if(mapConfig.resumeValues.endSite !=null) {
+            $("#finish").html(mapConfig.resumeValues.endSite);
         }
-        if(first && last)$("#distance").html(map.getDistance()+" m");
+        if(first && last){
+            if(mapConfig.resumeValues.distance==null){
+                $("#distance").html(map.getDistance()+" m");
+            } else {
+                $("#distance").html(mapConfig.resumeValues.distance);
+            }
+        }
         $(".leaflet-marker-icon").on();
         for(var marker in map._layers)if(map._layers[marker]._icon && map._layers[marker]._icon.className===icon)
             map._layers[marker].on('contextmenu',showPopUpMenu);
@@ -370,7 +388,7 @@ function initMap(mapConfig){
             }
             else last=first;
             var distance=0;
-            if(first){
+            if(first && mapConfig.resumeValues.startSite==null){
                 geocoder.reverse(first, map.options.crs.scale(16), function(results) {
                     var r = results[0];
                     var aux=r.name.split(',');
@@ -378,8 +396,10 @@ function initMap(mapConfig){
                     aux.splice(3,1);
                     $("#start_resume").html(aux.toString());
                 });
+            } else if (mapConfig.resumeValues.startSite!=null) {
+                $("#start_resume").html(mapConfig.resumeValues.startSite);
             }
-            if(last){
+            if(last && mapConfig.resumeValues.endSite == null){
                 geocoder.reverse(last, map.options.crs.scale(16), function(results) {
                     var r = results[0];
                     var aux=r.name.split(',');
@@ -387,6 +407,8 @@ function initMap(mapConfig){
                     aux.splice(3,1);
                     $("#finish_resume").html(aux.toString());
                 });
+            } else if(mapConfig.resumeValues.endSite!=null) {
+                $("#finish_resume").html(mapConfig.resumeValues.endSite);
             }
             var aux_distance=new Array();
             for(var i=0;i<mapConfig.events.length-1;i++)aux_distance.push(mapConfig.events[i].latLng);
@@ -593,7 +615,7 @@ function initMap(mapConfig){
 //
     var timestampToSecs=function(a){
         return(a.split(" ")[0]*360+a.split(" ")[1]*60+a.split(" ")[0]*1);
-    }
+    };
     lastId=0;
     var addLast=function(){
         $.ajax({
@@ -633,7 +655,7 @@ function initMap(mapConfig){
             }
         })
 
-    }
+    };
 
 // Event Manager(handle events from DB)
     L.Map.prototype.eventManager=
@@ -721,8 +743,6 @@ function initMap(mapConfig){
 
     if (mapConfig.resume) {
         setTimeout(map.showResumeInfo,1000);
-    } else {
-        setInterval(map.updateRouteInfo,1000);
     }
     if(mapConfig.points){
         map.loadFromWaypoints(mapConfig.points);
