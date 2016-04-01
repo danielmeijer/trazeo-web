@@ -31,7 +31,7 @@ use Trazeo\BaseBundle\Service\MailerHelper;
 class ApiUserController extends Controller
 {
 
-    const APITOKEN="drdpXejHrpGD8vxVpK8AxF3mPSWX3bAyE6EFqaVgBqmBk9EhuaCjpcYGLbn8JAvh5rwTVUG9pLDbqBhcwcxqjqGLWLbyt5YnKKN5Xg7BPnWeU994AWBn3wnuThwQe3XT";
+
     /**
      * Funcion para representar un uso erroneo de la API
      */
