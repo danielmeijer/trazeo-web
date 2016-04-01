@@ -31,6 +31,7 @@ use Trazeo\BaseBundle\Service\MailerHelper;
 class ApiUserController extends Controller
 {
 
+    const APITOKEN="drdpXejHrpGD8vxVpK8AxF3mPSWX3bAyE6EFqaVgBqmBk9EhuaCjpcYGLbn8JAvh5rwTVUG9pLDbqBhcwcxqjqGLWLbyt5YnKKN5Xg7BPnWeU994AWBn3wnuThwQe3XT";
     /**
      * Funcion para representar un uso erroneo de la API
      */
@@ -142,9 +143,17 @@ class ApiUserController extends Controller
         //recabamos los datos de la peticion
         $username = $request->get('username');
         $password = $request->get('password');
+        $token = $request->get('token');
         //se comprueba si el usuario existe
         $em = $this->get('doctrine.orm.entity_manager');
         $userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByNick($username);
+        if ($token != $this::APITOKEN) {
+            $view = View::create()
+                ->setStatusCode(200)
+                ->setData($this->msgDenied("Token not valid"));
+
+            return $this->get('fos_rest.view_handler')->handle($view);
+        }
         if ($userextend != null) {
             $view = View::create()
                 ->setStatusCode(200)
