@@ -31,7 +31,6 @@ use Trazeo\BaseBundle\Service\MailerHelper;
 class ApiUserController extends Controller
 {
 
-
     /**
      * Funcion para representar un uso erroneo de la API
      */
@@ -147,7 +146,7 @@ class ApiUserController extends Controller
         //se comprueba si el usuario existe
         $em = $this->get('doctrine.orm.entity_manager');
         $userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByNick($username);
-        if ($token != $this::APITOKEN) {
+        if ($token != $this->container->getParameter('api_token')) {
             $view = View::create()
                 ->setStatusCode(200)
                 ->setData($this->msgDenied("Token not valid"));
