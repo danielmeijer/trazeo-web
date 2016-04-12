@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\DatagridBundle\ProxyQuery\Doctrine\ProxyQuery;
 use Symfony\Component\Security\Core\SecurityContextInterface;
+use Trazeo\BaseBundle\Entity\EChild;
 use Trazeo\BaseBundle\Entity\EGroup;
 use Trazeo\BaseBundle\Service\Helper;
 use Trazeo\MyPageBundle\Entity\Page;
@@ -34,7 +35,7 @@ class EGroupAdmin extends Admin
     }
 
     /**
-     * @param DatagridMapper $datagridMapper
+     * {@inheritdoc}
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
@@ -49,12 +50,11 @@ class EGroupAdmin extends Admin
             ->add('inviteGroup')
             ->add('ride')
             ->add('createdAt')
-            ->add('updatedAt')
-        ;
+            ->add('updatedAt');
     }
 
     /**
-     * @param ListMapper $listMapper
+     * {@inheritdoc}
      */
     protected function configureListFields(ListMapper $listMapper)
     {
@@ -77,12 +77,11 @@ class EGroupAdmin extends Admin
                 )
             ))
             ->add('createdAt')
-            ->add('updatedAt')  
-        ;
+            ->add('updatedAt');
     }
 
     /**
-     * @param FormMapper $formMapper
+     * {@inheritdoc}
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
@@ -99,12 +98,11 @@ class EGroupAdmin extends Admin
             ) ))
             ->add('inviteGroup')
             ->add('ride')
-            ->add('page')
-        ;
+            ->add('page');
     }
 
     /**
-     * @param ShowMapper $showMapper
+     * {@inheritdoc}
      */
     protected function configureShowFields(ShowMapper $showMapper)
     {
@@ -112,10 +110,12 @@ class EGroupAdmin extends Admin
             ->add('id')
             ->add('visibility')
             ->add('hasRide')
-            ->add('name')
-        ;
+            ->add('name');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createQuery($context = 'list')
     {
         //ldd($this->securityContext->isGranted('ROLE_ADMIN'));
@@ -124,8 +124,7 @@ class EGroupAdmin extends Admin
 
         $query = parent::createQuery($context);
 
-        if(!$this->securityContext->isGranted('ROLE_SUPER_ADMIN'))
-        {
+        if (!$this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
             $user = $this->securityContext->getToken()->getUser();
 
             /** @var Helper $helper */
@@ -133,52 +132,66 @@ class EGroupAdmin extends Admin
             /** @var Page $page */
             $page = $helper->getPageBySubdomain();
 
-            if ($page == null) die("No Project for you");
+            if ($page == null) {
+                die("No Project for you");
+            }
 
-            if ($page->getUserextend()->getUser()->getId() != $user->getId()) die("No Project for you");
+            if ($page->getUserextend()->getUser()->getId() != $user->getId()) {
+                die("No Project for you");
+            }
 
-            foreach($page->getGroups() as $group) {
+            foreach ($page->getGroups() as $group) {
                 $query->orWhere($query->getRootAlias() . '.id=' . $group->getId());
             }
-            /**
-            $query->add('select', '*')
-                //->add('from'  , 'ApplicationSonataUserBundle:User c')
-                ->orWhere($query->getRootAlias().".id=80");
-                //->orWhere($query->getRootAlias().'.id='.$user->getId());
-            ;
-             **/
-
-            /**foreach ($user->getChildren()->toArray() as $user) {
-                $query->orWhere($query->getRootAlias().'.id='.$user->getId());
-                foreach ($user->getChildren()->toArray() as $user) {
-                    $query->orWhere($query->getRootAlias().'.id='.$user->getId());
-                }
-            }**/
         }
-
-        //if is logged admin, show all data
-        /**
-        if ($this->securityContext->isGranted('ROLE_ADMIN')) {
-            $queryBuilder->select('p')
-                ->from($this->getClass(), 'p')
-            ;
-        } else {
-            //for other users, show only data, which belongs to them
-            $adminId = $this->securityContext->getToken()->getUser()->getAdminId();
-
-            $queryBuilder->select('p')
-                ->from($this->getClass(), 'p')
-                ->where('p.adminId=:adminId')
-                ->setParameter('adminId', $adminId, Type::INTEGER)
-            ;
-        }
-         **/
 
         return $query;
+    }
 
-        /**
-        $proxyQuery = new ProxyQuery($queryBuilder);
-        return $proxyQuery;
-         **/
+    /**
+     * {@inheritdoc}
+     */
+    public function preUpdate($group)
+    {
+        // Si elimino un padre se quitan los niños que pueda tener
+
+        /** @var EGroup $group */
+        /** @var EChild $child */
+        foreach ($group->getChilds() as $child) {
+            $isChild = false;
+            foreach ($child->getUserextendchilds() as $userC) {
+                foreach ($group->getUserextendgroups() as $userG) {
+                    if ($userC->getId() == $userG->getId()) {
+                        $isChild = true;
+                    }
+                }
+            }
+            if (!$isChild) {
+                $group->removeChild($child);
+            }
+        }
+
+        //Si saco de un grupo a un padre sale tb del chat
+        if ($group->getChat()!=null) {
+            $chat=$group->getChat();
+            $chat->getChatMembers()->map(function($chatMember) use($group) {
+                /** @var UserExtend $chatMember */
+                if (!$group->getUserextendgroups()->exists($chatMember)) {
+                    $chatMember->removeChat($group->getChat());
+                    $group->getChat()->removeChatMember($chatMember);
+
+                    return null;
+                }
+                /** @var EntityManager $em */
+                $em=$this->container->get('doctrine.orm.default_entity_manager');
+                $em->persist($chatMember);
+
+                return $chatMember;
+            });
+            /** @var EntityManager $em */
+            $em=$this->container->get('doctrine.orm.default_entity_manager');
+            $em->persist($chat);
+            $em->flush();
+        }
     }
 }
