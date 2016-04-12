@@ -174,11 +174,11 @@ class PGroupAdmin extends Admin
         }
 
         //Si saco de un grupo a un padre sale tb del chat
-        if ($group->getChat()!=null){
+        if ($group->getChat()!=null) {
             $chat=$group->getChat();
             $chat->getChatMembers()->map(function($chatMember) use($group) {
                 /** @var UserExtend $chatMember */
-                if (!$group->getUserextendgroups()->exists($chatMember)) {
+                if (!$group->getUserextendgroups()->contains($chatMember)) {
                     $chatMember->removeChat($group->getChat());
                     $group->getChat()->removeChatMember($chatMember);
                     return null;

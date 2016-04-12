@@ -176,7 +176,7 @@ class EGroupAdmin extends Admin
             $chat=$group->getChat();
             $chat->getChatMembers()->map(function($chatMember) use($group) {
                 /** @var UserExtend $chatMember */
-                if (!$group->getUserextendgroups()->exists($chatMember)) {
+                if (!$group->getUserextendgroups()->contains($chatMember)) {
                     $chatMember->removeChat($group->getChat());
                     $group->getChat()->removeChatMember($chatMember);
 
