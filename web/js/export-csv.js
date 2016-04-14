@@ -278,7 +278,7 @@
                 '<x:Name>Ark1</x:Name>' +
                 '<x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->' +
                 '<style>td{border:none;font-family: Calibri, sans-serif;} .number{mso-number-format:"0.00";}</style>' +
-                '<meta name=ProgId content=Excel.Sheet>' +
+                '<meta name=ProgId content="Excel.Sheet">' +
                 '</head><body>' +
                 this.getTable(true) +
                 '</body></html>',
@@ -316,9 +316,6 @@
         Highcharts.getOptions().exporting.buttons.contextButton.menuItems.push({
             textKey: 'downloadCSV',
             onclick: function () { this.downloadCSV(); }
-        }, {
-            textKey: 'downloadXLS',
-            onclick: function () { this.downloadXLS(); }
         }, {
             textKey: 'viewData',
             onclick: function () { this.viewData(); }
