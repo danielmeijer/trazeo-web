@@ -274,6 +274,7 @@ class StatsAdminController extends Controller
             $obEdad->chart->renderTo('edad');
             $obEdad->title->text('Gráfico por Edad');
             $obEdad->xAxis->categories($label_years);
+            $obEdad->xAxis->title(array('text'  => "Edad"));
             $obEdad->plotOptions->pie(array(
                 'allowPointSelect'  => true,
                 'cursor'    => 'pointer',
@@ -286,6 +287,7 @@ class StatsAdminController extends Controller
             $obSexo = new Highchart();
             $obSexo->chart->renderTo('sexo');
             $obSexo->title->text('Gráfico por Sexo');
+            $obSexo->xAxis->title(array('text'  => "Genero"));
             $obSexo->plotOptions->pie(array(
                 'allowPointSelect'  => true,
                 'cursor'    => 'pointer',
@@ -302,6 +304,7 @@ class StatsAdminController extends Controller
             $obColegio = new Highchart();
             $obColegio->chart->renderTo('colegio');
             $obColegio->title->text('Gráfico por Colegio');
+            $obColegio->xAxis->title(array('text'  => "Colegio"));
             $obColegio->xAxis->categories($data_schools);
             $obColegio->plotOptions->pie(array(
                 'allowPointSelect'  => true,
@@ -316,6 +319,7 @@ class StatsAdminController extends Controller
             $obGrupo->chart->renderTo('grupo');
             $obGrupo->title->text('Gráfico por Grupo');
             $obGrupo->xAxis->categories($data_groups);
+            $obGrupo->xAxis->title(array('text'  => "Grupo"));
             $obGrupo->plotOptions->pie(array(
                 'allowPointSelect'  => true,
                 'cursor'    => 'pointer',
@@ -329,6 +333,7 @@ class StatsAdminController extends Controller
             $obUsersColegio = new Highchart();
             $obUsersColegio->chart->renderTo('users_colegio');
             $obUsersColegio->title->text('Gráfico por Colegio');
+            $obUsersColegio->xAxis->title(array('text'  => "Colegio"));
             $obUsersColegio->xAxis->categories($data_users_schools);
             $obUsersColegio->plotOptions->pie(array(
                 'allowPointSelect'  => true,
@@ -343,6 +348,7 @@ class StatsAdminController extends Controller
             $obUsersGrupo->chart->renderTo('users_grupo');
             $obUsersGrupo->title->text('Gráfico por Grupo');
             $obUsersGrupo->xAxis->categories($data_users_groups);
+            $obUsersGrupo->xAxis->title(array('text'  => "Colegio"));
             $obUsersGrupo->plotOptions->pie(array(
                 'allowPointSelect'  => true,
                 'cursor'    => 'pointer',

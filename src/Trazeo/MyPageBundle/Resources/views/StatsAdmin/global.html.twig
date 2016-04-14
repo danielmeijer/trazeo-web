@@ -1,5 +1,10 @@
 {% extends 'TrazeoMyPageBundle:Admin:custom_project_layout.html.twig' %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/tableToCsv.js') }}"></script>
+{% endblock %}
+
 {% block content %}
     <form method="POST" action="{{ path('stats_global') }}">
         {% form_theme form_filters 'TrazeoMyPageBundle:Form:bootstrap.12_label.html.twig' %}
@@ -16,7 +21,7 @@
 
     {% if (data.km is defined) %}
     <h2>{{ "customAdmin.stats.global.table.title"|trans }}</h2>
-    <table class="table table-bordered table-striped sonata-ba-list">
+    <table id="resume" class="table table-bordered table-striped sonata-ba-list">
         <thead>
             <tr class="sonata-ba-list-field-header">
                 <th>{{ "customAdmin.stats.global.table.data"|trans }}</th>
@@ -32,6 +37,10 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <a href="" download="export-global.csv" class="btn btn-primary center-block" onclick="$('#resume').toCSV($(this))">
+        Exportar en CSV
+    </a>
     {% endif %}
 
 {% endblock %}
