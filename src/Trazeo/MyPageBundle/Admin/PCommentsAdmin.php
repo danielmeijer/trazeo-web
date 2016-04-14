@@ -210,4 +210,18 @@ class PCommentsAdmin extends Admin
             return;
         }
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getExportFields()
+    {
+        return array(
+            'Autor'=>'author',
+            'Fecha'=>'createdAt',
+            'Mensaje'=>'body',
+            'Me gusta'=>'score'
+        );
+    }
+
 }

@@ -156,13 +156,16 @@ class PRideAdmin extends Admin
 
     public function getExportFields() {
         return array(
-            'id',
-            'countChildsR',
-            'duration',
-            'distance',
-            'groupRegistered',
-            'reports',
-            'createdAt'
+            'Numero de niños'=>'countChildsR',
+            'Duración'=>'duration',
+            'Distancía en metros'=>'distance',
+            'Grupo'=>'groupRegistered.name',
+            'Numero de reportes'=>'reports',
+            'Fecha del paseo'=>'formatDate',
+            '% del Ejercico diario'=>'diaryExercise',
+            'Pasos dados'=>'steps',
+            'Redución de emisiones CO2(gr)'=>'cO2Reduction',
+            'Calorias consumidas(por niño)'=>'caloriesConsumption'
         );
     }
 
@@ -241,4 +244,6 @@ class PRideAdmin extends Admin
             return;
         }
     }
+
+
 }
