@@ -173,22 +173,24 @@ class PGroupAdmin extends Admin
             }
         }
         $chat=$group->getChat();
-        $chat->getChatMembers()->map(function($chatMember) use($group) {
-            /** @var UserExtend $chatMember */
-            if (!$group->getUserextendgroups()->exists($chatMember)) {
-                $chatMember->removeChat($group->getChat());
-                $group->getChat()->removeChatMember($chatMember);
-                return null;
-            }
+        if ($chat!=null){
+            $chat->getChatMembers()->map(function($chatMember) use($group) {
+                /** @var UserExtend $chatMember */
+                if (!$group->getUserextendgroups()->contains($chatMember)) {
+                    $chatMember->removeChat($group->getChat());
+                    $group->getChat()->removeChatMember($chatMember);
+                    return null;
+                }
+                /** @var EntityManager $em */
+                $em=$this->container->get('doctrine.orm.default_entity_manager');
+                $em->persist($chatMember);
+                return $chatMember;
+            });
             /** @var EntityManager $em */
             $em=$this->container->get('doctrine.orm.default_entity_manager');
-            $em->persist($chatMember);
-            return $chatMember;
-        });
-        /** @var EntityManager $em */
-        $em=$this->container->get('doctrine.orm.default_entity_manager');
-        $em->persist($chat);
-        $em->flush();
+            $em->persist($chat);
+            $em->flush();
+        }
     }
 
     /**
@@ -203,4 +205,5 @@ class PGroupAdmin extends Admin
             'Numero de niños'=>'numberChilds'
         );
     }
+
 }
