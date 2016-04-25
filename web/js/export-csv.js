@@ -146,7 +146,7 @@
         var csv = '',
             rows = this.getDataRows(),
             options = (this.options.exporting || {}).csv || {},
-            itemDelimiter = options.itemDelimiter || ',', // use ';' for direct import to Excel
+            itemDelimiter = options.itemDelimiter || ';', // use ';' for direct import to Excel
             lineDelimiter = options.lineDelimiter || '\n'; // '\n' isn't working with the js csv data extraction
 
         // Transform the rows to CSV
@@ -261,7 +261,7 @@
         var csv = this.getCSV(true);
         getContent(
             this,
-            'data:text/csv,' + csv.replace(/\n/g, '%0A'),
+            'data:text/csv;charset=UTF-8,%EF%BB%BF' + csv.replace(/\n/g, '%0A'),
             'csv',
             csv,
             'text/csv'

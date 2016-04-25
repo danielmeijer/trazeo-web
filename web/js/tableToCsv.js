@@ -13,6 +13,7 @@
             if($(this).find("th").length) {
                 $(this).find("th").each(function() {
                     tmpStr = $(this).text().replace(/"/g, '""');
+                    tmpStr = $(this).text().replace(/,/g, ';');
                     tmpArr.push('"' + tmpStr + '"');
                 });
                 csvData.push(tmpArr);
@@ -26,11 +27,12 @@
                         tmpArr.push('"' + tmpStr + '"');
                     }
                 });
-                csvData.push(tmpArr.join(','));
+                csvData.push(tmpArr.join(';'));
             }
         });
+        csvData[0] = csvData[0].join(';');
         var output = csvData.join('\n');
-        var uri = 'data:application/csv;charset=UTF-8,' + encodeURIComponent(output);
+        var uri = 'data:application/csv;charset=UTF-8,%EF%BB%BF' + encodeURIComponent(output);
         $link.attr("href", uri);
     }
 })(jQuery);
