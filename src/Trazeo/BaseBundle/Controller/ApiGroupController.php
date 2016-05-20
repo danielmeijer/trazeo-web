@@ -536,6 +536,12 @@ class ApiGroupController extends Controller
             $groupRepository->joinGroup($idGroup, $userextend);
             $info['joined'] = 'true';
             $response = json_encode($info);
+            $group=$groupRepository->find($idGroup);
+            if ($group->getPage()!=null) {
+               $page=$group->getPage();
+               $message=$this->get('trazeo_mailer_helper')->createNewMessage('hola@trazeo.es','Trazeo',$page->getDataEmail(),'Un usuario se ha unido al grupo '.$group->getName(), $this->render('TrazeoFrontBundle:Email:userGroupJoin.html.twig', array('user'=>$userextend,'group'=>$group)));
+               $this->get('trazeo_mailer_helper')->sendMessage($message);
+            }
 
             return new Response($response, 200, array(
                 'Content-Type' => 'application/json'
@@ -641,7 +647,8 @@ class ApiGroupController extends Controller
 
             $fos_user_admin = $groupAdminUser->getUser();
             //ldd($fos_user_admin);
-            $url = $this->get('trazeo_base_helper')->getAutoLoginUrl($groupAdminUser->getUser(), 'panel_group');
+            $url = $this->container->get('urlhelper')->generateUrl('panel_group',$groupAdminUser->getUser());
+            //$url = $this->get('trazeo_base_helper')->getAutoLoginUrl($groupAdminUser->getUser(), 'panel_group');
             $not = $this->container->get('sopinet_user_notification');
             $el = $not->addNotification(
                 'group.join.request',
@@ -765,7 +772,6 @@ class ApiGroupController extends Controller
 
         // Comprobar que existen
         if ($requestUser && $requestGroup == true) {
-
             // Si existen, obtener el id de su registro en la base de datos
             $requestUserId = $requestUser->getId();
             $requestGroupId = $requestGroup->getId();
