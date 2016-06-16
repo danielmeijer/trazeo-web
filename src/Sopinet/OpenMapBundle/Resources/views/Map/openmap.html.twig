@@ -799,10 +799,11 @@
         var dbRequest=setInterval(addLast,5000);
     }
 
-    if(resume) setTimeout(map.showResumeInfo,1000);
-    else setInterval(map.updateRouteInfo,1000);
-    if(points)map.loadFromWaypoints(points);
-    map.updateRouteInfo();
+    setTimeout(map.showResumeInfo,1000);
+    setTimeout(map.updateRouteInfo,1000);
+    if(points){
+        map.loadFromWaypoints(points);
+    }
     map.disableRouting();
 
 
