@@ -7,14 +7,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class Helper {
 	private $_container;
-				
+
 	function __construct(ContainerInterface $container) {
 		$this->_container = $container;
 	}
-	
+
 	/**
 	 * Get cities from city String
-	 * 
+	 *
 	 * @param String $city
 	 * @param number $limit
 	 * @param Boolean $objects
@@ -24,9 +24,9 @@ class Helper {
 		$em = $this->_container->get("doctrine.orm.entity_manager");
 
 		$reJJ = $em->getRepository("JJsGeonamesBundle:City");
-		
+
 		$query = $reJJ->createQueryBuilder('a');
-		
+
 		if(!$objects)$param_return="a.id, a.nameUtf8";
 		else $param_return="a";
 
@@ -35,12 +35,12 @@ class Helper {
 		->setParameter('name', '%'.$city.'%')
 		->setMaxResults($limit)
 		->addOrderBy('a.id');
-		
+
 		$cities = $query->getQuery()->getArrayResult();
 
 		// Función que compara los elementos segun su coincidencía
 		function sorter($city) {
-			
+
 			return function ($a, $b) use ($city) {
 				if(is_array($a)){
 					similar_text($a['nameUtf8'],$city,$a_percent);
@@ -62,8 +62,8 @@ class Helper {
 			};
 		}
 		usort($cities, sorter($city));
-		
-		//En caso de querer devolver un array de objetos lo construye 
+
+		//En caso de querer devolver un array de objetos lo construye
 		if ($objects) {
 			$cities_old = $cities;
 			$cities = array();
@@ -71,7 +71,7 @@ class Helper {
 				$cities[] = $reJJ->findOneById($c['id']);
 			}
 		}
-		return $cities;		
+		return $cities;
 	}
 	/**
 	 *
@@ -87,6 +87,22 @@ class Helper {
 		$path = substr($path, $pos);
 		return $path;
 	}
+
+    function getSubdomain(){
+        if ($_SERVER['HTTP_HOST'] == "localhost" && $subdomain == null) {
+            $subdomain = "torrelodones";
+        }
+
+        if ($subdomain == null) {
+            $parts=explode('.', $_SERVER["SERVER_NAME"]);
+            $subdomain = $parts[0];
+        }
+
+        if ($subdomain == "beta" || $subdomain == "app") {
+            return null;
+        }
+        return $subdomain;
+    }
 
     function getPageBySubdomain($subdomain = null) {
         // TODO: DEBUG
