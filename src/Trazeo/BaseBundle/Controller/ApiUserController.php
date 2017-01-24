@@ -134,6 +134,15 @@ class ApiUserController extends Controller
 
 
     /**
+     * @ApiDoc(
+     *   description="Función para registrar un usuario",
+     *   section="user",
+     *   parameters={
+     *      {"name"="username", "dataType"="string", "required"=true, "description"="Email del usuario "},
+     *      {"name"="password", "dataType"="string", "required"=true, "description"="Password del usuario"},
+     *      {"name"="token", "dataType"="string", "required"=true, "description"="Password del usuario"}
+     *   }
+     * )
      * @POST("/api/register")
      * @param Request request
      */

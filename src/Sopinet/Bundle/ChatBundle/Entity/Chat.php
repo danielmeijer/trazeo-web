@@ -294,7 +294,7 @@ class Chat
      *
      * @return \Doctrine\Common\Collections\Collection
      * @VirtualProperty
-     * @SerializedName('chatMembers')
+     * @SerializedName("chatMembers")
      */
     public function getChatMembers()
     {

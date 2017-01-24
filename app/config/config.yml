@@ -196,12 +196,6 @@ services:
         tags:
             - { name: doctrine.event_subscriber }
 
-    trazeo.sonataPersistlistener:
-        class: Trazeo\BaseBundle\Listener\SonataListener
-        arguments: ['@doctrine.orm.default_entity_manager']
-        tags:
-            - { name: kernel.event_listener, event: sonata.admin.event.persistence.pre_update, method: onPreUpdate }
-
     sopinet_flashMessages:
         class:        Sopinet\FlashMessagesBundle\Service\FlashNotifier
         arguments:
