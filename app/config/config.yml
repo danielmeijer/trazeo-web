@@ -1,6 +1,5 @@
 imports:
     - { resource: parameters.yml }
-    - { resource: security.yml }
     - { resource: "../../vendor/sopinet/userbundle/Sopinet/UserBundle/Resources/config/config.yml" }
     - { resource: ../../vendor/knplabs/doctrine-behaviors/config/orm-services.yml }
 
