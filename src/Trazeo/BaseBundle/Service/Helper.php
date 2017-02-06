@@ -92,7 +92,7 @@ class Helper {
         // TODO: DEBUG
         if ($_SERVER['HTTP_HOST'] == "localhost" && $subdomain == null) $subdomain = "torrelodones";
         if ($subdomain == null) {
-            $parts=explode('.', $_SERVER["SERVER_NAME"]);
+            $parts=explode('.', $_SERVER["HTTP_HOST"]);
             $subdomain = $parts[0];
         }
 
