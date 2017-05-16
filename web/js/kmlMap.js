@@ -679,7 +679,7 @@ function initMap(mapConfig) {
         }
     };
 // Mapa tiempo real
-    if(mapConfig.realTime){
+    if(mapConfig.realtime){
         //if(events.length>0)map.loadFromEvents(events);
         var dbRequest=setInterval(addLast,5000);
     }
