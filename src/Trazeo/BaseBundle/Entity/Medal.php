@@ -32,7 +32,7 @@ class Medal extends AbstractEntity
     protected $title;
 
     /**
-     * @ORM\Column(name="description", type="string", length=255)
+     * @ORM\Column(name="description", type="string", length=1000)
      */
     protected $description;
 

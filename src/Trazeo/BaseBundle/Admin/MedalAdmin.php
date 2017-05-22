@@ -31,7 +31,7 @@ class MedalAdmin extends Admin
         $listMapper
             ->addIdentifier('id')
             ->add('title')
-            ->add('description')
+            ->add('description', null, array('label' => 'Descripción de medalla'))
             ->add('image')
             ->add('childs')
             ->add('_action', 'actions', array(
@@ -50,7 +50,7 @@ class MedalAdmin extends Admin
     {
         $formMapper
             ->add('title')
-            ->add('description')
+            ->add('description', null, array('label' => 'Descripción de medalla'))
             ->add('image')
             ->add('childs')
         ;
@@ -64,7 +64,7 @@ class MedalAdmin extends Admin
         $showMapper
             ->add('id')
             ->add('title')
-            ->add('description')
+            ->add('description', null, array('label' => 'Descripción de medalla'))
             ->add('image')
             ->add('childs')
             ->add('createdAt')
