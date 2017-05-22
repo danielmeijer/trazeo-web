@@ -1323,64 +1323,6 @@
             "time": "2016-01-01 19:09:42"
         },
         {
-            "name": "endroid/qrcode-bundle",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/endroid/EndroidQrCodeBundle.git",
-                "reference": "38a986b10b7dbca6972473f900752e58642c2294"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/endroid/EndroidQrCodeBundle/zipball/38a986b10b7dbca6972473f900752e58642c2294",
-                "reference": "38a986b10b7dbca6972473f900752e58642c2294",
-                "shasum": ""
-            },
-            "require": {
-                "endroid/qrcode": "^1.0",
-                "php": ">=5.3.0",
-                "sensio/framework-extra-bundle": "^3.0",
-                "symfony/http-kernel": "^2.3|^3.0"
-            },
-            "require-dev": {
-                "symfony/browser-kit": "^2.3|^3.0",
-                "symfony/framework-bundle": "^2.3|^3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Endroid\\Bundle\\QrCodeBundle\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jeroen van den Enden",
-                    "email": "info@endroid.nl",
-                    "homepage": "http://endroid.nl/"
-                }
-            ],
-            "description": "Endroid Qr Code Bundle for Symfony",
-            "homepage": "https://github.com/endroid/EndroidQrCodeBundle",
-            "keywords": [
-                "bundle",
-                "code",
-                "endroid",
-                "qr",
-                "qrcode",
-                "symfony"
-            ],
-            "time": "2016-01-05 20:19:18"
-        },
-        {
             "name": "friendsofsymfony/comment-bundle",
             "version": "dev-master",
             "target-dir": "FOS/CommentBundle",

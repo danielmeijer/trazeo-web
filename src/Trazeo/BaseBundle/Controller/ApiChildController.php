@@ -246,4 +246,42 @@ class ApiChildController extends Controller
 
         return $this->get('fos_rest.view_handler')->handle($view);
     }
+
+    /**
+     * @POST("/api/user/childrenMedals")
+     */
+    public function getUserChildrenMedalsAction(Request $request) {
+        $user = $this->checkPrivateAccess($request);
+        if ($user == false || $user == null) {
+            $view = View::create()
+                ->setStatusCode(200)
+                ->setData($this->msgDenied());
+
+            return $this->get('fos_rest.view_handler')->handle($view);
+        }
+
+        $em = $this->get('doctrine.orm.entity_manager');
+
+        $userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
+
+        $childs = $userextend->getChilds();
+
+        $childrenOk = array();
+        /** @var EChild $child */
+        foreach($childs as $child) {
+            if (count($child->getMedals()) > 0) {
+                $childOk = array();
+                $childOk['id'] = $child->getId();
+                $childOk['name'] = $child->getNick();
+                $childOk['medals'] = $child->getMedals();
+                $childrenOk[] = $childOk;
+            }
+        }
+
+        $view = View::create()
+            ->setStatusCode(200)
+            ->setData($this->doOK($childrenOk));
+
+        return $this->get('fos_rest.view_handler')->handle($view);
+    }
 }

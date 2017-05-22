@@ -57,7 +57,7 @@ class AppKernel extends Kernel
             new Sopinet\Bundle\UserNotificationsBundle\SopinetUserNotificationsBundle(),
             new Sopinet\FlashMessagesBundle\SopinetFlashMessagesBundle(),
             new Lunetics\LocaleBundle\LuneticsLocaleBundle(),
-            new Endroid\Bundle\QrCodeBundle\EndroidQrCodeBundle(),
+            //new Endroid\Bundle\QrCodeBundle\EndroidQrCodeBundle(),
             new Sopinet\Bundle\GamificationBundle\SopinetGamificationBundle(),
             new Sopinet\Bundle\SuggestionBundle\SopinetSuggestionBundle(),
             new Sopinet\GCMBundle\SopinetGCMBundle(),
@@ -71,7 +71,7 @@ class AppKernel extends Kernel
             new Sopinet\Bundle\ChatBundle\SopinetChatBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new RMS\PushNotificationsBundle\RMSPushNotificationsBundle(),
-            new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle()
+            new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

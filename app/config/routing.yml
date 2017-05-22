@@ -112,10 +112,10 @@ fos_comment_api:
     prefix: /api
     defaults: { _format: html }
     
-EndroidQrCodeBundle:
-    resource:   "@EndroidQrCodeBundle/Controller/"
-    type:       annotation
-    prefix:     /qrcode
+#EndroidQrCodeBundle:
+#    resource:   "@EndroidQrCodeBundle/Controller/"
+#    type:       annotation
+#    prefix:     /qrcode
 
 sopinet_autologin:
     resource: "@SopinetAutologinBundle/Resources/config/routing.yml"

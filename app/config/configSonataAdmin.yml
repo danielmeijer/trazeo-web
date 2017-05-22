@@ -1,5 +1,11 @@
 # Services
 services:
+    trazeo_base.admin.e_medal:
+        class: Trazeo\BaseBundle\Admin\MedalAdmin
+        arguments: [~, Trazeo\BaseBundle\Entity\Medal, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Medallas}
+
     trazeo_base.admin.e_child:
         class: Trazeo\BaseBundle\Admin\EChildAdmin
         arguments: [~, Trazeo\BaseBundle\Entity\EChild, SonataAdminBundle:CRUD]

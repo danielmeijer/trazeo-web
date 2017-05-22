@@ -89,6 +89,12 @@ class EChild extends AbstractEntity
      */
     protected $scholl;
 
+    /**
+     *  @ORM\ManyToMany(targetEntity="Medal", mappedBy="childs")
+     *  @Exclude
+     */
+    protected $medals;
+
     protected $emailParent;
 
     protected $mobileParent;
@@ -435,5 +441,38 @@ class EChild extends AbstractEntity
         $year_stamp = 31536000;
         $ret = $diff / $year_stamp;
         return round($ret, 0);
+    }
+
+    /**
+     * Add medals
+     *
+     * @param \Trazeo\BaseBundle\Entity\Medal $medals
+     * @return EChild
+     */
+    public function addMedal(\Trazeo\BaseBundle\Entity\Medal $medals)
+    {
+        $this->medals[] = $medals;
+
+        return $this;
+    }
+
+    /**
+     * Remove medals
+     *
+     * @param \Trazeo\BaseBundle\Entity\Medal $medals
+     */
+    public function removeMedal(\Trazeo\BaseBundle\Entity\Medal $medals)
+    {
+        $this->medals->removeElement($medals);
+    }
+
+    /**
+     * Get medals
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMedals()
+    {
+        return $this->medals;
     }
 }
