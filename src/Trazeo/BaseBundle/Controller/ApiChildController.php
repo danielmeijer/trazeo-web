@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Trazeo\BaseBundle\Entity\EChild;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class ApiChildController extends Controller
 {
@@ -248,6 +249,18 @@ class ApiChildController extends Controller
     }
 
     /**
+     * @param Request $request
+     *
+     * @return View|Response
+     * @ApiDoc(
+     *   description="Función que devuelve el listado medallas",
+     *   section="child",
+     *   parameters={
+     *      {"name"="email", "dataType"="string", "required"=true, "description"="Email del usuario"},
+     *      {"name"="pass", "dataType"="string", "required"=true, "description"="Password del usuario"},
+     *   }
+     * )
+     *
      * @POST("/api/user/childrenMedals")
      */
     public function getUserChildrenMedalsAction(Request $request) {
@@ -269,13 +282,11 @@ class ApiChildController extends Controller
         $childrenOk = array();
         /** @var EChild $child */
         foreach($childs as $child) {
-            if (count($child->getMedals()) > 0) {
-                $childOk = array();
-                $childOk['id'] = $child->getId();
-                $childOk['name'] = $child->getNick();
-                $childOk['medals'] = $child->getMedals();
-                $childrenOk[] = $childOk;
-            }
+            $childOk = array();
+            $childOk['id'] = $child->getId();
+            $childOk['name'] = $child->getNick();
+            $childOk['medals'] = $child->getMedals();
+            $childrenOk[] = $childOk;
         }
 
         $view = View::create()

@@ -12,6 +12,11 @@ use JMS\Serializer\Annotation\Exclude;
  */
 class Medal extends AbstractEntity
 {
+    public function __toString()
+    {
+        return $this->getTitle();
+    }
+
     use ORMBehaviors\Timestampable\Timestampable;
 
     /**
@@ -39,6 +44,7 @@ class Medal extends AbstractEntity
     /**
      * @ORM\ManyToMany(targetEntity="EChild", inversedBy="medals")
      * @ORM\JoinTable(name="medals_childs")
+     *  @Exclude
      **/
     protected $childs;
     /**

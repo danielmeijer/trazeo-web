@@ -452,6 +452,7 @@ class EChild extends AbstractEntity
     public function addMedal(\Trazeo\BaseBundle\Entity\Medal $medals)
     {
         $this->medals[] = $medals;
+        $medals->addChild($this);
 
         return $this;
     }
@@ -464,6 +465,7 @@ class EChild extends AbstractEntity
     public function removeMedal(\Trazeo\BaseBundle\Entity\Medal $medals)
     {
         $this->medals->removeElement($medals);
+        $medals->removeChild($this);
     }
 
     /**

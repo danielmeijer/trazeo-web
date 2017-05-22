@@ -72,6 +72,7 @@ class EChildAdmin extends Admin
             ->add('ride')
             ->add('inviteChild')
             ->add('scholl')
+            //->add('medals')
         ;
     }
 
