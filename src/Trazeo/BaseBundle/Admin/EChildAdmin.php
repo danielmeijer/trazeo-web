@@ -26,6 +26,7 @@ class EChildAdmin extends Admin
             ->add('ride')
             ->add('groups')
             ->add('inviteChild')
+            ->add('medals')
             ->add('createdAt')
             ->add('updatedAt');
     }
@@ -43,19 +44,18 @@ class EChildAdmin extends Admin
             ->add('visibility')
             ->add('gender')
             ->add('selected')
+            ->add('ride')
+            ->add('groups')
+            ->add('inviteChild')
+            ->add('scholl')
+            ->add('createdAt')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
                 )
-            ))
-            ->add('ride')
-            ->add('groups')
-            ->add('inviteChild')
-            ->add('scholl')
-            ->add('createdAt')
-            ->add('updatedAt');
+            ));
     }
 
     /**
@@ -72,7 +72,7 @@ class EChildAdmin extends Admin
             ->add('ride')
             ->add('inviteChild')
             ->add('scholl')
-            //->add('medals')
+            ->add('medals', 'sonata_type_model', array('multiple' => true, 'by_reference' => false))
         ;
     }
 
@@ -89,6 +89,7 @@ class EChildAdmin extends Admin
             ->add('gender')
             ->add('selected')
             ->add('scholl')
+            ->add('medals')
         ;
     }
 }

@@ -90,7 +90,7 @@ class EChild extends AbstractEntity
     protected $scholl;
 
     /**
-     *  @ORM\ManyToMany(targetEntity="Medal", mappedBy="childs")
+     *  @ORM\ManyToMany(targetEntity="Medal", mappedBy="childs", cascade={"persist"})
      *  @Exclude
      */
     protected $medals;

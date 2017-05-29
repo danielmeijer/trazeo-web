@@ -282,11 +282,13 @@ class ApiChildController extends Controller
         $childrenOk = array();
         /** @var EChild $child */
         foreach($childs as $child) {
-            $childOk = array();
-            $childOk['id'] = $child->getId();
-            $childOk['name'] = $child->getNick();
-            $childOk['medals'] = $child->getMedals();
-            $childrenOk[] = $childOk;
+            if (count($child->getMedals()->toArray()) > 0) {
+                $childOk = array();
+                $childOk['id'] = $child->getId();
+                $childOk['name'] = $child->getNick();
+                $childOk['medals'] = $child->getMedals();
+                $childrenOk[] = $childOk;
+            }
         }
 
         $view = View::create()
