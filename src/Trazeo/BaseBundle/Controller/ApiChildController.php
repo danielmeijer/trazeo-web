@@ -286,7 +286,7 @@ class ApiChildController extends Controller
                 $childOk = array();
                 $childOk['id'] = $child->getId();
                 $childOk['name'] = $child->getNick();
-                $childOk['medals'] = $child->getMedals();
+                $childOk['medals'] = array_reverse($child->getMedals()->toArray());
                 $childrenOk[] = $childOk;
             }
         }
