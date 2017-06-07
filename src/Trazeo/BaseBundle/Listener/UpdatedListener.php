@@ -3,11 +3,15 @@ namespace Trazeo\BaseBundle\Listener;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use FOS\UserBundle\Document\Group;
 use Sopinet\TimelineBundle\Entity\Comment;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Trazeo\BaseBundle\Entity\EGroup;
 use Trazeo\BaseBundle\Entity\UserExtend;
 use Application\Sonata\UserBundle\Entity\User as FOSUser;
 use Trazeo\BaseBundle\Entity\EEvent;
+use Trazeo\BaseBundle\Entity\Medal;
+use Trazeo\BaseBundle\Entity\EChild;
 
 class UpdatedListener implements EventSubscriber {
     private $_container;
@@ -20,6 +24,7 @@ class UpdatedListener implements EventSubscriber {
 	{
 		return array(
 				'postPersist',
+				'preUpdate',
 				'postUpdate'
 		);
 	}	
@@ -27,6 +32,20 @@ class UpdatedListener implements EventSubscriber {
 	public function postPersist(LifecycleEventArgs $args) {
 		$this->execUpdate($args, 'persist');
 	}
+
+	public function preUpdate($args) {
+		// Notificamos al Usuario se han añadido Medallas a su niño
+		$entity = $args->getEntity();
+		if ($entity instanceof EChild) {
+			if ($args->hasChangedField('lastMedals')) {
+				$email = $entity->getEmailParent();
+				$mailer = $this->_container->get('trazeo_mailer_helper');
+				$message = $mailer->createNewMessage('hola@trazeo.es', 'Trazeo', $email, "¡Habéis conseguido una nueva medalla en Trazeo!", "Entra en la sección Medallas de la aplicación móvil y podrás ver el nuevo reconocimiento conseguido al caminar con Trazeo y enseñárselo a tu hijo/a. ¡Enhorabuena!");
+				$mailer->sendMessage($message);
+			}
+		}
+	}
+
 	public function postUpdate(LifecycleEventArgs $args) {
 		$this->execUpdate($args, 'update');
 	}
