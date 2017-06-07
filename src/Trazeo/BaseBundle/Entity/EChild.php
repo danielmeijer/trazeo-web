@@ -101,6 +101,19 @@ class EChild extends AbstractEntity
 
     protected $weekNotActivity;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $lastMedals;
+
+    public function setLastMedals($lastMedals) {
+        $this->lastMedals = $lastMedals;
+    }
+
+    public function getLastMedals() {
+        return $this->lastMedals;
+    }
+
     public function getWeekNotActivity() {
         $em = $this->getEntityManager();
         $repositoryEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
@@ -453,6 +466,7 @@ class EChild extends AbstractEntity
     {
         $this->medals[] = $medals;
         $medals->addChild($this);
+	$this->setLastMedals(new \DateTime());
 
         return $this;
     }
