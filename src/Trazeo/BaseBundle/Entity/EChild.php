@@ -161,6 +161,7 @@ class EChild extends AbstractEntity
      */
     public function __construct()
     {
+	$this->lastMedals = new \DateTime();
         $this->userextendchildren = new \Doctrine\Common\Collections\ArrayCollection();
         $this->group = new \Doctrine\Common\Collections\ArrayCollection();
     }
