@@ -21,17 +21,17 @@
   "minimum-stability" : "dev",
   "require" : {
     "php": ">=5.3.3",
-    "symfony/symfony": "2.4.x-dev",
+    "symfony/symfony": "2.8.*",
     "doctrine/orm": ">=2.4.0-RC1",
-    "doctrine/doctrine-bundle": "~1.2",
+    "doctrine/doctrine-bundle": "^1.6",
     "doctrine/data-fixtures": "dev-master#bd44f6b",
     "doctrine/doctrine-fixtures-bundle": "dev-master#c5ff0542772102ddd4e2fbe173e9ad40ad67c22f",
     "twig/extensions": "~1.0",
     "symfony/assetic-bundle": "~2.3",
     "symfony/swiftmailer-bundle": "~2.3",
     "symfony/monolog-bundle": "~2.4",
-    "sensio/distribution-bundle": "~2.3",
-    "sensio/framework-extra-bundle": "~3.0",
+    "sensio/distribution-bundle": "~5.0",
+    "sensio/framework-extra-bundle": "^3.0.2",
     "sensio/generator-bundle": "~2.3",
     "incenteev/composer-parameter-handler": "~2.0",
     "kriswallsmith/assetic": "1.2.*",
@@ -74,7 +74,6 @@
     "sopinet/flash-messages-bundle" : "dev-master",
     "jms/serializer": "dev-master",
     "lunetics/locale-bundle": "2.2.*",
-    "endroid/qrcode-bundle": "dev-master",
     "sopinet/upload-magic-bundle" : "dev-master",
     "phpunit/phpunit-selenium": ">=1.2",
     "hipaway-travel/mandrill-bundle": "dev-master",
@@ -83,5 +82,31 @@
     "nelmio/api-doc-bundle": "dev-master",
     "richsage/rms-push-notifications-bundle": "dev-master",
     "oldsound/rabbitmq-bundle": "1.*"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache"
+    ],
+    "post-update-cmd": [
+      "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache"
+    ]
+  },
+  "extra": {
+    "symfony-app-dir": "app",
+    "symfony-web-dir": "web",
+    "symfony-assets-install": "relative",
+    "incenteev-parameters": {
+      "file": "app/config/parameters.yml"
+    }
   }
 }
