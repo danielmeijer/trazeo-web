@@ -251,12 +251,13 @@ sopinet_suggestion: ~
 sopinet_autologin:
     domain: http://localhost/trazeo-web/web/app_dev.php/
 
-hip_mandrill:
+slot_mandrill:
     api_key: sG8TY_s5xMA6wOvc9gLMmg
     disable_delivery: false # useful for dev/test environment. Default value is 'false'
     default:
         sender: hola@trazeo.es
         sender_name: Trazeo
+
 oneup_uploader:
     mappings:
         gallery:

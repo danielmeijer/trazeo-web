@@ -2,14 +2,34 @@ parameters:
     database_driver:   pdo_mysql
     database_host:     127.0.0.1
     database_port:     ~
-    database_name:     symfony
-    database_user:     root
-    database_password: ~
+    database_name:     database
+    database_user:     user
+    database_password: pass
 
-    mailer_transport:  smtp
+    mailer_transport:  gmail
     mailer_host:       127.0.0.1
-    mailer_user:       ~
-    mailer_password:   ~
+    mailer_user:       mail
+    mailer_password:   pass
+    mailer_port:       465
 
-    locale:            en
+    locale:            es
     secret:            ThisTokenIsNotSoSecretChangeIt
+    base_url:          base_url
+
+    sopinet_user_facebook_id: sopinet_user_facebook_id
+    sopinet_user_facebook_secret: sopinet_user_facebook_secret
+    sopinet_user_google_id: sopinet_user_google_id
+    sopinet_user_google_secret: sopinet_user_google_secret
+    sopinet_user_sucess: sopinet_user_success
+
+    sopinet_user_civiclub_security: civiclub_security
+    sopinet_user_civiclub_emitter_id: civiclub_id
+    sopinet_user_civiclub_emitter_center_id: civiclub_center
+    sopinet_user_civiclub_service_id: civiclub_service
+
+    exchange_code: exchange_code
+
+    gcm_api_key: gcm_api_key
+    mailer_service: "swiftMailer"
+
+    api_token: api_token_for_apps
