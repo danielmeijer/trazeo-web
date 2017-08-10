@@ -1,29 +1,29 @@
 trazeo
 ======
 
-Web+aplicación móvil para recuperar el camino al cole a pie
+Web + Mobile application to recover the way to school on foote
 
 TRAZEO
 ======
-Desarrollo financiado, inicialmente, gracias a la campaña de CrowdFunding del proyecto Trazeo
+Development funded initially by the CrowdFunding campaign of the Trazeo project
 
-Lanzar RabbitMQ (para procesar mensajes en Background
+Turn on RabbitMQ (to proccess messages in Background)
 =====================================================
 
 rabbitmq-server 
 
 ./app/console rabbitmq:consumer send_trazeo
 
-INSTALACION
+INSTALATION
 ===========
 
-1. Descargar código fuente
+1. Download source code
 
-2. Actualizar composer y limpiar caché, configurar
+2. Update composer and clear cache, configure
 
-3. Instalación de librerías del sistema: intl, curl, rabbit-mq-server
+3. Installation of system libraries: intl, curl, rabbit-mq-server
 
-4. Lanzar script de mensajes
+4. Run message script
 
 ./app/console rabbitmq:consumer send_trazeo
 
