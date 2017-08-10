@@ -17,10 +17,10 @@ class ESponsorAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
-            ->add('nick')
-            ->add('image')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('nick', null, array('label' => 'list.label_nick'))
+            ->add('image', null, array('label' => 'list.label_image'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
         ;
     }
 
@@ -31,17 +31,18 @@ class ESponsorAdmin extends Admin
     {
         $listMapper
             ->add('id')
-            ->add('nick')
-            ->add('image')
+            ->add('nick', null, array('label' => 'list.label_nick'))
+            ->add('image', null, array('label' => 'list.label_image'))
             ->add('_action', 'actions', array(
+                'label' => 'list.label_action',
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
                 )
             ))
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
             
         ;
     }
@@ -52,8 +53,8 @@ class ESponsorAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('nick')
-            ->add('image')
+            ->add('nick', null, array('label' => 'list.label_nick'))
+            ->add('image', null, array('label' => 'list.label_image'))
         ;
     }
 
@@ -64,8 +65,8 @@ class ESponsorAdmin extends Admin
     {
         $showMapper
             ->add('id')
-            ->add('nick')
-            ->add('image')
+            ->add('nick', null, array('label' => 'list.label_nick'))
+            ->add('image', null, array('label' => 'list.label_image'))
         ;
     }
 }

@@ -9,16 +9,15 @@ use Sonata\AdminBundle\Form\FormMapper;
  
 class MenuAdmin extends Admin
 {
-  protected $translationDomain = 'TrazeoBaseBundleAdmin';
 
   protected function configureFormFields(FormMapper $formMapper)
   {
     $formMapper
-        ->add('title')
-        ->add('page')
-        ->add('modules')
-        ->add('position')
-        ->add('link')
+        ->add('title', null, array('label' => 'list.label_title'))
+        ->add('page', null, array('label' => 'form.label_page'))
+        ->add('modules', null, array('label' => 'list.label_modules'))
+        ->add('position', null, array('label' => 'list.label_position'))
+        ->add('link', null, array('label' => 'list.label_link'))
         ->add('color_back')
         ->add('color_front')
     ;
@@ -27,11 +26,11 @@ class MenuAdmin extends Admin
   protected function configureDatagridFilters(DatagridMapper $datagridMapper)
   {
     $datagridMapper
-        ->add('title')
-        ->add('page')
-        ->add('modules')
-        ->add('position')
-        ->add('link')
+        ->add('title', null, array('label' => 'list.label_title'))
+        ->add('page', null, array('label' => 'form.label_page'))
+        ->add('modules', null, array('label' => 'list.label_modules'))
+        ->add('position', null, array('label' => 'list.label_position'))
+        ->add('link', null, array('label' => 'list.label_link'))
     ;
   }
  
@@ -39,11 +38,11 @@ class MenuAdmin extends Admin
   {
     $listMapper
         ->addIdentifier('id')
-        ->add('title')
-        ->add('page')
-        ->add('modules')
-        ->add('position')
-        ->add('link')
+        ->add('title', null, array('label' => 'list.label_title'))
+        ->add('page', null, array('label' => 'form.label_page'))
+        ->add('modules', null, array('label' => 'list.label_modules'))
+        ->add('position', null, array('label' => 'list.label_position'))
+        ->add('link', null, array('label' => 'list.label_link'))
     ;
   }
 }

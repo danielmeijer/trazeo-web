@@ -17,12 +17,12 @@ class ERouteAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
-            ->add('distance')
-            ->add('name')
-            ->add('group')
-            ->add('admin')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('distance', null, array('label' => 'show.label_distance'))
+            ->add('name', null, array('label' => 'show.label_name'))
+            ->add('group', null, array('label' => 'show.label_group_object'))
+            ->add('admin', null, array('label' => 'show.label_admin'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
         ;
     }
 
@@ -33,19 +33,20 @@ class ERouteAdmin extends Admin
     {
         $listMapper
             ->add('id')
-            ->add('distance')
-            ->add('name')
-            ->add('group')
-            ->add('admin')
+            ->add('distance', null, array('label' => 'show.label_distance'))
+            ->add('name', null, array('label' => 'show.label_name'))
+            ->add('group', null, array('label' => 'show.label_group_object'))
+            ->add('admin', null, array('label' => 'show.label_admin'))
             ->add('_action', 'actions', array(
+                'label' => 'list.label_action',
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
                 )
             ))
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
             
         ;
     }
@@ -57,12 +58,13 @@ class ERouteAdmin extends Admin
     {
         $formMapper
             ->add('id')
-            ->add('distance')
-            ->add('name')
-            ->add('group')
-            ->add('admin')
-            ->add('createdAt')
-            ->add('updatedAt')        ;
+            ->add('distance', null, array('label' => 'show.label_distance'))
+            ->add('name', null, array('label' => 'show.label_name'))
+            ->add('group', null, array('label' => 'show.label_group_object'))
+            ->add('admin', null, array('label' => 'show.label_admin'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
+        ;
     }
 
     /**
@@ -72,11 +74,12 @@ class ERouteAdmin extends Admin
     {
         $showMapper
             ->add('id')
-            ->add('distance')
-            ->add('name')
-            ->add('group')
-            ->add('admin')
-            ->add('createdAt')
-            ->add('updatedAt')        ;
+            ->add('distance', null, array('label' => 'show.label_distance'))
+            ->add('name', null, array('label' => 'show.label_name'))
+            ->add('group', null, array('label' => 'show.label_group_object'))
+            ->add('admin', null, array('label' => 'show.label_admin'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
+        ;
     }
 }

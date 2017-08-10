@@ -40,16 +40,16 @@ class EGroupAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
-            ->add('visibility')
-            ->add('hasRide')
-            ->add('name')
-            ->add('admin')
-            ->add('childs')
-            ->add('route')
-            ->add('inviteGroup')
-            ->add('ride')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('visibility', null, array('label' => 'show.label_visibility'))
+            ->add('hasRide', null, array('label' => 'show.label_has_ride'))
+            ->add('name', null, array('label' => 'show.label_name'))
+            ->add('admin', null, array('label' => 'show.label_admin'))
+            ->add('childs', null, array('label' => 'list.label_childs'))
+            ->add('route', null, array('label' => 'show.label_route'))
+            ->add('inviteGroup', null, array('label' => 'show.label_invite_group'))
+            ->add('ride', null, array('label' => 'show.label_ride'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'));
         ;
     }
 
@@ -60,24 +60,25 @@ class EGroupAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('id')
-            ->add('visibility')
-            ->add('hasRide')
-            ->add('name')
-            ->add('admin')
-            ->add('childs')
-            ->add('route')
-            ->add('inviteGroup')
-            ->add('ride')
+            ->add('visibility', null, array('label' => 'show.label_visibility'))
+            ->add('hasRide', null, array('label' => 'show.label_has_ride'))
+            ->add('name', null, array('label' => 'show.label_name'))
+            ->add('admin', null, array('label' => 'show.label_admin'))
+            ->add('childs', null, array('label' => 'list.label_childs'))
+            ->add('route', null, array('label' => 'show.label_route'))
+            ->add('inviteGroup', null, array('label' => 'show.label_invite_group'))
+            ->add('ride', null, array('label' => 'show.label_ride'))
             ->add('page')
             ->add('_action', 'actions', array(
+                'label' => 'list.label_action',
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
                 )
             ))
-            ->add('createdAt')
-            ->add('updatedAt')  
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'));
         ;
     }
 
@@ -87,18 +88,18 @@ class EGroupAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('visibility')
-            ->add('hasRide')
-            ->add('name')
-            ->add('admin')
-            ->add('childs')
-            ->add('route')
+            ->add('visibility', null, array('label' => 'show.label_visibility'))
+            ->add('hasRide', null, array('label' => 'show.label_has_ride'))
+            ->add('name', null, array('label' => 'show.label_name'))
+            ->add('admin', null, array('label' => 'show.label_admin'))
+            ->add('childs', null, array('label' => 'list.label_childs'))
+            ->add('route', null, array('label' => 'show.label_route'))
             ->add('bymode', 'choice', array('choices' => array(
                 EGroup::BYMODE_PEDIBUS => "Pedibús",
                 EGroup::BYMODE_BICIBUS => "Bicibús",
             ) ))
-            ->add('inviteGroup')
-            ->add('ride')
+            ->add('inviteGroup', null, array('label' => 'show.label_invite_group'))
+            ->add('ride', null, array('label' => 'show.label_ride'))
             ->add('page')
         ;
     }
@@ -110,9 +111,9 @@ class EGroupAdmin extends Admin
     {
         $showMapper
             ->add('id')
-            ->add('visibility')
-            ->add('hasRide')
-            ->add('name')
+            ->add('visibility', null, array('label' => 'show.label_visibility'))
+            ->add('hasRide', null, array('label' => 'show.label_has_ride'))
+            ->add('name', null, array('label' => 'show.label_name'))
         ;
     }
 

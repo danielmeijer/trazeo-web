@@ -17,11 +17,11 @@ class EReportAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
-            ->add('text')
-            ->add('ride')
-            ->add('userextend')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('text', null, array('label' => 'list.label_text'))
+            ->add('ride', null, array('label' => 'show.label_ride'))
+            ->add('userextend', null, array('label' => 'list.label_userextendchilds'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
         ;
     }
 
@@ -32,12 +32,13 @@ class EReportAdmin extends Admin
     {
         $listMapper
             ->add('id')
-            ->add('text')
-            ->add('ride')        
-            ->add('userextend')    
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('text', null, array('label' => 'list.label_text'))
+            ->add('ride', null, array('label' => 'show.label_ride'))
+            ->add('userextend', null, array('label' => 'list.label_userextendchilds'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
             ->add('_action', 'actions', array(
+                'label' => 'list.label_action',
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),
@@ -54,9 +55,9 @@ class EReportAdmin extends Admin
     {
         $formMapper
             ->add('id')
-            ->add('text')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('text', null, array('label' => 'list.label_text'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
         ;
     }
 
@@ -67,9 +68,9 @@ class EReportAdmin extends Admin
     {
         $showMapper
             ->add('id')
-            ->add('text')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('text', null, array('label' => 'list.label_text'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
         ;
     }
 }

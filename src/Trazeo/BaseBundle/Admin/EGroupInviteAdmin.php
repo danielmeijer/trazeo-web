@@ -17,10 +17,10 @@ class EGroupInviteAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('userextend')
-            ->add('group')
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
+            ->add('userextend', null, array('label' => 'list.label_userextendchilds'))
+            ->add('group', null, array('label' => 'show.label_group_object'))
         ;
     }
 
@@ -38,10 +38,10 @@ class EGroupInviteAdmin extends Admin
                     'delete' => array(),
                 )
             ))
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('userextend')
-            ->add('group')
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
+            ->add('userextend', null, array('label' => 'list.label_userextendchilds'))
+            ->add('group', null, array('label' => 'show.label_group_object'))
             
         ;
     }

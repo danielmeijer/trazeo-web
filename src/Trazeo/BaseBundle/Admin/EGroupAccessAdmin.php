@@ -18,10 +18,10 @@ class EGroupAccessAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('userextend')
-            ->add('group')
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
+            ->add('userextend', null, array('label' => 'list.label_userextendchilds'))
+            ->add('group', null, array('label' => 'show.label_group_object'))
         ;
     }
 
@@ -33,17 +33,17 @@ class EGroupAccessAdmin extends Admin
         $listMapper
             ->add('id')
             ->add('_action', 'actions', array(
+                'label' => 'list.label_action',
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
                 )
             ))
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('userextend')
-            ->add('group')
-            
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
+            ->add('userextend', null, array('label' => 'list.label_userextendchilds'))
+            ->add('group', null, array('label' => 'show.label_group_object'))
         ;
     }
 

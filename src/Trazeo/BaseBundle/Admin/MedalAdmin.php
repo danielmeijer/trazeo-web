@@ -17,10 +17,10 @@ class MedalAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
-            ->add('title')
-            ->add('childs')
-            ->add('createdAt')
-            ->add('updatedAt');
+            ->add('title', null, array('label' => 'list.label_title'))
+            ->add('childs', null, array('label' => 'list.label_childs'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'));
     }
 
     /**
@@ -30,11 +30,12 @@ class MedalAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('id')
-            ->add('title')
-            ->add('description', null, array('label' => 'Descripción de medalla'))
-            ->add('image')
-            ->add('childs')
+            ->add('title', null, array('label' => 'list.label_title'))
+            ->add('description', null, array('label' => 'list.label_desc_medal'))
+            ->add('image', null, array('label' => 'list.label_image'))
+            ->add('childs', null, array('label' => 'list.label_childs'))
             ->add('_action', 'actions', array(
+                'label' => 'list.label_action',
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),
@@ -49,10 +50,10 @@ class MedalAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('title')
-            ->add('description', null, array('label' => 'Descripción de medalla'))
-            ->add('image')
-            ->add('childs')
+            ->add('title', null, array('label' => 'list.label_title'))
+            ->add('description', null, array('label' => 'list.label_desc_medal'))
+            ->add('image', null, array('label' => 'list.label_image'))
+            ->add('childs', null, array('label' => 'list.label_childs'))
         ;
     }
 
@@ -63,12 +64,12 @@ class MedalAdmin extends Admin
     {
         $showMapper
             ->add('id')
-            ->add('title')
-            ->add('description', null, array('label' => 'Descripción de medalla'))
-            ->add('image')
-            ->add('childs')
-            ->add('createdAt')
-            ->add('updatedAt');
+            ->add('title', null, array('label' => 'list.label_title'))
+            ->add('description', null, array('label' => 'list.label_desc_medal'))
+            ->add('image', null, array('label' => 'list.label_image'))
+            ->add('childs', null, array('label' => 'list.label_childs'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
         ;
     }
 }

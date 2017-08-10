@@ -16,14 +16,14 @@ class ECatalogItemAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('points')
-            ->add('company')
-            ->add('title')
-            ->add('description')
-            ->add('link') 
-            ->add('file')    
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('points', null, array('label' => 'list.label_points'))
+            ->add('company', null, array('label' => 'list.label_company'))
+            ->add('title', null, array('label' => 'list.label_title'))
+            ->add('description', null, array('label' => 'list.label_description'))
+            ->add('link', null, array('label' => 'list.label_link'))
+            ->add('file', null, array('label' => 'list.label_file'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
         ;
     }
 
@@ -33,14 +33,14 @@ class ECatalogItemAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('points')
-            ->add('company')
-            ->add('title')
-            ->add('description')
-            ->add('link')     
-            ->add('file')
-            ->add('createdAt')
-            ->add('updatedAt')  
+            ->add('points', null, array('label' => 'list.label_points'))
+            ->add('company', null, array('label' => 'list.label_company'))
+            ->add('title', null, array('label' => 'list.label_title'))
+            ->add('description', null, array('label' => 'list.label_description'))
+            ->add('link', null, array('label' => 'list.label_link'))
+            ->add('file', null, array('label' => 'list.label_file'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
         ;
     }
 
@@ -50,14 +50,14 @@ class ECatalogItemAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('points')
-            ->add('company')
-            ->add('title')
-            ->add('description')
-            ->add('link')       
-            ->add('file')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('points', null, array('label' => 'list.label_points'))
+            ->add('company', null, array('label' => 'list.label_company'))
+            ->add('title', null, array('label' => 'list.label_title'))
+            ->add('description', null, array('label' => 'list.label_description'))
+            ->add('link', null, array('label' => 'list.label_link'))
+            ->add('file', null, array('label' => 'list.label_file'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
         ;
     }
 
@@ -67,14 +67,14 @@ class ECatalogItemAdmin extends Admin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('points')
-            ->add('company')
-            ->add('title')
-            ->add('description')
-            ->add('link')  
-            ->add('file')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('points', null, array('label' => 'list.label_points'))
+            ->add('company', null, array('label' => 'list.label_company'))
+            ->add('title', null, array('label' => 'list.label_title'))
+            ->add('description', null, array('label' => 'list.label_description'))
+            ->add('link', null, array('label' => 'list.label_link'))
+            ->add('file', null, array('label' => 'list.label_file'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
         ;
     }
     public function getFormTheme()

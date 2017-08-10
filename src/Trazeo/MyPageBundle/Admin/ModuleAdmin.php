@@ -10,14 +10,13 @@ use Trazeo\MyPageBundle\Entity\Module;
 
 class ModuleAdmin extends Admin
 {
-  protected $translationDomain = 'TrazeoBaseBundleAdmin';
 
   protected function configureFormFields(FormMapper $formMapper)
   {
     $formMapper
-        ->add('title')
-        ->add('content', null, array('required' => false))
-        ->add('type', 'choice', array('choices' => array(
+        ->add('title', null, array('label' => 'list.label_title'))
+        ->add('content', null, array('required' => false, 'label' => 'list.label_content'))
+        ->add('type', 'choice', array('label' => 'list.label_type', 'choices' => array(
             Module::TYPE_COMBOBIGINTRO => "ComboBigIntro",
             Module::TYPE_HTML => "Html",
             Module::TYPE_IMAGE => "Image",
@@ -25,19 +24,19 @@ class ModuleAdmin extends Admin
             Module::TYPE_FORMCONTACT => "FormContact",
             Module::TYPE_GENERALDATA => "GeneralData"
         ) ))
-        ->add('position')
-        ->add('menu')
+        ->add('position', null, array('label' => 'list.label_position'))
+        ->add('menu', null, array('label' => 'list.label_menu'))
     ;
   }
  
   protected function configureDatagridFilters(DatagridMapper $datagridMapper)
   {
     $datagridMapper
-        ->add('title')
-        ->add('content')
-        ->add('type')
-        ->add('position')
-        ->add('menu')
+        ->add('title', null, array('label' => 'list.label_title'))
+        ->add('content', null, array('label' => 'list.label_content'))
+        ->add('type', null, array('label' => 'list.label_type'))
+        ->add('position', null, array('label' => 'list.label_position'))
+        ->add('menu', null, array('label' => 'list.label_menu'))
     ;
   }
  
@@ -45,11 +44,11 @@ class ModuleAdmin extends Admin
   {
     $listMapper
         ->addIdentifier('id')
-        ->add('title')
-        ->add('content')
-        ->add('type')
-        ->add('position')
-        ->add('menu')
+        ->add('title', null, array('label' => 'list.label_title'))
+        ->add('content', null, array('label' => 'list.label_content'))
+        ->add('type', null, array('label' => 'list.label_type'))
+        ->add('position', null, array('label' => 'list.label_position'))
+        ->add('menu', null, array('label' => 'list.label_menu'))
     ;
   }
 }

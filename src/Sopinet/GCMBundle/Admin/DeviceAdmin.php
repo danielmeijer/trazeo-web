@@ -17,8 +17,8 @@ class DeviceAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
-            ->add('user')
-            ->add('date_register')
+            ->add('user', null, array('label' => 'list.label_user_username'))
+            ->add('date_register', null, array('label' => 'list.label_date_register'))
             ->add('token')
         ;
     }
@@ -30,8 +30,8 @@ class DeviceAdmin extends Admin
     {
         $listMapper
             ->add('id')
-            ->add('user')
-            ->add('date_register')
+            ->add('user', null, array('label' => 'list.label_user_username'))
+            ->add('date_register', null, array('label' => 'list.label_date_register'))
             ->add('token')
             ->add('_action', 'actions', array(
                 'actions' => array(
@@ -49,8 +49,8 @@ class DeviceAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('user')
-            ->add('date_register')
+            ->add('user', null, array('label' => 'list.label_user_username'))
+            ->add('date_register', null, array('label' => 'list.label_date_register'))
             ->add('token')
         ;
     }
@@ -62,8 +62,8 @@ class DeviceAdmin extends Admin
     {
         $showMapper
             ->add('id')
-            ->add('user')
-            ->add('date_register')
+            ->add('user', null, array('label' => 'list.label_user_username'))
+            ->add('date_register', null, array('label' => 'list.label_date_register'))
             ->add('token')
         ;
     }

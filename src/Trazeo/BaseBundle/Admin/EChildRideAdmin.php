@@ -17,11 +17,11 @@ class EChildRideAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
-            ->add('ride')
-            ->add('child')
-            ->add('distance')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('ride', null, array('label' => 'show.label_ride'))
+            ->add('child', null, array('label' => 'show.label_child'))
+            ->add('distance', null, array('label' => 'show.label_distance'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'));
             
         ;
     }
@@ -34,17 +34,18 @@ class EChildRideAdmin extends Admin
         $listMapper
             ->add('id')
             ->add('_action', 'actions', array(
+                'label' => 'list.label_action',
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
                 )
             ))
-            ->add('ride')
-            ->add('child')
-            ->add('distance')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('ride', null, array('label' => 'show.label_ride'))
+            ->add('child', null, array('label' => 'show.label_child'))
+            ->add('distance', null, array('label' => 'show.label_distance'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'));
         ;
     }
 
@@ -56,8 +57,8 @@ class EChildRideAdmin extends Admin
         $formMapper
             ->add('id')
             ->add('ride')
-            ->add('child')
-            ->add('distance')
+            ->add('child', null, array('label' => 'show.label_child'))
+            ->add('distance', null, array('label' => 'show.label_distance'))
         ;
     }
 
@@ -68,9 +69,9 @@ class EChildRideAdmin extends Admin
     {
         $showMapper
             ->add('id')
-            ->add('ride')
-            ->add('child')
-            ->add('distance')
+            ->add('ride', null, array('label' => 'show.label_ride'))
+            ->add('child', null, array('label' => 'show.label_child'))
+            ->add('distance', null, array('label' => 'show.label_distance'))
         ;
     }
 }

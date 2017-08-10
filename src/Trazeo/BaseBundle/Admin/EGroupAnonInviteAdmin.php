@@ -17,10 +17,10 @@ class EGroupAnonInviteAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('email')
-            ->add('group')
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
+            ->add('email', null, array('label' => 'show.label_user_email'))
+            ->add('group', null, array('label' => 'show.label_group_object'))
         ;
     }
 
@@ -31,17 +31,18 @@ class EGroupAnonInviteAdmin extends Admin
     {
         $listMapper
             ->add('id')
-            ->add('email')
+            ->add('email', null, array('label' => 'show.label_user_email'))
             ->add('_action', 'actions', array(
+                'label' => 'list.label_action',
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
                 )
             ))
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('group')
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
+            ->add('group', null, array('label' => 'show.label_group_object'))
         ;
     }
 
@@ -52,7 +53,7 @@ class EGroupAnonInviteAdmin extends Admin
     {
         $formMapper
             ->add('id')
-            ->add('email')
+            ->add('email', null, array('label' => 'show.label_user_email'))
             ->add('token')
         ;
     }
@@ -64,7 +65,7 @@ class EGroupAnonInviteAdmin extends Admin
     {
         $showMapper
             ->add('id')
-            ->add('email')
+            ->add('email', null, array('label' => 'show.label_user_email'))
             ->add('token')
         ;
     }

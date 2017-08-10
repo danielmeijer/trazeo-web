@@ -17,11 +17,11 @@ class EChildInviteAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
-            ->add('userextend')
-            ->add('child')
-            ->add('sender')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('userextend', null, array('label' => 'list.label_userextendchilds'))
+            ->add('child', null, array('label' => 'show.label_child'))
+            ->add('sender', null, array('label' => 'show.label_sender'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'));
             
         ;
     }
@@ -34,17 +34,18 @@ class EChildInviteAdmin extends Admin
         $listMapper
             ->add('id')
             ->add('_action', 'actions', array(
+                'label' => 'list.label_action',
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
                 )
             ))
-            ->add('userextend')
-            ->add('child')
-            ->add('sender')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('userextend', null, array('label' => 'list.label_userextendchilds'))
+            ->add('child', null, array('label' => 'show.label_child'))
+            ->add('sender', null, array('label' => 'show.label_sender'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'));
         ;
     }
 

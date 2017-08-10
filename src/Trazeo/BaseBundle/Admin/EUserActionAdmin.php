@@ -17,13 +17,13 @@ class EUserActionAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
-            ->add('action')
+            ->add('action', null, array('label' => 'list.label_action'))
             ->add('sopinetuserextend')
             ->add('ids')
-            ->add('acumulated')
+            ->add('acumulated', null, array('label' => 'list.label_acumulated'))
             ->add('mobile')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
         ;
     }
 
@@ -34,13 +34,14 @@ class EUserActionAdmin extends Admin
     {
         $listMapper
             ->add('id')
-            ->add('action')
+            ->add('action', null, array('label' => 'list.label_action'))
             ->add('sopinetuserextend')
             ->add('ids')
-            ->add('acumulated')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('acumulated', null, array('label' => 'list.label_acumulated'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
             ->add('_action', 'actions', array(
+                'label' => 'list.label_action',
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),
@@ -57,12 +58,12 @@ class EUserActionAdmin extends Admin
     {
         $formMapper
             ->add('id')
-            ->add('action')
+            ->add('action', null, array('label' => 'list.label_action'))
             ->add('sopinetuserextend')
             ->add('ids')
-            ->add('acumulated')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('acumulated', null, array('label' => 'list.label_acumulated'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
         ;
     }
 
@@ -73,12 +74,12 @@ class EUserActionAdmin extends Admin
     {
         $showMapper
             ->add('id')
-            ->add('action')
+            ->add('action', null, array('label' => 'list.label_action'))
             ->add('sopinetuserextend')
             ->add('ids')
-            ->add('acumulated')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('acumulated', null, array('label' => 'list.label_acumulated'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
         ;
     }
 }

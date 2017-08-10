@@ -17,12 +17,12 @@ class EEventAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
-            ->add('action')
-            ->add('data')
-            ->add('location')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('ride')
+            ->add('action', null, array('label' => 'list.label_action'))
+            ->add('data', null, array('label' => 'show.label_data'))
+            ->add('location', null, array('label' => 'show.label_location'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
+            ->add('ride', null, array('label' => 'show.label_ride'))
         ;
     }
 
@@ -33,19 +33,20 @@ class EEventAdmin extends Admin
     {
         $listMapper
             ->add('id')
-            ->add('action')
-            ->add('data')
-            ->add('location')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('action', null, array('label' => 'list.label_action'))
+            ->add('data', null, array('label' => 'show.label_data'))
+            ->add('location', null, array('label' => 'show.label_location'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
             ->add('_action', 'actions', array(
+                'label' => 'list.label_action',
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
                 )
             ))
-            ->add('ride')
+            ->add('ride', null, array('label' => 'show.label_ride'))
             
         ;
     }
@@ -57,11 +58,11 @@ class EEventAdmin extends Admin
     {
         $formMapper
             ->add('id')
-            ->add('action')
-            ->add('data')
-            ->add('location')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('action', null, array('label' => 'list.label_action'))
+            ->add('data', null, array('label' => 'show.label_data'))
+            ->add('location', null, array('label' => 'show.label_location'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
         ;
     }
 
@@ -72,11 +73,11 @@ class EEventAdmin extends Admin
     {
         $showMapper
             ->add('id')
-            ->add('action')
-            ->add('data')
-            ->add('location')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('action', null, array('label' => 'list.label_action'))
+            ->add('data', null, array('label' => 'show.label_data'))
+            ->add('location', null, array('label' => 'show.label_location'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
         ;
     }
 }

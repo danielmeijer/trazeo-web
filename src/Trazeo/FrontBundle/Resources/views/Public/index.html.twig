@@ -6,7 +6,7 @@
 		<div class="align-center">
 			<div class="row">
 				<div class="col-md-5 col-md-offset-1 col-sm-5 col-sm-offset-1">
-					<h2 class="slogan">¿Qué es Trazeo?</h2>
+					<h2 class="slogan">{{ 'homePage.index.title1'|trans|raw }}</h2>
 					<div class="videowrapper">
 						<iframe src="//www.youtube.com/embed/fWptLnpRGig" frameborder="0"
 							allowfullscreen></iframe>
@@ -14,11 +14,11 @@
 				</div>
 				<div class="col-md-5 col-sm-5">
 				
-					<h2 class="slogan">¿Quieres probarlo?</h2>
+					<h2 class="slogan">{{ 'homePage.index.title2'|trans|raw }}</h2>
 					<div class="cform col-md-12" id="contact-form">
 							<div class="form-group input-group col-md-10 col-md-offset-1">
-								<p class="col-md-offset-1 col-md-10">Puede probar la aplicación y web de <a href="http://trazeo.es">Trazeo</a>, recuerde que estamos en una versión BETA.</p>
-								<a href="{{ path('fos_user_security_login') }}" class="btn btn-lg btn-success log" style="font-size: 30px" name="log">Accede a Trazeo</a>		
+								<p class="col-md-offset-1 col-md-10">{{ 'homePage.index.subtitle1'|trans|raw }}</p>
+								<a href="{{ path('fos_user_security_login') }}" class="btn btn-lg btn-success log" style="font-size: 30px" name="log">{{ 'homePage.index.button1'|trans|raw }}</a>
 							</div>	
 					</div>
 				</div>
@@ -27,7 +27,7 @@
 	</div>
 
 	<p>&nbsp;</p><p>&nbsp;</p>
-	<h2 class="slogan well">Gracias a...</h2>
+	<h2 class="slogan well">{{ 'homePage.index.title3'|trans|raw }}</h2>
 	<div class="col-md-12 carousel-container">
 			<img style="margin-top:50px;" class=" col-md-3 col-sm-3 col-xs-4 img-responsive"
 			src="{{ asset('cofinanciadores/banner/250/FUNDACIONCAJASUR.jpg') }}" alt="FUNDACION CAJASUR">

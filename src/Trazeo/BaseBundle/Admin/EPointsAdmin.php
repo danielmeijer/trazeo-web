@@ -17,12 +17,12 @@ class EPointsAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
-            ->add('pickup')
-            ->add('description')
-            ->add('location')
-            ->add('route')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('pickup', null, array('label' => 'list.label_pickup'))
+            ->add('description', null, array('label' => 'list.label_description'))
+            ->add('location', null, array('label' => 'show.label_location'))
+            ->add('route', null, array('label' => 'show.label_route'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
         ;
     }
 
@@ -33,19 +33,20 @@ class EPointsAdmin extends Admin
     {
         $listMapper
             ->add('id')
-            ->add('pickup')
-            ->add('description')
-            ->add('location')
+            ->add('pickup', null, array('label' => 'list.label_pickup'))
+            ->add('description', null, array('label' => 'list.label_description'))
+            ->add('location', null, array('label' => 'show.label_location'))
             ->add('_action', 'actions', array(
+                'label' => 'list.label_action',
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
                 )
             ))
-            ->add('route')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('route', null, array('label' => 'show.label_route'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
         ;
     }
 
@@ -56,9 +57,9 @@ class EPointsAdmin extends Admin
     {
         $formMapper
             ->add('id')
-            ->add('pickup')
-            ->add('description')
-            ->add('location')
+            ->add('pickup', null, array('label' => 'list.label_pickup'))
+            ->add('description', null, array('label' => 'list.label_description'))
+            ->add('location', null, array('label' => 'show.label_location'))
         ;
     }
 
@@ -69,9 +70,9 @@ class EPointsAdmin extends Admin
     {
         $showMapper
             ->add('id')
-            ->add('pickup')
-            ->add('description')
-            ->add('location')
+            ->add('pickup', null, array('label' => 'list.label_pickup'))
+            ->add('description', null, array('label' => 'list.label_description'))
+            ->add('location', null, array('label' => 'show.label_location'))
         ;
     }
 }

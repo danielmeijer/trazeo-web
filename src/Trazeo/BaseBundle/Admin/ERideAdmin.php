@@ -17,14 +17,14 @@ class ERideAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
-            ->add('duration')
-            ->add('distance')
-            ->add('groupid')
-            ->add('group')
-            ->add('reports')
-            ->add('userextend')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('duration', null, array('label' => 'show.label_duration'))
+            ->add('distance', null, array('label' => 'show.label_distance'))
+            ->add('groupid', null, array('label' => 'list.label_group_id'))
+            ->add('group', null, array('label' => 'show.label_group_object'))
+            ->add('reports', null, array('label' => 'show.label_reports'))
+            ->add('userextend', null, array('label' => 'list.label_userextendchilds'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
         ;
     }
 
@@ -35,16 +35,17 @@ class ERideAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('id')
-            ->add('duration')
-            ->add('distance')
-            ->add('groupid')
-            ->add('group')
+            ->add('duration', null, array('label' => 'show.label_duration'))
+            ->add('distance', null, array('label' => 'show.label_distance'))
+            ->add('groupid', null, array('label' => 'list.label_group_id'))
+            ->add('group', null, array('label' => 'show.label_group_object'))
             //->add('events')
-            ->add('reports')
-            ->add('userextend')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('reports', null, array('label' => 'show.label_reports'))
+            ->add('userextend', null, array('label' => 'list.label_userextendchilds'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
             ->add('_action', 'actions', array(
+                'label' => 'list.label_action',
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),
@@ -61,12 +62,12 @@ class ERideAdmin extends Admin
     {
         $formMapper
             ->add('id')
-            ->add('duration')
-            ->add('distance')
-            ->add('groupid')
-            ->add('userextend')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('duration', null, array('label' => 'show.label_duration'))
+            ->add('distance', null, array('label' => 'show.label_distance'))
+            ->add('groupid', null, array('label' => 'list.label_group_id'))
+            ->add('userextend', null, array('label' => 'list.label_userextendchilds'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
         ;
     }
 
@@ -77,12 +78,12 @@ class ERideAdmin extends Admin
     {
         $showMapper
             ->add('id')
-            ->add('duration')
-            ->add('distance')
-            ->add('groupid')
-            ->add('userextend')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('duration', null, array('label' => 'show.label_duration'))
+            ->add('distance', null, array('label' => 'show.label_distance'))
+            ->add('groupid', null, array('label' => 'list.label_group_id'))
+            ->add('userextend', null, array('label' => 'list.label_userextendchilds'))
+            ->add('createdAt', null, array('label' => 'show.label_created_at'))
+            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
         ;
     }
 }
