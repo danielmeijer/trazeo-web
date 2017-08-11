@@ -37,7 +37,7 @@ class FormContact extends ModuleAbstract {
 
         /** @var MailerHelper $mailer */
         $mailer = $container->get('trazeo_mailer_helper');
-        $message = $mailer->createNewMessage('miguel@sopinet.com', 'Trazeo', 'mazetuski22@gmail.com', "Trazeo - Formulario de Contacto", $html);
+        $message = $mailer->createNewMessage('hola@trazeo.es', 'Trazeo', $email, "Trazeo - Formulario de Contacto", $html);
         $mailer->sendMessage($message);
 
         if (isset($result[0]['status']) && $result[0]['status'] == "sent") {
