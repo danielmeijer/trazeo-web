@@ -5,6 +5,7 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use FOS\UserBundle\Document\Group;
 use Sopinet\TimelineBundle\Entity\Comment;
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Trazeo\BaseBundle\Entity\EGroup;
 use Trazeo\BaseBundle\Entity\UserExtend;
@@ -40,7 +41,9 @@ class UpdatedListener implements EventSubscriber {
 			if ($args->hasChangedField('lastMedals')) {
 				$email = $entity->getEmailParent();
 				$mailer = $this->_container->get('trazeo_mailer_helper');
-				$message = $mailer->createNewMessage('hola@trazeo.es', 'Trazeo', $email, "¡Habéis conseguido una nueva medalla en Trazeo!", "Entra en la sección Medallas de la aplicación móvil y podrás ver el nuevo reconocimiento conseguido al caminar con Trazeo y enseñárselo a tu hijo/a. ¡Enhorabuena!");
+                /** @var Translator $translator */
+                $translator = $this->_container->get('translator');
+				$message = $mailer->createNewMessage('hola@trazeo.es', 'Trazeo', $email, $translator->trans('mail_new_medal'), $translator->trans('mail_new_medal_desc'));
 				$mailer->sendMessage($message);
 			}
 		}

@@ -3,6 +3,7 @@
 namespace Trazeo\FrontBundle\Controller;
 
 
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -57,7 +58,9 @@ class PanelController extends Controller
             $tutorial = 1;
             // Creamos el correo de bienvenida
             $mailer = $this->get('trazeo_mailer_helper');
-            $message = $mailer->createNewMessage('hola@trazeo.es', 'Trazeo', $fos_user->getEmail(), "Bienvenido a Trazeo.", $this->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:newUser.html.twig', array()));
+            /** @var Translator $translator */
+            $translator = $this->get('translator');
+            $message = $mailer->createNewMessage('hola@trazeo.es', 'Trazeo', $fos_user->getEmail(), $translator->trans('home_welcome_mail'), $this->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:newUser.html.twig', array()));
             $mailer->sendMessage($message);
 
         }

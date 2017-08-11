@@ -1,7 +1,8 @@
 <?php
 	namespace Trazeo\BaseBundle\Entity;
 	use Doctrine\ORM\EntityRepository;
-	use Trazeo\BaseBundle\Entity\EGroup;
+    use Symfony\Bundle\FrameworkBundle\Translation\Translator;
+    use Trazeo\BaseBundle\Entity\EGroup;
 	use Swift_Message as Message;
 	use Hip\MandrillBundle\Dispatcher;
 	 
@@ -24,7 +25,9 @@
 			//exit();
 	        //$dispatcher = $con->get('hip_mandrill.dispatcher');
             $mailer = $con->get('trazeo_mailer_helper');
-            $message = $mailer->createNewMessage('hola@trazeo.es', 'Trazeo', $userEmail, "Ha sido invitado al sistema de Trazeo", $con->get('templating')->render('TrazeoFrontBundle:PanelGroups:email_invite.html.twig', array('link' => $link, 'group' => $group, 'user' => $fos_user_current)));
+            /** @var Translator $translator */
+            $translator = $con->get('translator');
+            $message = $mailer->createNewMessage('hola@trazeo.es', 'Trazeo', $userEmail, $translator->trans('invitation_trazeo'), $con->get('templating')->render('TrazeoFrontBundle:PanelGroups:email_invite.html.twig', array('link' => $link, 'group' => $group, 'user' => $fos_user_current)));
             $mailer->sendMessage($message);
 
 			return $eGAI;
