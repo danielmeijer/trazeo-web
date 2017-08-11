@@ -22,6 +22,7 @@ class Module
     const TYPE_FORMCONTACT = "FormContact";
     const TYPE_GENERALDATA = "GeneralData";
     const TYPE_TRAZEOROUTESSCHOOL = "TrazeoRoutesSchool";
+    const TYPE_TRAZEOROUTESCITY = "TrazeoRoutesCity";
 
     use ORMBehaviors\Timestampable\Timestampable;
     /**

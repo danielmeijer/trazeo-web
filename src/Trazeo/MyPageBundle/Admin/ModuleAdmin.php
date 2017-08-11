@@ -23,6 +23,7 @@ class ModuleAdmin extends Admin
             Module::TYPE_IMAGES_ROW => "ImagesRow",
             Module::TYPE_TRAZEOROUTES => "TrazeoRoutes",
             Module::TYPE_TRAZEOROUTESSCHOOL => "TrazeoRoutesSchool",
+            Module::TYPE_TRAZEOROUTESCITY => "TrazeoRoutesCity",
             Module::TYPE_FORMCONTACT => "FormContact",
             Module::TYPE_GENERALDATA => "GeneralData"
         ) ))

@@ -274,7 +274,8 @@ class ApiController extends Controller {
 
 		$reJJ = $em->getRepository("JJsGeonamesBundle:City");
 		$groups = $em->getRepository('TrazeoBaseBundle:EGroup')->findAll();
-		
+
+		// TODO: We can use helper "getAllCitiesUsed" method
 		$cities=[];
 		if($userextend)$userCity=$userextend->getCity();
 		else $userCity=null;

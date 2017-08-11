@@ -2,6 +2,7 @@
 
 namespace Trazeo\BaseBundle\Service;
 
+use JJs\Bundle\GeonamesBundle\Entity\City;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -212,5 +213,25 @@ class Helper {
         }
 
         return $data;
+    }
+
+    /**
+     * Return cities array that are being used in Groups Entity
+     *
+     * @return array
+     */
+    public function getAllCitiesUsed() {
+        $em = $this->_container->get('doctrine.orm.entity_manager');
+        $reJJ = $em->getRepository("JJsGeonamesBundle:City");
+        $groups = $em->getRepository('TrazeoBaseBundle:EGroup')->findAll();
+        $cities=[];
+        foreach ($groups as $group) {
+            /** @var City $city */
+            $city=$reJJ->findOneById($group->getCity());
+            if ($city!=null && !in_array($city->getNameUtf8(),$cities)) {
+                $cities[$city->getId()]=$city->getNameUtf8();
+            }
+        }
+        return $cities;
     }
 }
