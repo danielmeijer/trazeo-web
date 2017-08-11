@@ -85,12 +85,16 @@
             return str.replace(new RegExp(find, 'g'), replace);
         }
 
-        function saveModules(parentID, order) {
-            if (typeof order == 'string') {
-                order = order.replace(/\|/g, ',');
+        function saveModules(parentID, orderPost) {
+            if (orderPost == null) {
+                alert(parentID);
+            } else if (typeof orderPost == 'string') {
+                orderPost = orderPost.replace(/\|/g, ',');
+            } else if (typeof orderPost == 'object') {
+                orderPost = orderPost.toString();
             }
 
-            var postURL = "{{base_url}}/admin/moduleComposer/saveOrderModules/" + parentID + "/" + order;
+            var postURL = "{{base_url}}admin/moduleComposer/saveOrderModules/" + parentID + "/" + orderPost;
 
             $.post( postURL, function( data ) {
                 alert(data);
@@ -102,7 +106,7 @@
                 order = order.replace(/\|/g, ',');
             }
 
-            var postURL = "{{base_url}}/admin/moduleComposer/saveOrderMenus/" + order;
+            var postURL = "{{base_url}}admin/moduleComposer/saveOrderMenus/" + order;
 
             $.post( postURL, function( data ) {
                 alert(data);
@@ -137,6 +141,8 @@
                      */
                     set: function (sortable) {
                         order = sortable.toArray();
+                        console.log("Menu saving...");
+                        console.log(order);
                         saveMenus(order);
                         // DESACTIVADO: localStorage.setItem(sortable.options.group, order.join('|'));
                     }
@@ -175,6 +181,7 @@
                 },
                 onAdd: function (/**Event*/evt) {
                     var moduleID = $(evt.item).attr("data-id");
+                    console.log("Add module to new Menu: "+moduleID);
                     //alert(moduleID);
                     // En moduleID tendré el ID del módulo, ahora tengo que buscar el Menú al que ha ido
                     var parentID = $("#"+moduleID).parent().attr('id');
@@ -182,7 +189,8 @@
                     $("#"+parentID).children().each(function(el) {
                         children.push($(this).attr('id'));
                     });
-                    saveModules(parentID, order);
+                    console.log("Children: "+children);
+                    saveModules(parentID, children);
                 }
             });
         });
