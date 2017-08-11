@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8e22b34567a0acc900ad8f618800072b",
+    "content-hash": "5332a8d8bdfd9c45d4b71f4495972620",
     "packages": [
         {
             "name": "a2lix/translation-form-bundle",
@@ -1052,12 +1052,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "d27a9fce7a01476cc3fba5c564558ee4ec0c64f1"
+                "reference": "d89d238594621220c8a18e8c1abf224e7e967ac3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/d27a9fce7a01476cc3fba5c564558ee4ec0c64f1",
-                "reference": "d27a9fce7a01476cc3fba5c564558ee4ec0c64f1",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/d89d238594621220c8a18e8c1abf224e7e967ac3",
+                "reference": "d89d238594621220c8a18e8c1abf224e7e967ac3",
                 "shasum": ""
             },
             "require": {
@@ -1120,7 +1120,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2017-07-25 03:02:26"
+            "time": "2017-08-11 19:43:05"
         },
         {
             "name": "egeloen/ckeditor-bundle",
@@ -3045,27 +3045,25 @@
         },
         {
             "name": "knplabs/knp-menu",
-            "version": "dev-master",
+            "version": "1.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpMenu.git",
-                "reference": "4d15e3a661e9a078f8bcf17910deae95ff62e548"
+                "reference": "f8e867268f63f561c1adadd6cbb5d8524f921873"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpMenu/zipball/4d15e3a661e9a078f8bcf17910deae95ff62e548",
-                "reference": "4d15e3a661e9a078f8bcf17910deae95ff62e548",
+                "url": "https://api.github.com/repos/KnpLabs/KnpMenu/zipball/f8e867268f63f561c1adadd6cbb5d8524f921873",
+                "reference": "f8e867268f63f561c1adadd6cbb5d8524f921873",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
             "require-dev": {
-                "pimple/pimple": "~1.0",
-                "silex/silex": "~1.0",
-                "symfony/phpunit-bridge": "~2.7|~3.0",
-                "symfony/routing": "~2.3|~3.0",
-                "twig/twig": "~1.16|~2.0"
+                "pimple/pimple": "*",
+                "silex/silex": "1.0.*",
+                "twig/twig": ">=1.2,<2.0-dev"
             },
             "suggest": {
                 "pimple/pimple": "for the built-in implementations of the menu provider and renderer provider",
@@ -3075,12 +3073,12 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.2-dev"
+                    "dev-master": "1.1.x-dev"
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Knp\\Menu\\": "src/Knp/Menu"
+                "psr-0": {
+                    "Knp\\Menu\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3107,39 +3105,31 @@
                 "menu",
                 "tree"
             ],
-            "time": "2017-06-20 13:42:20"
+            "time": "2012-06-10 16:20:40"
         },
         {
             "name": "knplabs/knp-menu-bundle",
-            "version": "dev-master",
+            "version": "1.1.x-dev",
+            "target-dir": "Knp/Bundle/MenuBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpMenuBundle.git",
-                "reference": "850824d1218d5e6fdef2bcfc18dd1c423b6553a9"
+                "reference": "2fecac02614e5a006f674dd5dd754eeaeca060b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpMenuBundle/zipball/850824d1218d5e6fdef2bcfc18dd1c423b6553a9",
-                "reference": "850824d1218d5e6fdef2bcfc18dd1c423b6553a9",
+                "url": "https://api.github.com/repos/KnpLabs/KnpMenuBundle/zipball/2fecac02614e5a006f674dd5dd754eeaeca060b9",
+                "reference": "2fecac02614e5a006f674dd5dd754eeaeca060b9",
                 "shasum": ""
             },
             "require": {
-                "knplabs/knp-menu": "~2.2",
-                "symfony/framework-bundle": "~2.3|~3.0"
-            },
-            "require-dev": {
-                "symfony/expression-language": "~2.4|~3.0",
-                "symfony/phpunit-bridge": "~2.7|~3.0"
+                "knplabs/knp-menu": "~1.1",
+                "symfony/framework-bundle": "~2.0"
             },
             "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.2.x-dev"
-                }
-            },
             "autoload": {
-                "psr-4": {
-                    "Knp\\Bundle\\MenuBundle\\": ""
+                "psr-0": {
+                    "Knp\\Bundle\\MenuBundle": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3164,7 +3154,7 @@
             "keywords": [
                 "menu"
             ],
-            "time": "2016-11-28 00:01:40"
+            "time": "2013-05-25 10:20:03"
         },
         {
             "name": "knplabs/knp-paginator-bundle",
@@ -8421,6 +8411,7 @@
         "sopinet/timeline-bundle": 20,
         "sopinet/simple-point-bundle": 20,
         "sopinet/flash-messages-bundle": 20,
+        "jms/serializer": 20,
         "sopinet/upload-magic-bundle": 20,
         "hipaway-travel/mandrill-bundle": 20,
         "sopinet/autologin-bundle": 20,
