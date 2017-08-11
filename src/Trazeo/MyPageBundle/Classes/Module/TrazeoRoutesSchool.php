@@ -14,10 +14,7 @@ class TrazeoRoutesSchool extends ModuleAbstract {
 
         $groups_from_school = $repositoryGroup->findBy(array('school1' => $module->getContent()));
 
-        $array1 = array();
-        $array1 = $groups_from_school;
-
-        return $array1;
+        return $groups_from_school;
     }
 
     public function getAdminDescription(Module $module) {
