@@ -7,9 +7,8 @@ imports:
 parameters:
     #sopinet_user_facebook_id: "202407359917838"
     #sopinet_user_facebook_secret: "5963af0550e8be4b14fc40413f63f72b"
-    sopinet_user_google_id: "117653870600-b4p1coann87l067i57rdcah8jpksb6ba.apps.googleusercontent.com"
-    sopinet_user_google_secret: "5g0PxCoOCnDQe7dADh-zeI7V"
     #sopinet_user_sucess: "trazeo.login_success_handler"
+    twig.options: "none"
 
 framework:
     #esi:            ~
