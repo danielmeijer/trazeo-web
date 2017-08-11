@@ -191,7 +191,11 @@ class Menu
     }
 
     public function __toString() {
-        return $this->getTitle();
+        $title = $this->getTitle();
+        if ($this->getPage() != null) {
+            $title .= " (".$this->getPage().")";
+        }
+        return $title;
     }
 
     /**

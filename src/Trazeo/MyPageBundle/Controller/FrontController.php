@@ -89,6 +89,7 @@ class FrontController extends Controller
 
        //$this->isGranted("edit", $page);
        $kml=false;
+       $groups = array();
        /** @var Menu $menu */
        foreach($page->getMenus() as $menu) {
            /** @var Module $module */

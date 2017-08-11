@@ -226,7 +226,11 @@ class Module
     }
 
     public function __toString() {
-        return $this->getTitle();
+        $title = $this->getTitle();
+        if ($this->getMenu() != null && $this->getMenu()->getPage() != null) {
+            $title .= " (".$this->getMenu()->getPage().")";
+        }
+        return $title;
     }
 
     public function __get($key) {
