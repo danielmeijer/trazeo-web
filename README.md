@@ -7,6 +7,11 @@ TRAZEO
 ======
 Development funded initially by the CrowdFunding campaign of the Trazeo project
 
+Requeriments
+============
+- php 5.4 or more
+- php-mbstring extension: ```sudo apt-get install php5.6-mbstring```
+
 Turn on RabbitMQ (to proccess messages in Background)
 =====================================================
 
