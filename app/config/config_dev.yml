@@ -3,7 +3,7 @@ imports:
     - { resource: configSonataAdmin.yml }
     #- { resource: configSonataPanel.yml }
     - { resource: parameters_dev.yml }
-    - { resource: security_dev.yml }
+    #- { resource: security_dev.yml } // TODO: delete security_dev.yml, security.yml is working here
 
 framework:
     router:
@@ -20,7 +20,7 @@ monolog:
         main:
             type:   stream
             path:   "%kernel.logs_dir%/%kernel.environment%.log"
-            level:  debug
+            level:  error
         console:
             type:   console
             bubble: false
