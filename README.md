@@ -19,8 +19,8 @@ rabbitmq-server
 
 ./app/console rabbitmq:consumer send_trazeo
 
-INSTALATION
-===========
+INSTALLATION
+============
 
 1. Download source code
 
