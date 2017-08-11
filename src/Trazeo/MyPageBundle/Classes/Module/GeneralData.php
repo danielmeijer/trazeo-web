@@ -2,8 +2,10 @@
 
 namespace Trazeo\MyPageBundle\Classes\Module;
 
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\Form;
 use Trazeo\BaseBundle\Entity\EGroup;
+use Trazeo\BaseBundle\Entity\ERideRepository;
 use Trazeo\BaseBundle\Service\Helper;
 use Trazeo\MyPageBundle\Classes\ModuleAbstract;
 use Trazeo\MyPageBundle\Entity\Module;

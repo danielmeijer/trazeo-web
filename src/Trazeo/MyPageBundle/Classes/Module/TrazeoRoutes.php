@@ -12,11 +12,13 @@ class TrazeoRoutes extends ModuleAbstract {
         $em = $container->get('doctrine')->getManager();
         $repositoryGroup = $em->getRepository('TrazeoBaseBundle:EGroup');
 
-        $groups_from_ciy = $repositoryGroup->findBy(array('city' => $module->getContent()));
+        $groups_from_city = $repositoryGroup->findBy(array('city' => $module->getContent()));
         $groups_custom = $module->getMenu()->getPage()->getGroups();
 
         $array1 = array();
-        if ($groups_from_ciy != null) $array1 = $groups_from_ciy->toArray();
+        if ($groups_from_city != null) {
+            $array1 = $groups_from_city;
+        }
 
         $array2 = array();
         if ($groups_custom != null) $array2 = $groups_custom->toArray();

@@ -19,7 +19,11 @@
                             <h4>
                                 <strong>{{ group.name }}</strong>
                             </h4>
-                            <p>{{ group.route.description }}</p>
+                            <p>
+                                {% if group.route != null %}
+                                    {{ group.route.description }}
+                                {% endif %}
+                            </p>
 
                             <div id="full-width-{{ group.id }}" class="modal container fade">
                                 <div class="modal-header">
@@ -53,7 +57,11 @@
                                             <tr>
                                                 <td><i class="fa fa-book"></i></td>
                                                 <td>{{"Route.show.owndescription"|trans}}</td>
-                                                <td>{{ group.route.description }}</td>
+                                                <td>
+                                                    {% if group.route != null %}
+                                                        {{ group.route.description }}
+                                                    {% endif %}
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td><i class="fa fa-user"></i></td>
@@ -68,7 +76,11 @@
                                             <tr>
                                                 <td><i class="fa fa-key"></i></td>
                                                 <td>{{"Route.show.creator"|trans}}</td>
-                                                <td>{{ group.route.admin }}</td>
+                                                <td>
+                                                    {% if group.route != null %}
+                                                        {{ group.route.admin }}
+                                                    {% endif %}
+                                                </td>
                                             </tr>
                                             </tbody>
                                         </table>
