@@ -1,5 +1,0 @@
-    TITULO:
-        class: CLASEADMIN
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Trazeo, label: CENTITY }
-        arguments: [null, CLASEENTITY, SonataAdminBundle:CRUD]
