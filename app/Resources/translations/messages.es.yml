@@ -961,3 +961,12 @@ homePage:
         item4: 'CROWFUNDING'
         item5: 'CONTACTO'
 
+#MAILS
+Request: 'Solicitud de canjeo de usuario'
+Request2: 'Solicitud de canjeo de usuario %nick% para la oferta %title% de la empresa %company%'
+mail_new_medal: '¡Habéis conseguido una nueva medalla en Trazeo!'
+mail_new_medal_desc: 'Entra en la sección Medallas de la aplicación móvil y podrás ver el nuevo reconocimiento conseguido al caminar con Trazeo y enseñárselo a tu hijo/a. ¡Enhorabuena!'
+list_groups_available: 'Listado de Grupos Disponibles'
+invitation_trazeo: 'Ha sido invitado al sistema de Trazeo'
+user_manual_nav: 'Manual de Usuario'
+home_welcome_mail: 'Bienvenido a Trazeo'

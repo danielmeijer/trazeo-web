@@ -2,6 +2,7 @@
 
 namespace Trazeo\FrontBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -148,11 +149,15 @@ class PanelPointController extends Controller
         $em->persist($user);
         $em->flush();
 
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
+        $body = $translator->trans('Request2', array('%nick%' => $user->getNick(), '%title%' => $ofert->getTitle(), '%company%' => $ofert->getCompany()));
+
         $message = \Swift_Message::newInstance()
         ->setFrom(array("hola@trazeo.es" => "Trazeo"))
         ->setTo("hola@trazeo.es")
-        ->setSubject('Solicitud de canjeo de usuario')
-        ->setBody('<p>Solicitud de canjeo del usuario '.$user->getNick().' para la oferta '.$ofert->getTitle().' de la empresa '.$ofert->getCompany(). '</p>', 'text/html');
+        ->setSubject($translator->trans('Request'))
+        ->setBody('<p>'.$body.'</p>', 'text/html');
         $ok = $this->container->get('mailer')->send($message);
 
         $notification = $container->addFlashMessages("success","Tu solicitud ha sido enviada y se está procesando");

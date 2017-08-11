@@ -3,6 +3,7 @@
 namespace Trazeo\MyPageBundle\Classes\Module;
 
 use Swift_Message as Message;;
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\Form\Form;
 use Trazeo\BaseBundle\Service\MailerHelper;
 use Trazeo\MyPageBundle\Classes\ModuleAbstract;
@@ -25,6 +26,8 @@ class FormContact extends ModuleAbstract {
 
 
         $dataForm = $request->get('FormContact');
+        /** @var Translator $translator */
+        $translator = $container->get('translator');
 
         $html = "<h2>Email recibido desde formulario de contacto</h2>";
         $html .= "<hr/>";

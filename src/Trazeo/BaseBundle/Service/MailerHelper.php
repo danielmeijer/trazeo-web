@@ -13,15 +13,20 @@ class MailerHelper {
         $this->_container = $container;
     }
 
-    public function createNewMessage($from='hola@trazeo.es', $fromName='Trazeo', $email, $subject, $body){
+    public function createNewMessage($from='hola@trazeo.es', $fromName='Trazeo', $email, $subject, $body, $withHtml = false){
         $mailer=$this->_container->getParameter('mailer_service');
         if ($mailer=='swiftMailer') {
             $message = new Swift_Message();
             $message
                 ->setFrom($from, $fromName)
                 ->addTo($email)
-                ->setSubject($subject)
-                ->setBody($body,'text/html');
+                ->setSubject($subject);
+                if($withHtml){
+                    $message->setBody($body, 'text/html');
+                }
+                else {
+                    $message->setBody($body);
+                }
 
             return $message;
 
