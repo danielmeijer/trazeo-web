@@ -35,13 +35,8 @@ class FormContact extends ModuleAbstract {
         /** @var MailerHelper $mailer */
         $mailer = $container->get('trazeo_mailer_helper');
         $message = $mailer->createNewMessage('hola@trazeo.es', 'Trazeo', $email, "Trazeo - Formulario de Contacto", $html);
-        $mailer->sendMessage($message);
-
-        if (isset($result[0]['status']) && $result[0]['status'] == "sent") {
-            $flashMessages->addFlashMessages("success", "Mensaje enviado con éxito.");
-        } else {
-            $flashMessages->addFlashMessages("warning", "Ha ocurrido un error.");
-        }
+        $result = $mailer->sendMessage($message);
+        $flashMessages->addFlashMessages("success", "Mensaje enviado con éxito.");
 
         return $container->redirect($container->generateUrl('landingPage', array('subdomain' => $subdomain)));
     }

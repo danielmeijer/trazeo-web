@@ -636,11 +636,17 @@ class ApiRideController extends Controller {
 
         //$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
         $reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
-
         $ride = $em->getRepository('TrazeoBaseBundle:ERide')->findOneById($id_ride);
-        // TODO: Lo ideal sería coger el último PUNTO con un REPOSITORY
-        $events = $reEvent->findBy(array('action' => "point", 'ride' => $ride->getId()), array('createdAt' => 'DESC'));
 
+        if (!$ride) {
+            $view = View::create()
+                ->setStatusCode(200)
+                ->setData($this->msgDenied('ride with id: ' . $id_ride . ' not found'));
+
+            return $this->get('fos_rest.view_handler')->handle($view);
+        }
+
+        $events = $reEvent->findBy(array('action' => "point", 'ride' => $ride->getId()), array('createdAt' => 'DESC'));
         if (count($events) > 0) {
             $data = $events[0];
         } else {
@@ -657,7 +663,7 @@ class ApiRideController extends Controller {
 
     /**
      * @ApiDoc(
-     *   description="Función que crea un nuevo paseo ",
+     *   description="Función que finaliza un paseo ",
      *   section="ride",
      *   parameters={
      *      {"name"="email", "dataType"="string", "required"=true, "description"="Email del usuario administrador"},
@@ -702,6 +708,13 @@ class ApiRideController extends Controller {
 
         /** @var ERide $ride */
         $ride = $em->getRepository('TrazeoBaseBundle:ERide')->find($id_ride);
+        if (!$ride) {
+            $view = View::create()
+                ->setStatusCode(200)
+                ->setData($this->msgDenied('ride with id: ' . $id_ride . ' not found'));
+
+            return $this->get('fos_rest.view_handler')->handle($view);
+        }
         $group = $ride->getGroup();
 
         //Cálculo del tiempo transcurrido en el paseo

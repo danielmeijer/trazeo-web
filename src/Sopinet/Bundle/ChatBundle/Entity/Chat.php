@@ -1,11 +1,15 @@
 <?php
 namespace Sopinet\Bundle\ChatBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\SerializedName;
+use JMS\Serializer\Annotation\VirtualProperty;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Exclude;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Trazeo\BaseBundle\Entity\EGroup;
 
 /**
  * Entity Chat
@@ -57,8 +61,15 @@ class Chat
 
     /**
      * @ORM\ManyToMany(targetEntity="\Trazeo\BaseBundle\Entity\UserExtend", mappedBy="chats")
+     * @Exclude
      */
     protected $chatMembers;
+
+    /** @ORM\OneToOne(targetEntity="Trazeo\BaseBundle\Entity\EGroup", inversedBy="chat")
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
+     * @Exclude
+     */
+    protected $group;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Trazeo\BaseBundle\Entity\UserExtend", inversedBy="chatsOwned", cascade={"persist", "remove"})
@@ -281,11 +292,29 @@ class Chat
     /**
      * Get chatMembers
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
+     * @VirtualProperty
+     * @SerializedName("chatMembers")
      */
     public function getChatMembers()
     {
+        if ($this->getGroup()!=null) {
+            return $this->getGroup()->getUserextendgroups();
+        }
+
         return $this->chatMembers;
+    }
+
+    /**
+     * Clean chatMembers
+     *
+     * @return Chat $this
+     */
+    public function cleanChatMembers()
+    {
+        $this->chatMembers=new ArrayCollection();
+
+        return $this;
     }
 
     /**
@@ -304,10 +333,36 @@ class Chat
     /**
      * Get admin
      *
-     * @return \Trazeo\BaseBundle\Entity\UserExtend 
+     * @return \Trazeo\BaseBundle\Entity\UserExtend
      */
     public function getAdmin()
     {
         return $this->admin;
+    }
+
+    /**
+     * @param ArrayCollection $users
+     *
+     * @return $this
+     */
+    public function setChatMembers($users)
+    {
+        $this->chatMembers=$users;
+
+        return $this;
+    }
+
+    /**
+     * @return EGroup
+     */
+    public function getGroup(){
+        return $this->group;
+    }
+
+    public function setGroup(EGroup $group)
+    {
+        $this->group=$group;
+
+        return $this;
     }
 }

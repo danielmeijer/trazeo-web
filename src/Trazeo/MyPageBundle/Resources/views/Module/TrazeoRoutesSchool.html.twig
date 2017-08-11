@@ -1,0 +1,110 @@
+<div class="container">
+    <div class="row text-center">
+        <div class="col-lg-10 col-lg-offset-1">
+            <h2>Paseando al cole</h2>
+            <hr class="small">
+            {% set size = group|length %}
+            <div class="row">
+                {% set i = 0 %}
+                {% for group in vars %}
+                    <div style="-webkit-column-count: {{ size }}; -moz-column-count: {{ size }}; column-count: {{ size }};">
+                        <div class="service-item">
+                            <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                {% if group.bymode == "bicibus" %}
+                                    <i class="fa fa-bicycle fa-stack-1x text-primary"></i>
+                                {% else %}
+                                    <i class="fa fa-users fa-stack-1x text-primary"></i>
+                                {% endif %}
+                            </span>
+                            <h4>
+                                <strong>{{ group.name }}</strong>
+                            </h4>
+                            {% if group.route!=null %}
+                                <p>{{ group.route.description }}</p>
+                            {% endif %}
+
+                            <div id="full-width-{{ group.id }}" class="modal container fade">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h3>{{ group.name }}
+                                        <div class="pull-right" style="margin-right:20px">
+                                            <a class="btn btn-primary btn-large" href="{{ path('registerInGroup', {'group_id': group.id}) }}" class="btn btn-light">¡Participar!</a>
+                                        </div>
+                                    </h3>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="alert-warning">
+                                        <table class="table">
+                                            <tbody>
+                                            <tr>
+                                                <td><i class="fa fa-flag-o"></i></td>
+                                                <td>{{"Route.show.start"|trans}}</td>
+                                                <td id="start_resume{{ group.id }}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><i class="fa fa-flag-checkered"></i></td>
+                                                <td>{{"Route.show.end"|trans}}</td>
+                                                <td id="finish_resume{{ group.id }}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><i class="fa fa-road"></i></td>
+                                                <td>{{"Route.show.distance"|trans}}</td>
+                                                <td id="distance_resume{{ group.id }}"></td>
+                                            </tr>
+                                            {% if group.route!=null %}
+                                            <tr>
+                                                <td><i class="fa fa-book"></i></td>
+                                                <td>{{"Route.show.owndescription"|trans}}</td>
+                                                <td>{{ group.route.description }}</td>
+                                            </tr>
+                                            {% endif %}
+                                            <tr>
+                                                <td><i class="fa fa-user"></i></td>
+                                                <td>{{"Route.show.childs"|trans}}</td>
+                                                <td>{{ group.childs.count }} {{"Route.show.signed"|trans}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><i class="fa fa-users"></i></td>
+                                                <td>{{"Route.show.group"|trans}}</td>
+                                                <td>{{ group }}</td>
+                                            </tr>
+                                            {% if group.route!=null %}
+                                            <tr>
+                                                <td><i class="fa fa-key"></i></td>
+                                                <td>{{"Route.show.creator"|trans}}</td>
+                                                <td>{{ group.route.admin }}</td>
+                                            </tr>
+                                            {% endif %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <p>
+                                        <div class="row">
+                                            <div class="map-popup" id="map-{{ group.id }}" class="col-md-12"></div>
+                                        </div>
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a class="btn btn-primary btn-large" href="{{ path('registerInGroup', {'group_id': group.id}) }}" class="btn btn-light">¡Participar!</a>
+                                    <button type="button" data-dismiss="modal" class="btn">Cerrar</button>
+                                </div>
+                            </div>
+
+                            <button class="demo btn btn-primary btn-large" data-toggle="modal" href="#full-width-{{ group.id }}">Saber más</button>
+
+
+                        </div>
+                    </div>
+                    {% set i = i + 1 %}
+                    {% if i % 4 == 0 %}
+                        </div>
+                        <div class="row">
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,1 @@
+php /var/www/beta.trazeo.es/app/console rabbitmq:consumer send_trazeo

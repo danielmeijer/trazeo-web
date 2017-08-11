@@ -1,4 +1,5 @@
 imports:
+    - { resource: security.yml }
     - { resource: config.yml }
     - { resource: configSonataPanel.yml }
     #- { resource: configSonataAdmin.yml }
@@ -22,7 +23,7 @@ monolog:
         nested:
             type:  stream
             path:  "%kernel.logs_dir%/%kernel.environment%.log"
-            level: debug
+            level: error
         console:
             type:  console
 

@@ -2,7 +2,8 @@ imports:
     - { resource: config.yml }
     - { resource: configSonataAdmin.yml }
     #- { resource: configSonataPanel.yml }
-    - { resource: parameters.yml }
+    - { resource: parameters_dev.yml }
+    - { resource: security_dev.yml }
 
 framework:
     router:

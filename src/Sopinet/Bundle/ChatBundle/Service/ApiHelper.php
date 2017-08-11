@@ -20,7 +20,7 @@ class ApiHelper {
     const OK = "ok";
     const DENIED= "Data not valid";
     const USERNOTVALID = "User starter not valid";
-    const USERNOTINCHAT= "User is not member of the chat";
+    const USERNOTINCHAT= "User is member of the chat";
     const USERSTARTERNOTVALID = "User starter not valid";
     const USERNOTADMIN = "User not admin";
     const CHATTYPEINCORRECT = "The type of chat must be event";
@@ -110,6 +110,9 @@ class ApiHelper {
         $user = $this->em->getRepository('\Application\Sonata\UserBundle\Entity\User')->findOneBy(array ("email"=>$email, "password"=>$password, "enabled"=>1));
         //$user= $this->getDoctrine()->getRepository('\Application\Sonata\UserBundle\Entity\User')->findOneBy(array ("username"=>$email));
         if ($user == null){
+            $user = $this->em->getRepository('\Application\Sonata\UserBundle\Entity\User')->findOneBy(array ("username"=>$email, "password"=>$password, "enabled"=>1));
+        }
+        if ($user == null) {
             return false;
         }
         return $user;

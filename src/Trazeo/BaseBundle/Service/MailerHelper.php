@@ -21,7 +21,7 @@ class MailerHelper {
                 ->setFrom($from, $fromName)
                 ->addTo($email)
                 ->setSubject($subject)
-                ->setBody($body);
+                ->setBody($body,'text/html');
 
             return $message;
 

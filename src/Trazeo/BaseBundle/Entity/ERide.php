@@ -539,4 +539,55 @@ class ERide extends AbstractEntity
 
         return $this;
     }
+
+
+    /**
+     * get % diary exercise
+     * @return integer
+     */
+    public function getDiaryExercise()
+    {
+        /** @var \DateTime $duration */
+        $seconds=$this->getDurationSeconds();
+        return $this->countChildsR!=0?round(($seconds/3600)*100, 2):0;//Corespondientes a 60 min de ejercico diario
+    }
+
+    /**
+     * get steps
+     * @return integer
+     */
+    public function getSteps()
+    {
+        return $this->countChildsR!=0?$this->getDistance()*3:0;
+    }
+
+    /**
+     * get CO2 Reduction
+     * @return integer
+     */
+    public function getCO2Reduction()
+    {
+        return $this->countChildsR!=0?round($this->getDistance()*0.148):0;
+    }
+
+    /**
+     * get Calories consumption
+     * @return integer
+     */
+    public function getCaloriesConsumption()
+    {
+        return $this->countChildsR!=0?round(($this->getDistance()*0.015)/$this->countChildsR, 2):0;
+    }
+
+    /**
+     * get Format Date
+     * @return integer
+     */
+    public function getFormatDate()
+    {
+        return $this->getCreatedAt()->format('H:m d/m/Y');
+    }
+
+
+
 }

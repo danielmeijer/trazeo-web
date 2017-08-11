@@ -2,6 +2,7 @@
 
 namespace Trazeo\MyPageBundle\Admin;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Admin\AdminInterface;
@@ -14,6 +15,7 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use Trazeo\BaseBundle\Entity\EChild;
 use Trazeo\BaseBundle\Entity\EGroup;
+use Trazeo\BaseBundle\Entity\UserExtend;
 
 class PGroupAdmin extends Admin
 {
@@ -170,5 +172,38 @@ class PGroupAdmin extends Admin
                 $group->removeChild($child);
             }
         }
+        $chat=$group->getChat();
+        if ($chat!=null){
+            $chat->getChatMembers()->map(function($chatMember) use($group) {
+                /** @var UserExtend $chatMember */
+                if (!$group->getUserextendgroups()->contains($chatMember)) {
+                    $chatMember->removeChat($group->getChat());
+                    $group->getChat()->removeChatMember($chatMember);
+                    return null;
+                }
+                /** @var EntityManager $em */
+                $em=$this->container->get('doctrine.orm.default_entity_manager');
+                $em->persist($chatMember);
+                return $chatMember;
+            });
+            /** @var EntityManager $em */
+            $em=$this->container->get('doctrine.orm.default_entity_manager');
+            $em->persist($chat);
+            $em->flush();
+        }
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getExportFields(){
+        return array(
+            'nombre'=>'name',
+            'administrador'=>'admin',
+            'colegio'=>'school1',
+            'Numero de padres'=>'numberUsers',
+            'Numero de niños'=>'numberChilds'
+        );
+    }
+
 }

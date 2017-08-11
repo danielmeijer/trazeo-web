@@ -7,13 +7,7 @@
 {% if id_map is not defined %}
     {% set id_map =  "mapa" %}
 {% endif %}
-<script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
-{% if kml %}
-    <script src='{{ asset('js/kmlMap.js') }}'></script>
-{% else %}
-    <script src='{{ asset('js/trazeoMap.js') }}'></script>
-{% endif %}
-<script>
+
     POINT=function(lat,lng){
         this.latLng=new L.LatLng(lat,lng);
         var pick=false;
@@ -49,12 +43,12 @@
         realtime: {{ realTime }},
         resume: {% if resume is defined %}true{% else %}false{% endif %},
         resumeFields: {
-          start: $("#start_resume{{ groupId|default('') }}"),
-          finish: $("#finish_resume{{ groupId|default('') }}"),
-          distance: $("#distance_resume{{ groupId|default('') }}"),
-          enviroment: $("#enviroment_resume{{ groupId|default('') }}"),
-          safe: $("#safe_resume{{ groupId|default('') }}"),
-          pollution: $("#pollution_resume{{ groupId|default('') }}")
+            start: $("#start_resume{{ groupId|default('') }}"),
+            finish: $("#finish_resume{{ groupId|default('') }}"),
+            distance: $("#distance_resume{{ groupId|default('') }}"),
+            enviroment: $("#enviroment_resume{{ groupId|default('') }}"),
+            safe: $("#safe_resume{{ groupId|default('') }}"),
+            pollution: $("#pollution_resume{{ groupId|default('') }}")
         },
         resumeValues: {
             endPoint: "{{ endPoint }}",
@@ -68,5 +62,3 @@
     };
 
     initMap(mapConfig);
-</script>
-

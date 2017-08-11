@@ -15,11 +15,13 @@ use Trazeo\MyPageBundle\Classes\ModuleAbstract;
 class Module
 {
     const TYPE_IMAGE = "Image";
+    const TYPE_IMAGES_ROW = "ImagesRow";
     const TYPE_HTML = "Html";
     const TYPE_COMBOBIGINTRO = "ComboBigIntro";
     const TYPE_TRAZEOROUTES = "TrazeoRoutes";
     const TYPE_FORMCONTACT = "FormContact";
     const TYPE_GENERALDATA = "GeneralData";
+    const TYPE_TRAZEOROUTESSCHOOL = "TrazeoRoutesSchool";
 
     use ORMBehaviors\Timestampable\Timestampable;
     /**

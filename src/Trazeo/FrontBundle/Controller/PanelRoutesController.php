@@ -300,12 +300,14 @@ class PanelRoutesController extends Controller
 		{
 			$latlng = explode(",", $points[$i]);
 
-			$punto = new EPoints();
-			$punto->setLocation(new SimplePoint($latlng[0], $latlng[1]));
-			$punto->setRoute($route);
-			$punto->setPickup($latlng[2]);
-			$punto->setDescription($latlng[3]);
-			$em->persist($punto);
+            if (array_key_exists(1,$latlng)) {
+                $punto = new EPoints();
+                $punto->setLocation(new SimplePoint($latlng[0], $latlng[1]));
+                $punto->setRoute($route);
+                $punto->setPickup($latlng[2]);
+                $punto->setDescription($latlng[3]);
+                $em->persist($punto);
+            }
 		}
 		
 		$helper = $this->get('trazeo_base_helper');

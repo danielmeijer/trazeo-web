@@ -87,7 +87,7 @@ class GenerateEmailsCommand extends ContainerAwareCommand
                 }
 
                 $mailer = $con->get('trazeo_mailer_helper');
-                $message = $mailer->createNewMessage('hola@trazeo.es', 'Trazeo', $user->getUser()->getEmail(), $subject, $con->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:notifyUser.html.twig', array('user' => $user, 'notifications' => $notifications)));
+                $message = $mailer->createNewMessage('no-reply@trazeo.es', 'Trazeo', $user->getUser()->getEmail(), $subject, $con->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:notifyUser.html.twig', array('user' => $user, 'notifications' => $notifications)));
                 $mailer->sendMessage($message);
                 $output->writeln('<info>Hecho</info>');
             }

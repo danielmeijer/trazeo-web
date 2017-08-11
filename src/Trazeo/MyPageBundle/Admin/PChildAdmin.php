@@ -42,14 +42,6 @@ class PChildAdmin extends Admin
         $actions = parent::getBatchActions();
 
 
-        // TODO: LA QUITAMOS
-        /*
-        $actions['createGraph'] = array(
-            'label' => $this->trans('action_graph', array(), 'SonataAdminBundle'),
-            'ask_confirmation' => false
-        );
-        */
-
         return $actions;
     }
 
@@ -204,5 +196,23 @@ class PChildAdmin extends Admin
         }
 
         return $query;
+    }
+
+
+
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getExportFields()
+    {
+        return array(
+            'Alias'=>'nick',
+            'Móvil del tutor'=>'mobileParent',
+            'Email del tutor'=>'emailParent',
+            'Género'=>'gender',
+            'Fecha de registro'=>'createdAt',
+            'Fecha de nacimiento'=>'dateBirth',
+        );
     }
 }

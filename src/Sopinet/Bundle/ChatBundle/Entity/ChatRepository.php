@@ -156,7 +156,8 @@ class ChatRepository extends EntityRepository
 
         // Comprobar que no está ya en el chat
         if ($this->userInChat($userToAdd, $chat)) {
-            throw new \Exception(ApiHelper::USERNOTINCHAT);
+            $chat->removeChatMember($userToAdd);
+            $userToAdd->removeChat($chat);
         }
 
         $chat->addChatMember($userToAdd);

@@ -146,4 +146,19 @@ class PUserExtendAdmin extends Admin
 
         return $query;
     }
+
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getExportFields()
+    {
+        return array(
+            'Email'=>'user.username',
+            'Fecha de registro'=>'user.createdAt',
+            'Móvil'=>'mobile',
+            'Ciudad'=>'city.name',
+            'País'=>'country.name'
+        );
+    }
 }

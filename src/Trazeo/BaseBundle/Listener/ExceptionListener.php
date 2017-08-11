@@ -24,7 +24,7 @@ class ExceptionListener
 
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
-        if($event->getException() instanceof PreconditionFailedHttpException){
+        /*if($event->getException() instanceof PreconditionFailedHttpException){
 
             if($event->getRequest()->getMethod()=='GET'){
                 $url=$_SERVER['HTTP_REFERER'];
@@ -40,7 +40,7 @@ class ExceptionListener
                     'Content-Type' => 'application/json'
                 )));
             }
-        }
+        }*/
 
     }
 }
