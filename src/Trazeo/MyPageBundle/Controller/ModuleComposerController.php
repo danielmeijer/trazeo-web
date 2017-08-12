@@ -19,6 +19,7 @@ use Trazeo\BaseBundle\Entity\EGroup;
 use Trazeo\BaseBundle\Entity\EGroupRepository;
 use Trazeo\BaseBundle\Entity\ERide;
 use Trazeo\BaseBundle\Entity\ERideRepository;
+use Trazeo\BaseBundle\Service\Helper;
 use Trazeo\MyPageBundle\Entity\Menu;
 use Trazeo\MyPageBundle\Entity\Module;
 use Trazeo\MyPageBundle\Form\BarAdminType;
@@ -26,6 +27,7 @@ use Trazeo\MyPageBundle\Form\ModuleEditComposerType;
 use Trazeo\MyPageBundle\Form\RegisteredAdminType;
 use Trazeo\MyPageBundle\Form\RegisteredEvolutionAdminType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Trazeo\MyPageBundle\TrazeoMyPageBundle;
 
 /**
  * @Route("/admin/moduleComposer")
@@ -47,7 +49,37 @@ class ModuleComposerController extends Controller
 
         return array(
             'admin_pool' => $admin_pool,
-            'page' => $page
+            'page' => $page,
+            'moduleTypes' => Module::$moduleTypes
+        );
+    }
+
+    /**
+     * @Route("/addModule/{moduleType}/{menu}", name="moduleComposer_addModule")
+     */
+    public function addModuleAction($moduleType, Menu $menu) {
+        $admin_pool = $this->get('sonata.admin.pool');
+
+        // Create empty module
+        $module = new Module();
+        $module->setType($moduleType);
+        $module->setTitle("Title");
+        $module->setPosition(1);
+        $module->setMenu($menu);
+        $module->setPage($menu->getPage());
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $em->persist($module);
+        $em->flush();
+
+        $formModule = $this->createForm(new ModuleEditComposerType($this), $module);
+        /** @var Form $formModule */
+        $formModule = $module->getClass()->addFieldsContentAdmin($formModule, $this, $module);
+
+        return $this->render('TrazeoMyPageBundle::ModuleComposer/editModule.html.twig', array(
+            'admin_pool' => $admin_pool,
+            'module' => $module,
+            'formModule' => $formModule->createView())
         );
     }
 
@@ -84,6 +116,19 @@ class ModuleComposerController extends Controller
             'module' => $module,
             'formModule' => $formModule->createView()
         );
+    }
+
+    /**
+     * @Route("/deleteModule/{module}", name="moduleComposer_deleteModule")
+     */
+    public function deleteModuleAction(Module $module) {
+        $em = $this->getDoctrine()->getEntityManager();
+        $em->remove($module);
+        $em->flush();
+
+        $this->addFlash("success", "Módulo eliminado con éxito");
+
+        return new RedirectResponse($this->generateUrl('moduleComposer_view'));
     }
 
     /**

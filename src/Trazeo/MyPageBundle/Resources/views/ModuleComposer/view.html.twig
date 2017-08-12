@@ -8,6 +8,18 @@
 
     <div id="menus">
         {% for menu in page.menus %}
+            <div class="dropdown pull-right">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                        data-toggle="dropdown" aria-expanded="true">
+                    Add module
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    {% for moduleType in moduleTypes %}
+                        <li><a href="{{ path('moduleComposer_addModule', {'moduleType':moduleType, 'menu':menu.id}) }}">{{ moduleType }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
             <div class="menu" data-id="menu-{{ menu.id }}" id="menu-{{ menu.id }}">
                 <div class="title_menu">
                     <span class="menu_colorback" style="background-color: #{{ menu.colorback }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
@@ -18,7 +30,11 @@
                     {% for module in menu.modules %}
                         <div class="module" data-id="module-{{ module.id }}" id="module-{{ module.id }}">{{ module }}<i class="js-edit">
                                 <a href="{{ path('moduleComposer_editModule', {'module': module.id}) }}">
-                                    Editar
+                                    Edit
+                                </a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="{{ path('moduleComposer_deleteModule', {'module': module.id}) }}">
+                                    Delete
                                 </a>
                         </i></div>
                     {% endfor %}
@@ -44,6 +60,9 @@
             width: 30px;
             height: 30px;
             border: 1px dashed #030303;
+        }
+        .new_module {
+            float: right;
         }
 
         .module {
@@ -156,7 +175,7 @@
                 draggable: '.module',
                 filter: ".empty, .menu_colorback",
                 dataIdAttr: 'data-id',
-                group: "localStorage-example",
+                group: "localStorage-modules",
                 store: {
                     /**
                      * Get the order of elements. Called once during initialization.

@@ -1,4 +1,9 @@
 services:
+    # Helpers Services
+    trazeo_mypage.moduleHelper:
+       class: Trazeo\MyPageBundle\Service\ModuleHelper
+
+    # Others
     trazeo_mypage.admin.page:
         class: Trazeo\MyPageBundle\Admin\PageAdmin
         arguments: [~, Trazeo\MyPageBundle\Entity\Page, SonataAdminBundle:CRUD]

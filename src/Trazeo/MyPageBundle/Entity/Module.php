@@ -24,6 +24,18 @@ class Module
     const TYPE_TRAZEOROUTESSCHOOL = "TrazeoRoutesSchool";
     const TYPE_TRAZEOROUTESCITY = "TrazeoRoutesCity";
 
+    public static $moduleTypes = array(
+        self::TYPE_IMAGE,
+        self::TYPE_IMAGES_ROW,
+        self::TYPE_HTML,
+        self::TYPE_COMBOBIGINTRO,
+        self::TYPE_TRAZEOROUTES,
+        self::TYPE_FORMCONTACT,
+        self::TYPE_GENERALDATA,
+        self::TYPE_TRAZEOROUTESSCHOOL,
+        self::TYPE_TRAZEOROUTESCITY
+    );
+
     use ORMBehaviors\Timestampable\Timestampable;
     /**
      * @var integer
