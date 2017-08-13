@@ -84,6 +84,19 @@ class ModuleComposerController extends Controller
     }
 
     /**
+     * @Route("/deleteMenu/{menu}", name="moduleComposer_deleteMenu")
+     */
+    public function deleteMenuAction(Menu $menu) {
+        $em = $this->getDoctrine()->getEntityManager();
+        $em->remove($menu);
+        $em->flush();
+
+        $this->addFlash("success", "Menu removed");
+
+        return new RedirectResponse($this->generateUrl('moduleComposer_view'));
+    }
+
+    /**
      * @Route("/editModule/{module}", name="moduleComposer_editModule")
      * @ParamConverter("module", class="TrazeoMyPageBundle:Module")
      * @Template()

@@ -1,26 +1,32 @@
 {% extends 'TrazeoMyPageBundle:Admin:custom_project_layout.html.twig' %}
 
 {% block content %}
-    <p>Esta pantalla se encuentra en construcción.</p>
-    <p>Las funciones de ordenar pueden no funcionar 100%.</p>
     <p>Puede mover los elementos, clicando y soltando para reordenarlos.</p>
     <p>Acceda a "Editar" los módulos, y podrá modificarlos.</p>
 
+    <a class="btn btn-success pull-left" href="#">Add menu</a>
+    <i id="iconSaving" data-toggle="tooltip" title="Changes saved automatically!" class="fa fa-save pull-right"></i>
+
+    <hr style="clear:both"></hr>
+
     <div id="menus">
         {% for menu in page.menus %}
-            <div class="dropdown pull-right">
-                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
-                        data-toggle="dropdown" aria-expanded="true">
-                    Add module
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                    {% for moduleType in moduleTypes %}
-                        <li><a href="{{ path('moduleComposer_addModule', {'moduleType':moduleType, 'menu':menu.id}) }}">{{ moduleType }}</a></li>
-                    {% endfor %}
-                </ul>
-            </div>
             <div class="menu" data-id="menu-{{ menu.id }}" id="menu-{{ menu.id }}">
+                <a class="btn btn-warning pull-right" href="{{ path('moduleComposer_deleteMenu', {'menu':menu.id}) }}">
+                    Remove menu
+                </a>
+                <div class="dropdown pull-right">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                            data-toggle="dropdown" aria-expanded="true">
+                        Add module
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                        {% for moduleType in moduleTypes %}
+                            <li><a href="{{ path('moduleComposer_addModule', {'moduleType':moduleType, 'menu':menu.id}) }}">{{ moduleType }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
                 <div class="title_menu">
                     <span class="menu_colorback" style="background-color: #{{ menu.colorback }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     {{ menu }}
@@ -28,12 +34,12 @@
                 <div class="modules" data-id="modules-{{ menu.id }}" id="modules-{{ menu.id }}">
                         <div class="module empty" data-id="module-0_{{ menu.id }}" id="module-0_{{ menu.id }}"> - </div>
                     {% for module in menu.modules %}
-                        <div class="module" data-id="module-{{ module.id }}" id="module-{{ module.id }}">{{ module }}<i class="js-edit">
-                                <a href="{{ path('moduleComposer_editModule', {'module': module.id}) }}">
+                        <div class="module" data-id="module-{{ module.id }}" id="module-{{ module.id }}">{{ module }}
+                            <i class="js-edit">
+                                <a class="btn btn-info" href="{{ path('moduleComposer_editModule', {'module': module.id}) }}">
                                     Edit
                                 </a>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <a href="{{ path('moduleComposer_deleteModule', {'module': module.id}) }}">
+                                <a class="btn btn-warning" href="{{ path('moduleComposer_deleteModule', {'module': module.id}) }}">
                                     Delete
                                 </a>
                         </i></div>
@@ -61,10 +67,6 @@
             height: 30px;
             border: 1px dashed #030303;
         }
-        .new_module {
-            float: right;
-        }
-
         .module {
             cursor: move;
             position: relative;
@@ -74,12 +76,6 @@
             -webkit-transition: opacity .2s;
             transition: opacity .2s;
             opacity: 0;
-            display: block;
-            cursor: pointer;
-            color: #c00;
-            top: 0px;
-            right: 40px;
-            position: absolute;
             font-style: normal;
         }
 
@@ -100,6 +96,17 @@
     <script>
         var order;
 
+        function initSaving() {
+            $("#iconSaving").addClass("fa-spin");
+            $("#iconSaving").css("color", "#FF0000");
+        }
+
+        function stopSaving(data) {
+            $("#iconSaving").removeClass("fa-spin");
+            $("#iconSaving").css("color", "#000000");
+            // alert(data);
+        }
+
         function replaceAll(find, replace, str) {
             return str.replace(new RegExp(find, 'g'), replace);
         }
@@ -114,9 +121,9 @@
             }
 
             var postURL = "{{base_url}}admin/moduleComposer/saveOrderModules/" + parentID + "/" + orderPost;
-
+            initSaving();
             $.post( postURL, function( data ) {
-                alert(data);
+                stopSaving(data);
             });
         }
 
@@ -126,9 +133,9 @@
             }
 
             var postURL = "{{base_url}}admin/moduleComposer/saveOrderMenus/" + order;
-
+            initSaving();
             $.post( postURL, function( data ) {
-                alert(data);
+                stopSaving(data);
             });
         }
 

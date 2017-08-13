@@ -5,6 +5,7 @@ namespace Trazeo\BaseBundle\Service;
 use JJs\Bundle\GeonamesBundle\Entity\City;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Trazeo\MyPageBundle\Entity\Page;
 
 class Helper {
 	private $_container;
@@ -105,6 +106,12 @@ class Helper {
         return $subdomain;
     }
 
+    /**
+     * Return page by subdomain
+     *
+     * @param null $subdomain
+     * @return Page
+     */
     function getPageBySubdomain($subdomain = null) {
         // TODO: DEBUG
         if ($_SERVER['HTTP_HOST'] == "localhost" && $subdomain == null) {
