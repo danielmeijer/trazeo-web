@@ -68,8 +68,8 @@ class PChildAdmin extends Admin
                 'choice',
                 [
                     'choices' => array(
-                        EChild::GENDER_BOY => "Niño",
-                        Echild::GENDER_GIRL => "Niña"
+                        EChild::GENDER_BOY => "Children.gender.boy",
+                        Echild::GENDER_GIRL => "Children.gender.girl"
                     )
                 ]
             );

@@ -1,3 +1,4 @@
+# TODO: We should only use app/Resources/translations?
 # Project Admin
 list:
     label_nick: 'Nombre'

@@ -1,3 +1,4 @@
+# We need translate "spedibus"
 Admin:
     no: 'Disponible para el administrador'
     yes: 'Eres administrador de este grupo'
@@ -5,13 +6,13 @@ Admin:
 'Bad credentials': 'Nombre de usuario o Contraseña inválido'
 
 Btn:
-    back: return
-    edit: edit
-    success: Save
+    back: 'Return'
+    edit: 'Edit'
+    success: 'Save'
 
 Catalog:
     button:
-        back: return
+        back: 'Return'
 
     index:
         description: 'Catalog management panel. All prizes can be edited here.'
@@ -31,20 +32,20 @@ CatalogItem:
         position: 'Display position in the catalog'
         title: 'Prize Title Line'
 
-    link: Link
-    points: points
-    position: position
-    title: Title
+    link: 'Link'
+    points: 'Points'
+    position: 'Position'
+    title: 'Title'
 
-CatalogItemcompany: Company
+CatalogItemcompany: 'Company'
 ChangeVisibility: 'Change visibility'
 
 Children:
     data:
-        age: Age
-        name: Name
-        options: Options
-        visibility: Visibility
+        age: 'Age'
+        name: 'Name'
+        options: 'Options'
+        visibility: 'Visibility'
 
     date: 'Birthdate'
 
@@ -53,9 +54,9 @@ Children:
         title: 'Edit child data'
 
     empty: 'You have not yet registered any of your children'
-    gender: Gender
-    gender.boy: Boy
-    gender.girl: Girl
+    gender: 'Gender'
+    gender.boy: 'Boy'
+    gender.girl: 'Girl'
 
     help:
         datebirth: 'Birthdate'
@@ -65,17 +66,17 @@ Children:
         groups: 'Assign to a group of pedibuses'
         nick: 'Name of child'
         scholl: 'School'
-        sex: Gender
+        sex: 'Gender'
         userextend: 'Tutor'
-        visibility: Visibility
+        visibility: 'Visibility'
 
     index:
-        acept: Accept
+        acept: 'Accept'
         asigned: 'Groups in which you are registered'
-        cancel: Cancel
+        cancel: 'Cancel'
         description: 'In this section you can consult all the information regarding your children registered in Trazeo'
-        disjoin: Unlink
-        edit: Edit
+        disjoin: 'Unlink'
+        edit: 'Edit'
 
         mail:
             invite: 'Send an invitation to other users to be one of the guardians of this child'
@@ -87,7 +88,7 @@ Children:
 
         subtitle: 'Children you have registered on the platform'
         title: 'List of your children'
-        tutors: Tutors
+        tutors: 'Tutors'
 
     invited: 'You have an invitation to be a tutor'
     list: 'List of children'
@@ -107,30 +108,30 @@ Children:
         title: 'Child Facts'
 
     visibility:
-        disabled: Private
-        enabled: Public
-        private: Private
-        public: Public
+        disabled: 'Disabled'
+        enabled: 'Enabled'
+        private: 'Private'
+        public: 'Public'
 
 City:
     all: 'Show all'
 
 Confirmation:
-    no: No
+    no: 'No'
     question: 'Are you sure?'
-    yes: Yes
+    yes: 'Yes'
 
-Create: Create
-Delete: Delete
+Create: 'Create'
+Delete: 'Delete'
 
 DeleteAccount:
     description: 'If you wish to delete your profile now, please contact us by email at hola@trazeo.es and we will process your request.'
     title: 'Delete Account'
 
 Description: 'The web / mobile application to recover the way to school on foot'
-DisJoin: Unlink
+DisJoin: 'Unlink'
 Email: 'Email'
-España: Spain
+España: 'Spain'
 
 Exchange:
     button:
@@ -147,12 +148,12 @@ Exchange:
 
 Form:
     profile:
-        pass: Password
+        pass: 'Password'
         repeatpass: 'Confirm Password'
 
 Group:
     new:
-        locality: Location
+        locality: 'Location'
 
     school: 'School'
 
@@ -163,13 +164,13 @@ Groups:
         request: 'Has requested to join your group '
 
     data:
-        activity: Activity
+        activity: 'Activity'
         chat: 'Wall of the pedibus group'
         member: 'Member of the group'
-        name: Name
-        options: Options
-        route: Route
-        visibility: Visibility
+        name: 'Name'
+        options: 'Options'
+        route: 'Route'
+        visibility: 'Visibility'
 
     edit:
         description: 'Indicate the type of visibility and assign a route'
@@ -220,15 +221,15 @@ Groups:
         description: 'Group info'
         title: 'Relevant data about the pedibus group'
 
-    visibility: Visibility
-    visibility.hidden: Hidden
-    visibility.private: Private
-    visibility.public: Public
+    visibility: 'Visibility'
+    visibility.hidden: 'Hidden'
+    visibility.private: 'Private'
+    visibility.public: 'Public'
 
 Help:
     button:
         createChild: 'Register your children or edit your data. Remember that they have to be linked to a group to appear in the listing of the adult mobile application that accompanies the pedibus. If you register them after joining a group, you will have to manually link them on the wall of the group. '
-        createGroup: Help.button.createGroup
+        createGroup: 'Create a group if you want to organize a pedibus.'
         editChild: 'The data will be private. You can only see them yourself. Only the adult who accompanies the group every day can see the name when accessing the list of children involved. '
         editGroup: 'Fill in all the fields so that your group is easy to find by the rest of the participants. Only you as administrator can modify this group data. '
         group: 'If you belong to a group of pedibus you can communicate with the other participating families through the wall, invite others to join, and earn points by participating. When you link your children, the accompanying adult can see them in the children list and send you notifications. '
@@ -241,7 +242,7 @@ Help:
 Home:
     modal:
         app:
-            close: Continue
+            close: 'Continue'
             explain1: 'Welcome to Trazeo Caminos Escolares. </ Br> The tool consists of a web and a mobile application (available for Android). </ Br> The mobile application only needs to install if you are going to someday be the Adult companion of a group of pedibus. </ Br> You can download it in this link '
             explain2: '</ br> or at any other time from <a href="www.trazeo.es"> www.trazeo.es </a>. </ Br> Click Continue to continue with the welcome tutorial from The web. </ Br> You will receive an email with instructions to add your first 50 points. </ Br> Ask us if you have any doubts, and walk! '
             link: 'Download now'
@@ -253,31 +254,29 @@ Login:
     email: 'Email'
     forgot: 'Forgot password?'
     new: 'Do not have an account?'
-    password: Password
-    signin: Login
+    password: 'Password'
+    signin: 'Login'
     title: 'Login'
     username: 'Email'
 
 Menu:
-    children: Children
-    groups: Groups
-    home: Home
-    routes: Routes
+    children: 'Children'
+    groups: 'Groups'
+    home: 'Home'
+    routes: 'Routes'
 
     tooltip:
-        children: Children
-        group: Group
-        home: Home
-        point: Points
-        route: Routes
+        children: 'Children'
+        group: 'Group'
+        home: 'Home'
+        point: 'Points'
+        route: 'Routes'
 
 Navbar:
     logout: 'Logout'
-    profile: Profile
-    settings: Configuration
+    profile: 'Profile'
+    settings: 'Configuration'
 
-Niña: Girl
-Niño: Boy
 No: No
 NoAccess: 'No Access'
 
@@ -356,8 +355,8 @@ Notifications:
     title: 'List of notifications'
 
 Options:
-    delete: Delete
-    edit: Edit
+    delete: 'Delete'
+    edit: 'Edit'
 
 Panel:
     title: 'Main panel'
@@ -377,14 +376,14 @@ Points:
     description: 'In this section you can consult all the information regarding the points you have obtained in Trazeo'
     exchange: 'Do you want to redeem your points?'
     explanation: 'Earn points in Trazeo by participating in the pedibus and encouraging others to do so'
-    got: you have
+    got: 'you have'
 
     historical:
         button: 'Point History'
         description: 'List of actions that have reported points'
         distance: 'kilometers with Trazeo, which become'
-        exchange: exchangeable
-        exchange_plural: exchangeable
+        exchange: 'exchangeable'
+        exchange_plural: 'exchangeable'
         explanation: 'These are the points you have achieved so far'
         title: 'Point History'
         walk: 'has walked'
@@ -416,7 +415,7 @@ Points:
                 first: 'How does it work? </br>'
                 second: 'Do you want to know more about <a href="http://www.civiclub.org">CiviClub.org</a>?'
 
-        close: Close
+        close: 'Close'
 
         exchange:
             body: 'We have already received your request to redeem your points in Trazeo for this prize. We will send you an email in the next few hours with detailed instructions for you to enjoy. Thank you for having your children walk with Trazeo! '
@@ -431,14 +430,14 @@ Points:
             third: 'If you need more information, or if you are a company or organization and want to offer prizes and discounts in Trazeo, you can contact us at hola@trazeo.es'
         header: 'In Trazeo we want to reward your commitment to healthy habits and sustainability, allowing you to add points to your personal account and exchange them for awards and discounts offered by our companies and collaborating organizations.'
         howto: 'Get points in Trazeo'
-        mail: hola@trazeo.es
+        mail: 'hola@trazeo.es'
 
         question:
             first: 'How can you score points in Trazeo?</br>'
             second: 'How can you redeem your points in Trazeo?</br></br>'
 
-    name: points
-    name_plural: points
+    name: 'points'
+    name_plural: 'points'
     title: 'My points'
     total: 'in total'
 
@@ -492,8 +491,8 @@ Ride:
 Route:
     data:
         map: 'Map of the route'
-        name: Name
-        options: Options
+        name: 'Name'
+        options: 'Options'
 
     description: 'Relevant data of the route'
 
@@ -533,25 +532,25 @@ Route:
     show:
         buttons:
             cancel: 'Cancel Action'
-            end: Finish
+            end: 'Finish'
             erase: 'Delete point'
             pickup: 'Create collection point'
             pickupErase: 'Delete collection point'
-            save: Save
-            start: Start
-            undo: Undo
+            save: 'Save'
+            start: 'Start'
+            undo: 'Undo'
 
-        childs: Children
+        childs: 'Children'
         create: 'Create New Group'
-        creator: Author
+        creator: 'Author'
         description: 'Map and route data'
-        distance: Distance
+        distance: 'Distance'
         edit: 'Edit route'
         end: 'Ends at'
-        group: Group
+        group: 'Group'
         groups: 'Groups with this route'
         map: 'Map of the route'
-        owndescription: Description
+        owndescription: 'Description'
         signed: 'signed on this route'
         start: 'Starts at'
         title: 'Route: %name%'
@@ -560,12 +559,12 @@ Route:
 Settings:
     index:
         description: 'Customize your notification notices on the trazeo platform'
-        title: Notifications
+        title: 'Notifications'
 
-Si: Yes
+Si: 'Yes'
 
 Sponsors:
-    current: Sponsors
+    current: 'Sponsors'
 
 Suggestion:
     access_groups: 'You are not in any group yet! Search now for a group in your Locality and join it. '
@@ -574,7 +573,6 @@ Suggestion:
     link_child: 'Access the Wall of any of your groups to link your children.'
     new_child: 'You have not registered any child yet! Click here to register your children in the system. '
     no_school: "in your child's profile you can fill in the' Educational Center 'to which you belong"
-    suggestion: ''
 
 Timeline:
     child:
@@ -602,9 +600,9 @@ Timeline:
 
 Trans:
     alternative: 'alternative translation'
-    description: Description
+    description: 'Description'
     head: 'Trazeo translations'
-    meaning: Meaning
+    meaning: 'Meaning'
     notfound: 'No messages'
 
     save:
@@ -626,19 +624,19 @@ Trans:
         new: 'New messages'
 
     table:
-        id: Identifier
+        id: 'Identifier'
         info: 'Additional information'
-        translation: Translation
+        translation: 'Translation'
 
     title: 'Messages available for translation (en-US, Spanish - Spain)'
 
-Update: Update
+Update: 'Update'
 
 'User account is disabled':
-    '': 'User account disabled'
+    '': 'User account disabled' # TODO: ?
 
 User:
-    points: Points
+    points: 'Points'
 
 Userextend:
     help:
@@ -651,9 +649,9 @@ Userextend:
         title: 'User Profile'
 
     profile:
-        avatar: Avatar
+        avatar: 'Avatar'
         edit: 'Edit Profile'
-        location: Location
+        location: 'Location'
         profile: 'Profile data'
         title: 'User Profile'
 
@@ -685,7 +683,7 @@ group:
         updated: 'The group has been updated'
 
     new:
-        locality: Location
+        locality: 'Location'
         submit: 'Create Group'
 
     show:
@@ -693,9 +691,9 @@ group:
 
 layout:
     logged_in_as: 'Identified as %username%'
-    login: Login
-    logout: Exit
-    register: Register
+    login: 'Login'
+    logout: 'Exit'
+    register: 'Register'
 
 preference:
     civiclub_conexion:
@@ -703,8 +701,8 @@ preference:
         name: 'Conection with CiviClub'
 
         value:
-            no: no
-            yes: yes
+            no: 'no'
+            yes: 'yes'
 
     notification_email:
         description: 'Check this box if you want to receive email notifications'
@@ -712,8 +710,8 @@ preference:
 
         value:
             important: 'Only the important'
-            never: None
-            now: All
+            never: 'None'
+            now: 'All'
 
 profile:
     edit:
@@ -723,7 +721,7 @@ profile:
         updated: 'Profile has been updated'
 
     show:
-        email: Email
+        email: 'Email'
         username: 'Username'
 
 registration:
@@ -738,7 +736,7 @@ registration:
     flash:
         user_created: 'User created successfully'
 
-    submit: Sign up
+    submit: 'Sign up'
 
 resetting:
     check_email: 'An email has been sent to %email%. it contains an activation link that you must press to reset your password.'
@@ -763,11 +761,12 @@ resetting:
 security:
     login:
         password: 'Password:'
-        remember_me: Remember
-        submit: Login
+        remember_me: 'Remember'
+        submit: 'Login'
         username: 'Username:'
 
 # Project Admin
+# TODO: We could put it in another file
 list:
     label_nick: 'Name'
     label_date_birth: 'Birthdate '
