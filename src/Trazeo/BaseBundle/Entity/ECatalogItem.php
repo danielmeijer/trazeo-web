@@ -7,12 +7,15 @@ namespace Trazeo\BaseBundle\Entity;
  use JMS\Serializer\Annotation\Type;
  use JMS\Serializer\Annotation\VirtualProperty;
  use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+ use Symfony\Component\HttpFoundation\File\File;
+ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
  /**
  * Entity ECatalogItem
  *
  * @ORM\Table("e_catalogitem")
- * @ORM\Entity(repositoryClass="ECatalogItemRepository")
+ * @ORM\Entity(repositoryClass="ECatalogItemRepository")*
+ * @Vich\Uploadable
  */
  class ECatalogItem
  {
@@ -65,7 +68,7 @@ namespace Trazeo\BaseBundle\Entity;
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="link", type="string")
+	 * @ORM\Column(name="link", type="string", nullable=true)
 	 */
 	 protected $link="";
 
@@ -76,10 +79,17 @@ namespace Trazeo\BaseBundle\Entity;
      */
      protected $complete=0;
 
-	/**
-	 * @ORM\OneToMany(targetEntity="File", mappedBy="catalogitems", cascade={"remove"}, orphanRemoval=true)
-	 */
-	 protected $file;
+     /**
+      * @ORM\Column(type="string", length=255)
+      * @var string
+      */
+     private $image;
+
+     /**
+      * @Vich\UploadableField(mapping="catalog_images", fileNameProperty="image")
+      * @var File
+      */
+     private $imageFile;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="JJs\Bundle\GeonamesBundle\Entity\City", inversedBy="catalogitem")
@@ -87,13 +97,20 @@ namespace Trazeo\BaseBundle\Entity;
 	 */
 	 protected $citys;
 
+     public function setImageFile(File $image = null)
+     {
+         $this->imageFile = $image;
+
+         if ($image) {
+             $this->updatedAt = new \DateTime('now');
+         }
+     }
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->file = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -112,9 +129,8 @@ namespace Trazeo\BaseBundle\Entity;
       * @SerializedName("url")
       */
      public function url(){
-         if($this->getFile()==null)return null;
-         if(count($this->getFile()->toArray()) == 0)return null;
-         return $this->getFile()->toArray()[0]->getPathRelative();
+         if ($this->getImage() == null) return "";
+         return '/uploads/images/catalog/' . $this->getImage();
      }
 
     /**
@@ -211,40 +227,6 @@ namespace Trazeo\BaseBundle\Entity;
     public function getLink()
     {
         return $this->link;
-    }
-
-    /**
-     * Add file
-     *
-     * @param \Trazeo\BaseBundle\Entity\File $file
-     *
-     * @return ECatalogItem
-     */
-    public function addFile(\Trazeo\BaseBundle\Entity\File $file)
-    {
-        $this->file[] = $file;
-
-        return $this;
-    }
-
-    /**
-     * Remove file
-     *
-     * @param \Trazeo\BaseBundle\Entity\File $file
-     */
-    public function removeFile(\Trazeo\BaseBundle\Entity\File $file)
-    {
-        $this->file->removeElement($file);
-    }
-
-    /**
-     * Get file
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getFile()
-    {
-        return $this->file;
     }
 
     /**
@@ -366,4 +348,19 @@ namespace Trazeo\BaseBundle\Entity;
     {
         return $this->position;
     }
+
+     public function getImageFile()
+     {
+         return $this->imageFile;
+     }
+
+     public function setImage($image)
+     {
+         $this->image = $image;
+     }
+
+     public function getImage()
+     {
+         return $this->image;
+     }
 }

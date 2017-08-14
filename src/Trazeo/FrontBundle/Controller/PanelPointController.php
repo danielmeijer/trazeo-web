@@ -3,17 +3,18 @@
 namespace Trazeo\FrontBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Trazeo\BaseBundle\Entity\ECatalogItem;
 use Trazeo\BaseBundle\Entity\EGroup;
 use Trazeo\BaseBundle\Entity\ERoute;
 use Trazeo\BaseBundle\Entity\EGroupAccess;
 use Trazeo\BaseBundle\Entity\EGroupInvite;
 use Trazeo\BaseBundle\Entity\EChild;
-use Trazeo\BaseBundle\Entity\File;
 use Trazeo\BaseBundle\Form\GroupType;
 use Trazeo\BaseBundle\Controller\GroupsController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -47,12 +48,8 @@ class PanelPointController extends Controller
         $gamification = $this->container->get('sopinet_gamification');
         $points=$gamification->getUserPoints();
         $citys=[];
+        /** @var ECatalogItem $ofert */
         foreach ($oferts as $ofert) {
-            if(count($ofert->getFile()->getValues())>0){
-                $files[]=$ofert->getFile()->getValues()[0];
-            } else {
-                $files[]=new File();
-            }
             if($ofert->getCitys()!=null && !in_array($ofert->getCitys(),$citys)) {
                 $citys[]=$ofert->getCitys();
             }
@@ -64,7 +61,6 @@ class PanelPointController extends Controller
             'city' => $user->getCity(),
             'points' => $points,
             'oferts' => $oferts,
-            'files' => $files,
             'exchange'=> $exchange,
             'cities'=>$citys
         );
@@ -93,15 +89,11 @@ class PanelPointController extends Controller
 
         $gamification = $this->container->get('sopinet_gamification');
         $points=$gamification->getUserPoints();
-        foreach ($oferts as $ofert) {
-            $files[]=$ofert->getFile()->getValues()[0];
-        }
         return array(
             'user' => $user,
             'city' => $user->getCity(),
             'points' => $points,
             'oferts' => $oferts,
-            'files' => $files,
             'exchange'=> $exchange,
             'cities'=> $citys
         );

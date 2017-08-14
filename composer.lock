@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5332a8d8bdfd9c45d4b71f4495972620",
+    "content-hash": "d4fff21760d37627915925733b81f89d",
     "packages": [
         {
             "name": "a2lix/translation-form-bundle",
@@ -3878,72 +3878,6 @@
             "time": "2015-12-11T17:57:35+00:00"
         },
         {
-            "name": "oneup/uploader-bundle",
-            "version": "v1.0.1",
-            "target-dir": "Oneup/UploaderBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/1up-lab/OneupUploaderBundle.git",
-                "reference": "0a0bb1e9cb0d44cd6ea4dd9dfc6fe619e226adfe"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/1up-lab/OneupUploaderBundle/zipball/0a0bb1e9cb0d44cd6ea4dd9dfc6fe619e226adfe",
-                "reference": "0a0bb1e9cb0d44cd6ea4dd9dfc6fe619e226adfe",
-                "shasum": ""
-            },
-            "require": {
-                "symfony/finder": ">=2.2.0",
-                "symfony/framework-bundle": ">=2.2"
-            },
-            "require-dev": {
-                "amazonwebservices/aws-sdk-for-php": "1.5.*",
-                "knplabs/gaufrette": "0.2.*@dev",
-                "phpunit/phpunit": "3.7.*",
-                "sensio/framework-extra-bundle": "2.*",
-                "symfony/browser-kit": "2.*",
-                "symfony/class-loader": "2.*",
-                "symfony/security-bundle": "2.*"
-            },
-            "suggest": {
-                "knplabs/knp-gaufrette-bundle": "0.1.*"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-0": {
-                    "Oneup\\UploaderBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jim Schmid",
-                    "email": "js@1up.io",
-                    "homepage": "http://1up.io",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Handles multi file uploads in Symfony2. Features included: Chunked upload, Orphans management, Gaufrette support.",
-            "homepage": "http://1up.io",
-            "keywords": [
-                "FancyUpload",
-                "FineUploader",
-                "MooUpload",
-                "Uploadify",
-                "YUI3 Uploader",
-                "blueimp",
-                "dropzone",
-                "fileupload",
-                "jQuery File Uploader",
-                "plupload",
-                "upload"
-            ],
-            "time": "2013-11-06T18:09:25+00:00"
-        },
-        {
             "name": "paragonie/random_compat",
             "version": "v2.0.10",
             "source": {
@@ -6806,12 +6740,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sopinet/template-sbadmin2-bundle.git",
-                "reference": "b98e3d61b09f4206720fb715f735ba4fb7f02191"
+                "reference": "3d523dc2ab9addf8c2d43be2a2e6e01d2e3fd4d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sopinet/template-sbadmin2-bundle/zipball/b98e3d61b09f4206720fb715f735ba4fb7f02191",
-                "reference": "b98e3d61b09f4206720fb715f735ba4fb7f02191",
+                "url": "https://api.github.com/repos/sopinet/template-sbadmin2-bundle/zipball/3d523dc2ab9addf8c2d43be2a2e6e01d2e3fd4d4",
+                "reference": "3d523dc2ab9addf8c2d43be2a2e6e01d2e3fd4d4",
                 "shasum": ""
             },
             "require": {
@@ -6846,7 +6780,7 @@
                 "bundle",
                 "template"
             ],
-            "time": "2017-08-14 09:19:15"
+            "time": "2017-08-14 09:36:04"
         },
         {
             "name": "sopinet/timeline-bundle",
@@ -6893,52 +6827,6 @@
                 "timeline"
             ],
             "time": "2014-05-22 22:20:28"
-        },
-        {
-            "name": "sopinet/upload-magic-bundle",
-            "version": "dev-master",
-            "target-dir": "Sopinet/Bundle/UploadMagicBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sopinet/upload-magic-bundle.git",
-                "reference": "7ca0dc39a8649a231197668e979ed9186d50886e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sopinet/upload-magic-bundle/zipball/7ca0dc39a8649a231197668e979ed9186d50886e",
-                "reference": "7ca0dc39a8649a231197668e979ed9186d50886e",
-                "shasum": ""
-            },
-            "require": {
-                "oneup/uploader-bundle": "1.0.*@dev",
-                "php": ">=5.4.0"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-0": {
-                    "Sopinet\\Bundle\\UploadMagicBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL2"
-            ],
-            "authors": [
-                {
-                    "name": "Fernando Hidalgo",
-                    "email": "fhidalgo@sopinet.com",
-                    "homepage": "http://sopinet.com"
-                }
-            ],
-            "description": "Symfony2 Bundle - Easy integration for DropzoneJS and OneupUploaderBundle",
-            "keywords": [
-                "Symfony2",
-                "bundle",
-                "dropzonejs",
-                "oneupuploader",
-                "upload"
-            ],
-            "time": "2016-02-11 17:39:08"
         },
         {
             "name": "sopinet/userbundle",
@@ -8129,6 +8017,89 @@
             "time": "2013-07-27T06:36:38+00:00"
         },
         {
+            "name": "vich/uploader-bundle",
+            "version": "1.4.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dustin10/VichUploaderBundle.git",
+                "reference": "c257283253c57273fed46079fa03ecc79f072585"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dustin10/VichUploaderBundle/zipball/c257283253c57273fed46079fa03ecc79f072585",
+                "reference": "c257283253c57273fed46079fa03ecc79f072585",
+                "shasum": ""
+            },
+            "require": {
+                "jms/metadata": "^1.5",
+                "php": "^5.5|^7.0",
+                "symfony/asset": "^2.3|^3.0",
+                "symfony/dependency-injection": "^2.3|^3.0",
+                "symfony/finder": "^2.2|^3.0",
+                "symfony/framework-bundle": "^2.3|^3.0",
+                "symfony/property-access": "^2.5|^3.0",
+                "symfony/security": "^2.3|^3.0",
+                "symfony/templating": "^2.3|^3.0"
+            },
+            "require-dev": {
+                "doctrine/doctrine-bundle": "^1.6",
+                "doctrine/mongodb-odm": "^1.0",
+                "doctrine/orm": "^2.2.3",
+                "ext-sqlite3": "*",
+                "knplabs/knp-gaufrette-bundle": "^0.3",
+                "matthiasnoback/symfony-dependency-injection-test": "^0.7",
+                "mikey179/vfsstream": "^1.2",
+                "oneup/flysystem-bundle": "^1.0",
+                "phpunit/phpunit": "^5.6",
+                "symfony/browser-kit": "^2.3|^3.0",
+                "symfony/css-selector": "^2.3|^3.0",
+                "symfony/dom-crawler": "^2.3|^3.0",
+                "symfony/form": "^2.3|^3.0",
+                "symfony/twig-bridge": "^2.3.10|^3.0",
+                "symfony/twig-bundle": "^2.3|^3.0",
+                "symfony/validator": "^2.3|^3.0",
+                "symfony/yaml": "^2.0.5|^3.0"
+            },
+            "suggest": {
+                "doctrine/doctrine-bundle": "~1.6",
+                "doctrine/mongodb-odm-bundle": "*",
+                "doctrine/orm": "^2.2.3",
+                "doctrine/phpcr-odm": "~1.0",
+                "knplabs/knp-gaufrette-bundle": "~0.3",
+                "ocramius/proxy-manager": "To have the Gaufrette with Doctrine adapter",
+                "symfony/yaml": "^2.0.5",
+                "willdurand/propel-eventdispatcher-bundle": "~1.2"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Vich\\UploaderBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dustin Dobervich",
+                    "email": "ddobervich@gmail.com"
+                }
+            ],
+            "description": "Ease file uploads attached to entities",
+            "homepage": "https://github.com/dustin10/VichUploaderBundle",
+            "keywords": [
+                "file uploads",
+                "upload"
+            ],
+            "time": "2017-07-11 09:29:28"
+        },
+        {
             "name": "videlalvaro/php-amqplib",
             "version": "dev-master",
             "source": {
@@ -8412,13 +8383,13 @@
         "sopinet/simple-point-bundle": 20,
         "sopinet/flash-messages-bundle": 20,
         "jms/serializer": 20,
-        "sopinet/upload-magic-bundle": 20,
         "hipaway-travel/mandrill-bundle": 20,
         "sopinet/autologin-bundle": 20,
         "ob/highcharts-bundle": 20,
         "richsage/rms-push-notifications-bundle": 20,
         "slot/mandrill-bundle": 20,
-        "sopinet/template-sbadmin2-bundle": 20
+        "sopinet/template-sbadmin2-bundle": 20,
+        "vich/uploader-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
