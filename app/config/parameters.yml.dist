@@ -22,11 +22,6 @@ parameters:
     sopinet_user_google_secret: sopinet_user_google_secret
     sopinet_user_sucess: sopinet_user_success
 
-    sopinet_user_civiclub_security: civiclub_security
-    sopinet_user_civiclub_emitter_id: civiclub_id
-    sopinet_user_civiclub_emitter_center_id: civiclub_center
-    sopinet_user_civiclub_service_id: civiclub_service
-
     exchange_code: exchange_code
 
     gcm_api_key: gcm_api_key
