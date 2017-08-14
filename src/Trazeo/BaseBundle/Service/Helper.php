@@ -113,14 +113,14 @@ class Helper {
      * @return Page
      */
     function getPageBySubdomain($subdomain = null) {
-        // TODO: DEBUG
-        if ($_SERVER['HTTP_HOST'] == "localhost" && $subdomain == null) {
-            $subdomain = "torrelodones";
-        }
-
         if ($subdomain == null) {
-            $parts=explode('.', $_SERVER["HTTP_HOST"]);
-            $subdomain = $parts[0];
+            // Debug mode or from console
+            if (!isset($_SERVER['HTTP_HOST']) || $_SERVER['HTTP_HOST'] == "localhost") {
+                $subdomain = "torrelodones";
+            } else {
+                $parts=explode('.', $_SERVER["HTTP_HOST"]);
+                $subdomain = $parts[0];
+            }
         }
 
         if ($subdomain == "beta" || $subdomain == "app") {
