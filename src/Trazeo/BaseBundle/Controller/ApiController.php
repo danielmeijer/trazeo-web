@@ -230,9 +230,7 @@ class ApiController extends Controller {
 		$q = $this->getRequest()->get('code');
 		$em = $this->get('doctrine.orm.entity_manager');
 		$code=$this->container->getParameter('exchange_code');
-	    //Obtener usuarios que tengan marcada la opcion de conexion con civiclub
-        $reUserValue = $em->getRepository("SopinetUserPreferencesBundle:UserValue");
-        $civiclub_setting = $em->getRepository("SopinetUserPreferencesBundle:UserSetting")->findOneByName("civiclub_conexion");
+
 		if($q==$code){
 			$userextend = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($user);
 			$sopinetuserextend=$em->getRepository("SopinetUserBundle:SopinetUserExtend")->findOneByUser($userextend->getUser());

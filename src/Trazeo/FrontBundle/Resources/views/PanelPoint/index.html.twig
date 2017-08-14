@@ -6,16 +6,11 @@
 {% block body_content %}
 <!-- START pointsResume -->
 	<div class="col-lg-12" >
-		<div class="howto col-md-4" data-toggle="modal" data-target="#howToModal">
+		<div class="howto col-md-8" data-toggle="modal" data-target="#howToModal">
 			<button type="button" class="btn btn-warning">
 				 <i class="fa fa-info"></i>&nbsp; {{ 'Points.exchange'|trans }}	
 			</button>
-		</div>	
-		<div class="civi col-md-4" data-toggle="modal" data-target="#civiModal">
-			<button type="button" class="btn btn-warning">
-				 <i class="fa fa-info"></i>&nbsp; {{ 'Points.modal.civi.button'|trans }}	
-			</button>
-		</div>	
+		</div>
 		<div class="code col-md-4">
 			<button type="button" class="btn btn-warning exchange-code">
 				 <i class="fa fa-plus-circle"></i>&nbsp; {{ "Exchange.button.code"|trans}}
@@ -61,7 +56,6 @@
 	{% include 'TrazeoFrontBundle:PanelPoint:_howto_modal.html.twig' %}
 	{% include 'TrazeoFrontBundle:PanelPoint:_exchange_modal.html.twig'%}
 	{% include 'TrazeoFrontBundle:PanelPoint:_exchangeFail_modal.html.twig'%}
-	{% include 'TrazeoFrontBundle:PanelPoint:_civi_modal.html.twig' %}
 	{% include 'TrazeoFrontBundle:PanelPoint:exchange.html.twig' %}
 	<!-- END pointsResume -->
 {% endblock %}{# END body_content #}

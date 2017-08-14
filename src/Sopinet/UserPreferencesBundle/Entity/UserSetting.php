@@ -50,7 +50,13 @@ class UserSetting
     /**
      * @ORM\Column(name="defaultoption", type="string", length=255)
      */
-    protected $defaultoption;    
+    protected $defaultoption;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $enabled;
+
     /**
      * Constructor
      */
@@ -228,5 +234,29 @@ class UserSetting
     public function getDefaultoption()
     {
         return $this->defaultoption;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     *
+     * @return UserSetting
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
     }
 }

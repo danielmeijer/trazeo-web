@@ -243,8 +243,8 @@ lunetics_locale:
        set_on_change: true
        
 sopinet_gamification:
-    class: 'TrazeoBaseBundle:UserExtend'      
-    api: 'CiviClub'
+    class: 'TrazeoBaseBundle:UserExtend'
+
 sopinet_suggestion: ~
 
 sopinet_autologin:
