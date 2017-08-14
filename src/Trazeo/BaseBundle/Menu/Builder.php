@@ -61,18 +61,6 @@ class Builder extends ContainerAware
             $menu['Point']->setAttribute('class', 'active');
         }              
 
-        if($this->container->get('security.context')->isGranted('ROLE_CATALOG')){
-            // Points
-            $menu->addChild('Catalog', array(
-                'route' => 'panel_catalogitems_list'
-            ))
-                ->setLabel("");
-            $menu['Catalog']->setAttribute('icon', 'fa-file fa-2x');
-            $menu['Catalog']->setAttribute('tooltip', 'Menu.tooltip.catalog');
-            if ($options['activeMenu'] == "Catalog") {
-                $menu['Catalog']->setAttribute('class', 'active');
-            }
-        }
         return $menu;
     }
 }
