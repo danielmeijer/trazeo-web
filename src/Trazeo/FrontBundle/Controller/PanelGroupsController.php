@@ -669,9 +669,6 @@ class PanelGroupsController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            //Obtener usuarios que tengan marcada la opcion de conexion con civiclub
-            $reUserValue = $em->getRepository("SopinetUserPreferencesBundle:UserValue");
-            $civiclub_setting = $em->getRepository("SopinetUserPreferencesBundle:UserSetting")->findOneByName("civiclub_conexion");
 
             $city = $request->get('city');
             $helper = $this->get('trazeo_base_helper');

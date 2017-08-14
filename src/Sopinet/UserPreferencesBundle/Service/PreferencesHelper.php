@@ -15,7 +15,8 @@ class PreferencesHelper {
 	function getAllSettings() {
 		$em = $this->_container->get("doctrine.orm.entity_manager");
 		$reSettings = $em->getRepository("SopinetUserPreferencesBundle:UserSetting");
-		$settings = $reSettings->findAll();
+		// Filter settings, only enabled
+		$settings = $reSettings->findByEnabled(1);
 		return $settings;		
 	}
 	

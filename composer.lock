@@ -1052,12 +1052,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "d89d238594621220c8a18e8c1abf224e7e967ac3"
+                "reference": "f311dd1dd14df3e42df0c56d95a1566ce2f2ebce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/d89d238594621220c8a18e8c1abf224e7e967ac3",
-                "reference": "d89d238594621220c8a18e8c1abf224e7e967ac3",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/f311dd1dd14df3e42df0c56d95a1566ce2f2ebce",
+                "reference": "f311dd1dd14df3e42df0c56d95a1566ce2f2ebce",
                 "shasum": ""
             },
             "require": {
@@ -1120,7 +1120,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2017-08-11 19:43:05"
+            "time": "2017-08-13 18:47:26"
         },
         {
             "name": "egeloen/ckeditor-bundle",
@@ -1538,12 +1538,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Atlantic18/DoctrineExtensions.git",
-                "reference": "4aada51be60e0b280e8c678cdbf963693f928f45"
+                "reference": "851b8befd42ee386b3cbd101bb0fb0a0bebd10c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/4aada51be60e0b280e8c678cdbf963693f928f45",
-                "reference": "4aada51be60e0b280e8c678cdbf963693f928f45",
+                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/851b8befd42ee386b3cbd101bb0fb0a0bebd10c1",
+                "reference": "851b8befd42ee386b3cbd101bb0fb0a0bebd10c1",
                 "shasum": ""
             },
             "require": {
@@ -1608,7 +1608,7 @@
                 "tree",
                 "uploadable"
             ],
-            "time": "2017-08-04 07:13:17"
+            "time": "2017-08-12 18:55:24"
         },
         {
             "name": "guzzle/common",
@@ -6806,12 +6806,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sopinet/template-sbadmin2-bundle.git",
-                "reference": "983c183f55df01f755991379dfa1cad38791b677"
+                "reference": "b98e3d61b09f4206720fb715f735ba4fb7f02191"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sopinet/template-sbadmin2-bundle/zipball/983c183f55df01f755991379dfa1cad38791b677",
-                "reference": "983c183f55df01f755991379dfa1cad38791b677",
+                "url": "https://api.github.com/repos/sopinet/template-sbadmin2-bundle/zipball/b98e3d61b09f4206720fb715f735ba4fb7f02191",
+                "reference": "b98e3d61b09f4206720fb715f735ba4fb7f02191",
                 "shasum": ""
             },
             "require": {
@@ -6846,7 +6846,7 @@
                 "bundle",
                 "template"
             ],
-            "time": "2017-08-11 14:14:28"
+            "time": "2017-08-14 09:19:15"
         },
         {
             "name": "sopinet/timeline-bundle",

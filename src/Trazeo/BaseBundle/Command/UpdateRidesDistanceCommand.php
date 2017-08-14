@@ -33,10 +33,8 @@ class UpdateRidesDistanceCommand extends ContainerAwareCommand
     	//Sacar paseos cuya distancia sea nula 
     	$rides = $em->getRepository("TrazeoBaseBundle:ERide")->findByDistance(null);
     	$measurer = $con->get('trazeo_base_distance_measurer');
-        //Obtener usuarios que tengan marcada la opcion de conexion con civiclub
-        $reUserValue = $em->getRepository("SopinetUserPreferencesBundle:UserValue");
-        $civiclub_setting = $em->getRepository("SopinetUserPreferencesBundle:UserSetting")->findOneByName("civiclub_conexion");
-    	//Para cada paseo calculamos la distancía recorrida en total 
+
+    	//Para cada paseo calculamos la distancía recorrida en total
     	foreach($rides as $ride){
     		$distance=0;
     		$childs=[];

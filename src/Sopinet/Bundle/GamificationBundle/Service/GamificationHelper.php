@@ -377,12 +377,6 @@ class GamificationHelper {
 	 */
 	private function _callApi($api =null,$user,$points) {
 		switch ($api) {
-			case 'CiviClub':
-				$con=$this->_container;
-				$con = $con->get('sopinet_gamification_civiclub');
-				$con->civiclubCall($user,$points);
-				break;
-			
 			default:
 				break;
 		}

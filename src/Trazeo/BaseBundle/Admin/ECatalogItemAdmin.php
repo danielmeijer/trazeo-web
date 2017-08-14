@@ -41,6 +41,14 @@ class ECatalogItemAdmin extends Admin
             ->add('file', null, array('label' => 'list.label_file'))
             ->add('createdAt', null, array('label' => 'show.label_created_at'))
             ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
+            ->add('_action', 'actions', array(
+                'label' => 'list.label_action',
+                'actions' => array(
+                    'show' => array(),
+                    'edit' => array(),
+                    'delete' => array(),
+                )
+            ));
         ;
     }
 
