@@ -2,6 +2,7 @@
 
 namespace Trazeo\FrontBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -31,6 +32,8 @@ class PanelChildrenController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$um = $this->container->get('fos_user.user_manager');
 
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
 		$container = $this->get('sopinet_flashMessages');
 		
 		$fos_user_current = $this->container->get('security.context')->getToken()->getUser();
@@ -44,7 +47,7 @@ class PanelChildrenController extends Controller
 		
 
 		if($fos_user == $fos_user_current ){
-			$notification = $container->addFlashMessages("warning","Ya eres tutor de este niño");
+			$notification = $container->addFlashMessages("warning", $translator->trans('flash_messages.error_are_tutor'));
 			return $this->redirect($this->generateUrl('panel_child'));
 		}
 		
@@ -54,13 +57,13 @@ class PanelChildrenController extends Controller
 		foreach($childUsers as $childUser){
 			if($user == $childUser){
 		
-				$notification = $container->addFlashMessages("warning","El usuario al que quieres invitar ya es uno de los tutores del niño");
+				$notification = $container->addFlashMessages("warning", $translator->trans('flash_messages.error_invite_tutor'));
 				return $this->redirect($this->generateUrl('panel_child'));
 			}
 		}
 
 		if($fos_user != true){
-			$notification = $container->addFlashMessages("warning","El correo electrónico introducido no corresponde a ningún usuario");
+			$notification = $container->addFlashMessages("warning", $translator->trans('flash_messages.wrong_email'));
 			return $this->redirect($this->generateUrl('panel_child'));
 		}
 
@@ -77,7 +80,7 @@ class PanelChildrenController extends Controller
 			// Comprobar que no tienen el mismo id de registro (petición duplicada)
 			if($requestUserId = $requestChildId) {
 				// Excepción y redirección
-				$notification = $container->addFlashMessages("warning","Ya has invitado a este usuario anteriormente");
+				$notification = $container->addFlashMessages("warning", $translator->trans('flash_messages.error_already_invited'));
 				return $this->redirect($this->generateUrl('panel_child'));
 
 			}
@@ -109,7 +112,7 @@ class PanelChildrenController extends Controller
 			$em->flush();
 
 			$container = $this->get('sopinet_flashMessages');
-			$notification = $container->addFlashMessages("success","El usuario ha recibido tu invitación para ser tutor del niño");
+			$notification = $container->addFlashMessages("success", $translator->trans('flash_messages.send_invitation'));
 			return $this->redirect($this->generateUrl('panel_child'));
 
 		}
@@ -127,14 +130,15 @@ class PanelChildrenController extends Controller
 	public function disJoinChildAction($id) {
 	
 		$em = $this->getDoctrine()->getManager();
-	
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
 		$fos_user = $this->container->get('security.context')->getToken()->getUser();
 		$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
 		$container = $this->get('sopinet_flashMessages');
 		$child = $em->getRepository('TrazeoBaseBundle:EChild')->find($id);
 	
 		if (!$child) {
-			$notification = $container->addFlashMessages("warning","El registro del niño ha sido eliminado");
+			$notification = $container->addFlashMessages("warning", $translator->trans('flash_messages.delete'));
 			return $this->redirect($this->generateUrl('panel_child'));
 		}
 	
@@ -198,6 +202,8 @@ class PanelChildrenController extends Controller
     public function acceptInviteGroupAction($id, $child,$sender) {
         	
     	$em = $this->getDoctrine()->getManager();
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
   
     	$fos_user = $this->container->get('security.context')->getToken()->getUser();
     	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
@@ -206,7 +212,7 @@ class PanelChildrenController extends Controller
     	$container = $this->get('sopinet_flashMessages');
     
     	if (!$childToJoin) {
-    		$notification = $container->addFlashMessages("success","No puedes unirte al grupo porque ha sido eliminado");
+    		$notification = $container->addFlashMessages("success", $translator->trans('flash_messages.group_removed_join'));
     		return $this->redirect($this->generateUrl('panel_child'));
     	}
     
@@ -237,7 +243,7 @@ class PanelChildrenController extends Controller
         $em->persist($el);
         $em->flush();    
     
-    	$notification = $container->addFlashMessages("success","Has aceptado la invitación para ser tutor");
+    	$notification = $container->addFlashMessages("success", $translator->trans('flash_messages.accept_tutor'));
     	return $this->redirect($this->generateUrl('panel_child'));
     }
     
@@ -253,6 +259,8 @@ class PanelChildrenController extends Controller
     public function denyInviteChildAction($id,$child,$sender) {
     
     	$em = $this->getDoctrine()->getManager();
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
     
     	$userRequest = $em->getRepository('TrazeoBaseBundle:EChildInvite')->findOneByUserextend($id);
     
@@ -277,7 +285,7 @@ class PanelChildrenController extends Controller
         $em->flush();
     
     	$container = $this->get('sopinet_flashMessages');
-    	$notification = $container->addFlashMessages("success","Has rechazado la invitación");
+    	$notification = $container->addFlashMessages("success", $translator->trans('flash_messages.decline_invitation'));
     
     	return $this->redirect($this->generateUrl('panel_child'));
     
@@ -292,6 +300,8 @@ class PanelChildrenController extends Controller
      */
     public function createAction(Request $request)
     {
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
         $child = new EChild();
         $form = $this->createCreateForm($child);
         $form->handleRequest($request);
@@ -309,7 +319,7 @@ class PanelChildrenController extends Controller
             $em->flush();
         }
         $container = $this->get('sopinet_flashMessages');
-        $notification = $container->addFlashMessages("success","Has registrado a tu niño/a con éxito");
+        $notification = $container->addFlashMessages("success", $translator->trans('flash_messages.child_register'));
         return $this->redirect($this->generateUrl('panel_dashboard'));
     }
 
@@ -392,6 +402,8 @@ class PanelChildrenController extends Controller
     public function editAction(Echild $child)
     {
         $em = $this->getDoctrine()->getManager();
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
 
         $fos_user = $this->container->get('security.context')->getToken()->getUser();
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
@@ -407,12 +419,12 @@ class PanelChildrenController extends Controller
         $container = $this->get('sopinet_flashMessages');
         if(count($users) < 1){
         	
-        	$notification = $container->addFlashMessages("error","No tienes permisos para editar la información de este niño");
+        	$notification = $container->addFlashMessages("error", $translator->trans('flash_messages.not_edit_child'));
         	return $this->redirect($this->generateUrl('panel_child'));
         }
 
         if (!$child) {
-        	$notification = $container->addFlashMessages("warning","El registro indicado no existe");
+        	$notification = $container->addFlashMessages("warning", $translator->trans('flash_messages.registry_not_exists'));
         	return $this->redirect($this->generateUrl('panel_child'));
         }
 
@@ -493,13 +505,15 @@ class PanelChildrenController extends Controller
     public function deleteAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
         $fos_user = $this->container->get('security.context')->getToken()->getUser();
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
         $child = $em->getRepository('TrazeoBaseBundle:EChild')->find($id);
         
         $container = $this->get('sopinet_flashMessages');
         if (!$child) {
-        	$notification = $container->addFlashMessages("warning","El registro del niño que intentas eliminar no existe");
+        	$notification = $container->addFlashMessages("warning", $translator->trans('flash_messages.registry_not_exists'));
         	return $this->redirect($this->generateUrl('panel_dashboard'));
         }
         
@@ -515,11 +529,11 @@ class PanelChildrenController extends Controller
 
 			$em->remove($child);
 			$em->flush();
-			$notification = $container->addFlashMessages("success","El registro de niño ha sido eliminado");
+			$notification = $container->addFlashMessages("success", $translator->trans('flash_messages.delete'));
 			return $this->redirect($this->generateUrl('panel_dashboard'));
 
 		}else {
-			$notification = $container->addFlashMessages("error","Sólo un tutor puede eliminar un registro niño");
+			$notification = $container->addFlashMessages("error", $translator->trans('flash_messages.not_remove'));
 			return $this->redirect($this->generateUrl('panel_dashboard'));	
 		}
     }
