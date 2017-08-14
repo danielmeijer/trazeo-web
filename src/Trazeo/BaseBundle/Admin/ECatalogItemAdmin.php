@@ -68,8 +68,6 @@ class ECatalogItemAdmin extends Admin
                 'required' => false,
                 'allow_delete' => true
             ))
-            ->add('createdAt', null, array('label' => 'show.label_created_at'))
-            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
         ;
     }
 
