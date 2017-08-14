@@ -51,7 +51,7 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ FOSCommentBundle, SopinetTemplateSbadmin2Bundle, TrazeoFrontBundle, SopinetTemplateLandingBundle,SopinetTemplateAmoebaBundle, JMSTranslationBundle, FOSUserBundle, SopinetFlashMessagesBundle, SopinetTimelineBundle, SopinetSuggestionBundle, SopinetUploadMagicBundle, TrazeoMyPageBundle, SonataAdminBundle]
+    bundles:        [ FOSCommentBundle, SopinetTemplateSbadmin2Bundle, TrazeoFrontBundle, SopinetTemplateLandingBundle,SopinetTemplateAmoebaBundle, JMSTranslationBundle, FOSUserBundle, SopinetFlashMessagesBundle, SopinetTimelineBundle, SopinetSuggestionBundle, TrazeoMyPageBundle, SonataAdminBundle]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -198,11 +198,7 @@ services:
         arguments:
             entityManager: @doctrine.orm.entity_manager
             container: @service_container
-    sopinet.uploadlistener:
-        class: Sopinet\Bundle\UploadMagicBundle\Listener\UploadListener
-        arguments: ['@doctrine']
-        tags:
-            - { name: kernel.event_listener, event: oneup_uploader.post_persist, method: onUpload }
+
 jms_translation:
     configs:
         app:
@@ -256,11 +252,6 @@ slot_mandrill:
     default:
         sender: hola@trazeo.es
         sender_name: Trazeo
-
-oneup_uploader:
-    mappings:
-        gallery:
-            frontend: dropzone
 
 security:
     firewalls:
@@ -330,3 +321,11 @@ old_sound_rabbit_mq:
             exchange_options: {name: 'send_trazeo', type: direct}
             queue_options:    {name: 'send_trazeo'}
             callback:         send_trazeo
+
+# VichUploader
+vich_uploader:
+    db_driver: orm
+    mappings:
+        catalog_images:
+            uri_prefix:         '/uploads/images/catalog'
+            upload_destination: '%kernel.root_dir%/../web/uploads/images/catalog'

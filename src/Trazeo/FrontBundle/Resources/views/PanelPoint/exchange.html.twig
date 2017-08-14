@@ -11,7 +11,7 @@
         {#{%if j==0%}<div class="row col-md-12 col-xs-12 col-sm-12 col-lg-12" style="margin-top:10px">{%endif%}#}
 		{% if ofert.citys is not null %}
         {% include 'TrazeoFrontBundle:PanelPoint:_row_catalogItem.html.twig' with {
-		'ofert': ofert, 'file': files[i]
+		'ofert': ofert
 		} %}
         {% endif %}
 		{%set j=j+1%}
@@ -33,7 +33,7 @@
         {#{%if j==0%}<div class="row col-md-12 col-xs-12 col-sm-12 col-lg-12" style="margin-top:10px">{%endif%}#}
         {% if ofert.citys is null %}
             {% include 'TrazeoFrontBundle:PanelPoint:_row_catalogItem.html.twig' with {
-            'ofert': ofert, 'file': files[i]
+            'ofert': ofert
             } %}
         {% endif %}
         {%set j=j+1%}

@@ -21,7 +21,7 @@ class ECatalogItemAdmin extends Admin
             ->add('title', null, array('label' => 'list.label_title'))
             ->add('description', null, array('label' => 'list.label_description'))
             ->add('link', null, array('label' => 'list.label_link'))
-            ->add('file', null, array('label' => 'list.label_file'))
+            ->add('image', null, array('label' => 'list.label_file'))
             ->add('createdAt', null, array('label' => 'show.label_created_at'))
             ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
         ;
@@ -38,7 +38,7 @@ class ECatalogItemAdmin extends Admin
             ->add('title', null, array('label' => 'list.label_title'))
             ->add('description', null, array('label' => 'list.label_description'))
             ->add('link', null, array('label' => 'list.label_link'))
-            ->add('file', null, array('label' => 'list.label_file'))
+            ->add('image', null, array('label' => 'list.label_file'))
             ->add('createdAt', null, array('label' => 'show.label_created_at'))
             ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
             ->add('_action', 'actions', array(
@@ -63,9 +63,11 @@ class ECatalogItemAdmin extends Admin
             ->add('title', null, array('label' => 'list.label_title'))
             ->add('description', null, array('label' => 'list.label_description'))
             ->add('link', null, array('label' => 'list.label_link'))
-            ->add('file', null, array('label' => 'list.label_file'))
-            ->add('createdAt', null, array('label' => 'show.label_created_at'))
-            ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
+            ->add('imageFile', 'vich_image', array(
+                'label' => 'list.label_file',
+                'required' => false,
+                'allow_delete' => true
+            ))
         ;
     }
 
@@ -80,20 +82,9 @@ class ECatalogItemAdmin extends Admin
             ->add('title', null, array('label' => 'list.label_title'))
             ->add('description', null, array('label' => 'list.label_description'))
             ->add('link', null, array('label' => 'list.label_link'))
-            ->add('file', null, array('label' => 'list.label_file'))
+            ->add('image', null, array('label' => 'list.label_file'))
             ->add('createdAt', null, array('label' => 'show.label_created_at'))
             ->add('updatedAt', null, array('label' => 'show.label_updated_at'))
         ;
     }
-    public function getFormTheme()
-    {
-        return array_merge(
-            parent::getFormTheme(),
-            array('TrazeoBaseBundle:CRUD:base_file_field.html.twig')
-        );
-    }
-  /*  public function getFormTheme() {
-        return array('TrazeoBaseBundle:CRUD:base_file_field.html.twig');
-    }*/
-
 }

@@ -62,8 +62,8 @@ class AppKernel extends Kernel
             new Sopinet\GCMBundle\SopinetGCMBundle(),
             new Sopinet\AutologinBundle\SopinetAutologinBundle(),
             new Slot\MandrillBundle\SlotMandrillBundle(),
-            new Oneup\UploaderBundle\OneupUploaderBundle(),
-            new Sopinet\Bundle\UploadMagicBundle\SopinetUploadMagicBundle(),
+            # DEPRECATED, now using VichUploader... new Oneup\UploaderBundle\OneupUploaderBundle(),
+            # DEPRECATED, now using VichUploader... new Sopinet\Bundle\UploadMagicBundle\SopinetUploadMagicBundle(),
             new Trazeo\MyPageBundle\TrazeoMyPageBundle(),
             new Ob\HighchartsBundle\ObHighchartsBundle(),
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
@@ -71,6 +71,7 @@ class AppKernel extends Kernel
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new RMS\PushNotificationsBundle\RMSPushNotificationsBundle(),
             new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
+            new Vich\UploaderBundle\VichUploaderBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

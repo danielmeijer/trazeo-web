@@ -78,7 +78,6 @@
     "sopinet/flash-messages-bundle" : "dev-master",
     "jms/serializer": "dev-master",
     "lunetics/locale-bundle": "2.2.*",
-    "sopinet/upload-magic-bundle" : "dev-master",
     "phpunit/phpunit-selenium": ">=1.2",
     "hipaway-travel/mandrill-bundle": "dev-master",
     "sopinet/autologin-bundle": "dev-master",
@@ -89,7 +88,8 @@
     "slot/mandrill-bundle": "dev-master",
     "sopinet/template-amoeba-bundle": "0.0.1",
     "sopinet/template-landing-bundle": "0.0.1",
-    "sopinet/template-sbadmin2-bundle": "dev-master"
+    "sopinet/template-sbadmin2-bundle": "dev-master",
+    "vich/uploader-bundle": "1.4.x-dev"
   },
   "scripts": {
     "post-install-cmd": [

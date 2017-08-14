@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Trazeo\BaseBundle\Entity\ECatalogItem;
+use Trazeo\BaseBundle\Entity\ECatalogItemRepository;
 use Trazeo\BaseBundle\Entity\File;
 use Trazeo\BaseBundle\Form\CatalogItemType;
 /**
@@ -23,6 +24,9 @@ class PanelCatalogItemController extends Controller
 	 * @Route("/delete/{id}", name="panel_catalogitem_delete")
 	 * @ParamConverter("item", class="TrazeoBaseBundle:ECatalogItem")
 	 */
+    /**
+     * DEPRECATED: From Admin now
+
 	public function deleteItemAction($id, Request $request) {
 		$user = $this->get('security.context')->getToken()->getUser();
 		$em = $this->get('doctrine.orm.entity_manager');
@@ -69,11 +73,14 @@ class PanelCatalogItemController extends Controller
 				)
 		);		
 	}
+     * */
 	
 	/**
 	 * @Route("/edit/{id}", name="panel_catalogitems_edit"))
 	 * @ParamConverter("item", class="TrazeoBaseBundle:ECatalogItem")
 	 */
+    /**
+     * DEPRECATED: From Admin now
 	public function itemseditAction(ECatalogItem $id, Request $request)
 	{
 		$em = $this->get('doctrine.orm.entity_manager');
@@ -83,12 +90,14 @@ class PanelCatalogItemController extends Controller
 		$item = $repositoryItem->findOneById($id);
 		return $this->showEditView($item);
 	}
-		
+	*/
 
 	
 	/**
 	 * @Route("/save/{id}", name="panel_catalogitems_save"))
 	 */
+    /**
+     * DEPRECATED: From Admin now
 	public function itemssaveAction(Request $request,$id) {
 		 
 		$em = $this->get('doctrine.orm.entity_manager');
@@ -136,18 +145,20 @@ class PanelCatalogItemController extends Controller
 			return $this->redirect($this->generateUrl('panel_catalogitems_list'));
 		}
 	}
+     * */
 	
 	/**
 	 * @Route("/list", name="panel_catalogitems_list"))
 	 * @Template
 	 */
+    /**
+     * DEPRECATED: From Admin now
 	public function itemslistAction()
 	{
 		$em    = $this->get('doctrine.orm.entity_manager');
 
-        /** @var User $user */
         $user = $this->get('security.context')->getToken()->getUser();
-        /** @var ECatalogItemRepository $reItem */
+
         $reItem = $em->getRepository("TrazeoBaseBundle:ECatalogItem");
         if (!$this->get('security.context')->isGranted('ROLE_CATALOG')) {
             throw new AccessDeniedException();
@@ -161,7 +172,8 @@ class PanelCatalogItemController extends Controller
 		return array(
 				'items' => $items
 		);
-	}	
+	}
+     * */
 
     /**
      * Creates a form to create a CatalogItem entity.
@@ -170,6 +182,8 @@ class PanelCatalogItemController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
+    /**
+     * DEPRECATED: From Admin now
     private function createCreateForm(ECatalogItem $item)
     {
         $form = $this->createForm(new CatalogItemType(), $item, array(
@@ -189,6 +203,7 @@ class PanelCatalogItemController extends Controller
 
         return $form;
     }
+     * */
 
     /**
      * Displays a form to create a new CatalogItem entity.
@@ -197,6 +212,8 @@ class PanelCatalogItemController extends Controller
      * @Method("GET")
      * @Template()
      */
+    /**
+     * DEPRECATED: From Admin now
     public function newAction()
     {
         $item = new ECatalogItem();
@@ -211,6 +228,7 @@ class PanelCatalogItemController extends Controller
             'file' => $file
         );
     }
+     * */
 
     
     /**
@@ -219,6 +237,8 @@ class PanelCatalogItemController extends Controller
      * @Route("/", name="panel_itemscatalog_create")
      * @Method("POST")
      */
+        /**
+         * DEPRECATED: From Admin now
     public function createAction(Request $request)
     {
 	    $em = $this->getDoctrine()->getManager();
@@ -250,4 +270,5 @@ class PanelCatalogItemController extends Controller
         $notification = $container->addFlashMessages("success", $translator->trans('flash_messages.create_success'));
         return $this->redirect($this->generateUrl('panel_dashboard'));
     }
+         * */
 }
