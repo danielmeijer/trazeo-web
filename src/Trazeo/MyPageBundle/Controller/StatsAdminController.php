@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\HttpFoundation\Request;
 use Trazeo\BaseBundle\Entity\EChild;
 use Trazeo\BaseBundle\Entity\EChildRepository;
@@ -93,6 +94,8 @@ class StatsAdminController extends Controller
     public function barAction(Request $request) {
         // http://blog.eike.se/2014/03/custom-page-controller-in-sonata-admin.html
         $admin_pool = $this->get('sonata.admin.pool');
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
 
         $form_filters = $this->createForm(new BarAdminType($this));
 
@@ -272,9 +275,9 @@ class StatsAdminController extends Controller
             // Gráfico EDAD
             $obEdad = new Highchart();
             $obEdad->chart->renderTo('edad');
-            $obEdad->title->text('Gráfico por Edad');
+            $obEdad->title->text($translator->trans('graphic.age'));
             $obEdad->xAxis->categories($label_years);
-            $obEdad->xAxis->title(array('text'  => "Edad"));
+            $obEdad->xAxis->title(array('text'  => $translator->trans('graphic.age2')));
             $obEdad->plotOptions->pie(array(
                 'allowPointSelect'  => true,
                 'cursor'    => 'pointer',

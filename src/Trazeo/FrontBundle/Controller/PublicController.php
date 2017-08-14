@@ -5,6 +5,7 @@ namespace Trazeo\FrontBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Trazeo\BaseBundle\Entity\EGroupInvite;
@@ -40,45 +41,47 @@ class PublicController extends Controller
         }
 
 		$asset=$this->container->get('templating.helper.assets');
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
 
         // Si es una página normal, continuamos
     	$banners = array();
     	
     	$banners[0]['url'] = $asset->getUrl('cofinanciadores/banner/100/acerapeatonal.jpg');
     	$banners[0]['title'] = "Acera Peatonal";
-    	$banners[0]['desc'] = "Entre todos hacemos calle.";
+    	$banners[0]['desc'] = $translator->trans('homePage.thanks.text1');
     	
     	$banners[1]['url'] = $asset->getUrl('cofinanciadores/banner/100/elportillo.jpg');
     	$banners[1]['title'] = "El Portillo";
-    	$banners[1]['desc'] = "Imprescindible, oportuno y necesario Trazeo y sus caminos escolares seguros.";
+    	$banners[1]['desc'] = $translator->trans('homePage.thanks.text2');
 
     	$banners[2]['url'] = $asset->getUrl('cofinanciadores/banner/100/quaip.png');;
     	$banners[2]['title'] = "QuaIP";
-    	$banners[2]['desc'] = "Imprescindible, oportuno y necesario Trazeo y sus caminos escolares seguros.";
+    	$banners[2]['desc'] = $translator->trans('homePage.thanks.text2');
 
     	$banners[3]['url'] = $asset->getUrl('cofinanciadores/banner/100/suspasitos.png');
     	$banners[3]['title'] = "SusPasitos";
-    	$banners[3]['desc'] = "Pasito a pasito; por una ciudad limpia de coches y peligros para nuestros hijos.";    	
+    	$banners[3]['desc'] = $translator->trans('homePage.thanks.text3');
 
     	$banners[4]['url'] = $asset->getUrl('cofinanciadores/banner/250/Sopinet1.jpg');
     	$banners[4]['title'] = "Sopinet";
-    	$banners[4]['desc'] = "Imprescindible, oportuno y necesario Trazeo y sus caminos escolares seguros.";
+    	$banners[4]['desc'] = $translator->trans('homePage.thanks.text2');
     	 
     	$banners[5]['url'] = $asset->getUrl('cofinanciadores/banner/250/HelenDoron0.jpg');
     	$banners[5]['title'] = "Helen Doron";
-   		$banners[5]['desc'] = "Imprescindible, oportuno y necesario Trazeo y sus caminos escolares seguros.";
+   		$banners[5]['desc'] = $translator->trans('homePage.thanks.text2');
     	    	 
     	$banners[6]['url'] = $asset->getUrl('cofinanciadores/banner/100/suspasitos.png');
     	$banners[6]['title'] = "SusPasitos";
-   		$banners[6]['desc'] = "Imprescindible, oportuno y necesario Trazeo y sus caminos escolares seguros.";
+   		$banners[6]['desc'] = $translator->trans('homePage.thanks.text2');
     	    	 
    		$banners[7]['url'] = $asset->getUrl('cofinanciadores/banner/250/DCABO.png');
    		$banners[7]['title'] = "DCABO CONSULTORES";
-   		$banners[7]['desc'] = "Imprescindible, oportuno y necesario Trazeo y sus caminos escolares seguros.";
+   		$banners[7]['desc'] = $translator->trans('homePage.thanks.text2');
 
    		$banners[8]['url'] = $asset->getUrl('cofinanciadores/originales/banner/250/CentroCordoba.jpg');
    		$banners[8]['title'] = "Centro Córdoba";
-   		$banners[8]['desc'] = "Imprescindible, oportuno y necesario Trazeo y sus caminos escolares seguros.";
+   		$banners[8]['desc'] = $translator->trans('homePage.thanks.text2');
    		 
    		
    		/*

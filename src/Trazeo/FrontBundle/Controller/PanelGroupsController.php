@@ -2,6 +2,7 @@
 
 namespace Trazeo\FrontBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -36,6 +37,8 @@ class PanelGroupsController extends Controller
      */
     public function changeVisibility(EGroup $id, $visibility){
         $em = $this->getDoctrine()->getManager();
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
         $fos_user = $this->container->get('security.context')->getToken()->getUser();
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
         $group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
@@ -44,7 +47,7 @@ class PanelGroupsController extends Controller
         $groupAdmin = $group->getAdmin();
         $container = $this->get('sopinet_flashMessages');
         if($groupAdmin != $user ){
-            $notification = $container->addFlashMessages("error","No tienes autorización para editar este grupo");
+            $notification = $container->addFlashMessages("error", $translator->trans('flash_messages.not_edit_child'));
         }
         else{
             $group->setVisibility($visibility);
@@ -115,6 +118,8 @@ class PanelGroupsController extends Controller
     public function joinGroupAction($id)
     {
         $em = $this->getDoctrine()->getManager();
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
         $fosUser = $this->container->get('security.context')->getToken()->getUser();
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fosUser);
         $repositoryGroup = $em->getRepository('TrazeoBaseBundle:EGroup');
@@ -122,7 +127,7 @@ class PanelGroupsController extends Controller
         //Unimos al usuario al grupo
         try {
             $repositoryGroup->joinGroup($id, $user);
-            $container->addFlashMessages("success", "Te has unido correctamente al grupo");
+            $container->addFlashMessages("success", $translator->trans('flash_messages.join_success'));
         } catch (Exception $e) {
             $container->addFlashMessages("warning", $e->getMessage());
         }
@@ -143,6 +148,8 @@ class PanelGroupsController extends Controller
     public function disJoinGroupAction($id)
     {
         $em = $this->getDoctrine()->getManager();
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
         $fosUser = $this->container->get('security.context')->getToken()->getUser();
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fosUser);
         $container = $this->get('sopinet_flashMessages');
@@ -150,7 +157,7 @@ class PanelGroupsController extends Controller
         //Sacamos al usuario del grupo
         try {
             $reGroup->disjoinGroup($id, $user);
-            $container->addFlashMessages("warning", "Has salido del grupo");
+            $container->addFlashMessages("warning", $translator->trans('flash_messages.disjoin_success'));
         } catch (PreconditionFailedHttpException $e) {
             $container->addFlashMessages("warning", $e->getMessage());
         }
@@ -168,6 +175,8 @@ class PanelGroupsController extends Controller
     public function requestJoinGroupAction($id) {
 
         $em = $this->getDoctrine()->getManager();
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
         // FOSUser y UserExtend correspondiente logueado
         $fos_user = $this->container->get('security.context')->getToken()->getUser();
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
@@ -184,7 +193,7 @@ class PanelGroupsController extends Controller
         $requestGroup = $em->getRepository('TrazeoBaseBundle:EGroupAccess')->findOneByGroup($group);
         $container = $this->get('sopinet_flashMessages');
         if ($groupVisibility == 2 ){
-            $notification = $container->addFlashMessages("warning","Sólo puedes unirte a un grupo oculto mediante invitación.");
+            $notification = $container->addFlashMessages("warning", $translator->trans('flash_messages.hidden_group_join_fail'));
             return $this->redirect($this->generateUrl('panel_group'));
 
         }
@@ -198,7 +207,7 @@ class PanelGroupsController extends Controller
             if($requestUserId = $requestGroupId) {
                 // Excepción y redirección
 
-                $notification = $container->addFlashMessages("warning","Ya has solicitado el acceso a este grupo anteriormente");
+                $notification = $container->addFlashMessages("warning", $translator->trans('flash_messages.already_requested'));
                 return $this->redirect($this->generateUrl('panel_group'));
 
             }
@@ -233,7 +242,7 @@ class PanelGroupsController extends Controller
             $em->persist($access);
             $em->flush();
 
-            $notification = $container->addFlashMessages("success","Tu solicitud para unirte ha sido enviada al adminsitrador del grupo");
+            $notification = $container->addFlashMessages("success", $translator->trans('flash_messages.request_send'));
             return $this->redirect($this->generateUrl('panel_group'));
 
         }
@@ -251,20 +260,22 @@ class PanelGroupsController extends Controller
     public function letJoinGroupAction($id, $group) {
 
         $em = $this->getDoctrine()->getManager();
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
         $container = $this->get('sopinet_flashMessages');
         $fos_user_current = $this->container->get('security.context')->getToken()->getUser();
         $user_current =$em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user_current);
 
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($id);
         if (!$user) {
-            $notification = $container->addFlashMessages("error","No puedes dar acceso porque el usuario ya no existe");
+            $notification = $container->addFlashMessages("error", $translator->trans('flash_messages.user_not_exists'));
             return $this->redirect($this->generateUrl('panel_group'));
         }
         $fos_user = $user->getuser();
         $groupToJoin = $em->getRepository('TrazeoBaseBundle:EGroup')->find($group);
 
         if (!$groupToJoin) {
-            $notification = $container->addFlashMessages("error","No puedes dar acceso porque el grupo ya no existe");
+            $notification = $container->addFlashMessages("error", $translator->trans('flash_messages.group_not_exists'));
             return $this->redirect($this->generateUrl('panel_group'));
         }
 
@@ -305,7 +316,7 @@ class PanelGroupsController extends Controller
         $em->persist($el);
         $em->flush();
 
-        $notification = $container->addFlashMessages("success","El usuario ha sido añadido al grupo");
+        $notification = $container->addFlashMessages("success", $translator->trans('flash_messages.add_success'));
 
         return $this->redirect($this->generateUrl('panel_group'));
     }
@@ -321,6 +332,8 @@ class PanelGroupsController extends Controller
     public function denyJoinGroupAction($id, $group) {
 
         $em = $this->getDoctrine()->getManager();
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
         $um = $this->container->get('fos_user.user_manager');
         $fos_user_current = $this->container->get('security.context')->getToken()->getUser();
         $user_current =$em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user_current);
@@ -336,7 +349,7 @@ class PanelGroupsController extends Controller
 
         $groupAdmin = $groupRequest->getAdmin();
         $container = $this->get('sopinet_flashMessages');
-        $notification = $container->addFlashMessages("success","Has rechazado la petición del usuario para unirse al grupo");
+        $notification = $container->addFlashMessages("success", $translator->trans('flash_messages.decline_request'));
 
         $not = $this->container->get('sopinet_user_notification');
         $url=$this->get('trazeo_base_helper')->getAutoLoginUrl($fos_user,'panel_group');
@@ -368,6 +381,8 @@ class PanelGroupsController extends Controller
     public function inviteGroupAction(Request $request) {
 
         $em = $this->getDoctrine()->getManager();
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
         $um = $this->container->get('fos_user.user_manager');
 
         $container = $this->get('sopinet_flashMessages');
@@ -390,7 +405,7 @@ class PanelGroupsController extends Controller
         foreach($groupUsers as $groupUser){
             if($user == $groupUser){
 
-                $notification = $container->addFlashMessages("warning","El usuario ya forma parte del grupo");
+                $notification = $container->addFlashMessages("warning", $translator->trans('flash_messages.already_in_group'));
                 return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
             }
         }
@@ -402,12 +417,12 @@ class PanelGroupsController extends Controller
             $reGAI->createNew($group, $userEmail, $fos_user_current, $this);
 
             // $notification = $container->addFlashMessages("warning","El correo electrónico introducido no corresponde a ningún usuario");
-            $notification = $container->addFlashMessages("success","Se ha enviado un email al usuario invitándolo al sistema Trazeo y a este grupo.");
+            $notification = $container->addFlashMessages("success", $translator->trans('flash_messages.send_invitation'));
             return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
         }
 
         if($fos_user == $fos_user_current ){
-            $notification = $container->addFlashMessages("warning","No necesitas invitación para unirte a un grupo del que eres administrador");
+            $notification = $container->addFlashMessages("warning", $translator->trans('flash_messages.group_admin_join'));
             return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
         }
 
@@ -427,7 +442,7 @@ class PanelGroupsController extends Controller
             // Comprobar que no tienen el mismo id de registro (petición duplicada)
             if($requestUserId = $requestGroupId) {
                 // Excepción y redirección
-                $notification = $container->addFlashMessages("warning","Ya has invitado a este usuario anteriormente");
+                $notification = $container->addFlashMessages("warning", $translator->trans('flash_messages.error_already_invited'));
                 return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
 
             }
@@ -460,7 +475,7 @@ class PanelGroupsController extends Controller
             $em->flush();
 
             $container = $this->get('sopinet_flashMessages');
-            $notification = $container->addFlashMessages("success","El usuario ha recibido tu invitación para unirse al grupo");
+            $notification = $container->addFlashMessages("success", $translator->trans('flash_messages.send_invitation'));
             return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$groupId)));
 
         }
@@ -477,18 +492,20 @@ class PanelGroupsController extends Controller
     public function acceptInviteGroupAction($id, $group) {
 
         $em = $this->getDoctrine()->getManager();
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
         $fos_user_current = $this->container->get('security.context')->getToken()->getUser();
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($id);
         $groupToJoin = $em->getRepository('TrazeoBaseBundle:EGroup')->find($group);
         $container = $this->get('sopinet_flashMessages');
 
         if (!$groupToJoin) {
-            $notification = $container->addFlashMessages("success","No puedes unirte al grupo porque ha sido eliminado");
+            $notification = $container->addFlashMessages("success", $translator->trans('flash_messages.group_removed_join'));
             return $this->redirect($this->generateUrl('panel_group'));
         }
 
         if(in_array($user,$groupToJoin->getUserextendgroups()->toArray())){
-            $notification = $container->addFlashMessages("success","Ya eres miembro de este grupo");
+            $notification = $container->addFlashMessages("success", $translator->trans('flash_messages.error_are_joined_group'));
             return $this->redirect($this->generateUrl('panel_group'));
         }
 
@@ -530,7 +547,7 @@ class PanelGroupsController extends Controller
         $em->remove($userRequest);
         $em->flush();
 
-        $notification = $container->addFlashMessages("success","Te has unido correctamente al grupo");
+        $notification = $container->addFlashMessages("success", $translator->trans('flash_messages.join_success'));
         return $this->redirect($this->generateUrl('panel_group_timeline',array('id'=>$group)));
     }
 
@@ -546,6 +563,8 @@ class PanelGroupsController extends Controller
     public function denyInviteGroupAction($id,$group) {
 
         $em = $this->getDoctrine()->getManager();
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
         $fos_user_current = $this->container->get('security.context')->getToken()->getUser();
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->find($id);
         $userRequest = $em->getRepository('TrazeoBaseBundle:EGroupInvite')->findOneByUserextend($id);
@@ -576,7 +595,7 @@ class PanelGroupsController extends Controller
         $em->remove($userRequest);
         $em->flush();
         $container = $this->get('sopinet_flashMessages');
-        $notification = $container->addFlashMessages("success","Has rechazado la invitación");
+        $notification = $container->addFlashMessages("success", $translator->trans('flash_messages.decline_invitation'));
 
         return $this->redirect($this->generateUrl('panel_group'));
 
@@ -648,6 +667,8 @@ class PanelGroupsController extends Controller
         $form->handleRequest($request);
 
         $em = $this->getDoctrine()->getManager();
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
         $groupForm =$form->getData();
         $groupName = $groupForm->getName();
 
@@ -660,7 +681,7 @@ class PanelGroupsController extends Controller
             if($groupUniqueName == $groupName){
 
                 $container = $this->get('sopinet_flashMessages');
-                $container->addFlashMessages("warning", "Ya existe un grupo con el nombre que has indicado, ");
+                $container->addFlashMessages("warning", $translator->trans('flash_messages.group_exists'));
                 return $this->redirect($this->generateUrl('panel_group_new'));
             }
         }
@@ -810,6 +831,8 @@ class PanelGroupsController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
         $fos_user = $this->container->get('security.context')->getToken()->getUser();
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
         $group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
@@ -819,12 +842,12 @@ class PanelGroupsController extends Controller
         $container = $this->get('sopinet_flashMessages');
         if($groupAdmin != $user ){
 
-            $notification = $container->addFlashMessages("error","No tienes autorización para editar este grupo");
+            $notification = $container->addFlashMessages("error", $translator->trans('flash_messages.not_edit_child'));
             return $this->redirect($this->generateUrl('panel_dashboard'));
         }
         if (!$group) {
 
-            $notification = $container->addFlashMessages("warning","No existe el grupo o ha sido eliminado");
+            $notification = $container->addFlashMessages("warning", $translator->trans('flash_messages.group_not_exists'));
             return $this->redirect($this->generateUrl('panel_dashboard'));
         }
 
@@ -887,6 +910,8 @@ class PanelGroupsController extends Controller
     public function timelineAction(Egroup $group)
     {
         $em = $this->getDoctrine()->getManager();
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
         $fos_user = $this->container->get('security.context')->getToken()->getUser();
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
 
@@ -899,7 +924,7 @@ class PanelGroupsController extends Controller
         }
         if (!$can) {
             $container = $this->get('sopinet_flashMessages');
-            $notification = $container->addFlashMessages("error","No tiene acceso a este grupo, por favor, solicítelo antes de poder participar en el Muro");
+            $notification = $container->addFlashMessages("error", $translator->trans('flash_messages.not_access_group'));
             return $this->redirect($this->generateUrl('panel_group'));
         }
 
@@ -933,6 +958,8 @@ class PanelGroupsController extends Controller
     public function setRouteAction($group,$route) {
 
         $em = $this->getDoctrine()->getManager();
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
 
         $groupEntity = $em->getRepository('TrazeoBaseBundle:EGroup')->findOneById($group);
         $routeEntity = $em->getRepository('TrazeoBaseBundle:ERoute')->find($route);
@@ -941,7 +968,7 @@ class PanelGroupsController extends Controller
         $em->persist($groupEntity);
         $em->flush();
         $container = $this->get('sopinet_flashMessages');
-        $notification = $container->addFlashMessages("success","La ruta ha sido asignada a este grupo");
+        $notification = $container->addFlashMessages("success", $translator->trans('flash_messages.add_success'));
         return $this->redirect($this->generateUrl('panel_group_timeline', array('id' => $group)));
     }
 
@@ -999,6 +1026,8 @@ class PanelGroupsController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
 
         $fos_user = $this->container->get('security.context')->getToken()->getUser();
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
@@ -1011,15 +1040,15 @@ class PanelGroupsController extends Controller
         //Tratamos de borrar el grupo
         try{
             $repositoryGroup->userDeleteGroup($id,$user);
-            $notification = $container->addFlashMessages("success","El grupo ha sido eliminado");
+            $notification = $container->addFlashMessages("success", $translator->trans('flash_messages.remove_success'));
             return $this->redirect($this->generateUrl('panel_dashboard'));
         }
         catch(PreconditionFailedHttpException $e){
-            $notification = $container->addFlashMessages("warning","El grupo que intentas eliminar no existe");
+            $notification = $container->addFlashMessages("warning", $translator->trans('flash_messages.group_not_exists'));
             return $this->redirect($this->generateUrl('panel_dashboard'));
         }
         catch(AccessDeniedException $e){
-            $notification = $container->addFlashMessages("error","Sólo el administrador puede eliminar un grupo");
+            $notification = $container->addFlashMessages("error", $translator->trans('flash_messages.not_remove'));
             return $this->redirect($this->generateUrl('panel_dashboard'));
         }
     }

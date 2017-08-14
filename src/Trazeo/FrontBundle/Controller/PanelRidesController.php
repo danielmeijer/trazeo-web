@@ -2,6 +2,7 @@
 
 namespace Trazeo\FrontBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -33,7 +34,9 @@ class PanelRidesController extends FOSRestController
     public function currentAction(ERide $ride)
     {
     	$em = $this->getDoctrine()->getManager();
-    	$reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
+        $reEvent = $em->getRepository('TrazeoBaseBundle:EEvent');
 
     	$fos_user = $this->container->get('security.context')->getToken()->getUser();
     	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
@@ -55,7 +58,7 @@ class PanelRidesController extends FOSRestController
     	foreach ($groups as $userGroup){
     		if($userGroup->getId()==$groupId)$find=true;
     	}
-    	if($find==false)die('No perteneces al grupo de este paseo.');
+    	if($find==false)die($translator->trans('flash_messages.not_see'));
     	
     	
     	$children = $group->getChilds();    	

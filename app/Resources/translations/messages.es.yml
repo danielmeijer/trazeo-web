@@ -960,21 +960,53 @@ homePage:
         item3: 'BLOG'
         item4: 'CROWFUNDING'
         item5: 'CONTACTO'
+    thanks:
+        text1: 'Entre todos hacemos calle.'
+        text2: 'Imprescindible, oportuno y necesario Trazeo y sus caminos escolares seguros.'
+        text3: 'Pasito a pasito; por una ciudad limpia de coches y peligros para nuestros hijos.'
 
 flash_messages:
     wrong_email: 'El correo electrónico introducido no corresponde a ningún usuario'
+    error_general: 'Ha ocurrido un error durante el proceso'
     error_invite_tutor: 'El usuario al que quieres invitar ya es uno de los tutores del niño'
     error_are_tutor: 'Ya eres tutor de este niño'
+    error_are_joined_group: 'Ya estas en este grupo'
     error_already_invited: 'Ya has invitado a este usuario anteriormente'
-    send_invitation: 'El usuario ha recibido tu invitación para ser tutor del niño'
+    send_invitation: 'El usuario ha recibido tu invitación'
     delete: 'Ha sido eliminado'
     group_removed_join: 'No puedes unirte al grupo porque ha sido eliminado'
     accept_tutor: 'Has aceptado la invitación para ser tutor'
     decline_invitation: 'Has rechazado la invitación'
+    decline_request: 'Has rechazado la petición'
     child_register: 'Has registrado a tu niño/a con éxito'
-    not_edit_child: 'No tienes permisos para editar la información de este niño'
-    not_remove: "No tienes permisos para editar esta información"
+    not_edit_child: 'No tienes permisos para editar esta información'
+    not_remove: "No tienes permisos para eliminar esta información"
+    not_see: "No tienes permisos para acceder a esta información"
     registry_not_exists: 'El registro indicado no existe'
+    create_success: "Ha sido creada con éxito"
+    join_success: "Te has unido correctamente al grupo"
+    disjoin_success: 'Has salido del grupo'
+    hidden_group_join_fail: 'Sólo puedes unirte a un grupo oculto mediante invitación.'
+    already_requested: 'Ya lo has solicitado anteriormente.'
+    request_send: 'Tu solicitud ha sido enviada.'
+    user_already_exists: 'El usuario ya existe'
+    not_exists: 'No existe o ha sido eliminado'
+    user_not_exists: 'El usuario ya no existe'
+    user_exists: 'El usuario ya existe'
+    group_not_exists: 'El grupo no existe o ha sido eliminado'
+    group_exists: 'Ya existe ese grupo'
+    add_success: 'Ha sido añadido con éxito'
+    remove_success: 'Ha sido eliminado con éxito'
+    already_in_group: 'El usuario ya forma parte del grupo'
+    group_admin_join: 'No necesitas invitación para unirte a un grupo del que eres administrador'
+    not_access_group: 'No tiene acceso a este grupo, por favor, solicítelo antes de poder participar en el Muro'
+    not_points_needed: 'No tienes los puntos necesarios'
+    accept_conditions: 'Debe aceptar las condiciones de uso'
+    email_send: 'Su email se ha mandado con éxito'
+
+graphic:
+    age: 'Gráfico por Edad'
+    age2: 'Edad'
 
 #MAILS
 Request: 'Solicitud de canjeo de usuario'

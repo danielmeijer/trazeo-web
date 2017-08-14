@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -104,6 +105,8 @@ class ModuleComposerController extends Controller
     public function editModuleAction(Module $module, Request $request) {
         // http://blog.eike.se/2014/03/custom-page-controller-in-sonata-admin.html
         $admin_pool = $this->get('sonata.admin.pool');
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
 
         $formModule = $this->createForm(new ModuleEditComposerType($this), $module);
         /** @var Form $formModule */
@@ -119,7 +122,7 @@ class ModuleComposerController extends Controller
             $em->persist($module);
             $em->flush();
 
-            $request->getSession()->getFlashBag()->add("success", "Módulo guardado con éxito");
+            $request->getSession()->getFlashBag()->add("success", $translator->trans('flash_messages.add_success'));
 
             return new RedirectResponse($this->generateUrl('moduleComposer_view'));
         }
@@ -136,10 +139,12 @@ class ModuleComposerController extends Controller
      */
     public function deleteModuleAction(Module $module) {
         $em = $this->getDoctrine()->getEntityManager();
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
         $em->remove($module);
         $em->flush();
 
-        $this->addFlash("success", "Módulo eliminado con éxito");
+        $this->addFlash("success", $translator->trans('flash_messages.remove_success'));
 
         return new RedirectResponse($this->generateUrl('moduleComposer_view'));
     }
