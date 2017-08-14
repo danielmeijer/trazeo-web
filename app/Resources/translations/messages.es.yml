@@ -961,6 +961,21 @@ homePage:
         item4: 'CROWFUNDING'
         item5: 'CONTACTO'
 
+flash_messages:
+    wrong_email: 'El correo electrónico introducido no corresponde a ningún usuario'
+    error_invite_tutor: 'El usuario al que quieres invitar ya es uno de los tutores del niño'
+    error_are_tutor: 'Ya eres tutor de este niño'
+    error_already_invited: 'Ya has invitado a este usuario anteriormente'
+    send_invitation: 'El usuario ha recibido tu invitación para ser tutor del niño'
+    delete: 'Ha sido eliminado'
+    group_removed_join: 'No puedes unirte al grupo porque ha sido eliminado'
+    accept_tutor: 'Has aceptado la invitación para ser tutor'
+    decline_invitation: 'Has rechazado la invitación'
+    child_register: 'Has registrado a tu niño/a con éxito'
+    not_edit_child: 'No tienes permisos para editar la información de este niño'
+    not_remove: "No tienes permisos para editar esta información"
+    registry_not_exists: 'El registro indicado no existe'
+
 #MAILS
 Request: 'Solicitud de canjeo de usuario'
 Request2: 'Solicitud de canjeo de usuario %nick% para la oferta %title% de la empresa %company%'
