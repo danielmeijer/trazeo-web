@@ -1,6 +1,7 @@
 <?php
 namespace Trazeo\FrontBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -205,6 +206,8 @@ class PanelRoutesController extends Controller
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
         $fos_user = $this->container->get('security.context')->getToken()->getUser();
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
         $route = $em->getRepository('TrazeoBaseBundle:ERoute')->find($id);
@@ -214,12 +217,12 @@ class PanelRoutesController extends Controller
         $container = $this->get('sopinet_flashMessages');
         if($routeAdmin != $user ){
         
-        	$notification = $container->addFlashMessages("error","No tienes autorización para editar esta ruta");
+        	$notification = $container->addFlashMessages("error", $translator->trans('flash_messages.not_edit_child'));
         	return $this->redirect($this->generateUrl('panel_groups'));
         }
         if (!$route) {
         	
-        	$notification = $container->addFlashMessages("warning","No existe la ruta o ha sido eliminada");
+        	$notification = $container->addFlashMessages("warning", $translator->trans('flash_messages.not_exists'));
         	return $this->redirect($this->generateUrl('panel_groups'));
         }
 
@@ -366,7 +369,8 @@ class PanelRoutesController extends Controller
     public function deleteAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-    	
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
     	$fos_user = $this->container->get('security.context')->getToken()->getUser();
     	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
     	$userId = $user->getId();
@@ -376,7 +380,7 @@ class PanelRoutesController extends Controller
         $container = $this->get('sopinet_flashMessages');
         
         if (!$route) {
-        	$notification = $container->addFlashMessages("warning","La ruta que intentas eliminar no existe");
+        	$notification = $container->addFlashMessages("warning", $translator->trans('flash_messages.not_exists'));
         	return $this->redirect($this->generateUrl('panel_dashboard'));
         }
         
@@ -386,11 +390,11 @@ class PanelRoutesController extends Controller
 
 			$em->remove($route);
 			$em->flush();
-			$notification = $container->addFlashMessages("success","La ruta ha sido eliminada");
+			$notification = $container->addFlashMessages("success", $translator->trans('flash_messages.remove_success'));
 			return $this->redirect($this->generateUrl('panel_dashboard'));
 			
 		}else {
-			$notification = $container->addFlashMessages("error","Sólo el administrador puede eliminar una ruta");
+			$notification = $container->addFlashMessages("error",  $translator->trans('flash_messages.not_remove'));
 			return $this->redirect($this->generateUrl('panel_dashboard'));	
 		}
     }

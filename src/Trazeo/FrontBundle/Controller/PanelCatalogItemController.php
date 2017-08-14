@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Trazeo\BaseBundle\Entity\ECatalogItem;
@@ -221,6 +222,8 @@ class PanelCatalogItemController extends Controller
     public function createAction(Request $request)
     {
 	    $em = $this->getDoctrine()->getManager();
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
 		$repositoryItem = $em->getRepository("TrazeoBaseBundle:ECatalogItem");
 		 
 		//Sacamos el item
@@ -244,7 +247,7 @@ class PanelCatalogItemController extends Controller
             $em->flush();
         }
         $container = $this->get('sopinet_flashMessages');
-        $notification = $container->addFlashMessages("success","Has creado la oferta con exito");
+        $notification = $container->addFlashMessages("success", $translator->trans('flash_messages.create_success'));
         return $this->redirect($this->generateUrl('panel_dashboard'));
     }
 }

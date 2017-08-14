@@ -233,7 +233,7 @@ Help:
         editChild: 'The data will be private. You can only see them yourself. Only the adult who accompanies the group every day can see the name when accessing the list of children involved. '
         editGroup: 'Fill in all the fields so that your group is easy to find by the rest of the participants. Only you as administrator can modify this group data. '
         group: 'If you belong to a group of pedibus you can communicate with the other participating families through the wall, invite others to join, and earn points by participating. When you link your children, the accompanying adult can see them in the children list and send you notifications. '
-        groupList: "Search for active groups of pedibus in your city and in your educational center, and join one of them. In the public groups (green) your children and you will be incorporated directly. In the private (red), you will send a request to the manager of the group to approve your incorporation. historical: 'Aquí puedes ver las acciones por las que has recibido puntos"
+        groupList: "Search for active groups of pedibus in your city and in your educational center, and join one of them. In the public groups (green) your children and you will be incorporated directly. In the private (red), you will send a request to the manager of the group to approve your incorporation. historical: Here you can see the actions for which you received points"
         newChild: 'On this screen you have to register your children to link them to your user. Your data is private. You can only see them, and the adult who accompanies the group every day when you access the list of children involved (Only see the name). Remember that in order for your children to appear in this list, besides registering them here, you will have to link them to a group that you belong to. From that moment, every time you participate, you start earning points for walking '
         newGroup: 'Fill in all the fields so that your group is easy to find by the other participants: Only you as administrator can modify this group data. Fill in the country, municipality and educational center will allow filtering by these data in the list of groups'
         points: 'Trazeo rewards families who walk. Every time your children participate in the pedibus or you accompany the group you get points that accumulate in your account and you can redeem in our catalog or in the Civiclub.'
@@ -955,21 +955,53 @@ homePage:
         item3: 'BLOG'
         item4: 'CROWFUNDING'
         item5: 'CONTACT'
+    thanks:
+        text1: 'Between all we do street.'
+        text2: 'Necessary, timely and necessary Trazeo and its safe school routes.'
+        text3: 'Step by step; For a clean city of cars and dangers for our children.'
 
 flash_messages:
     wrong_email: 'The email entered does not correspond to any user'
+    error_general: 'An error occurred during the process'
     error_invite_tutor: "The user you want to invite is already one of the child's tutors"
     error_are_tutor: 'You are already tutoring this child'
+    error_are_joined_group: 'You are already in this group'
     error_already_invited: 'You have already invited this user before'
-    send_invitation: "The user has received your invitation to be the child's guardian"
+    send_invitation: "The user has received your invitation"
     delete: 'Has been removed'
     group_removed_join: 'You can not join the group because it has been deleted'
     accept_tutor: 'You have accepted the invitation to be a tutor'
     decline_invitation: 'You have declined the invitation'
+    decline_request: 'You have rejected the request'
     child_register: 'You have successfully registered your child'
     not_edit_child: "You do not have permission to edit this information"
     not_remove: "You do not have permission to remove this information"
+    not_see: "You do not have permission to access this information"
     registry_not_exists: 'The specified record does not exist'
+    create_success: "It has been successfully created"
+    join_success: "You have successfully joined the group"
+    disjoin_success: 'You left the group'
+    hidden_group_join_fail: 'You can only join a hidden group by invitation.'
+    already_requested: 'You have already requested it previously.'
+    request_send: 'Your request has been sent.'
+    user_already_exists: 'The user already exists'
+    not_exists: 'Does not exist or has been deleted'
+    user_not_exists: 'User no longer exists'
+    user_exists: 'User already exists'
+    group_not_exists: 'Group does not exist or has been deleted'
+    group_exists: 'That group already exists'
+    add_success: 'It has been added successfully'
+    remove_success: 'It has been successfully deleted'
+    already_in_group: 'The user is already part of the group'
+    group_admin_join: 'You do not need an invitation to join a group you are an admin'
+    not_access_group: 'You do not have access to this group, please request it before you can participate in the Wall'
+    not_points_needed: 'You do not have the necessary points'
+    accept_conditions: 'You must accept the conditions of use'
+    email_send: 'Your email was successfully sent'
+
+graphic:
+    age: 'Age Chart'
+    age2: 'Age'
 
 Request: 'User Redeem Request'
 Request2: 'User Redeem Request %nick% for the offer %title% of the company %company%'

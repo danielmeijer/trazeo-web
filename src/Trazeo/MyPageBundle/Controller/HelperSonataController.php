@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\CoreBundle\FlashMessage\FlashManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -25,6 +26,8 @@ class HelperSonataController extends Controller
      */
     public function sendEmailAction(Request $request)
     {
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
         $data = $request->get('SendEmail');
         $emails_string = $request->get('emails');
         $emails = explode(",", $emails_string);
@@ -46,7 +49,7 @@ class HelperSonataController extends Controller
 
         $result = $dispatcher->send($message);
 
-        $this->getRequest()->getSession()->getFlashBag()->add("success", "Su email se ha mandado con éxito");
+        $this->getRequest()->getSession()->getFlashBag()->add("success", $translator->trans('flash_messages.email_send'));
 
         return new RedirectResponse($this->generateUrl('sonata_admin_dashboard'));
     }

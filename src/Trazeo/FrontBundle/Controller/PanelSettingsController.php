@@ -2,6 +2,7 @@
 
 namespace Trazeo\FrontBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -40,12 +41,14 @@ class PanelSettingsController extends Controller
 	 */	
 	public function saveAction(Request $request)
 	{
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
 		$sup = $this->container->get('sopinet_user_preferences');
 		$sup->setAllSettings($request);
 		
 		$container = $this->get('sopinet_flashMessages');
 		// TODO: Traducir mensaje de Guardadas Preferencias de Usuario
-		$notification = $container->addFlashMessages("success","Guardadas preferencias de usuario");
+		$notification = $container->addFlashMessages("success", $translator->trans('flash_messages.add_success'));
 		
 		return $this->redirect($this->generateUrl('panel_user_settings'));
 	}

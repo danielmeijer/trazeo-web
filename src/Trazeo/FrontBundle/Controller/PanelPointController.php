@@ -135,6 +135,8 @@ class PanelPointController extends Controller
     public function exchangeAction($id)
     {
         $em = $this->getDoctrine()->getManager();
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
         $fos_user = $this->container->get('security.context')->getToken()->getUser(); 
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
         $container = $this->get('sopinet_flashMessages');  
@@ -142,15 +144,13 @@ class PanelPointController extends Controller
         $ofert = $em->getRepository('TrazeoBaseBundle:ECatalogItem')->find($id);
 
         if(($user->getPoints()-$user->getSpendedPoints())<$ofert->getPoints()){
-         $notification = $container->addFlashMessages("success","Tu solicitud no ha sido enviada ya que no tienes los puntos necesarios");
-         return $this->redirect($this->generateUrl('panel_point', array('exchange' => 2)));           
+         $notification = $container->addFlashMessages("success", $translator->trans('flash_messages.not_points_needed'));
+         return $this->redirect($this->generateUrl('panel_point', array('exchange' => 2)));
         }
         $user->setSpendedPoints($user->getSpendedPoints()+$ofert->getPoints());
         $em->persist($user);
         $em->flush();
 
-        /** @var Translator $translator */
-        $translator = $this->get('translator');
         $body = $translator->trans('Request2', array('%nick%' => $user->getNick(), '%title%' => $ofert->getTitle(), '%company%' => $ofert->getCompany()));
 
         $message = \Swift_Message::newInstance()
@@ -160,7 +160,7 @@ class PanelPointController extends Controller
         ->setBody('<p>'.$body.'</p>', 'text/html');
         $ok = $this->container->get('mailer')->send($message);
 
-        $notification = $container->addFlashMessages("success","Tu solicitud ha sido enviada y se está procesando");
+        $notification = $container->addFlashMessages("success", $translator->trans('flash_messages.request_send'));
         return $this->redirect($this->generateUrl('panel_point',array('exchange' => 1)));
     }
 }

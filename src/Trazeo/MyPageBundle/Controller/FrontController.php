@@ -3,6 +3,7 @@
 namespace Trazeo\MyPageBundle\Controller;
 
 
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -209,7 +210,8 @@ class FrontController extends Controller
      */
     public function saveInGroup($group_id, Request $request) {
         $em = $this->getDoctrine()->getEntityManager();
-
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
         /** @var EGroupRepository $repositoryGroup */
         $repositoryGroup = $em->getRepository("TrazeoBaseBundle:EGroup");
         /** @var EGroup $group */
@@ -217,7 +219,7 @@ class FrontController extends Controller
 
         $container = $this->get('sopinet_flashMessages');
         if ($request->get('condiciones') != "on") {
-            $container->addFlashMessages("warning","Debe aceptar las condiciones de uso.");
+            $container->addFlashMessages("warning", $translator->trans('flash_messages.accept_conditions'));
             return $this->redirect($this->generateUrl('registerInGroup', array('group_id' => $group->getId())));
         }
 
@@ -255,7 +257,7 @@ class FrontController extends Controller
         $user_exists = $user = $this->container->get('fos_user.user_manager')->findUserByUsernameOrEmail($user_check['email']);
         if ($user_exists != null) {
             $container = $this->get('sopinet_flashMessages');
-            $container->addFlashMessages("warning","Este usuario ya existe, si es el suyo, acceda desde esta pantalla.");
+            $container->addFlashMessages("warning", $translator->trans('flash_messages.user_exists'));
             return $this->redirect($this->generateUrl('fos_user_security_login'));
             //return $this->redirect($this->generateUrl('loginInGroup', array('group_id' => $group->getId())));
         }
@@ -334,7 +336,7 @@ class FrontController extends Controller
              **/
 
 
-            $container->addFlashMessages("warning","Ha ocurrido algún error, por favor, revise los datos.");
+            $container->addFlashMessages("warning", $translator->trans('flash_messages.error_general'));
             return $this->redirect($this->generateUrl('registerInGroup', array('group_id' => $group->getId())));
 
 
