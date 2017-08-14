@@ -11,3 +11,5 @@ Temporal documentation for Production Migration
 
 - Remove civiclub userPreferences (active another field):
     ```UPDATE `user_setting` SET `enabled` = '1' WHERE `user_setting`.`id` = 2;```
+    
+- Review and Update catalogItems
