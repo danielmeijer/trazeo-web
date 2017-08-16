@@ -111,6 +111,8 @@ swiftmailer:
 
 # FOSUserBundle Configuration
 fos_user:
+    resetting:
+        token_ttl: 0
     from_email:
         address: "%mailer_email%"
         sender_name: "%mailer_sender%"
