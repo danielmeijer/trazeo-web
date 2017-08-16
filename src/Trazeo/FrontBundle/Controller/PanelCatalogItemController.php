@@ -242,7 +242,6 @@ class PanelCatalogItemController extends Controller
     public function createAction(Request $request)
     {
 	    $em = $this->getDoctrine()->getManager();
-        /** @var Translator $translator */
         $translator = $this->get('translator');
 		$repositoryItem = $em->getRepository("TrazeoBaseBundle:ECatalogItem");
 		 
