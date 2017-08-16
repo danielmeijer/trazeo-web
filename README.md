@@ -13,6 +13,7 @@ Requeriments
 - mysql 5.5 (error in 5.6 or superior)
 - php-mbstring extension: ```sudo apt-get install php5.6-mbstring```
 - php-intl extension: ```sudo apt-get install php5.6-intl```
+- php-amqplib: ```sudo apt-get install php-amqplib```
 
 Turn on RabbitMQ (to proccess messages in Background)
 =====================================================

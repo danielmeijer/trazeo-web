@@ -29,7 +29,7 @@ monolog:
 
 elao_error_notifier:
     from: hola@trazeo.es
-    to: aarrabal@sopinet.com
+    to: fhidalgo@sopinet.com
     handle404: true
     mailer: mailer
     handlePHPErrors: true
