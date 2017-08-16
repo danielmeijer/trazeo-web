@@ -55,4 +55,7 @@ Temporal documentation for Production Migration
 - Spool changed to: /smail/spool
 ```
     mkdir /smail/spool -p
+    chmod 777 /smail/spool/default/
 ```
+
+- Configure rabbit parameters

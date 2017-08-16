@@ -29,3 +29,8 @@ parameters:
     mailer_service: "swiftMailer"
 
     api_token: api_token_for_apps
+
+    rabbit_server:
+    rabbit_port:
+    rabbit_user:
+    rabbit_pass:
