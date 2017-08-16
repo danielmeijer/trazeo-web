@@ -3,6 +3,10 @@ Temporal documentation for Production Migration
 
 ## Upgrade Database
 
+- Mailjet configuration
+  
+  We are going to migrate to mailjet system, configure it in parameters.yml and parameters_dev.yml
+
 - Resolve updateAt field in fos_user_user:
 
 ```UPDATE fos_user_user SET updated_at = created_at WHERE updated_at = 0```
