@@ -106,8 +106,8 @@ swiftmailer:
     username:  %mailer_user%
     password:  %mailer_password%
     spool:
-        type:                 file
-        path:                 "%kernel.cache_dir%/swiftmailer/spool"
+        type: file
+        path: '/smail/spool'
 
 # FOSUserBundle Configuration
 fos_user:

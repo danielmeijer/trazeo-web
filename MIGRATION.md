@@ -51,3 +51,8 @@ Temporal documentation for Production Migration
    ORDER BY
            RAND()
 ```
+
+- Spool changed to: /smail/spool
+```
+    mkdir /smail/spool -p
+```
