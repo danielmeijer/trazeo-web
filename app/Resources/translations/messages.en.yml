@@ -1002,6 +1002,16 @@ flash_messages:
 graphic:
     age: 'Age Chart'
     age2: 'Age'
+    number_child: 'Number of Children'
+    number_families: 'Number of families'
+    number_participation: 'Number of shares'
+    group_graphic: 'Graph by group'
+    school: 'School'
+    evolution: "Evolution of Children Records"
+    evolution_families: 'Evolution of Family Records'
+    evolution_groups: 'Evolution of participation by groups'
+    evolution_total: 'Evolution of total participation'
+    number_records: 'Number of records'
 
 Request: 'User Redeem Request'
 Request2: 'User Redeem Request %nick% for the offer %title% of the company %company%'
