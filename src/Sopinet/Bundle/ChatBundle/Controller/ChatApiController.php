@@ -14,12 +14,27 @@ use Sopinet\Bundle\ChatBundle\Entity\MessageRepository;
 use Sopinet\Bundle\ChatBundle\Service\ApiHelper;
 use Sopinet\GCMBundle\Entity\Device;
 use Sopinet\GCMBundle\Model\Msg;
+use Sopinet\GCMBundle\Service\GCMHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Trazeo\BaseBundle\Entity\UserExtend;
 
 
 class ChatApiController extends FOSRestController{
 
+    /**
+     * @Get("/debug")
+     */
+    public function debugAction(Request $request) {
+        $mes = array(
+            'type' => 'text',
+            'text' => 'hola!',
+            'chatid' => 137,
+            'chattype' => 'event'
+        );
+
+        $this->get('old_sound_rabbit_mq.send_trazeo_producer')->setContentType('application/json');
+        $this->get('old_sound_rabbit_mq.send_trazeo_producer')->publish(json_encode($mes));
+    }
     /**
      * @param Request $request
      *
@@ -138,6 +153,7 @@ class ChatApiController extends FOSRestController{
 
         // Enviamos el mensaje correspondiente a todos los dispositivos, excepto
         // al que está enviando este mensaje.
+        /** @var GCMHelper $gcmhelper */
         $gcmhelper = $this->get('sopinet_gcmhelper');
         foreach ($devices as $device) {
             if ($device->getToken() != $msg->from) {
