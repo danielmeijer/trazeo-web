@@ -284,7 +284,7 @@ class StatsAdminController extends Controller
                 'dataLabels'    => array('enabled' => false),
                 'showInLegend'  => true
             ));
-            $obEdad->series(array(array('type' => 'column', 'name' => 'Nº niños/as', 'data' => $data_years)));
+            $obEdad->series(array(array('type' => 'column', 'name' => $translator->trans('graphic.number_child'), 'data' => $data_years)));
 
             // Gráfico SEXO
             $obSexo = new Highchart();
@@ -301,7 +301,7 @@ class StatsAdminController extends Controller
                 array('Niños', $boys),
                 array('Niñas', $girls)
             );
-            $obSexo->series(array(array('type' => 'pie', 'name' => 'Nº niños/as', 'data' => $data_gender)));
+            $obSexo->series(array(array('type' => 'pie', 'name' => $translator->trans('graphic.number_child'), 'data' => $data_gender)));
 
             // Gráfico COLEGIO
             $obColegio = new Highchart();
@@ -315,7 +315,7 @@ class StatsAdminController extends Controller
                 'dataLabels'    => array('enabled' => false),
                 'showInLegend'  => true
             ));
-            $obColegio->series(array(array('type' => 'pie', 'name' => 'Nº niños/as', 'data' => $data_schools)));
+            $obColegio->series(array(array('type' => 'pie', 'name' => $translator->trans('graphic.number_child'), 'data' => $data_schools)));
 
             // Gráfico por GRUPOS
             $obGrupo = new Highchart();
@@ -329,7 +329,7 @@ class StatsAdminController extends Controller
                 'dataLabels'    => array('enabled' => false),
                 'showInLegend'  => true
             ));
-            $obGrupo->series(array(array('type' => 'column', 'name' => 'Nº niños/as', 'data' => $data_groups)));
+            $obGrupo->series(array(array('type' => 'column', 'name' => $translator->trans('graphic.number_child'), 'data' => $data_groups)));
 
             // Gráficos de USUARIOS/FAMILIAS
             // Gráfico COLEGIO
@@ -344,21 +344,21 @@ class StatsAdminController extends Controller
                 'dataLabels'    => array('enabled' => false),
                 'showInLegend'  => true
             ));
-            $obUsersColegio->series(array(array('type' => 'pie', 'name' => 'Nº familias', 'data' => $data_users_schools)));
+            $obUsersColegio->series(array(array('type' => 'pie', 'name' => $translator->trans('graphic.number_families'), 'data' => $data_users_schools)));
 
             // Gráfico por GRUPOS
             $obUsersGrupo = new Highchart();
             $obUsersGrupo->chart->renderTo('users_grupo');
-            $obUsersGrupo->title->text('Gráfico por Grupo');
+            $obUsersGrupo->title->text($translator->trans('graphic.group_graphic'));
             $obUsersGrupo->xAxis->categories($data_users_groups);
-            $obUsersGrupo->xAxis->title(array('text'  => "Colegio"));
+            $obUsersGrupo->xAxis->title(array('text'  => $translator->trans('graphic.school')));
             $obUsersGrupo->plotOptions->pie(array(
                 'allowPointSelect'  => true,
                 'cursor'    => 'pointer',
                 'dataLabels'    => array('enabled' => false),
                 'showInLegend'  => true
             ));
-            $obUsersGrupo->series(array(array('type' => 'column', 'name' => 'Nº familias', 'data' => $data_users_groups)));
+            $obUsersGrupo->series(array(array('type' => 'column', 'name' => $translator->trans('graphic.number_families'), 'data' => $data_users_groups)));
         }
 
         return array(
@@ -382,6 +382,8 @@ class StatsAdminController extends Controller
         $admin_pool = $this->get('sonata.admin.pool');
 
         $form_filters = $this->createForm(new RegisteredAdminType($this));
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
 
         $chartByUser = null;
         $chartByChild = null;
@@ -530,10 +532,10 @@ class StatsAdminController extends Controller
             }
             $chartChildren = new Highchart();
             $chartChildren->chart->renderTo('linechartByChildren');  // The #id of the div where to render the chart
-            $chartChildren->title->text('Evolución de registros de Niños');
-            $chartChildren->xAxis->title(array('text'  => "Fecha"));
+            $chartChildren->title->text($translator->trans('graphic.evolution'));
+            $chartChildren->xAxis->title(array('text'  => $translator->trans('filter.label_created_at')));
             $chartChildren->xAxis->categories($labels);
-            $chartChildren->yAxis->title(array('text'  => "Número de Registros"));
+            $chartChildren->yAxis->title(array('text'  => $translator->trans('graphic.number_records')));
             $chartChildren->series($series);
 
             $series = array();
@@ -560,10 +562,10 @@ class StatsAdminController extends Controller
             }
             $chartUsers = new Highchart();
             $chartUsers->chart->renderTo('linechartByUser');  // The #id of the div where to render the chart
-            $chartUsers->title->text('Evolución de registros de Familias');
-            $chartUsers->xAxis->title(array('text'  => "Fecha"));
+            $chartUsers->title->text($translator->trans('graphic.evolution_families'));
+            $chartUsers->xAxis->title(array('text'  => $translator->trans('filter.label_created_at')));
             $chartUsers->xAxis->categories($labels);
-            $chartUsers->yAxis->title(array('text'  => "Número de Registros"));
+            $chartUsers->yAxis->title(array('text'  => $translator->trans('graphic.number_records')));
             $chartUsers->series($series);
 
 
@@ -615,6 +617,8 @@ class StatsAdminController extends Controller
     {
         // http://blog.eike.se/2014/03/custom-page-controller-in-sonata-admin.html
         $admin_pool = $this->get('sonata.admin.pool');
+        /** @var Translator $translator */
+        $translator = $this->get('translator');
 
         //$child = new EChild();
         $form_filters = $this->createForm(new EvolutionAdminType($this));
@@ -694,10 +698,10 @@ class StatsAdminController extends Controller
 
             $chartTotal = new Highchart();
             $chartTotal->chart->renderTo('linechartTotal');  // The #id of the div where to render the chart
-            $chartTotal->title->text('Evolución de participación Total');
-            $chartTotal->xAxis->title(array('text'  => "Fecha"));
+            $chartTotal->title->text($translator->trans('filter.evolution_total'));
+            $chartTotal->xAxis->title(array('text'  => $translator->trans('filter.label_created_at')));
             $chartTotal->xAxis->categories($labels);
-            $chartTotal->yAxis->title(array('text'  => "Número de Participaciones"));
+            $chartTotal->yAxis->title(array('text'  => $translator->trans('filter.number_participation')));
             $chartTotal->series($series);
 
             /** @var EGroupRepository $repositoryEGroup */
@@ -716,10 +720,10 @@ class StatsAdminController extends Controller
 
             $chartByGroup = new Highchart();
             $chartByGroup->chart->renderTo('linechartByGroups');  // The #id of the div where to render the chart
-            $chartByGroup->title->text('Evolución de participación por Grupos');
-            $chartByGroup->xAxis->title(array('text'  => "Fecha"));
+            $chartByGroup->title->text($translator->trans('graphic.evolution_groups'));
+            $chartByGroup->xAxis->title(array('text'  => $translator->trans('filter.label_created_at')));
             $chartByGroup->xAxis->categories($labels);
-            $chartByGroup->yAxis->title(array('text'  => "Número de Participaciones"));
+            $chartByGroup->yAxis->title(array('text'  => $translator->trans('filter.number_participation')));
             $chartByGroup->series($series);
         }
 

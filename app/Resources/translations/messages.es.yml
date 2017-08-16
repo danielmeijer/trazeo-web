@@ -1007,6 +1007,16 @@ flash_messages:
 graphic:
     age: 'Gráfico por Edad'
     age2: 'Edad'
+    number_child: 'Nº Niños/as'
+    number_families: 'Número de familias'
+    number_participation: 'Número de participaciones'
+    group_graphic: 'Gráfico por grupo'
+    school: 'Colegio'
+    evolution: 'Evolución de registros de Niños'
+    evolution_families: 'Evolución de registros de familias'
+    evolution_groups: 'Evolución de participación por grupos'
+    evolution_total: 'Evolución de participación total'
+    number_records: 'Número de registros'
 
 #MAILS
 Request: 'Solicitud de canjeo de usuario'

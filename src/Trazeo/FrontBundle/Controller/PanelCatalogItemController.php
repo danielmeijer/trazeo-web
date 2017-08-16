@@ -242,6 +242,7 @@ class PanelCatalogItemController extends Controller
     public function createAction(Request $request)
     {
 	    $em = $this->getDoctrine()->getManager();
+
         $translator = $this->get('translator');
 		$repositoryItem = $em->getRepository("TrazeoBaseBundle:ECatalogItem");
 		 
@@ -269,5 +270,5 @@ class PanelCatalogItemController extends Controller
         $notification = $container->addFlashMessages("success", $translator->trans('flash_messages.create_success'));
         return $this->redirect($this->generateUrl('panel_dashboard'));
     }
-         * */
+         **/
 }
