@@ -15,6 +15,7 @@ use Sopinet\Bundle\ChatBundle\Service\ApiHelper;
 use Sopinet\GCMBundle\Entity\Device;
 use Sopinet\GCMBundle\Model\Msg;
 use Sopinet\GCMBundle\Service\GCMHelper;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Trazeo\BaseBundle\Entity\UserExtend;
 
@@ -33,7 +34,9 @@ class ChatApiController extends FOSRestController{
         );
 
         $this->get('old_sound_rabbit_mq.send_trazeo_producer')->setContentType('application/json');
-        $this->get('old_sound_rabbit_mq.send_trazeo_producer')->publish(json_encode($mes));
+        $result = $this->get('old_sound_rabbit_mq.send_trazeo_producer')->publish(json_encode($mes));
+
+        return new JsonResponse($result);
     }
     /**
      * @param Request $request
