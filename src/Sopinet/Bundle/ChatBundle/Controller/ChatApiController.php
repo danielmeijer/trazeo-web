@@ -5,6 +5,7 @@ namespace Sopinet\Bundle\ChatBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\Post;
+use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sopinet\Bundle\ChatBundle\Entity\Chat;
