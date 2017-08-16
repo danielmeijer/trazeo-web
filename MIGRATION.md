@@ -13,3 +13,26 @@ Temporal documentation for Production Migration
     ```UPDATE `user_setting` SET `enabled` = '1' WHERE `user_setting`.`id` = 2;```
     
 - Review and Update catalogItems
+
+- Update tables about slug field:
+
+```
+    sh scripts/schema_update.sh
+```
+
+```
+   SET @r := 0;
+   UPDATE  geo_city g
+   SET     g.slug = (@r := @r + 1)
+   ORDER BY
+           RAND()
+```
+    sh scripts/schema_update.sh
+    
+```
+   SET @r := 0;
+   UPDATE  geo_state g
+   SET     g.slug = (@r := @r + 1)
+   ORDER BY
+           RAND()
+```
