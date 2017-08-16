@@ -8,9 +8,20 @@ Temporal documentation for Production Migration
 ```UPDATE fos_user_user SET updated_at = created_at WHERE updated_at = 0```
 
 - e_suggestion content table need be reviewed, it has any rows with bug
+```
+    UPDATE `e_suggestion` SET `text` = 'access_groups' WHERE `e_suggestion`.`id` = 3;
+    UPDATE `e_suggestion` SET `text` = 'complete_profile' WHERE `e_suggestion`.`id` = 2;
+    DELETE FROM `e_suggestion` WHERE `e_suggestion`.`id` = 1
+```
 
 - Remove civiclub userPreferences (active another field):
     ```UPDATE `user_setting` SET `enabled` = '1' WHERE `user_setting`.`id` = 2;```
+    
+- Create web/uploads/images/catalog directory
+```
+    mkdir web/uploads/images/catalog -p
+    chmod 777 web/uploads/images/catalog
+```
     
 - Review and Update catalogItems
 
