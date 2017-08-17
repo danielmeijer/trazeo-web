@@ -15,6 +15,12 @@ Requeriments
 - php-intl extension: ```sudo apt-get install php5.6-intl```
 - php-amqplib: ```sudo apt-get install php-amqplib```
 
+- Supervisor
+```
+apt-get install supervisor
+app/console rabbitmq-supervisor:rebuild
+```
+
 Turn on RabbitMQ (to proccess messages in Background)
 =====================================================
 

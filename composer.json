@@ -89,7 +89,8 @@
     "sopinet/template-amoeba-bundle": "0.0.1",
     "sopinet/template-landing-bundle": "0.0.1",
     "sopinet/template-sbadmin2-bundle": "dev-master",
-    "vich/uploader-bundle": "1.4.x-dev"
+    "vich/uploader-bundle": "1.4.x-dev",
+    "phobetor/rabbitmq-supervisor-bundle": "dev-master"
   },
   "scripts": {
     "post-install-cmd": [

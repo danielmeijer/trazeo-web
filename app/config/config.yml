@@ -335,3 +335,7 @@ vich_uploader:
         catalog_images:
             uri_prefix:         '/uploads/images/catalog'
             upload_destination: '%kernel.root_dir%/../web/uploads/images/catalog'
+
+# Rabbit Supervisor
+rabbit_mq_supervisor:
+    worker_count:                       8 # number of workers per queue

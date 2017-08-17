@@ -72,6 +72,7 @@ class AppKernel extends Kernel
             new RMS\PushNotificationsBundle\RMSPushNotificationsBundle(),
             new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
             new Vich\UploaderBundle\VichUploaderBundle(),
+            new Phobetor\RabbitMqSupervisorBundle\RabbitMqSupervisorBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

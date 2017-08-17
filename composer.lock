@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d4fff21760d37627915925733b81f89d",
+    "content-hash": "f4428783adbeda56f435f0015634b83b",
     "packages": [
         {
             "name": "a2lix/translation-form-bundle",
@@ -3926,6 +3926,57 @@
             "time": "2017-03-13T16:27:32+00:00"
         },
         {
+            "name": "phobetor/rabbitmq-supervisor-bundle",
+            "version": "dev-master",
+            "target-dir": "Phobetor/RabbitMqSupervisorBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Phobetor/rabbitmq-supervisor-bundle.git",
+                "reference": "878e0c3df68868681b4c0b3ec966500241bd2077"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Phobetor/rabbitmq-supervisor-bundle/zipball/878e0c3df68868681b4c0b3ec966500241bd2077",
+                "reference": "878e0c3df68868681b4c0b3ec966500241bd2077",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/console": "~2.5|~3.0",
+                "symfony/framework-bundle": "~2.5|~3.0",
+                "symfony/process": "~2.5|~3.0"
+            },
+            "suggest": {
+                "oldsound/rabbitmq-bundle": "The abandoned older version of php-amqplib/rabbitmq-bundle which also works",
+                "php-amqplib/rabbitmq-bundle": "The rabbitmq bundle for symfony which this bundle takes the consumer information from"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Phobetor\\RabbitMqSupervisorBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andreas Kintzinger",
+                    "homepage": "https://github.com/Phobetor/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Symfony 2 bundle to automatically create and update supervisor configurations for RabbitMQ consumer daemons",
+            "homepage": "https://github.com/Phobetor/rabbitmq-supervisor-bundle",
+            "keywords": [
+                "Symfony2",
+                "rabbitmq",
+                "supervisor",
+                "supervisord"
+            ],
+            "time": "2017-06-01 05:17:46"
+        },
+        {
             "name": "phpcollection/phpcollection",
             "version": "0.5.0",
             "source": {
@@ -4781,6 +4832,7 @@
                 "ladybug",
                 "tree"
             ],
+            "abandoned": "symfony/var-dumper",
             "time": "2013-08-07T21:05:16+00:00"
         },
         {
@@ -4832,6 +4884,7 @@
                 "tree",
                 "twig"
             ],
+            "abandoned": "symfony/var-dumper",
             "time": "2013-08-07T21:33:23+00:00"
         },
         {
@@ -8389,7 +8442,8 @@
         "richsage/rms-push-notifications-bundle": 20,
         "slot/mandrill-bundle": 20,
         "sopinet/template-sbadmin2-bundle": 20,
-        "vich/uploader-bundle": 20
+        "vich/uploader-bundle": 20,
+        "phobetor/rabbitmq-supervisor-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
