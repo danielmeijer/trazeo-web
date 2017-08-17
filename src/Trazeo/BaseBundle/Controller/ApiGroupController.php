@@ -66,7 +66,7 @@ class ApiGroupController extends Controller
      * @param array $data Serie de datos
      * @return array Serie de datos
      */
-    private function doOK($data)
+    private function doOK($data = null)
     {
         $ret['state'] = 1;
         $ret['msg'] = "Ok";
@@ -813,7 +813,7 @@ class ApiGroupController extends Controller
 
         $view = View::create()
             ->setStatusCode(200)
-            ->setData($this->doOK());
+            ->setData($this->doOK("ok"));
 
         return $this->get('fos_rest.view_handler')->handle($view);
     }
