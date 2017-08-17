@@ -9,6 +9,7 @@ parameters:
     #sopinet_user_facebook_secret: "5963af0550e8be4b14fc40413f63f72b"
     #sopinet_user_sucess: "trazeo.login_success_handler"
     twig.options: "none"
+    mailer_sender: "Trazeo"
 
 framework:
     #esi:            ~
@@ -105,11 +106,16 @@ swiftmailer:
     username:  %mailer_user%
     password:  %mailer_password%
     spool:
-        type:                 file
-        path:                 "%kernel.cache_dir%/swiftmailer/spool"
+        type: file
+        path: '/smail/spool'
 
 # FOSUserBundle Configuration
 fos_user:
+    resetting:
+        token_ttl: 0
+    from_email:
+        address: "%mailer_email%"
+        sender_name: "%mailer_sender%"
     db_driver: orm
     firewall_name: main
     user_class: Application\Sonata\UserBundle\Entity\User
@@ -297,10 +303,10 @@ rms_push_notifications:
 old_sound_rabbit_mq:
     connections:
         default:
-            host:     'localhost'
-            port:     5672
-            user:     'guest'
-            password: 'guest'
+            host:     '%rabbit_server%'
+            port:     '%rabbit_port%'
+            user:     '%rabbit_user%'
+            password: '%rabbit_pass%'
             vhost:    '/'
             lazy:     false
             connection_timeout: 3
