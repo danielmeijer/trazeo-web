@@ -258,6 +258,7 @@ Login:
     signin: 'Login'
     title: 'Login'
     username: 'Email'
+    request: 'Reset password'
 
 Menu:
     children: 'Children'

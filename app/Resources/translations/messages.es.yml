@@ -260,6 +260,7 @@ Login:
     signin: 'Entrar'
     title: 'Inicio de sesión'
     username: 'Correo electrónico'
+    request: 'Restablecer contraseña'
 
 Menu:
     children: 'Niños/as'
