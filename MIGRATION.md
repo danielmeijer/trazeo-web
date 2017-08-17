@@ -54,7 +54,7 @@ Temporal documentation for Production Migration
 
 - Spool changed to: /smail/spool
 
-If are using Docker, you need create it in Docker PHP container
+If are using Docker, you need create it in Docker PHP container:
 
 ```
     mkdir /smail/spool -p
@@ -62,3 +62,12 @@ If are using Docker, you need create it in Docker PHP container
 ```
 
 - Configure rabbit parameters
+
+- Configure supervisor
+
+If are using Docker, you need do it in Docker PHP container:
+
+```
+apt-get install supervisor
+app/console rabbitmq-supervisor:rebuild
+```
