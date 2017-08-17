@@ -53,6 +53,9 @@ Temporal documentation for Production Migration
 ```
 
 - Spool changed to: /smail/spool
+
+If are using Docker, you need create it in Docker PHP container
+
 ```
     mkdir /smail/spool -p
     chmod 777 /smail/spool/default/
