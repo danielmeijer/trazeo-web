@@ -16,6 +16,7 @@ Temporal documentation for Production Migration
     UPDATE `e_suggestion` SET `text` = 'access_groups' WHERE `e_suggestion`.`id` = 3;
     UPDATE `e_suggestion` SET `text` = 'complete_profile' WHERE `e_suggestion`.`id` = 2;
     DELETE FROM `e_suggestion` WHERE `e_suggestion`.`id` = 1
+    UPDATE `e_suggestion` SET `rule` = 'return (count($user->getChilds()) > 0) && count($user->getChilds()[0]->getGroups()) == 0);' WHERE `e_suggestion`.`id` = 4;
 ```
 
 - Remove civiclub userPreferences (active another field):
