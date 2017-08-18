@@ -940,16 +940,16 @@
         },
         {
             "name": "doctrine/instantiator",
-            "version": "1.0.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/instantiator.git",
-                "reference": "8e884e78f9f0eb1329e445619e04456e64d8051d"
+                "reference": "5acd2bd8c2b600ad5cc4c9180ebf0a930604d6a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/8e884e78f9f0eb1329e445619e04456e64d8051d",
-                "reference": "8e884e78f9f0eb1329e445619e04456e64d8051d",
+                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/5acd2bd8c2b600ad5cc4c9180ebf0a930604d6a5",
+                "reference": "5acd2bd8c2b600ad5cc4c9180ebf0a930604d6a5",
                 "shasum": ""
             },
             "require": {
@@ -990,7 +990,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2015-06-14 21:17:01"
+            "time": "2017-02-16 16:15:51"
         },
         {
             "name": "doctrine/lexer",
@@ -6793,12 +6793,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sopinet/template-sbadmin2-bundle.git",
-                "reference": "3d523dc2ab9addf8c2d43be2a2e6e01d2e3fd4d4"
+                "reference": "e3c791f9dedc3c83aee89266f59042f317ad1f0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sopinet/template-sbadmin2-bundle/zipball/3d523dc2ab9addf8c2d43be2a2e6e01d2e3fd4d4",
-                "reference": "3d523dc2ab9addf8c2d43be2a2e6e01d2e3fd4d4",
+                "url": "https://api.github.com/repos/sopinet/template-sbadmin2-bundle/zipball/e3c791f9dedc3c83aee89266f59042f317ad1f0c",
+                "reference": "e3c791f9dedc3c83aee89266f59042f317ad1f0c",
                 "shasum": ""
             },
             "require": {
@@ -6833,7 +6833,7 @@
                 "bundle",
                 "template"
             ],
-            "time": "2017-08-14 09:36:04"
+            "time": "2017-08-17 07:43:27"
         },
         {
             "name": "sopinet/timeline-bundle",
