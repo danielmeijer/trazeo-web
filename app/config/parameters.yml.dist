@@ -34,3 +34,5 @@ parameters:
     rabbit_port:
     rabbit_user:
     rabbit_pass:
+
+    report_error_to_email: emailForReport@gmail.com
