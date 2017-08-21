@@ -1,8 +1,6 @@
 Temporal documentation for Production Migration
 ===============================================
 
-## Upgrade Database
-
 - Mailjet configuration
   
   We are going to migrate to mailjet system, configure it in parameters.yml and parameters_dev.yml
@@ -70,5 +68,5 @@ If are using Docker, you need do it in Docker PHP container:
 
 ```
 apt-get install supervisor
-app/console rabbitmq-supervisor:rebuild
+app/console rabbitmq-supervisor:rebuild --env=prod
 ```
