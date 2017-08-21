@@ -28,9 +28,9 @@ monolog:
             type:  console
 
 elao_error_notifier:
-    from: hola@trazeo.es
-    to: fhidalgo@sopinet.com
-    handle404: true
+    from: "%mailer_email%"
+    to: "%report_error_to_email%"
+    handle404: false
     mailer: mailer
     handlePHPErrors: true
     handlePHPWarnings: false
