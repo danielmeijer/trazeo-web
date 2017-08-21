@@ -18,13 +18,13 @@ class GroupType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
             ->add('country', 'entity', array(
                 'class' => 'JJsGeonamesBundle:Country',
                 'attr' => array('class' => 'chosen-select'),
                 'required' => false, //Para permitir hacer submit con una opción 'vacía'
                 'empty_value' => 'España', //Valor que aparece por defecto si no tiene un país asignado
-                'empty_data' => $options['attr']['default'],
                 'property' => 'name'))
 
             ->add('name', null, array(
@@ -39,7 +39,7 @@ class GroupType extends AbstractType
                 'attr' => array(
                     'class' => 'chosen-select',
                     'data-toggle' => 'popover',
-                    'data-placement' => 'right',
+                    'data-placement' => 'right',º
                     'data-content' => $options['attr']['Groups.help.city']
                 ),
                 'required' => false, //Para permitir hacer submit con una opción 'vacía'
@@ -54,8 +54,17 @@ class GroupType extends AbstractType
                     'data-toggle' => 'popover',
                     'data-placement' => 'right',
                     'data-content' => $options['attr']['Groups.help.name2']
-                )))
-            ->add('school1', 'datalist', ['choices' => $options['schools']]);
+                )));
+            if(array_key_exists('school', $options['attr']) && $options['attr']['school'] != null) {
+                $builder->add('school1', 'datalist', ['choices' => $options['schools'], 'attr' => array(
+                    'placeholder' => 'graphic.school',
+                    'value' => $options['attr']['school']
+                )]);
+            }else{
+                $builder->add('school1', 'datalist', ['choices' => $options['schools'], 'attr' => array(
+                    'placeholder' => 'graphic.school'
+                )]);
+            }
     }
 
     /**

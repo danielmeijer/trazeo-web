@@ -70,7 +70,7 @@ class PanelRoutesController extends Controller
     {
     	$em = $this->getDoctrine()->getManager();
     	$fos_user = $this->container->get('security.context')->getToken()->getUser();
-    	 
+
     	//UserExtend
     	$user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
     	
@@ -83,6 +83,8 @@ class PanelRoutesController extends Controller
         if ($form->isValid())
             $em = $this->getDoctrine()->getManager();
             $route->setAdmin($user);
+            $route->setEndAdress('');
+            $route->setStartAdress('');
             $em->persist($route);
             $em->flush();
             $group->setRoute($route);
