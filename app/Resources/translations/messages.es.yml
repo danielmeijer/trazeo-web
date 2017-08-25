@@ -352,7 +352,7 @@ Notifications:
     modal:
         accept: 'Ir a la notificación'
         close: 'Cerrar'
-        dismiss: 'Ir a la notificación'
+        dismiss: 'Cerrar'
         title: 'Tienes una notificación importante:'
 
     title: 'Listado de notificaciones'
@@ -1028,3 +1028,39 @@ list_groups_available: 'Listado de Grupos Disponibles'
 invitation_trazeo: 'Ha sido invitado al sistema de Trazeo'
 user_manual_nav: 'Manual de Usuario'
 home_welcome_mail: 'Bienvenido a Trazeo'
+compose_module: "Ir al compositor de módulos"
+can_move: "Puede mover los elementos, clicando y soltando para reordenarlos."
+edit_module: "Acceda a Editar los módulos, y podrá modificarlos."
+
+#Group register
+
+group_register:
+    title: "ESTÁS <b>REGISTRÁNDOTE</b> EN EL GRUPO<br>"
+    register: "Registro"
+    data: "Tus datos"
+    children: 'Tus niñ@s'
+    email: "Introduce tu email y una contraseña"
+    conditions: "condiciones"
+    use: "de uso"
+    profile: "Completa la información de tu perfil"
+    register_children: "Registra a los niños que participarán en el grupo"
+    add_children: "¿Quieres añadir más niños?"
+    next: "Siguiente"
+    previous: "Anterior"
+    finish: "Finalizar"
+    have_account: "¿Ya tienes cuenta? Haz clic aquí"
+    accept: "Acepto las"
+    have_account2: "Ya tengo cuenta"
+    access_to: "Acceso a"
+    data_access: "Rellene sus datos de acceso."
+    not_account: "¿No tienes cuenta?"
+    thanks: "Gracias por registrate en Trazeo."
+    discharged: "Tus niñ@s han sido dados de alta en el grupo"
+    download: "Descarga la Aplicación"
+    tomorrow: "Mañana, el monitor ya los tendrá en su listado."
+    recommend: "Te recomendamos que descargues Trazeo en tu móvil"
+    recommend2: "para comunicarte con el resto de miembros y el monitor de tu grupo, ver por donde va éste cuando esté en marcha, obtener notificaciones cuando lleguen al colegio y canjear por premios los puntos que ganais por vuestra participación."
+    child_number: "Niñ@ número"
+    necessary: "Es necesario aceptar las condiciones"
+    name: "Nombre y apellidos"
+    locale: "Localidad"

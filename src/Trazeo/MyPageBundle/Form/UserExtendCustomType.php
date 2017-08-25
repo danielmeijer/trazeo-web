@@ -17,7 +17,7 @@ class UserExtendCustomType extends AbstractType
         $builder
             ->add('name', null, array(
                     'attr' => array(
-                        'placeholder' => 'Nombre y Apellidos',
+                        'placeholder' => 'group_register.name',
                         'data-toggle' => 'popover',
                         'data-placement' => 'right'
                     ),

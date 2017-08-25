@@ -350,7 +350,7 @@ Notifications:
     modal:
         accept: 'Go to notification'
         close: 'Close'
-        dismiss: 'Go to notification'
+        dismiss: 'Close'
         title: 'You have an important notification:'
 
     title: 'List of notifications'
@@ -1022,3 +1022,37 @@ list_groups_available: 'List of Available Groups'
 invitation_trazeo: 'He has been invited to the Trazeo system'
 user_manual_nav: 'User Manual'
 home_welcome_mail: 'Welcome to Trazeo'
+compose_module: "Go to Modeller Composer"
+can_move: "You can move items by clicking and releasing them to reorder them."
+edit_module: "Access Edit modules, and you can modify them."
+
+group_register:
+    title: "YOU ARE <b>REGISTERED</b> IN THE GROUP<br>"
+    register: "Register"
+    data: "Your data"
+    children: 'Your children'
+    email: "Enter your email and password"
+    conditions: "terms"
+    use: "of use"
+    profile: "Complete your profile information"
+    register_children: "Register the children who will participate in the group"
+    add_children: "Want to add more kids?"
+    next: "Next"
+    previous: "Previous"
+    finish: "Finish"
+    have_account: "Already have an account? Click here"
+    accept: "I accept the"
+    have_account2: "I already have an account"
+    access_to: "Access to"
+    data_access: "Fill in your login details."
+    not_account: "You do not have an account?"
+    thanks: "Thank you for registering in Trazeo."
+    discharged: "Your children have been discharged in the group"
+    download: "Download the application"
+    tomorrow: "Tomorrow, the monitor will have them listed."
+    recommend: "We recommend you download Trazeo to your mobile phone"
+    recommend2: " to communicate with the rest of the members and the monitor of your group, see where it goes when it is in progress, get notifications when they arrive at school and redeem for points the points you earn for your participation."
+    child_number: "Child number"
+    necessary: "It is necessary to accept the conditions"
+    name: "Name and surname"
+    locale: "Location"
