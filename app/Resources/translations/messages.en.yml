@@ -1056,3 +1056,18 @@ group_register:
     necessary: "It is necessary to accept the conditions"
     name: "Name and surname"
     locale: "Location"
+
+group_join:
+    hello: 'Hello!'
+    user: 'The user'
+    join: 'has joined the group'
+    can: 'and now he can'
+    email: 'The contact email of the user'
+    next: 'for the follow-up and correct discharge management, is as follows'
+    help: 'If you need help, contact us. Many of the doubts you may have at first can be solved directly, and we look forward to helping you, really ;). Write an email to'
+    help2: 'or leave us your phone so that we can call you through the form'
+    help3: 'You can also access the manuals for using the app and the web from'
+    help4: 'or leave us a message on the web'
+    contact: 'Contact'
+    see_you: 'See you on the way!'
+    see_you2: 'The team of Trazeo Caminos Escolares'

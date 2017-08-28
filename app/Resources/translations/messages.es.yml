@@ -1064,3 +1064,18 @@ group_register:
     necessary: "Es necesario aceptar las condiciones"
     name: "Nombre y apellidos"
     locale: "Localidad"
+
+group_join:
+    hello: 'Hola!'
+    user: 'El usuario'
+    join: 'se ha unido al grupo'
+    can: 'y ahora podrá'
+    email: 'El email de contacto del usuario'
+    next: 'para el seguimiento y correcta gestión del alta, es el siguiente'
+    help: 'Si necesitas ayuda, contáctanos. Muchas de las dudas que puedes tener al principio te las podemos resolver directamente, y estamos deseando ayudarte, de verdad ;). Escríbenos un mail a'
+    help2: 'o déjanos tu teléfono para que te llamemos a través del formulario de'
+    help3: 'También puedes acceder a los manuales de uso de la app y la web desde'
+    help4: 'o dejarnos un mensaje en la web'
+    contact: 'Contacto'
+    see_you: 'Nos vemos en el camino!'
+    see_you2: 'El equipo de Trazeo Caminos Escolares'
