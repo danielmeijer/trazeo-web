@@ -116,7 +116,7 @@ class PGroupAdmin extends Admin
         $formMapper
             //->add('visibility')
             //->add('hasRide')
-            ->add('name', array('label' => 'show.label_name'))
+            ->add('name', null, array('label' => 'show.label_name'))
             ->add('admin')
             ->add('childs', null, array('label' => 'list.label_childs'))
             ->add('userextendgroups', null, array('label' => 'list.label_userextendchilds'))
