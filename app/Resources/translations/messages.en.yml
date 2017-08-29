@@ -1028,7 +1028,7 @@ graphic:
     for_month: 'Per month'
     for_week: 'Per week'
     for_day: 'Per day'
-
+    group: 'Group'
 
 Request: 'User Redeem Request'
 Request2: 'User Redeem Request %nick% for the offer %title% of the company %company%'

@@ -1033,6 +1033,7 @@ graphic:
     for_month: 'Por mes'
     for_week: 'Por semana'
     for_day: 'Por día'
+    group: 'Grupo'
 
 #MAILS
 Request: 'Solicitud de canjeo de usuario'

@@ -28,7 +28,7 @@ class BarAdminType extends AbstractType
         //ldd($page);
 
         $builder->add('group', 'entity', array(
-                'label' => "form.label_group",
+                'label' => "graphic.group",
                 'required' => false,
                 'class' => 'TrazeoBaseBundle:EGroup',
                 'multiple' => true,
@@ -46,7 +46,7 @@ class BarAdminType extends AbstractType
         $builder->add('date_from',
             $options['field_type'],
             array(
-                'label' => "graphic.form",
+                'label' => "graphic.from",
                 'required' => false,
                 'attr' => array(
                     'placeholder' => 'graphic.date'
