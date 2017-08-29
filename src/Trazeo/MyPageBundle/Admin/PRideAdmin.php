@@ -112,6 +112,7 @@ class PRideAdmin extends Admin
                 ))
              **/
             ->add('_action', 'actions', array(
+                'label' => 'list.label_action',
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),
