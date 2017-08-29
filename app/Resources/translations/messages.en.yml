@@ -673,6 +673,21 @@ form:
     password: 'Password:'
     password_confirmation: 'Repeat password:'
     username: 'Username:'
+    label_name: 'Name'
+    label_admin: 'Administrador'
+    label_childs: 'Children'
+    label_userextendgroups: 'Father/Mother'
+    label_private_monitor: 'Private monitor'
+    label_monitor_userextendgroups: 'Authorized monitors'
+    label_bymode: 'Group Type'
+    label_distance: 'Distance'
+    label_fix_child_count: 'Indicate how many children have participated'
+    label_group_registered: 'Group to which it belongs'
+    label_created_at: 'Date and time of creation'
+    label_author: 'Author'
+    label_score: 'Likes'
+    label_body: 'Message'
+    label_page: 'Proyect'
 
 group:
     edit:
@@ -825,23 +840,6 @@ list:
     label_menu: 'Menu'
     label_date_register: 'Registration date'
 
-form:
-    label_name: 'Name'
-    label_admin: 'Administrador'
-    label_childs: 'Children'
-    label_userextendgroups: 'Father/Mother'
-    label_private_monitor: 'Private monitor'
-    label_monitor_userextendgroups: 'Authorized monitors'
-    label_bymode: 'Group Type'
-    label_distance: 'Distance'
-    label_fix_child_count: 'Indicate how many children have participated'
-    label_group_registered: 'Group to which it belongs'
-    label_created_at: 'Date and time of creation'
-    label_author: 'Author'
-    label_score: 'Likes'
-    label_body: 'Message'
-    label_page: 'Proyect'
-
 show:
     label_id: 'Identifier'
     label_nick: 'Nick'
@@ -891,6 +889,9 @@ show:
     label_data: 'Data'
     label_location: 'Location'
     label_route: 'Route'
+    label_number_users: 'Users'
+    label_private_monitor: 'Private monitor'
+    label_monitor_userextendgroups: 'Authorized Monitors'
 
 
 breadcrumb:

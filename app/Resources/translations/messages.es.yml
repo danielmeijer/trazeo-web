@@ -678,6 +678,21 @@ form:
     password: 'Contraseña:'
     password_confirmation: 'Repita la contraseña:'
     username: 'Nombre de usuario:'
+    label_name: 'Nombre'
+    label_admin: 'Administrador'
+    label_childs: 'Niños/as'
+    label_userextendgroups: 'Padres/Madres'
+    label_private_monitor: 'Monitor Privado'
+    label_monitor_userextendgroups: 'Monitores autorizados'
+    label_bymode: 'Tipo de Grupo'
+    label_distance: 'Distancia'
+    label_fix_child_count: 'Indique cuántos niños han participado'
+    label_group_registered: 'Grupo al que pertenece'
+    label_created_at: 'Fecha y hora de creación'
+    label_author: 'Autor'
+    label_score: 'Me gustas'
+    label_body: 'Mensaje'
+    label_page: 'Proyecto'
 
 group:
     edit:
@@ -830,23 +845,6 @@ list:
     label_menu: 'Menú'
     label_date_register: 'Fecha de Registro'
 
-form:
-    label_name: 'Nombre'
-    label_admin: 'Administrador'
-    label_childs: 'Niños/as'
-    label_userextendgroups: 'Padres/Madres'
-    label_private_monitor: 'Monitor Privado'
-    label_monitor_userextendgroups: 'Monitores autorizados'
-    label_bymode: 'Tipo de Grupo'
-    label_distance: 'Distancia'
-    label_fix_child_count: 'Indique cuántos niños han participado'
-    label_group_registered: 'Grupo al que pertenece'
-    label_created_at: 'Fecha y hora de creación'
-    label_author: 'Autor'
-    label_score: 'Me gustas'
-    label_body: 'Mensaje'
-    label_page: 'Proyecto'
-
 show:
     label_id: 'Identificador'
     label_nick: 'Nombre'
@@ -896,6 +894,9 @@ show:
     label_data: 'Datos'
     label_location: 'Localización'
     label_route: 'Ruta'
+    label_number_users: 'Usuarios'
+    label_private_monitor: 'Monitor privado'
+    label_monitor_userextendgroups: 'Monitores autorizados'
 
 
 breadcrumb:
