@@ -7,6 +7,8 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sopinet\Bundle\SimplePointBundle\ORM\Type\SimplePoint;
+use Trazeo\BaseBundle\Form\DataTransformer\TextToPointTransformer;
 
 class EPointsAdmin extends Admin
 {
@@ -55,11 +57,13 @@ class EPointsAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $transformer = new TextToPointTransformer();
+
         $formMapper
-            ->add('id')
             ->add('pickup', null, array('label' => 'list.label_pickup'))
             ->add('description', null, array('label' => 'list.label_description'))
             ->add('location', null, array('label' => 'show.label_location'))
+            ->get('location')->addModelTransformer($transformer)
         ;
     }
 
