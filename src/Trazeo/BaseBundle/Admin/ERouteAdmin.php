@@ -36,6 +36,7 @@ class ERouteAdmin extends Admin
             ->add('distance', null, array('label' => 'show.label_distance'))
             ->add('name', null, array('label' => 'show.label_name'))
             ->add('group', null, array('label' => 'show.label_group_object'))
+            ->add('description', null, array('label' => 'show.label_description'))
             ->add('admin', null, array('label' => 'show.label_admin'))
             ->add('_action', 'actions', array(
                 'label' => 'list.label_action',
