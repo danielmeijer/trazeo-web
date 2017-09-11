@@ -897,6 +897,7 @@ show:
     label_number_users: 'Usuarios'
     label_private_monitor: 'Monitor privado'
     label_monitor_userextendgroups: 'Monitores autorizados'
+    label_description: 'Descripción'
 
 
 breadcrumb:
