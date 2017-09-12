@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RequestContext;
 use Swift_Message as Message;
 use Hip\MandrillBundle\Dispatcher;
+use Trazeo\BaseBundle\Service\MailerHelper;
 
 class GenerateEmailsCommand extends ContainerAwareCommand
 {
@@ -86,8 +87,9 @@ class GenerateEmailsCommand extends ContainerAwareCommand
                     $subject=("Tiene ".count($notifications)." novedades");
                 }
 
+                /** @var MailerHelper $mailer */
                 $mailer = $con->get('trazeo_mailer_helper');
-                $message = $mailer->createNewMessage('no-reply@trazeo.es', 'Trazeo', $user->getUser()->getEmail(), $subject, $con->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:notifyUser.html.twig', array('user' => $user, 'notifications' => $notifications)));
+                $message = $mailer->createNewMessage('hola@trazeo.es', 'Trazeo', $user->getUser()->getEmail(), $subject, $con->get('templating')->render('SopinetTemplateSbadmin2Bundle:Emails:notifyUser.html.twig', array('user' => $user, 'notifications' => $notifications)));
                 $mailer->sendMessage($message);
                 $output->writeln('<info>Hecho</info>');
             }
