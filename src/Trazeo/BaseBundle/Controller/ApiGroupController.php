@@ -6,6 +6,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use JMS\Serializer\SerializationContext;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Psr\Log\LoggerInterface;
 use Sopinet\Bundle\ChatBundle\Entity\Chat;
 use Sopinet\Bundle\ChatBundle\Entity\ChatRepository;
 use Sopinet\Bundle\ChatBundle\Service\ApiHelper;
@@ -932,6 +933,9 @@ class ApiGroupController extends Controller
         $apiHelper=$this->get('apihelper');
         //Comprobamos el usuario
         $user = $this->checkPrivateAccess($request);
+        /** @var LoggerInterface $logger */
+        $logger = $this->get('logger');
+        $logger->info($user->getId());
         if ($user == false || $user == null) {
             $view = View::create()
                 ->setStatusCode(200)
@@ -958,14 +962,19 @@ class ApiGroupController extends Controller
         }
         /** @var ChatRepository $repositoryChat */
         $repositoryChat = $em->getRepository('SopinetChatBundle:Chat');
+        $logger->info($user->getId(). 'next');
         //Comprobamos si el grupo ya tiene chat
         if ($group->getChat()!=null) {
             $chat=$group->getChat();
+            $logger->info($user->getId().'chat existe');
             if (!$repositoryChat->userInChat($userextend, $chat)) {
+                $logger->info($user->getId().'no esta en el chat');
                 //Si el usuario no esta en el chat se añade
                 try {
                     $repositoryChat->addMember($chat, $userextend->getId());
+                    $logger->info($user->getId().' añadido');
                 } catch (\Exception $e) {
+                    $logger->info($user->getId().' salto excepción');
                     return $this->exceptionHandler($e);
                 }
             }
