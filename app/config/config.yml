@@ -339,3 +339,13 @@ vich_uploader:
 # Rabbit Supervisor
 rabbit_mq_supervisor:
     worker_count:                       8 # number of workers per queue
+
+monolog:
+    channels: ['chat']
+    handlers:
+        chat:
+            type: stream
+            # log to var/logs/lifx_dev.log
+            path: "%kernel.logs_dir%/chat_%kernel.environment%.log"
+            # log *all* messages (debug is lowest level)
+            channels: [chat]
