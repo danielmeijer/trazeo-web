@@ -130,7 +130,7 @@ namespace Trazeo\BaseBundle\Entity;
       */
      public function url(){
          if ($this->getImage() == null) return "";
-         return '/uploads/images/catalog/' . $this->getImage();
+         return 'uploads/images/catalog/' . $this->getImage();
      }
 
     /**
