@@ -30,7 +30,7 @@
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                     <h3>{{ group.name }}
                                         <div class="pull-right" style="margin-right:20px">
-                                            <a class="btn btn-primary btn-large" href="{{ path('registerInGroup', {'group_id': group.id}) }}" class="btn btn-light">¡Participar!</a>
+                                            <a class="btn btn-primary btn-large" href="{{ path('registerInGroup', {'group_id': group.id}) }}" class="btn btn-light">{{ "routes.join"|trans }}</a>
                                         </div>
                                     </h3>
                                 </div>
@@ -93,7 +93,7 @@
                                     </p>
                                 </div>
                                 <div class="modal-footer">
-                                    <a class="btn btn-primary btn-large" href="{{ path('registerInGroup', {'group_id': group.id}) }}" class="btn btn-light">¡Participar!</a>
+                                    <a class="btn btn-primary btn-large" href="{{ path('registerInGroup', {'group_id': group.id}) }}" class="btn btn-light">{{ "routes.join"|trans }}</a>
                                     <button type="button" data-dismiss="modal" class="btn">{{ "close"|trans }}</button>
                                 </div>
                             </div>
