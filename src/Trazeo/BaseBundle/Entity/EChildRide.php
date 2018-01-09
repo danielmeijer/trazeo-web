@@ -13,24 +13,27 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 class EChildRide
 {
 	use ORMBehaviors\Timestampable\Timestampable;
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+
+//    /**
+//     * @var integer
+//     *
+//     * @ORM\Column(name="id", type="integer")
+//     * @ORM\Id
+//     * @ORM\GeneratedValue(strategy="AUTO")
+//     */
+//    protected $id;
 
     /** 
      * @ORM\ManyToOne(targetEntity="ERide")
-     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     * @ORM\Id
+     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $ride;
     
     /** 
      * @ORM\ManyToOne(targetEntity="EChild")
-     * @ORM\JoinColumn(name="child_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     * @ORM\Id
+     * @ORM\JoinColumn(name="child_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $child;
     
@@ -49,15 +52,15 @@ class EChildRide
      */
     protected $updated=false;
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+//    /**
+//     * Get id
+//     *
+//     * @return integer
+//     */
+//    public function getId()
+//    {
+//        return $this->id;
+//    }
 
 
     /**

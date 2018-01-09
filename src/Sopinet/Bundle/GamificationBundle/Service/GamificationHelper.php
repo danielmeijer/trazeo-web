@@ -47,7 +47,7 @@ class GamificationHelper {
 	function getUserRepository() {
 		$em = $this->_container->get("doctrine.orm.entity_manager");
 		$con = $this->_container;
-		$class=$con->parameters['sopinet_gamification.class'];
+		$class=$con->getParameter('sopinet_gamification.class');
 		return $em->getRepository($class);
 	}
 
@@ -177,7 +177,7 @@ class GamificationHelper {
 		$em->persist($userextend);
 		$em->flush();	
 		$con = $this->_container;
-		$api = $con->parameters['sopinet_gamification.api'];
+		$api = $con->getParameter('sopinet_gamification.api');
 		if($call_api)$this->_callApi($api,$user->getUser(),$points);
 	}
 

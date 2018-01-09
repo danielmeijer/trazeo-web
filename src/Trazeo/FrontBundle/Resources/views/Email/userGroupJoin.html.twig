@@ -2,13 +2,13 @@
 <table>
     <tr>
         <td>
-            Hola!
+            {{ 'group_join.hello'|trans }}
         </td>
     </tr>
     <tr>
         <td>
             <dl>
-                <dt>El usuario {{ user.user.username }} se ha unido al grupo {{ group.name }} y ahora podra:</dt>
+                <dt>{{ 'group_join.user'|trans }} {{ user.user.username }} {{ 'group_join.join'|trans }} {{ group.name }} {{ 'group_join.can'|trans }}:</dt>
                 <dd>- Visualizar el recorrido y/o recibir notificaciones de que los niños han llegado sin incidencias cuando el grupo este en marcha.</dd>
             </dl>
         </td>
@@ -16,20 +16,20 @@
     <tr>
         <td>
             <p>
-                El email de contacto de {{ user.user.username }}, para el seguimiento y correcta gestión del alta, es eñ siguientes <a href="{{  "mailto:"~user.user.email}}"  target="_top">{{ user.user.email }}</a>
+                {{ 'group_join.email'|trans }} {{ user.user.username }}, {{ 'group_join.next'|trans }} <a href="{{  "mailto:"~user.user.email}}"  target="_top">{{ user.user.email }}</a>
             </p>
         </td>
     </tr>
     <tr>
         <td>
-            <p>Si necesitas ayuda, contáctanos. Muchas de las dudas que puedes tener al principio te las podemos resolver directamente, y estamos deseando ayudarte, de verdad ;). Escríbenos un mail a <a href="mailto:hola@trazeo.es"> hola@trazeo.es</a>o déjanos tu teléfono para que te llamemos a través del formulario de <a href="http://trazeo.es/contacto/"><b>Contacto</b></a>. También puedes acceder a los manuales de uso de la app y la web desde <a href="http://www.trazeo.es/">www.trazeo.es</a> o dejarnos un mensaje en la web.
+            <p>{{ 'group_join.help'|trans }} <a href="mailto:hola@trazeo.es"> hola@trazeo.es</a> {{ 'group_join.help2'|trans }} <a href="http://trazeo.es/contacto/"><b>{{ 'group_join.contact'|trans }}</b></a>. {{ 'group_join.help3'|trans }} <a href="http://www.trazeo.es/">www.trazeo.es</a> {{ 'group_join.help4'|trans }}.
             </p>
         </td>
     </tr>
     <tr>
         <td>
-            <p>Nos vemos en el camino!
-                </br>El equipo de Trazeo Caminos Escolares
+            <p>{{ 'group_join.see_you'|trans }}
+                </br>{{ 'group_join.see_you2'|trans }}
                 </br><a href="http://www.trazeo.es/">trazeo.es</a></p>
         </td>
     </tr>

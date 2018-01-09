@@ -67,11 +67,12 @@ class PGroupAdmin extends Admin
             //->addIdentifier('id')
             //->add('visibility')
             //->add('hasRide')
-            ->addIdentifier('name')
+            ->addIdentifier('name', null, array('label' => 'show.label_name'))
+            ->add('route.description', null, array('label' => 'show.label_description'))
             //->add('admin')
             //->add('childs')
-            ->add('numberChilds')
-            ->add('numberUsers')
+            ->add('numberChilds', null, array('label' => 'list.label_childs'))
+            ->add('numberUsers', null, array('label' => 'show.label_number_users'))
             //->add('userextendgroups')
             //->add('monitor_userextendgroups')
             //->add('userextendgroups.user.message')
@@ -80,6 +81,7 @@ class PGroupAdmin extends Admin
             //->add('ride')
             //->add('page')
             ->add('_action', 'actions', array(
+                'label' => 'list.label_action',
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),
@@ -94,11 +96,11 @@ class PGroupAdmin extends Admin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('name')
+            ->add('name', null, array('label' => 'show.label_name'))
             ->add('admin')
-            ->add('childs')
-            ->add('userextendgroups')
-            ->add('privateMonitor')
+            ->add('childs', null, array('label' => 'list.label_childs'))
+            ->add('userextendgroups', null, array('label' => 'list.label_userextendchilds'))
+            ->add('privateMonitor', null, array('label' => 'show.label_private_monitor'))
             ->add('monitor_userextendgroups')
             //->add('route')
             ->add('bymode', 'choice', array('choices' => array(
@@ -115,12 +117,13 @@ class PGroupAdmin extends Admin
         $formMapper
             //->add('visibility')
             //->add('hasRide')
-            ->add('name')
+            ->add('name', null, array('label' => 'show.label_name'))
+            ->add('route.description', null, array('label' => 'show.label_description'))
             ->add('admin')
-            ->add('childs')
-            ->add('userextendgroups')
-            ->add('privateMonitor')
-            ->add('monitor_userextendgroups')
+            ->add('childs', null, array('label' => 'list.label_childs'))
+            ->add('userextendgroups', null, array('label' => 'list.label_userextendchilds'))
+            ->add('privateMonitor', null, array('label' => 'show.label_private_monitor'))
+            ->add('monitor_userextendgroups', null, array('label' => 'show.label_monitor_userextendgroups'))
             ->add('page')
             ->add('bymode', 'choice', array('choices' => array(
                 EGroup::BYMODE_PEDIBUS => "Pedibús",

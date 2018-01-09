@@ -17,6 +17,7 @@ use Trazeo\BaseBundle\Entity\ERoute;
 use Trazeo\BaseBundle\Entity\EGroupAccess;
 use Trazeo\BaseBundle\Entity\EGroupInvite;
 use Trazeo\BaseBundle\Entity\EChild;
+use Trazeo\BaseBundle\Entity\UserExtend;
 use Trazeo\BaseBundle\Form\GroupType;
 use Trazeo\BaseBundle\Controller\GroupsController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -662,6 +663,7 @@ class PanelGroupsController extends Controller
      */
     public function createAction(Request $request)
     {
+
         $group = new EGroup();
         $form = $this->createCreateForm($group);
         $form->handleRequest($request);
@@ -686,9 +688,15 @@ class PanelGroupsController extends Controller
             }
         }
 
-
+        if($group->getCountry() == null){
+            $fos_user = $this->container->get('security.context')->getToken()->getUser();
+            /** @var UserExtend $user */
+            $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
+            $group->setCountry($user->getCountry());
+        }
 
         if ($form->isValid()) {
+
             $em = $this->getDoctrine()->getManager();
 
             $city = $request->get('city');
@@ -745,6 +753,7 @@ class PanelGroupsController extends Controller
      */
     private function createCreateForm(EGroup $group)
     {
+
         $em = $this->getDoctrine()->getManager();
         $fos_user = $this->container->get('security.context')->getToken()->getUser();
         $user = $em->getRepository('TrazeoBaseBundle:UserExtend')->findOneByUser($fos_user);
@@ -771,6 +780,7 @@ class PanelGroupsController extends Controller
             ),
             'schools'=>$schools
         ));
+
         $form->add('hasRide', 'hidden', array('data' => 0));
         $form->add('submit', 'submit', array('label' => 'Create'));
 
@@ -894,6 +904,7 @@ class PanelGroupsController extends Controller
                 'Groups.help.city' => $this->get('translator')->trans('Groups.help.city'),
                 'Groups.help.school' => $this->get('translator')->trans('Groups.help.shool'),
                 'default' => $cityCodeId,
+                'school' => $group->getSchool1()
             ),
             'schools'=>$schools
         ));
@@ -986,6 +997,7 @@ class PanelGroupsController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+        /** @var EGroup $group */
         $group = $em->getRepository('TrazeoBaseBundle:EGroup')->find($id);
 
         if (!$group) {
@@ -995,7 +1007,6 @@ class PanelGroupsController extends Controller
         //$deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($group);
         $editForm->handleRequest($request);
-
         if ($editForm->isValid()) {
             $city = $request->get('city');
             $helper = $this->get('trazeo_base_helper');

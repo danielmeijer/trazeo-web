@@ -14,14 +14,14 @@
                 <input type="reset" class="btn btn-lg btn-primary btn-block" value="Limpiar filtros"/>
             </div>
             <div class="col-md-6">
-                <button class="btn btn-lg btn-success btn-block" type="submit">Refrescar datos</button>
+                <button class="btn btn-lg btn-success btn-block" type="submit">{{ 'graphic.refresh'|trans }}</button>
             </div>
         </div>
     </form>
 
     {% if (data.km is defined) %}
     <h2>{{ "customAdmin.stats.global.table.title"|trans }}</h2>
-    <table id="resume" class="table table-bordered table-striped sonata-ba-list">
+    <table id="exportTable" class="table table-bordered table-striped sonata-ba-list">
         <thead>
             <tr class="sonata-ba-list-field-header">
                 <th>{{ "customAdmin.stats.global.table.data"|trans }}</th>
@@ -38,7 +38,7 @@
         </tbody>
     </table>
 
-    <a href="" download="export-global.csv" class="btn btn-primary center-block" onclick="$('#resume').toCSV($(this))">
+    <a class="btn btn-primary center-block export" onclick="exportTableToCSV('export-global.csv')">
         Exportar en CSV
     </a>
     {% endif %}

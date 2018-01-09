@@ -23,7 +23,7 @@ class GlobalAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('group', 'entity', array(
-                'label' => "Grupos",
+                'label' => "graphic.group",
                 'required' => false,
                 'class' => 'TrazeoBaseBundle:EGroup',
                 'multiple' => true,
@@ -40,10 +40,10 @@ class GlobalAdminType extends AbstractType
         $builder->add('date_from',
             $options['field_type'],
             array(
-                'label' => "Fecha (desde)",
+                'label' => "graphic.from",
                 'required' => false,
                 'attr' => array(
-                    'placeholder' => 'Fecha'
+                    'placeholder' => 'graphic.date'
                 )
             ),
             $options['field_options']
@@ -51,10 +51,10 @@ class GlobalAdminType extends AbstractType
         $builder->add('date_to',
             $options['field_type'],
             array(
-                'label' => "Fecha (hasta)",
+                'label' => "graphic.until",
                 'required' => false,
                 'attr' => array(
-                    'placeholder' => 'Fecha'
+                    'placeholder' => 'graphic.date'
                 )
             ),
             $options['field_options']

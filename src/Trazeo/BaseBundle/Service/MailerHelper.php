@@ -21,7 +21,7 @@ class MailerHelper {
                 ->setFrom($from, $fromName)
                 ->addTo($email)
                 ->setSubject($subject);
-                if($withHtml){
+                if($withHtml || true){
                     $message->setBody($body, 'text/html');
                 }
                 else {

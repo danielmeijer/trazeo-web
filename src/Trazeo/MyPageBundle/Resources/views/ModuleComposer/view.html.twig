@@ -1,10 +1,10 @@
 {% extends 'TrazeoMyPageBundle:Admin:custom_project_layout.html.twig' %}
 
 {% block content %}
-    <p>Puede mover los elementos, clicando y soltando para reordenarlos.</p>
-    <p>Acceda a "Editar" los módulos, y podrá modificarlos.</p>
+    <p>{{ 'can_move'|trans }}</p>
+    <p>{{ 'edit_module'|trans }}</p>
 
-    <a class="btn btn-success pull-left" href="#">Add menu</a>
+    <a class="btn btn-success pull-left" href="{{ path('admin_trazeo_mypage_menu_create') }}">Add menu</a>
     <i id="iconSaving" data-toggle="tooltip" title="Changes saved automatically!" class="fa fa-save pull-right"></i>
 
     <hr style="clear:both"></hr>

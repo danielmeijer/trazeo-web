@@ -101,6 +101,7 @@ class PCommentsAdmin extends Admin
             ->add('score')
             ->add('createdAt')
             ->add('_action', 'actions', array(
+                'label' => 'list.label_action',
                 'actions' => array(
                     'show' => array(),
                     'edit' => array(),

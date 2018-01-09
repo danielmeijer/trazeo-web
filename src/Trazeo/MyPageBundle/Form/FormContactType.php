@@ -44,30 +44,30 @@ class FormContactType extends AbstractType
         $builder->add('name',
             'text',
             array(
-                'label' => "Tu nombre",
+                'label' => "contact.your_name",
                 'required' => true,
                 'attr' => array(
-                    'placeholder' => 'Tu nombre'
+                    'placeholder' => 'contact.your_name'
                 )
             )
         );
         $builder->add('email',
             'email',
             array(
-                'label' => "Tu correo electrónico",
+                'label' => "contact.your_email",
                 'required' => true,
                 'attr' => array(
-                    'placeholder' => 'Tu correo electrónico'
+                    'placeholder' => 'contact.your_email'
                 )
             )
         );
         $builder->add('message',
             'textarea',
             array(
-                'label' => "Tu mensaje",
+                'label' => "contact.your_message",
                 'required' => true,
                 'attr' => array(
-                    'placeholder' => 'Tu mensaje'
+                    'placeholder' => 'contact.your_message'
                 )
             )
         );

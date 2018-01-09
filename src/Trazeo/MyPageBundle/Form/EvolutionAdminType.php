@@ -28,7 +28,7 @@ class EvolutionAdminType extends AbstractType
         //ldd($page);
 
         $builder->add('group', 'entity', array(
-                'label' => "Grupos",
+                'label' => "graphic.group",
                 'required' => false,
                 'class' => 'TrazeoBaseBundle:EGroup',
                 'multiple' => true,
@@ -45,10 +45,10 @@ class EvolutionAdminType extends AbstractType
         $builder->add('date_from',
             $options['field_type'],
             array(
-                'label' => "Fecha (desde)",
+                'label' => "graphic.from",
                 'required' => false,
                 'attr' => array(
-                    'placeholder' => 'Fecha'
+                    'placeholder' => 'graphic.date'
                 )
             ),
             $options['field_options']
@@ -56,10 +56,10 @@ class EvolutionAdminType extends AbstractType
         $builder->add('date_to',
             $options['field_type'],
             array(
-                'label' => "Fecha (hasta)",
+                'label' => "graphic.until",
                 'required' => false,
                 'attr' => array(
-                    'placeholder' => 'Fecha'
+                    'placeholder' => 'graphic.date'
                 )
             ),
             $options['field_options']
@@ -67,10 +67,10 @@ class EvolutionAdminType extends AbstractType
         $builder->add('age_from',
             'integer',
             array(
-                'label' => "Edad (desde)",
+                'label' => "graphic.age_from",
                 'required' => false,
                 'attr' => array(
-                    'placeholder' => 'Edad'
+                    'placeholder' => 'graphic.age'
                 )
             ),
             $options['field_options']
@@ -78,10 +78,10 @@ class EvolutionAdminType extends AbstractType
         $builder->add('age_to',
             'integer',
             array(
-                'label' => "Edad (hasta)",
+                'label' => "graphic.age_until",
                 'required' => false,
                 'attr' => array(
-                    'placeholder' => 'Edad'
+                    'placeholder' => 'graphic.age'
                 )
             ),
             $options['field_options']
@@ -89,11 +89,11 @@ class EvolutionAdminType extends AbstractType
         $builder->add('mode',
             'choice',
             array(
-                'label' => 'Agrupación de datos',
+                'label' => 'graphic.grouping',
                 'choices' => array(
-                    'month' => 'por Mes',
-                    'week' => 'por Semana',
-                    'day' => 'por Días'
+                    'month' => 'graphic.for_month',
+                    'week' => 'graphic.for_week',
+                    'day' => 'graphic.for_day'
                 )
             ),
             $options['field_options']

@@ -134,7 +134,7 @@ class StatsAdminController extends Controller
             }
 
             if (isset($data['date_to']) && $data['date_to'] != "") {
-                $date_temp_formated = $helper->getDateTime($data['data_to']);
+                $date_temp_formated = $helper->getDateTime($data['date_to']);
                 $qb->andWhere('fuser.createdAt <= :date_to');
                 $qb->setParameter('date_to', $date_temp_formated->format('Y-m-d'));
             }

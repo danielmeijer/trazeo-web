@@ -1,6 +1,7 @@
 <?php 
 namespace Trazeo\BaseBundle\Command;
 
+use Sopinet\GCMBundle\Service\GCMHelper;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -36,7 +37,6 @@ class CheckRidesCommand extends ContainerAwareCommand
 
         /** @var ERide $ride */
         foreach($rides as $ride){
-    		
     		
     		/*
     		//Ordenar los eventos de cada grupo
@@ -74,7 +74,6 @@ class CheckRidesCommand extends ContainerAwareCommand
 	 			$rideGroup->setHasRide(0);
 	 			
 	 			$em->persist($rideGroup);
-	 			$em->flush();
 	 			
 	 			//Cálculo del tiempo transcurrido en el paseo
 	 			$inicio = $ride->getCreatedAt();
@@ -88,7 +87,6 @@ class CheckRidesCommand extends ContainerAwareCommand
                 $ride->setGroupRegistered($rideGroup);
 	 			$ride->setGroup(null);
 	 			$em->persist($ride);
-	 			$em->flush();
 
                 $userextends = $rideGroup->getUserextendgroups();
 
@@ -120,6 +118,7 @@ class CheckRidesCommand extends ContainerAwareCommand
                     } else {
                         $repositoryDevice=$em->getRepository('SopinetGCMBundle:Device');
                         $devices=$repositoryDevice->findByUser($userextend);
+                        /** @var GCMHelper $gcmHelper */
                         $gcmHelper=$con->get('sopinet_gcmhelper');
                         /** @var Device $device */
                         foreach ($devices as $device) {
@@ -137,16 +136,13 @@ class CheckRidesCommand extends ContainerAwareCommand
 	 				$child->setSelected(0);
 	 				$em->persist($child);
 	 			}
-	 			$em->flush();
 
 	 			$event = new EEvent();
 	 			$event->setRide($ride);
 	 			$event->setAction("finish");
 	 			$event->setData("");
 	 			//$event->setLocation(new SimplePoint($latitude, $longitude));
-	 			$em->persist($event); 			
-	 						
-	 			$em->flush();
+	 			$em->persist($event);
 	 			
 	 			$output->writeln('<fg=yellow>Paseo del grupo ' . $rideGroup->getName() . ' detenido</fg=yellow>');
 	 		}else{
@@ -154,6 +150,8 @@ class CheckRidesCommand extends ContainerAwareCommand
 	 			$output->writeln('<fg=yellow>No hay ningún paseo que detener</fg=yellow>');
 	 		}
     	}
+
+        $em->flush();
     	
     	$output->writeln('<info>Hecho</info>');
     }

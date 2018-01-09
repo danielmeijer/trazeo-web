@@ -53,7 +53,19 @@ function initMap(mapConfig){
     });
 
     if(mapConfig.points.length>1) {
+        var pointsLat = [];
         var center=mapConfig.points[0].latLng;
+        var points = mapConfig.points;
+        for(var i = 0; i<points.length;i++){
+            pointsLat.push(points[i].latLng);
+        }
+        var polylineOptions = {
+            color: '#6AAB01',
+            weight: 5,
+            opacity: 0.7
+        };
+
+        var polyline = new L.Polyline(pointsLat, polylineOptions);
     }
     else{
         center=new L.LatLng(37.8938548, -4.788015299999984)
@@ -64,6 +76,10 @@ function initMap(mapConfig){
         ,zoom: 16
         ,scrollWheelZoom: false
     });
+
+    if(mapConfig.points.length>1) {
+        polyline.addTo(map);
+    }
 
 
 // Routing Machine plugin info

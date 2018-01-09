@@ -38,7 +38,7 @@
                 <input type="reset" class="btn btn-lg btn-primary btn-block" value="Limpiar filtros"/>
             </div>
             <div class="col-md-6">
-                <button class="btn btn-lg btn-success btn-block" type="submit">Generar gráfica</button>
+                <button class="btn btn-lg btn-success btn-block" type="submit">{{ 'graphic.new'|trans }}</button>
             </div>
         </div>
     </form>
@@ -46,9 +46,8 @@
     <!-- Load jQuery from Google's CDN if needed -->
     <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>-->
 
-
     {% if chartEdad is not null %}
-        <h2>Gráficos de Registro de Niños/as</h2>
+        <h2>{{ 'graphic.register_child'|trans }}</h2>
         <div id="edad" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
     {% endif %}
     {% if chartSexo is not null %}
@@ -64,7 +63,7 @@
     <hr/>
 
     {% if chartUsersColegio is not null %}
-        <h2>Gráficos de Registro de Familias</h2>
+        <h2>{{ 'graphic.register_families'|trans }}</h2>
         <div id="users_colegio" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
     {% endif %}
     {% if chartUsersGrupo is not null %}

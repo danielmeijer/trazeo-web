@@ -33,7 +33,7 @@ class UpdateRidesDistanceCommand extends ContainerAwareCommand
     	//Sacar paseos cuya distancia sea nula 
     	$rides = $em->getRepository("TrazeoBaseBundle:ERide")->findByDistance(null);
     	$measurer = $con->get('trazeo_base_distance_measurer');
-
+        $repositoryChildRide = $em->getRepository("TrazeoBaseBundle:EChildRide");
     	//Para cada paseo calculamos la distancía recorrida en total
     	foreach($rides as $ride){
     		$distance=0;
@@ -71,10 +71,16 @@ class UpdateRidesDistanceCommand extends ContainerAwareCommand
                 $output->writeln('<info>Niño detectado'. $child . ' distancía '.$auxdistance.'</info>');
 				//Si ha recorrido alguna distancía se guarda
 				if($auxdistance!=0){
-					$childride =new EChildRide();
-					$childride->setRide($ride);
-					$childride->setChild($child);
-					$childride->setDistance($auxdistance);	
+				    /** @var EChildRide $childride */
+				    $childride = $repositoryChildRide->findOneBy(['ride' => $ride->getId(), 'child' => $child->getId()]);
+				    if($childride == null) {
+                        $childride = new EChildRide();
+                        $childride->setRide($ride);
+                        $childride->setChild($child);
+                        $childride->setDistance($auxdistance);
+                    }else{
+				        $childride->setDistance($childride->getDistance() + $auxdistance);
+                    }
 					$em->persist($childride);
 					$em->flush();       
 				}

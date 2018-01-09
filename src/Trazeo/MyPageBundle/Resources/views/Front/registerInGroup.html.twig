@@ -21,28 +21,28 @@
             $("#form_child_3").hide();
             $("#form_child_4").hide();
             $("#activate_form_1").click(function() {
-                $("#activate_form_1").html("Niñ@ número 2");
+                $("#activate_form_1").html("{{ 'group_register.child_number'|trans }} 2");
                 $("#activate_form_1").addClass('btn-warning');
                 $("#activate_form_1").prop( "disabled", true );
                 $("#form_child_1").show();
                 return false;
             });
             $("#activate_form_2").click(function() {
-                $("#activate_form_2").html("Niñ@ número 3");
+                $("#activate_form_2").html("{{ 'group_register.child_number'|trans }} 3");
                 $("#activate_form_2").addClass('btn-warning');
                 $("#activate_form_2").prop( "disabled", true );
                 $("#form_child_2").show();
                 return false;
             });
             $("#activate_form_3").click(function() {
-                $("#activate_form_3").html("Niñ@ número 4");
+                $("#activate_form_3").html("{{ 'group_register.child_number'|trans }} 4");
                 $("#activate_form_3").addClass('btn-warning');
                 $("#activate_form_3").prop( "disabled", true );
                 $("#form_child_3").show();
                 return false;
             });
             $("#activate_form_4").click(function() {
-                $("#activate_form_4").html("Niñ@ número 5");
+                $("#activate_form_4").html("{{ 'group_register.child_number'|trans }} 5");
                 $("#activate_form_4").addClass('btn-warning');
                 $("#activate_form_4").prop( "disabled", true );
                 $("#form_child_4").show();
@@ -56,7 +56,7 @@
                 },
                 messages: {
                     condiciones: {
-                        required: "Es necesario aceptar las condiciones"
+                        required: "{{ 'group_register.necessary'|trans }}"
                     }
                 }
             });

@@ -1,15 +1,15 @@
 {% extends "SopinetTemplateSbadmin2Bundle:Login:layout.html.twig" %}
 
 {% block title %}
-    Acceso a {{ group.route.name }}
+    {{ 'group_register.access_to'|trans }} {{ group.route.name }}
 {% endblock %}
 
 {% block header %}
-    Acceso a {{ group.route.name }}
+    {{ 'group_register.access_to'|trans }} {{ group.route.name }}
 {% endblock %}
 
 {% block fos_user_content %}
-    <p>Rellene sus datos de acceso.</p>
+    <p>{{ 'group_register.data_access'|trans }}</p>
     <form method="POST" action="{{ path('loginSaveInGroup', {'group_id': group.id}) }}">
         <div class="row">
             <div class="col-md-12">
@@ -28,7 +28,7 @@
         <button class="btn btn-lg btn-success btn-block" type="submit">Acceder</button>
     </form>
     <div class="panel-footer">
-        <a class="btn-lg btn-success btn-register btn-block" href="{{ path('registerInGroup', {'group_id': group.id}) }}">¿No tienes cuenta?</a>
+        <a class="btn-lg btn-success btn-register btn-block" href="{{ path('registerInGroup', {'group_id': group.id}) }}">{{ 'group_register.not_account'|trans }}</a>
     </div>
 {% endblock %}
 

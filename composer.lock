@@ -6793,12 +6793,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sopinet/template-sbadmin2-bundle.git",
-                "reference": "e3c791f9dedc3c83aee89266f59042f317ad1f0c"
+                "reference": "f8771d5812f981c1c6557d80c1134c27f90e185c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sopinet/template-sbadmin2-bundle/zipball/e3c791f9dedc3c83aee89266f59042f317ad1f0c",
-                "reference": "e3c791f9dedc3c83aee89266f59042f317ad1f0c",
+                "url": "https://api.github.com/repos/sopinet/template-sbadmin2-bundle/zipball/f8771d5812f981c1c6557d80c1134c27f90e185c",
+                "reference": "f8771d5812f981c1c6557d80c1134c27f90e185c",
                 "shasum": ""
             },
             "require": {
@@ -6833,7 +6833,7 @@
                 "bundle",
                 "template"
             ],
-            "time": "2017-08-17 07:43:27"
+            "time": "2017-09-07 07:26:49"
         },
         {
             "name": "sopinet/timeline-bundle",

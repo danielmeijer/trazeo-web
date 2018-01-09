@@ -89,6 +89,7 @@ class UserExtendAdmin extends Admin
         ->add('mobile', null, array('label' => 'list.label_mobile'))
         ->add('city.nameUtf8', null, array('label' => 'list.label_city_name'))
         ->add('_action', 'actions', array(
+            'label' => 'list.label_action',
             'actions' => array(
                 'show' => array(),
                 'edit' => array(),

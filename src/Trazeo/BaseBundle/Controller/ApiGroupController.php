@@ -929,9 +929,12 @@ class ApiGroupController extends Controller
      */
     public function postCreateChatAction(Request $request)
     {
+        $loggerChat = $this->get('monolog.logger.chat');
+        $loggerChat->info("Entra.");
         $apiHelper=$this->get('apihelper');
         //Comprobamos el usuario
         $user = $this->checkPrivateAccess($request);
+        $loggerChat->info("Entra el usuario.");
         if ($user == false || $user == null) {
             $view = View::create()
                 ->setStatusCode(200)
@@ -946,32 +949,43 @@ class ApiGroupController extends Controller
         $token=$request->get('device_token');
         $repositoryDevice = $em->getRepository('SopinetGCMBundle:Device');
         $device=$repositoryDevice->findOneBy(array('user'=>$userextend,'token'=>$token));
+        $loggerChat->info("Entra device.");
         if ($device==null) {
             return $apiHelper->msgDenied(ApiHelper::NODEVICE);
         }
+        $loggerChat->info("Existe device");
         //Obtenemos el grupo
         $repositoryGroup = $em->getRepository('TrazeoBaseBundle:EGroup');
         $group=$repositoryGroup->find($request->get('group_id'));
         //Comprobamos si el usuario pertenece al grupo
+        $loggerChat->info("Busca grupo");
         if (!$repositoryGroup->isUserInGroup($userextend, $group)) {
             $apiHelper->msgDenied('User is not in the group');
         }
+        $loggerChat->info("Existe grupo");
         /** @var ChatRepository $repositoryChat */
         $repositoryChat = $em->getRepository('SopinetChatBundle:Chat');
         //Comprobamos si el grupo ya tiene chat
+        $loggerChat->info("Busca chat");
         if ($group->getChat()!=null) {
+            $loggerChat->info("Existe chat");
             $chat=$group->getChat();
             if (!$repositoryChat->userInChat($userextend, $chat)) {
+                $loggerChat->info("No esta en el chat");
                 //Si el usuario no esta en el chat se añade
                 try {
                     $repositoryChat->addMember($chat, $userextend->getId());
+                    $loggerChat->info("Lo añade");
                 } catch (\Exception $e) {
+                    $loggerChat->info("Error al añadir");
                     return $this->exceptionHandler($e);
                 }
             }
         }
+
         //Si no lo tiene se crea
         else{
+            $loggerChat->info("Crea chat");
             $chat=new Chat();
             $chat->setType(Chat::EVENT);
             $chat->setName($group->getName());
@@ -980,6 +994,7 @@ class ApiGroupController extends Controller
             foreach ($group->getUserextendgroups() as $user) {
                 try {
                     $repositoryChat->addMember($chat, $user->getId());
+                    $loggerChat->info("Añade todos los miembros");
                 } catch (\Exception $e) {
                     return $this->exceptionHandler($e);
                 }
@@ -988,8 +1003,10 @@ class ApiGroupController extends Controller
         }
         $group->setChat($chat);
         $em->persist($chat);
+        $loggerChat->info("Persist chat");
         $em->persist($group);
         $em->flush();
+        $loggerChat->info("Insertado el chat");
 
         return $apiHelper->msgOK($chat);
     }

@@ -352,7 +352,7 @@ Notifications:
     modal:
         accept: 'Ir a la notificación'
         close: 'Cerrar'
-        dismiss: 'Ir a la notificación'
+        dismiss: 'Cerrar'
         title: 'Tienes una notificación importante:'
 
     title: 'Listado de notificaciones'
@@ -678,6 +678,21 @@ form:
     password: 'Contraseña:'
     password_confirmation: 'Repita la contraseña:'
     username: 'Nombre de usuario:'
+    label_name: 'Nombre'
+    label_admin: 'Administrador'
+    label_childs: 'Niños/as'
+    label_userextendgroups: 'Padres/Madres'
+    label_private_monitor: 'Monitor Privado'
+    label_monitor_userextendgroups: 'Monitores autorizados'
+    label_bymode: 'Tipo de Grupo'
+    label_distance: 'Distancia'
+    label_fix_child_count: 'Indique cuántos niños han participado'
+    label_group_registered: 'Grupo al que pertenece'
+    label_created_at: 'Fecha y hora de creación'
+    label_author: 'Autor'
+    label_score: 'Me gustas'
+    label_body: 'Mensaje'
+    label_page: 'Proyecto'
 
 group:
     edit:
@@ -830,23 +845,6 @@ list:
     label_menu: 'Menú'
     label_date_register: 'Fecha de Registro'
 
-form:
-    label_name: 'Nombre'
-    label_admin: 'Administrador'
-    label_childs: 'Niños/as'
-    label_userextendgroups: 'Padres/Madres'
-    label_private_monitor: 'Monitor Privado'
-    label_monitor_userextendgroups: 'Monitores autorizados'
-    label_bymode: 'Tipo de Grupo'
-    label_distance: 'Distancia'
-    label_fix_child_count: 'Indique cuántos niños han participado'
-    label_group_registered: 'Grupo al que pertenece'
-    label_created_at: 'Fecha y hora de creación'
-    label_author: 'Autor'
-    label_score: 'Me gustas'
-    label_body: 'Mensaje'
-    label_page: 'Proyecto'
-
 show:
     label_id: 'Identificador'
     label_nick: 'Nombre'
@@ -896,6 +894,10 @@ show:
     label_data: 'Datos'
     label_location: 'Localización'
     label_route: 'Ruta'
+    label_number_users: 'Usuarios'
+    label_private_monitor: 'Monitor privado'
+    label_monitor_userextendgroups: 'Monitores autorizados'
+    label_description: 'Descripción'
 
 
 breadcrumb:
@@ -1018,6 +1020,21 @@ graphic:
     evolution_groups: 'Evolución de participación por grupos'
     evolution_total: 'Evolución de participación total'
     number_records: 'Número de registros'
+    new: 'Generar gráfica'
+    register_child: 'Gráficos de Registro de Niños/as'
+    register_families: 'Gráficos de Registro de Familias'
+    refresh: 'Refrescar datos'
+    from: 'Fecha (Desde)'
+    until: 'Fecha (Hasta)'
+    date: 'Fecha'
+    age_from: 'Edad (Desde)'
+    age_until: 'Edad (Hasta)'
+    age: 'Edad'
+    grouping: 'Agrupación de datos'
+    for_month: 'Por mes'
+    for_week: 'Por semana'
+    for_day: 'Por día'
+    group: 'Grupo'
 
 #MAILS
 Request: 'Solicitud de canjeo de usuario'
@@ -1028,3 +1045,54 @@ list_groups_available: 'Listado de Grupos Disponibles'
 invitation_trazeo: 'Ha sido invitado al sistema de Trazeo'
 user_manual_nav: 'Manual de Usuario'
 home_welcome_mail: 'Bienvenido a Trazeo'
+compose_module: "Ir al compositor de módulos"
+can_move: "Puede mover los elementos, clicando y soltando para reordenarlos."
+edit_module: "Acceda a Editar los módulos, y podrá modificarlos."
+
+#Group register
+
+group_register:
+    title: "ESTÁS <b>REGISTRÁNDOTE</b> EN EL GRUPO<br>"
+    register: "Registro"
+    data: "Tus datos"
+    children: 'Tus niñ@s'
+    email: "Introduce tu email y una contraseña"
+    conditions: "condiciones"
+    use: "de uso"
+    profile: "Completa la información de tu perfil"
+    register_children: "Registra a los niños que participarán en el grupo"
+    add_children: "¿Quieres añadir más niños?"
+    next: "Siguiente"
+    previous: "Anterior"
+    finish: "Finalizar"
+    have_account: "¿Ya tienes cuenta? Haz clic aquí"
+    accept: "Acepto las"
+    have_account2: "Ya tengo cuenta"
+    access_to: "Acceso a"
+    data_access: "Rellene sus datos de acceso."
+    not_account: "¿No tienes cuenta?"
+    thanks: "Gracias por registrate en Trazeo."
+    discharged: "Tus niñ@s han sido dados de alta en el grupo"
+    download: "Descarga la Aplicación"
+    tomorrow: "Mañana, el monitor ya los tendrá en su listado."
+    recommend: "Te recomendamos que descargues Trazeo en tu móvil"
+    recommend2: "para comunicarte con el resto de miembros y el monitor de tu grupo, ver por donde va éste cuando esté en marcha, obtener notificaciones cuando lleguen al colegio y canjear por premios los puntos que ganais por vuestra participación."
+    child_number: "Niñ@ número"
+    necessary: "Es necesario aceptar las condiciones"
+    name: "Nombre y apellidos"
+    locale: "Localidad"
+
+group_join:
+    hello: 'Hola!'
+    user: 'El usuario'
+    join: 'se ha unido al grupo'
+    can: 'y ahora podrá'
+    email: 'El email de contacto del usuario'
+    next: 'para el seguimiento y correcta gestión del alta, es el siguiente'
+    help: 'Si necesitas ayuda, contáctanos. Muchas de las dudas que puedes tener al principio te las podemos resolver directamente, y estamos deseando ayudarte, de verdad ;). Escríbenos un mail a'
+    help2: 'o déjanos tu teléfono para que te llamemos a través del formulario de'
+    help3: 'También puedes acceder a los manuales de uso de la app y la web desde'
+    help4: 'o dejarnos un mensaje en la web'
+    contact: 'Contacto'
+    see_you: 'Nos vemos en el camino!'
+    see_you2: 'El equipo de Trazeo Caminos Escolares'

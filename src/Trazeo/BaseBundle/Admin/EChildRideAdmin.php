@@ -16,7 +16,6 @@ class EChildRideAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('id')
             ->add('ride', null, array('label' => 'show.label_ride'))
             ->add('child', null, array('label' => 'show.label_child'))
             ->add('distance', null, array('label' => 'show.label_distance'))
@@ -32,7 +31,6 @@ class EChildRideAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
             ->add('_action', 'actions', array(
                 'label' => 'list.label_action',
                 'actions' => array(
@@ -55,7 +53,6 @@ class EChildRideAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('id')
             ->add('ride')
             ->add('child', null, array('label' => 'show.label_child'))
             ->add('distance', null, array('label' => 'show.label_distance'))
@@ -68,7 +65,6 @@ class EChildRideAdmin extends Admin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('id')
             ->add('ride', null, array('label' => 'show.label_ride'))
             ->add('child', null, array('label' => 'show.label_child'))
             ->add('distance', null, array('label' => 'show.label_distance'))
