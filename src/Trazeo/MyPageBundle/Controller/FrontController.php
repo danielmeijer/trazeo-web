@@ -18,6 +18,7 @@ use Trazeo\BaseBundle\Entity\EChild;
 use Trazeo\BaseBundle\Entity\EGroup;
 use Trazeo\BaseBundle\Entity\EGroupRepository;
 use Trazeo\BaseBundle\Entity\UserExtend;
+use Trazeo\BaseBundle\Service\Helper;
 use Trazeo\MyPageBundle\Form\ChildOptionalType;
 use Trazeo\MyPageBundle\Form\UserExtendCustomType;
 use Trazeo\BaseBundle\Form\UserExtendType;
@@ -294,6 +295,7 @@ class FrontController extends Controller
             if ($request->get('trazeo_basebundle_userextend[country]') == '') {
                 $userExtend->setCountry($spainCode);
             }
+            /** @var Helper $helper */
             $helper = $this->get('trazeo_base_helper');
             $city_entity = $helper->getCities($request->get('city'), 10, true);
             if (count($city_entity) > 0) {
