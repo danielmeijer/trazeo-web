@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row text-center">
         <div class="col-lg-10 col-lg-offset-1">
-            <h2>Nuestras Rutas</h2>
+            <h2>{{ "routes.title"|trans }}</h2>
             <hr class="small">
             <div class="row">
                 {% set i = 0 %}
@@ -94,11 +94,11 @@
                                 </div>
                                 <div class="modal-footer">
                                     <a class="btn btn-primary btn-large" href="{{ path('registerInGroup', {'group_id': group.id}) }}" class="btn btn-light">¡Participar!</a>
-                                    <button type="button" data-dismiss="modal" class="btn">Cerrar</button>
+                                    <button type="button" data-dismiss="modal" class="btn">{{ "close"|trans }}</button>
                                 </div>
                             </div>
 
-                            <button class="demo btn btn-primary btn-large" data-toggle="modal" href="#full-width-{{ group.id }}">Saber más</button>
+                            <button class="demo btn btn-primary btn-large" data-toggle="modal" href="#full-width-{{ group.id }}">{{ "routes.readmore"|trans }}</button>
 
 
                         </div>

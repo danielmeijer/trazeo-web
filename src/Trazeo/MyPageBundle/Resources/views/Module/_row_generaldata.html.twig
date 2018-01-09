@@ -4,37 +4,37 @@
 <!-- Participaciones -->
 {% if key == "participaciones" %}
     {% set icon = "fa-male" %}
-    {% set text = "Participaciones" %}
+    {% set text = "data.participations"|trans %}
 
 <!-- Paseos -->
 {% elseif key == "paseos" %}
     {% set icon = "fa-location-arrow" %}
-    {% set text = "Paseos realizados" %}
+    {% set text = "data.finished"|trans %}
 
 <!-- KM -->
 {% elseif key == "km" %}
     {% set icon = "fa-globe" %}
-    {% set text = "Kilómetros recorridos" %}
+    {% set text = "data.km"|trans %}
 
 <!-- CO2 -->
 {% elseif key == "co2" %}
     {% set icon = "fa-cloud" %}
-    {% set text = "CO2 Ahorrado" %}
+    {% set text = "data.co2"|trans %}
 
 <!-- Litros combustible -->
 {% elseif key == "litros_combustible" %}
     {% set icon = "fa-car" %}
-    {% set text = "Litros ahorrados" %}
+    {% set text = "data.liters"|trans %}
 
 <!-- Euros combustible -->
 {% elseif key == "euros_combustible" %}
     {% set icon = "fa-euro" %}
-    {% set text = "Euros ahorrados" %}
+    {% set text = "data.euro"|trans %}
 
 <!-- Tiempo formato -->
 {% elseif key == "tiempo_formato" %}
     {% set icon = "fa-clock-o" %}
-    {% set text = "Tiempo andado" %}
+    {% set text = "data.time"|trans %}
 
 {% endif %}
 
